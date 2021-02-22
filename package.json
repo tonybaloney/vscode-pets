@@ -6,9 +6,14 @@
 	"engines": {
 		"vscode": "^1.53.0"
 	},
+	"repository": {"type": "github", "url": "https://github.com/tonybaloney/vscode-pets"},
+	"publisher": "tonybaloney",
 	"categories": [
 		"Other"
 	],
+	"keywords": ["pet", "cat", "pets"],
+	"license": "MIT",
+	"icon": "icon.png",
 	"activationEvents": [
 		"*"
 	],
