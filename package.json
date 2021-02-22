@@ -2,7 +2,7 @@
 	"name": "vscode-pets",
 	"displayName": "vscode-pets",
 	"description": "Pets for your VS Code",
-	"version": "0.0.3",
+	"version": "0.1.0",
 	"engines": {
 		"vscode": "^1.53.0"
 	},
@@ -24,6 +24,22 @@
 				"command": "vscode-pets.start",
 				"title": "Start pet coding session",
 				"category": "Pet Coding"
+			}
+		],
+		"configuration":[
+			{
+				"properties": {
+					"vscode-pets.petColor": {
+						"type": "string",
+						"enum": [
+							"black",
+							"brown"
+						],
+						"default": "brown",
+						"description": "Pet color",
+						"scope": "window"
+					}
+				}
 			}
 		]
 	},

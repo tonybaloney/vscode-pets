@@ -3,10 +3,9 @@
 // It cannot access the main VS Code APIs directly.
 (function () {
     var state = 'idle'; // idle, walking-right, walking-left, climbing right
-    const vscode = acquireVsCodeApi();
     var pet = document.getElementsByClassName("pet")[0];
     var petRoot = basePetUri;
-    const oldState = vscode.getState();
+    var petAffix = petColor;
     var idleCounter = 0;
     var petLeft = 0;
     var petBottom = 0;
@@ -37,7 +36,7 @@
 
     function sitIdle(){
         faceLeft(); faceUp();
-        setAnimation('/bwcat_idle_blink_8fps.gif');
+        setAnimation('/'+petAffix+'_idle_blink_8fps.gif');
         idleCounter++;
         if (idleCounter > 50) { // Sit for 5 seconds
             idleCounter = 0;
@@ -46,7 +45,7 @@
     }
 
     function wallHangLeft(){
-        setAnimation('/bwcat_wallgrab_8fps.gif');
+        setAnimation('/'+petAffix+'_wallgrab_8fps.gif');
         idleCounter++;
         if (idleCounter > 50) { // Sit for 5 seconds
             idleCounter = 0;
@@ -55,7 +54,7 @@
     }
 
     function land(){
-        setAnimation('/bwcat_land_8fps.gif');
+        setAnimation('/'+petAffix+'_land_8fps.gif');
         idleCounter++;
         if (idleCounter > 10) { // Sit for 1 second
             idleCounter = 0;
@@ -65,7 +64,7 @@
 
     function stepRight(){
         faceRight();
-        setAnimation('/bwcat_sneak_8fps.gif');
+        setAnimation('/'+petAffix+'_sneak_8fps.gif');
         petLeft += 1;
         pet.style.left = `${petLeft}px`;
         if (petLeft >= (window.innerWidth - 30))
@@ -76,7 +75,7 @@
 
     function stepLeft(){
         faceLeft();
-        setAnimation('/bwcat_run_12fps.gif');
+        setAnimation('/'+petAffix+'_run_12fps.gif');
         petLeft -= 2;
         pet.style.left = `${petLeft}px`;
         if (petLeft <= 0)
@@ -87,7 +86,7 @@
 
     function climbUpLeft(){
         faceLeft();
-        setAnimation('/bwcat_wallclimb_8fps.gif');
+        setAnimation('/'+petAffix+'_wallclimb_8fps.gif');
         petBottom += 1;
         pet.style.bottom = `${petBottom}px`;
         if (petBottom >= 100)
@@ -98,7 +97,7 @@
 
     function climbDownLeft(){
         faceRight();
-        setAnimation('/bwcat_fall_from_grab_8fps.gif', false);
+        setAnimation('/'+petAffix+'_fall_from_grab_8fps.gif', false);
         petBottom -= 5;
         pet.style.bottom = `${petBottom}px`;
         if (petBottom <= 0)
