@@ -1,22 +1,33 @@
 import * as path from 'path';
-import { isRegExp } from 'util';
+import { runInThisContext } from 'vm';
 import * as vscode from 'vscode';
+
+const DEFAULT_COLOR:string  = "brown";
 
 export function activate(context: vscode.ExtensionContext) {
 	context.subscriptions.push(
 		vscode.commands.registerCommand('vscode-pets.start', () => {
-			PetPanel.createOrShow(context.extensionUri, context.extensionPath);
+			const color:string = vscode.workspace.getConfiguration("vscode-pets").get("petColor", DEFAULT_COLOR);
+			PetPanel.createOrShow(context.extensionUri, context.extensionPath, color);
 		})
 	);
+
+	// Listening to configuration changes
+	context.subscriptions.push(vscode.workspace.onDidChangeConfiguration(e => {
+		if (e.affectsConfiguration('vscode-pets.petColor')) {
+			const color = vscode.workspace.getConfiguration("vscode-pets").get("petColor", DEFAULT_COLOR);
+			PetPanel.createOrShow(context.extensionUri, context.extensionPath, color);
+		}
+	}));
 
 	if (vscode.window.registerWebviewPanelSerializer) {
 		// Make sure we register a serializer in activation event
 		vscode.window.registerWebviewPanelSerializer(PetPanel.viewType, {
 			async deserializeWebviewPanel(webviewPanel: vscode.WebviewPanel, state: any) {
-				console.log(`Got state: ${state}`);
 				// Reset the webview options so we use latest uri for `localResourceRoots`.
 				webviewPanel.webview.options = getWebviewOptions(context.extensionUri);
-				PetPanel.revive(webviewPanel, context.extensionUri, context.extensionPath);
+				const color = vscode.workspace.getConfiguration("vscode-pets").get("petColor", DEFAULT_COLOR);
+				PetPanel.revive(webviewPanel, context.extensionUri, context.extensionPath, color);
 			}
 		});
 	}
@@ -47,16 +58,21 @@ class PetPanel {
 	private readonly _extensionUri: vscode.Uri;
 	private _disposables: vscode.Disposable[] = [];
 	private _petMediaPath: string;
+	private _petColor: string;
 
-	public static createOrShow(extensionUri: vscode.Uri, extensionPath: string) {
+	public static createOrShow(extensionUri: vscode.Uri, extensionPath: string, petColor: string) {
 		const column = vscode.window.activeTextEditor
 			? vscode.window.activeTextEditor.viewColumn
 			: undefined;
 
 		// If we already have a panel, show it.
 		if (PetPanel.currentPanel) {
-			PetPanel.currentPanel._panel.reveal(column);
-			return;
+			if (petColor === PetPanel.currentPanel.petColor()) {
+				PetPanel.currentPanel._panel.reveal(column);
+				return;
+			} else {
+				PetPanel.currentPanel.updatePetColor(petColor);
+			}
 		}
 
 		// Otherwise, create a new panel.
@@ -67,17 +83,18 @@ class PetPanel {
 			getWebviewOptions(extensionUri),
 		);
 
-		PetPanel.currentPanel = new PetPanel(panel, extensionUri, extensionPath);
+		PetPanel.currentPanel = new PetPanel(panel, extensionUri, extensionPath, petColor);
 	}
 
-	public static revive(panel: vscode.WebviewPanel, extensionUri: vscode.Uri, extensionPath: string) {
-		PetPanel.currentPanel = new PetPanel(panel, extensionUri, extensionPath);
+	public static revive(panel: vscode.WebviewPanel, extensionUri: vscode.Uri, extensionPath: string, petColor: string) {
+		PetPanel.currentPanel = new PetPanel(panel, extensionUri, extensionPath, petColor);
 	}
 
-	private constructor(panel: vscode.WebviewPanel, extensionUri: vscode.Uri, extensionPath: string) {
+	private constructor(panel: vscode.WebviewPanel, extensionUri: vscode.Uri, extensionPath: string, color: string) {
 		this._panel = panel;
 		this._extensionUri = extensionUri;
 		this._petMediaPath = path.join(extensionPath, 'media', 'cats');
+		this._petColor = color;
 		// Set the webview's initial html content
 		this._update();
 
@@ -110,6 +127,17 @@ class PetPanel {
 		);
 	}
 
+	public petColor(): string { 
+		return this._petColor;
+	}
+
+	public updatePetColor(newColor: string){
+		this._petColor = newColor;
+		if (this._panel.visible) {
+			this._update();
+		}
+	}
+
 	public doRefactor() {
 		// Send a message to the webview webview.
 		// You can send any JSON serializable data.
@@ -132,10 +160,10 @@ class PetPanel {
 
 	private _update() {
 		const webview = this._panel.webview;
-		this._panel.webview.html = this._getHtmlForWebview(webview, 'bwcat_idle_blink_8fps.gif');
+		this._panel.webview.html = this._getHtmlForWebview(webview, this._petColor);
 	}
 
-	private _getHtmlForWebview(webview: vscode.Webview, petGifPath: string) {
+	private _getHtmlForWebview(webview: vscode.Webview, petColor: string) {
 		// Local path to main script run in the webview
 		const scriptPathOnDisk = vscode.Uri.joinPath(this._extensionUri, 'media', 'main.js');
 
@@ -152,7 +180,6 @@ class PetPanel {
 
 		// Get path to resource on disk
 		const basePetUri = webview.asWebviewUri(vscode.Uri.file(path.join(this._petMediaPath)));
-		const petGifUri = webview.asWebviewUri(vscode.Uri.file(path.join(this._petMediaPath, petGifPath)));
 
 		// Use a nonce to only allow specific scripts to be run
 		const nonce = getNonce();
@@ -172,8 +199,8 @@ class PetPanel {
 				<title>VS Code Pets</title>
 			</head>
 			<body>
-				<script nonce="${nonce}">var basePetUri = "${basePetUri}";</script>
-				<img class="pet" src="${petGifUri}" />
+				<script nonce="${nonce}">var basePetUri = "${basePetUri}"; var petColor = "${petColor}";</script>
+				<img class="pet" src="" />
 				<script nonce="${nonce}" src="${scriptUri}"></script>
 			</body>
 			</html>`;

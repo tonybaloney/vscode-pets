@@ -2,6 +2,6 @@
 
 Puts a small, bored cat in your code editor.
 
-Run the "Open Pet" action to see the panel. 
+Run the "Start pet coding session" action to see the panel. 
 
 ![screenshot](https://github.com/tonybaloney/vscode-pet/raw/master/screenshot.gif)
