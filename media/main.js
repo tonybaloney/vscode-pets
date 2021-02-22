@@ -19,6 +19,15 @@
         pet.style.webkitTransform = "scaleX(1)";
     }
 
+    function faceDown(){
+        pet.style.webkitTransform = "scaleY(-1)";
+    }
+
+    function faceUp(){
+        pet.style.webkitTransform = "scaleY(1)";
+    }
+
+
     function setAnimation(face){
         if (pet.src === petRoot + face){
             return;
@@ -27,6 +36,7 @@
     }
 
     function sitIdle(){
+        faceLeft(); faceUp();
         setAnimation('/bwcat_idle_blink_8fps.gif');
         idleCounter++;
         if (idleCounter > 50) { // Sit for 5 seconds
@@ -78,7 +88,7 @@
     }
 
     function climbDownLeft(){
-        faceLeft();
+        faceRight(); faceDown();
         setAnimation('/bwcat_wallclimb_8fps.gif');
         petBottom -= 1;
         pet.style.bottom = `${petBottom}px`;
