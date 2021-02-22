@@ -20,15 +20,15 @@
     }
 
     function faceDown(){
-        pet.style.webkitTransform = "scaleY(-1)";
+        pet.style.webkitTransform = "rotate(180)";
     }
 
     function faceUp(){
-        pet.style.webkitTransform = "scaleY(1)";
+        pet.style.webkitTransform = "rotate(0)";
     }
 
 
-    function setAnimation(face){
+    function setAnimation(face, repeat=true){
         if (pet.src === petRoot + face){
             return;
         }
@@ -54,6 +54,15 @@
         }
     }
 
+    function land(){
+        setAnimation('/bwcat_land_8fps.gif');
+        idleCounter++;
+        if (idleCounter > 10) { // Sit for 1 second
+            idleCounter = 0;
+            return true ;
+        }
+    }
+
     function stepRight(){
         faceRight();
         setAnimation('/bwcat_sneak_8fps.gif');
@@ -67,8 +76,8 @@
 
     function stepLeft(){
         faceLeft();
-        setAnimation('/bwcat_sneak_8fps.gif');
-        petLeft -= 1;
+        setAnimation('/bwcat_run_12fps.gif');
+        petLeft -= 2;
         pet.style.left = `${petLeft}px`;
         if (petLeft <= 0)
         {
@@ -88,12 +97,13 @@
     }
 
     function climbDownLeft(){
-        faceRight(); faceDown();
-        setAnimation('/bwcat_wallclimb_8fps.gif');
-        petBottom -= 1;
+        faceRight();
+        setAnimation('/bwcat_fall_from_grab_8fps.gif', false);
+        petBottom -= 5;
         pet.style.bottom = `${petBottom}px`;
         if (petBottom <= 0)
         {
+            petBottom = 0;
             return true;
         }
     }
@@ -121,6 +131,10 @@
             }
         } else if (state === 'climbing-down-left'){
             if (climbDownLeft()){
+                state = 'landing';
+            }
+        } else if (state === 'landing'){
+            if (land()){
                 state = 'idle';
             }
         }
