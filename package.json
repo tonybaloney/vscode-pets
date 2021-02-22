@@ -38,6 +38,16 @@
 						"default": "brown",
 						"description": "Pet color",
 						"scope": "window"
+					},
+					"vscode-pets.petType": {
+						"type": "string",
+						"enum": [
+							"cat",
+							"dog"
+						],
+						"default": "cat",
+						"description": "Pet type",
+						"scope": "window"
 					}
 				}
 			}

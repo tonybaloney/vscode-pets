@@ -36,9 +36,19 @@
 
     function sitIdle(){
         faceLeft(); faceUp();
-        setAnimation('/'+petAffix+'_idle_blink_8fps.gif');
+        setAnimation('/'+petAffix+'_idle_8fps.gif');
         idleCounter++;
-        if (idleCounter > 50) { // Sit for 5 seconds
+        if (idleCounter > 50 + Math.floor(Math.random() * 100)) { // Sit for 5-15 seconds
+            idleCounter = 0;
+            return true ;
+        }
+    }
+
+    function lie(){
+        faceLeft(); faceUp();
+        setAnimation('/'+petAffix+'_lie_8fps.gif');
+        idleCounter++;
+        if (idleCounter > 50 + Math.floor(Math.random() * 100)) { // Sit for 5 seconds
             idleCounter = 0;
             return true ;
         }
@@ -64,7 +74,7 @@
 
     function stepRight(){
         faceRight();
-        setAnimation('/'+petAffix+'_sneak_8fps.gif');
+        setAnimation('/'+petAffix+'_walk_8fps.gif');
         petLeft += 1;
         pet.style.left = `${petLeft}px`;
         if (petLeft >= (window.innerWidth - 30))
@@ -75,7 +85,7 @@
 
     function stepLeft(){
         faceLeft();
-        setAnimation('/'+petAffix+'_run_12fps.gif');
+        setAnimation('/'+petAffix+'_walk_fast_8fps.gif');
         petLeft -= 2;
         pet.style.left = `${petLeft}px`;
         if (petLeft <= 0)
@@ -107,7 +117,7 @@
         }
     }
 
-    function nextPosition(){
+    function catSequence(){
         if (state === 'idle'){
             if (sitIdle()) {
                 state = 'walking-right';
@@ -138,10 +148,37 @@
             }
         }
     }
+
+    function dogSequence(){
+        if (state === 'idle'){
+            if (sitIdle()) {
+                state = 'walking-right';
+            }
+        } else if (state === 'walking-right'){
+            if (stepRight()){
+                state = 'walking-left';
+            }
+        } else if (state === 'walking-left'){
+            if (stepLeft()){
+                state = 'lie';
+            }
+        } else if (state === 'lie'){
+            if (lie()){
+                state = 'idle';
+            }
+        }
+    }
+
     function startAnimations(){
-        setInterval(() => {
-            nextPosition();
-        }, 100);
+        if (petType === "cat"){
+            setInterval(() => {
+                catSequence();
+            }, 100);
+        } else if (petType === "dog"){
+            setInterval(() => {
+                dogSequence();
+            }, 100);
+        }
     }
 
     console.log("Using path " + petRoot);

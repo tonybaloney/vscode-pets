@@ -1,22 +1,24 @@
 import * as path from 'path';
-import { runInThisContext } from 'vm';
 import * as vscode from 'vscode';
 
 const DEFAULT_COLOR:string  = "brown";
+const DEFAULT_PET_TYPE:string = "cat";
 
 export function activate(context: vscode.ExtensionContext) {
 	context.subscriptions.push(
 		vscode.commands.registerCommand('vscode-pets.start', () => {
 			const color:string = vscode.workspace.getConfiguration("vscode-pets").get("petColor", DEFAULT_COLOR);
-			PetPanel.createOrShow(context.extensionUri, context.extensionPath, color);
+			const petType:string = vscode.workspace.getConfiguration("vscode-pets").get("petType", DEFAULT_PET_TYPE);
+			PetPanel.createOrShow(context.extensionUri, context.extensionPath, color, petType);
 		})
 	);
 
 	// Listening to configuration changes
 	context.subscriptions.push(vscode.workspace.onDidChangeConfiguration(e => {
-		if (e.affectsConfiguration('vscode-pets.petColor')) {
+		if (e.affectsConfiguration('vscode-pets.petColor') || e.affectsConfiguration('vscode-pets.petType')) {
 			const color = vscode.workspace.getConfiguration("vscode-pets").get("petColor", DEFAULT_COLOR);
-			PetPanel.createOrShow(context.extensionUri, context.extensionPath, color);
+			const petType:string = vscode.workspace.getConfiguration("vscode-pets").get("petType", DEFAULT_PET_TYPE);
+			PetPanel.createOrShow(context.extensionUri, context.extensionPath, color, petType);
 		}
 	}));
 
@@ -27,7 +29,8 @@ export function activate(context: vscode.ExtensionContext) {
 				// Reset the webview options so we use latest uri for `localResourceRoots`.
 				webviewPanel.webview.options = getWebviewOptions(context.extensionUri);
 				const color = vscode.workspace.getConfiguration("vscode-pets").get("petColor", DEFAULT_COLOR);
-				PetPanel.revive(webviewPanel, context.extensionUri, context.extensionPath, color);
+				const petType:string = vscode.workspace.getConfiguration("vscode-pets").get("petType", DEFAULT_PET_TYPE);
+				PetPanel.revive(webviewPanel, context.extensionUri, context.extensionPath, color, petType);
 			}
 		});
 	}
@@ -59,19 +62,23 @@ class PetPanel {
 	private _disposables: vscode.Disposable[] = [];
 	private _petMediaPath: string;
 	private _petColor: string;
+	private _petType: string;
+	private _extensionPath: string;
 
-	public static createOrShow(extensionUri: vscode.Uri, extensionPath: string, petColor: string) {
+	public static createOrShow(extensionUri: vscode.Uri, extensionPath: string, petColor: string, petType:string) {
 		const column = vscode.window.activeTextEditor
 			? vscode.window.activeTextEditor.viewColumn
 			: undefined;
 
 		// If we already have a panel, show it.
 		if (PetPanel.currentPanel) {
-			if (petColor === PetPanel.currentPanel.petColor()) {
+			if (petColor === PetPanel.currentPanel.petColor() && petType === PetPanel.currentPanel.petType()) {
 				PetPanel.currentPanel._panel.reveal(column);
 				return;
 			} else {
 				PetPanel.currentPanel.updatePetColor(petColor);
+				PetPanel.currentPanel.updatePetType(petType);
+				PetPanel.currentPanel.update();
 			}
 		}
 
@@ -83,18 +90,20 @@ class PetPanel {
 			getWebviewOptions(extensionUri),
 		);
 
-		PetPanel.currentPanel = new PetPanel(panel, extensionUri, extensionPath, petColor);
+		PetPanel.currentPanel = new PetPanel(panel, extensionUri, extensionPath, petColor, petType);
 	}
 
-	public static revive(panel: vscode.WebviewPanel, extensionUri: vscode.Uri, extensionPath: string, petColor: string) {
-		PetPanel.currentPanel = new PetPanel(panel, extensionUri, extensionPath, petColor);
+	public static revive(panel: vscode.WebviewPanel, extensionUri: vscode.Uri, extensionPath: string, petColor: string, petType: string) {
+		PetPanel.currentPanel = new PetPanel(panel, extensionUri, extensionPath, petColor, petType);
 	}
 
-	private constructor(panel: vscode.WebviewPanel, extensionUri: vscode.Uri, extensionPath: string, color: string) {
+	private constructor(panel: vscode.WebviewPanel, extensionUri: vscode.Uri, extensionPath: string, color: string, type: string) {
 		this._panel = panel;
 		this._extensionUri = extensionUri;
-		this._petMediaPath = path.join(extensionPath, 'media', 'cats');
+		this._extensionPath = extensionPath;
+		this._petMediaPath = path.join(extensionPath, 'media', type);
 		this._petColor = color;
+		this._petType = type;
 		// Set the webview's initial html content
 		this._update();
 
@@ -105,9 +114,7 @@ class PetPanel {
 		// Update the content based on view changes
 		this._panel.onDidChangeViewState(
 			e => {
-				if (this._panel.visible) {
-					this._update();
-				}
+				this.update();
 			},
 			null,
 			this._disposables
@@ -131,11 +138,16 @@ class PetPanel {
 		return this._petColor;
 	}
 
+	public petType(): string { 
+		return this._petType;
+	}
+
 	public updatePetColor(newColor: string){
 		this._petColor = newColor;
-		if (this._panel.visible) {
-			this._update();
-		}
+	}
+
+	public updatePetType(newType: string){
+		this._petMediaPath = path.join(this._extensionPath, 'media', newType);
 	}
 
 	public doRefactor() {
@@ -158,12 +170,18 @@ class PetPanel {
 		}
 	}
 
-	private _update() {
-		const webview = this._panel.webview;
-		this._panel.webview.html = this._getHtmlForWebview(webview, this._petColor);
+	public update(){
+		if (this._panel.visible) {
+			this._update();
+		}
 	}
 
-	private _getHtmlForWebview(webview: vscode.Webview, petColor: string) {
+	private _update() {
+		const webview = this._panel.webview;
+		this._panel.webview.html = this._getHtmlForWebview(webview);
+	}
+
+	private _getHtmlForWebview(webview: vscode.Webview) {
 		// Local path to main script run in the webview
 		const scriptPathOnDisk = vscode.Uri.joinPath(this._extensionUri, 'media', 'main.js');
 
@@ -199,7 +217,7 @@ class PetPanel {
 				<title>VS Code Pets</title>
 			</head>
 			<body>
-				<script nonce="${nonce}">var basePetUri = "${basePetUri}"; var petColor = "${petColor}";</script>
+				<script nonce="${nonce}">var basePetUri = "${basePetUri}"; var petColor = "${this.petColor()}"; var petType = "${this.petType()}";</script>
 				<img class="pet" src="" />
 				<script nonce="${nonce}" src="${scriptUri}"></script>
 			</body>
