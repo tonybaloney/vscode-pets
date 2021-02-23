@@ -1,10 +1,16 @@
 # vscode-pets README
 
+[![Visual Studio Marketplace Version](https://img.shields.io/visual-studio-marketplace/v/tonybaloney.vscode-pets?color=blue)](https://marketplace.visualstudio.com/items?itemName=tonybaloney.vscode-pets&WT.mc_id=python-17801-anthonyshaw)
+
 Puts a small, bored cat or an enthusiastic dog in your code editor.
 
 Run the "Start pet coding session" action to see the panel. 
 
 ![screenshot](https://github.com/tonybaloney/vscode-pet/raw/master/screenshot.gif)
+
+## Installation
+
+Get from the [VS Code marketplace](https://marketplace.visualstudio.com/items?itemName=tonybaloney.vscode-pets&WT.mc_id=python-17801-anthonyshaw)
 
 ## Showing your pet
 
