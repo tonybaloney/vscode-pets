@@ -3,10 +3,11 @@
 // It cannot access the main VS Code APIs directly.
 (function () {
     var state = 'idle'; // idle, walking-right, walking-left, climbing right
+    var prevState = '';
     var pet = document.getElementsByClassName("pet")[0];
     var petRoot = basePetUri;
     var petAffix = petColor;
-    var idleCounter = 0;
+    var idleCounter = 0, swipeCounter = 0;
     var petLeft = 0;
     var petBottom = 0;
 
@@ -26,8 +27,7 @@
         pet.style.webkitTransform = "rotate(0)";
     }
 
-
-    function setAnimation(face, repeat=true){
+    function setAnimation(face){
         if (pet.src === petRoot + face){
             return;
         }
@@ -72,6 +72,15 @@
         }
     }
 
+    function swipe(){
+        setAnimation('/'+petAffix+'_swipe_8fps.gif');
+        swipeCounter++;
+        if (swipeCounter > 10) { // Sit for 1 second
+            swipeCounter = 0;
+            return true ;
+        }
+    }
+
     function stepRight(){
         faceRight();
         setAnimation('/'+petAffix+'_walk_8fps.gif');
@@ -107,7 +116,7 @@
 
     function climbDownLeft(){
         faceRight();
-        setAnimation('/'+petAffix+'_fall_from_grab_8fps.gif', false);
+        setAnimation('/'+petAffix+'_fall_from_grab_8fps.gif');
         petBottom -= 5;
         pet.style.bottom = `${petBottom}px`;
         if (petBottom <= 0)
@@ -146,6 +155,10 @@
             if (land()){
                 state = 'idle';
             }
+        } else if (state === 'swipe'){
+            if (swipe()){
+                state = prevState;
+            }
         }
     }
 
@@ -166,10 +179,27 @@
             if (lie()){
                 state = 'idle';
             }
+        } else if (state === 'swipe'){
+            if (swipe()){
+                state = prevState;
+            }
         }
     }
 
+    function handleMouseOver(e) {
+        if (state === "swipe") {
+            return;
+        }
+        if (petBottom !== 0) // don't swipe when on wall/falling.
+        {
+            return ; 
+        }
+        prevState = state;
+        state = "swipe";
+    }
+
     function startAnimations(){
+        pet.addEventListener('mouseover', handleMouseOver);
         if (petType === "cat"){
             setInterval(() => {
                 catSequence();
