@@ -13,6 +13,14 @@ export function activate(context: vscode.ExtensionContext) {
 		})
 	);
 
+	context.subscriptions.push(
+		vscode.commands.registerCommand('vscode-pets.throw-ball', () => {
+			if (PetPanel.currentPanel) {
+				PetPanel.currentPanel.throwBall();
+			}
+		})
+	);
+
 	// Listening to configuration changes
 	context.subscriptions.push(vscode.workspace.onDidChangeConfiguration(e => {
 		if (e.affectsConfiguration('vscode-pets.petColor') || e.affectsConfiguration('vscode-pets.petType')) {
@@ -150,10 +158,8 @@ class PetPanel {
 		this._petMediaPath = path.join(this._extensionPath, 'media', newType);
 	}
 
-	public doRefactor() {
-		// Send a message to the webview webview.
-		// You can send any JSON serializable data.
-		this._panel.webview.postMessage({ command: 'refactor' });
+	public throwBall() {
+		this._panel.webview.postMessage({ command: 'throw-ball' });
 	}
 
 	public dispose() {
@@ -218,7 +224,7 @@ class PetPanel {
 			</head>
 			<body>
 				<script nonce="${nonce}">var basePetUri = "${basePetUri}"; var petColor = "${this.petColor()}"; var petType = "${this.petType()}";</script>
-				<img class="pet" src="" />
+				<canvas id="petCanvas"></canvas><img class="pet" src="" />
 				<script nonce="${nonce}" src="${scriptUri}"></script>
 			</body>
 			</html>`;
