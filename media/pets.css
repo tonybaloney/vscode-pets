@@ -90,6 +90,13 @@ textarea::placeholder {
 	color: var(--vscode-input-placeholderForeground);
 }
 
+#petCanvas{
+	position:fixed; 
+	bottom:0;
+	left:0; 
+	z-index: 1;
+}
+
 img.pet {
 	-webkit-transform: scaleX(-1);
 	transform: scaleX(-1);
@@ -98,4 +105,5 @@ img.pet {
 	left: 0px;
 	right: 0px;
 	bottom:0px;
+	z-index: 2;
 }
