@@ -2,6 +2,10 @@
 
 All notable changes to the "vscode-pets" extension will be documented in this file.
 
+## [0.5.0]
+
+- Added snake
+
 ## [0.4.0]
 
 - Cats and dogs will chase balls
