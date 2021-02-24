@@ -1,6 +1,6 @@
 # vscode-pets README
 
-[![Visual Studio Marketplace Version](https://img.shields.io/visual-studio-marketplace/v/tonybaloney.vscode-pets?color=blue)](https://marketplace.visualstudio.com/items?itemName=tonybaloney.vscode-pets&WT.mc_id=python-17801-anthonyshaw)
+[![Visual Studio Marketplace Version](https://img.shields.io/visual-studio-marketplace/v/tonybaloney.vscode-pets?color=blue&logo=visual-studio)](https://marketplace.visualstudio.com/items?itemName=tonybaloney.vscode-pets&WT.mc_id=python-17801-anthonyshaw)
 
 Puts a small, bored cat or an enthusiastic dog in your code editor.
 
