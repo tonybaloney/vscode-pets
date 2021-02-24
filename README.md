@@ -1,6 +1,7 @@
 # vscode-pets README
+![icon](https://github.com/tonybaloney/vscode-pet/raw/master/icon.png)
 
-Puts a small, bored cat or an enthusiastic dog in your code editor.
+Puts a small, bored cat, an enthusiastic dog, or a feisty snake in your code editor.
 
 Run the "Start pet coding session" action to see the panel. 
 
@@ -15,6 +16,8 @@ Run the "Start pet coding session" command (`vscode-pets.start`)
 You can choose either pet type and fur color
 
 ![screenshot2](https://github.com/tonybaloney/vscode-pet/raw/master/screenshot-2.gif)
+
+_*snake can only be green_
 
 ## Playing
 

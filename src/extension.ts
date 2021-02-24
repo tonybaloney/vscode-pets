@@ -1,6 +1,8 @@
 import * as path from 'path';
 import * as vscode from 'vscode';
 
+const POSSIBLE_COLORS = ["brown", "black", "green"];
+const POSSIBLE_PETS = ["dog", "cat", "snake"];
 const DEFAULT_COLOR:string  = "brown";
 const DEFAULT_PET_TYPE:string = "cat";
 
@@ -77,7 +79,17 @@ class PetPanel {
 		const column = vscode.window.activeTextEditor
 			? vscode.window.activeTextEditor.viewColumn
 			: undefined;
-
+		petColor = petColor.trim().toLowerCase();
+		petType = petType.trim().toLowerCase();
+		if (!POSSIBLE_COLORS.includes(petColor)){
+			petColor = DEFAULT_COLOR;
+		}
+		if (!POSSIBLE_PETS.includes(petType)){
+			petColor = DEFAULT_PET_TYPE;
+		}
+		if (petType === "snake"){
+			petColor = "green";
+		}
 		// If we already have a panel, show it.
 		if (PetPanel.currentPanel) {
 			if (petColor === PetPanel.currentPanel.petColor() && petType === PetPanel.currentPanel.petType()) {

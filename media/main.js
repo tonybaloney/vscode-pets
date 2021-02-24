@@ -292,6 +292,34 @@
     }
   }
 
+  function snakeSequence() {
+    if (state === "idle") {
+      if (sitIdle()) {
+        state = "walking-right";
+      }
+    } else if (state === "walking-right") {
+      if (stepRight()) {
+        state = "walking-left";
+      }
+    } else if (state === "walking-left") {
+      if (stepLeft()) {
+        state = "idle";
+      }
+    } else if (state === "swipe") {
+      if (swipe()) {
+        state = prevState;
+      }
+    } else if (state === "chase") {
+      if (chase()) {
+        state = "idle-ball";
+      }
+    } else if (state === "idle-ball") {
+      if (idleBall()) {
+        state = prevState;
+      }
+    }
+  }
+
   function handleMouseOver(e) {
     if (state === "swipe" || state === "chase") {
       return;
@@ -313,6 +341,10 @@
     } else if (petType === "dog") {
       setInterval(() => {
         dogSequence();
+      }, 100);
+    } else if (petType === "snake") {
+      setInterval(() => {
+        snakeSequence();
       }, 100);
     }
   }
