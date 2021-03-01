@@ -1,17 +1,35 @@
 import * as path from 'path';
 import * as vscode from 'vscode';
 
-const POSSIBLE_COLORS = ["brown", "black", "green"];
-const POSSIBLE_PETS = ["dog", "cat", "snake"];
-const DEFAULT_COLOR:string  = "brown";
-const DEFAULT_PET_TYPE:string = "cat";
+enum PetColor {
+	brown = "brown", 
+	black = "black", 
+	greeb = "green"
+};
+
+enum PetType {
+	dog = "dog",
+	cat = "cat",
+	snake = "snake"
+};
+
+enum PetSize {
+	nano = "nano",
+	medium = "medium",
+	large = "large"
+};
+
+const DEFAULT_PET_SCALE = PetSize.nano;
+const DEFAULT_COLOR = PetColor.brown;
+const DEFAULT_PET_TYPE:PetType = PetType.cat;
 
 export function activate(context: vscode.ExtensionContext) {
 	context.subscriptions.push(
 		vscode.commands.registerCommand('vscode-pets.start', () => {
-			const color:string = vscode.workspace.getConfiguration("vscode-pets").get("petColor", DEFAULT_COLOR);
-			const petType:string = vscode.workspace.getConfiguration("vscode-pets").get("petType", DEFAULT_PET_TYPE);
-			PetPanel.createOrShow(context.extensionUri, context.extensionPath, color, petType);
+			const color:PetColor = vscode.workspace.getConfiguration("vscode-pets").get("petColor", DEFAULT_COLOR);
+			const petType:PetType = vscode.workspace.getConfiguration("vscode-pets").get("petType", DEFAULT_PET_TYPE);
+			const petSize:PetSize = vscode.workspace.getConfiguration("vscode-pets").get("petSize", DEFAULT_PET_SCALE);
+			PetPanel.createOrShow(context.extensionUri, context.extensionPath, color, petType, petSize);
 		})
 	);
 
@@ -25,10 +43,11 @@ export function activate(context: vscode.ExtensionContext) {
 
 	// Listening to configuration changes
 	context.subscriptions.push(vscode.workspace.onDidChangeConfiguration(e => {
-		if (e.affectsConfiguration('vscode-pets.petColor') || e.affectsConfiguration('vscode-pets.petType')) {
-			const color = vscode.workspace.getConfiguration("vscode-pets").get("petColor", DEFAULT_COLOR);
-			const petType:string = vscode.workspace.getConfiguration("vscode-pets").get("petType", DEFAULT_PET_TYPE);
-			PetPanel.createOrShow(context.extensionUri, context.extensionPath, color, petType);
+		if (e.affectsConfiguration('vscode-pets.petColor') || e.affectsConfiguration('vscode-pets.petType') || e.affectsConfiguration('vscode-pets.petSize')) {
+			const color:PetColor = vscode.workspace.getConfiguration("vscode-pets").get("petColor", DEFAULT_COLOR);
+			const petType:PetType = vscode.workspace.getConfiguration("vscode-pets").get("petType", DEFAULT_PET_TYPE);
+			const petSize:PetSize = vscode.workspace.getConfiguration("vscode-pets").get("petSize", DEFAULT_PET_SCALE);
+			PetPanel.createOrShow(context.extensionUri, context.extensionPath, color, petType, petSize);
 		}
 	}));
 
@@ -38,9 +57,10 @@ export function activate(context: vscode.ExtensionContext) {
 			async deserializeWebviewPanel(webviewPanel: vscode.WebviewPanel, state: any) {
 				// Reset the webview options so we use latest uri for `localResourceRoots`.
 				webviewPanel.webview.options = getWebviewOptions(context.extensionUri);
-				const color = vscode.workspace.getConfiguration("vscode-pets").get("petColor", DEFAULT_COLOR);
-				const petType:string = vscode.workspace.getConfiguration("vscode-pets").get("petType", DEFAULT_PET_TYPE);
-				PetPanel.revive(webviewPanel, context.extensionUri, context.extensionPath, color, petType);
+				const color:PetColor = vscode.workspace.getConfiguration("vscode-pets").get("petColor", DEFAULT_COLOR);
+				const petType:PetType = vscode.workspace.getConfiguration("vscode-pets").get("petType", DEFAULT_PET_TYPE);
+				const petSize:PetSize = vscode.workspace.getConfiguration("vscode-pets").get("petSize", DEFAULT_PET_SCALE);
+				PetPanel.revive(webviewPanel, context.extensionUri, context.extensionPath, color, petType, petSize);
 			}
 		});
 	}
@@ -71,25 +91,15 @@ class PetPanel {
 	private readonly _extensionUri: vscode.Uri;
 	private _disposables: vscode.Disposable[] = [];
 	private _petMediaPath: string;
-	private _petColor: string;
-	private _petType: string;
+	private _petColor: PetColor;
+	private _petType: PetType;
+	private _petSize: PetSize;
 	private _extensionPath: string;
 
-	public static createOrShow(extensionUri: vscode.Uri, extensionPath: string, petColor: string, petType:string) {
+	public static createOrShow(extensionUri: vscode.Uri, extensionPath: string, petColor: PetColor, petType:PetType, petSize:PetSize) {
 		const column = vscode.window.activeTextEditor
 			? vscode.window.activeTextEditor.viewColumn
 			: undefined;
-		petColor = petColor.trim().toLowerCase();
-		petType = petType.trim().toLowerCase();
-		if (!POSSIBLE_COLORS.includes(petColor)){
-			petColor = DEFAULT_COLOR;
-		}
-		if (!POSSIBLE_PETS.includes(petType)){
-			petColor = DEFAULT_PET_TYPE;
-		}
-		if (petType === "snake"){
-			petColor = "green";
-		}
 		// If we already have a panel, show it.
 		if (PetPanel.currentPanel) {
 			if (petColor === PetPanel.currentPanel.petColor() && petType === PetPanel.currentPanel.petType()) {
@@ -110,20 +120,21 @@ class PetPanel {
 			getWebviewOptions(extensionUri),
 		);
 
-		PetPanel.currentPanel = new PetPanel(panel, extensionUri, extensionPath, petColor, petType);
+		PetPanel.currentPanel = new PetPanel(panel, extensionUri, extensionPath, petColor, petType, petSize);
 	}
 
-	public static revive(panel: vscode.WebviewPanel, extensionUri: vscode.Uri, extensionPath: string, petColor: string, petType: string) {
-		PetPanel.currentPanel = new PetPanel(panel, extensionUri, extensionPath, petColor, petType);
+	public static revive(panel: vscode.WebviewPanel, extensionUri: vscode.Uri, extensionPath: string, petColor: PetColor, petType: PetType, petSize: PetSize) {
+		PetPanel.currentPanel = new PetPanel(panel, extensionUri, extensionPath, petColor, petType, petSize);
 	}
 
-	private constructor(panel: vscode.WebviewPanel, extensionUri: vscode.Uri, extensionPath: string, color: string, type: string) {
+	private constructor(panel: vscode.WebviewPanel, extensionUri: vscode.Uri, extensionPath: string, color: PetColor, type: PetType, size: PetSize) {
 		this._panel = panel;
 		this._extensionUri = extensionUri;
 		this._extensionPath = extensionPath;
 		this._petMediaPath = path.join(extensionPath, 'media', type);
 		this._petColor = color;
 		this._petType = type;
+		this._petSize = size;
 		// Set the webview's initial html content
 		this._update();
 
@@ -154,20 +165,28 @@ class PetPanel {
 		);
 	}
 
-	public petColor(): string { 
+	public petColor(): PetColor { 
 		return this._petColor;
 	}
 
-	public petType(): string { 
+	public petType(): PetType { 
 		return this._petType;
 	}
 
-	public updatePetColor(newColor: string){
+	public petSize(): PetSize {
+		return this._petSize;
+	}
+
+	public updatePetColor(newColor: PetColor){
 		this._petColor = newColor;
 	}
 
-	public updatePetType(newType: string){
+	public updatePetType(newType: PetType){
 		this._petMediaPath = path.join(this._extensionPath, 'media', newType);
+	}
+
+	public updatePetSize(newSize: PetSize){
+		this._petSize = newSize;
 	}
 
 	public throwBall() {
@@ -235,7 +254,7 @@ class PetPanel {
 				<title>VS Code Pets</title>
 			</head>
 			<body>
-				<script nonce="${nonce}">var basePetUri = "${basePetUri}"; var petColor = "${this.petColor()}"; var petType = "${this.petType()}";</script>
+				<script nonce="${nonce}">var basePetUri = "${basePetUri}"; var petColor = "${this.petColor()}"; var petType = "${this.petType()}"; var scaleSize = "${this.petSize()}";</script>
 				<canvas id="petCanvas"></canvas><img class="pet" src="" />
 				<script nonce="${nonce}" src="${scriptUri}"></script>
 			</body>

@@ -54,6 +54,16 @@
 						"default": "cat",
 						"description": "Pet type",
 						"scope": "window"
+					},
+					"vscode-pets.petSize": {
+						"type": "string",
+						"enum": [
+							"nano",
+							"medium",
+							"large"
+						],
+						"default": "nano",
+						"description": "Pet size"
 					}
 				}
 			}
