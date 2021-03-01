@@ -12,6 +12,11 @@
     idleBallCounter = 0;
   var petLeft = 0;
   var petBottom = 0;
+  
+  // TODO : Configure scaling
+  var spriteWidth = 128;
+  var spriteHeight = 128;
+
 
   /// Bouncing ball components, credit https://stackoverflow.com/a/29982343
   var canvas,
@@ -159,9 +164,9 @@
   function stepRight() {
     faceRight();
     setAnimation("/" + petAffix + "_walk_8fps.gif");
-    petLeft += 1;
+    petLeft += 3;
     pet.style.left = `${petLeft}px`;
-    if (petLeft >= window.innerWidth - 30) {
+    if (petLeft >= window.innerWidth - spriteWidth) {
       return true;
     }
   }
@@ -169,7 +174,7 @@
   function stepLeft() {
     faceLeft();
     setAnimation("/" + petAffix + "_walk_fast_8fps.gif");
-    petLeft -= 2;
+    petLeft -= 5;
     pet.style.left = `${petLeft}px`;
     if (petLeft <= 0) {
       return true;
@@ -187,7 +192,7 @@
     }
 
     pet.style.left = `${petLeft}px`;
-    if (canvas.height - cy < 30 && cx < petLeft && petLeft < cx + 15) {
+    if (canvas.height - cy < spriteWidth && cx < petLeft && petLeft < cx + 15) {
       // hide ball
       canvas.style.display = "none";
       paused = true;
