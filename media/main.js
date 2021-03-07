@@ -13,10 +13,13 @@
   var petLeft = 0;
   var petBottom = 0;
   
-  // TODO : Configure scaling
-  var spriteWidth = 128;
-  var spriteHeight = 128;
-
+  if (scaleSize === "nano"){
+    var spriteWidth = 30, radius = 2;
+  } else if (scaleSize === "medium"){
+    var spriteWidth = 55, radius = 4;
+  } else if (scaleSize === "large"){
+    var spriteWidth = 110, radius = 8;
+  }
 
   /// Bouncing ball components, credit https://stackoverflow.com/a/29982343
   var canvas,
@@ -25,11 +28,17 @@
     cy = 100,
     vx = 2,
     vy = 5,
-    radius = 2,
     gravity = 0.2,
     damping = 0.9,
     traction = 0.8,
     paused = false;
+
+  function initSpriteScale() {
+    pet.style.width = "auto";
+    pet.style.height = "auto";
+    pet.style.maxWidth = `${spriteWidth}px`;
+    pet.style.maxHeight = `${spriteWidth}px`;
+  }
 
   function initBallPhysics() {
     canvas = document.getElementById("petCanvas");
@@ -49,7 +58,7 @@
 
   function throwBall() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    if (!paused) requestAnimationFrame(throwBall);
+    if (!paused) {requestAnimationFrame(throwBall);}
 
     if (cx + radius >= canvas.width) {
       vx = -vx * damping;
@@ -354,6 +363,7 @@
     }
   }
 
+  initSpriteScale();
   startAnimations();
   initBallPhysics();
 
