@@ -2,6 +2,12 @@
 
 All notable changes to the "vscode-pets" extension will be documented in this file.
 
+## [0.6.0]
+
+- Added an option to make the pets bigger! vscode-pets.petSize can be nano (default), medium or large
+- Fixed a bug if the user put an invalid configuration option it would fail to render pets.
+- Fixed a bug for a missing animation of the black cat swiping the mouse cursor.
+
 ## [0.5.0]
 
 - Added snake
