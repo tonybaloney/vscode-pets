@@ -4,7 +4,7 @@ import * as vscode from 'vscode';
 enum PetColor {
 	brown = "brown", 
 	black = "black", 
-	greeb = "green"
+	green = "green"
 };
 
 enum PetType {
@@ -23,13 +23,31 @@ const DEFAULT_PET_SCALE = PetSize.nano;
 const DEFAULT_COLOR = PetColor.brown;
 const DEFAULT_PET_TYPE:PetType = PetType.cat;
 
+class PetSpecification {
+	color: PetColor;
+	type: PetType;
+	size: PetSize;
+
+	constructor() {
+		this.color = vscode.workspace.getConfiguration("vscode-pets").get<PetColor>("petColor", DEFAULT_COLOR);
+		if (!Object.values(PetColor).includes(this.color))
+			{this.color = DEFAULT_COLOR;}
+
+		this.type = vscode.workspace.getConfiguration("vscode-pets").get<PetType>("petType", DEFAULT_PET_TYPE);
+		if (!Object.values(PetType).includes(this.type))
+			{this.type = DEFAULT_PET_TYPE;}
+			
+		this.size = vscode.workspace.getConfiguration("vscode-pets").get<PetSize>("petSize", DEFAULT_PET_SCALE);
+		if (!Object.values(PetSize).includes(this.size))
+			{this.size = DEFAULT_PET_SCALE;}
+	};
+}
+
 export function activate(context: vscode.ExtensionContext) {
 	context.subscriptions.push(
 		vscode.commands.registerCommand('vscode-pets.start', () => {
-			const color:PetColor = vscode.workspace.getConfiguration("vscode-pets").get("petColor", DEFAULT_COLOR);
-			const petType:PetType = vscode.workspace.getConfiguration("vscode-pets").get("petType", DEFAULT_PET_TYPE);
-			const petSize:PetSize = vscode.workspace.getConfiguration("vscode-pets").get("petSize", DEFAULT_PET_SCALE);
-			PetPanel.createOrShow(context.extensionUri, context.extensionPath, color, petType, petSize);
+			const spec = new PetSpecification();
+			PetPanel.createOrShow(context.extensionUri, context.extensionPath, spec.color, spec.type, spec.size);
 		})
 	);
 
@@ -44,10 +62,8 @@ export function activate(context: vscode.ExtensionContext) {
 	// Listening to configuration changes
 	context.subscriptions.push(vscode.workspace.onDidChangeConfiguration(e => {
 		if (e.affectsConfiguration('vscode-pets.petColor') || e.affectsConfiguration('vscode-pets.petType') || e.affectsConfiguration('vscode-pets.petSize')) {
-			const color:PetColor = vscode.workspace.getConfiguration("vscode-pets").get("petColor", DEFAULT_COLOR);
-			const petType:PetType = vscode.workspace.getConfiguration("vscode-pets").get("petType", DEFAULT_PET_TYPE);
-			const petSize:PetSize = vscode.workspace.getConfiguration("vscode-pets").get("petSize", DEFAULT_PET_SCALE);
-			PetPanel.createOrShow(context.extensionUri, context.extensionPath, color, petType, petSize);
+			const spec = new PetSpecification();
+			PetPanel.createOrShow(context.extensionUri, context.extensionPath, spec.color, spec.type, spec.size);
 		}
 	}));
 
@@ -57,10 +73,8 @@ export function activate(context: vscode.ExtensionContext) {
 			async deserializeWebviewPanel(webviewPanel: vscode.WebviewPanel, state: any) {
 				// Reset the webview options so we use latest uri for `localResourceRoots`.
 				webviewPanel.webview.options = getWebviewOptions(context.extensionUri);
-				const color:PetColor = vscode.workspace.getConfiguration("vscode-pets").get("petColor", DEFAULT_COLOR);
-				const petType:PetType = vscode.workspace.getConfiguration("vscode-pets").get("petType", DEFAULT_PET_TYPE);
-				const petSize:PetSize = vscode.workspace.getConfiguration("vscode-pets").get("petSize", DEFAULT_PET_SCALE);
-				PetPanel.revive(webviewPanel, context.extensionUri, context.extensionPath, color, petType, petSize);
+				const spec = new PetSpecification();
+				PetPanel.revive(webviewPanel, context.extensionUri, context.extensionPath, spec.color, spec.type, spec.size);
 			}
 		});
 	}
@@ -102,12 +116,15 @@ class PetPanel {
 			: undefined;
 		// If we already have a panel, show it.
 		if (PetPanel.currentPanel) {
-			if (petColor === PetPanel.currentPanel.petColor() && petType === PetPanel.currentPanel.petType()) {
+			if (petColor === PetPanel.currentPanel.petColor() 
+				&& petType === PetPanel.currentPanel.petType()
+				&& petSize === PetPanel.currentPanel.petSize()) {
 				PetPanel.currentPanel._panel.reveal(column);
 				return;
 			} else {
 				PetPanel.currentPanel.updatePetColor(petColor);
 				PetPanel.currentPanel.updatePetType(petType);
+				PetPanel.currentPanel.updatePetSize(petSize);
 				PetPanel.currentPanel.update();
 			}
 		}
@@ -165,7 +182,9 @@ class PetPanel {
 		);
 	}
 
-	public petColor(): PetColor { 
+	public petColor(): PetColor {
+		if (this._petType === PetType.snake)
+			{return PetColor.green;}
 		return this._petColor;
 	}
 

@@ -13,7 +13,6 @@
   var petLeft = 0;
   var petBottom = 0;
   
-  // TODO : Configure scaling
   if (scaleSize === "nano"){
     var spriteWidth = 30, radius = 2;
   } else if (scaleSize === "medium"){
