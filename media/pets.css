@@ -100,7 +100,6 @@ textarea::placeholder {
 img.pet {
 	-webkit-transform: scaleX(-1);
 	transform: scaleX(-1);
-	size: 30px;
 	position: absolute;
 	left: 0px;
 	right: 0px;
