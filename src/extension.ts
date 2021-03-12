@@ -4,13 +4,15 @@ import * as vscode from 'vscode';
 enum PetColor {
 	brown = "brown", 
 	black = "black", 
-	green = "green"
+	green = "green",
+	metallic = "metallic"
 };
 
 enum PetType {
 	dog = "dog",
 	cat = "cat",
-	snake = "snake"
+	snake = "snake",
+	clippy = "clippy",
 };
 
 enum PetSize {
@@ -185,6 +187,8 @@ class PetPanel {
 	public petColor(): PetColor {
 		if (this._petType === PetType.snake)
 			{return PetColor.green;}
+		if (this._petType === PetType.clippy)
+			{return PetColor.metallic;}
 		return this._petColor;
 	}
 

@@ -2,16 +2,24 @@
 	"name": "vscode-pets",
 	"displayName": "vscode-pets",
 	"description": "Pets for your VS Code",
-	"version": "0.6.0",
+	"version": "0.7.0",
 	"engines": {
 		"vscode": "^1.53.0"
 	},
-	"repository": {"type": "github", "url": "https://github.com/tonybaloney/vscode-pets"},
+	"repository": {
+		"type": "github",
+		"url": "https://github.com/tonybaloney/vscode-pets"
+	},
 	"publisher": "tonybaloney",
 	"categories": [
 		"Other"
 	],
-	"keywords": ["pet", "cat", "pets"],
+	"keywords": [
+		"pet",
+		"cat",
+		"pets",
+		"clippy"
+	],
 	"license": "MIT",
 	"icon": "icon.png",
 	"activationEvents": [
@@ -31,7 +39,7 @@
 				"category": "Pet Coding"
 			}
 		],
-		"configuration":[
+		"configuration": [
 			{
 				"properties": {
 					"vscode-pets.petColor": {
@@ -49,7 +57,8 @@
 						"enum": [
 							"cat",
 							"dog",
-							"snake"
+							"snake",
+							"clippy"
 						],
 						"default": "cat",
 						"description": "Pet type",
