@@ -334,6 +334,26 @@
     }
   }
 
+  function clippySequence() {
+    if (state === "idle") {
+      if (sitIdle()) {
+        state = "walking-right";
+      }
+    } else if (state === "walking-right") {
+      if (stepRight()) {
+        state = "walking-left";
+      }
+    } else if (state === "walking-left") {
+      if (stepLeft()) {
+        state = "idle";
+      }
+    } else if (state === "swipe") {
+      if (swipe()) {
+        state = prevState;
+      }
+    }
+  }
+
   function handleMouseOver(e) {
     if (state === "swipe" || state === "chase") {
       return;
@@ -359,6 +379,10 @@
     } else if (petType === "snake") {
       setInterval(() => {
         snakeSequence();
+      }, 100);
+    } else if (petType === "clippy") {
+      setInterval(() => {
+        clippySequence();
       }, 100);
     }
   }
