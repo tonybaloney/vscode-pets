@@ -351,6 +351,14 @@
       if (swipe()) {
         state = prevState;
       }
+    } else if (state === "chase") {
+      if (chase()) {
+        state = "idle-ball";
+      }
+    } else if (state === "idle-ball") {
+      if (idleBall()) {
+        state = prevState;
+      }
     }
   }
 
