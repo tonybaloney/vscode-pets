@@ -2,6 +2,14 @@
 
 All notable changes to the "vscode-pets" extension will be documented in this file.
 
+## [0.8.0]
+
+- Clippy will now chase a ball if you throw it
+
+## [0.7.0]
+
+- Added a new pet(?) "clippy", the Microsoft paperclip
+
 ## [0.6.0]
 
 - Added an option to make the pets bigger! vscode-pets.petSize can be nano (default), medium or large
