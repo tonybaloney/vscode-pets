@@ -280,11 +280,21 @@ class PetPanel {
 		// Get pet type selector
 		const getPetTypeSelector = () => {
 			let options = Object.keys(PetType).map((type) => {
-				// console.log(`${type}, ${this.petType()}, ${type === this.petType()}`)
 				return `<option ${type === this.petType() ? "selected" : ""} value="${type}">${type}</option>`
 			}
 			);
 			return `<select id="pet-type-select">
+						${options.join("\n")}
+					</select>`;
+		};
+
+		// Get pet size selector
+		const getPetSizeSelector = () => {
+			let options = Object.keys(PetSize).map((size) => {
+				return `<option ${size === this.petSize() ? "selected" : ""} value="${size}">${size}</option>`
+			}
+			);
+			return `<select id="pet-size-select">
 						${options.join("\n")}
 					</select>`;
 		};
@@ -295,15 +305,24 @@ class PetPanel {
 					if (e.selected in PetColor) {
 						let color = e.selected as PetColor;
 						this.updatePetColor(color);
-						webview.html = this._getHtmlForWebview(webview)
-					}
+						webview.html = this._getHtmlForWebview(webview);
+					};
+					break;
 				}
 				case "selected pet": {
 					if (e.selected in PetType) {
 						let petType = e.selected as PetType;
-						this.updatePetType(petType)
-						webview.html = this._getHtmlForWebview(webview)
-					}
+						this.updatePetType(petType);
+						webview.html = this._getHtmlForWebview(webview);
+					};
+					break;
+				}
+				case "selected size": {
+					if (e.selected in PetSize) {
+						let size = e.selected as PetSize;
+						this.updatePetSize(size);
+						webview.html = this._getHtmlForWebview(webview);
+					};
 				}
 			}
 		});
@@ -329,6 +348,7 @@ class PetPanel {
 				<canvas id="petCanvas"></canvas><img class="pet" src="" />
 				${getColorSelector()}
 				${getPetTypeSelector()}
+				${getPetSizeSelector()}
 				<script nonce="${nonce}" src="${scriptUri}"></script>
 			</body>
 			</html>`;

@@ -38,6 +38,14 @@
       vscode.postMessage({type: "selected pet", selected})
     })
   }
+
+  var sizeSelector = document.querySelector("#pet-size-select");
+  if (sizeSelector) {
+    sizeSelector.addEventListener("change", () => {
+      var selected = sizeSelector.options[sizeSelector.selectedIndex].value;
+      vscode.postMessage({type: "selected size", selected})
+    })
+  }
   
 
   /// Bouncing ball components, credit https://stackoverflow.com/a/29982343
