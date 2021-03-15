@@ -2,6 +2,7 @@
 
 // It cannot access the main VS Code APIs directly.
 (function () {
+  var vscode = acquireVsCodeApi();
   var state = "idle"; // idle, walking-right, walking-left, climbing right
   var prevState = "";
   var pet = document.getElementsByClassName("pet")[0];
@@ -13,13 +14,23 @@
   var petLeft = 0;
   var petBottom = 0;
   
-  if (scaleSize === "nano"){
+  if (scaleSize === "nano") {
     var spriteWidth = 30, radius = 2;
-  } else if (scaleSize === "medium"){
+  } else if (scaleSize === "medium") {
     var spriteWidth = 55, radius = 4;
-  } else if (scaleSize === "large"){
+  } else if (scaleSize === "large") {
     var spriteWidth = 110, radius = 8;
   }
+  
+  /// Add event listeners
+  var colorSelector = document.querySelector("#color-select");
+  if (colorSelector) {
+    colorSelector.addEventListener("change", () => {
+      var selected = colorSelector.options[colorSelector.selectedIndex].value;
+      vscode.postMessage({type: "selected color", selected})
+    })
+  }
+  
 
   /// Bouncing ball components, credit https://stackoverflow.com/a/29982343
   var canvas,
