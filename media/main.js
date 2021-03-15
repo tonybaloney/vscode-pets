@@ -23,28 +23,14 @@
   }
   
   /// Add event listeners
-  var colorSelector = document.querySelector("#color-select");
-  if (colorSelector) {
-    colorSelector.addEventListener("change", () => {
-      var selected = colorSelector.options[colorSelector.selectedIndex].value;
-      vscode.postMessage({type: "selected color", selected})
-    })
-  }
-
-  var typeSelector = document.querySelector("#pet-type-select");
-  if (typeSelector) {
-    typeSelector.addEventListener("change", () => {
-      var selected = typeSelector.options[typeSelector.selectedIndex].value;
-      vscode.postMessage({type: "selected pet", selected})
-    })
-  }
-
-  var sizeSelector = document.querySelector("#pet-size-select");
-  if (sizeSelector) {
-    sizeSelector.addEventListener("change", () => {
-      var selected = sizeSelector.options[sizeSelector.selectedIndex].value;
-      vscode.postMessage({type: "selected size", selected})
-    })
+  for (let selectorName of ["color", "type", "size"]) {
+    let selector = document.querySelector(`#pet-${selectorName}-selector`)
+    if (selector) {
+      selector.addEventListener("change", () => {
+        let selected = selector.options[selector.selectedIndex].value;
+        vscode.postMessage({type: `selected-${selectorName}`, selected})
+      })
+    }
   }
   
 

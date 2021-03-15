@@ -270,7 +270,7 @@ class PetPanel {
 				let options = ["black", "brown"].map((color) =>
 					`<option ${color === this.petColor() ? "selected" : ""} value="${color}">${color}</option>`
 				);
-				return `<select id="color-select">
+				return `<select id="pet-color-selector">
 							${options.join("\n")}
 						</select>`;
 			}
@@ -281,9 +281,8 @@ class PetPanel {
 		const getPetTypeSelector = () => {
 			let options = Object.keys(PetType).map((type) => {
 				return `<option ${type === this.petType() ? "selected" : ""} value="${type}">${type}</option>`
-			}
-			);
-			return `<select id="pet-type-select">
+			});
+			return `<select id="pet-type-selector">
 						${options.join("\n")}
 					</select>`;
 		};
@@ -292,16 +291,15 @@ class PetPanel {
 		const getPetSizeSelector = () => {
 			let options = Object.keys(PetSize).map((size) => {
 				return `<option ${size === this.petSize() ? "selected" : ""} value="${size}">${size}</option>`
-			}
-			);
-			return `<select id="pet-size-select">
+			});
+			return `<select id="pet-size-selector">
 						${options.join("\n")}
 					</select>`;
 		};
 
 		webview.onDidReceiveMessage((e) => {
 			switch (e.type) {
-				case "selected color": {
+				case "selected-color": {
 					if (e.selected in PetColor) {
 						let color = e.selected as PetColor;
 						this.updatePetColor(color);
@@ -309,7 +307,7 @@ class PetPanel {
 					};
 					break;
 				}
-				case "selected pet": {
+				case "selected-type": {
 					if (e.selected in PetType) {
 						let petType = e.selected as PetType;
 						this.updatePetType(petType);
@@ -317,7 +315,7 @@ class PetPanel {
 					};
 					break;
 				}
-				case "selected size": {
+				case "selected-size": {
 					if (e.selected in PetSize) {
 						let size = e.selected as PetSize;
 						this.updatePetSize(size);
