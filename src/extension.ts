@@ -206,6 +206,7 @@ class PetPanel {
 
 	public updatePetType(newType: PetType){
 		this._petMediaPath = path.join(this._extensionPath, 'media', newType);
+		this._petType = newType;
 	}
 
 	public updatePetSize(newSize: PetSize){
@@ -264,20 +265,45 @@ class PetPanel {
 
 		// Get the color selector
 		const getColorSelector = () => {
+			// Don't add selector if the type is clippy or snake
 			if (![PetType.clippy, PetType.snake].includes(this.petType())) {
+				let options = ["black", "brown"].map((color) =>
+					`<option ${color === this.petColor() ? "selected" : ""} value="${color}">${color}</option>`
+				);
 				return `<select id="color-select">
-							${["black", "brown"].map((color) =>
-								`<option ${color === this.petColor() ? "selected" : ""} value="${color}">${color}</option>`).join("\n")}
+							${options.join("\n")}
 						</select>`;
 			}
 			return "";
+		};
+		
+		// Get pet type selector
+		const getPetTypeSelector = () => {
+			let options = Object.keys(PetType).map((type) => {
+				// console.log(`${type}, ${this.petType()}, ${type === this.petType()}`)
+				return `<option ${type === this.petType() ? "selected" : ""} value="${type}">${type}</option>`
+			}
+			);
+			return `<select id="pet-type-select">
+						${options.join("\n")}
+					</select>`;
 		};
 
 		webview.onDidReceiveMessage((e) => {
 			switch (e.type) {
 				case "selected color": {
-					let color = e.selected as PetColor;
-					this.updatePetColor(color);
+					if (e.selected in PetColor) {
+						let color = e.selected as PetColor;
+						this.updatePetColor(color);
+						webview.html = this._getHtmlForWebview(webview)
+					}
+				}
+				case "selected pet": {
+					if (e.selected in PetType) {
+						let petType = e.selected as PetType;
+						this.updatePetType(petType)
+						webview.html = this._getHtmlForWebview(webview)
+					}
 				}
 			}
 		});
@@ -302,6 +328,7 @@ class PetPanel {
 				<script nonce="${nonce}">var basePetUri = "${basePetUri}"; var petColor = "${this.petColor()}"; var petType = "${this.petType()}"; var scaleSize = "${this.petSize()}";</script>
 				<canvas id="petCanvas"></canvas><img class="pet" src="" />
 				${getColorSelector()}
+				${getPetTypeSelector()}
 				<script nonce="${nonce}" src="${scriptUri}"></script>
 			</body>
 			</html>`;

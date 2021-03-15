@@ -30,6 +30,14 @@
       vscode.postMessage({type: "selected color", selected})
     })
   }
+
+  var typeSelector = document.querySelector("#pet-type-select");
+  if (typeSelector) {
+    typeSelector.addEventListener("change", () => {
+      var selected = typeSelector.options[typeSelector.selectedIndex].value;
+      vscode.postMessage({type: "selected pet", selected})
+    })
+  }
   
 
   /// Bouncing ball components, credit https://stackoverflow.com/a/29982343
