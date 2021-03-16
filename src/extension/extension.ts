@@ -1,11 +1,10 @@
 import * as path from 'path';
 import * as vscode from 'vscode';
-import { PetSize, PetColor, PetType } from '../common/vscode-pets';
-
+import { PetSize, PetColor, PetType } from '../common/types';
 
 const DEFAULT_PET_SCALE = PetSize.nano;
 const DEFAULT_COLOR = PetColor.brown;
-const DEFAULT_PET_TYPE:PetType = PetType.cat;
+const DEFAULT_PET_TYPE = PetType.cat;
 
 class PetSpecification {
 	color: PetColor;
@@ -14,16 +13,9 @@ class PetSpecification {
 
 	constructor() {
 		this.color = vscode.workspace.getConfiguration("vscode-pets").get<PetColor>("petColor", DEFAULT_COLOR);
-		if (!Object.values(PetColor).includes(this.color))
-			{this.color = DEFAULT_COLOR;}
-
 		this.type = vscode.workspace.getConfiguration("vscode-pets").get<PetType>("petType", DEFAULT_PET_TYPE);
-		if (!Object.values(PetType).includes(this.type))
-			{this.type = DEFAULT_PET_TYPE;}
-			
 		this.size = vscode.workspace.getConfiguration("vscode-pets").get<PetSize>("petSize", DEFAULT_PET_SCALE);
-		if (!Object.values(PetSize).includes(this.size))
-			{this.size = DEFAULT_PET_SCALE;}
+		// TODO : Verify configuration is valid
 	};
 }
 
@@ -225,7 +217,7 @@ class PetPanel {
 
 	private _getHtmlForWebview(webview: vscode.Webview) {
 		// Local path to main script run in the webview
-		const scriptPathOnDisk = vscode.Uri.joinPath(this._extensionUri, 'media', 'main.js');
+		const scriptPathOnDisk = vscode.Uri.joinPath(this._extensionUri, 'media', 'main-bundle.js');
 
 		// And the uri we use to load this script in the webview
 		const scriptUri = webview.asWebviewUri(scriptPathOnDisk);
@@ -259,9 +251,10 @@ class PetPanel {
 				<title>VS Code Pets</title>
 			</head>
 			<body>
-				<script nonce="${nonce}">var basePetUri = "${basePetUri}"; var petColor = "${this.petColor()}"; var petType = "${this.petType()}"; var scaleSize = "${this.petSize()}";</script>
 				<canvas id="petCanvas"></canvas><img class="pet" src="" />
 				<script nonce="${nonce}" src="${scriptUri}"></script>
+				<script nonce="${nonce}">petApp.petPanelApp("${basePetUri}", "${this.petColor()}", "${this.petType()}","${this.petSize()}");</script>
+				
 			</body>
 			</html>`;
 	}
