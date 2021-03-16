@@ -1,8 +1,8 @@
 // This script will be run within the webview itself
-import { PetSize, PetColor, PetType } from '../common/vscode-pets';
+import { PetSize, PetColor, PetType } from '../common/types';
  
 // It cannot access the main VS Code APIs directly.
-function petPanelApp(basePetUri: string, petColor: PetColor, scaleSize: PetSize, petType: PetType) {
+export function petPanelApp(basePetUri: string, petColor: PetColor, scaleSize: PetSize, petType: PetType) {
   var state: string = "idle"; // idle, walking-right, walking-left, climbing right
   var prevState: string = "";
   var pet: HTMLImageElement = (document.getElementsByClassName("pet") as HTMLCollectionOf<HTMLImageElement>)[0];
@@ -395,7 +395,7 @@ function petPanelApp(basePetUri: string, petColor: PetColor, scaleSize: PetSize,
       }, 100);
     }
   }
-
+  console.log('Starting pet session');
   initSpriteScale();
   startAnimations();
   initBallPhysics();

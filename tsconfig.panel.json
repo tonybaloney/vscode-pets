@@ -2,7 +2,7 @@
 	"compilerOptions": {
 		"module": "commonjs",
 		"target": "es6",
-		"outDir": "media",
+		"outDir": "./build",
 		"lib": [
 			"es6", "DOM"
 		],

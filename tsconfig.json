@@ -1,9 +1,10 @@
 {
     "compilerOptions": {
       "noImplicitAny": true,
-      "strictNullChecks": true
+      "strictNullChecks": true,
+      "outDir": "./.build-out"
     },
     "include": [
       "src"
-    ]
+    ],
   }
