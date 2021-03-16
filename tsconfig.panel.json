@@ -2,7 +2,7 @@
 	"compilerOptions": {
 		"module": "commonjs",
 		"target": "es6",
-		"outDir": "../media",
+		"outDir": "media",
 		"lib": [
 			"es6", "DOM"
 		],
@@ -16,6 +16,7 @@
 	},
 	"exclude": [
 		"node_modules",
-		".vscode-test"
+		".vscode-test",
+		"src/extension"
 	]
 }
