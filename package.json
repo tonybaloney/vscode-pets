@@ -80,8 +80,10 @@
 	},
 	"scripts": {
 		"vscode:prepublish": "npm run compile",
-		"compile": "tsc -p ./",
-		"watch": "tsc -watch -p ./",
+		"compile:panel": "tsc -p ./tsconfig.panel.json",
+		"compile:extension": "tsc -p ./tsconfig.extension.json",
+		"compile": "npm run compile:panel && npm run compile:extension",
+		"watch": "tsc -watch ",
 		"pretest": "npm run compile && npm run lint",
 		"lint": "eslint src --ext ts",
 		"test": "node ./out/test/runTest.js"
