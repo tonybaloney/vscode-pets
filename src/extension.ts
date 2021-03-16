@@ -31,15 +31,15 @@ class PetSpecification {
 	size: PetSize;
 
 	constructor() {
-		this.color = vscode.workspace.getConfiguration("vscode-pets").get<PetColor>("petColor", DEFAULT_COLOR);
+		this.color = getConfiguration().get<PetColor>("petColor", DEFAULT_COLOR);
 		if (!Object.values(PetColor).includes(this.color))
 			{this.color = DEFAULT_COLOR;}
 
-		this.type = vscode.workspace.getConfiguration("vscode-pets").get<PetType>("petType", DEFAULT_PET_TYPE);
+		this.type = getConfiguration().get<PetType>("petType", DEFAULT_PET_TYPE);
 		if (!Object.values(PetType).includes(this.type))
 			{this.type = DEFAULT_PET_TYPE;}
 			
-		this.size = vscode.workspace.getConfiguration("vscode-pets").get<PetSize>("petSize", DEFAULT_PET_SCALE);
+		this.size = getConfiguration().get<PetSize>("petSize", DEFAULT_PET_SCALE);
 		if (!Object.values(PetSize).includes(this.size))
 			{this.size = DEFAULT_PET_SCALE;}
 	};
@@ -82,6 +82,10 @@ export function activate(context: vscode.ExtensionContext) {
 	}
 }
 
+function getConfiguration(config?: vscode.ConfigurationScope) {
+	return vscode.workspace.getConfiguration("vscode-pets", config);
+}
+
 function getWebviewOptions(extensionUri: vscode.Uri): vscode.WebviewOptions {
 	return {
 		// Enable javascript in the webview
@@ -117,6 +121,7 @@ class PetPanel {
 			? vscode.window.activeTextEditor.viewColumn
 			: undefined;
 		// If we already have a panel, show it.
+		console.log(PetPanel.currentPanel);
 		if (PetPanel.currentPanel) {
 			if (petColor === PetPanel.currentPanel.petColor() 
 				&& petType === PetPanel.currentPanel.petType()
@@ -128,6 +133,7 @@ class PetPanel {
 				PetPanel.currentPanel.updatePetType(petType);
 				PetPanel.currentPanel.updatePetSize(petSize);
 				PetPanel.currentPanel.update();
+				return;
 			}
 		}
 
@@ -174,9 +180,33 @@ class PetPanel {
 		this._panel.webview.onDidReceiveMessage(
 			message => {
 				switch (message.command) {
-					case 'alert':
+					case 'alert': {
 						vscode.window.showErrorMessage(message.text);
-						return;
+						break;
+					}
+					case "selected-color": {
+						if (message.selected in PetColor) {
+							let color = message.selected as PetColor;
+							this.updatePetColor(color, true);
+							this.update();
+						};
+						break;
+					}
+					case "selected-type": {
+						if (message.selected in PetType) {
+							let petType = message.selected as PetType;
+							this.updatePetType(petType, true);
+							this.update();
+						};
+						break;
+					}
+					case "selected-size": {
+						if (message.selected in PetSize) {
+							let size = message.selected as PetSize;
+							this.updatePetSize(size, true);
+							this.update();
+						};
+					}
 				}
 			},
 			null,
@@ -200,17 +230,26 @@ class PetPanel {
 		return this._petSize;
 	}
 
-	public updatePetColor(newColor: PetColor){
+	public updatePetColor(newColor: PetColor, save?: boolean){
 		this._petColor = newColor;
+		if (save) {
+			getConfiguration().update("petColor", newColor, vscode.ConfigurationTarget.Global);
+		}
 	}
 
-	public updatePetType(newType: PetType){
+	public updatePetType(newType: PetType, save?: boolean){
 		this._petMediaPath = path.join(this._extensionPath, 'media', newType);
 		this._petType = newType;
+		if (save) {
+			getConfiguration().update("petType", newType, vscode.ConfigurationTarget.Global);
+		}
 	}
 
-	public updatePetSize(newSize: PetSize){
+	public updatePetSize(newSize: PetSize, save?: boolean){
 		this._petSize = newSize;
+		if (save) {
+			getConfiguration().update("petSize", newSize, vscode.ConfigurationTarget.Global);
+		}
 	}
 
 	public throwBall() {
@@ -279,8 +318,8 @@ class PetPanel {
 		
 		// Get pet type selector
 		const getPetTypeSelector = () => {
-			let options = Object.keys(PetType).map((type) => {
-				return `<option ${type === this.petType() ? "selected" : ""} value="${type}">${type}</option>`
+			let options = Object.values(PetType).map((type) => {
+				return `<option ${type === this.petType() ? "selected" : ""} value="${type}">${type}</option>`;
 			});
 			return `<select id="pet-type-selector">
 						${options.join("\n")}
@@ -289,41 +328,14 @@ class PetPanel {
 
 		// Get pet size selector
 		const getPetSizeSelector = () => {
-			let options = Object.keys(PetSize).map((size) => {
-				return `<option ${size === this.petSize() ? "selected" : ""} value="${size}">${size}</option>`
+			let options = Object.values(PetSize).map((size) => {
+				return `<option ${size === this.petSize() ? "selected" : ""} value="${size}">${size}</option>`;
 			});
 			return `<select id="pet-size-selector">
 						${options.join("\n")}
 					</select>`;
 		};
 
-		webview.onDidReceiveMessage((e) => {
-			switch (e.type) {
-				case "selected-color": {
-					if (e.selected in PetColor) {
-						let color = e.selected as PetColor;
-						this.updatePetColor(color);
-						webview.html = this._getHtmlForWebview(webview);
-					};
-					break;
-				}
-				case "selected-type": {
-					if (e.selected in PetType) {
-						let petType = e.selected as PetType;
-						this.updatePetType(petType);
-						webview.html = this._getHtmlForWebview(webview);
-					};
-					break;
-				}
-				case "selected-size": {
-					if (e.selected in PetSize) {
-						let size = e.selected as PetSize;
-						this.updatePetSize(size);
-						webview.html = this._getHtmlForWebview(webview);
-					};
-				}
-			}
-		});
 
 		return `<!DOCTYPE html>
 			<html lang="en">

@@ -28,7 +28,7 @@
     if (selector) {
       selector.addEventListener("change", () => {
         let selected = selector.options[selector.selectedIndex].value;
-        vscode.postMessage({type: `selected-${selectorName}`, selected})
+        vscode.postMessage({command: `selected-${selectorName}`, selected})
       })
     }
   }
