@@ -5,7 +5,7 @@ import { PetSize, PetColor, PetType } from '../common/types';
 export function petPanelApp(basePetUri: string, petColor: PetColor, scaleSize: PetSize, petType: PetType) {
   var state: string = "idle"; // idle, walking-right, walking-left, climbing right
   var prevState: string = "";
-  var pet: HTMLImageElement = (document.getElementsByClassName("pet") as HTMLCollectionOf<HTMLImageElement>)[0];
+  var petSpriteElement: HTMLImageElement = (document.getElementById("petSprite") as HTMLImageElement);
   var petRoot = basePetUri;
   var petAffix = petColor;
   var idleCounter: number = 0,
@@ -35,10 +35,10 @@ export function petPanelApp(basePetUri: string, petColor: PetColor, scaleSize: P
     paused: boolean = false;
 
   function initSpriteScale() {
-    pet.style.width = "auto";
-    pet.style.height = "auto";
-    pet.style.maxWidth = `${spriteWidth}px`;
-    pet.style.maxHeight = `${spriteWidth}px`;
+    petSpriteElement.style.width = "auto";
+    petSpriteElement.style.height = "auto";
+    petSpriteElement.style.maxWidth = `${spriteWidth}px`;
+    petSpriteElement.style.maxHeight = `${spriteWidth}px`;
   }
 
   function initBallPhysics() {
@@ -90,22 +90,22 @@ export function petPanelApp(basePetUri: string, petColor: PetColor, scaleSize: P
   }
 
   function faceLeft() {
-    pet.style.webkitTransform = "scaleX(-1)";
+    petSpriteElement.style.webkitTransform = "scaleX(-1)";
   }
 
   function faceRight() {
-    pet.style.webkitTransform = "scaleX(1)";
+    petSpriteElement.style.webkitTransform = "scaleX(1)";
   }
 
   function faceUp() {
-    pet.style.webkitTransform = "rotate(0)";
+    petSpriteElement.style.webkitTransform = "rotate(0)";
   }
 
   function setAnimation(face: string) {
-    if (pet.src === petRoot + face) {
+    if (petSpriteElement.src === petRoot + face) {
       return;
     }
-    pet.src = petRoot + face;
+    petSpriteElement.src = petRoot + face;
   }
 
   function sitIdle() {
@@ -175,7 +175,7 @@ export function petPanelApp(basePetUri: string, petColor: PetColor, scaleSize: P
     faceRight();
     setAnimation("/" + petAffix + "_walk_8fps.gif");
     petLeft += 3;
-    pet.style.left = `${petLeft}px`;
+    petSpriteElement.style.left = `${petLeft}px`;
     if (petLeft >= window.innerWidth - spriteWidth) {
       return true;
     }
@@ -185,7 +185,7 @@ export function petPanelApp(basePetUri: string, petColor: PetColor, scaleSize: P
     faceLeft();
     setAnimation("/" + petAffix + "_walk_fast_8fps.gif");
     petLeft -= 5;
-    pet.style.left = `${petLeft}px`;
+    petSpriteElement.style.left = `${petLeft}px`;
     if (petLeft <= 0) {
       return true;
     }
@@ -201,7 +201,7 @@ export function petPanelApp(basePetUri: string, petColor: PetColor, scaleSize: P
       petLeft += 3;
     }
 
-    pet.style.left = `${petLeft}px`;
+    petSpriteElement.style.left = `${petLeft}px`;
     if (canvas.height - cy < spriteWidth && cx < petLeft && petLeft < cx + 15) {
       // hide ball
       canvas.style.display = "none";
@@ -214,7 +214,7 @@ export function petPanelApp(basePetUri: string, petColor: PetColor, scaleSize: P
     faceLeft();
     setAnimation("/" + petAffix + "_wallclimb_8fps.gif");
     petBottom += 1;
-    pet.style.bottom = `${petBottom}px`;
+    petSpriteElement.style.bottom = `${petBottom}px`;
     if (petBottom >= 100) {
       return true;
     }
@@ -224,7 +224,7 @@ export function petPanelApp(basePetUri: string, petColor: PetColor, scaleSize: P
     faceRight();
     setAnimation("/" + petAffix + "_fall_from_grab_8fps.gif");
     petBottom -= 5;
-    pet.style.bottom = `${petBottom}px`;
+    petSpriteElement.style.bottom = `${petBottom}px`;
     if (petBottom <= 0) {
       petBottom = 0;
       return true;
@@ -376,7 +376,7 @@ export function petPanelApp(basePetUri: string, petColor: PetColor, scaleSize: P
   }
 
   function startAnimations() {
-    pet.addEventListener("mouseover", handleMouseOver);
+    petSpriteElement.addEventListener("mouseover", handleMouseOver);
     if (petType === PetType.cat) {
       setInterval(() => {
         catSequence();
@@ -395,7 +395,7 @@ export function petPanelApp(basePetUri: string, petColor: PetColor, scaleSize: P
       }, 100);
     }
   }
-  console.log('Starting pet session');
+  console.log('Starting pet session', petColor, basePetUri, petType);
   initSpriteScale();
   startAnimations();
   initBallPhysics();

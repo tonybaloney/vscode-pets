@@ -251,9 +251,9 @@ class PetPanel {
 				<title>VS Code Pets</title>
 			</head>
 			<body>
-				<canvas id="petCanvas"></canvas><img class="pet" src="" />
+				<canvas id="petCanvas"></canvas><img id="petSprite" class="pet" src="" />
 				<script nonce="${nonce}" src="${scriptUri}"></script>
-				<script nonce="${nonce}">petApp.petPanelApp("${basePetUri}", "${this.petColor()}", "${this.petType()}","${this.petSize()}");</script>
+				<script nonce="${nonce}">petApp.petPanelApp("${basePetUri}", "${this.petColor()}", "${this.petSize()}", "${this.petType()}");</script>
 				
 			</body>
 			</html>`;
