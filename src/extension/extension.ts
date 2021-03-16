@@ -1,25 +1,7 @@
 import * as path from 'path';
 import * as vscode from 'vscode';
+import { PetSize, PetColor, PetType } from '../common/vscode-pets';
 
-enum PetColor {
-	brown = "brown", 
-	black = "black", 
-	green = "green",
-	metallic = "metallic"
-};
-
-enum PetType {
-	dog = "dog",
-	cat = "cat",
-	snake = "snake",
-	clippy = "clippy",
-};
-
-enum PetSize {
-	nano = "nano",
-	medium = "medium",
-	large = "large"
-};
 
 const DEFAULT_PET_SCALE = PetSize.nano;
 const DEFAULT_COLOR = PetColor.brown;
