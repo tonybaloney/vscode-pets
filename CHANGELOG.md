@@ -2,6 +2,10 @@
 
 All notable changes to the "vscode-pets" extension will be documented in this file.
 
+## [0.9.0]
+
+- Rewrote the animation sequence for the pets from a simple loop into a Bayesian network (they act a bit more randomly).
+
 ## [0.8.0]
 
 - Clippy will now chase a ball if you throw it
