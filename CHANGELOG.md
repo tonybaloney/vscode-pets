@@ -2,6 +2,11 @@
 
 All notable changes to the "vscode-pets" extension will be documented in this file.
 
+## [0.10.0]
+
+- Clippy can now be selected with different colored baseball caps.
+- Clippy will now also skateboard 🛹
+
 ## [0.9.0]
 
 - Rewrote the animation sequence for the pets from a simple loop into a Bayesian network (they act a bit more randomly).
