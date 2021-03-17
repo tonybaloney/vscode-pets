@@ -1,5 +1,4 @@
-import { PetColor } from "../common/types";
-import { ISequenceNode, ISequenceTree } from "./sequences";
+import { ISequenceTree } from "./sequences";
 import { IState, States, resolveState, HorizontalDirection, ChaseState, BallState } from "./states";
 
 export class InvalidStateException {
@@ -78,6 +77,8 @@ abstract class BasePetType implements IPetType {
             if (this.holdState && this.holdStateEnum){
                 this.currentState = this.holdState;
                 this.currentStateEnum = this.holdStateEnum;
+                this.holdState = undefined;
+                this.holdStateEnum = undefined;
                 console.log("Recovering to state" , this.currentStateEnum);
                 return;
             }
