@@ -2,8 +2,7 @@
 export const enum PetColor {
 	brown = "brown", 
 	black = "black", 
-	green = "green",
-	metallic = "metallic"
+	green = "green"
 }
 
 export const enum PetType {
