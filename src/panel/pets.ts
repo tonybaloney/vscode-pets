@@ -1,5 +1,6 @@
+import { PetColor } from "../common/types";
 import { ISequenceNode, ISequenceTree } from "./sequences";
-import { IState, States, resolveState, HorizontalDirection } from "./states";
+import { IState, States, resolveState, HorizontalDirection, ChaseState, BallState } from "./states";
 
 export class InvalidStateException {
 
@@ -8,7 +9,7 @@ export class InvalidStateException {
 export interface IPetType {
     canSwipe(): boolean
     swipe(): void
-    chase(): void
+    chase(ballState: BallState, canvas: HTMLCanvasElement): void
     nextFrame(): void
 }
 
@@ -17,6 +18,8 @@ abstract class BasePetType implements IPetType {
     sequence: ISequenceTree = { startingState: States.sitIdle, sequenceStates: []};
     currentState: IState;
     currentStateEnum: States;
+    holdState: IState | undefined;
+    holdStateEnum: States | undefined;
     el: HTMLImageElement;
     petRoot: string;
 
@@ -28,15 +31,21 @@ abstract class BasePetType implements IPetType {
     }
 
     canSwipe(){
+        // Some pets override this with custom rules
         return true;
     }
 
     swipe() {
-        // TODO Implement
+        if (this.currentStateEnum === States.swipe) { return; }
+        this.holdState = this.currentState;
+        this.holdStateEnum = this.currentStateEnum;
+        this.currentStateEnum = States.swipe;
+        this.currentState = resolveState(this.currentStateEnum, this.el);
     }
     
-    chase() {
-         // TODO
+    chase(ballState: BallState, canvas: HTMLCanvasElement) {
+        this.currentStateEnum = States.chase;
+        this.currentState = new ChaseState(this.el, ballState, canvas);
     }
 
     faceLeft() {
@@ -65,6 +74,14 @@ abstract class BasePetType implements IPetType {
         this.setAnimation(this.currentState.spriteLabel);
         if (this.currentState.nextFrame())
         {
+            // If recovering from swipe..
+            if (this.holdState && this.holdStateEnum){
+                this.currentState = this.holdState;
+                this.currentStateEnum = this.holdStateEnum;
+                console.log("Recovering to state" , this.currentStateEnum);
+                return;
+            }
+
             // Work out next state
             var possibleNextStates: States[] | undefined = undefined;
             for (var i = 0 ; i < this.sequence.sequenceStates.length; i++) {
@@ -126,8 +143,26 @@ export class Cat extends BasePetType {
                 state: States.land,
                 possibleNextStates: [States.sitIdle, States.walkRight, States.runRight]
             },
+            {
+                state: States.chase,
+                possibleNextStates: [States.idleWithBall]
+            },
+            {
+                state: States.idleWithBall,
+                possibleNextStates: [States.walkRight, States.walkLeft, States.runLeft, States.runRight]
+            },
         ]
     };
+
+    canSwipe() {
+        if (this.currentStateEnum === States.climbWallLeft ||
+            this.currentStateEnum === States.jumpDownLeft || 
+            this.currentStateEnum === States.land ||
+            this.currentStateEnum === States.wallHangLeft) {
+            return false;
+        }
+        return true;
+    }
 }
 
 export class Dog extends BasePetType {
@@ -140,6 +175,10 @@ export class Dog extends BasePetType {
                 possibleNextStates: [States.walkRight, States.runRight, States.lie]
             },
             {
+                state: States.lie,
+                possibleNextStates: [States.walkRight, States.runRight]
+            },
+            {
                 state: States.walkRight,
                 possibleNextStates: [States.walkLeft, States.runLeft]
             },
@@ -149,12 +188,20 @@ export class Dog extends BasePetType {
             },
             {
                 state: States.walkLeft,
-                possibleNextStates: [States.sitIdle]
+                possibleNextStates: [States.sitIdle, States.lie]
             },
             {
                 state: States.runLeft,
-                possibleNextStates: [States.sitIdle]
-            }
+                possibleNextStates: [States.sitIdle, States.lie]
+            },
+            {
+                state: States.chase,
+                possibleNextStates: [States.idleWithBall]
+            },
+            {
+                state: States.idleWithBall,
+                possibleNextStates: [States.walkRight, States.walkLeft, States.runLeft, States.runRight]
+            },
         ]
     };
 }
@@ -170,11 +217,11 @@ export class Snake extends BasePetType {
             },
             {
                 state: States.walkRight,
-                possibleNextStates: [States.walkLeft, States.runLeft, States.lie]
+                possibleNextStates: [States.walkLeft, States.runLeft]
             },
             {
                 state: States.runRight,
-                possibleNextStates: [States.walkLeft, States.runLeft, States.lie]
+                possibleNextStates: [States.walkLeft, States.runLeft]
             },
             {
                 state: States.walkLeft,
@@ -183,7 +230,15 @@ export class Snake extends BasePetType {
             {
                 state: States.runLeft,
                 possibleNextStates: [States.sitIdle]
-            }
+            },
+            {
+                state: States.chase,
+                possibleNextStates: [States.idleWithBall]
+            },
+            {
+                state: States.idleWithBall,
+                possibleNextStates: [States.walkRight, States.walkLeft, States.runLeft, States.runRight]
+            },
         ]
     };
 }
@@ -199,11 +254,11 @@ export class Clippy extends BasePetType {
             },
             {
                 state: States.walkRight,
-                possibleNextStates: [States.walkLeft, States.runLeft, States.lie]
+                possibleNextStates: [States.walkLeft, States.runLeft]
             },
             {
                 state: States.runRight,
-                possibleNextStates: [States.walkLeft, States.runLeft, States.lie]
+                possibleNextStates: [States.walkLeft, States.runLeft]
             },
             {
                 state: States.walkLeft,
@@ -212,7 +267,15 @@ export class Clippy extends BasePetType {
             {
                 state: States.runLeft,
                 possibleNextStates: [States.sitIdle]
-            }
+            },
+            {
+                state: States.chase,
+                possibleNextStates: [States.idleWithBall]
+            },
+            {
+                state: States.idleWithBall,
+                possibleNextStates: [States.walkRight, States.walkLeft, States.runLeft, States.runRight]
+            },
         ]
     };
 }

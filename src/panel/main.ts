@@ -1,6 +1,7 @@
 // This script will be run within the webview itself
 import { PetSize, PetColor, PetType } from '../common/types';
 import {createPet} from './pets';
+import { BallState } from './states';
 
 function calculateBallRadius(size: PetSize): number{
   if (size === PetSize.nano){
@@ -33,16 +34,9 @@ export function petPanelApp(basePetUri: string, petColor: PetColor, petSize: Pet
   const ballRadius: number = calculateBallRadius(petSize);
 
   /// Bouncing ball components, credit https://stackoverflow.com/a/29982343
-  var canvas : HTMLCanvasElement,
-    ctx: CanvasRenderingContext2D,
-    cx: number = 100,
-    cy: number = 100,
-    vx: number = 2,
-    vy: number = 5,
-    gravity: number = 0.2,
-    damping: number = 0.9,
-    traction: number = 0.8,
-    paused: boolean = false;
+  var canvas : HTMLCanvasElement, ctx: CanvasRenderingContext2D;
+  const gravity: number = 0.2, damping: number = 0.9, traction: number = 0.8;
+  var ballState: BallState;
 
   function initSprite() {
     petSpriteElement.style.left = '0px';
@@ -62,41 +56,37 @@ export function petPanelApp(basePetUri: string, petColor: PetColor, petSize: Pet
 
   function resetBall() {
     canvas.style.display = "block";
-    paused = false;
-    cx = 100;
-    cy = 100;
-    vx = 2;
-    vy = 5;
+    ballState = new BallState(100, 100, 2, 5);
   }
 
   function throwBall() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    if (!paused) {requestAnimationFrame(throwBall);}
+    if (!ballState.paused) {requestAnimationFrame(throwBall);}
 
-    if (cx + ballRadius >= canvas.width) {
-      vx = -vx * damping;
-      cx = canvas.width - ballRadius;
-    } else if (cx - ballRadius <= 0) {
-      vx = -vx * damping;
-      cx = ballRadius;
+    if (ballState.cx + ballRadius >= canvas.width) {
+      ballState.vx = -ballState.vx * damping;
+      ballState.cx = canvas.width - ballRadius;
+    } else if (ballState.cx - ballRadius <= 0) {
+      ballState.vx = -ballState.vx * damping;
+      ballState.cx = ballRadius;
     }
-    if (cy + ballRadius >= canvas.height) {
-      vy = -vy * damping;
-      cy = canvas.height - ballRadius;
+    if (ballState.cy + ballRadius >= canvas.height) {
+      ballState.vy = -ballState.vy * damping;
+      ballState.cy = canvas.height - ballRadius;
       // traction here
-      vx *= traction;
-    } else if (cy - ballRadius <= 0) {
-      vy = -vy * damping;
-      cy = ballRadius;
+      ballState.vx *= traction;
+    } else if (ballState.cy - ballRadius <= 0) {
+      ballState.vy = -ballState.vy * damping;
+      ballState.cy = ballRadius;
     }
 
-    vy += gravity;
+    ballState.vy += gravity;
 
-    cx += vx;
-    cy += vy;
+    ballState.cx += ballState.vx;
+    ballState.cy += ballState.vy;
 
     ctx.beginPath();
-    ctx.arc(cx, cy, ballRadius, 0, 2 * Math.PI, false);
+    ctx.arc(ballState.cx, ballState.cy, ballRadius, 0, 2 * Math.PI, false);
     ctx.fillStyle = "#2ed851";
     ctx.fill();
   }
@@ -126,7 +116,7 @@ export function petPanelApp(basePetUri: string, petColor: PetColor, petSize: Pet
       case "throw-ball":
         resetBall();
         throwBall();
-        pet.chase();
+        pet.chase(ballState, canvas);
         break;
     }
   });
