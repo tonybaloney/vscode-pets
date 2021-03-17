@@ -16,7 +16,24 @@ export const enum States {
     jumpDownLeft = "jump-down-left",
     land = "land",
     swipe = "swipe",
-    idleWithBall = "idle-with-ball"
+    idleWithBall = "idle-with-ball",
+    chase = "chase"
+}
+
+export class BallState {
+    cx: number;
+    cy: number;
+    vx: number;
+    vy: number;
+    paused: boolean;
+
+    constructor(cx: number, cy: number, vx: number, vy: number){
+        this.cx = cx;
+        this.cy = cy;
+        this.vx = vx;
+        this.vy = vy;
+        this.paused = false;
+    }
 }
 
 export function resolveState(state: string, el: HTMLImageElement): IState {
@@ -30,6 +47,9 @@ export function resolveState(state: string, el: HTMLImageElement): IState {
         case States.wallHangLeft: return new WallHangLeftState(el);
         case States.climbWallLeft: return new ClimbWallLeftState(el);
         case States.jumpDownLeft: return new JumpDownLeftState(el);
+        case States.land: return new LandState(el);
+        case States.swipe: return new SwipeState(el);
+        case States.idleWithBall: return new IdleWithBallState(el);
     }
     return new SitIdleState(el);
 }
@@ -54,7 +74,7 @@ class AbstractStaticState implements IState {
 
     nextFrame() : boolean {
         this.idleCounter++;
-        if (this.idleCounter > 50 + Math.floor(Math.random() * 100)) {
+        if (this.idleCounter > this.holdTime) {
             return true;
         }
         return false;
@@ -64,14 +84,14 @@ class AbstractStaticState implements IState {
 export class SitIdleState extends AbstractStaticState {
     label = States.sitIdle;
     spriteLabel = "idle";
-    horizontalDirection = HorizontalDirection.left;
+    horizontalDirection = HorizontalDirection.right;
     holdTime = 50;
 }
 
 export class LieState extends AbstractStaticState {
     label = States.lie;
     spriteLabel = "lie";
-    horizontalDirection = HorizontalDirection.left;
+    horizontalDirection = HorizontalDirection.right;
     holdTime = 50;
 }
 
@@ -92,7 +112,7 @@ export class LandState extends AbstractStaticState {
 export class SwipeState extends AbstractStaticState {
     label = States.swipe;
     spriteLabel = "swipe";
-    horizontalDirection = HorizontalDirection.left;
+    horizontalDirection = HorizontalDirection.natural;
     holdTime = 10;
 }
 
@@ -110,16 +130,18 @@ export class WalkRightState implements IState {
     skipSpeed = 3;
     spriteLabel = "walk";
     horizontalDirection = HorizontalDirection.right;
+    leftBoundary: number;
 
     constructor(petElement: HTMLImageElement) {
         this.petLeft = parseInt(petElement.style.left);
         this.el = petElement;
+        this.leftBoundary = window.innerWidth;
     }
 
     nextFrame() : boolean {
         this.petLeft += this.skipSpeed;
         this.el.style.left = `${this.petLeft}px`;
-        if (this.petLeft >= window.innerWidth - this.el.width) {
+        if (this.petLeft >= this.leftBoundary - this.el.width) {
             return true;
         }
         return false;
@@ -132,7 +154,7 @@ export class WalkLeftState implements IState {
     el: HTMLImageElement;
     skipSpeed = 3;
     spriteLabel = "walk";
-    horizontalDirection = HorizontalDirection.right;
+    horizontalDirection = HorizontalDirection.left;
 
     constructor(petElement: HTMLImageElement) {
         this.petLeft = parseInt(petElement.style.left);
@@ -161,28 +183,42 @@ export class RunLeftState extends WalkLeftState {
     skipSpeed = 5;
 }
 
-// export class ChaseState implements IState {
+export class ChaseState implements IState {
+    label = States.chase;
+    petLeft: number;
+    el: HTMLImageElement;
+    skipSpeed = 3;
+    spriteLabel = "run";
+    horizontalDirection = HorizontalDirection.left;
+    ballState: BallState;
+    canvas: HTMLCanvasElement;
 
-// }
+    constructor(petElement: HTMLImageElement, ballState: BallState, canvas: HTMLCanvasElement) {
+        this.petLeft = parseInt(petElement.style.left);
+        this.el = petElement;
+        this.ballState = ballState;
+        this.canvas = canvas;
+    }
 
-//   function chase() {
-//     setAnimation("/" + petAffix + "_run_8fps.gif");
-//     if (petLeft > cx) {
-//       faceLeft();
-//       petLeft -= 3;
-//     } else {
-//       faceRight();
-//       petLeft += 3;
-//     }
+    nextFrame() : boolean {
+        if (this.petLeft > this.ballState.cx) {
+            this.horizontalDirection = HorizontalDirection.left;
+            this.petLeft -= 3;
+        } else {
+            this.horizontalDirection = HorizontalDirection.right;
+            this.petLeft += 3;
+        }
 
-//     petSpriteElement.style.left = `${petLeft}px`;
-//     if (canvas.height - cy < spriteWidth && cx < petLeft && petLeft < cx + 15) {
-//       // hide ball
-//       canvas.style.display = "none";
-//       paused = true;
-//       return true;
-//     }
-//   }
+        this.el.style.left = `${this.petLeft}px`;
+        if (this.canvas.height - this.ballState.cy < this.el.width && this.ballState.cx < this.petLeft && this.petLeft < this.ballState.cx + 15) {
+            // hide ball
+            this.canvas.style.display = "none";
+            this.ballState.paused = true;
+            return true;
+        }
+        return false;
+    }
+}
 
 export class ClimbWallLeftState implements IState {
     label = States.climbWallLeft;
@@ -190,7 +226,7 @@ export class ClimbWallLeftState implements IState {
     el: HTMLImageElement;
     skipSpeed = 3;
     spriteLabel = "wallclimb";
-    horizontalDirection = HorizontalDirection.right;
+    horizontalDirection = HorizontalDirection.left;
 
     constructor(petElement: HTMLImageElement) {
         this.petBottom = parseInt(petElement.style.bottom);
