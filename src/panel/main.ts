@@ -1,7 +1,6 @@
 // This script will be run within the webview itself
 import { PetSize, PetColor, PetType } from '../common/types';
-import {IState} from './states'; 
-import {resolvePet} from './pets';
+import {createPet} from './pets';
 
 function calculateBallRadius(size: PetSize): number{
   if (size === PetSize.nano){
@@ -30,9 +29,7 @@ function calculateSpriteWidth(size: PetSize): number{
 // It cannot access the main VS Code APIs directly.
 export function petPanelApp(basePetUri: string, petColor: PetColor, petSize: PetSize, petType: PetType) {
   var petSpriteElement: HTMLImageElement = (document.getElementById("petSprite") as HTMLImageElement);
-  var petRoot = basePetUri;
-  var petBottom: number = 0;
-  var pet = resolvePet(petType);
+  var pet = createPet(petType, petSpriteElement, basePetUri + '/' + petColor);
   const ballRadius: number = calculateBallRadius(petSize);
 
   /// Bouncing ball components, credit https://stackoverflow.com/a/29982343
@@ -47,7 +44,9 @@ export function petPanelApp(basePetUri: string, petColor: PetColor, petSize: Pet
     traction: number = 0.8,
     paused: boolean = false;
 
-  function initSpriteScale() {
+  function initSprite() {
+    petSpriteElement.style.left = '0px';
+    petSpriteElement.style.bottom = '0px';
     petSpriteElement.style.width = "auto";
     petSpriteElement.style.height = "auto";
     petSpriteElement.style.maxWidth = `${calculateSpriteWidth(petSize)}px`;
@@ -102,43 +101,21 @@ export function petPanelApp(basePetUri: string, petColor: PetColor, petSize: Pet
     ctx.fill();
   }
 
-  function faceLeft() {
-    petSpriteElement.style.webkitTransform = "scaleX(-1)";
-  }
-
-  function faceRight() {
-    petSpriteElement.style.webkitTransform = "scaleX(1)";
-  }
-
-  function faceUp() {
-    petSpriteElement.style.webkitTransform = "rotate(0)";
-  }
-
-  function setAnimation(face: string) {
-    if (petSpriteElement.src === petRoot + face) {
-      return;
-    }
-    petSpriteElement.src = petRoot + face;
-  }
-
   function handleMouseOver(e: any) {
-    if (pet.currentState() === "swipe" || state === "chase") {
+    if (!pet.canSwipe()) {
       return;
     }
-    if (petBottom !== 0) {
-      // don't swipe when on wall/falling.
-      return;
-    }
-    prevState = state;
-    state = "swipe";
+    pet.swipe();
   }
 
   function startAnimations() {
     petSpriteElement.addEventListener("mouseover", handleMouseOver);
-    // TODO : init pet 
+    setInterval(() => {
+      pet.nextFrame();
+    }, 100);
   }
   console.log('Starting pet session', petColor, basePetUri, petType);
-  initSpriteScale();
+  initSprite();
   startAnimations();
   initBallPhysics();
 
@@ -149,8 +126,7 @@ export function petPanelApp(basePetUri: string, petColor: PetColor, petSize: Pet
       case "throw-ball":
         resetBall();
         throwBall();
-        prevState = state;
-        state = "chase";
+        pet.chase();
         break;
     }
   });

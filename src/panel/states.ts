@@ -1,14 +1,7 @@
-import { SSL_OP_SSLEAY_080_CLIENT_DH_BUG } from "node:constants";
-import { inherits } from "node:util";
-
 export enum HorizontalDirection {
     left,
-    right
-}
-
-export enum VerticalDirection { 
-    up,
-    down
+    right,
+    natural // No change to current direction
 }
 
 export const enum States {
@@ -26,12 +19,25 @@ export const enum States {
     idleWithBall = "idle-with-ball"
 }
 
+export function resolveState(state: string, el: HTMLImageElement): IState {
+    switch(state){
+        case States.sitIdle: return new SitIdleState(el);
+        case States.walkRight: return new WalkRightState(el);
+        case States.walkLeft: return new WalkLeftState(el);
+        case States.runRight: return new RunRightState(el);
+        case States.runLeft: return new RunLeftState(el);
+        case States.lie: return new LieState(el);
+        case States.wallHangLeft: return new WallHangLeftState(el);
+        case States.climbWallLeft: return new ClimbWallLeftState(el);
+        case States.jumpDownLeft: return new JumpDownLeftState(el);
+    }
+    return new SitIdleState(el);
+}
+
 export interface IState {
     label: string
     spriteLabel: string
     horizontalDirection: HorizontalDirection
-    verticalDirection: VerticalDirection
-    init(petElement: HTMLImageElement): any
     nextFrame(): boolean
 }
 
@@ -41,11 +47,9 @@ class AbstractStaticState implements IState {
     spriteLabel = "idle";
     holdTime = 50;
     horizontalDirection = HorizontalDirection.left;
-    verticalDirection = VerticalDirection.up;
 
-    init() {
+    constructor(petElement: HTMLImageElement) {
         this.idleCounter = 0;
-
     }
 
     nextFrame() : boolean {
@@ -61,52 +65,41 @@ export class SitIdleState extends AbstractStaticState {
     label = States.sitIdle;
     spriteLabel = "idle";
     horizontalDirection = HorizontalDirection.left;
-    verticalDirection = VerticalDirection.up;
     holdTime = 50;
 }
 
 export class LieState extends AbstractStaticState {
     label = States.lie;
-    idleCounter: number;
     spriteLabel = "lie";
     horizontalDirection = HorizontalDirection.left;
-    verticalDirection = VerticalDirection.up;
     holdTime = 50;
 }
 
 export class WallHangLeftState extends AbstractStaticState {
     label = States.wallHangLeft;
-    idleCounter: number;
     spriteLabel = "wallgrab";
     horizontalDirection = HorizontalDirection.left;
-    verticalDirection = VerticalDirection.up;
     holdTime = 50;
 }
 
 export class LandState extends AbstractStaticState {
     label = States.land;
-    idleCounter: number;
     spriteLabel = "land";
     horizontalDirection = HorizontalDirection.left;
-    verticalDirection = VerticalDirection.up;
     holdTime = 10;
 }
 
 export class SwipeState extends AbstractStaticState {
     label = States.swipe;
-    idleCounter: number;
     spriteLabel = "swipe";
     horizontalDirection = HorizontalDirection.left;
-    verticalDirection = VerticalDirection.up;
     holdTime = 10;
 }
 
 export class IdleWithBallState extends AbstractStaticState {
     label = States.idleWithBall;
-    idleCounter: number;
     spriteLabel = "with_ball";
     horizontalDirection = HorizontalDirection.left;
-    verticalDirection = VerticalDirection.up;
     holdTime = 30;
 }
 
@@ -117,10 +110,9 @@ export class WalkRightState implements IState {
     skipSpeed = 3;
     spriteLabel = "walk";
     horizontalDirection = HorizontalDirection.right;
-    verticalDirection = VerticalDirection.up;
 
-    init(petElement: HTMLImageElement) {
-        this.petLeft = 0;
+    constructor(petElement: HTMLImageElement) {
+        this.petLeft = parseInt(petElement.style.left);
         this.el = petElement;
     }
 
@@ -141,10 +133,9 @@ export class WalkLeftState implements IState {
     skipSpeed = 3;
     spriteLabel = "walk";
     horizontalDirection = HorizontalDirection.right;
-    verticalDirection = VerticalDirection.up;
 
-    init(petElement: HTMLImageElement) {
-        this.petLeft = 0;
+    constructor(petElement: HTMLImageElement) {
+        this.petLeft = parseInt(petElement.style.left);
         this.el = petElement;
     }
 
@@ -193,23 +184,49 @@ export class RunLeftState extends WalkLeftState {
 //     }
 //   }
 
-  function climbUpLeft() {
-    faceLeft();
-    setAnimation("/" + petAffix + "_wallclimb_8fps.gif");
-    petBottom += 1;
-    petSpriteElement.style.bottom = `${petBottom}px`;
-    if (petBottom >= 100) {
-      return true;
-    }
-  }
+export class ClimbWallLeftState implements IState {
+    label = States.climbWallLeft;
+    petBottom: number;
+    el: HTMLImageElement;
+    skipSpeed = 3;
+    spriteLabel = "wallclimb";
+    horizontalDirection = HorizontalDirection.right;
 
-  function climbDownLeft() {
-    faceRight();
-    setAnimation("/" + petAffix + "_fall_from_grab_8fps.gif");
-    petBottom -= 5;
-    petSpriteElement.style.bottom = `${petBottom}px`;
-    if (petBottom <= 0) {
-      petBottom = 0;
-      return true;
+    constructor(petElement: HTMLImageElement) {
+        this.petBottom = parseInt(petElement.style.bottom);
+        this.el = petElement;
     }
-  }
+
+    nextFrame() : boolean {
+        this.petBottom += 1;
+        this.el.style.bottom = `${this.petBottom}px`;
+        if (this.petBottom >= 100) {
+          return true;
+        }
+        return false;
+    }
+}
+
+export class JumpDownLeftState implements IState {
+    label = States.jumpDownLeft;
+    petBottom: number;
+    el: HTMLImageElement;
+    skipSpeed = 3;
+    spriteLabel = "fall_from_grab";
+    horizontalDirection = HorizontalDirection.right;
+
+    constructor(petElement: HTMLImageElement) {
+        this.petBottom = parseInt(petElement.style.bottom);
+        this.el = petElement;
+    }
+
+    nextFrame() : boolean {
+        this.petBottom -= 5;
+        this.el.style.bottom = `${this.petBottom}px`;
+        if (this.petBottom <= 0) {
+            this.petBottom = 0;
+            return true;
+        }   
+        return false;
+    }
+}
