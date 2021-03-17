@@ -25,8 +25,6 @@ You can choose either pet type and fur color
 
 _*snake can only be green_
 
-_*Clippy can only be metallic_
-
 ## Playing
 
 Pets will interact with you
@@ -38,8 +36,6 @@ Pets will interact with you
 Play catch with your pet! Run the "Throw ball" command (`vscode-pets.throw-ball`).
 
 ![screenshot4](https://github.com/tonybaloney/vscode-pet/raw/master/screenshot-4.gif)
-
-_*Clippy does not play with balls._
 
 # Credits
 
