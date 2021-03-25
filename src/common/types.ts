@@ -2,7 +2,8 @@
 export const enum PetColor {
 	brown = "brown", 
 	black = "black", 
-	green = "green"
+	green = "green",
+	yellow = "yellow"
 }
 
 export const enum PetType {
@@ -10,6 +11,7 @@ export const enum PetType {
 	cat = "cat",
 	snake = "snake",
 	clippy = "clippy",
+	rubberduck = "rubber duck"
 }
 
 export const enum PetSize {
