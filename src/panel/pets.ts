@@ -281,6 +281,43 @@ export class Clippy extends BasePetType {
     };
 }
 
+export class RubberDuck extends BasePetType {
+    label = "rubber duck";
+    sequence = {
+        startingState: States.sitIdle,
+        sequenceStates: [
+            {
+                state: States.sitIdle,
+                possibleNextStates: [States.walkRight, States.runRight]
+            },
+            {
+                state: States.walkRight,
+                possibleNextStates: [States.walkLeft, States.runLeft]
+            },
+            {
+                state: States.runRight,
+                possibleNextStates: [States.walkLeft, States.runLeft]
+            },
+            {
+                state: States.walkLeft,
+                possibleNextStates: [States.sitIdle]
+            },
+            {
+                state: States.runLeft,
+                possibleNextStates: [States.sitIdle]
+            },
+            {
+                state: States.chase,
+                possibleNextStates: [States.idleWithBall]
+            },
+            {
+                state: States.idleWithBall,
+                possibleNextStates: [States.walkRight, States.walkLeft, States.runLeft, States.runRight]
+            },
+        ]
+    };
+}
+
 export class InvalidPetException {
 }
 
@@ -296,6 +333,9 @@ export function createPet(petType: string, el: HTMLImageElement, petRoot: string
     }
     else if (petType === "clippy") {
         return new Clippy(el, petRoot);
+    }
+    else if (petType === "rubber duck") {
+        return new RubberDuck(el, petRoot);
     }
     throw new InvalidPetException();
 }

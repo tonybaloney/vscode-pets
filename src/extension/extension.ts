@@ -161,6 +161,8 @@ class PetPanel {
 	public petColor(): PetColor {
 		if (this._petType === PetType.snake)
 			{return PetColor.green;}
+		if (this._petType === PetType.rubberduck)
+			{return PetColor.yellow;}
 		if ((this._petType === PetType.dog || 
 			this._petType === PetType.cat) && 
 			this._petColor === PetColor.green)
