@@ -1,7 +1,7 @@
 # vscode-pets README
 ![icon](https://github.com/tonybaloney/vscode-pet/raw/master/icon.png)
 
-Puts a small, bored cat, an enthusiastic dog, a feisty snake, or Clippy 📎 in your code editor.
+Puts a small, bored cat, an enthusiastic dog, a feisty snake, a rubber duck, or Clippy 📎 in your code editor.
 
 [![Visual Studio Marketplace Version](https://img.shields.io/visual-studio-marketplace/v/tonybaloney.vscode-pets?color=blue&logo=visual-studio)](https://marketplace.visualstudio.com/items?itemName=tonybaloney.vscode-pets&WT.mc_id=python-17801-anthonyshaw)
 
@@ -25,6 +25,8 @@ You can choose either pet type and fur color
 
 _*snake can only be green_
 
+_*rubber duck can only be yellow_
+
 ## Playing
 
 Pets will interact with you
@@ -41,4 +43,4 @@ Play catch with your pet! Run the "Throw ball" command (`vscode-pets.throw-ball`
 
 The cat, dog, and snake media assets for this extension were licensed from itch.io.
 
-[Marc Duiker](https://twitter.com/marcduiker) created the Clippy media assets.
+[Marc Duiker](https://twitter.com/marcduiker) created the Clippy and rubber duck media assets.
