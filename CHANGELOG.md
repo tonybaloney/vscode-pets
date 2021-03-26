@@ -2,6 +2,10 @@
 
 All notable changes to the "vscode-pets" extension will be documented in this file.
 
+## [0.11.0]
+
+- Added a rubber duck as a new pet. Talk with them while debugging your code!
+
 ## [0.10.0]
 
 - Clippy can now be selected with different colored baseball caps.
