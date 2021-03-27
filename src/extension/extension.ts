@@ -6,6 +6,8 @@ const DEFAULT_PET_SCALE = PetSize.nano;
 const DEFAULT_COLOR = PetColor.brown;
 const DEFAULT_PET_TYPE = PetType.cat;
 
+const ALL_PETS = [PetType.cat, PetType.clippy, PetType.dog, PetType.rubberduck, PetType.snake];
+
 class PetSpecification {
 	color: PetColor;
 	type: PetType;
@@ -31,6 +33,40 @@ export function activate(context: vscode.ExtensionContext) {
 		vscode.commands.registerCommand('vscode-pets.throw-ball', () => {
 			if (PetPanel.currentPanel) {
 				PetPanel.currentPanel.throwBall();
+			}
+		})
+	);
+
+	context.subscriptions.push(
+		vscode.commands.registerCommand('vscode-pets.spawn-pet', async () => {
+			if (PetPanel.currentPanel) {
+				const petType = await vscode.window.showQuickPick(ALL_PETS, {
+					placeHolder: 'Select a pet',
+				});
+				var petColor: PetColor = DEFAULT_COLOR;
+				switch (petType as PetType){
+					case PetType.rubberduck:
+						petColor = PetColor.yellow;
+						break;
+					case PetType.snake:
+						petColor = PetColor.green;
+						break;
+					case PetType.cat:
+					case PetType.dog:
+						var choices = [PetColor.black, PetColor.brown];
+						petColor = await vscode.window.showQuickPick(choices, {
+							placeHolder: 'Select a color',
+						}) as PetColor;
+						break;
+					case PetType.clippy:
+						var choices = [PetColor.black, PetColor.brown, PetColor.green];
+						petColor = await vscode.window.showQuickPick(choices, {
+							placeHolder: 'Select a color',
+						}) as PetColor;
+						break;
+				}
+				
+				PetPanel.currentPanel.spawnPet(petType as PetType, petColor as PetColor);
 			}
 		})
 	);
@@ -67,6 +103,24 @@ function getWebviewOptions(extensionUri: vscode.Uri): vscode.WebviewOptions {
 }
 
 /**
+ * Some pets can only have certain colors, this makes sure they haven't been misconfigured.
+ * @param petColor 
+ * @param petType 
+ * @returns normalized color
+ */
+function normalizeColor(petColor: PetColor, petType: PetType): PetColor {
+	if (petType === PetType.snake)
+		{return PetColor.green;}
+	if (petType === PetType.rubberduck)
+		{return PetColor.yellow;}
+	if ((petType === PetType.dog || 
+		petType === PetType.cat) && 
+		petColor === PetColor.green)
+		{return PetColor.brown;}
+	return petColor;
+}
+
+/**
  * Manages pet coding webview panels
  */
 class PetPanel {
@@ -84,7 +138,6 @@ class PetPanel {
 	private _petColor: PetColor;
 	private _petType: PetType;
 	private _petSize: PetSize;
-	private _extensionPath: string;
 
 	public static createOrShow(extensionUri: vscode.Uri, extensionPath: string, petColor: PetColor, petType:PetType, petSize:PetSize) {
 		const column = vscode.window.activeTextEditor
@@ -123,8 +176,7 @@ class PetPanel {
 	private constructor(panel: vscode.WebviewPanel, extensionUri: vscode.Uri, extensionPath: string, color: PetColor, type: PetType, size: PetSize) {
 		this._panel = panel;
 		this._extensionUri = extensionUri;
-		this._extensionPath = extensionPath;
-		this._petMediaPath = path.join(extensionPath, 'media', type);
+		this._petMediaPath = path.join(extensionPath, 'media');
 		this._petColor = color;
 		this._petType = type;
 		this._petSize = size;
@@ -159,15 +211,7 @@ class PetPanel {
 	}
 
 	public petColor(): PetColor {
-		if (this._petType === PetType.snake)
-			{return PetColor.green;}
-		if (this._petType === PetType.rubberduck)
-			{return PetColor.yellow;}
-		if ((this._petType === PetType.dog || 
-			this._petType === PetType.cat) && 
-			this._petColor === PetColor.green)
-			{return PetColor.brown;}
-		return this._petColor;
+		return normalizeColor(this._petColor, this._petType);
 	}
 
 	public petType(): PetType { 
@@ -183,7 +227,7 @@ class PetPanel {
 	}
 
 	public updatePetType(newType: PetType){
-		this._petMediaPath = path.join(this._extensionPath, 'media', newType);
+		this._petType = newType;
 	}
 
 	public updatePetSize(newSize: PetSize){
@@ -192,6 +236,10 @@ class PetPanel {
 
 	public throwBall() {
 		this._panel.webview.postMessage({ command: 'throw-ball' });
+	}
+
+	public spawnPet(type: PetType, color: PetColor) {
+		this._panel.webview.postMessage({ command: 'spawn-pet', type: type, color: color});
 	}
 
 	public dispose() {
@@ -255,7 +303,7 @@ class PetPanel {
 				<title>VS Code Pets</title>
 			</head>
 			<body>
-				<canvas id="petCanvas"></canvas><img id="petSprite" class="pet" src="" />
+				<canvas id="petCanvas"></canvas><div id="petsContainer"></div>
 				<script nonce="${nonce}" src="${scriptUri}"></script>
 				<script nonce="${nonce}">petApp.petPanelApp("${basePetUri}", "${this.petColor()}", "${this.petSize()}", "${this.petType()}");</script>
 				
