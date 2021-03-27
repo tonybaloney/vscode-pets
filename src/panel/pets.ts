@@ -1,5 +1,5 @@
 import { ISequenceTree } from "./sequences";
-import { IState, States, resolveState, HorizontalDirection, ChaseState, BallState } from "./states";
+import { IState, States, resolveState, HorizontalDirection, ChaseState, BallState, FrameResult } from "./states";
 
 export class InvalidStateException {
 
@@ -10,7 +10,7 @@ export interface IPetType {
     swipe(): void
     chase(ballState: BallState, canvas: HTMLCanvasElement): void
     nextFrame(): void
-}
+} 
 
 abstract class BasePetType implements IPetType {
     label: string = "base";
@@ -55,13 +55,28 @@ abstract class BasePetType implements IPetType {
         this.el.style.webkitTransform = "scaleX(1)";
     }
 
-
     setAnimation(face: string) {
         const newFace: string = `${this.petRoot}_${face}_8fps.gif`;
         if (this.el.src === newFace) {
             return;
         }
         this.el.src = newFace;
+    }
+
+    chooseNextState(fromState: States): States {
+        // Work out next state
+        var possibleNextStates: States[] | undefined = undefined;
+        for (var i = 0 ; i < this.sequence.sequenceStates.length; i++) {
+            if (this.sequence.sequenceStates[i].state === fromState) {
+                possibleNextStates = this.sequence.sequenceStates[i].possibleNextStates;
+            }
+        }
+        if (!possibleNextStates){
+            throw new InvalidStateException();
+        }
+        // randomly choose the next state
+        const idx = Math.floor(Math.random() * possibleNextStates.length);
+        return possibleNextStates[idx];
     }
 
     nextFrame() {
@@ -71,7 +86,8 @@ abstract class BasePetType implements IPetType {
             this.faceRight();
         }
         this.setAnimation(this.currentState.spriteLabel);
-        if (this.currentState.nextFrame())
+        var frameResult = this.currentState.nextFrame();
+        if (frameResult === FrameResult.stateComplete)
         {
             // If recovering from swipe..
             if (this.holdState && this.holdStateEnum){
@@ -79,25 +95,18 @@ abstract class BasePetType implements IPetType {
                 this.currentStateEnum = this.holdStateEnum;
                 this.holdState = undefined;
                 this.holdStateEnum = undefined;
-                console.log("Recovering to state" , this.currentStateEnum);
                 return;
             }
 
-            // Work out next state
-            var possibleNextStates: States[] | undefined = undefined;
-            for (var i = 0 ; i < this.sequence.sequenceStates.length; i++) {
-                if (this.sequence.sequenceStates[i].state === this.currentStateEnum) {
-                    possibleNextStates = this.sequence.sequenceStates[i].possibleNextStates;
-                }
+            var nextState = this.chooseNextState(this.currentStateEnum);
+            this.currentState = resolveState(nextState, this.el);
+            this.currentStateEnum = nextState;
+        } else if (frameResult === FrameResult.stateCancel){
+            if (this.currentStateEnum === States.chase) { // Currently the only one anyway
+                var nextState = this.chooseNextState(States.idleWithBall);
+                this.currentState = resolveState(nextState, this.el);
+                this.currentStateEnum = nextState;
             }
-            if (!possibleNextStates){
-                throw new InvalidStateException();
-            }
-            // randomly choose the next state
-            const idx = Math.floor(Math.random() * possibleNextStates.length);
-            this.currentState = resolveState(possibleNextStates[idx], this.el);
-            this.currentStateEnum = possibleNextStates[idx];
-            console.log("Transitioning to state" , this.currentStateEnum);
         }
     }
 }
