@@ -20,6 +20,13 @@ export const enum States {
     chase = "chase"
 }
 
+export enum FrameResult { 
+    stateContinue,
+    stateComplete,
+    // Special states
+    stateCancel
+}
+
 export class BallState {
     cx: number;
     cy: number;
@@ -58,7 +65,7 @@ export interface IState {
     label: string
     spriteLabel: string
     horizontalDirection: HorizontalDirection
-    nextFrame(): boolean
+    nextFrame(): FrameResult
 }
 
 class AbstractStaticState implements IState {
@@ -72,12 +79,12 @@ class AbstractStaticState implements IState {
         this.idleCounter = 0;
     }
 
-    nextFrame() : boolean {
+    nextFrame() : FrameResult {
         this.idleCounter++;
         if (this.idleCounter > this.holdTime) {
-            return true;
+            return FrameResult.stateComplete;
         }
-        return false;
+        return FrameResult.stateContinue;
     }
 }
 
@@ -138,13 +145,13 @@ export class WalkRightState implements IState {
         this.leftBoundary = window.innerWidth;
     }
 
-    nextFrame() : boolean {
+    nextFrame() : FrameResult {
         this.petLeft += this.skipSpeed;
         this.el.style.left = `${this.petLeft}px`;
         if (this.petLeft >= this.leftBoundary - this.el.width) {
-            return true;
+            return FrameResult.stateComplete;
         }
-        return false;
+        return FrameResult.stateContinue;
     }
 }
 
@@ -161,13 +168,13 @@ export class WalkLeftState implements IState {
         this.el = petElement;
     }
 
-    nextFrame() : boolean {
+    nextFrame() : FrameResult {
         this.petLeft -= this.skipSpeed;
         this.el.style.left = `${this.petLeft}px`;
         if (this.petLeft <= 0) {
-            return true;
+            return FrameResult.stateComplete;
         }
-        return false;
+        return FrameResult.stateContinue;
     }
 }
 
@@ -200,7 +207,10 @@ export class ChaseState implements IState {
         this.canvas = canvas;
     }
 
-    nextFrame() : boolean {
+    nextFrame() : FrameResult {
+        if (this.ballState.paused) {
+            return FrameResult.stateCancel; // Ball is already caught
+        }
         if (this.petLeft > this.ballState.cx) {
             this.horizontalDirection = HorizontalDirection.left;
             this.petLeft -= 3;
@@ -214,9 +224,9 @@ export class ChaseState implements IState {
             // hide ball
             this.canvas.style.display = "none";
             this.ballState.paused = true;
-            return true;
+            return FrameResult.stateComplete;
         }
-        return false;
+        return FrameResult.stateContinue;
     }
 }
 
@@ -233,13 +243,13 @@ export class ClimbWallLeftState implements IState {
         this.el = petElement;
     }
 
-    nextFrame() : boolean {
+    nextFrame() : FrameResult {
         this.petBottom += 1;
         this.el.style.bottom = `${this.petBottom}px`;
         if (this.petBottom >= 100) {
-          return true;
+          return FrameResult.stateComplete;
         }
-        return false;
+        return FrameResult.stateContinue;
     }
 }
 
@@ -256,13 +266,13 @@ export class JumpDownLeftState implements IState {
         this.el = petElement;
     }
 
-    nextFrame() : boolean {
+    nextFrame() : FrameResult {
         this.petBottom -= 5;
         this.el.style.bottom = `${this.petBottom}px`;
         if (this.petBottom <= 0) {
             this.petBottom = 0;
-            return true;
+            return FrameResult.stateComplete;
         }   
-        return false;
+        return FrameResult.stateContinue;
     }
 }

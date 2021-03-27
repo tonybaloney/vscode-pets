@@ -38,6 +38,11 @@
 				"command": "vscode-pets.throw-ball",
 				"title": "Throw ball",
 				"category": "Pet Coding"
+			},
+			{
+				"command": "vscode-pets.spawn-pet",
+				"title": "Spawn additional pet",
+				"category": "Pet Coding"
 			}
 		],
 		"configuration": [
