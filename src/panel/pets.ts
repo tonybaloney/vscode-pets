@@ -10,7 +10,6 @@ export interface IPetType {
     swipe(): void
     chase(ballState: BallState, canvas: HTMLCanvasElement): void
     nextFrame(): void
-    handleMouseOver(e: any): void
 }
 
 abstract class BasePetType implements IPetType {
@@ -28,13 +27,6 @@ abstract class BasePetType implements IPetType {
         this.petRoot = petRoot;
         this.currentStateEnum = this.sequence.startingState;
         this.currentState = resolveState(this.currentStateEnum, spriteElement);
-    }
-
-    handleMouseOver(e: any){
-        if (!this.canSwipe()) {
-            return;
-        }
-        this.swipe();
     }
 
     canSwipe(){
