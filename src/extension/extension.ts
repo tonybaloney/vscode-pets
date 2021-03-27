@@ -7,6 +7,8 @@ const DEFAULT_COLOR = PetColor.brown;
 const DEFAULT_PET_TYPE = PetType.cat;
 
 const ALL_PETS = [PetType.cat, PetType.clippy, PetType.dog, PetType.rubberduck, PetType.snake];
+const ALL_COLORS = [PetColor.black, PetColor.brown, PetColor.green, PetColor.yellow];
+const ALL_SCALES = [PetSize.nano, PetSize.medium, PetSize.large];
 
 class PetSpecification {
 	color: PetColor;
@@ -15,9 +17,17 @@ class PetSpecification {
 
 	constructor() {
 		this.color = vscode.workspace.getConfiguration("vscode-pets").get<PetColor>("petColor", DEFAULT_COLOR);
+		if (ALL_COLORS.lastIndexOf(this.color) === -1){
+			this.color = DEFAULT_COLOR;
+		}
 		this.type = vscode.workspace.getConfiguration("vscode-pets").get<PetType>("petType", DEFAULT_PET_TYPE);
+		if (ALL_PETS.lastIndexOf(this.type) === -1){
+			this.type = DEFAULT_PET_TYPE;
+		}
 		this.size = vscode.workspace.getConfiguration("vscode-pets").get<PetSize>("petSize", DEFAULT_PET_SCALE);
-		// TODO : Verify configuration is valid
+		if (ALL_SCALES.lastIndexOf(this.size) === -1){
+			this.size = DEFAULT_PET_SCALE;
+		}
 	};
 }
 
@@ -75,7 +85,12 @@ export function activate(context: vscode.ExtensionContext) {
 	context.subscriptions.push(vscode.workspace.onDidChangeConfiguration(e => {
 		if (e.affectsConfiguration('vscode-pets.petColor') || e.affectsConfiguration('vscode-pets.petType') || e.affectsConfiguration('vscode-pets.petSize')) {
 			const spec = new PetSpecification();
-			PetPanel.createOrShow(context.extensionUri, context.extensionPath, spec.color, spec.type, spec.size);
+			if (PetPanel.currentPanel) {
+				PetPanel.currentPanel.updatePetColor(spec.color);
+				PetPanel.currentPanel.updatePetSize(spec.size);
+				PetPanel.currentPanel.updatePetType(spec.type);
+				PetPanel.currentPanel.update();
+			}
 		}
 	}));
 
