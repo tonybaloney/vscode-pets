@@ -1,6 +1,6 @@
 // This script will be run within the webview itself
 import { PetSize, PetColor, PetType } from '../common/types';
-import {createPet} from './pets';
+import {createPet, IPetType} from './pets';
 import { BallState } from './states';
 
 function calculateBallRadius(size: PetSize): number{
@@ -27,25 +27,43 @@ function calculateSpriteWidth(size: PetSize): number{
   }
 }
 
+function initSprite(el: HTMLImageElement, petSize: PetSize) {
+  el.style.left = '0px';
+  el.style.bottom = '0px';
+  el.style.width = "auto";
+  el.style.height = "auto";
+  el.style.maxWidth = `${calculateSpriteWidth(petSize)}px`;
+  el.style.maxHeight = `${calculateSpriteWidth(petSize)}px`;
+}
+
+function startAnimations(el: HTMLImageElement, pet: IPetType) {
+  el.addEventListener("mouseover", pet.handleMouseOver);
+  setInterval(() => {
+    pet.nextFrame();
+  }, 100);
+}
+
+function addPetToPanel(petType: PetType, basePetUri: string, petColor: PetColor, petSize: PetSize): IPetType {
+  var petSpriteElement: HTMLImageElement = document.createElement("img");
+  petSpriteElement.className = "pet";
+  (document.getElementById("petsContainer") as HTMLDivElement).appendChild(petSpriteElement);
+  const root = basePetUri + '/' + petType + '/' + petColor;
+  console.log("Creating new pet : ", petType, root);
+  var newPet = createPet(petType, petSpriteElement, root);
+  initSprite(petSpriteElement, petSize);
+  startAnimations(petSpriteElement, newPet);
+  return newPet;
+}
+
 // It cannot access the main VS Code APIs directly.
 export function petPanelApp(basePetUri: string, petColor: PetColor, petSize: PetSize, petType: PetType) {
-  var petSpriteElement: HTMLImageElement = (document.getElementById("petSprite") as HTMLImageElement);
-  var pet = createPet(petType, petSpriteElement, basePetUri + '/' + petColor);
+  var pets: Array<IPetType> = [addPetToPanel(petType, basePetUri, petColor, petSize)];
   const ballRadius: number = calculateBallRadius(petSize);
 
   /// Bouncing ball components, credit https://stackoverflow.com/a/29982343
   var canvas : HTMLCanvasElement, ctx: CanvasRenderingContext2D;
   const gravity: number = 0.2, damping: number = 0.9, traction: number = 0.8;
   var ballState: BallState;
-
-  function initSprite() {
-    petSpriteElement.style.left = '0px';
-    petSpriteElement.style.bottom = '0px';
-    petSpriteElement.style.width = "auto";
-    petSpriteElement.style.height = "auto";
-    petSpriteElement.style.maxWidth = `${calculateSpriteWidth(petSize)}px`;
-    petSpriteElement.style.maxHeight = `${calculateSpriteWidth(petSize)}px`;
-  }
 
   function initBallPhysics() {
     canvas = (document.getElementById("petCanvas") as HTMLCanvasElement);
@@ -91,22 +109,8 @@ export function petPanelApp(basePetUri: string, petColor: PetColor, petSize: Pet
     ctx.fill();
   }
 
-  function handleMouseOver(e: any) {
-    if (!pet.canSwipe()) {
-      return;
-    }
-    pet.swipe();
-  }
-
-  function startAnimations() {
-    petSpriteElement.addEventListener("mouseover", handleMouseOver);
-    setInterval(() => {
-      pet.nextFrame();
-    }, 100);
-  }
   console.log('Starting pet session', petColor, basePetUri, petType);
-  initSprite();
-  startAnimations();
+
   initBallPhysics();
 
   // Handle messages sent from the extension to the webview
@@ -116,7 +120,12 @@ export function petPanelApp(basePetUri: string, petColor: PetColor, petSize: Pet
       case "throw-ball":
         resetBall();
         throwBall();
-        pet.chase(ballState, canvas);
+        pets.forEach(pet => {
+          pet.chase(ballState, canvas);
+        });
+        break;
+      case "spawn-pet":
+        pets.push(addPetToPanel(message.type, basePetUri, message.color, petSize));
         break;
     }
   });
