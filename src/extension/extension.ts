@@ -10,31 +10,43 @@ const ALL_PETS = [PetType.cat, PetType.clippy, PetType.dog, PetType.rubberduck, 
 const ALL_COLORS = [PetColor.black, PetColor.brown, PetColor.green, PetColor.yellow];
 const ALL_SCALES = [PetSize.nano, PetSize.medium, PetSize.large];
 
+function getConfiguredSize(): PetSize {
+	var size = vscode.workspace.getConfiguration("vscode-pets").get<PetSize>("petSize", DEFAULT_PET_SCALE);
+	if (ALL_SCALES.lastIndexOf(size) === -1){
+		size = DEFAULT_PET_SCALE;
+	}
+	return size;
+}
+
 class PetSpecification {
 	color: PetColor;
 	type: PetType;
 	size: PetSize;
 
-	constructor() {
-		this.color = vscode.workspace.getConfiguration("vscode-pets").get<PetColor>("petColor", DEFAULT_COLOR);
-		if (ALL_COLORS.lastIndexOf(this.color) === -1){
-			this.color = DEFAULT_COLOR;
-		}
-		this.type = vscode.workspace.getConfiguration("vscode-pets").get<PetType>("petType", DEFAULT_PET_TYPE);
-		if (ALL_PETS.lastIndexOf(this.type) === -1){
-			this.type = DEFAULT_PET_TYPE;
-		}
-		this.size = vscode.workspace.getConfiguration("vscode-pets").get<PetSize>("petSize", DEFAULT_PET_SCALE);
-		if (ALL_SCALES.lastIndexOf(this.size) === -1){
-			this.size = DEFAULT_PET_SCALE;
-		}
+	constructor(color: PetColor, type: PetType, size: PetSize) {
+		this.color = color;
+		this.type = type;
+		this.size = size;
 	};
+
+	static fromConfiguration(): PetSpecification{
+		var color = vscode.workspace.getConfiguration("vscode-pets").get<PetColor>("petColor", DEFAULT_COLOR);
+		if (ALL_COLORS.lastIndexOf(color) === -1){
+			color = DEFAULT_COLOR;
+		}
+		var type = vscode.workspace.getConfiguration("vscode-pets").get<PetType>("petType", DEFAULT_PET_TYPE);
+		if (ALL_PETS.lastIndexOf(type) === -1){
+			type = DEFAULT_PET_TYPE;
+		}
+		
+		return new PetSpecification(color, type, getConfiguredSize());
+	}
 }
 
 export function activate(context: vscode.ExtensionContext) {
 	context.subscriptions.push(
 		vscode.commands.registerCommand('vscode-pets.start', () => {
-			const spec = new PetSpecification();
+			const spec = PetSpecification.fromConfiguration();
 			PetPanel.createOrShow(context.extensionUri, context.extensionPath, spec.color, spec.type, spec.size);
 		})
 	);
@@ -75,8 +87,8 @@ export function activate(context: vscode.ExtensionContext) {
 						}) as PetColor;
 						break;
 				}
-				
-				PetPanel.currentPanel.spawnPet(petType as PetType, petColor as PetColor);
+				const spec = new PetSpecification(petColor, petType as PetType, getConfiguredSize());
+				PetPanel.currentPanel.spawnPet(spec);
 			}
 		})
 	);
@@ -84,7 +96,7 @@ export function activate(context: vscode.ExtensionContext) {
 	// Listening to configuration changes
 	context.subscriptions.push(vscode.workspace.onDidChangeConfiguration(e => {
 		if (e.affectsConfiguration('vscode-pets.petColor') || e.affectsConfiguration('vscode-pets.petType') || e.affectsConfiguration('vscode-pets.petSize')) {
-			const spec = new PetSpecification();
+			const spec = PetSpecification.fromConfiguration();
 			if (PetPanel.currentPanel) {
 				PetPanel.currentPanel.updatePetColor(spec.color);
 				PetPanel.currentPanel.updatePetSize(spec.size);
@@ -100,7 +112,7 @@ export function activate(context: vscode.ExtensionContext) {
 			async deserializeWebviewPanel(webviewPanel: vscode.WebviewPanel, state: any) {
 				// Reset the webview options so we use latest uri for `localResourceRoots`.
 				webviewPanel.webview.options = getWebviewOptions(context.extensionUri);
-				const spec = new PetSpecification();
+				const spec = PetSpecification.fromConfiguration();
 				PetPanel.revive(webviewPanel, context.extensionUri, context.extensionPath, spec.color, spec.type, spec.size);
 			}
 		});
@@ -253,8 +265,8 @@ class PetPanel {
 		this._panel.webview.postMessage({ command: 'throw-ball' });
 	}
 
-	public spawnPet(type: PetType, color: PetColor) {
-		this._panel.webview.postMessage({ command: 'spawn-pet', type: type, color: color});
+	public spawnPet(spec: PetSpecification) {
+		this._panel.webview.postMessage({ command: 'spawn-pet', type: spec.type, color: spec.color});
 	}
 
 	public dispose() {
