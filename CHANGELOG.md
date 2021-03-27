@@ -2,6 +2,11 @@
 
 All notable changes to the "vscode-pets" extension will be documented in this file.
 
+## [0.12.0]
+
+- Added the ability to spawn multiple pets through the `vscode-pets.spawn-pet` command
+- Fixed an annoying bug that would create multiple panels when you modify the pet settings
+
 ## [0.11.0]
 
 - Added a rubber duck as a new pet. Talk with them while debugging your code!
