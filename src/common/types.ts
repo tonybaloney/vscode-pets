@@ -19,3 +19,8 @@ export const enum PetSize {
 	medium = "medium",
 	large = "large"
 }
+
+export const enum ExtPosition {
+	panel = "panel",
+	explorer = "explorer"
+}
