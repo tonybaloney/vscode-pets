@@ -3,6 +3,15 @@ import { PetSize, PetColor, PetType } from '../common/types';
 import {createPet, IPetType} from './pets';
 import { BallState } from './states';
 
+/* This is how the VS Code API can be invoked from the panel */
+declare global {
+  interface Window {
+    acquireVsCodeApi(): any;
+  }
+}
+
+const vscode = window.acquireVsCodeApi();
+
 class PetElement {
   el: HTMLImageElement;
   pet: IPetType;
