@@ -1,12 +1,16 @@
 // This script will be run within the webview itself
 import { PetSize, PetColor, PetType } from '../common/types';
 import {createPet, IPetType} from './pets';
-import { BallState } from './states';
+import { BallState, PetPanelState } from './states';
 
 /* This is how the VS Code API can be invoked from the panel */
 declare global {
+  interface VscodeStateApi { 
+    getState() : PetPanelState; // API is actually Any, but we want it to be typed.
+    setState(state: PetPanelState): void;
+  }
   interface Window {
-    acquireVsCodeApi(): any;
+    acquireVsCodeApi(): VscodeStateApi;
   }
 }
 
@@ -15,10 +19,14 @@ const vscode = window.acquireVsCodeApi();
 class PetElement {
   el: HTMLImageElement;
   pet: IPetType;
+  color: PetColor;
+  type: PetType;
 
-  constructor(el: HTMLImageElement, pet: IPetType){
+  constructor(el: HTMLImageElement, pet: IPetType, color: PetColor, type: PetType){
     this.el = el;
     this.pet = pet;
+    this.color = color;
+    this.type = type;
   }
 }
 
@@ -48,9 +56,9 @@ function calculateSpriteWidth(size: PetSize): number{
   }
 }
 
-function initSprite(el: HTMLImageElement, petSize: PetSize) {
-  el.style.left = '0px';
-  el.style.bottom = '0px';
+function initSprite(el: HTMLImageElement, petSize: PetSize, left: string, bottom: string) {
+  el.style.left = left;
+  el.style.bottom = bottom;
   el.style.width = "auto";
   el.style.height = "auto";
   el.style.maxWidth = `${calculateSpriteWidth(petSize)}px`;
@@ -74,24 +82,49 @@ function startAnimations(el: HTMLImageElement, pet: IPetType) {
   el.addEventListener("mouseover", handleMouseOver);
   setInterval(() => {
     pet.nextFrame();
+    saveState();
   }, 100);
 }
 
-function addPetToPanel(petType: PetType, basePetUri: string, petColor: PetColor, petSize: PetSize): PetElement {
+function addPetToPanel(petType: PetType, basePetUri: string, petColor: PetColor, petSize: PetSize, left: string, bottom: string): PetElement {
   var petSpriteElement: HTMLImageElement = document.createElement("img");
   petSpriteElement.className = "pet";
   (document.getElementById("petsContainer") as HTMLDivElement).appendChild(petSpriteElement);
   const root = basePetUri + '/' + petType + '/' + petColor;
   console.log("Creating new pet : ", petType, root);
   var newPet = createPet(petType, petSpriteElement, root);
-  initSprite(petSpriteElement, petSize);
+  initSprite(petSpriteElement, petSize, left, bottom);
   startAnimations(petSpriteElement, newPet);
-  return new PetElement(petSpriteElement, newPet);
+  return new PetElement(petSpriteElement, newPet, petColor, petType);
+}
+
+function saveState(){
+  var state = new PetPanelState();
+  state.petStates = new Array();
+
+  allPets.forEach(petItem => {
+    state.petStates!.push({
+      petColor: petItem.color,
+      petType: petItem.type,
+      petState: petItem.pet.getState(),
+      elLeft: petItem.el.style.left,
+      elBottom: petItem.el.style.bottom
+    });
+  });
+  vscode.setState(state);
+}
+
+function recoverState(basePetUri: string, petSize: PetSize){
+  var state = vscode.getState();
+  state.petStates!.forEach(p => {
+    var newPet = addPetToPanel(p.petType!, basePetUri, p.petColor!, petSize, p.elLeft!, p.elBottom!);
+    newPet.pet.recoverState(p.petState!);
+    allPets.push(newPet);
+  });
 }
 
 // It cannot access the main VS Code APIs directly.
 export function petPanelApp(basePetUri: string, petColor: PetColor, petSize: PetSize, petType: PetType) {
-  allPets.push(addPetToPanel(petType, basePetUri, petColor, petSize));
   const ballRadius: number = calculateBallRadius(petSize);
 
   /// Bouncing ball components, credit https://stackoverflow.com/a/29982343
@@ -144,6 +177,16 @@ export function petPanelApp(basePetUri: string, petColor: PetColor, petSize: Pet
   }
 
   console.log('Starting pet session', petColor, basePetUri, petType);
+  // New session
+  var state = vscode.getState();
+  if (!state) {
+    console.log('No state, starting a new session.');
+    allPets.push(addPetToPanel(petType, basePetUri, petColor, petSize, '0px', '0px'));
+    saveState();
+  } else { 
+    console.log('Recovering state - ', state);
+    recoverState(basePetUri, petSize);
+  }
 
   initBallPhysics();
 
@@ -159,7 +202,8 @@ export function petPanelApp(basePetUri: string, petColor: PetColor, petSize: Pet
         });
         break;
       case "spawn-pet":
-        allPets.push(addPetToPanel(message.type, basePetUri, message.color, petSize));
+        allPets.push(addPetToPanel(message.type, basePetUri, message.color, petSize, '0px', '0px'));
+        saveState();
         break;
     }
   });
