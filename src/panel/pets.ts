@@ -1,5 +1,5 @@
 import { ISequenceTree } from "./sequences";
-import { IState, States, resolveState, HorizontalDirection, ChaseState, BallState, FrameResult } from "./states";
+import { IState, States, resolveState, HorizontalDirection, ChaseState, BallState, FrameResult, PetInstanceState } from "./states";
 
 export class InvalidStateException {
 
@@ -10,6 +10,8 @@ export interface IPetType {
     swipe(): void
     chase(ballState: BallState, canvas: HTMLCanvasElement): void
     nextFrame(): void
+    getState(): PetInstanceState
+    recoverState(state: PetInstanceState): void
 } 
 
 abstract class BasePetType implements IPetType {
@@ -27,6 +29,15 @@ abstract class BasePetType implements IPetType {
         this.petRoot = petRoot;
         this.currentStateEnum = this.sequence.startingState;
         this.currentState = resolveState(this.currentStateEnum, spriteElement);
+    }
+
+    getState(): PetInstanceState { 
+        return {currentStateEnum: this.currentStateEnum};
+    }
+
+    recoverState(state: PetInstanceState){
+        this.currentStateEnum = state.currentStateEnum!;
+        this.currentState = resolveState(this.currentStateEnum, this.el);
     }
 
     canSwipe(){
