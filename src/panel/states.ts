@@ -161,7 +161,7 @@ export class WalkRightState implements IState {
     constructor(petElement: HTMLImageElement) {
         this.petLeft = parseInt(petElement.style.left);
         this.el = petElement;
-        this.leftBoundary = window.innerWidth;
+        this.leftBoundary = Math.floor(window.innerWidth * 0.95);
     }
 
     nextFrame() : FrameResult {
