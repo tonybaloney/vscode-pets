@@ -7,6 +7,9 @@ All notable changes to the "vscode-pets" extension will be documented in this fi
 - Added the ability to spawn multiple pets through the `vscode-pets.spawn-pet` command
 - Fixed an annoying bug that would create multiple panels when you modify the pet settings
 - Pet panel saves its state when taken out of focus (you click on another tab)
+- Pets will randomize their starting positions
+- Additional pets will persist across global state (restarting Code)
+- Additional pets will persist across multiple computers if you have Settings Sync enabled
 
 ## [0.11.0]
 
