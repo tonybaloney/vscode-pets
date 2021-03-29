@@ -1,3 +1,22 @@
+import { PetColor, PetType } from "../common/types";
+
+export class PetInstanceState {
+    currentStateEnum: States | undefined;
+}
+
+export class PetElementState {
+    petState: PetInstanceState | undefined;
+    petType: PetType | undefined;
+    petColor: PetColor | undefined;
+    elLeft: string | undefined;
+    elBottom: string | undefined;
+}
+
+export class PetPanelState {
+    petStates: Array<PetElementState> | undefined;
+}
+
+
 export enum HorizontalDirection {
     left,
     right,

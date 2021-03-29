@@ -2,10 +2,11 @@
 
 All notable changes to the "vscode-pets" extension will be documented in this file.
 
-## [0.12.0]
+## [1.0.0]
 
 - Added the ability to spawn multiple pets through the `vscode-pets.spawn-pet` command
 - Fixed an annoying bug that would create multiple panels when you modify the pet settings
+- Pet panel saves its state when taken out of focus (you click on another tab)
 
 ## [0.11.0]
 

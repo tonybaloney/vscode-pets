@@ -1,4 +1,5 @@
-# vscode-pets README
+# VS Code Pets
+
 ![icon](https://github.com/tonybaloney/vscode-pet/raw/master/icon.png)
 
 Puts a small, bored cat, an enthusiastic dog, a feisty snake, a rubber duck, or Clippy 📎 in your code editor.
@@ -39,7 +40,13 @@ Play catch with your pet! Run the "Throw ball" command (`vscode-pets.throw-ball`
 
 ![screenshot4](https://github.com/tonybaloney/vscode-pet/raw/master/screenshot-4.gif)
 
-# Credits
+## Adding extra pets!
+
+Run the "Spawn additional pet" command (`vscode-pets.spawn-pet`) and select the pet type and color.
+
+Extra pets will not persist between closing and restarting VS Code.
+
+## Credits
 
 The cat, dog, and snake media assets for this extension were licensed from itch.io.
 
