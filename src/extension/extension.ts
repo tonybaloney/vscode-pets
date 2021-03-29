@@ -66,6 +66,7 @@ export function activate(context: vscode.ExtensionContext) {
 					placeHolder: 'Select a pet',
 				});
 				var petColor: PetColor = DEFAULT_COLOR;
+				var choices;
 				switch (petType as PetType){
 					case PetType.rubberduck:
 						petColor = PetColor.yellow;
@@ -75,13 +76,13 @@ export function activate(context: vscode.ExtensionContext) {
 						break;
 					case PetType.cat:
 					case PetType.dog:
-						var choices = [PetColor.black, PetColor.brown];
+						choices = [PetColor.black, PetColor.brown];
 						petColor = await vscode.window.showQuickPick(choices, {
 							placeHolder: 'Select a color',
 						}) as PetColor;
 						break;
 					case PetType.clippy:
-						var choices = [PetColor.black, PetColor.brown, PetColor.green];
+						choices = [PetColor.black, PetColor.brown, PetColor.green];
 						petColor = await vscode.window.showQuickPick(choices, {
 							placeHolder: 'Select a color',
 						}) as PetColor;
@@ -119,11 +120,10 @@ export function activate(context: vscode.ExtensionContext) {
 	}
 }
 
-function getWebviewOptions(extensionUri: vscode.Uri): vscode.WebviewOptions {
+function getWebviewOptions(extensionUri: vscode.Uri): vscode.WebviewOptions & vscode.WebviewPanelOptions {
 	return {
 		// Enable javascript in the webview
 		enableScripts: true,
-
 		// And restrict the webview to only loading content from our extension's `media` directory.
 		localResourceRoots: [vscode.Uri.joinPath(extensionUri, 'media')]
 	};
