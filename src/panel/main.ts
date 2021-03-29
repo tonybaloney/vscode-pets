@@ -123,6 +123,11 @@ function recoverState(basePetUri: string, petSize: PetSize){
   });
 }
 
+function randomStartPosition() : string {
+  const x: number = Math.floor(Math.random() * (window.innerWidth * 0.7));
+  return `${x}px`;
+}
+
 // It cannot access the main VS Code APIs directly.
 export function petPanelApp(basePetUri: string, petColor: PetColor, petSize: PetSize, petType: PetType) {
   const ballRadius: number = calculateBallRadius(petSize);
@@ -181,7 +186,7 @@ export function petPanelApp(basePetUri: string, petColor: PetColor, petSize: Pet
   var state = vscode.getState();
   if (!state) {
     console.log('No state, starting a new session.');
-    allPets.push(addPetToPanel(petType, basePetUri, petColor, petSize, '0px', '0px'));
+    allPets.push(addPetToPanel(petType, basePetUri, petColor, petSize, randomStartPosition(), '0px'));
     saveState();
   } else { 
     console.log('Recovering state - ', state);
@@ -202,7 +207,7 @@ export function petPanelApp(basePetUri: string, petColor: PetColor, petSize: Pet
         });
         break;
       case "spawn-pet":
-        allPets.push(addPetToPanel(message.type, basePetUri, message.color, petSize, '0px', '0px'));
+        allPets.push(addPetToPanel(message.type, basePetUri, message.color, petSize, randomStartPosition(), '0px'));
         saveState();
         break;
     }
