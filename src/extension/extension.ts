@@ -2,6 +2,9 @@ import * as path from 'path';
 import * as vscode from 'vscode';
 import { PetSize, PetColor, PetType } from '../common/types';
 
+const EXTRA_PETS_KEY = 'vscode-pets.extra-pets';
+const EXTRA_PETS_KEY_TYPES = EXTRA_PETS_KEY + '.types';
+const EXTRA_PETS_KEY_COLORS = EXTRA_PETS_KEY + '.colors';
 const DEFAULT_PET_SCALE = PetSize.nano;
 const DEFAULT_COLOR = PetColor.brown;
 const DEFAULT_PET_TYPE = PetType.cat;
@@ -41,6 +44,28 @@ class PetSpecification {
 		
 		return new PetSpecification(color, type, getConfiguredSize());
 	}
+
+	static collectionFromMemento(context: vscode.ExtensionContext, size: PetSize): PetSpecification[] {
+		var contextTypes = context.globalState.get<PetType[]>(EXTRA_PETS_KEY_TYPES, []);
+		var contextColors = context.globalState.get<PetColor[]>(EXTRA_PETS_KEY_COLORS, []);
+		var result: PetSpecification[] = new Array();
+		for (let index = 0; index < contextTypes.length; index++) {
+			result.push(new PetSpecification(contextColors![index], contextTypes[index], size));
+		}
+		return result;
+	}
+}
+
+export function storeCollectionAsMemento(context: vscode.ExtensionContext, collection: PetSpecification[]){
+	var contextTypes = new Array(collection.length);
+	var contextColors = new Array(collection.length);
+	for (let index = 0; index < collection.length; index++) {
+		contextTypes[index] = collection[index].type;
+		contextColors[index] = collection[index].color;
+	}
+	context.globalState.update(EXTRA_PETS_KEY_TYPES, contextTypes);
+	context.globalState.update(EXTRA_PETS_KEY_COLORS, contextColors);
+	context.globalState.setKeysForSync([EXTRA_PETS_KEY_TYPES, EXTRA_PETS_KEY_COLORS]);
 }
 
 export function activate(context: vscode.ExtensionContext) {
@@ -48,6 +73,14 @@ export function activate(context: vscode.ExtensionContext) {
 		vscode.commands.registerCommand('vscode-pets.start', () => {
 			const spec = PetSpecification.fromConfiguration();
 			PetPanel.createOrShow(context.extensionUri, context.extensionPath, spec.color, spec.type, spec.size);
+			
+			// Recover extra pets from last session
+			if (PetPanel.currentPanel){
+				var collection = PetSpecification.collectionFromMemento(context, getConfiguredSize());
+				collection.forEach(item => {
+					PetPanel.currentPanel!.spawnPet(item);
+				});
+			}
 		})
 	);
 
@@ -56,6 +89,13 @@ export function activate(context: vscode.ExtensionContext) {
 			if (PetPanel.currentPanel) {
 				PetPanel.currentPanel.throwBall();
 			}
+		})
+	);
+
+	context.subscriptions.push(
+		vscode.commands.registerCommand('vscode-pets.delete-pets', () => {
+			context.globalState.update(EXTRA_PETS_KEY + '.types', []);
+			context.globalState.update(EXTRA_PETS_KEY + '.colors', []);
 		})
 	);
 
@@ -90,6 +130,9 @@ export function activate(context: vscode.ExtensionContext) {
 				}
 				const spec = new PetSpecification(petColor, petType as PetType, getConfiguredSize());
 				PetPanel.currentPanel.spawnPet(spec);
+				var collection = PetSpecification.collectionFromMemento(context, getConfiguredSize());
+				collection.push(spec);
+				storeCollectionAsMemento(context, collection);
 			}
 		})
 	);

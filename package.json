@@ -43,6 +43,11 @@
 				"command": "vscode-pets.spawn-pet",
 				"title": "Spawn additional pet",
 				"category": "Pet Coding"
+			},
+			{
+				"command": "vscode-pets.delete-pets",
+				"title": "Delete additional pets",
+				"category": "Pet Coding"
 			}
 		],
 		"configuration": [
