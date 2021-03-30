@@ -33,8 +33,22 @@
 				{
 					"type": "webview",
 					"id": "vscode-pets.petsView",
-					"name": "VSCode pets Pets View",
+					"name": "VSCode Pets",
 					"when": "vscode-pets.position == 'explorer'"
+				}
+			]
+		},
+		"menus": {
+			"view/title": [
+				{
+					"command": "vscode-pets.spawn-pet",
+					"when": "view == vscode-pets.petsView",
+					"group": "navigation"
+				},
+				{
+					"command": "vscode-pets.throw-ball",
+					"when": "view == vscode-pets.petsView",
+					"group": "navigation"
 				}
 			]
 		},
@@ -47,12 +61,20 @@
 			{
 				"command": "vscode-pets.throw-ball",
 				"title": "Throw ball",
-				"category": "Pet Coding"
+				"category": "Pet Coding",
+				"icon": {
+					"dark": "media/icon/dark-circle-outline.svg",
+					"light": "media/icon/light-circle-outline.svg"
+				}
 			},
 			{
 				"command": "vscode-pets.spawn-pet",
 				"title": "Spawn additional pet",
-				"category": "Pet Coding"
+				"category": "Pet Coding",
+				"icon": {
+					"dark": "media/icon/dark-add.svg",
+					"light": "media/icon/light-add.svg"
+				}
 			},
 			{
 				"command": "vscode-pets.delete-pets",
