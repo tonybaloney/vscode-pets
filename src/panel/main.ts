@@ -210,6 +210,12 @@ export function petPanelApp(basePetUri: string, petColor: PetColor, petSize: Pet
         allPets.push(addPetToPanel(message.type, basePetUri, message.color, petSize, randomStartPosition(), '0px'));
         saveState();
         break;
+      case "reset-pet":
+        allPets.forEach(pet => pet.el.remove());
+        allPets = [];
+        allPets.push(addPetToPanel(message.type, basePetUri, message.color, message.size, randomStartPosition(), '0px'));
+        saveState();
+        break;
     }
   });
 };

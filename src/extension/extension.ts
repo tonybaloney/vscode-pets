@@ -162,6 +162,15 @@ export function activate(context: vscode.ExtensionContext) {
 			}
 		})
 	);
+	
+	context.subscriptions.push(
+		vscode.commands.registerCommand('vscode-pets.reset-pets', () => {
+			if (getConfigurationPosition() === ExtPosition.explorer && provider) {
+				const spec = PetSpecification.fromConfiguration();
+				provider.resetPets(spec);
+			}
+		})
+	);
 
 	// Listening to configuration changes
 	context.subscriptions.push(vscode.workspace.onDidChangeConfiguration(e => {
@@ -461,6 +470,10 @@ class PetWebviewViewProvider extends PetWebviewContainer {
 	
 	update() {
 		this._update();
+	}
+
+	public resetPets(spec: PetSpecification) {
+		this.getWebview().postMessage({ command: 'reset-pet', type: spec.type, color: spec.color, size: spec.size });
 	}
 
 	getWebview(): vscode.Webview {
