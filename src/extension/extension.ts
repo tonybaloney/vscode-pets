@@ -104,8 +104,12 @@ export function activate(context: vscode.ExtensionContext) {
 
 	context.subscriptions.push(
 		vscode.commands.registerCommand('vscode-pets.throw-ball', () => {
-			if (PetPanel.currentPanel) {
-				PetPanel.currentPanel.throwBall();
+			if (getConfigurationPosition() === ExtPosition.explorer && provider) {
+				provider.throwBall();
+			} else {
+				if (PetPanel.currentPanel) {
+					PetPanel.currentPanel.throwBall();
+				}
 			}
 		})
 	);
@@ -439,15 +443,7 @@ class PetWebviewViewProvider extends PetWebviewContainer {
 	resolveWebviewView(webviewView: vscode.WebviewView, context: vscode.WebviewViewResolveContext<unknown>, token: vscode.CancellationToken): void | Thenable<void> {
 		this._webviewView = webviewView;
 	
-		webviewView.webview.options = {
-			// Allow scripts in the webview
-			enableScripts: true,
-	
-			localResourceRoots: [
-				this._extensionUri
-			]
-		};
-		
+		webviewView.webview.options = getWebviewOptions(this._extensionUri);
 		webviewView.webview.html = this._getHtmlForWebview(webviewView.webview);
 		
 		webviewView.webview.onDidReceiveMessage(
@@ -461,6 +457,10 @@ class PetWebviewViewProvider extends PetWebviewContainer {
 			null,
 			this._disposables
 		);		
+	}
+	
+	update() {
+		this._update();
 	}
 
 	getWebview(): vscode.Webview {
