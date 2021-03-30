@@ -33,7 +33,7 @@
 				{
 					"type": "webview",
 					"id": "vscode-pets.petsView",
-					"name": "VSCode Pets",
+					"name": "VS Code Pets",
 					"when": "vscode-pets.position == 'explorer'"
 				}
 			]
@@ -42,6 +42,11 @@
 			"view/title": [
 				{
 					"command": "vscode-pets.spawn-pet",
+					"when": "view == vscode-pets.petsView",
+					"group": "navigation"
+				},
+				{
+					"command": "vscode-pets.reset-pets",
 					"when": "view == vscode-pets.petsView",
 					"group": "navigation"
 				},
@@ -80,6 +85,16 @@
 				"command": "vscode-pets.delete-pets",
 				"title": "Delete additional pets",
 				"category": "Pet Coding"
+			},
+			{
+				"command": "vscode-pets.reset-pets",
+				"title": "Reset pets",
+				"category": "Pet Coding",
+				"when": "focusedView == vscode-pets.petsView && vscode-pets.position == 'explorer'",
+				"icon": {
+					"dark": "media/icon/dark-refresh.svg",
+					"light": "media/icon/light-refresh.svg"
+				}
 			}
 		],
 		"configuration": [
