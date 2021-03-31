@@ -92,8 +92,8 @@
 				"category": "Pet Coding",
 				"when": "focusedView == vscode-pets.petsView && vscode-pets.position == 'explorer'",
 				"icon": {
-					"dark": "media/icon/dark-refresh.svg",
-					"light": "media/icon/light-refresh.svg"
+					"dark": "media/icon/dark-trash.svg",
+					"light": "media/icon/light-trash.svg"
 				}
 			}
 		],
