@@ -182,6 +182,13 @@ export function activate(context: vscode.ExtensionContext) {
 				PetPanel.currentPanel.updatePetType(spec.type);
 				PetPanel.currentPanel.update();
 			}
+
+			if (getConfigurationPosition() === ExtPosition.explorer && provider) {
+				provider.updatePetColor(spec.color);
+				provider.updatePetSize(spec.size);
+				provider.updatePetType(spec.type);
+				provider.update();
+			}
 		}
 		
 		if (e.affectsConfiguration('vscode-pets.position')) {
