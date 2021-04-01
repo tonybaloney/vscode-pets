@@ -82,15 +82,19 @@ export function storeCollectionAsMemento(context: vscode.ExtensionContext, colle
 export function activate(context: vscode.ExtensionContext) {
 	context.subscriptions.push(
 		vscode.commands.registerCommand('vscode-pets.start', () => {
-			const spec = PetSpecification.fromConfiguration();
-			PetPanel.createOrShow(context.extensionUri, context.extensionPath, spec.color, spec.type, spec.size);
-			
-			// Recover extra pets from last session
-			if (PetPanel.currentPanel){
-				var collection = PetSpecification.collectionFromMemento(context, getConfiguredSize());
-				collection.forEach(item => {
-					PetPanel.currentPanel!.spawnPet(item);
-				});
+			if (getConfigurationPosition() === ExtPosition.explorer && webviewViewProvider) {
+				vscode.commands.executeCommand('vscode-pets.petsView.focus');
+			} else {
+				const spec = PetSpecification.fromConfiguration();
+				PetPanel.createOrShow(context.extensionUri, context.extensionPath, spec.color, spec.type, spec.size);
+				
+				// Recover extra pets from last session
+				if (PetPanel.currentPanel){
+					var collection = PetSpecification.collectionFromMemento(context, getConfiguredSize());
+					collection.forEach(item => {
+						PetPanel.currentPanel!.spawnPet(item);
+					});
+				}
 			}
 		})
 	);
