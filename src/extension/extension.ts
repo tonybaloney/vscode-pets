@@ -166,8 +166,15 @@ export function activate(context: vscode.ExtensionContext) {
 	context.subscriptions.push(
 		vscode.commands.registerCommand('vscode-pets.reset-pets', () => {
 			if (getConfigurationPosition() === ExtPosition.explorer && provider) {
+				context.globalState.update(EXTRA_PETS_KEY + '.types', []);
+				context.globalState.update(EXTRA_PETS_KEY + '.colors', []);
+
 				const spec = PetSpecification.fromConfiguration();
-				provider.resetPets(spec);
+				provider.updatePetColor(spec.color);
+				provider.updatePetSize(spec.size);
+				provider.updatePetType(spec.type);
+
+				provider.resetPets();
 			}
 		})
 	);
@@ -479,8 +486,8 @@ class PetWebviewViewProvider extends PetWebviewContainer {
 		this._update();
 	}
 
-	public resetPets(spec: PetSpecification) {
-		this.getWebview().postMessage({ command: 'reset-pet', type: spec.type, color: spec.color, size: spec.size });
+	public resetPets() {
+		this.getWebview().postMessage({ command: 'reset-pet', type: this.petType(), color: this.petColor(), size: this.petSize() });
 	}
 
 	getWebview(): vscode.Webview {
