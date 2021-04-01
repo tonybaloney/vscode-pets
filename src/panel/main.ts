@@ -128,21 +128,22 @@ function randomStartPosition() : string {
   return `${x}px`;
 }
 
+let canvas : HTMLCanvasElement, ctx: CanvasRenderingContext2D;
+
+function initBallPhysics() {
+  canvas = (document.getElementById("petCanvas") as HTMLCanvasElement);
+  ctx = (canvas.getContext("2d") as CanvasRenderingContext2D);
+  ctx.canvas.width = window.innerWidth;
+  ctx.canvas.height = window.innerHeight;
+}
+
 // It cannot access the main VS Code APIs directly.
 export function petPanelApp(basePetUri: string, petColor: PetColor, petSize: PetSize, petType: PetType) {
   const ballRadius: number = calculateBallRadius(petSize);
 
   /// Bouncing ball components, credit https://stackoverflow.com/a/29982343
-  var canvas : HTMLCanvasElement, ctx: CanvasRenderingContext2D;
   const gravity: number = 0.2, damping: number = 0.9, traction: number = 0.8;
   var ballState: BallState;
-
-  function initBallPhysics() {
-    canvas = (document.getElementById("petCanvas") as HTMLCanvasElement);
-    ctx = (canvas.getContext("2d") as CanvasRenderingContext2D);
-    ctx.canvas.width = window.innerWidth;
-    ctx.canvas.height = window.innerHeight;
-  }
 
   function resetBall() {
     canvas.style.display = "block";
@@ -219,3 +220,7 @@ export function petPanelApp(basePetUri: string, petColor: PetColor, petSize: Pet
     }
   });
 };
+
+window.addEventListener('resize', function () {
+  initBallPhysics();
+});
