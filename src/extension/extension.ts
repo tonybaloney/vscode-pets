@@ -14,7 +14,7 @@ const ALL_PETS = [PetType.cat, PetType.clippy, PetType.dog, PetType.rubberduck, 
 const ALL_COLORS = [PetColor.black, PetColor.brown, PetColor.green, PetColor.yellow];
 const ALL_SCALES = [PetSize.nano, PetSize.medium, PetSize.large];
 
-let provider: PetWebviewViewProvider;
+let webviewViewProvider: PetWebviewViewProvider;
 
 function getConfiguredSize(): PetSize {
 	var size = vscode.workspace.getConfiguration("vscode-pets").get<PetSize>("petSize", DEFAULT_PET_SCALE);
@@ -96,16 +96,16 @@ export function activate(context: vscode.ExtensionContext) {
 	);
 
 	const spec = PetSpecification.fromConfiguration();
-	provider = new PetWebviewViewProvider(context.extensionUri, context.extensionPath, spec.color, spec.type, spec.size);
+	webviewViewProvider = new PetWebviewViewProvider(context.extensionUri, context.extensionPath, spec.color, spec.type, spec.size);
 	updateExtensionPositionContext();
 	
 	context.subscriptions.push(
-		vscode.window.registerWebviewViewProvider(PetWebviewViewProvider.viewType, provider));
+		vscode.window.registerWebviewViewProvider(PetWebviewViewProvider.viewType, webviewViewProvider));
 
 	context.subscriptions.push(
 		vscode.commands.registerCommand('vscode-pets.throw-ball', () => {
-			if (getConfigurationPosition() === ExtPosition.explorer && provider) {
-				provider.throwBall();
+			if (getConfigurationPosition() === ExtPosition.explorer && webviewViewProvider) {
+				webviewViewProvider.throwBall();
 			} else {
 				if (PetPanel.currentPanel) {
 					PetPanel.currentPanel.throwBall();
@@ -152,7 +152,7 @@ export function activate(context: vscode.ExtensionContext) {
 				}
 				const spec = new PetSpecification(petColor, petType as PetType, getConfiguredSize());
 				if (getConfigurationPosition() === ExtPosition.explorer) {
-					provider.spawnPet(spec);
+					webviewViewProvider.spawnPet(spec);
 				} else if (PetPanel.currentPanel) {
 					PetPanel.currentPanel.spawnPet(spec);
 				}
@@ -165,16 +165,16 @@ export function activate(context: vscode.ExtensionContext) {
 	
 	context.subscriptions.push(
 		vscode.commands.registerCommand('vscode-pets.reset-pets', () => {
-			if (getConfigurationPosition() === ExtPosition.explorer && provider) {
+			if (getConfigurationPosition() === ExtPosition.explorer && webviewViewProvider) {
 				context.globalState.update(EXTRA_PETS_KEY + '.types', []);
 				context.globalState.update(EXTRA_PETS_KEY + '.colors', []);
 
 				const spec = PetSpecification.fromConfiguration();
-				provider.updatePetColor(spec.color);
-				provider.updatePetSize(spec.size);
-				provider.updatePetType(spec.type);
+				webviewViewProvider.updatePetColor(spec.color);
+				webviewViewProvider.updatePetSize(spec.size);
+				webviewViewProvider.updatePetType(spec.type);
 
-				provider.resetPets();
+				webviewViewProvider.resetPets();
 			}
 		})
 	);
@@ -190,11 +190,11 @@ export function activate(context: vscode.ExtensionContext) {
 				PetPanel.currentPanel.update();
 			}
 
-			if (getConfigurationPosition() === ExtPosition.explorer && provider) {
-				provider.updatePetColor(spec.color);
-				provider.updatePetSize(spec.size);
-				provider.updatePetType(spec.type);
-				provider.update();
+			if (getConfigurationPosition() === ExtPosition.explorer && webviewViewProvider) {
+				webviewViewProvider.updatePetColor(spec.color);
+				webviewViewProvider.updatePetSize(spec.size);
+				webviewViewProvider.updatePetType(spec.type);
+				webviewViewProvider.update();
 			}
 		}
 		
