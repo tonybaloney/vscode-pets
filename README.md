@@ -46,6 +46,26 @@ Run the "Spawn additional pet" command (`vscode-pets.spawn-pet`) and select the 
 
 Extra pets will not persist between closing and restarting VS Code.
 
+## Contributing
+
+### Ideas and discussion
+
+Have an awesome idea for a new feature? Please [open an issue](https://github.com/tonybaloney/vscode-pets/issues/new) describing your idea! You can also help by reviewing some of the [existing ideas](https://github.com/tonybaloney/vscode-pets/issues) and leaving your opinion.
+
+### Reporting bugs
+
+Something is not working as it should? Please [open an issue](https://github.com/tonybaloney/vscode-pets/issues/new) giving as much information as you can.
+
+### Write code
+
+Want to contribute to vscode-pets? Feel free to [fork the repository](https://github.com/tonybaloney/vscode-pets/fork) and submit a pull request.
+
+#### Testing the changes
+
+* Run `npm install`.
+* Run `npm run compile`.
+* Go to the debug panel on sidebar and launch the development version with the extension loaded (first option in the debug profiles).
+
 ## Credits
 
 The cat, dog, and snake media assets for this extension were licensed from itch.io.
