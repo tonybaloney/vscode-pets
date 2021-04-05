@@ -2,6 +2,10 @@
 
 All notable changes to the "vscode-pets" extension will be documented in this file.
 
+## [1.1.0]
+
+- Added the choice of having the pets panel as an editor tab (current default), or as a panel in the explorer view. You can also drag the explorer tab to the left to have it pinned as a side-bar shortcut.
+
 ## [1.0.0]
 
 - Added the ability to spawn multiple pets through the `vscode-pets.spawn-pet` command
