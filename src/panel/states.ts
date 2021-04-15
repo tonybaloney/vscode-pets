@@ -62,7 +62,7 @@ export class BallState {
     }
 }
 
-export function resolveState(state: string, el: HTMLImageElement): IState {
+export function resolveState(state: string, el: HTMLImageElement, floor: number): IState {
     switch(state){
         case States.sitIdle: return new SitIdleState(el);
         case States.walkRight: return new WalkRightState(el);
@@ -72,7 +72,7 @@ export function resolveState(state: string, el: HTMLImageElement): IState {
         case States.lie: return new LieState(el);
         case States.wallHangLeft: return new WallHangLeftState(el);
         case States.climbWallLeft: return new ClimbWallLeftState(el);
-        case States.jumpDownLeft: return new JumpDownLeftState(el);
+        case States.jumpDownLeft: return new JumpDownLeftState(el, floor);
         case States.land: return new LandState(el);
         case States.swipe: return new SwipeState(el);
         case States.idleWithBall: return new IdleWithBallState(el);
@@ -279,17 +279,19 @@ export class JumpDownLeftState implements IState {
     skipSpeed = 3;
     spriteLabel = "fall_from_grab";
     horizontalDirection = HorizontalDirection.right;
+    floor: number;
 
-    constructor(petElement: HTMLImageElement) {
+    constructor(petElement: HTMLImageElement, floor: number) {
         this.petBottom = parseInt(petElement.style.bottom);
         this.el = petElement;
+        this.floor = floor;
     }
 
     nextFrame() : FrameResult {
         this.petBottom -= 5;
         this.el.style.bottom = `${this.petBottom}px`;
-        if (this.petBottom <= 0) {
-            this.petBottom = 0;
+        if (this.petBottom <= this.floor) {
+            this.petBottom = this.floor;
             return FrameResult.stateComplete;
         }   
         return FrameResult.stateContinue;

@@ -1,6 +1,6 @@
 import * as path from 'path';
 import * as vscode from 'vscode';
-import { PetSize, PetColor, PetType, ExtPosition } from '../common/types';
+import { PetSize, PetColor, PetType, ExtPosition, Theme } from '../common/types';
 
 const EXTRA_PETS_KEY = 'vscode-pets.extra-pets';
 const EXTRA_PETS_KEY_TYPES = EXTRA_PETS_KEY + '.types';
@@ -9,10 +9,12 @@ const DEFAULT_PET_SCALE = PetSize.nano;
 const DEFAULT_COLOR = PetColor.brown;
 const DEFAULT_PET_TYPE = PetType.cat;
 const DEFAULT_POSITION = ExtPosition.panel;
+const DEFAULT_THEME = Theme.none;
 
 const ALL_PETS = [PetType.cat, PetType.clippy, PetType.dog, PetType.rubberduck, PetType.snake];
 const ALL_COLORS = [PetColor.black, PetColor.brown, PetColor.green, PetColor.yellow];
 const ALL_SCALES = [PetSize.nano, PetSize.medium, PetSize.large];
+const ALL_THEMES = [Theme.none, Theme.forest];
 
 let webviewViewProvider: PetWebviewViewProvider;
 
@@ -22,6 +24,14 @@ function getConfiguredSize(): PetSize {
 		size = DEFAULT_PET_SCALE;
 	}
 	return size;
+}
+
+function getConfiguredTheme(): Theme {
+	var theme = vscode.workspace.getConfiguration("vscode-pets").get<Theme>("theme", DEFAULT_THEME);
+	if (ALL_THEMES.lastIndexOf(theme) === -1){
+		theme = DEFAULT_THEME;
+	}
+	return theme;
 }
 
 function getConfigurationPosition() {
@@ -86,7 +96,7 @@ export function activate(context: vscode.ExtensionContext) {
 				vscode.commands.executeCommand('vscode-pets.petsView.focus');
 			} else {
 				const spec = PetSpecification.fromConfiguration();
-				PetPanel.createOrShow(context.extensionUri, context.extensionPath, spec.color, spec.type, spec.size);
+				PetPanel.createOrShow(context.extensionUri, context.extensionPath, spec.color, spec.type, spec.size, getConfiguredTheme());
 				
 				// Recover extra pets from last session
 				if (PetPanel.currentPanel){
@@ -100,7 +110,7 @@ export function activate(context: vscode.ExtensionContext) {
 	);
 
 	const spec = PetSpecification.fromConfiguration();
-	webviewViewProvider = new PetWebviewViewProvider(context.extensionUri, context.extensionPath, spec.color, spec.type, spec.size);
+	webviewViewProvider = new PetWebviewViewProvider(context.extensionUri, context.extensionPath, spec.color, spec.type, spec.size, getConfiguredTheme());
 	updateExtensionPositionContext();
 	
 	context.subscriptions.push(
@@ -185,12 +195,16 @@ export function activate(context: vscode.ExtensionContext) {
 
 	// Listening to configuration changes
 	context.subscriptions.push(vscode.workspace.onDidChangeConfiguration(e => {
-		if (e.affectsConfiguration('vscode-pets.petColor') || e.affectsConfiguration('vscode-pets.petType') || e.affectsConfiguration('vscode-pets.petSize')) {
+		if (e.affectsConfiguration('vscode-pets.petColor') 
+		    || e.affectsConfiguration('vscode-pets.petType') 
+			|| e.affectsConfiguration('vscode-pets.petSize')
+			|| e.affectsConfiguration('vscode-pets.theme')) {
 			const spec = PetSpecification.fromConfiguration();
 			if (PetPanel.currentPanel) {
 				PetPanel.currentPanel.updatePetColor(spec.color);
 				PetPanel.currentPanel.updatePetSize(spec.size);
 				PetPanel.currentPanel.updatePetType(spec.type);
+				PetPanel.currentPanel.updateTheme(getConfiguredTheme());
 				PetPanel.currentPanel.update();
 			}
 
@@ -198,6 +212,7 @@ export function activate(context: vscode.ExtensionContext) {
 				webviewViewProvider.updatePetColor(spec.color);
 				webviewViewProvider.updatePetSize(spec.size);
 				webviewViewProvider.updatePetType(spec.type);
+				webviewViewProvider.updateTheme(getConfiguredTheme());
 				webviewViewProvider.update();
 			}
 		}
@@ -214,7 +229,7 @@ export function activate(context: vscode.ExtensionContext) {
 				// Reset the webview options so we use latest uri for `localResourceRoots`.
 				webviewPanel.webview.options = getWebviewOptions(context.extensionUri);
 				const spec = PetSpecification.fromConfiguration();
-				PetPanel.revive(webviewPanel, context.extensionUri, context.extensionPath, spec.color, spec.type, spec.size);
+				PetPanel.revive(webviewPanel, context.extensionUri, context.extensionPath, spec.color, spec.type, spec.size, getConfiguredTheme());
 			}
 		});
 	}
@@ -254,13 +269,15 @@ class PetWebviewContainer {
 	protected _petColor: PetColor;
 	protected _petType: PetType;
 	protected _petSize: PetSize;
+	protected _theme: Theme;
 
-	constructor (extensionUri: vscode.Uri, extensionPath: string, color: PetColor, type:PetType, size:PetSize) {
+	constructor (extensionUri: vscode.Uri, extensionPath: string, color: PetColor, type:PetType, size:PetSize, theme: Theme) {
 		this._extensionUri = extensionUri;
 		this._petMediaPath = path.join(extensionPath, 'media');
 		this._petColor = color;
 		this._petType = type;
 		this._petSize = size;
+		this._theme = theme;
 	}
 
 	public petColor(): PetColor {
@@ -275,6 +292,10 @@ class PetWebviewContainer {
 		return this._petSize;
 	}
 
+	public theme(): Theme {
+		return this._theme;
+	}
+
 	public updatePetColor(newColor: PetColor){
 		this._petColor = newColor;
 	}
@@ -285,6 +306,10 @@ class PetWebviewContainer {
 
 	public updatePetSize(newSize: PetSize){
 		this._petSize = newSize;
+	}
+
+	public updateTheme(newTheme: Theme){
+		this._theme = newTheme;
 	}
 
 	public throwBall() {
@@ -344,9 +369,11 @@ class PetWebviewContainer {
 				<title>VS Code Pets</title>
 			</head>
 			<body>
-				<canvas id="petCanvas"></canvas><div id="petsContainer"></div>
+				<canvas id="petCanvas"></canvas>
+				<div id="petsContainer"></div>
+				<div id="foreground"></div>	
 				<script nonce="${nonce}" src="${scriptUri}"></script>
-				<script nonce="${nonce}">petApp.petPanelApp("${basePetUri}", "${this.petColor()}", "${this.petSize()}", "${this.petType()}");</script>
+				<script nonce="${nonce}">petApp.petPanelApp("${basePetUri}", "${this.theme()}", "${this.petColor()}", "${this.petSize()}", "${this.petType()}");</script>
 				
 			</body>
 			</html>`;
@@ -367,7 +394,7 @@ class PetPanel extends PetWebviewContainer {
 
 	private readonly _panel: vscode.WebviewPanel;
 
-	public static createOrShow(extensionUri: vscode.Uri, extensionPath: string, petColor: PetColor, petType:PetType, petSize:PetSize) {
+	public static createOrShow(extensionUri: vscode.Uri, extensionPath: string, petColor: PetColor, petType:PetType, petSize:PetSize, theme: Theme) {
 		const column = vscode.window.activeTextEditor
 			? vscode.window.activeTextEditor.viewColumn
 			: undefined;
@@ -394,15 +421,15 @@ class PetPanel extends PetWebviewContainer {
 			getWebviewOptions(extensionUri),
 		);
 
-		PetPanel.currentPanel = new PetPanel(panel, extensionUri, extensionPath, petColor, petType, petSize);
+		PetPanel.currentPanel = new PetPanel(panel, extensionUri, extensionPath, petColor, petType, petSize, theme);
 	}
 
-	public static revive(panel: vscode.WebviewPanel, extensionUri: vscode.Uri, extensionPath: string, petColor: PetColor, petType: PetType, petSize: PetSize) {
-		PetPanel.currentPanel = new PetPanel(panel, extensionUri, extensionPath, petColor, petType, petSize);
+	public static revive(panel: vscode.WebviewPanel, extensionUri: vscode.Uri, extensionPath: string, petColor: PetColor, petType: PetType, petSize: PetSize, theme: Theme) {
+		PetPanel.currentPanel = new PetPanel(panel, extensionUri, extensionPath, petColor, petType, petSize, theme);
 	}
 
-	private constructor(panel: vscode.WebviewPanel, extensionUri: vscode.Uri, extensionPath: string, color: PetColor, type: PetType, size: PetSize) {
-		super(extensionUri, extensionPath, color, type, size);
+	private constructor(panel: vscode.WebviewPanel, extensionUri: vscode.Uri, extensionPath: string, color: PetColor, type: PetType, size: PetSize, theme: Theme) {
+		super(extensionUri, extensionPath, color, type, size, theme);
 
 		this._panel = panel;
 
