@@ -148,7 +148,7 @@ export function activate(context: vscode.ExtensionContext) {
 						}) as PetColor;
 						break;
 					case PetType.clippy:
-						choices = [PetColor.black, PetColor.brown, PetColor.green];
+						choices = [PetColor.black, PetColor.brown, PetColor.green, PetColor.yellow];
 						petColor = await vscode.window.showQuickPick(choices, {
 							placeHolder: 'Select a color',
 						}) as PetColor;
