@@ -144,6 +144,15 @@
 						],
 						"default": "panel",
 						"description": "VSCode pets webview position"
+					},
+					"vscode-pets.theme": {
+						"type": "string",
+						"enum": [
+							"none",
+							"forest"
+						],
+						"default": "none",
+						"description": "Background theme assets for your pets"
 					}
 				}
 			}

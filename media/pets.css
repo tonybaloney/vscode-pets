@@ -13,6 +13,21 @@ body {
 	font-weight: var(--vscode-font-weight);
 	font-family: var(--vscode-font-family);
 	background-color: var(--vscode-editor-background);
+	background-attachment: fixed;
+	background-repeat: repeat-x;
+	background-position: bottom left;
+}
+
+#foreground {
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 5;
+	background-attachment: fixed;
+	background-repeat: repeat-x;
+	background-position: bottom left;
 }
 
 ol,
@@ -94,7 +109,7 @@ textarea::placeholder {
 	position:fixed; 
 	bottom:0;
 	left:0; 
-	z-index: 1;
+	z-index: 10;
 }
 
 img.pet {

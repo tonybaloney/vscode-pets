@@ -7,6 +7,7 @@ export class InvalidStateException {
 
 export interface IPetType {
     canSwipe(): boolean
+    canChase(): boolean
     swipe(): void
     chase(ballState: BallState, canvas: HTMLCanvasElement): void
     nextFrame(): void
@@ -23,12 +24,14 @@ abstract class BasePetType implements IPetType {
     holdStateEnum: States | undefined;
     el: HTMLImageElement;
     petRoot: string;
+    floor: number;
 
-    constructor(spriteElement: HTMLImageElement, petRoot: string){
+    constructor(spriteElement: HTMLImageElement, petRoot: string, floor: number){
         this.el = spriteElement;
         this.petRoot = petRoot;
+        this.floor = floor;
         this.currentStateEnum = this.sequence.startingState;
-        this.currentState = resolveState(this.currentStateEnum, spriteElement);
+        this.currentState = resolveState(this.currentStateEnum, spriteElement, this.floor);
     }
 
     getState(): PetInstanceState { 
@@ -37,7 +40,7 @@ abstract class BasePetType implements IPetType {
 
     recoverState(state: PetInstanceState){
         this.currentStateEnum = state.currentStateEnum!;
-        this.currentState = resolveState(this.currentStateEnum, this.el);
+        this.currentState = resolveState(this.currentStateEnum, this.el, this.floor);
     }
 
     canSwipe(){
@@ -45,12 +48,16 @@ abstract class BasePetType implements IPetType {
         return true;
     }
 
+    canChase(){
+        return this.canSwipe(); // They're really the same at this stage 
+    }
+
     swipe() {
         if (this.currentStateEnum === States.swipe) { return; }
         this.holdState = this.currentState;
         this.holdStateEnum = this.currentStateEnum;
         this.currentStateEnum = States.swipe;
-        this.currentState = resolveState(this.currentStateEnum, this.el);
+        this.currentState = resolveState(this.currentStateEnum, this.el, this.floor);
     }
     
     chase(ballState: BallState, canvas: HTMLCanvasElement) {
@@ -110,12 +117,12 @@ abstract class BasePetType implements IPetType {
             }
 
             var nextState = this.chooseNextState(this.currentStateEnum);
-            this.currentState = resolveState(nextState, this.el);
+            this.currentState = resolveState(nextState, this.el, this.floor);
             this.currentStateEnum = nextState;
         } else if (frameResult === FrameResult.stateCancel){
             if (this.currentStateEnum === States.chase) { // Currently the only one anyway
                 var nextState = this.chooseNextState(States.idleWithBall);
-                this.currentState = resolveState(nextState, this.el);
+                this.currentState = resolveState(nextState, this.el, this.floor);
                 this.currentStateEnum = nextState;
             }
         }
@@ -183,6 +190,10 @@ export class Cat extends BasePetType {
             return false;
         }
         return true;
+    }
+
+    canChase(){
+        return this.canSwipe(); // Dont chase if we're hanging on the wall
     }
 }
 
@@ -341,21 +352,21 @@ export class RubberDuck extends BasePetType {
 export class InvalidPetException {
 }
 
-export function createPet(petType: string, el: HTMLImageElement, petRoot: string) : IPetType {
+export function createPet(petType: string, el: HTMLImageElement, petRoot: string, floor: number) : IPetType {
     if (petType === "cat"){
-        return new Cat(el, petRoot);
+        return new Cat(el, petRoot, floor);
     }
     else if (petType === "dog") {
-        return new Dog(el, petRoot);
+        return new Dog(el, petRoot, floor);
     }
     else if (petType === "snake") {
-        return new Snake(el, petRoot);
+        return new Snake(el, petRoot, floor);
     }
     else if (petType === "clippy") {
-        return new Clippy(el, petRoot);
+        return new Clippy(el, petRoot, floor);
     }
     else if (petType === "rubber duck") {
-        return new RubberDuck(el, petRoot);
+        return new RubberDuck(el, petRoot, floor);
     }
     throw new InvalidPetException();
 }
