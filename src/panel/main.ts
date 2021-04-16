@@ -46,6 +46,19 @@ function calculateBallRadius(size: PetSize): number{
   }
 }
 
+function calculateFloor(size: PetSize): number {
+  switch (size){
+    case PetSize.nano:
+      return 23;
+    case PetSize.medium:
+      return 40;
+    case PetSize.large:
+      return 65;
+    default:
+      return 23;
+  }
+}
+
 function handleMouseOver(e: MouseEvent){
   var el = e.currentTarget as HTMLDivElement;
   allPets.forEach(element => {
@@ -130,9 +143,10 @@ export function petPanelApp(basePetUri: string, theme: Theme, petColor: PetColor
   var floor = 0;
   // Apply Theme backgrounds
   if (theme !== Theme.none){
-    document.body.style.backgroundImage = `url('${basePetUri}/backgrounds/${theme}/background.png')`;
-    document.getElementById("foreground")!.style.backgroundImage = `url('${basePetUri}/backgrounds/${theme}/foreground.png')`;
-    floor = 30; // Themes have pets at a specified height (30px)
+    document.body.style.backgroundImage = `url('${basePetUri}/backgrounds/${theme}/background-${petSize}.png')`;
+    document.getElementById("foreground")!.style.backgroundImage = `url('${basePetUri}/backgrounds/${theme}/foreground-${petSize}.png')`;
+    
+    floor = calculateFloor(petSize); // Themes have pets at a specified height from the ground
   } else {
     document.body.style.backgroundImage = "";
     document.getElementById("foreground")!.style.backgroundImage = "";
@@ -158,12 +172,12 @@ export function petPanelApp(basePetUri: string, theme: Theme, petColor: PetColor
       ballState.vx = -ballState.vx * damping;
       ballState.cx = ballRadius;
     }
-    if (ballState.cy + ballRadius >= (canvas.height)) {
+    if (ballState.cy + ballRadius + floor >= (canvas.height)) {
       ballState.vy = -ballState.vy * damping;
-      ballState.cy = canvas.height - ballRadius;
+      ballState.cy = canvas.height - ballRadius - floor;
       // traction here
       ballState.vx *= traction;
-    } else if (ballState.cy - ballRadius <= floor) {
+    } else if (ballState.cy - ballRadius <= 0) {
       ballState.vy = -ballState.vy * damping;
       ballState.cy = ballRadius;
     }
@@ -211,7 +225,10 @@ export function petPanelApp(basePetUri: string, theme: Theme, petColor: PetColor
         saveState();
         break;
       case "reset-pet":
-        allPets.forEach(pet => pet.el.remove());
+        allPets.forEach(pet => {
+          pet.el.remove();
+          pet.collision.remove();
+        });
         allPets = [];
         allPets.push(addPetToPanel(message.type, basePetUri, message.color, message.size, randomStartPosition(), floor, floor));
         saveState();
