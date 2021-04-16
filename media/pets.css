@@ -16,6 +16,7 @@ body {
 	background-attachment: fixed;
 	background-repeat: repeat-x;
 	background-position: bottom left;
+	overflow: hidden; /* Hide scrollbars */
 }
 
 #foreground {
@@ -109,7 +110,7 @@ textarea::placeholder {
 	position:fixed; 
 	bottom:0;
 	left:0; 
-	z-index: 10;
+	z-index: 3;
 }
 
 img.pet {
