@@ -46,6 +46,12 @@ Run the "Spawn additional pet" command (`vscode-pets.spawn-pet`) and select the 
 
 Extra pets will not persist between closing and restarting VS Code.
 
+## Themes
+
+Configure `vscode-pets.theme` to `"forest"` and let your pets play in a spooky forest.
+
+![forest](https://github.com/tonybaloney/vscode-pet/raw/master/screenshot-7.gif)
+
 ## Contributing
 
 ### Ideas and discussion
