@@ -86,12 +86,16 @@ abstract class BasePetType implements IPetType {
         this._bottom = bottom;
         this.el.style.bottom = `${this._bottom}px`;
         this.el.style.bottom = `${this._bottom}px`;
+        this.collision.style.left = `${this._left}px`;
+        this.collision.style.bottom = `${this._bottom}px`;
     };
 
     positionLeft(left: number): void {
         this._left = left;
         this.el.style.left = `${this._left}px`;
         this.el.style.left = `${this._left}px`;
+        this.collision.style.left = `${this._left}px`;
+        this.collision.style.bottom = `${this._bottom}px`;
     }
 
     width(): number {
@@ -423,7 +427,7 @@ export function createPet(petType: string, el: HTMLImageElement, collision: HTML
     else if (petType === "clippy") {
         return new Clippy(el, collision, size, left, bottom, petRoot, floor);
     }
-    else if (petType === "rubber-duck") {
+    else if (petType === "rubber-duck" || petType === "rubber duck") {
         return new RubberDuck(el, collision, size, left, bottom, petRoot, floor);
     }
     throw new InvalidPetException();
