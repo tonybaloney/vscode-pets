@@ -70,11 +70,12 @@ function startAnimations(collision: HTMLDivElement, pet: IPetType) {
 function addPetToPanel(petType: PetType, basePetUri: string, petColor: PetColor, petSize: PetSize, left: number, bottom: number, floor: number): PetElement {
   var petSpriteElement: HTMLImageElement = document.createElement("img");
   petSpriteElement.className = "pet";
+  (document.getElementById("petsContainer") as HTMLDivElement).appendChild(petSpriteElement);
 
   var collisionElement: HTMLDivElement = document.createElement("div");
   collisionElement.className = "collision";
+  (document.getElementById("petsContainer") as HTMLDivElement).appendChild(collisionElement);
 
-  (document.getElementById("petsContainer") as HTMLDivElement).appendChild(petSpriteElement);
   const root = basePetUri + '/' + petType + '/' + petColor;
   console.log("Creating new pet : ", petType, root);
   var newPet = createPet(petType, petSpriteElement, collisionElement, petSize, left, bottom, root, floor);
@@ -101,6 +102,9 @@ function saveState(){
 function recoverState(basePetUri: string, petSize: PetSize, floor: number){
   var state = vscode.getState();
   state.petStates!.forEach(p => {
+    // Fixes a bug related to duck animations
+    if (p.petType as string === "rubber duck") {(p.petType as string) = "rubber-duck";}
+
     var newPet = addPetToPanel(p.petType!, basePetUri, p.petColor!, petSize, parseInt(p.elLeft!), parseInt(p.elBottom!), floor);
     newPet.pet.recoverState(p.petState!);
     allPets.push(newPet);
