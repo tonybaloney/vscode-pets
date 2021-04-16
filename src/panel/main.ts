@@ -1,5 +1,5 @@
 // This script will be run within the webview itself
-import { PetSize, PetColor, PetType } from '../common/types';
+import { PetSize, PetColor, PetType, Theme } from '../common/types';
 import {createPet, IPetType} from './pets';
 import { BallState, PetPanelState } from './states';
 
@@ -18,12 +18,14 @@ const vscode = window.acquireVsCodeApi();
 
 class PetElement {
   el: HTMLImageElement;
+  collision: HTMLDivElement;
   pet: IPetType;
   color: PetColor;
   type: PetType;
 
-  constructor(el: HTMLImageElement, pet: IPetType, color: PetColor, type: PetType){
+  constructor(el: HTMLImageElement, collision: HTMLDivElement, pet: IPetType, color: PetColor, type: PetType){
     this.el = el;
+    this.collision = collision;
     this.pet = pet;
     this.color = color;
     this.type = type;
@@ -44,31 +46,23 @@ function calculateBallRadius(size: PetSize): number{
   }
 }
 
-function calculateSpriteWidth(size: PetSize): number{
-  if (size === PetSize.nano){
-    return 30;
-  } else if (size === PetSize.medium){
-    return 55;
-  } else if (size === PetSize.large){
-    return 110;
-  } else {
-    return 30; // Shrug
+function calculateFloor(size: PetSize): number {
+  switch (size){
+    case PetSize.nano:
+      return 23;
+    case PetSize.medium:
+      return 40;
+    case PetSize.large:
+      return 65;
+    default:
+      return 23;
   }
 }
 
-function initSprite(el: HTMLImageElement, petSize: PetSize, left: string, bottom: string) {
-  el.style.left = left;
-  el.style.bottom = bottom;
-  el.style.width = "auto";
-  el.style.height = "auto";
-  el.style.maxWidth = `${calculateSpriteWidth(petSize)}px`;
-  el.style.maxHeight = `${calculateSpriteWidth(petSize)}px`;
-}
-
 function handleMouseOver(e: MouseEvent){
-  var el = e.currentTarget as HTMLImageElement;
+  var el = e.currentTarget as HTMLDivElement;
   allPets.forEach(element => {
-    if (element.el === el){
+    if (element.collision === el){
       if (!element.pet.canSwipe()) {
         return;
       }
@@ -78,24 +72,28 @@ function handleMouseOver(e: MouseEvent){
   
 }
 
-function startAnimations(el: HTMLImageElement, pet: IPetType) {
-  el.addEventListener("mouseover", handleMouseOver);
+function startAnimations(collision: HTMLDivElement, pet: IPetType) {
+  collision.addEventListener("mouseover", handleMouseOver);
   setInterval(() => {
     pet.nextFrame();
     saveState();
   }, 100);
 }
 
-function addPetToPanel(petType: PetType, basePetUri: string, petColor: PetColor, petSize: PetSize, left: string, bottom: string): PetElement {
+function addPetToPanel(petType: PetType, basePetUri: string, petColor: PetColor, petSize: PetSize, left: number, bottom: number, floor: number): PetElement {
   var petSpriteElement: HTMLImageElement = document.createElement("img");
   petSpriteElement.className = "pet";
   (document.getElementById("petsContainer") as HTMLDivElement).appendChild(petSpriteElement);
+
+  var collisionElement: HTMLDivElement = document.createElement("div");
+  collisionElement.className = "collision";
+  (document.getElementById("petsContainer") as HTMLDivElement).appendChild(collisionElement);
+
   const root = basePetUri + '/' + petType + '/' + petColor;
   console.log("Creating new pet : ", petType, root);
-  var newPet = createPet(petType, petSpriteElement, root);
-  initSprite(petSpriteElement, petSize, left, bottom);
-  startAnimations(petSpriteElement, newPet);
-  return new PetElement(petSpriteElement, newPet, petColor, petType);
+  var newPet = createPet(petType, petSpriteElement, collisionElement, petSize, left, bottom, root, floor);
+  startAnimations(collisionElement, newPet);
+  return new PetElement(petSpriteElement, collisionElement, newPet, petColor, petType);
 }
 
 function saveState(){
@@ -114,23 +112,25 @@ function saveState(){
   vscode.setState(state);
 }
 
-function recoverState(basePetUri: string, petSize: PetSize){
+function recoverState(basePetUri: string, petSize: PetSize, floor: number){
   var state = vscode.getState();
   state.petStates!.forEach(p => {
-    var newPet = addPetToPanel(p.petType!, basePetUri, p.petColor!, petSize, p.elLeft!, p.elBottom!);
+    // Fixes a bug related to duck animations
+    if (p.petType as string === "rubber duck") {(p.petType as string) = "rubber-duck";}
+
+    var newPet = addPetToPanel(p.petType!, basePetUri, p.petColor!, petSize, parseInt(p.elLeft!), parseInt(p.elBottom!), floor);
     newPet.pet.recoverState(p.petState!);
     allPets.push(newPet);
   });
 }
 
-function randomStartPosition() : string {
-  const x: number = Math.floor(Math.random() * (window.innerWidth * 0.7));
-  return `${x}px`;
+function randomStartPosition() : number {
+  return Math.floor(Math.random() * (window.innerWidth * 0.7));
 }
 
 let canvas : HTMLCanvasElement, ctx: CanvasRenderingContext2D;
 
-function initBallPhysics() {
+function initCanvas() {
   canvas = (document.getElementById("petCanvas") as HTMLCanvasElement);
   ctx = (canvas.getContext("2d") as CanvasRenderingContext2D);
   ctx.canvas.width = window.innerWidth;
@@ -138,8 +138,19 @@ function initBallPhysics() {
 }
 
 // It cannot access the main VS Code APIs directly.
-export function petPanelApp(basePetUri: string, petColor: PetColor, petSize: PetSize, petType: PetType) {
+export function petPanelApp(basePetUri: string, theme: Theme, petColor: PetColor, petSize: PetSize, petType: PetType) {
   const ballRadius: number = calculateBallRadius(petSize);
+  var floor = 0;
+  // Apply Theme backgrounds
+  if (theme !== Theme.none){
+    document.body.style.backgroundImage = `url('${basePetUri}/backgrounds/${theme}/background-${petSize}.png')`;
+    document.getElementById("foreground")!.style.backgroundImage = `url('${basePetUri}/backgrounds/${theme}/foreground-${petSize}.png')`;
+    
+    floor = calculateFloor(petSize); // Themes have pets at a specified height from the ground
+  } else {
+    document.body.style.backgroundImage = "";
+    document.getElementById("foreground")!.style.backgroundImage = "";
+  }
 
   /// Bouncing ball components, credit https://stackoverflow.com/a/29982343
   const gravity: number = 0.2, damping: number = 0.9, traction: number = 0.8;
@@ -161,9 +172,9 @@ export function petPanelApp(basePetUri: string, petColor: PetColor, petSize: Pet
       ballState.vx = -ballState.vx * damping;
       ballState.cx = ballRadius;
     }
-    if (ballState.cy + ballRadius >= canvas.height) {
+    if (ballState.cy + ballRadius + floor >= (canvas.height)) {
       ballState.vy = -ballState.vy * damping;
-      ballState.cy = canvas.height - ballRadius;
+      ballState.cy = canvas.height - ballRadius - floor;
       // traction here
       ballState.vx *= traction;
     } else if (ballState.cy - ballRadius <= 0) {
@@ -187,14 +198,14 @@ export function petPanelApp(basePetUri: string, petColor: PetColor, petSize: Pet
   var state = vscode.getState();
   if (!state) {
     console.log('No state, starting a new session.');
-    allPets.push(addPetToPanel(petType, basePetUri, petColor, petSize, randomStartPosition(), '0px'));
+    allPets.push(addPetToPanel(petType, basePetUri, petColor, petSize, randomStartPosition(), floor, floor));
     saveState();
   } else { 
     console.log('Recovering state - ', state);
-    recoverState(basePetUri, petSize);
+    recoverState(basePetUri, petSize, floor);
   }
 
-  initBallPhysics();
+  initCanvas();
 
   // Handle messages sent from the extension to the webview
   window.addEventListener("message", (event) => {
@@ -204,23 +215,28 @@ export function petPanelApp(basePetUri: string, petColor: PetColor, petSize: Pet
         resetBall();
         throwBall();
         allPets.forEach(petEl => {
-          petEl.pet.chase(ballState, canvas);
+          if (petEl.pet.canChase()){
+            petEl.pet.chase(ballState, canvas);
+          }
         });
         break;
       case "spawn-pet":
-        allPets.push(addPetToPanel(message.type, basePetUri, message.color, petSize, randomStartPosition(), '0px'));
+        allPets.push(addPetToPanel(message.type, basePetUri, message.color, petSize, randomStartPosition(), floor, floor));
         saveState();
         break;
       case "reset-pet":
-        allPets.forEach(pet => pet.el.remove());
+        allPets.forEach(pet => {
+          pet.el.remove();
+          pet.collision.remove();
+        });
         allPets = [];
-        allPets.push(addPetToPanel(message.type, basePetUri, message.color, message.size, randomStartPosition(), '0px'));
+        allPets.push(addPetToPanel(message.type, basePetUri, message.color, message.size, randomStartPosition(), floor, floor));
         saveState();
         break;
     }
   });
-};
 
+};
 window.addEventListener('resize', function () {
-  initBallPhysics();
+  initCanvas();
 });

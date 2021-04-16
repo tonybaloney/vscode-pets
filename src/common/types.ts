@@ -24,3 +24,8 @@ export const enum ExtPosition {
 	panel = "panel",
 	explorer = "explorer"
 }
+
+export const enum Theme {
+	none = "none",
+	forest = "forest"
+}

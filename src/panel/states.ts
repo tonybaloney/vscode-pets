@@ -1,4 +1,5 @@
 import { PetColor, PetType } from "../common/types";
+import { IPetType } from "./pets";
 
 export class PetInstanceState {
     currentStateEnum: States | undefined;
@@ -62,28 +63,36 @@ export class BallState {
     }
 }
 
-export function resolveState(state: string, el: HTMLImageElement): IState {
+export function isStateAboveGround(state: States): boolean {
+    return (state === States.climbWallLeft ||
+            state === States.jumpDownLeft || 
+            state === States.land ||
+            state === States.wallHangLeft);
+}
+
+export function resolveState(state: string, pet: IPetType): IState {
     switch(state){
-        case States.sitIdle: return new SitIdleState(el);
-        case States.walkRight: return new WalkRightState(el);
-        case States.walkLeft: return new WalkLeftState(el);
-        case States.runRight: return new RunRightState(el);
-        case States.runLeft: return new RunLeftState(el);
-        case States.lie: return new LieState(el);
-        case States.wallHangLeft: return new WallHangLeftState(el);
-        case States.climbWallLeft: return new ClimbWallLeftState(el);
-        case States.jumpDownLeft: return new JumpDownLeftState(el);
-        case States.land: return new LandState(el);
-        case States.swipe: return new SwipeState(el);
-        case States.idleWithBall: return new IdleWithBallState(el);
+        case States.sitIdle: return new SitIdleState(pet);
+        case States.walkRight: return new WalkRightState(pet);
+        case States.walkLeft: return new WalkLeftState(pet);
+        case States.runRight: return new RunRightState(pet);
+        case States.runLeft: return new RunLeftState(pet);
+        case States.lie: return new LieState(pet);
+        case States.wallHangLeft: return new WallHangLeftState(pet);
+        case States.climbWallLeft: return new ClimbWallLeftState(pet);
+        case States.jumpDownLeft: return new JumpDownLeftState(pet);
+        case States.land: return new LandState(pet);
+        case States.swipe: return new SwipeState(pet);
+        case States.idleWithBall: return new IdleWithBallState(pet);
     }
-    return new SitIdleState(el);
+    return new SitIdleState(pet);
 }
 
 export interface IState {
     label: string
     spriteLabel: string
     horizontalDirection: HorizontalDirection
+    pet: IPetType;
     nextFrame(): FrameResult
 }
 
@@ -92,10 +101,13 @@ class AbstractStaticState implements IState {
     idleCounter: number;
     spriteLabel = "idle";
     holdTime = 50;
+    pet: IPetType;
+    
     horizontalDirection = HorizontalDirection.left;
 
-    constructor(petElement: HTMLImageElement) {
+    constructor(pet: IPetType) {
         this.idleCounter = 0;
+        this.pet = pet;
     }
 
     nextFrame() : FrameResult {
@@ -151,23 +163,20 @@ export class IdleWithBallState extends AbstractStaticState {
 
 export class WalkRightState implements IState {
     label = States.walkRight;
-    petLeft: number;
-    el: HTMLImageElement;
+    pet: IPetType;
     skipSpeed = 3;
     spriteLabel = "walk";
     horizontalDirection = HorizontalDirection.right;
     leftBoundary: number;
 
-    constructor(petElement: HTMLImageElement) {
-        this.petLeft = parseInt(petElement.style.left);
-        this.el = petElement;
+    constructor(pet: IPetType) {
         this.leftBoundary = Math.floor(window.innerWidth * 0.95);
+        this.pet = pet;
     }
 
     nextFrame() : FrameResult {
-        this.petLeft += this.skipSpeed;
-        this.el.style.left = `${this.petLeft}px`;
-        if (this.petLeft >= this.leftBoundary - this.el.width) {
+        this.pet.positionLeft(this.pet.left() + this.skipSpeed);
+        if (this.pet.left() >= this.leftBoundary - this.pet.width()) {
             return FrameResult.stateComplete;
         }
         return FrameResult.stateContinue;
@@ -176,21 +185,18 @@ export class WalkRightState implements IState {
 
 export class WalkLeftState implements IState {
     label = States.walkLeft;
-    petLeft: number;
-    el: HTMLImageElement;
     skipSpeed = 3;
     spriteLabel = "walk";
     horizontalDirection = HorizontalDirection.left;
+    pet: IPetType;
 
-    constructor(petElement: HTMLImageElement) {
-        this.petLeft = parseInt(petElement.style.left);
-        this.el = petElement;
+    constructor(pet: IPetType) {
+        this.pet = pet;
     }
 
     nextFrame() : FrameResult {
-        this.petLeft -= this.skipSpeed;
-        this.el.style.left = `${this.petLeft}px`;
-        if (this.petLeft <= 0) {
+        this.pet.positionLeft(this.pet.left() - this.skipSpeed);
+        if (this.pet.left() <= 0) {
             return FrameResult.stateComplete;
         }
         return FrameResult.stateContinue;
@@ -211,17 +217,16 @@ export class RunLeftState extends WalkLeftState {
 
 export class ChaseState implements IState {
     label = States.chase;
-    petLeft: number;
-    el: HTMLImageElement;
     skipSpeed = 3;
     spriteLabel = "run";
     horizontalDirection = HorizontalDirection.left;
     ballState: BallState;
     canvas: HTMLCanvasElement;
+    pet: IPetType;
 
-    constructor(petElement: HTMLImageElement, ballState: BallState, canvas: HTMLCanvasElement) {
-        this.petLeft = parseInt(petElement.style.left);
-        this.el = petElement;
+    constructor(pet: IPetType, ballState: BallState, canvas: HTMLCanvasElement)
+    {
+        this.pet = pet;
         this.ballState = ballState;
         this.canvas = canvas;
     }
@@ -230,16 +235,15 @@ export class ChaseState implements IState {
         if (this.ballState.paused) {
             return FrameResult.stateCancel; // Ball is already caught
         }
-        if (this.petLeft > this.ballState.cx) {
+        if (this.pet.left() > this.ballState.cx) {
             this.horizontalDirection = HorizontalDirection.left;
-            this.petLeft -= 3;
+            this.pet.positionLeft(this.pet.left() - this.skipSpeed);
         } else {
             this.horizontalDirection = HorizontalDirection.right;
-            this.petLeft += 3;
+            this.pet.positionLeft(this.pet.left() + this.skipSpeed);
         }
 
-        this.el.style.left = `${this.petLeft}px`;
-        if (this.canvas.height - this.ballState.cy < this.el.width && this.ballState.cx < this.petLeft && this.petLeft < this.ballState.cx + 15) {
+        if (this.canvas.height - this.ballState.cy < this.pet.width() && this.ballState.cx < this.pet.left() && this.pet.left() < this.ballState.cx + 15) {
             // hide ball
             this.canvas.style.display = "none";
             this.ballState.paused = true;
@@ -251,21 +255,18 @@ export class ChaseState implements IState {
 
 export class ClimbWallLeftState implements IState {
     label = States.climbWallLeft;
-    petBottom: number;
-    el: HTMLImageElement;
     skipSpeed = 3;
     spriteLabel = "wallclimb";
     horizontalDirection = HorizontalDirection.left;
+    pet: IPetType;
 
-    constructor(petElement: HTMLImageElement) {
-        this.petBottom = parseInt(petElement.style.bottom);
-        this.el = petElement;
+    constructor(pet: IPetType) {
+        this.pet = pet;
     }
 
     nextFrame() : FrameResult {
-        this.petBottom += 1;
-        this.el.style.bottom = `${this.petBottom}px`;
-        if (this.petBottom >= 100) {
+        this.pet.positionBottom(this.pet.bottom() + 1);
+        if (this.pet.bottom() >= 100) {
           return FrameResult.stateComplete;
         }
         return FrameResult.stateContinue;
@@ -274,22 +275,19 @@ export class ClimbWallLeftState implements IState {
 
 export class JumpDownLeftState implements IState {
     label = States.jumpDownLeft;
-    petBottom: number;
-    el: HTMLImageElement;
     skipSpeed = 3;
     spriteLabel = "fall_from_grab";
     horizontalDirection = HorizontalDirection.right;
+    pet: IPetType;
 
-    constructor(petElement: HTMLImageElement) {
-        this.petBottom = parseInt(petElement.style.bottom);
-        this.el = petElement;
+    constructor(pet: IPetType) {
+        this.pet = pet;
     }
 
     nextFrame() : FrameResult {
-        this.petBottom -= 5;
-        this.el.style.bottom = `${this.petBottom}px`;
-        if (this.petBottom <= 0) {
-            this.petBottom = 0;
+        this.pet.positionBottom(this.pet.bottom() - 5);
+        if (this.pet.bottom() <= this.pet.floor()) {
+            this.pet.positionBottom(this.pet.floor());
             return FrameResult.stateComplete;
         }   
         return FrameResult.stateContinue;
