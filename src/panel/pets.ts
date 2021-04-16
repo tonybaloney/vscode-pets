@@ -411,6 +411,19 @@ export class RubberDuck extends BasePetType {
     };
 }
 
+export class Totori extends BasePetType {
+    label = "totori";
+    sequence = {
+        startingState: States.sitIdle,
+        sequenceStates: [
+            {
+                state: States.sitIdle,
+                possibleNextStates: [States.sitIdle]
+            }
+        ]
+    };
+}
+
 export class InvalidPetException {
 }
 
@@ -429,6 +442,9 @@ export function createPet(petType: string, el: HTMLImageElement, collision: HTML
     }
     else if (petType === "rubber-duck") {
         return new RubberDuck(el, collision, size, left, bottom, petRoot, floor);
+    }
+    else if (petType === "totori") {
+        return new Totori(el, collision, size, left, bottom, petRoot, floor);
     }
     throw new InvalidPetException();
 }

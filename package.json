@@ -121,7 +121,8 @@
 							"dog",
 							"snake",
 							"clippy",
-							"rubber-duck"
+							"rubber-duck",
+							"totori"
 						],
 						"default": "cat",
 						"description": "Pet type",
