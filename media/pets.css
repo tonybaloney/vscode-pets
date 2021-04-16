@@ -13,6 +13,22 @@ body {
 	font-weight: var(--vscode-font-weight);
 	font-family: var(--vscode-font-family);
 	background-color: var(--vscode-editor-background);
+	background-attachment: fixed;
+	background-repeat: repeat-x;
+	background-position: bottom left;
+	overflow: hidden; /* Hide scrollbars */
+}
+
+#foreground {
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 5;
+	background-attachment: fixed;
+	background-repeat: repeat-x;
+	background-position: bottom left;
 }
 
 ol,
@@ -94,7 +110,7 @@ textarea::placeholder {
 	position:fixed; 
 	bottom:0;
 	left:0; 
-	z-index: 1;
+	z-index: 3;
 }
 
 img.pet {
@@ -105,4 +121,12 @@ img.pet {
 	right: 0px;
 	bottom:0px;
 	z-index: 2;
+}
+
+.collision {
+	position: absolute;
+	left: 0px;
+	right: 0px;
+	bottom:0px;
+	z-index: 999;
 }
