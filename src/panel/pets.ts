@@ -371,7 +371,7 @@ export class Clippy extends BasePetType {
 }
 
 export class RubberDuck extends BasePetType {
-    label = "rubber duck";
+    label = "rubber-duck";
     sequence = {
         startingState: States.sitIdle,
         sequenceStates: [
@@ -423,7 +423,7 @@ export function createPet(petType: string, el: HTMLImageElement, collision: HTML
     else if (petType === "clippy") {
         return new Clippy(el, collision, size, left, bottom, petRoot, floor);
     }
-    else if (petType === "rubber duck") {
+    else if (petType === "rubber-duck") {
         return new RubberDuck(el, collision, size, left, bottom, petRoot, floor);
     }
     throw new InvalidPetException();
