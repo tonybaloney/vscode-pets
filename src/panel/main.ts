@@ -18,12 +18,14 @@ const vscode = window.acquireVsCodeApi();
 
 class PetElement {
   el: HTMLImageElement;
+  collision: HTMLDivElement;
   pet: IPetType;
   color: PetColor;
   type: PetType;
 
-  constructor(el: HTMLImageElement, pet: IPetType, color: PetColor, type: PetType){
+  constructor(el: HTMLImageElement, collision: HTMLDivElement, pet: IPetType, color: PetColor, type: PetType){
     this.el = el;
+    this.collision = collision;
     this.pet = pet;
     this.color = color;
     this.type = type;
@@ -44,31 +46,10 @@ function calculateBallRadius(size: PetSize): number{
   }
 }
 
-function calculateSpriteWidth(size: PetSize): number{
-  if (size === PetSize.nano){
-    return 30;
-  } else if (size === PetSize.medium){
-    return 55;
-  } else if (size === PetSize.large){
-    return 110;
-  } else {
-    return 30; // Shrug
-  }
-}
-
-function initSprite(el: HTMLImageElement, petSize: PetSize, left: string, bottom: string) {
-  el.style.left = left;
-  el.style.bottom = bottom;
-  el.style.width = "auto";
-  el.style.height = "auto";
-  el.style.maxWidth = `${calculateSpriteWidth(petSize)}px`;
-  el.style.maxHeight = `${calculateSpriteWidth(petSize)}px`;
-}
-
 function handleMouseOver(e: MouseEvent){
-  var el = e.currentTarget as HTMLImageElement;
+  var el = e.currentTarget as HTMLDivElement;
   allPets.forEach(element => {
-    if (element.el === el){
+    if (element.collision === el){
       if (!element.pet.canSwipe()) {
         return;
       }
@@ -78,24 +59,27 @@ function handleMouseOver(e: MouseEvent){
   
 }
 
-function startAnimations(el: HTMLImageElement, pet: IPetType) {
-  el.addEventListener("mouseover", handleMouseOver);
+function startAnimations(collision: HTMLDivElement, pet: IPetType) {
+  collision.addEventListener("mouseover", handleMouseOver);
   setInterval(() => {
     pet.nextFrame();
     saveState();
   }, 100);
 }
 
-function addPetToPanel(petType: PetType, basePetUri: string, petColor: PetColor, petSize: PetSize, left: string, bottom: string, floor: number): PetElement {
+function addPetToPanel(petType: PetType, basePetUri: string, petColor: PetColor, petSize: PetSize, left: number, bottom: number, floor: number): PetElement {
   var petSpriteElement: HTMLImageElement = document.createElement("img");
   petSpriteElement.className = "pet";
+
+  var collisionElement: HTMLDivElement = document.createElement("div");
+  collisionElement.className = "collision";
+
   (document.getElementById("petsContainer") as HTMLDivElement).appendChild(petSpriteElement);
   const root = basePetUri + '/' + petType + '/' + petColor;
   console.log("Creating new pet : ", petType, root);
-  var newPet = createPet(petType, petSpriteElement, root, floor);
-  initSprite(petSpriteElement, petSize, left, bottom);
-  startAnimations(petSpriteElement, newPet);
-  return new PetElement(petSpriteElement, newPet, petColor, petType);
+  var newPet = createPet(petType, petSpriteElement, collisionElement, petSize, left, bottom, root, floor);
+  startAnimations(collisionElement, newPet);
+  return new PetElement(petSpriteElement, collisionElement, newPet, petColor, petType);
 }
 
 function saveState(){
@@ -117,15 +101,14 @@ function saveState(){
 function recoverState(basePetUri: string, petSize: PetSize, floor: number){
   var state = vscode.getState();
   state.petStates!.forEach(p => {
-    var newPet = addPetToPanel(p.petType!, basePetUri, p.petColor!, petSize, p.elLeft!, p.elBottom!, floor);
+    var newPet = addPetToPanel(p.petType!, basePetUri, p.petColor!, petSize, parseInt(p.elLeft!), parseInt(p.elBottom!), floor);
     newPet.pet.recoverState(p.petState!);
     allPets.push(newPet);
   });
 }
 
-function randomStartPosition() : string {
-  const x: number = Math.floor(Math.random() * (window.innerWidth * 0.7));
-  return `${x}px`;
+function randomStartPosition() : number {
+  return Math.floor(Math.random() * (window.innerWidth * 0.7));
 }
 
 let canvas : HTMLCanvasElement, ctx: CanvasRenderingContext2D;
@@ -197,7 +180,7 @@ export function petPanelApp(basePetUri: string, theme: Theme, petColor: PetColor
   var state = vscode.getState();
   if (!state) {
     console.log('No state, starting a new session.');
-    allPets.push(addPetToPanel(petType, basePetUri, petColor, petSize, randomStartPosition(), `${floor}px`, floor));
+    allPets.push(addPetToPanel(petType, basePetUri, petColor, petSize, randomStartPosition(), floor, floor));
     saveState();
   } else { 
     console.log('Recovering state - ', state);
@@ -220,13 +203,13 @@ export function petPanelApp(basePetUri: string, theme: Theme, petColor: PetColor
         });
         break;
       case "spawn-pet":
-        allPets.push(addPetToPanel(message.type, basePetUri, message.color, petSize, randomStartPosition(), `${floor}px`, floor));
+        allPets.push(addPetToPanel(message.type, basePetUri, message.color, petSize, randomStartPosition(), floor, floor));
         saveState();
         break;
       case "reset-pet":
         allPets.forEach(pet => pet.el.remove());
         allPets = [];
-        allPets.push(addPetToPanel(message.type, basePetUri, message.color, message.size, randomStartPosition(), `${floor}px`, floor));
+        allPets.push(addPetToPanel(message.type, basePetUri, message.color, message.size, randomStartPosition(), floor, floor));
         saveState();
         break;
     }

@@ -121,3 +121,11 @@ img.pet {
 	bottom:0px;
 	z-index: 2;
 }
+
+.collision {
+	position: absolute;
+	left: 0px;
+	right: 0px;
+	bottom:0px;
+	z-index: 999;
+}
