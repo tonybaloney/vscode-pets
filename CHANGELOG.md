@@ -2,6 +2,12 @@
 
 All notable changes to the "vscode-pets" extension will be documented in this file.
 
+## [1.2.0]
+
+- Now with themes! Configure `vscode-pets.theme` to `"forest"` and let your pets play in a spooky forest.
+- [bugfix] rubber duck is correctly animated
+- [bugfix] cats will no longer chase the ball when hanging off the wall
+
 ## [1.1.1]
 
 - Clippy is now available in Yellow (thanks Marc Duiker)
