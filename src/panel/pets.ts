@@ -117,11 +117,11 @@ abstract class BasePetType implements IPetType {
     }
 
     canSwipe(){
-        return isStateAboveGround(this.currentStateEnum);
+        return !isStateAboveGround(this.currentStateEnum);
     }
 
     canChase(){
-        return isStateAboveGround(this.currentStateEnum);
+        return !isStateAboveGround(this.currentStateEnum);
     }
 
     swipe() {
