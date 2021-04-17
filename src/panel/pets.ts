@@ -205,7 +205,38 @@ abstract class BasePetType implements IPetType {
     }
 }
 
-
+export class Totoro extends BasePetType {
+    label = "totoro";
+    sequence = {
+        startingState: States.sitIdle,
+        sequenceStates: [
+            {
+                state: States.sitIdle,
+                possibleNextStates: [States.walkRight, States.walkLeft]
+            },
+            {
+                state: States.walkRight,
+                possibleNextStates: [States.walkLeft, States.lie, States.sitIdle, States.runRight]
+            },
+            {
+                state: States.runLeft,
+                possibleNextStates: [States.lie, States.sitIdle, States.walkLeft]
+            },
+            {
+                state: States.runRight,
+                possibleNextStates: [States.lie, States.sitIdle, States.walkRight]
+            },
+            {
+                state: States.walkLeft,
+                possibleNextStates: [States.runLeft, States.lie, States.sitIdle]
+            },
+            {
+                state: States.lie,
+                possibleNextStates: [States.walkLeft, States.walkRight]
+            }
+        ]
+    };
+}
 export class Cat extends BasePetType {
     label = "cat";
     sequence = {
@@ -415,6 +446,9 @@ export class InvalidPetException {
 }
 
 export function createPet(petType: string, el: HTMLImageElement, collision: HTMLDivElement, size: PetSize, left: number, bottom: number, petRoot: string, floor: number) : IPetType {
+    if (petType === "totoro"){
+        return new Totoro(el, collision, size, left, bottom, petRoot, floor);
+    }
     if (petType === "cat"){
         return new Cat(el, collision, size, left, bottom, petRoot, floor);
     }
