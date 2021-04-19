@@ -2,7 +2,7 @@
 	"name": "vscode-pets",
 	"displayName": "vscode-pets",
 	"description": "Pets for your VS Code",
-	"version": "1.2.0",
+	"version": "1.2.1",
 	"engines": {
 		"vscode": "^1.53.0"
 	},
@@ -108,6 +108,7 @@
 							"black",
 							"brown",
 							"green",
+							"red",
 							"yellow"
 						],
 						"default": "brown",
@@ -118,10 +119,11 @@
 						"type": "string",
 						"enum": [
 							"cat",
-							"dog",
-							"snake",
+							"crab",
 							"clippy",
-							"rubber-duck"
+							"dog",
+							"rubber-duck",
+							"snake"
 						],
 						"default": "cat",
 						"description": "Pet type",
