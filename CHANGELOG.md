@@ -2,6 +2,10 @@
 
 All notable changes to the "vscode-pets" extension will be documented in this file.
 
+## [1.2.1]
+
+- Added Ferris the crab 🦀 as a new pet.
+
 ## [1.2.0]
 
 - Now with themes! Configure `vscode-pets.theme` to `"forest"` and let your pets play in a spooky forest.
