@@ -164,10 +164,7 @@ export function activate(context: vscode.ExtensionContext) {
 						}) as PetColor;
 						break;
 					case PetType.crab:
-						choices = [PetColor.red];
-						petColor = await vscode.window.showQuickPick(choices, {
-							placeHolder: 'Select a color',
-						}) as PetColor;
+						petColor = PetColor.red;
 						break;
 				}
 				const spec = new PetSpecification(petColor, petType as PetType, getConfiguredSize());
