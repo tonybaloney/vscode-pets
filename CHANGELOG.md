@@ -2,7 +2,7 @@
 
 All notable changes to the "vscode-pets" extension will be documented in this file.
 
-## [1.2.1]
+## [1.3.0]
 
 - Added Ferris the crab 🦀 as a new pet.
 
