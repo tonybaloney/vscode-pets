@@ -1,6 +1,6 @@
 // This script will be run within the webview itself
 import { PetSize, PetColor, PetType, Theme } from '../common/types';
-import {createPet, IPetType} from './pets';
+import {createPet, IPetType, InvalidPetException} from './pets';
 import { BallState, PetPanelState } from './states';
 
 /* This is how the VS Code API can be invoked from the panel */
@@ -46,17 +46,30 @@ function calculateBallRadius(size: PetSize): number{
   }
 }
 
-function calculateFloor(size: PetSize): number {
-  switch (size){
-    case PetSize.nano:
-      return 23;
-    case PetSize.medium:
-      return 40;
-    case PetSize.large:
-      return 65;
-    default:
-      return 23;
+function calculateFloor(size: PetSize, theme: Theme): number {
+  switch (theme){
+    case Theme.forest:
+      switch (size){
+        case PetSize.medium:
+          return 40;
+        case PetSize.large:
+          return 65;
+        case PetSize.nano:
+        default:
+          return 23;
+      }
+    case Theme.castle:
+      switch (size){
+        case PetSize.medium:
+          return 80;
+        case PetSize.large:
+          return 120;
+        case PetSize.nano:
+        default:
+          return 45;
+      }
   }
+  return 0;
 }
 
 function handleMouseOver(e: MouseEvent){
@@ -118,9 +131,13 @@ function recoverState(basePetUri: string, petSize: PetSize, floor: number){
     // Fixes a bug related to duck animations
     if (p.petType as string === "rubber duck") {(p.petType as string) = "rubber-duck";}
 
-    var newPet = addPetToPanel(p.petType!, basePetUri, p.petColor!, petSize, parseInt(p.elLeft!), parseInt(p.elBottom!), floor);
-    newPet.pet.recoverState(p.petState!);
-    allPets.push(newPet);
+    try {
+      var newPet = addPetToPanel(p.petType!, basePetUri, p.petColor!, petSize, parseInt(p.elLeft!), parseInt(p.elBottom!), floor);
+      newPet.pet.recoverState(p.petState!);
+      allPets.push(newPet);
+    } catch (InvalidPetException){
+      console.log("State had invalid pet, discarding.");
+    }
   });
 }
 
@@ -146,7 +163,7 @@ export function petPanelApp(basePetUri: string, theme: Theme, petColor: PetColor
     document.body.style.backgroundImage = `url('${basePetUri}/backgrounds/${theme}/background-${petSize}.png')`;
     document.getElementById("foreground")!.style.backgroundImage = `url('${basePetUri}/backgrounds/${theme}/foreground-${petSize}.png')`;
     
-    floor = calculateFloor(petSize); // Themes have pets at a specified height from the ground
+    floor = calculateFloor(petSize, theme); // Themes have pets at a specified height from the ground
   } else {
     document.body.style.backgroundImage = "";
     document.getElementById("foreground")!.style.backgroundImage = "";

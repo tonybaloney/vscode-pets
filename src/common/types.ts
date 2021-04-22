@@ -29,5 +29,6 @@ export const enum ExtPosition {
 
 export const enum Theme {
 	none = "none",
-	forest = "forest"
+	forest = "forest",
+	castle = "castle"
 }

@@ -2,6 +2,10 @@
 
 All notable changes to the "vscode-pets" extension will be documented in this file.
 
+## [1.4.0]
+
+- Add a `castle` theme!
+
 ## [1.3.0]
 
 - Added Ferris the crab 🦀 as a new pet.
