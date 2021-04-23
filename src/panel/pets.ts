@@ -212,28 +212,52 @@ export class Totoro extends BasePetType {
         sequenceStates: [
             {
                 state: States.sitIdle,
+                possibleNextStates: [States.walkRight, States.runRight, States.lie]
+            },
+            {
+                state: States.lie,
                 possibleNextStates: [States.walkRight, States.walkLeft]
             },
             {
                 state: States.walkRight,
-                possibleNextStates: [States.walkLeft, States.lie, States.sitIdle, States.runRight]
-            },
-            {
-                state: States.runLeft,
-                possibleNextStates: [States.lie, States.sitIdle, States.walkLeft]
+                possibleNextStates: [States.walkLeft, States.runLeft, States.sitIdle]
             },
             {
                 state: States.runRight,
-                possibleNextStates: [States.lie, States.sitIdle, States.walkRight]
+                possibleNextStates: [States.walkLeft, States.runLeft]
             },
             {
                 state: States.walkLeft,
-                possibleNextStates: [States.runLeft, States.lie, States.sitIdle]
+                possibleNextStates: [States.sitIdle, States.climbWallLeft, States.sitIdle]
             },
             {
-                state: States.lie,
-                possibleNextStates: [States.walkLeft, States.walkRight]
-            }
+                state: States.runLeft,
+                possibleNextStates: [States.sitIdle, States.climbWallLeft]
+            },
+            {
+                state: States.climbWallLeft,
+                possibleNextStates: [States.wallHangLeft]
+            },
+            {
+                state: States.wallHangLeft,
+                possibleNextStates: [States.jumpDownLeft]
+            },
+            {
+                state: States.jumpDownLeft,
+                possibleNextStates: [States.land]
+            },
+            {
+                state: States.land,
+                possibleNextStates: [States.sitIdle, States.walkRight, States.runRight, States.lie]
+            },
+            {
+                state: States.chase,
+                possibleNextStates: [States.idleWithBall]
+            },
+            {
+                state: States.idleWithBall,
+                possibleNextStates: [States.walkRight, States.walkLeft, States.runLeft, States.runRight]
+            },
         ]
     };
 }
