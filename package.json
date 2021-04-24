@@ -108,8 +108,9 @@
 							"black",
 							"brown",
 							"green",
-							"red",
-							"yellow"
+							"yellow",
+							"gray",
+							"red"
 						],
 						"default": "brown",
 						"description": "Pet color",
@@ -121,8 +122,9 @@
 							"cat",
 							"crab",
 							"clippy",
-							"dog",
 							"rubber-duck",
+							"totoro",
+							"dog",
 							"snake"
 						],
 						"default": "cat",
