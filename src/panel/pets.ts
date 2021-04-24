@@ -212,7 +212,7 @@ export class Totoro extends BasePetType {
         sequenceStates: [
             {
                 state: States.sitIdle,
-                possibleNextStates: [States.walkRight, States.runRight, States.lie]
+                possibleNextStates: [States.walkRight, States.lie]
             },
             {
                 state: States.lie,
@@ -220,19 +220,11 @@ export class Totoro extends BasePetType {
             },
             {
                 state: States.walkRight,
-                possibleNextStates: [States.walkLeft, States.runLeft, States.sitIdle]
-            },
-            {
-                state: States.runRight,
-                possibleNextStates: [States.walkLeft, States.runLeft]
+                possibleNextStates: [States.walkLeft, States.sitIdle]
             },
             {
                 state: States.walkLeft,
                 possibleNextStates: [States.sitIdle, States.climbWallLeft, States.sitIdle]
-            },
-            {
-                state: States.runLeft,
-                possibleNextStates: [States.sitIdle, States.climbWallLeft]
             },
             {
                 state: States.climbWallLeft,
@@ -248,7 +240,7 @@ export class Totoro extends BasePetType {
             },
             {
                 state: States.land,
-                possibleNextStates: [States.sitIdle, States.walkRight, States.runRight, States.lie]
+                possibleNextStates: [States.sitIdle, States.walkRight, States.lie]
             },
             {
                 state: States.chase,
@@ -256,7 +248,7 @@ export class Totoro extends BasePetType {
             },
             {
                 state: States.idleWithBall,
-                possibleNextStates: [States.walkRight, States.walkLeft, States.runLeft, States.runRight]
+                possibleNextStates: [States.walkRight, States.walkLeft]
             },
         ]
     };
