@@ -20,13 +20,15 @@ Run the "Start pet coding session" command (`vscode-pets.start`)
 
 ## Configuring your pet
 
-You can choose either pet type and fur color
+You can choose either pet type and pet color
 
 ![screenshot2](https://github.com/tonybaloney/vscode-pet/raw/master/screenshot-2.gif)
 
 _*snake can only be green_
 
 _*rubber duck can only be yellow_
+
+_*Ferris the crab can only be red_
 
 ## Playing
 
@@ -76,7 +78,7 @@ Want to contribute to vscode-pets? Feel free to [fork the repository](https://gi
 
 The cat, dog, and snake media assets for this extension were licensed from itch.io.
 
-[Marc Duiker](https://twitter.com/marcduiker) created the Clippy and rubber duck media assets.
+[Marc Duiker](https://twitter.com/marcduiker) created the Clippy, rubber duck, and Ferris the crab media assets.
 
 ## Thank you
 
