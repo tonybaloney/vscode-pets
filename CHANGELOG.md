@@ -2,9 +2,13 @@
 
 All notable changes to the "vscode-pets" extension will be documented in this file.
 
+## [1.4.0]
+
+- Added Totoro as a new pet. Credit to @robconery
+
 ## [1.3.0]
 
-- Added Ferris the crab 🦀 as a new pet.
+- Added Ferris the crab 🦀 as a new pet. Credit @marcduiker
 
 ## [1.2.0]
 
