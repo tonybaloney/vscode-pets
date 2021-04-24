@@ -458,6 +458,43 @@ export class RubberDuck extends BasePetType {
     };
 }
 
+export class Crab extends BasePetType {
+    label = "crab";
+    sequence = {
+        startingState: States.sitIdle,
+        sequenceStates: [
+            {
+                state: States.sitIdle,
+                possibleNextStates: [States.walkRight, States.runRight]
+            },
+            {
+                state: States.walkRight,
+                possibleNextStates: [States.walkLeft, States.runLeft]
+            },
+            {
+                state: States.runRight,
+                possibleNextStates: [States.walkLeft, States.runLeft]
+            },
+            {
+                state: States.walkLeft,
+                possibleNextStates: [States.sitIdle]
+            },
+            {
+                state: States.runLeft,
+                possibleNextStates: [States.sitIdle]
+            },
+            {
+                state: States.chase,
+                possibleNextStates: [States.idleWithBall]
+            },
+            {
+                state: States.idleWithBall,
+                possibleNextStates: [States.walkRight, States.walkLeft, States.runLeft, States.runRight]
+            },
+        ]
+    };
+}
+
 export class InvalidPetException {
 }
 
@@ -476,6 +513,9 @@ export function createPet(petType: string, el: HTMLImageElement, collision: HTML
     }
     else if (petType === "clippy") {
         return new Clippy(el, collision, size, left, bottom, petRoot, floor);
+    }
+    else if (petType === "crab") {
+        return new Crab(el, collision, size, left, bottom, petRoot, floor);
     }
     else if (petType === "rubber-duck") {
         return new RubberDuck(el, collision, size, left, bottom, petRoot, floor);
