@@ -31,5 +31,12 @@ export const enum ExtPosition {
 
 export const enum Theme {
 	none = "none",
-	forest = "forest"
+	forest = "forest",
+	castle = "castle"
+}
+
+export const enum ColorThemeKind {
+	Light = 1,
+	Dark = 2,
+	HighContrast = 3
 }
