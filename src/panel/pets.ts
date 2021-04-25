@@ -205,7 +205,54 @@ abstract class BasePetType implements IPetType {
     }
 }
 
-
+export class Totoro extends BasePetType {
+    label = "totoro";
+    sequence = {
+        startingState: States.sitIdle,
+        sequenceStates: [
+            {
+                state: States.sitIdle,
+                possibleNextStates: [States.walkRight, States.lie]
+            },
+            {
+                state: States.lie,
+                possibleNextStates: [States.walkRight, States.walkLeft]
+            },
+            {
+                state: States.walkRight,
+                possibleNextStates: [States.walkLeft, States.sitIdle]
+            },
+            {
+                state: States.walkLeft,
+                possibleNextStates: [States.sitIdle, States.climbWallLeft, States.sitIdle]
+            },
+            {
+                state: States.climbWallLeft,
+                possibleNextStates: [States.wallHangLeft]
+            },
+            {
+                state: States.wallHangLeft,
+                possibleNextStates: [States.jumpDownLeft]
+            },
+            {
+                state: States.jumpDownLeft,
+                possibleNextStates: [States.land]
+            },
+            {
+                state: States.land,
+                possibleNextStates: [States.sitIdle, States.walkRight, States.lie]
+            },
+            {
+                state: States.chase,
+                possibleNextStates: [States.idleWithBall]
+            },
+            {
+                state: States.idleWithBall,
+                possibleNextStates: [States.walkRight, States.walkLeft]
+            },
+        ]
+    };
+}
 export class Cat extends BasePetType {
     label = "cat";
     sequence = {
@@ -452,6 +499,9 @@ export class InvalidPetException {
 }
 
 export function createPet(petType: string, el: HTMLImageElement, collision: HTMLDivElement, size: PetSize, left: number, bottom: number, petRoot: string, floor: number) : IPetType {
+    if (petType === "totoro"){
+        return new Totoro(el, collision, size, left, bottom, petRoot, floor);
+    }
     if (petType === "cat"){
         return new Cat(el, collision, size, left, bottom, petRoot, floor);
     }
