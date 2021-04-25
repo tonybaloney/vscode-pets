@@ -11,8 +11,8 @@ const DEFAULT_PET_TYPE = PetType.cat;
 const DEFAULT_POSITION = ExtPosition.panel;
 const DEFAULT_THEME = Theme.none;
 
-const ALL_PETS = [PetType.cat, PetType.crab, PetType.clippy, PetType.dog, PetType.rubberduck, PetType.snake];
-const ALL_COLORS = [PetColor.black, PetColor.brown, PetColor.green, PetColor.red, PetColor.yellow];
+const ALL_PETS = [PetType.cat, PetType.clippy, PetType.dog, PetType.rubberduck, PetType.snake, PetType.totoro, PetType.crab];
+const ALL_COLORS = [PetColor.black, PetColor.brown, PetColor.green, PetColor.yellow, PetColor.gray, PetColor.red];
 const ALL_SCALES = [PetSize.nano, PetSize.medium, PetSize.large];
 const ALL_THEMES = [Theme.none, Theme.forest, Theme.castle];
 
@@ -150,6 +150,9 @@ export function activate(context: vscode.ExtensionContext) {
 					case PetType.snake:
 						petColor = PetColor.green;
 						break;
+					case PetType.totoro:
+						petColor = PetColor.gray;
+						break;
 					case PetType.cat:
 					case PetType.dog:
 						choices = [PetColor.black, PetColor.brown];
@@ -254,6 +257,8 @@ function getWebviewOptions(extensionUri: vscode.Uri): vscode.WebviewOptions & vs
  * @returns normalized color
  */
 function normalizeColor(petColor: PetColor, petType: PetType): PetColor {
+	if (petType === PetType.totoro)
+		{return PetColor.gray;}
 	if (petType === PetType.snake)
 		{return PetColor.green;}
 	if (petType === PetType.rubberduck)

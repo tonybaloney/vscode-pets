@@ -151,7 +151,7 @@ export class SwipeState extends AbstractStaticState {
     label = States.swipe;
     spriteLabel = "swipe";
     horizontalDirection = HorizontalDirection.natural;
-    holdTime = 10;
+    holdTime = 30;
 }
 
 export class IdleWithBallState extends AbstractStaticState {
