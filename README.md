@@ -20,7 +20,7 @@ Run the "Start pet coding session" command (`vscode-pets.start`)
 
 ## Configuring your pet
 
-You can choose either pet type and pet color
+You can choose either pet type and pet color:
 
 ![screenshot2](https://github.com/tonybaloney/vscode-pet/raw/master/screenshots/screenshot-2.gif)
 
@@ -42,7 +42,7 @@ Play catch with your pet! Run the "Throw ball" command (`vscode-pets.throw-ball`
 
 ![screenshot4](https://github.com/tonybaloney/vscode-pet/raw/master/screenshots/screenshot-4.gif)
 
-## Adding extra pets!
+## Adding extra pets
 
 Run the "Spawn additional pet" command (`vscode-pets.spawn-pet`) and select the pet type and color.
 
@@ -52,7 +52,7 @@ Extra pets will not persist between closing and restarting VS Code.
 
 Configure `vscode-pets.theme` to `"forest"` and let your pets play in a spooky forest.
 
-![forest](https://github.com/tonybaloney/vscode-pet/raw/master/screenshots/screenshot-7.gif)
+![forest](https://github.com/tonybaloney/vscode-pet/raw/master/screenshots/forest.gif)
 
 Set `vscode-pets.theme` to `"castle"` for them to roam the ramparts!
 
