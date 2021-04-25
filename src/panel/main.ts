@@ -160,8 +160,8 @@ export function petPanelApp(basePetUri: string, theme: Theme, petColor: PetColor
   var floor = 0;
   // Apply Theme backgrounds
   if (theme !== Theme.none){
-    document.body.style.backgroundImage = `url('${basePetUri}/backgrounds/${theme}/background-${petSize}.png')`;
-    document.getElementById("foreground")!.style.backgroundImage = `url('${basePetUri}/backgrounds/${theme}/foreground-${petSize}.png')`;
+    document.body.style.backgroundImage = `url('${basePetUri}/backgrounds/${theme}/background-dark-${petSize}.png')`;
+    document.getElementById("foreground")!.style.backgroundImage = `url('${basePetUri}/backgrounds/${theme}/foreground-dark-${petSize}.png')`;
     
     floor = calculateFloor(petSize, theme); // Themes have pets at a specified height from the ground
   } else {
