@@ -34,3 +34,9 @@ export const enum Theme {
 	forest = "forest",
 	castle = "castle"
 }
+
+export const enum ColorThemeKind {
+	Light = 1,
+	Dark = 2,
+	HighContrast = 3
+}

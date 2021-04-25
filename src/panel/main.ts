@@ -1,6 +1,6 @@
 // This script will be run within the webview itself
-import { PetSize, PetColor, PetType, Theme } from '../common/types';
-import {createPet, IPetType, InvalidPetException} from './pets';
+import { PetSize, PetColor, PetType, Theme, ColorThemeKind } from '../common/types';
+import { createPet, IPetType, InvalidPetException} from './pets';
 import { BallState, PetPanelState } from './states';
 
 /* This is how the VS Code API can be invoked from the panel */
@@ -155,13 +155,28 @@ function initCanvas() {
 }
 
 // It cannot access the main VS Code APIs directly.
-export function petPanelApp(basePetUri: string, theme: Theme, petColor: PetColor, petSize: PetSize, petType: PetType) {
+export function petPanelApp(basePetUri: string, theme: Theme, themeKind: ColorThemeKind, petColor: PetColor, petSize: PetSize, petType: PetType) {
   const ballRadius: number = calculateBallRadius(petSize);
   var floor = 0;
   // Apply Theme backgrounds
   if (theme !== Theme.none){
-    document.body.style.backgroundImage = `url('${basePetUri}/backgrounds/${theme}/background-dark-${petSize}.png')`;
-    document.getElementById("foreground")!.style.backgroundImage = `url('${basePetUri}/backgrounds/${theme}/foreground-dark-${petSize}.png')`;
+    var _themeKind = "";
+    switch (themeKind) {
+      case ColorThemeKind.Dark:
+        _themeKind = "dark";
+        break;
+      case ColorThemeKind.Light:
+        _themeKind = "light";
+        break;
+      case ColorThemeKind.HighContrast:
+      default:
+        _themeKind = "light";
+        break;
+    }
+
+
+    document.body.style.backgroundImage = `url('${basePetUri}/backgrounds/${theme}/background-${_themeKind}-${petSize}.png')`;
+    document.getElementById("foreground")!.style.backgroundImage = `url('${basePetUri}/backgrounds/${theme}/foreground-${_themeKind}-${petSize}.png')`;
     
     floor = calculateFloor(petSize, theme); // Themes have pets at a specified height from the ground
   } else {
