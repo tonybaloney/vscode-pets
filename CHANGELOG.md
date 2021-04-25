@@ -4,7 +4,7 @@ All notable changes to the "vscode-pets" extension will be documented in this fi
 
 ## [1.5.0]
 
-- Add a `castle` theme!
+- Added a `castle` theme! The castle will light up when you switch from a light to dark theme too.
 
 ## [1.4.0]
 
