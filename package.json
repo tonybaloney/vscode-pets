@@ -154,7 +154,8 @@
 						"type": "string",
 						"enum": [
 							"none",
-							"forest"
+							"forest",
+							"castle"
 						],
 						"default": "none",
 						"description": "Background theme assets for your pets"
