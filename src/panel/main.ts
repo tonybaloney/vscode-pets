@@ -1,6 +1,6 @@
 // This script will be run within the webview itself
 import { PetSize, PetColor, PetType, Theme, ColorThemeKind } from '../common/types';
-import { createPet, IPetType, InvalidPetException} from './pets';
+import { createPet, IPetType, InvalidPetException, PetCollection, PetElement, IPetCollection } from './pets';
 import { BallState, PetPanelState } from './states';
 
 /* This is how the VS Code API can be invoked from the panel */
@@ -16,23 +16,7 @@ declare global {
 
 const vscode = window.acquireVsCodeApi();
 
-class PetElement {
-  el: HTMLImageElement;
-  collision: HTMLDivElement;
-  pet: IPetType;
-  color: PetColor;
-  type: PetType;
-
-  constructor(el: HTMLImageElement, collision: HTMLDivElement, pet: IPetType, color: PetColor, type: PetType){
-    this.el = el;
-    this.collision = collision;
-    this.pet = pet;
-    this.color = color;
-    this.type = type;
-  }
-}
-
-var allPets: Array<PetElement> = new Array(0);
+var allPets: IPetCollection = new PetCollection();
 
 function calculateBallRadius(size: PetSize): number{
   if (size === PetSize.nano){
@@ -74,7 +58,7 @@ function calculateFloor(size: PetSize, theme: Theme): number {
 
 function handleMouseOver(e: MouseEvent){
   var el = e.currentTarget as HTMLDivElement;
-  allPets.forEach(element => {
+  allPets.pets().forEach(element => {
     if (element.collision === el){
       if (!element.pet.canSwipe()) {
         return;
@@ -88,6 +72,7 @@ function handleMouseOver(e: MouseEvent){
 function startAnimations(collision: HTMLDivElement, pet: IPetType) {
   collision.addEventListener("mouseover", handleMouseOver);
   setInterval(() => {
+    allPets.seekNewFriends();
     pet.nextFrame();
     saveState();
   }, 100);
@@ -113,7 +98,7 @@ function saveState(){
   var state = new PetPanelState();
   state.petStates = new Array();
 
-  allPets.forEach(petItem => {
+  allPets.pets().forEach(petItem => {
     state.petStates!.push({
       petColor: petItem.color,
       petType: petItem.type,
@@ -246,7 +231,7 @@ export function petPanelApp(basePetUri: string, theme: Theme, themeKind: ColorTh
       case "throw-ball":
         resetBall();
         throwBall();
-        allPets.forEach(petEl => {
+        allPets.pets().forEach(petEl => {
           if (petEl.pet.canChase()){
             petEl.pet.chase(ballState, canvas);
           }
@@ -257,11 +242,11 @@ export function petPanelApp(basePetUri: string, theme: Theme, themeKind: ColorTh
         saveState();
         break;
       case "reset-pet":
-        allPets.forEach(pet => {
+        allPets.pets().forEach(pet => {
           pet.el.remove();
           pet.collision.remove();
         });
-        allPets = [];
+        allPets.reset();
         allPets.push(addPetToPanel(message.type, basePetUri, message.color, message.size, randomStartPosition(), floor, floor));
         saveState();
         break;
