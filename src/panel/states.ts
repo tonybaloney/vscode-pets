@@ -243,7 +243,9 @@ export class ChaseState implements IState {
             this.pet.positionLeft(this.pet.left() + this.skipSpeed);
         }
 
-        if (this.canvas.height - this.ballState.cy < this.pet.width() && this.ballState.cx < this.pet.left() && this.pet.left() < this.ballState.cx + 15) {
+        if (this.canvas.height - this.ballState.cy < (this.pet.width() + this.pet.floor()) &&
+            this.ballState.cx < this.pet.left() &&
+            this.pet.left() < this.ballState.cx + 15) {
             // hide ball
             this.canvas.style.display = "none";
             this.ballState.paused = true;
