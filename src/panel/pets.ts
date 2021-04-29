@@ -389,11 +389,11 @@ export class Cat extends BasePetType {
             },
             {
                 state: States.walkLeft,
-                possibleNextStates: [States.sitIdle, States.climbWallLeft]
+                possibleNextStates: [States.sitIdle, States.climbWallLeft, States.walkRight, States.runRight]
             },
             {
                 state: States.runLeft,
-                possibleNextStates: [States.sitIdle, States.climbWallLeft]
+                possibleNextStates: [States.sitIdle, States.climbWallLeft, States.walkRight, States.runRight]
             },
             {
                 state: States.climbWallLeft,
@@ -446,11 +446,11 @@ export class Dog extends BasePetType {
             },
             {
                 state: States.walkLeft,
-                possibleNextStates: [States.sitIdle, States.lie]
+                possibleNextStates: [States.sitIdle, States.lie, States.walkRight, States.runRight]
             },
             {
                 state: States.runLeft,
-                possibleNextStates: [States.sitIdle, States.lie]
+                possibleNextStates: [States.sitIdle, States.lie, States.walkRight, States.runRight]
             },
             {
                 state: States.chase,
@@ -483,11 +483,11 @@ export class Snake extends BasePetType {
             },
             {
                 state: States.walkLeft,
-                possibleNextStates: [States.sitIdle]
+                possibleNextStates: [States.sitIdle, States.walkRight, States.runRight]
             },
             {
                 state: States.runLeft,
-                possibleNextStates: [States.sitIdle]
+                possibleNextStates: [States.sitIdle, States.walkRight, States.runRight]
             },
             {
                 state: States.chase,
