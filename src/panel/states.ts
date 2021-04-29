@@ -37,7 +37,8 @@ export const enum States {
     land = "land",
     swipe = "swipe",
     idleWithBall = "idle-with-ball",
-    chase = "chase"
+    chase = "chase",
+    chaseFriend = "chase-friend"
 }
 
 export enum FrameResult { 
@@ -84,6 +85,7 @@ export function resolveState(state: string, pet: IPetType): IState {
         case States.land: return new LandState(pet);
         case States.swipe: return new SwipeState(pet);
         case States.idleWithBall: return new IdleWithBallState(pet);
+        case States.chaseFriend: return new ChaseFriendState(pet);
     }
     return new SitIdleState(pet);
 }
@@ -251,6 +253,33 @@ export class ChaseState implements IState {
             this.ballState.paused = true;
             return FrameResult.stateComplete;
         }
+        return FrameResult.stateContinue;
+    }
+}
+
+export class ChaseFriendState implements IState {
+    label = States.chaseFriend;
+    skipSpeed = 3;
+    spriteLabel = "run";
+    horizontalDirection = HorizontalDirection.left;
+    pet: IPetType;
+
+    constructor(pet: IPetType) {
+        this.pet = pet;
+    }
+
+    nextFrame() : FrameResult {
+        if (!this.pet.friend().isPlaying()) {
+            return FrameResult.stateCancel; // Friend is no longer playing.
+        }
+        if (this.pet.left() > this.pet.friend().left()) {
+            this.horizontalDirection = HorizontalDirection.left;
+            this.pet.positionLeft(this.pet.left() - this.skipSpeed);
+        } else {
+            this.horizontalDirection = HorizontalDirection.right;
+            this.pet.positionLeft(this.pet.left() + this.skipSpeed);
+        }
+
         return FrameResult.stateContinue;
     }
 }

@@ -64,7 +64,7 @@ export class PetCollection implements IPetCollection {
                     potentialFriend.pet.left() < petInCollection.pet.left() + petInCollection.pet.width())
                     {
                         // We found a possible new friend..
-                        console.log(petInCollection.pet, " and ", potentialFriend.pet, " want to be friends");
+                        console.log(petInCollection.pet.name(), " wants to be friends with ", potentialFriend.pet.name(), ".");
                         petInCollection.pet.makeFriendsWith(potentialFriend.pet);
                     }
             });
@@ -94,9 +94,11 @@ export interface IPetType {
     floor(): number;
 
     // Friends API
+    name(): string;
     hasFriend(): boolean;
     friend(): IPetType;
     makeFriendsWith(friend: IPetType): boolean;
+    isPlaying(): boolean;
 } 
 
 function calculateSpriteWidth(size: PetSize): number{
@@ -258,6 +260,17 @@ abstract class BasePetType implements IPetType {
             this.faceRight();
         }
         this.setAnimation(this.currentState.spriteLabel);
+
+        // What's my buddy doing?
+        if (this.hasFriend() && this.currentStateEnum !== States.chaseFriend){
+            if (this.friend().isPlaying() && !isStateAboveGround(this.currentStateEnum))
+            {
+                this.currentState = resolveState(States.chaseFriend, this);
+                this.currentStateEnum = States.chaseFriend;
+                return;
+            }
+        }
+
         var frameResult = this.currentState.nextFrame();
         if (frameResult === FrameResult.stateComplete)
         {
@@ -274,7 +287,11 @@ abstract class BasePetType implements IPetType {
             this.currentState = resolveState(nextState, this);
             this.currentStateEnum = nextState;
         } else if (frameResult === FrameResult.stateCancel){
-            if (this.currentStateEnum === States.chase) { // Currently the only one anyway
+            if (this.currentStateEnum === States.chase) {
+                var nextState = this.chooseNextState(States.idleWithBall);
+                this.currentState = resolveState(nextState, this);
+                this.currentStateEnum = nextState;
+            } else if (this.currentStateEnum === States.chaseFriend) {
                 var nextState = this.chooseNextState(States.idleWithBall);
                 this.currentState = resolveState(nextState, this);
                 this.currentStateEnum = nextState;
@@ -290,10 +307,18 @@ abstract class BasePetType implements IPetType {
         return this._friend!;
     }
 
+    name(): string {
+        return this.label;
+    }
+
     makeFriendsWith(friend: IPetType): boolean {
         this._friend = friend;
-        console.log("New friends ❤️");
+        console.log(this.name(), ": I'm now friends ❤️ with ", friend.name());
         return true;
+    }
+
+    isPlaying(): boolean {
+        return this.currentStateEnum === States.runRight || this.currentStateEnum === States.runLeft ;
     }
 }
 
