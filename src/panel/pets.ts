@@ -1,25 +1,102 @@
-import { PetSize } from "../common/types";
+import { PetColor, PetSize, PetType } from "../common/types";
 import { ISequenceTree } from "./sequences";
-import { IState, States, resolveState, HorizontalDirection, ChaseState, BallState, FrameResult, PetInstanceState, isStateAboveGround } from "./states";
+import { IState, States, resolveState, HorizontalDirection, ChaseState, BallState, FrameResult, PetInstanceState, isStateAboveGround, PetElementState } from "./states";
 
 export class InvalidStateException {
 
 }
 
+export class PetElement {
+    el: HTMLImageElement;
+    collision: HTMLDivElement;
+    pet: IPetType;
+    color: PetColor;
+    type: PetType;
+  
+    constructor(el: HTMLImageElement, collision: HTMLDivElement, pet: IPetType, color: PetColor, type: PetType){
+      this.el = el;
+      this.collision = collision;
+      this.pet = pet;
+      this.color = color;
+      this.type = type;
+    }
+  }
+
+export interface IPetCollection {
+    pets(): Array<PetElement>;
+    push(pet: PetElement): void;
+    reset(): void;
+    seekNewFriends(): void;
+}
+
+export class PetCollection implements IPetCollection {
+    _pets: Array<PetElement>;
+
+    constructor(){
+        this._pets = new Array(0);
+    }
+
+    pets() {
+        return this._pets;
+    }
+
+    push(pet: PetElement){
+        this._pets.push(pet);
+    }
+
+    reset(){
+        this._pets = [];
+    }
+
+    seekNewFriends() {
+        if (this._pets.length <= 1)
+            {return;} // You can't be friends with yourself.
+        
+        this._pets.forEach(petInCollection => {
+            if (petInCollection.pet.hasFriend())
+                {return;} // I already have a friend!
+            this._pets.forEach(potentialFriend => {
+                if (potentialFriend.pet.hasFriend())
+                    {return;} // Already has a friend. sorry.
+                if (!potentialFriend.pet.canChase())
+                    {return;} // Pet is busy doing something else.
+                if (potentialFriend.pet.left() > petInCollection.pet.left() &&
+                    potentialFriend.pet.left() < petInCollection.pet.left() + petInCollection.pet.width())
+                    {
+                        // We found a possible new friend..
+                        console.log(petInCollection.pet, " and ", potentialFriend.pet, " want to be friends");
+                        petInCollection.pet.makeFriendsWith(potentialFriend.pet);
+                    }
+            });
+        });
+    }
+}
+
 export interface IPetType {
+    nextFrame(): void
+
+    // Special methods for actions
     canSwipe(): boolean
     canChase(): boolean
     swipe(): void
     chase(ballState: BallState, canvas: HTMLCanvasElement): void
-    nextFrame(): void
+
+    // State API
     getState(): PetInstanceState
     recoverState(state: PetInstanceState): void
+
+    // Positioning
     bottom(): number;
     left(): number;
     positionBottom(bottom: number): void;
     positionLeft(left: number): void;
     width(): number;
     floor(): number;
+
+    // Friends API
+    hasFriend(): boolean;
+    friend(): IPetType;
+    makeFriendsWith(friend: IPetType): boolean;
 } 
 
 function calculateSpriteWidth(size: PetSize): number{
@@ -47,6 +124,7 @@ abstract class BasePetType implements IPetType {
     private _bottom: number;
     petRoot: string;
     _floor: number;
+    _friend: IPetType | undefined;
 
     constructor(spriteElement: HTMLImageElement, collisionElement: HTMLDivElement, size: PetSize, left: number, bottom: number, petRoot: string, floor: number){
         this.el = spriteElement;
@@ -125,7 +203,7 @@ abstract class BasePetType implements IPetType {
     }
 
     canChase(){
-        return !isStateAboveGround(this.currentStateEnum);
+        return !isStateAboveGround(this.currentStateEnum) && this.currentStateEnum !== States.chase;
     }
 
     swipe() {
@@ -202,6 +280,20 @@ abstract class BasePetType implements IPetType {
                 this.currentStateEnum = nextState;
             }
         }
+    }
+
+    hasFriend() : boolean {
+        return this._friend !== undefined;
+    }
+
+    friend() : IPetType { 
+        return this._friend!;
+    }
+
+    makeFriendsWith(friend: IPetType): boolean {
+        this._friend = friend;
+        console.log("New friends ❤️");
+        return true;
     }
 }
 
