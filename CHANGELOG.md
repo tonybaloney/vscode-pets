@@ -2,6 +2,10 @@
 
 All notable changes to the "vscode-pets" extension will be documented in this file.
 
+## [1.5.1]
+
+- [bugfix] fixed the ball chases for themes with a high floor, like the castle
+
 ## [1.5.0]
 
 - Added a `castle` theme! The castle will light up when you switch from a light to dark theme too.
