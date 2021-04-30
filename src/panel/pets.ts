@@ -1,6 +1,7 @@
 import { PetColor, PetSize, PetType } from "../common/types";
 import { ISequenceTree } from "./sequences";
 import { IState, States, resolveState, HorizontalDirection, ChaseState, BallState, FrameResult, PetInstanceState, isStateAboveGround, PetElementState } from "./states";
+import { PET_NAMES, CAT_NAMES, DOG_NAMES, CRAB_NAMES } from "../common/names";
 
 export class InvalidStateException {
 
@@ -26,7 +27,8 @@ export interface IPetCollection {
     pets(): Array<PetElement>;
     push(pet: PetElement): void;
     reset(): void;
-    seekNewFriends(): void;
+    seekNewFriends(): string[];
+    locate(name: string): PetElement | undefined;
 }
 
 export class PetCollection implements IPetCollection {
@@ -48,10 +50,16 @@ export class PetCollection implements IPetCollection {
         this._pets = [];
     }
 
-    seekNewFriends() {
+    locate(name: string): PetElement | undefined {
+        return this._pets.find((collection, value, obj) => {
+            return collection.pet.name() === name;
+        });
+    }
+
+    seekNewFriends() : string[] { 
         if (this._pets.length <= 1)
-            {return;} // You can't be friends with yourself.
-        
+            {return [];} // You can't be friends with yourself.
+        var messages = new Array<string>(0);
         this._pets.forEach(petInCollection => {
             if (petInCollection.pet.hasFriend())
                 {return;} // I already have a friend!
@@ -65,10 +73,14 @@ export class PetCollection implements IPetCollection {
                     {
                         // We found a possible new friend..
                         console.log(petInCollection.pet.name(), " wants to be friends with ", potentialFriend.pet.name(), ".");
-                        petInCollection.pet.makeFriendsWith(potentialFriend.pet);
+                        if (petInCollection.pet.makeFriendsWith(potentialFriend.pet))
+                        {
+                            messages.push(`${petInCollection.pet.name()} (${petInCollection.pet.emoji()}): I'm now friends ❤️ with ${potentialFriend.pet.name()} (${potentialFriend.pet.emoji()})`);
+                        }
                     }
             });
         });
+        return messages;
     }
 }
 
@@ -84,6 +96,7 @@ export interface IPetType {
     // State API
     getState(): PetInstanceState
     recoverState(state: PetInstanceState): void
+    recoverFriend(friend: IPetType): void
 
     // Positioning
     bottom(): number;
@@ -95,6 +108,7 @@ export interface IPetType {
 
     // Friends API
     name(): string;
+    emoji(): string;
     hasFriend(): boolean;
     friend(): IPetType;
     makeFriendsWith(friend: IPetType): boolean;
@@ -127,8 +141,9 @@ abstract class BasePetType implements IPetType {
     petRoot: string;
     _floor: number;
     _friend: IPetType | undefined;
+    private _name: string;
 
-    constructor(spriteElement: HTMLImageElement, collisionElement: HTMLDivElement, size: PetSize, left: number, bottom: number, petRoot: string, floor: number){
+    constructor(spriteElement: HTMLImageElement, collisionElement: HTMLDivElement, size: PetSize, left: number, bottom: number, petRoot: string, floor: number, name: string){
         this.el = spriteElement;
         this.collision = collisionElement;
         this.petRoot = petRoot;
@@ -138,6 +153,8 @@ abstract class BasePetType implements IPetType {
         this.initSprite(size, left, bottom);
         this.currentStateEnum = this.sequence.startingState;
         this.currentState = resolveState(this.currentStateEnum, this);
+
+        this._name = name;
     }
 
     initSprite(petSize: PetSize, left: number, bottom: number) {
@@ -190,9 +207,17 @@ abstract class BasePetType implements IPetType {
         return {currentStateEnum: this.currentStateEnum};
     }
 
+    recoverFriend(friend: IPetType){
+        // Recover friends..
+        this._friend = friend;
+    }
+
     recoverState(state: PetInstanceState){
+        // TODO : Resolve a bug where if it was swiping before, it would fail
+        // because holdState is no longer valid.
         this.currentStateEnum = state.currentStateEnum!;
         this.currentState = resolveState(this.currentStateEnum, this);
+
         if (!isStateAboveGround(this.currentStateEnum)){
             // Reset the bottom of the sprite to the floor as the theme
             // has likely changed.
@@ -308,7 +333,7 @@ abstract class BasePetType implements IPetType {
     }
 
     name(): string {
-        return this.label;
+        return this._name;
     }
 
     makeFriendsWith(friend: IPetType): boolean {
@@ -319,6 +344,10 @@ abstract class BasePetType implements IPetType {
 
     isPlaying(): boolean {
         return this.currentStateEnum === States.runRight || this.currentStateEnum === States.runLeft ;
+    }
+
+    emoji(): string { 
+        return "🐶";
     }
 }
 
@@ -369,6 +398,9 @@ export class Totoro extends BasePetType {
             },
         ]
     };
+    emoji(): string { 
+        return "🐾";
+    }
 }
 export class Cat extends BasePetType {
     label = "cat";
@@ -421,6 +453,9 @@ export class Cat extends BasePetType {
             },
         ]
     };
+    emoji(): string { 
+        return "🐱";
+    }
 }
 
 export class Dog extends BasePetType {
@@ -462,6 +497,9 @@ export class Dog extends BasePetType {
             },
         ]
     };
+    emoji(): string { 
+        return "🐶";
+    }
 }
 
 export class Snake extends BasePetType {
@@ -499,6 +537,9 @@ export class Snake extends BasePetType {
             },
         ]
     };
+    emoji(): string { 
+        return "🐍";
+    }
 }
 
 export class Clippy extends BasePetType {
@@ -536,6 +577,9 @@ export class Clippy extends BasePetType {
             },
         ]
     };
+    emoji(): string { 
+        return "📎";
+    }
 }
 
 export class RubberDuck extends BasePetType {
@@ -573,6 +617,9 @@ export class RubberDuck extends BasePetType {
             },
         ]
     };
+    emoji(): string { 
+        return "🐥";
+    }
 }
 
 export class Crab extends BasePetType {
@@ -610,32 +657,57 @@ export class Crab extends BasePetType {
             },
         ]
     };
+    emoji(): string { 
+        return "🦀";
+    }
 }
 
 export class InvalidPetException {
 }
 
-export function createPet(petType: string, el: HTMLImageElement, collision: HTMLDivElement, size: PetSize, left: number, bottom: number, petRoot: string, floor: number) : IPetType {
+function getPetName(collection: Map<number, string>, label: string, count: number) : string {
+    if (collection.has(count)){
+        return collection.get(count)!;
+    } else {
+        return label + count;
+    }
+}
+
+export function createPet(petType: string, el: HTMLImageElement, collision: HTMLDivElement, size: PetSize, left: number, bottom: number, petRoot: string, floor: number, name: string | undefined, count: number) : IPetType {
     if (petType === "totoro"){
-        return new Totoro(el, collision, size, left, bottom, petRoot, floor);
+        if (name === undefined)
+            {name = getPetName(PET_NAMES, PetType.totoro, count);}
+        return new Totoro(el, collision, size, left, bottom, petRoot, floor, name);
     }
     if (petType === "cat"){
-        return new Cat(el, collision, size, left, bottom, petRoot, floor);
+        if (name === undefined)
+            {name = getPetName(CAT_NAMES, PetType.cat, count);}
+        return new Cat(el, collision, size, left, bottom, petRoot, floor, name);
     }
     else if (petType === "dog") {
-        return new Dog(el, collision, size, left, bottom, petRoot, floor);
+        if (name === undefined)
+            {name = getPetName(DOG_NAMES, PetType.dog, count);}
+        return new Dog(el, collision, size, left, bottom, petRoot, floor, name);
     }
     else if (petType === "snake") {
-        return new Snake(el, collision, size, left, bottom, petRoot, floor);
+        if (name === undefined)
+            {name = getPetName(PET_NAMES, PetType.snake, count);}
+        return new Snake(el, collision, size, left, bottom, petRoot, floor, name);
     }
     else if (petType === "clippy") {
-        return new Clippy(el, collision, size, left, bottom, petRoot, floor);
+        if (name === undefined)
+            {name = getPetName(PET_NAMES, PetType.clippy, count);}
+        return new Clippy(el, collision, size, left, bottom, petRoot, floor, name);
     }
     else if (petType === "crab") {
-        return new Crab(el, collision, size, left, bottom, petRoot, floor);
+        if (name === undefined)
+            {name = getPetName(CRAB_NAMES, PetType.crab, count);}
+        return new Crab(el, collision, size, left, bottom, petRoot, floor, name);
     }
     else if (petType === "rubber-duck") {
-        return new RubberDuck(el, collision, size, left, bottom, petRoot, floor);
+        if (name === undefined)
+            {name = getPetName(PET_NAMES, PetType.rubberduck, count);}
+        return new RubberDuck(el, collision, size, left, bottom, petRoot, floor, name);
     }
     throw new InvalidPetException();
 }

@@ -11,10 +11,13 @@ export class PetElementState {
     petColor: PetColor | undefined;
     elLeft: string | undefined;
     elBottom: string | undefined;
+    petName: string | undefined;
+    petFriend: string | undefined;
 }
 
 export class PetPanelState {
     petStates: Array<PetElementState> | undefined;
+    petCounter: number | undefined;
 }
 
 

@@ -1,13 +1,14 @@
 // This script will be run within the webview itself
-import { PetSize, PetColor, PetType, Theme, ColorThemeKind } from '../common/types';
+import { PetSize, PetColor, PetType, Theme, ColorThemeKind, WebviewMessage } from '../common/types';
 import { createPet, IPetType, InvalidPetException, PetCollection, PetElement, IPetCollection } from './pets';
-import { BallState, PetPanelState } from './states';
+import { BallState, ChaseFriendState, PetElementState, PetInstanceState, PetPanelState, States } from './states';
 
 /* This is how the VS Code API can be invoked from the panel */
 declare global {
   interface VscodeStateApi { 
     getState() : PetPanelState; // API is actually Any, but we want it to be typed.
     setState(state: PetPanelState): void;
+    postMessage(message: WebviewMessage): void;
   }
   interface Window {
     acquireVsCodeApi(): VscodeStateApi;
@@ -17,6 +18,7 @@ declare global {
 const vscode = window.acquireVsCodeApi();
 
 var allPets: IPetCollection = new PetCollection();
+var petCounter: number;
 
 function calculateBallRadius(size: PetSize): number{
   if (size === PetSize.nano){
@@ -72,13 +74,19 @@ function handleMouseOver(e: MouseEvent){
 function startAnimations(collision: HTMLDivElement, pet: IPetType) {
   collision.addEventListener("mouseover", handleMouseOver);
   setInterval(() => {
-    allPets.seekNewFriends();
+    var updates = allPets.seekNewFriends();
+    updates.forEach(message => {
+      vscode.postMessage({
+        text: message,
+        command: 'info'
+      });
+    });
     pet.nextFrame();
     saveState();
   }, 100);
 }
 
-function addPetToPanel(petType: PetType, basePetUri: string, petColor: PetColor, petSize: PetSize, left: number, bottom: number, floor: number): PetElement {
+function addPetToPanel(petType: PetType, basePetUri: string, petColor: PetColor, petSize: PetSize, left: number, bottom: number, floor: number, name: string | undefined): PetElement {
   var petSpriteElement: HTMLImageElement = document.createElement("img");
   petSpriteElement.className = "pet";
   (document.getElementById("petsContainer") as HTMLDivElement).appendChild(petSpriteElement);
@@ -89,7 +97,8 @@ function addPetToPanel(petType: PetType, basePetUri: string, petColor: PetColor,
 
   const root = basePetUri + '/' + petType + '/' + petColor;
   console.log("Creating new pet : ", petType, root);
-  var newPet = createPet(petType, petSpriteElement, collisionElement, petSize, left, bottom, root, floor);
+  var newPet = createPet(petType, petSpriteElement, collisionElement, petSize, left, bottom, root, floor, name, petCounter);
+  petCounter ++ ;
   startAnimations(collisionElement, newPet);
   return new PetElement(petSpriteElement, collisionElement, newPet, petColor, petType);
 }
@@ -100,28 +109,60 @@ function saveState(){
 
   allPets.pets().forEach(petItem => {
     state.petStates!.push({
+      petName: petItem.pet.name(),
       petColor: petItem.color,
       petType: petItem.type,
       petState: petItem.pet.getState(),
+      petFriend: petItem.pet.friend() ? petItem.pet.friend().name() : undefined,
       elLeft: petItem.el.style.left,
       elBottom: petItem.el.style.bottom
     });
   });
+  state.petCounter = petCounter;
   vscode.setState(state);
 }
 
 function recoverState(basePetUri: string, petSize: PetSize, floor: number){
   var state = vscode.getState();
+  
+  if (state.petCounter === undefined || isNaN(state.petCounter)){
+    petCounter = 1;
+  } else {
+    petCounter = state.petCounter!;
+  }
+
+  var recoveryMap: Map<IPetType, PetElementState> = new Map();
   state.petStates!.forEach(p => {
     // Fixes a bug related to duck animations
     if (p.petType as string === "rubber duck") {(p.petType as string) = "rubber-duck";}
 
     try {
-      var newPet = addPetToPanel(p.petType!, basePetUri, p.petColor!, petSize, parseInt(p.elLeft!), parseInt(p.elBottom!), floor);
-      newPet.pet.recoverState(p.petState!);
+      var newPet = addPetToPanel(
+        p.petType!, 
+        basePetUri, 
+        p.petColor!, 
+        petSize, 
+        parseInt(p.elLeft!), 
+        parseInt(p.elBottom!), 
+        floor,
+        p.petName);
       allPets.push(newPet);
+      recoveryMap.set(newPet.pet, p);
     } catch (InvalidPetException){
-      console.log("State had invalid pet, discarding.");
+      console.log("State had invalid pet (" + p.petType + "), discarding.");
+    }
+  });
+  recoveryMap.forEach( (state, pet) => {
+    // Recover previous state.
+    pet.recoverState(state.petState!);
+
+    // Resolve friend relationships
+    var friend = undefined;
+    if (state.petFriend){
+      friend = allPets.locate(state.petFriend);
+      if (friend){
+        pet.recoverFriend(friend.pet);
+      }
     }
   });
 }
@@ -215,7 +256,8 @@ export function petPanelApp(basePetUri: string, theme: Theme, themeKind: ColorTh
   var state = vscode.getState();
   if (!state) {
     console.log('No state, starting a new session.');
-    allPets.push(addPetToPanel(petType, basePetUri, petColor, petSize, randomStartPosition(), floor, floor));
+    petCounter = 1;
+    allPets.push(addPetToPanel(petType, basePetUri, petColor, petSize, randomStartPosition(), floor, floor, undefined));
     saveState();
   } else { 
     console.log('Recovering state - ', state);
@@ -238,7 +280,7 @@ export function petPanelApp(basePetUri: string, theme: Theme, themeKind: ColorTh
         });
         break;
       case "spawn-pet":
-        allPets.push(addPetToPanel(message.type, basePetUri, message.color, petSize, randomStartPosition(), floor, floor));
+        allPets.push(addPetToPanel(message.type, basePetUri, message.color, petSize, randomStartPosition(), floor, floor, undefined));
         saveState();
         break;
       case "reset-pet":
@@ -247,7 +289,8 @@ export function petPanelApp(basePetUri: string, theme: Theme, themeKind: ColorTh
           pet.collision.remove();
         });
         allPets.reset();
-        allPets.push(addPetToPanel(message.type, basePetUri, message.color, message.size, randomStartPosition(), floor, floor));
+        allPets.push(addPetToPanel(message.type, basePetUri, message.color, message.size, randomStartPosition(), floor, floor, undefined));
+        petCounter = 1;
         saveState();
         break;
     }
