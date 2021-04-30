@@ -99,6 +99,9 @@ export const PET_NAMES: Map<number, string> = new Map<number, string>([
     [98, 'Scout'],
     [99, 'Charlie'],
     [100, 'Cleo'],
+    [101, 'Purfect'],
+    [102, 'Spot'],
+    [103, 'Harry'],
 ]);
 
 export const CAT_NAMES = PET_NAMES;
