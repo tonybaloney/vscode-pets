@@ -40,3 +40,13 @@ export const enum ColorThemeKind {
 	Dark = 2,
 	HighContrast = 3
 }
+
+export class WebviewMessage {
+	text: string;
+	command: string;
+
+	constructor(text: string, command: string) {
+		this.text = text;
+		this.command = command;
+	}
+}

@@ -1,7 +1,7 @@
 import * as path from 'path';
 import * as vscode from 'vscode';
 import { ColorThemeKind } from 'vscode';
-import { PetSize, PetColor, PetType, ExtPosition, Theme } from '../common/types';
+import { PetSize, PetColor, PetType, ExtPosition, Theme, WebviewMessage } from '../common/types';
 
 const EXTRA_PETS_KEY = 'vscode-pets.extra-pets';
 const EXTRA_PETS_KEY_TYPES = EXTRA_PETS_KEY + '.types';
@@ -401,6 +401,16 @@ class PetWebviewContainer {
 	}
 }
 
+function handleWebviewMessage(message: WebviewMessage){
+	switch (message.command) {
+		case 'alert':
+			vscode.window.showErrorMessage(message.text);
+			return;
+		case 'info':
+			vscode.window.showInformationMessage(message.text);
+			return;
+	}
+}
 
 /**
  * Manages pet coding webview panels
@@ -472,13 +482,7 @@ class PetPanel extends PetWebviewContainer {
 
 		// Handle messages from the webview
 		this._panel.webview.onDidReceiveMessage(
-			message => {
-				switch (message.command) {
-					case 'alert':
-						vscode.window.showErrorMessage(message.text);
-						return;
-				}
-			},
+			handleWebviewMessage,
 			null,
 			this._disposables
 		);
@@ -522,13 +526,7 @@ class PetWebviewViewProvider extends PetWebviewContainer {
 		webviewView.webview.html = this._getHtmlForWebview(webviewView.webview);
 		
 		webviewView.webview.onDidReceiveMessage(
-			message => {
-				switch (message.command) {
-					case 'alert':
-						vscode.window.showErrorMessage(message.text);
-						return;
-				}
-			},
+			handleWebviewMessage,
 			null,
 			this._disposables
 		);		
