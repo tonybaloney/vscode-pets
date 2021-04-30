@@ -112,9 +112,60 @@ export const CRAB_NAMES : Map<number, string> = new Map<number, string>([
     [4, 'Big Red'],
     [5, 'Crabby'],
     [6, 'Buddy'],
-    [7, 'Ruby'],
+    [7, 'Ruby Red'],
     [8, 'Oscar'],
     [9, 'Lucy'],
     [10, 'Bailey']
 ]);
 
+export const CLIPPY_NAMES: Map<number, string> = new Map<number, string>([
+    [1, 'Clippy'],
+    [2, 'Karl Klammer'],
+    [3, 'Clippy Jr.'],
+    [4, 'Molly'],
+    [5, 'Coco'],
+    [6, 'Buddy'],
+    [7, 'Ruby'],
+    [8, 'Oscar'],
+    [9, 'Lucy'],
+    [10, 'Bailey'],
+]);
+
+export const TOTORO_NAMES: Map<number, string> = new Map<number, string>([
+    [1, 'Totoro'],
+    [2, 'トトロ'],
+    [3, 'Max'],
+    [4, 'Molly'],
+    [5, 'Coco'],
+    [6, 'Buddy'],
+    [7, 'Ruby'],
+    [8, 'Oscar'],
+    [9, 'Lucy'],
+    [10, 'Bailey'],
+]);
+
+export const SNAKE_NAMES: Map<number, string> = new Map<number, string>([
+    [1, 'Sneaky'],
+    [2, 'Mr Slippery'],
+    [3, 'Max'],
+    [4, 'Molly'],
+    [5, 'Coco'],
+    [6, 'Buddy'],
+    [7, 'Ruby'],
+    [8, 'Oscar'],
+    [9, 'Lucy'],
+    [10, 'Bailey'],
+]);
+
+export const DUCK_NAMES: Map<number, string> = new Map<number, string>([
+    [1, 'Quacky'],
+    [2, 'Floaty'],
+    [3, 'Duck'],
+    [4, 'Molly'],
+    [5, 'Sunshine'],
+    [6, 'Buddy'],
+    [7, 'Chirpy'],
+    [8, 'Oscar'],
+    [9, 'Lucy'],
+    [10, 'Bailey'],
+]);
