@@ -1,7 +1,7 @@
 import { PetColor, PetSize, PetType } from "../common/types";
 import { ISequenceTree } from "./sequences";
-import { IState, States, resolveState, HorizontalDirection, ChaseState, BallState, FrameResult, PetInstanceState, isStateAboveGround, PetElementState } from "./states";
-import { PET_NAMES, CAT_NAMES, DOG_NAMES, CRAB_NAMES } from "../common/names";
+import { IState, States, resolveState, HorizontalDirection, ChaseState, BallState, FrameResult, PetInstanceState, isStateAboveGround } from "./states";
+import { CAT_NAMES, DOG_NAMES, CRAB_NAMES, SNAKE_NAMES, CLIPPY_NAMES, TOTORO_NAMES, DUCK_NAMES } from "../common/names";
 
 export class InvalidStateException {
 
@@ -676,7 +676,7 @@ function getPetName(collection: Map<number, string>, label: string, count: numbe
 export function createPet(petType: string, el: HTMLImageElement, collision: HTMLDivElement, size: PetSize, left: number, bottom: number, petRoot: string, floor: number, name: string | undefined, count: number) : IPetType {
     if (petType === "totoro"){
         if (name === undefined)
-            {name = getPetName(PET_NAMES, PetType.totoro, count);}
+            {name = getPetName(TOTORO_NAMES, PetType.totoro, count);}
         return new Totoro(el, collision, size, left, bottom, petRoot, floor, name);
     }
     if (petType === "cat"){
@@ -691,12 +691,12 @@ export function createPet(petType: string, el: HTMLImageElement, collision: HTML
     }
     else if (petType === "snake") {
         if (name === undefined)
-            {name = getPetName(PET_NAMES, PetType.snake, count);}
+            {name = getPetName(SNAKE_NAMES, PetType.snake, count);}
         return new Snake(el, collision, size, left, bottom, petRoot, floor, name);
     }
     else if (petType === "clippy") {
         if (name === undefined)
-            {name = getPetName(PET_NAMES, PetType.clippy, count);}
+            {name = getPetName(CLIPPY_NAMES, PetType.clippy, count);}
         return new Clippy(el, collision, size, left, bottom, petRoot, floor, name);
     }
     else if (petType === "crab") {
@@ -706,7 +706,7 @@ export function createPet(petType: string, el: HTMLImageElement, collision: HTML
     }
     else if (petType === "rubber-duck") {
         if (name === undefined)
-            {name = getPetName(PET_NAMES, PetType.rubberduck, count);}
+            {name = getPetName(DUCK_NAMES, PetType.rubberduck, count);}
         return new RubberDuck(el, collision, size, left, bottom, petRoot, floor, name);
     }
     throw new InvalidPetException();
