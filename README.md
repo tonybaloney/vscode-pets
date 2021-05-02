@@ -80,9 +80,9 @@ Want to contribute to vscode-pets? Feel free to [fork the repository](https://gi
 
 ## Credits
 
-The cat, dog, and snake media assets for this extension were licensed from itch.io.
+The cat and dog media assets for this extension were licensed from itch.io.
 
-[Marc Duiker](https://twitter.com/marcduiker) created the Clippy, rubber duck, and Ferris the crab media assets.
+[Marc Duiker](https://twitter.com/marcduiker) created the Clippy, rubber duck, snake, and Ferris the crab media assets.
 
 ## Thank you
 
