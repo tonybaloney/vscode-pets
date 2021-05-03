@@ -169,10 +169,10 @@ export class IdleWithBallState extends AbstractStaticState {
 export class WalkRightState implements IState {
     label = States.walkRight;
     pet: IPetType;
-    skipSpeed = 3;
     spriteLabel = "walk";
     horizontalDirection = HorizontalDirection.right;
     leftBoundary: number;
+    speedMultiplier = 1;
 
     constructor(pet: IPetType) {
         this.leftBoundary = Math.floor(window.innerWidth * 0.95);
@@ -180,7 +180,7 @@ export class WalkRightState implements IState {
     }
 
     nextFrame() : FrameResult {
-        this.pet.positionLeft(this.pet.left() + this.skipSpeed);
+        this.pet.positionLeft(this.pet.left() + this.pet.speed() * this.speedMultiplier);
         if (this.pet.left() >= this.leftBoundary - this.pet.width()) {
             return FrameResult.stateComplete;
         }
@@ -190,17 +190,17 @@ export class WalkRightState implements IState {
 
 export class WalkLeftState implements IState {
     label = States.walkLeft;
-    skipSpeed = 3;
     spriteLabel = "walk";
     horizontalDirection = HorizontalDirection.left;
     pet: IPetType;
+    speedMultiplier = 1;
 
     constructor(pet: IPetType) {
         this.pet = pet;
     }
 
     nextFrame() : FrameResult {
-        this.pet.positionLeft(this.pet.left() - this.skipSpeed);
+        this.pet.positionLeft(this.pet.left() - this.pet.speed() * this.speedMultiplier);
         if (this.pet.left() <= 0) {
             return FrameResult.stateComplete;
         }
@@ -211,18 +211,17 @@ export class WalkLeftState implements IState {
 export class RunRightState extends WalkRightState {
     label = States.runRight;
     spriteLabel = "walk_fast";
-    skipSpeed = 5;
+    speedMultiplier = 1.6;
 }
 
 export class RunLeftState extends WalkLeftState {
     label = States.runLeft;
     spriteLabel = "walk_fast";
-    skipSpeed = 5;
+    speedMultiplier = 1.6;
 }
 
 export class ChaseState implements IState {
     label = States.chase;
-    skipSpeed = 3;
     spriteLabel = "run";
     horizontalDirection = HorizontalDirection.left;
     ballState: BallState;
@@ -242,10 +241,10 @@ export class ChaseState implements IState {
         }
         if (this.pet.left() > this.ballState.cx) {
             this.horizontalDirection = HorizontalDirection.left;
-            this.pet.positionLeft(this.pet.left() - this.skipSpeed);
+            this.pet.positionLeft(this.pet.left() - this.pet.speed());
         } else {
             this.horizontalDirection = HorizontalDirection.right;
-            this.pet.positionLeft(this.pet.left() + this.skipSpeed);
+            this.pet.positionLeft(this.pet.left() + this.pet.speed());
         }
 
         if (this.canvas.height - this.ballState.cy < (this.pet.width() + this.pet.floor()) &&
@@ -262,7 +261,6 @@ export class ChaseState implements IState {
 
 export class ChaseFriendState implements IState {
     label = States.chaseFriend;
-    skipSpeed = 3;
     spriteLabel = "run";
     horizontalDirection = HorizontalDirection.left;
     pet: IPetType;
@@ -277,10 +275,10 @@ export class ChaseFriendState implements IState {
         }
         if (this.pet.left() > this.pet.friend().left()) {
             this.horizontalDirection = HorizontalDirection.left;
-            this.pet.positionLeft(this.pet.left() - this.skipSpeed);
+            this.pet.positionLeft(this.pet.left() - this.pet.speed());
         } else {
             this.horizontalDirection = HorizontalDirection.right;
-            this.pet.positionLeft(this.pet.left() + this.skipSpeed);
+            this.pet.positionLeft(this.pet.left() + this.pet.speed());
         }
 
         return FrameResult.stateContinue;
@@ -289,7 +287,6 @@ export class ChaseFriendState implements IState {
 
 export class ClimbWallLeftState implements IState {
     label = States.climbWallLeft;
-    skipSpeed = 3;
     spriteLabel = "wallclimb";
     horizontalDirection = HorizontalDirection.left;
     pet: IPetType;
@@ -309,7 +306,6 @@ export class ClimbWallLeftState implements IState {
 
 export class JumpDownLeftState implements IState {
     label = States.jumpDownLeft;
-    skipSpeed = 3;
     spriteLabel = "fall_from_grab";
     horizontalDirection = HorizontalDirection.right;
     pet: IPetType;
