@@ -1,4 +1,4 @@
-import { PetColor, PetSize, PetType } from "../common/types";
+import { PetColor, PetSize, PetSpeed, PetType } from "../common/types";
 import { ISequenceTree } from "./sequences";
 import { IState, States, resolveState, HorizontalDirection, ChaseState, BallState, FrameResult, PetInstanceState, isStateAboveGround } from "./states";
 import { CAT_NAMES, DOG_NAMES, CRAB_NAMES, SNAKE_NAMES, CLIPPY_NAMES, TOTORO_NAMES, DUCK_NAMES } from "../common/names";
@@ -92,6 +92,7 @@ export interface IPetType {
     canChase(): boolean
     swipe(): void
     chase(ballState: BallState, canvas: HTMLCanvasElement): void
+    speed(): number
 
     // State API
     getState(): PetInstanceState
@@ -142,8 +143,9 @@ abstract class BasePetType implements IPetType {
     _floor: number;
     _friend: IPetType | undefined;
     private _name: string;
+    private _speed: number;
 
-    constructor(spriteElement: HTMLImageElement, collisionElement: HTMLDivElement, size: PetSize, left: number, bottom: number, petRoot: string, floor: number, name: string){
+    constructor(spriteElement: HTMLImageElement, collisionElement: HTMLDivElement, size: PetSize, left: number, bottom: number, petRoot: string, floor: number, name: string, speed: number){
         this.el = spriteElement;
         this.collision = collisionElement;
         this.petRoot = petRoot;
@@ -155,6 +157,7 @@ abstract class BasePetType implements IPetType {
         this.currentState = resolveState(this.currentStateEnum, this);
 
         this._name = name;
+        this._speed = speed;
     }
 
     initSprite(petSize: PetSize, left: number, bottom: number) {
@@ -205,6 +208,10 @@ abstract class BasePetType implements IPetType {
 
     getState(): PetInstanceState { 
         return {currentStateEnum: this.currentStateEnum};
+    }
+
+    speed(): number {
+        return this._speed;
     }
 
     recoverFriend(friend: IPetType){
@@ -677,37 +684,37 @@ export function createPet(petType: string, el: HTMLImageElement, collision: HTML
     if (petType === "totoro"){
         if (name === undefined)
             {name = getPetName(TOTORO_NAMES, PetType.totoro, count);}
-        return new Totoro(el, collision, size, left, bottom, petRoot, floor, name);
+        return new Totoro(el, collision, size, left, bottom, petRoot, floor, name, PetSpeed.normal);
     }
     if (petType === "cat"){
         if (name === undefined)
             {name = getPetName(CAT_NAMES, PetType.cat, count);}
-        return new Cat(el, collision, size, left, bottom, petRoot, floor, name);
+        return new Cat(el, collision, size, left, bottom, petRoot, floor, name, PetSpeed.normal);
     }
     else if (petType === "dog") {
         if (name === undefined)
             {name = getPetName(DOG_NAMES, PetType.dog, count);}
-        return new Dog(el, collision, size, left, bottom, petRoot, floor, name);
+        return new Dog(el, collision, size, left, bottom, petRoot, floor, name, PetSpeed.normal);
     }
     else if (petType === "snake") {
         if (name === undefined)
             {name = getPetName(SNAKE_NAMES, PetType.snake, count);}
-        return new Snake(el, collision, size, left, bottom, petRoot, floor, name);
+        return new Snake(el, collision, size, left, bottom, petRoot, floor, name, PetSpeed.verySlow);
     }
     else if (petType === "clippy") {
         if (name === undefined)
             {name = getPetName(CLIPPY_NAMES, PetType.clippy, count);}
-        return new Clippy(el, collision, size, left, bottom, petRoot, floor, name);
+        return new Clippy(el, collision, size, left, bottom, petRoot, floor, name, PetSpeed.slow);
     }
     else if (petType === "crab") {
         if (name === undefined)
             {name = getPetName(CRAB_NAMES, PetType.crab, count);}
-        return new Crab(el, collision, size, left, bottom, petRoot, floor, name);
+        return new Crab(el, collision, size, left, bottom, petRoot, floor, name, PetSpeed.slow);
     }
     else if (petType === "rubber-duck") {
         if (name === undefined)
             {name = getPetName(DUCK_NAMES, PetType.rubberduck, count);}
-        return new RubberDuck(el, collision, size, left, bottom, petRoot, floor, name);
+        return new RubberDuck(el, collision, size, left, bottom, petRoot, floor, name, PetSpeed.fast);
     }
     throw new InvalidPetException();
 }
