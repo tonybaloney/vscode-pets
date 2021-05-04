@@ -2,6 +2,10 @@
 
 All notable changes to the "vscode-pets" extension will be documented in this file.
 
+## [1.7.0]
+
+- Updated the snake media 🐍. Credit @marcduiker
+
 ## [1.6.0]
 
 - Pets will now become friends with other pets and chase after them when they're playing
