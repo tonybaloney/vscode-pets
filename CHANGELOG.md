@@ -5,6 +5,7 @@ All notable changes to the "vscode-pets" extension will be documented in this fi
 ## [1.7.0]
 
 - Updated the snake media 🐍. Credit @marcduiker
+- Different types of pets move at more realistic speeds.
 
 ## [1.6.0]
 
