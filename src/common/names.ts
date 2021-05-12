@@ -172,3 +172,16 @@ export const DUCK_NAMES: Map<number, string> = new Map<number, string>([
     [9, 'Lucy'],
     [10, 'Bailey'],
 ]);
+
+export const ZAPPY_NAMES: Map<number, string> = new Map<number, string>([
+    [1, 'Zappy'],
+    [2, 'Zippy'],
+    [3, 'Zappy Jr.'],
+    [4, 'Zoppy'],
+    [5, 'Zuppy'],
+    [6, 'Zeppy'],
+    [7, 'Big Z'],
+    [8, 'Little z'],
+    [9, 'The Flash'],
+    [10, 'Thor'],
+]);

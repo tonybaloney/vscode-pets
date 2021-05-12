@@ -26,7 +26,7 @@ You can choose either pet type and pet color:
 
 _*snake can only be green_
 
-_*rubber duck can only be yellow_
+_*rubber duck & Zappy can only be yellow_
 
 _*Ferris the crab can only be red_
 
@@ -82,7 +82,7 @@ Want to contribute to vscode-pets? Feel free to [fork the repository](https://gi
 
 The cat and dog media assets for this extension were licensed from itch.io.
 
-[Marc Duiker](https://twitter.com/marcduiker) created the Clippy, rubber duck, snake, and Ferris the crab media assets.
+[Marc Duiker](https://twitter.com/marcduiker) created the Clippy, Zappy, rubber duck, snake, and Ferris the crab media assets.
 
 [Karen Rustad Tölva](https://www.aldeka.net) designed the original concept of Ferris the crab. 
 
