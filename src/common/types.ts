@@ -15,7 +15,8 @@ export const enum PetType {
 	clippy = "clippy",
 	rubberduck = "rubber-duck",
 	totoro = "totoro",
-	crab = "crab"
+	crab = "crab",
+	zappy = "zappy"
 }
 
 export const enum PetSpeed {
