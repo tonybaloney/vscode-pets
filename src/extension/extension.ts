@@ -12,7 +12,7 @@ const DEFAULT_PET_TYPE = PetType.cat;
 const DEFAULT_POSITION = ExtPosition.panel;
 const DEFAULT_THEME = Theme.none;
 
-const ALL_PETS = [PetType.cat, PetType.clippy, PetType.dog, PetType.rubberduck, PetType.snake, PetType.totoro, PetType.crab];
+const ALL_PETS = [PetType.cat, PetType.clippy, PetType.dog, PetType.rubberduck, PetType.snake, PetType.totoro, PetType.crab, PetType.zappy];
 const ALL_COLORS = [PetColor.black, PetColor.brown, PetColor.green, PetColor.yellow, PetColor.gray, PetColor.red];
 const ALL_SCALES = [PetSize.nano, PetSize.medium, PetSize.large];
 const ALL_THEMES = [Theme.none, Theme.forest, Theme.castle];
@@ -174,6 +174,9 @@ export function activate(context: vscode.ExtensionContext) {
 					case PetType.crab:
 						petColor = PetColor.red;
 						break;
+					case PetType.zappy:
+							petColor = PetColor.yellow;
+							break;
 				}
 				const spec = new PetSpecification(petColor, petType as PetType, getConfiguredSize());
 				if (getConfigurationPosition() === ExtPosition.explorer) {

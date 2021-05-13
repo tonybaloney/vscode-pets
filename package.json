@@ -2,7 +2,7 @@
 	"name": "vscode-pets",
 	"displayName": "vscode-pets",
 	"description": "Pets for your VS Code",
-	"version": "1.7.0",
+	"version": "1.8.0",
 	"engines": {
 		"vscode": "^1.53.0"
 	},
@@ -122,10 +122,11 @@
 							"cat",
 							"crab",
 							"clippy",
-							"rubber-duck",
-							"totoro",
 							"dog",
-							"snake"
+							"rubber-duck",
+							"snake",
+							"totoro",
+							"zappy"
 						],
 						"default": "cat",
 						"description": "Pet type",

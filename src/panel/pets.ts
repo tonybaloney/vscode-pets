@@ -1,7 +1,7 @@
 import { PetColor, PetSize, PetSpeed, PetType } from "../common/types";
 import { ISequenceTree } from "./sequences";
 import { IState, States, resolveState, HorizontalDirection, ChaseState, BallState, FrameResult, PetInstanceState, isStateAboveGround } from "./states";
-import { CAT_NAMES, DOG_NAMES, CRAB_NAMES, SNAKE_NAMES, CLIPPY_NAMES, TOTORO_NAMES, DUCK_NAMES } from "../common/names";
+import { CAT_NAMES, DOG_NAMES, CRAB_NAMES, SNAKE_NAMES, CLIPPY_NAMES, TOTORO_NAMES, DUCK_NAMES, ZAPPY_NAMES } from "../common/names";
 
 export class InvalidStateException {
 
@@ -669,6 +669,46 @@ export class Crab extends BasePetType {
     }
 }
 
+export class Zappy extends BasePetType {
+    label = "zappy";
+    sequence = {
+        startingState: States.sitIdle,
+        sequenceStates: [
+            {
+                state: States.sitIdle,
+                possibleNextStates: [States.walkRight, States.runRight]
+            },
+            {
+                state: States.walkRight,
+                possibleNextStates: [States.walkLeft, States.runLeft]
+            },
+            {
+                state: States.runRight,
+                possibleNextStates: [States.walkLeft, States.runLeft]
+            },
+            {
+                state: States.walkLeft,
+                possibleNextStates: [States.sitIdle]
+            },
+            {
+                state: States.runLeft,
+                possibleNextStates: [States.sitIdle]
+            },
+            {
+                state: States.chase,
+                possibleNextStates: [States.idleWithBall]
+            },
+            {
+                state: States.idleWithBall,
+                possibleNextStates: [States.walkRight, States.walkLeft, States.runLeft, States.runRight]
+            },
+        ]
+    };
+    emoji(): string { 
+        return "⚡";
+    }
+}
+
 export class InvalidPetException {
 }
 
@@ -715,6 +755,11 @@ export function createPet(petType: string, el: HTMLImageElement, collision: HTML
         if (name === undefined)
             {name = getPetName(DUCK_NAMES, PetType.rubberduck, count);}
         return new RubberDuck(el, collision, size, left, bottom, petRoot, floor, name, PetSpeed.fast);
+    }
+    else if (petType === "zappy") {
+        if (name === undefined)
+            {name = getPetName(ZAPPY_NAMES, PetType.zappy, count);}
+        return new RubberDuck(el, collision, size, left, bottom, petRoot, floor, name, PetSpeed.verFast);
     }
     throw new InvalidPetException();
 }
