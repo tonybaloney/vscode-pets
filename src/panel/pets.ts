@@ -759,7 +759,7 @@ export function createPet(petType: string, el: HTMLImageElement, collision: HTML
     else if (petType === "zappy") {
         if (name === undefined)
             {name = getPetName(ZAPPY_NAMES, PetType.zappy, count);}
-        return new RubberDuck(el, collision, size, left, bottom, petRoot, floor, name, PetSpeed.verFast);
+        return new Zappy(el, collision, size, left, bottom, petRoot, floor, name, PetSpeed.veryFast);
     }
     throw new InvalidPetException();
 }

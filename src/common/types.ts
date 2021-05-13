@@ -24,7 +24,7 @@ export const enum PetSpeed {
 	slow = 2,
 	normal = 3,
 	fast = 4,
-	verFast = 5
+	veryFast = 5
 }
 
 export const enum PetSize {
