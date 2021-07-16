@@ -724,7 +724,7 @@ function getPetName(collection: Map<number, string>, label: string, count: numbe
     }
 }
 
-export function createPet(petType: string, el: HTMLImageElement, collision: HTMLDivElement, size: PetSize, left: number, bottom: number, petRoot: string, floor: number, name: string | undefined, count: number) : IPetType {
+export function createPet(petType: string, el: HTMLImageElement, collision: HTMLDivElement, size: PetSize, left: number, bottom: number, petRoot: string, floor: number, name: string | undefined) : IPetType {
     if (petType === "totoro"){
         if (name === undefined)
             {name = getPetName(TOTORO_NAMES, PetType.totoro, Totoro.count + 1);}
