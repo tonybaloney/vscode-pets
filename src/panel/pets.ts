@@ -258,19 +258,18 @@ abstract class BasePetType implements IPetType {
     }
 
     faceLeft() {
-        this.el.style.webkitTransform = "scaleX(-1)";
+        this.el.style.transform = "scaleX(-1)";
     }
 
     faceRight() {
-        this.el.style.webkitTransform = "scaleX(1)";
+        this.el.style.transform = "scaleX(1)";
     }
 
     setAnimation(face: string) {
-        const newFace: string = `${this.petRoot}_${face}_8fps.gif`;
-        if (this.el.src === newFace) {
+        if (this.el.src.endsWith(`_${face}_8fps.gif`)) {
             return;
         }
-        this.el.src = newFace;
+        this.el.src = `${this.petRoot}_${face}_8fps.gif`;
     }
 
     chooseNextState(fromState: States): States {
