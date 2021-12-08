@@ -1,7 +1,7 @@
 import { PetColor, PetSize, PetSpeed, PetType } from "../common/types";
 import { ISequenceTree } from "./sequences";
 import { IState, States, resolveState, HorizontalDirection, ChaseState, BallState, FrameResult, PetInstanceState, isStateAboveGround } from "./states";
-import { CAT_NAMES, DOG_NAMES, CRAB_NAMES, SNAKE_NAMES, CLIPPY_NAMES, TOTORO_NAMES, DUCK_NAMES, ZAPPY_NAMES } from "../common/names";
+import { CAT_NAMES, DOG_NAMES, CRAB_NAMES, SNAKE_NAMES, CLIPPY_NAMES, TOTORO_NAMES, DUCK_NAMES, ZAPPY_NAMES, ROCKY_NAMES } from "../common/names";
 
 export class InvalidStateException {
 
@@ -93,6 +93,7 @@ export interface IPetType {
     swipe(): void
     chase(ballState: BallState, canvas: HTMLCanvasElement): void
     speed(): number
+    isMoving(): boolean
 
     // State API
     getState(): PetInstanceState
@@ -218,6 +219,10 @@ abstract class BasePetType implements IPetType {
         return this._speed;
     }
 
+    isMoving(): boolean {
+        return this._speed !== PetSpeed.still;
+    }
+
     recoverFriend(friend: IPetType){
         // Recover friends..
         this._friend = friend;
@@ -241,7 +246,9 @@ abstract class BasePetType implements IPetType {
     }
 
     canChase(){
-        return !isStateAboveGround(this.currentStateEnum) && this.currentStateEnum !== States.chase;
+        return !isStateAboveGround(this.currentStateEnum) 
+        && this.currentStateEnum !== States.chase
+        && this.isMoving();
     }
 
     swipe() {
@@ -297,7 +304,9 @@ abstract class BasePetType implements IPetType {
         this.setAnimation(this.currentState.spriteLabel);
 
         // What's my buddy doing?
-        if (this.hasFriend() && this.currentStateEnum !== States.chaseFriend){
+        if (this.hasFriend() 
+            && this.currentStateEnum !== States.chaseFriend
+            && this.isMoving()) {
             if (this.friend().isPlaying() && !isStateAboveGround(this.currentStateEnum))
             {
                 this.currentState = resolveState(States.chaseFriend, this);
@@ -353,7 +362,7 @@ abstract class BasePetType implements IPetType {
     }
 
     isPlaying(): boolean {
-        return this.currentStateEnum === States.runRight || this.currentStateEnum === States.runLeft ;
+        return this.isMoving() && (this.currentStateEnum === States.runRight || this.currentStateEnum === States.runLeft);
     }
 
     emoji(): string { 
@@ -712,6 +721,39 @@ export class Zappy extends BasePetType {
     }
 }
 
+
+export class Rocky extends BasePetType {
+    label = "rocky";
+    sequence = {
+        startingState: States.sitIdle,
+        sequenceStates: [
+            {
+                state: States.sitIdle,
+                possibleNextStates: [States.walkRight, States.runRight]
+            },
+            {
+                state: States.walkRight,
+                possibleNextStates: [States.sitIdle, States.runRight]
+            },
+            {
+                state: States.runRight,
+                possibleNextStates: [States.sitIdle, States.walkRight]
+            },
+            {
+                state: States.chase,
+                possibleNextStates: [States.idleWithBall]
+            },
+            {
+                state: States.idleWithBall,
+                possibleNextStates: [States.walkRight, States.runRight]
+            },
+        ]
+    };
+    emoji(): string { 
+        return "💎";
+    }
+}
+
 export class InvalidPetException {
 }
 
@@ -763,6 +805,11 @@ export function createPet(petType: string, el: HTMLImageElement, collision: HTML
         if (name === undefined)
             {name = getPetName(ZAPPY_NAMES, PetType.zappy, Zappy.count + 1);}
         return new Zappy(el, collision, size, left, bottom, petRoot, floor, name, PetSpeed.veryFast);
+    }
+    else if (petType === "rocky") {
+        if (name === undefined)
+            {name = getPetName(ROCKY_NAMES, PetType.rocky, Rocky.count + 1);}
+        return new Rocky(el, collision, size, left, bottom, petRoot, floor, name, PetSpeed.still);
     }
     throw new InvalidPetException();
 }
