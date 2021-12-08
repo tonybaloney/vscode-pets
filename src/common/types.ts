@@ -9,17 +9,19 @@ export const enum PetColor {
 }
 
 export const enum PetType {
-	dog = "dog",
 	cat = "cat",
-	snake = "snake",
 	clippy = "clippy",
-	rubberduck = "rubber-duck",
-	totoro = "totoro",
 	crab = "crab",
+	dog = "dog",
+	rocky = "rocky",
+	rubberduck = "rubber-duck",
+	snake = "snake",
+	totoro = "totoro",
 	zappy = "zappy"
 }
 
 export const enum PetSpeed {
+	still = 0,
 	verySlow = 1,
 	slow = 2,
 	normal = 3,
