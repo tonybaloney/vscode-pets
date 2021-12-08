@@ -185,3 +185,16 @@ export const ZAPPY_NAMES: Map<number, string> = new Map<number, string>([
     [9, 'The Flash'],
     [10, 'Thor'],
 ]);
+
+export const ROCKY_NAMES: Map<number, string> = new Map<number, string>([
+    [1, 'Rocky'],
+    [2, 'The Rock'],
+    [3, 'Quartzy'],
+    [4, 'Rocky I'],
+    [5, 'Rocky II'],
+    [6, 'Rocky III'],
+    [7, 'Pebbles Sr.'],
+    [8, 'Big Granite'],
+    [9, 'Boulder'],
+    [10, 'Rockefeller'],
+]);

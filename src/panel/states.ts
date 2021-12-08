@@ -1,4 +1,4 @@
-import { PetColor, PetType } from "../common/types";
+import { PetColor, PetSpeed, PetType } from "../common/types";
 import { IPetType } from "./pets";
 
 export class PetInstanceState {
@@ -156,7 +156,7 @@ export class SwipeState extends AbstractStaticState {
     label = States.swipe;
     spriteLabel = "swipe";
     horizontalDirection = HorizontalDirection.natural;
-    holdTime = 30;
+    holdTime = 45;
 }
 
 export class IdleWithBallState extends AbstractStaticState {
@@ -173,15 +173,22 @@ export class WalkRightState implements IState {
     horizontalDirection = HorizontalDirection.right;
     leftBoundary: number;
     speedMultiplier = 1;
+    idleCounter: number;
+    holdTime = 60;
 
     constructor(pet: IPetType) {
         this.leftBoundary = Math.floor(window.innerWidth * 0.95);
         this.pet = pet;
+        this.idleCounter = 0;
     }
 
     nextFrame() : FrameResult {
+        this.idleCounter++;
         this.pet.positionLeft(this.pet.left() + this.pet.speed() * this.speedMultiplier);
-        if (this.pet.left() >= this.leftBoundary - this.pet.width()) {
+        if (this.pet.isMoving() && this.pet.left() >= this.leftBoundary - this.pet.width()) {
+            return FrameResult.stateComplete;
+        }
+        else if (!this.pet.isMoving() && this.idleCounter > this.holdTime) {
             return FrameResult.stateComplete;
         }
         return FrameResult.stateContinue;
@@ -194,14 +201,19 @@ export class WalkLeftState implements IState {
     horizontalDirection = HorizontalDirection.left;
     pet: IPetType;
     speedMultiplier = 1;
+    idleCounter: number;
+    holdTime = 60;
 
     constructor(pet: IPetType) {
         this.pet = pet;
+        this.idleCounter = 0;
     }
 
     nextFrame() : FrameResult {
         this.pet.positionLeft(this.pet.left() - this.pet.speed() * this.speedMultiplier);
-        if (this.pet.left() <= 0) {
+        if (this.pet.isMoving() && this.pet.left() <= 0) {
+            return FrameResult.stateComplete;
+        } else if (!this.pet.isMoving() && this.idleCounter > this.holdTime) {
             return FrameResult.stateComplete;
         }
         return FrameResult.stateContinue;
@@ -212,12 +224,14 @@ export class RunRightState extends WalkRightState {
     label = States.runRight;
     spriteLabel = "walk_fast";
     speedMultiplier = 1.6;
+    holdTime = 130;
 }
 
 export class RunLeftState extends WalkLeftState {
     label = States.runLeft;
     spriteLabel = "walk_fast";
     speedMultiplier = 1.6;
+    holdTime = 130;
 }
 
 export class ChaseState implements IState {
