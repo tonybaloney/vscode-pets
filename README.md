@@ -30,6 +30,8 @@ _*rubber duck & Zappy can only be yellow_
 
 _*Ferris the crab can only be red_
 
+_*Rocky can only be gray_
+
 ## Playing
 
 Pets will interact with you
@@ -39,6 +41,8 @@ Pets will interact with you
 ## Throwing a ball
 
 Play catch with your pet! Run the "Throw ball" command (`vscode-pets.throw-ball`).
+
+_* Rocky will not run & catch a ball. Have you ever seen a rock run after a ball? Neither have we._
 
 ![screenshot4](https://github.com/tonybaloney/vscode-pet/raw/master/screenshots/screenshot-4.gif)
 
@@ -82,7 +86,7 @@ Want to contribute to vscode-pets? Feel free to [fork the repository](https://gi
 
 The cat and dog media assets for this extension were licensed from itch.io.
 
-[Marc Duiker](https://twitter.com/marcduiker) created the Clippy, Zappy, rubber duck, snake, and Ferris the crab media assets.
+[Marc Duiker](https://twitter.com/marcduiker) created the Clippy, Rocky, Zappy, rubber duck, snake, and Ferris the crab media assets.
 
 [Karen Rustad Tölva](https://www.aldeka.net) designed the original concept of Ferris the crab. 
 
