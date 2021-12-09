@@ -115,6 +115,7 @@ exports.PET_NAMES = new Map([
     [101, 'Purfect'],
     [102, 'Spot'],
     [103, 'Harry'],
+    [104, 'Bolt']
 ]);
 exports.CAT_NAMES = exports.PET_NAMES;
 exports.DOG_NAMES = exports.PET_NAMES;
