@@ -102,6 +102,7 @@ export const PET_NAMES: Map<number, string> = new Map<number, string>([
     [101, 'Purfect'],
     [102, 'Spot'],
     [103, 'Harry'],
+    [104, 'Bolt']
 ]);
 
 export const CAT_NAMES = PET_NAMES;
