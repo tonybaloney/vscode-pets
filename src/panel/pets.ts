@@ -738,19 +738,14 @@ export class Rocky extends BasePetType {
             {
                 state: States.runRight,
                 possibleNextStates: [States.sitIdle, States.walkRight]
-            },
-            {
-                state: States.chase,
-                possibleNextStates: [States.idleWithBall]
-            },
-            {
-                state: States.idleWithBall,
-                possibleNextStates: [States.walkRight, States.runRight]
-            },
+            }
         ]
     };
     emoji(): string { 
         return "💎";
+    }
+    canChase(): boolean {
+        return false;
     }
 }
 

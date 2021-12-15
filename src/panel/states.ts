@@ -1,4 +1,4 @@
-import { PetColor, PetSpeed, PetType } from "../common/types";
+import { PetColor, PetType } from "../common/types";
 import { IPetType } from "./pets";
 
 export class PetInstanceState {
@@ -156,7 +156,7 @@ export class SwipeState extends AbstractStaticState {
     label = States.swipe;
     spriteLabel = "swipe";
     horizontalDirection = HorizontalDirection.natural;
-    holdTime = 45;
+    holdTime = 15;
 }
 
 export class IdleWithBallState extends AbstractStaticState {
