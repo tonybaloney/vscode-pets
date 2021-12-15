@@ -276,7 +276,8 @@ function normalizeColor(petColor: PetColor, petType: PetType): PetColor {
 		{return PetColor.red;}
 	if ((petType === PetType.dog || 
 		petType === PetType.cat) && 
-		petColor === PetColor.green)
+		petColor !== PetColor.brown && 
+		petColor !== PetColor.black)
 		{return PetColor.brown;}
 	return petColor;
 }
