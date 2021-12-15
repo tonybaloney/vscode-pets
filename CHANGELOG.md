@@ -2,7 +2,7 @@
 
 All notable changes to the "vscode-pets" extension will be documented in this file.
 
-## [1.9.0]
+## [1.9.1]
 
 - Added Rocky (the rock) as a new pet. Credit @marcduiker
 
