@@ -2,6 +2,13 @@
 
 All notable changes to the "vscode-pets" extension will be documented in this file.
 
+## [1.9.2]
+
+- Added "Bolt" as a new name
+- Fixed animations for totoro after chasing the ball
+- Fixed swipe animation holding for too long
+- Fixed dog or cat color being set to anything other than brown or black not defaulting back to another color
+
 ## [1.9.1]
 
 - Added Rocky (the rock) as a new pet. Credit @marcduiker
