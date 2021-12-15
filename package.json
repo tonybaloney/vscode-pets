@@ -85,7 +85,7 @@
 			},
 			{
 				"command": "vscode-pets.delete-pets",
-				"title": "Delete additional pets",
+				"title": "Send additional pets to a farm",
 				"category": "Pet Coding"
 			},
 			{
