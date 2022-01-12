@@ -262,7 +262,8 @@ export function activate(context: vscode.ExtensionContext) {
 }
 
 function updateStatusBar(): void {
-	petsStatusBar.text = `$(new-file) Create Pet Playground`;
+	petsStatusBar.text = `$(squirrel)`;
+	petsStatusBar.tooltip = "Create Pet Playground";
 	petsStatusBar.show();
 }
 
