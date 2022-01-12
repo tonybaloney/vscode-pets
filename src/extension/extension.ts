@@ -94,6 +94,8 @@ export function storeCollectionAsMemento(context: vscode.ExtensionContext, colle
 	context.globalState.setKeysForSync([EXTRA_PETS_KEY_TYPES, EXTRA_PETS_KEY_COLORS]);
 }
 
+let petsStatusBar : vscode.StatusBarItem;
+
 export function activate(context: vscode.ExtensionContext) {
 	context.subscriptions.push(
 		vscode.commands.registerCommand('vscode-pets.start', () => {
@@ -113,6 +115,15 @@ export function activate(context: vscode.ExtensionContext) {
 			}
 		})
 	);
+
+	// status bar item
+	petsStatusBar = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Right, 100);
+	petsStatusBar.command = 'vscode-pets.start';
+	context.subscriptions.push(petsStatusBar);
+
+	context.subscriptions.push(vscode.window.onDidChangeActiveTextEditor(updateStatusBar));
+	context.subscriptions.push(vscode.window.onDidChangeTextEditorSelection(updateStatusBar));
+	updateStatusBar();
 
 	const spec = PetSpecification.fromConfiguration();
 	webviewViewProvider = new PetWebviewViewProvider(context.extensionUri, context.extensionPath, spec.color, spec.type, spec.size, getConfiguredTheme(), getConfiguredThemeKind());
@@ -248,6 +259,16 @@ export function activate(context: vscode.ExtensionContext) {
 			}
 		});
 	}
+}
+
+function updateStatusBar(): void {
+	petsStatusBar.text = `$(squirrel)`;
+	petsStatusBar.tooltip = "Create Pet Playground";
+	petsStatusBar.show();
+}
+
+export function deactivate() {
+	petsStatusBar.dispose();
 }
 
 function getWebviewOptions(extensionUri: vscode.Uri): vscode.WebviewOptions & vscode.WebviewPanelOptions {
