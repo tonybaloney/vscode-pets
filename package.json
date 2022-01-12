@@ -2,7 +2,7 @@
 	"name": "vscode-pets",
 	"displayName": "vscode-pets",
 	"description": "Pets for your VS Code",
-	"version": "1.9.2",
+	"version": "1.9.3",
 	"engines": {
 		"vscode": "^1.53.0"
 	},
@@ -63,7 +63,8 @@
 			{
 				"command": "vscode-pets.start",
 				"title": "Start pet coding session",
-				"category": "Pet Coding"
+				"category": "Pet Coding",
+				"icon": "media/dog.svg"
 			},
 			{
 				"command": "vscode-pets.throw-ball",
