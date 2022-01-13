@@ -94,7 +94,8 @@ export function storeCollectionAsMemento(context: vscode.ExtensionContext, colle
 	context.globalState.setKeysForSync([EXTRA_PETS_KEY_TYPES, EXTRA_PETS_KEY_COLORS]);
 }
 
-let petsStatusBar : vscode.StatusBarItem;
+let petPlaygroundStatusBar : vscode.StatusBarItem;
+let spawnPetStatusBar : vscode.StatusBarItem;
 
 export function activate(context: vscode.ExtensionContext) {
 	context.subscriptions.push(
@@ -117,12 +118,17 @@ export function activate(context: vscode.ExtensionContext) {
 	);
 
 	// status bar item
-	petsStatusBar = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Right, 100);
-	petsStatusBar.command = 'vscode-pets.start';
-	context.subscriptions.push(petsStatusBar);
+	petPlaygroundStatusBar = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Right, 100);
+	petPlaygroundStatusBar.command = 'vscode-pets.start';
+	context.subscriptions.push(petPlaygroundStatusBar);
+
+	spawnPetStatusBar = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Right, 100);
+	spawnPetStatusBar.command = 'vscode-pets.spawn-pet';
+	context.subscriptions.push(spawnPetStatusBar);
 
 	context.subscriptions.push(vscode.window.onDidChangeActiveTextEditor(updateStatusBar));
 	context.subscriptions.push(vscode.window.onDidChangeTextEditorSelection(updateStatusBar));
+	context.subscriptions.push(vscode.window.onDidChangeActiveTextEditor(updateExtensionPositionContext));
 	updateStatusBar();
 
 	const spec = PetSpecification.fromConfiguration();
@@ -200,9 +206,18 @@ export function activate(context: vscode.ExtensionContext) {
 				collection.push(spec);
 				storeCollectionAsMemento(context, collection);
 			}
-		})
-	);
-	
+			else {
+				if (getConfigurationPosition() === ExtPosition.explorer && webviewViewProvider) {
+					vscode.commands.executeCommand('vscode-pets.petsView.focus');
+				} 
+				else {
+					vscode.commands.executeCommand('vscode-pets.start');
+				}
+				vscode.window.showInformationMessage("A Pet Playground has been created. You can now use the 'Spawn Pets Command!' to add more pets.");
+			}
+		}
+	));
+
 	context.subscriptions.push(
 		vscode.commands.registerCommand('vscode-pets.reset-pets', () => {
 			if (getConfigurationPosition() === ExtPosition.explorer && webviewViewProvider) {
@@ -262,13 +277,17 @@ export function activate(context: vscode.ExtensionContext) {
 }
 
 function updateStatusBar(): void {
-	petsStatusBar.text = `$(squirrel)`;
-	petsStatusBar.tooltip = "Create Pet Playground";
-	petsStatusBar.show();
+	spawnPetStatusBar.text = `$(squirrel)`;
+	spawnPetStatusBar.tooltip = "Spawn Pet";
+	spawnPetStatusBar.show();
 }
 
-export function deactivate() {
-	petsStatusBar.dispose();
+export function petPlaygroundDeactivate() {
+	petPlaygroundStatusBar.dispose();
+}
+
+export function spawnPetDeactivate() {
+	spawnPetStatusBar.dispose();
 }
 
 function getWebviewOptions(extensionUri: vscode.Uri): vscode.WebviewOptions & vscode.WebviewPanelOptions {
@@ -366,7 +385,8 @@ class PetWebviewContainer {
 
 	public spawnPet(spec: PetSpecification) {
 		this.getWebview().postMessage({ command: 'spawn-pet', type: spec.type, color: spec.color});
-	}
+		this.getWebview().postMessage({ command: 'set-size', size: spec.size });
+	} 
 
 	protected getWebview(): vscode.Webview {
 		throw new Error('Not implemented');
