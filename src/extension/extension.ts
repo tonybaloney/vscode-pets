@@ -207,11 +207,20 @@ export function activate(context: vscode.ExtensionContext) {
 				storeCollectionAsMemento(context, collection);
 			}
 			else {
+
+				// create a new pet panel if one has not been created
 				if (getConfigurationPosition() === ExtPosition.explorer && webviewViewProvider) {
 					vscode.commands.executeCommand('vscode-pets.petsView.focus');
-				} 
-				else {
-					vscode.commands.executeCommand('vscode-pets.start');
+				} else {
+					const spec = PetSpecification.fromConfiguration();
+					PetPanel.createOrShow(context.extensionUri, context.extensionPath, spec.color, spec.type, spec.size, getConfiguredTheme(), getConfiguredThemeKind());
+					
+					if (PetPanel.currentPanel){
+						var collection = PetSpecification.collectionFromMemento(context, getConfiguredSize());
+						collection.forEach(item => {
+							PetPanel.currentPanel!.spawnPet(item);
+						});
+					}
 				}
 				vscode.window.showInformationMessage("A Pet Playground has been created. You can now use the 'Spawn Pets Command!' to add more pets.");
 			}
