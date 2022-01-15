@@ -188,13 +188,13 @@ export function petPanelApp(basePetUri: string, theme: Theme, themeKind: ColorTh
   if (theme !== Theme.none){
     var _themeKind = "";
     switch (themeKind) {
-      case ColorThemeKind.Dark:
+      case ColorThemeKind.dark:
         _themeKind = "dark";
         break;
-      case ColorThemeKind.Light:
+      case ColorThemeKind.light:
         _themeKind = "light";
         break;
-      case ColorThemeKind.HighContrast:
+      case ColorThemeKind.highContrast:
       default:
         _themeKind = "light";
         break;
