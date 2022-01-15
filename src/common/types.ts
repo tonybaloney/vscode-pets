@@ -1,4 +1,3 @@
-
 export const enum PetColor {
 	brown = "brown", 
 	black = "black", 
@@ -47,9 +46,9 @@ export const enum Theme {
 }
 
 export const enum ColorThemeKind {
-	Light = 1,
-	Dark = 2,
-	HighContrast = 3
+	light = 1,
+	dark = 2,
+	highContrast = 3
 }
 
 export class WebviewMessage {
