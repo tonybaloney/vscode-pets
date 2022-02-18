@@ -1,10 +1,9 @@
 {
     "compilerOptions": {
-      "noImplicitAny": true,
-      "strictNullChecks": true,
-      "outDir": "./.build-out"
+        "noImplicitAny": true,
+        "strictNullChecks": true,
+        "outDir": "./.build-out",
+        "lib": ["es2016", "dom"]
     },
-    "include": [
-      "src"
-    ],
-  }
+    "include": ["src"]
+}
