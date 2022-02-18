@@ -24,13 +24,13 @@ You can choose either pet type and pet color:
 
 ![screenshot2](https://github.com/tonybaloney/vscode-pet/raw/master/screenshots/screenshot-2.gif)
 
-_*snake can only be green_
+_\*snake can only be green_
 
-_*rubber duck & Zappy can only be yellow_
+_\*rubber duck & Zappy can only be yellow_
 
-_*Ferris the crab can only be red_
+_\*Ferris the crab can only be red_
 
-_*Rocky can only be gray_
+_\*Rocky can only be gray_
 
 ## Playing
 
@@ -42,7 +42,7 @@ Pets will interact with you
 
 Play catch with your pet! Run the "Throw ball" command (`vscode-pets.throw-ball`).
 
-_* Rocky will not run & catch a ball. Have you ever seen a rock run after a ball? Neither have we._
+_\* Rocky will not run & catch a ball. Have you ever seen a rock run after a ball? Neither have we._
 
 ![screenshot4](https://github.com/tonybaloney/vscode-pet/raw/master/screenshots/screenshot-4.gif)
 
@@ -78,9 +78,9 @@ Want to contribute to vscode-pets? Feel free to [fork the repository](https://gi
 
 #### Testing the changes
 
-* Run `npm install`.
-* Run `npm run compile`.
-* Go to the debug panel on sidebar and launch the development version with the extension loaded (first option in the debug profiles).
+-   Run `npm install`.
+-   Run `npm run compile`.
+-   Go to the debug panel on sidebar and launch the development version with the extension loaded (first option in the debug profiles).
 
 ## Credits
 
@@ -88,12 +88,17 @@ The cat and dog media assets for this extension were licensed from itch.io.
 
 [Marc Duiker](https://twitter.com/marcduiker) created the Clippy, Rocky, Zappy, rubber duck, snake, and Ferris the crab media assets.
 
-[Karen Rustad Tölva](https://www.aldeka.net) designed the original concept of Ferris the crab. 
+[Karen Rustad Tölva](https://www.aldeka.net) designed the original concept of Ferris the crab.
 
 ## Thank you
 
 Thanks to all the contributors to this project:
 
-- @marcduiker
-- @Vicente015
-- @Yukaii
+-   @marcduiker
+-   @Vicente015
+-   @Yukaii
+-   @robconery
+-   @JING1201
+-   @aclaughan
+-   @Tarang74
+-   @Harry-Hopkinson
