@@ -153,11 +153,13 @@ function addPetToPanel(
     );
 }
 
-function removePetFromPanel(pet: PetElement): PetElement {
-    pet.el.remove();
+function removePetFromPanel(pet: PetElement): any {
+    pet.collision.removeEventListener('mouseover', handleMouseOver);
+    (document.getElementById('petsContainer') as HTMLDivElement).removeChild(
+        pet.collision,
+    );
     pet.collision.remove();
-    allPets.remove(pet);
-    return pet;
+    pet.remove();
 }
 
 export function saveState() {
@@ -383,6 +385,8 @@ export function petPanelApp(
                 break;
             case 'remove-pet':
                 allPets.remove(message.id);
+                saveState();
+                break;
             case 'reset-pet':
                 allPets.pets().forEach((pet) => {
                     pet.el.remove();
