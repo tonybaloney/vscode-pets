@@ -32,6 +32,12 @@ export class PetElement {
     pet: IPetType;
     color: PetColor;
     type: PetType;
+    remove() {
+        this.el.remove();
+        this.collision.remove();
+        this.color = PetColor.null;
+        this.type = PetType.null;
+    }
 
     constructor(
         el: HTMLImageElement,
@@ -54,7 +60,7 @@ export interface IPetCollection {
     reset(): void;
     seekNewFriends(): string[];
     locate(name: string): PetElement | undefined;
-    remove(pet: PetElement): void;
+    remove(name: string): void;
 }
 
 export class PetCollection implements IPetCollection {
@@ -72,15 +78,6 @@ export class PetCollection implements IPetCollection {
         this._pets.push(pet);
     }
 
-    remove(pet: PetElement): void {
-        const index = this._pets.indexOf(pet);
-        if (index > -1) {
-            this._pets.splice(index, 1);
-        } else {
-            throw new InvalidStateException();
-        }
-    }
-
     reset() {
         this._pets = [];
     }
@@ -88,6 +85,16 @@ export class PetCollection implements IPetCollection {
     locate(name: string): PetElement | undefined {
         return this._pets.find((collection, value, obj) => {
             return collection.pet.name() === name;
+        });
+    }
+
+    remove(name: string): any {
+        const pet = this.locate(name);
+        if (pet) {
+            pet.remove();
+        }
+        this._pets = this._pets.filter((petInCollection) => {
+            return petInCollection.pet.name() !== name;
         });
     }
 

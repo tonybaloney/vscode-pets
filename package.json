@@ -48,11 +48,6 @@
                     "group": "navigation"
                 },
                 {
-                    "command": "vscode-pets.remove-pet",
-                    "when": "view == vscode-pets.petsView",
-                    "group": "navigation"
-                },
-                {
                     "command": "vscode-pets.throw-ball",
                     "when": "view == vscode-pets.petsView",
                     "group": "navigation"
@@ -82,15 +77,6 @@
                 "icon": {
                     "dark": "media/icon/dark-add.svg",
                     "light": "media/icon/light-add.svg"
-                }
-            },
-            {
-                "command": "vscode-pets.remove-pet",
-                "title": "Remove pet",
-                "category": "Pet Coding",
-                "icon": {
-                    "dark": "media/icon/dark-trash.svg",
-                    "light": "media/icon/light-trash.svg"
                 }
             },
             {

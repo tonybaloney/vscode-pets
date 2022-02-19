@@ -37,6 +37,7 @@ const ALL_COLORS = [
     PetColor.yellow,
     PetColor.gray,
     PetColor.red,
+    PetColor.null,
 ];
 const ALL_SCALES = [PetSize.nano, PetSize.medium, PetSize.large];
 const ALL_THEMES = [Theme.none, Theme.forest, Theme.castle];
@@ -421,24 +422,17 @@ export function activate(context: vscode.ExtensionContext) {
                     getConfiguredSize(),
                 );
                 if (getConfigurationPosition() === ExtPosition.explorer) {
-                    vscode.window.showInformationMessage('Debugging...');
                     webviewViewProvider.removePet(spec);
                 } else if (PetPanel.currentPanel) {
-                    vscode.window.showInformationMessage('Debugging 2...');
                     PetPanel.currentPanel.removePet(spec);
-                } else {
-                    vscode.window.showInformationMessage(
-                        'Open a Pet Playground before attempting to remove a pet.',
-                    );
                 }
                 var collection = PetSpecification.collectionFromMemento(
                     context,
                     getConfiguredSize(),
                 );
-                collection.splice(collection.indexOf(spec), 1);
+                collection.push(spec);
                 storeCollectionAsMemento(context, collection);
             } else {
-                // create a new pet panel if one has not been created
                 if (
                     getConfigurationPosition() === ExtPosition.explorer &&
                     webviewViewProvider
@@ -463,8 +457,8 @@ export function activate(context: vscode.ExtensionContext) {
                             context,
                             getConfiguredSize(),
                         );
-                        collection.forEach((): void => {
-                            PetPanel.currentPanel!.removePet(spec);
+                        collection.forEach((item) => {
+                            PetPanel.currentPanel!.spawnPet(item);
                         });
                     }
                 }
@@ -481,59 +475,56 @@ export function activate(context: vscode.ExtensionContext) {
                 getConfigurationPosition() === ExtPosition.explorer &&
                 webviewViewProvider
             ) {
-                context.globalState.update(EXTRA_PETS_KEY + '.types', []);
-                context.globalState.update(EXTRA_PETS_KEY + '.colors', []);
-
-                const spec = PetSpecification.fromConfiguration();
-                webviewViewProvider.updatePetColor(spec.color);
-                webviewViewProvider.updatePetSize(spec.size);
-                webviewViewProvider.updatePetType(spec.type);
                 webviewViewProvider.resetPets();
+            } else if (PetPanel.currentPanel) {
+                PetPanel.currentPanel.resetPets();
             }
         }),
     );
 
     // Listening to configuration changes
     context.subscriptions.push(
-        vscode.workspace.onDidChangeConfiguration((e): void => {
-            if (
-                e.affectsConfiguration('vscode-pets.petColor') ||
-                e.affectsConfiguration('vscode-pets.petType') ||
-                e.affectsConfiguration('vscode-pets.petSize') ||
-                e.affectsConfiguration('vscode-pets.theme') ||
-                e.affectsConfiguration('workbench.colorTheme')
-            ) {
-                const spec = PetSpecification.fromConfiguration();
-                if (PetPanel.currentPanel) {
-                    PetPanel.currentPanel.updatePetColor(spec.color);
-                    PetPanel.currentPanel.updatePetSize(spec.size);
-                    PetPanel.currentPanel.updatePetType(spec.type);
-                    PetPanel.currentPanel.updateTheme(
-                        getConfiguredTheme(),
-                        getConfiguredThemeKind(),
-                    );
-                    PetPanel.currentPanel.update();
-                }
-
+        vscode.workspace.onDidChangeConfiguration(
+            (e: vscode.ConfigurationChangeEvent): void => {
                 if (
-                    getConfigurationPosition() === ExtPosition.explorer &&
-                    webviewViewProvider
+                    e.affectsConfiguration('vscode-pets.petColor') ||
+                    e.affectsConfiguration('vscode-pets.petType') ||
+                    e.affectsConfiguration('vscode-pets.petSize') ||
+                    e.affectsConfiguration('vscode-pets.theme') ||
+                    e.affectsConfiguration('workbench.colorTheme')
                 ) {
-                    webviewViewProvider.updatePetColor(spec.color);
-                    webviewViewProvider.updatePetSize(spec.size);
-                    webviewViewProvider.updatePetType(spec.type);
-                    webviewViewProvider.updateTheme(
-                        getConfiguredTheme(),
-                        getConfiguredThemeKind(),
-                    );
-                    webviewViewProvider.update();
-                }
-            }
+                    const spec = PetSpecification.fromConfiguration();
+                    if (PetPanel.currentPanel) {
+                        PetPanel.currentPanel.updatePetColor(spec.color);
+                        PetPanel.currentPanel.updatePetSize(spec.size);
+                        PetPanel.currentPanel.updatePetType(spec.type);
+                        PetPanel.currentPanel.updateTheme(
+                            getConfiguredTheme(),
+                            getConfiguredThemeKind(),
+                        );
+                        PetPanel.currentPanel.update();
+                    }
 
-            if (e.affectsConfiguration('vscode-pets.position')) {
-                updateExtensionPositionContext();
-            }
-        }),
+                    if (
+                        getConfigurationPosition() === ExtPosition.explorer &&
+                        webviewViewProvider
+                    ) {
+                        webviewViewProvider.updatePetColor(spec.color);
+                        webviewViewProvider.updatePetSize(spec.size);
+                        webviewViewProvider.updatePetType(spec.type);
+                        webviewViewProvider.updateTheme(
+                            getConfiguredTheme(),
+                            getConfiguredThemeKind(),
+                        );
+                        webviewViewProvider.update();
+                    }
+                }
+
+                if (e.affectsConfiguration('vscode-pets.position')) {
+                    updateExtensionPositionContext();
+                }
+            },
+        ),
     );
 
     if (vscode.window.registerWebviewPanelSerializer) {
@@ -697,7 +688,7 @@ class PetWebviewContainer {
 
     public removePet(spec: PetSpecification) {
         this.getWebview().postMessage({
-            command: 'spawn-pet',
+            command: 'remove-pet',
             type: spec.type,
             color: spec.color,
         });
@@ -852,6 +843,13 @@ class PetPanel extends PetWebviewContainer {
             theme,
             themeKind,
         );
+    }
+
+    public resetPets() {
+        this.updatePetColor(this.petColor());
+        this.updatePetType(this.petType());
+        this.updatePetSize(this.petSize());
+        this.update();
     }
 
     public static revive(
