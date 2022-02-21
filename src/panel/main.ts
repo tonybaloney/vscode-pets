@@ -7,7 +7,6 @@ import {
     ColorThemeKind,
     WebviewMessage,
 } from '../common/types';
-import * as vscodeImport from 'vscode';
 import {
     createPet,
     IPetType,
@@ -388,10 +387,6 @@ export function petPanelApp(
                 if (pet) {
                     pet.remove();
                     saveState();
-                } else {
-                    vscodeImport.window.showInformationMessage(
-                        'The Pet you are looking for does not exist.',
-                    );
                 }
                 break;
             case 'reset-pet':
