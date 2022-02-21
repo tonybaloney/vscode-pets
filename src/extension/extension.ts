@@ -259,10 +259,10 @@ export function activate(context: vscode.ExtensionContext) {
                 getConfigurationPosition() === ExtPosition.explorer &&
                 webviewViewProvider
             ) {
-                webviewViewProvider.removePet(spec);
+                webviewViewProvider.deletePet();
             } else {
                 if (PetPanel.currentPanel) {
-                    PetPanel.currentPanel.removePet(spec);
+                    PetPanel.currentPanel.deletePet();
                 }
             }
         }),
@@ -333,106 +333,6 @@ export function activate(context: vscode.ExtensionContext) {
                 storeCollectionAsMemento(context, collection);
             } else {
                 // create a new pet panel if one has not been created
-                if (
-                    getConfigurationPosition() === ExtPosition.explorer &&
-                    webviewViewProvider
-                ) {
-                    vscode.commands.executeCommand(
-                        'vscode-pets.petsView.focus',
-                    );
-                } else {
-                    const spec = PetSpecification.fromConfiguration();
-                    PetPanel.createOrShow(
-                        context.extensionUri,
-                        context.extensionPath,
-                        spec.color,
-                        spec.type,
-                        spec.size,
-                        getConfiguredTheme(),
-                        getConfiguredThemeKind(),
-                    );
-
-                    if (PetPanel.currentPanel) {
-                        var collection = PetSpecification.collectionFromMemento(
-                            context,
-                            getConfiguredSize(),
-                        );
-                        collection.forEach((item) => {
-                            PetPanel.currentPanel!.spawnPet(item);
-                        });
-                    }
-                }
-                vscode.window.showInformationMessage(
-                    "A Pet Playground has been created. You can now use the 'Spawn Pets Command!' to add more pets.",
-                );
-            }
-        }),
-    );
-
-    context.subscriptions.push(
-        vscode.commands.registerCommand('vscode-pets.remove-pet', async () => {
-            if (
-                PetPanel.currentPanel ||
-                getConfigurationPosition() === ExtPosition.explorer
-            ) {
-                const petType = await vscode.window.showQuickPick(ALL_PETS, {
-                    placeHolder: 'Select a pet to remove',
-                });
-                var petColor: PetColor = DEFAULT_COLOR;
-                var choices;
-                switch (petType as PetType) {
-                    case PetType.rubberduck:
-                        petColor = PetColor.yellow;
-                        break;
-                    case PetType.snake:
-                        petColor = PetColor.green;
-                        break;
-                    case PetType.rocky:
-                    case PetType.totoro:
-                        petColor = PetColor.gray;
-                        break;
-                    case PetType.cat:
-                    case PetType.dog:
-                        choices = [PetColor.black, PetColor.brown];
-                        petColor = (await vscode.window.showQuickPick(choices, {
-                            placeHolder: 'Select a color',
-                        })) as PetColor;
-                        break;
-                    case PetType.clippy:
-                        choices = [
-                            PetColor.black,
-                            PetColor.brown,
-                            PetColor.green,
-                            PetColor.yellow,
-                        ];
-                        petColor = (await vscode.window.showQuickPick(choices, {
-                            placeHolder: 'Select a color',
-                        })) as PetColor;
-                        break;
-                    case PetType.crab:
-                        petColor = PetColor.red;
-                        break;
-                    case PetType.zappy:
-                        petColor = PetColor.yellow;
-                        break;
-                }
-                const spec = new PetSpecification(
-                    petColor,
-                    petType as PetType,
-                    getConfiguredSize(),
-                );
-                if (getConfigurationPosition() === ExtPosition.explorer) {
-                    webviewViewProvider.removePet(spec);
-                } else if (PetPanel.currentPanel) {
-                    PetPanel.currentPanel.removePet(spec);
-                }
-                var collection = PetSpecification.collectionFromMemento(
-                    context,
-                    getConfiguredSize(),
-                );
-                collection.push(spec);
-                storeCollectionAsMemento(context, collection);
-            } else {
                 if (
                     getConfigurationPosition() === ExtPosition.explorer &&
                     webviewViewProvider
@@ -686,13 +586,8 @@ class PetWebviewContainer {
         this.getWebview().postMessage({ command: 'set-size', size: spec.size });
     }
 
-    public removePet(spec: PetSpecification) {
-        this.getWebview().postMessage({
-            command: 'remove-pet',
-            type: spec.type,
-            color: spec.color,
-        });
-        this.getWebview().postMessage({ command: 'set-size', size: spec.size });
+    public deletePet() {
+        this.getWebview().postMessage({ command: 'delete-pet' });
     }
 
     protected getWebview(): vscode.Webview {
@@ -849,11 +744,8 @@ class PetPanel extends PetWebviewContainer {
         this.getWebview().postMessage({ command: 'reset-pet' });
     }
 
-    public removePet(spec: PetSpecification): void {
-        this.getWebview().postMessage({
-            command: 'remove-pet',
-            spec,
-        });
+    public deletePet(): void {
+        this.getWebview().postMessage({ command: 'delete-pet' });
     }
 
     public static revive(

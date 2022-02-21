@@ -82,7 +82,12 @@
             {
                 "command": "vscode-pets.delete-pets",
                 "title": "Send additional pets to a farm",
-                "category": "Pet Coding"
+                "category": "Pet Coding",
+                "when": "focusedView == vscode-pets.petsView && vscode-pets.position == 'explorer'",
+                "icon": {
+                    "dark": "media/icon/dark-trash.svg",
+                    "light": "media/icon/light-trash.svg"
+                }
             },
             {
                 "command": "vscode-pets.reset-pets",

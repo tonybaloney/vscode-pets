@@ -383,9 +383,16 @@ export function petPanelApp(
                 );
                 saveState();
                 break;
-            case 'remove-pet':
-                allPets.remove(message.id);
-                saveState();
+            case 'delete-pet':
+                var pet = allPets.locate(message.id);
+                if (pet) {
+                    pet.remove();
+                    saveState();
+                } else {
+                    vscodeImport.window.showInformationMessage(
+                        'The Pet you are looking for does not exist.',
+                    );
+                }
                 break;
             case 'reset-pet':
                 allPets.pets().forEach((pet) => {
