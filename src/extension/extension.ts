@@ -846,10 +846,14 @@ class PetPanel extends PetWebviewContainer {
     }
 
     public resetPets() {
-        this.updatePetColor(this.petColor());
-        this.updatePetType(this.petType());
-        this.updatePetSize(this.petSize());
-        this.update();
+        this.getWebview().postMessage({ command: 'reset-pet' });
+    }
+
+    public removePet(spec: PetSpecification): void {
+        this.getWebview().postMessage({
+            command: 'remove-pet',
+            spec,
+        });
     }
 
     public static revive(

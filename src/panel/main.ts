@@ -395,16 +395,20 @@ export function petPanelApp(
                 allPets.reset();
                 allPets.push(
                     addPetToPanel(
-                        message.type,
+                        petType,
                         basePetUri,
-                        message.color,
-                        message.size,
+                        petColor,
+                        petSize,
                         randomStartPosition(),
                         floor,
                         floor,
                         undefined,
                     ),
                 );
+                petCounter = 1;
+                saveState();
+                break;
+            case 'pause-pet':
                 petCounter = 1;
                 saveState();
                 break;
