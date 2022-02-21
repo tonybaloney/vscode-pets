@@ -22,7 +22,7 @@ import {
     ZAPPY_NAMES,
     ROCKY_NAMES,
 } from '../common/names';
-import { window } from 'vscode';
+import { PetSpecification } from '../extension/extension';
 
 export class InvalidStateException {}
 

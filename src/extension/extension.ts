@@ -82,7 +82,7 @@ function updateExtensionPositionContext() {
     );
 }
 
-class PetSpecification {
+export class PetSpecification {
     color: PetColor;
     type: PetType;
     size: PetSize;
@@ -177,7 +177,6 @@ export function activate(context: vscode.ExtensionContext) {
                     getConfiguredThemeKind(),
                 );
 
-                // Recover extra pets from last session
                 if (PetPanel.currentPanel) {
                     var collection = PetSpecification.collectionFromMemento(
                         context,
@@ -260,10 +259,8 @@ export function activate(context: vscode.ExtensionContext) {
                 webviewViewProvider
             ) {
                 webviewViewProvider.deletePet();
-            } else {
-                if (PetPanel.currentPanel) {
-                    PetPanel.currentPanel.deletePet();
-                }
+            } else if (PetPanel.currentPanel) {
+                PetPanel.currentPanel.deletePet();
             }
         }),
     );
@@ -332,35 +329,31 @@ export function activate(context: vscode.ExtensionContext) {
                 collection.push(spec);
                 storeCollectionAsMemento(context, collection);
             } else {
-                // create a new pet panel if one has not been created
-                if (
-                    getConfigurationPosition() === ExtPosition.explorer &&
-                    webviewViewProvider
-                ) {
-                    vscode.commands.executeCommand(
-                        'vscode-pets.petsView.focus',
+                const spec = PetSpecification.fromConfiguration();
+                PetPanel.createOrShow(
+                    context.extensionUri,
+                    context.extensionPath,
+                    spec.color,
+                    spec.type,
+                    spec.size,
+                    getConfiguredTheme(),
+                    getConfiguredThemeKind(),
+                );
+                if (PetPanel.currentPanel) {
+                    var collection = PetSpecification.collectionFromMemento(
+                        context,
+                        getConfiguredSize(),
                     );
+                    collection.forEach((item) => {
+                        PetPanel.currentPanel!.spawnPet(item);
+                    });
                 } else {
-                    const spec = PetSpecification.fromConfiguration();
-                    PetPanel.createOrShow(
-                        context.extensionUri,
-                        context.extensionPath,
-                        spec.color,
-                        spec.type,
-                        spec.size,
-                        getConfiguredTheme(),
-                        getConfiguredThemeKind(),
+                    var collection = PetSpecification.collectionFromMemento(
+                        context,
+                        getConfiguredSize(),
                     );
-
-                    if (PetPanel.currentPanel) {
-                        var collection = PetSpecification.collectionFromMemento(
-                            context,
-                            getConfiguredSize(),
-                        );
-                        collection.forEach((item) => {
-                            PetPanel.currentPanel!.spawnPet(item);
-                        });
-                    }
+                    collection.push(spec);
+                    storeCollectionAsMemento(context, collection);
                 }
                 vscode.window.showInformationMessage(
                     "A Pet Playground has been created. You can now use the 'Spawn Pets Command!' to add more pets.",
@@ -376,8 +369,24 @@ export function activate(context: vscode.ExtensionContext) {
                 webviewViewProvider
             ) {
                 webviewViewProvider.resetPets();
+                var collection = PetSpecification.collectionFromMemento(
+                    context,
+                    getConfiguredSize(),
+                );
+                collection.splice(0, collection.length);
+                storeCollectionAsMemento(context, collection);
             } else if (PetPanel.currentPanel) {
                 PetPanel.currentPanel.resetPets();
+                var collection = PetSpecification.collectionFromMemento(
+                    context,
+                    getConfiguredSize(),
+                );
+                collection.splice(0, collection.length);
+                storeCollectionAsMemento(context, collection);
+            } else {
+                vscode.window.showErrorMessage(
+                    'Please Open a Pet Playground to Reset the Pets!',
+                );
             }
         }),
     );
