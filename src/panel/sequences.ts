@@ -1,12 +1,11 @@
-import { States } from "./states";
-
+import { States } from './states';
 
 export interface ISequenceNode {
-    state: States
-    possibleNextStates: States[]
+    state: States;
+    possibleNextStates: States[];
 }
 
 export interface ISequenceTree {
-    startingState: States
-    sequenceStates: ISequenceNode[]
+    startingState: States;
+    sequenceStates: ISequenceNode[];
 }

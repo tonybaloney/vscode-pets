@@ -102,14 +102,14 @@ export const PET_NAMES: Map<number, string> = new Map<number, string>([
     [101, 'Purfect'],
     [102, 'Spot'],
     [103, 'Harry'],
-    [104, 'Bolt']
+    [104, 'Bolt'],
 ]);
 
 export const CAT_NAMES = PET_NAMES;
 
 export const DOG_NAMES = PET_NAMES;
 
-export const CRAB_NAMES : Map<number, string> = new Map<number, string>([
+export const CRAB_NAMES: Map<number, string> = new Map<number, string>([
     [1, 'Ferris'],
     [2, 'Pinchy'],
     [3, 'Grabby'],
@@ -119,7 +119,7 @@ export const CRAB_NAMES : Map<number, string> = new Map<number, string>([
     [7, 'Ruby Red'],
     [8, 'Oscar'],
     [9, 'Lucy'],
-    [10, 'Bailey']
+    [10, 'Bailey'],
 ]);
 
 export const CLIPPY_NAMES: Map<number, string> = new Map<number, string>([
