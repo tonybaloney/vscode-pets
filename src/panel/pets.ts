@@ -89,12 +89,15 @@ export class PetCollection implements IPetCollection {
     }
 
     remove(name: string): any {
-        const pet = this.locate(name);
-        if (pet) {
-            pet.remove();
+        for (var i = 0; i < this._pets.length; i++) {
+            if (this._pets[i].pet.name() === name) {
+                this._pets.splice(i, 1);
+            }
         }
-        this._pets = this._pets.filter((petInCollection) => {
-            return petInCollection.pet.name() !== name;
+        this._pets.forEach((pet) => {
+            if (pet.pet.name() === name) {
+                pet.remove();
+            }
         });
     }
 
