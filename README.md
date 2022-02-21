@@ -24,13 +24,10 @@ You can choose either pet type and pet color:
 
 ![screenshot2](https://github.com/tonybaloney/vscode-pet/raw/master/screenshots/screenshot-2.gif)
 
-_\*snake can only be green_
-
-_\*rubber duck & Zappy can only be yellow_
-
-_\*Ferris the crab can only be red_
-
-_\*Rocky can only be gray_
+* Snake can only be green_ 
+* Rubber duck & Zappy can only be yellow
+* Ferris the crab can only be red
+* Rocky can only be gray
 
 ## Playing
 
@@ -42,7 +39,7 @@ Pets will interact with you
 
 Play catch with your pet! Run the "Throw ball" command (`vscode-pets.throw-ball`).
 
-_\* Rocky will not run & catch a ball. Have you ever seen a rock run after a ball? Neither have we._
+* Rocky will not run & catch a ball. Have you ever seen a rock run after a ball? Neither have we.
 
 ![screenshot4](https://github.com/tonybaloney/vscode-pet/raw/master/screenshots/screenshot-4.gif)
 
