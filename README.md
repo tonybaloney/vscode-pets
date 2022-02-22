@@ -24,7 +24,7 @@ You can choose either pet type and pet color:
 
 ![screenshot2](https://github.com/tonybaloney/vscode-pet/raw/master/screenshots/screenshot-2.gif)
 
-* Snake can only be green_ 
+* Snake can only be green
 * Rubber duck & Zappy can only be yellow
 * Ferris the crab can only be red
 * Rocky can only be gray
