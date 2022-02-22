@@ -244,10 +244,12 @@ export function activate(context: vscode.ExtensionContext) {
                 webviewViewProvider
             ) {
                 webviewViewProvider.throwBall();
+            } else if (PetPanel.currentPanel) {
+                PetPanel.currentPanel.throwBall();
             } else {
-                if (PetPanel.currentPanel) {
-                    PetPanel.currentPanel.throwBall();
-                }
+                vscode.window.showErrorMessage(
+                    "Please open a Pet's Playground first.",
+                );
             }
         }),
     );

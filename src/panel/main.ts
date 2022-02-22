@@ -326,6 +326,10 @@ export function petPanelApp(
         ctx.arc(ballState.cx, ballState.cy, ballRadius, 0, 2 * Math.PI, false);
         ctx.fillStyle = '#2ed851';
         ctx.fill();
+        ctx.lineWidth = 1;
+        ctx.strokeStyle = '#2ed851';
+        ctx.stroke();
+        ctx.closePath();
     }
 
     console.log('Starting pet session', petColor, basePetUri, petType);
