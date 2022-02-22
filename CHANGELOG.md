@@ -2,6 +2,10 @@
 
 All notable changes to the "vscode-pets" extension will be documented in this file.
 
+## [1.10.0]
+
+- The Squirrel button on the status bar is also a shortcut to add a pet. Credit @Harry-Hopkinson
+
 ## [1.9.3]
 
 - Added a shortcut to open the pets window (a little squirrel) in the status bar. Credit @Harry-Hopkinson
