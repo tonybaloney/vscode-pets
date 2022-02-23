@@ -585,7 +585,9 @@ class PetWebviewContainer {
     }
 
     public throwBall() {
-        this.getWebview().postMessage({ command: 'throw-ball' });
+        this.getWebview().postMessage({
+            command: 'throw-ball',
+        });
     }
 
     public spawnPet(spec: PetSpecification) {
