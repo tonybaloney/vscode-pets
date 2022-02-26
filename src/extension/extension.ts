@@ -319,9 +319,20 @@ export function activate(context: vscode.ExtensionContext) {
                     petType as PetType,
                     getConfiguredSize(),
                 );
-                if (getConfigurationPosition() === ExtPosition.explorer) {
+                if (
+                    spec.type == null ||
+                    spec.color == null ||
+                    spec.size == null
+                ) {
+                    return vscode.window.showErrorMessage(
+                        'Cancelled Spawning Pet',
+                    );
+                } else if (
+                    getConfigurationPosition() === ExtPosition.explorer &&
+                    spec
+                ) {
                     webviewViewProvider.spawnPet(spec);
-                } else if (PetPanel.currentPanel) {
+                } else if (PetPanel.currentPanel && spec) {
                     PetPanel.currentPanel.spawnPet(spec);
                 }
                 var collection = PetSpecification.collectionFromMemento(
@@ -358,7 +369,7 @@ export function activate(context: vscode.ExtensionContext) {
                     storeCollectionAsMemento(context, collection);
                 }
                 vscode.window.showInformationMessage(
-                    "A Pet Playground has been created. You can now use the 'Spawn Pets Command!' to add more pets.",
+                    "A Pet Playground has been created. You can now use the 'Spawn Additional Pet' Command to add more pets.",
                 );
             }
         }),
