@@ -1,3 +1,8 @@
 CHANGELOG.md
 README.md
 webpack.config.js
+LICENSE
+.gitignore
+tsconfig.json
+tsconfig.extension.json
+.eslintrc.json
