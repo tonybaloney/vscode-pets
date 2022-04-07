@@ -320,9 +320,9 @@ export function activate(context: vscode.ExtensionContext) {
                     getConfiguredSize(),
                 );
                 if (
-                    spec.type == null ||
-                    spec.color == null ||
-                    spec.size == null
+                    spec.type  === null ||
+                    spec.color === null ||
+                    spec.size  === null
                 ) {
                     return vscode.window.showErrorMessage(
                         'Cancelled Spawning Pet',
@@ -400,6 +400,19 @@ export function activate(context: vscode.ExtensionContext) {
                 vscode.window.showErrorMessage(
                     'Please Open a Pet Playground to Reset the Pets!',
                 );
+            }
+        }),
+    );
+
+    context.subscriptions.push(
+        vscode.commands.registerCommand('vscode-pets.design-pet', () => {
+            if (
+                getConfigurationPosition() === ExtPosition.explorer &&
+                webviewViewProvider
+            ) {
+                webviewViewProvider.designPet();
+            } else if (PetPanel.currentPanel) {
+                PetPanel.currentPanel.designPet();
             }
         }),
     );
@@ -614,6 +627,10 @@ class PetWebviewContainer {
         this.getWebview().postMessage({ command: 'delete-pet' });
     }
 
+    public designPet() {
+        this.getWebview().postMessage({ command: 'design-pet' });
+    }
+
     protected getWebview(): vscode.Webview {
         throw new Error('Not implemented');
     }
@@ -686,6 +703,13 @@ class PetWebviewContainer {
 				<div id="foreground"></div>	
 				<script nonce="${nonce}" src="${scriptUri}"></script>
 				<script nonce="${nonce}">petApp.petPanelApp("${basePetUri}", "${this.theme()}", ${this.themeKind()}, "${this.petColor()}", "${this.petSize()}", "${this.petType()}");</script>
+                <div id="designer" style="display: none; position: absolute">
+                    <canvas id="original-canvas"></canvas>
+                    <canvas id="new-canvas"></canvas>
+                    <div id="substitutions">
+                        <ul id="substitutions-list"></ul>
+                    </div>
+                </div>
 			</body>
 			</html>`;
     }

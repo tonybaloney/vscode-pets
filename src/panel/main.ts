@@ -7,6 +7,7 @@ import {
     ColorThemeKind,
     WebviewMessage,
 } from '../common/types';
+import { initiatizeDesigner } from './designer';
 import {
     createPet,
     IPetType,
@@ -413,6 +414,10 @@ export function petPanelApp(
             case 'pause-pet':
                 petCounter = 1;
                 saveState();
+                break;
+            case 'design-pet':
+                document.getElementById('designer')!.style.display = "block";
+                initiatizeDesigner(basePetUri);
                 break;
         }
     });

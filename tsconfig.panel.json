@@ -17,6 +17,7 @@
 	"exclude": [
 		"node_modules",
 		".vscode-test",
-		"src/extension"
+		"src/extension",
+		"src/designer"
 	]
 }
