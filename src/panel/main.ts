@@ -7,7 +7,7 @@ import {
     ColorThemeKind,
     WebviewMessage,
 } from '../common/types';
-import { initiatizeDesigner } from './designer';
+import { initializeDesigner } from './designer';
 import {
     createPet,
     IPetType,
@@ -273,14 +273,14 @@ export function petPanelApp(
                 break;
         }
 
-        document.body.style.backgroundImage = `url('${basePetUri}/backgrounds/${theme}/background-${_themeKind}-${petSize}.png')`;
+        document.getElementById('main')!.style.backgroundImage = `url('${basePetUri}/backgrounds/${theme}/background-${_themeKind}-${petSize}.png')`;
         document.getElementById(
             'foreground',
         )!.style.backgroundImage = `url('${basePetUri}/backgrounds/${theme}/foreground-${_themeKind}-${petSize}.png')`;
 
         floor = calculateFloor(petSize, theme); // Themes have pets at a specified height from the ground
     } else {
-        document.body.style.backgroundImage = '';
+        document.getElementById('main')!.style.backgroundImage = '';
         document.getElementById('foreground')!.style.backgroundImage = '';
     }
 
@@ -416,8 +416,9 @@ export function petPanelApp(
                 saveState();
                 break;
             case 'design-pet':
+                document.getElementById('main')!.style.display = "none";
                 document.getElementById('designer')!.style.display = "block";
-                initiatizeDesigner(basePetUri);
+                initializeDesigner(basePetUri);
                 break;
         }
     });

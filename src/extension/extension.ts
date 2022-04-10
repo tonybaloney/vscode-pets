@@ -698,16 +698,18 @@ class PetWebviewContainer {
 				<title>VS Code Pets</title>
 			</head>
 			<body>
-				<canvas id="petCanvas"></canvas>
-				<div id="petsContainer"></div>
-				<div id="foreground"></div>	
+                <div id="main">
+                    <canvas id="petCanvas"></canvas>
+                    <div id="petsContainer"></div>
+                    <div id="foreground"></div>	
+                </div>
 				<script nonce="${nonce}" src="${scriptUri}"></script>
 				<script nonce="${nonce}">petApp.petPanelApp("${basePetUri}", "${this.theme()}", ${this.themeKind()}, "${this.petColor()}", "${this.petSize()}", "${this.petType()}");</script>
                 <div id="designer" style="display: none; position: absolute">
                     <canvas id="original-canvas"></canvas>
                     <canvas id="new-canvas"></canvas>
                     <div id="substitutions">
-                        <ul id="substitutions-list"></ul>
+                        <div id="substitutions-list"></div>
                     </div>
                 </div>
 			</body>

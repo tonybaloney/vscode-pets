@@ -21,7 +21,7 @@ class Substitution {
 
 var substitutions : Array<Substitution> = new Array();
 
-export function initiatizeDesigner(uri: string) {
+export function initializeDesigner(uri: string) {
     var img = new Image();
     img.crossOrigin = 'anonymous';
     img.src = `${uri}/dog/black_idle_8fps.gif`;
@@ -49,17 +49,15 @@ export function initiatizeDesigner(uri: string) {
             }
             if (!found){
                 uniqueColors.push({r: data[i], g: data[i + 1], b: data[i + 2]});
+                console.log("Found new color", data[i], data[i+1], data[i+2]);
             }
         }
     
-        var subList = document.getElementById('substitutions-list') as HTMLUListElement;
+        var subList = document.getElementById('substitutions-list') as HTMLDivElement;
     
         for (var i = 0; i < uniqueColors.length; i ++){
             var color = uniqueColors[i];
-            var li = document.createElement('li');
-            var original = document.createElement('div');
-            original.className = "original";
-            original.style.backgroundColor = original.innerText;
+            
             var newColor = document.createElement('input') as HTMLInputElement;
             newColor.type = 'color';
             newColor.value = rgbToHex(color.r, color.g, color.b);
@@ -69,10 +67,7 @@ export function initiatizeDesigner(uri: string) {
                 substitutions[id].new = hexToRgb(this.value);
                 drawImage();
             });
-            li.appendChild(original);
-            li.appendChild(newColor);
-    
-            subList.appendChild(li);
+            subList.appendChild(newColor);
             substitutions.push({original: color, new: color});
         }
     
