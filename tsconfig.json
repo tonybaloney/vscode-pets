@@ -3,7 +3,8 @@
         "noImplicitAny": true,
         "strictNullChecks": true,
         "outDir": "./.build-out",
-        "lib": ["es2016", "dom"]
+        "lib": ["es2016", "dom"],
+        "target": "esnext"
     },
     "include": ["src"]
 }
