@@ -10,19 +10,11 @@ import {
 import {
     createPet,
     IPetType,
-    InvalidPetException,
     PetCollection,
     PetElement,
     IPetCollection,
 } from './pets';
-import {
-    BallState,
-    ChaseFriendState,
-    PetElementState,
-    PetInstanceState,
-    PetPanelState,
-    States,
-} from './states';
+import { BallState, PetElementState, PetPanelState } from './states';
 
 /* This is how the VS Code API can be invoked from the panel */
 declare global {
@@ -150,15 +142,6 @@ function addPetToPanel(
         petColor,
         petType,
     );
-}
-
-function removePetFromPanel(pet: PetElement): any {
-    pet.collision.removeEventListener('mouseover', handleMouseOver);
-    (document.getElementById('petsContainer') as HTMLDivElement).removeChild(
-        pet.collision,
-    );
-    pet.collision.remove();
-    pet.remove();
 }
 
 export function saveState() {
