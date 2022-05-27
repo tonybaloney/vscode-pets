@@ -320,9 +320,9 @@ export function activate(context: vscode.ExtensionContext) {
                     getConfiguredSize(),
                 );
                 if (
-                    spec.type == null ||
-                    spec.color == null ||
-                    spec.size == null
+                    spec.type === null ||
+                    spec.color === null ||
+                    spec.size === null
                 ) {
                     return vscode.window.showErrorMessage(
                         'Cancelled Spawning Pet',
@@ -452,10 +452,7 @@ export function activate(context: vscode.ExtensionContext) {
     if (vscode.window.registerWebviewPanelSerializer) {
         // Make sure we register a serializer in activation event
         vscode.window.registerWebviewPanelSerializer(PetPanel.viewType, {
-            async deserializeWebviewPanel(
-                webviewPanel: vscode.WebviewPanel,
-                state: any,
-            ) {
+            async deserializeWebviewPanel(webviewPanel: vscode.WebviewPanel) {
                 // Reset the webview options so we use latest uri for `localResourceRoots`.
                 webviewPanel.webview.options = getWebviewOptions(
                     context.extensionUri,
@@ -817,7 +814,7 @@ class PetPanel extends PetWebviewContainer {
 
         // Update the content based on view changes
         this._panel.onDidChangeViewState(
-            (e) => {
+            () => {
                 this.update();
             },
             null,
@@ -862,11 +859,7 @@ class PetWebviewViewProvider extends PetWebviewContainer {
 
     private _webviewView?: vscode.WebviewView;
 
-    resolveWebviewView(
-        webviewView: vscode.WebviewView,
-        context: vscode.WebviewViewResolveContext<unknown>,
-        token: vscode.CancellationToken,
-    ): void | Thenable<void> {
+    resolveWebviewView(webviewView: vscode.WebviewView): void | Thenable<void> {
         this._webviewView = webviewView;
 
         webviewView.webview.options = getWebviewOptions(this._extensionUri);

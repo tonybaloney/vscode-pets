@@ -6,3 +6,7 @@ LICENSE
 tsconfig.json
 tsconfig.extension.json
 .eslintrc.json
+out
+media
+.vscode
+tsconfig.panel.json
