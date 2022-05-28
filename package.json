@@ -174,8 +174,7 @@
         "compile": "npm run compile:panel && npm run compile:extension",
         "watch": "tsc -watch -p ./tsconfig.extension.json",
         "pretest": "npm run compile && npm run lint",
-        "lint": "eslint src --ext ts && prettier --check .",
-        "lint:fix": "eslint src --ext ts --fix && prettier --write .",
+        "lint": "eslint src --ext ts",
         "test": "node ./out/extension/test/runTest.js"
     },
     "devDependencies": {
@@ -186,19 +185,12 @@
         "@typescript-eslint/eslint-plugin": "^4.1.1",
         "@typescript-eslint/parser": "^4.1.1",
         "eslint": "^7.9.0",
-        "eslint-plugin-unused-imports": "^2.0.0",
         "glob": "^7.1.6",
         "mocha": "^8.1.3",
-        "prettier": "^2.6.2",
         "ts-loader": "^8.0.18",
         "typescript": "^4.1.5",
         "vscode-test": "^1.6.1",
         "webpack": "^5.72.1",
         "webpack-cli": "^4.9.2"
-        "typescript": "^4.0.2",
-        "typescript-eslint": "^0.0.1-alpha.0",
-        "vscode-test": "^1.4.0",
-        "webpack": "^5.26.0",
-        "webpack-cli": "^4.5.0"
     }
 }
