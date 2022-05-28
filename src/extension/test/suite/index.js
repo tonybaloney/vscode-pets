@@ -1,35 +1,39 @@
-import * as path from 'path';
-import * as Mocha from 'mocha';
-import * as glob from 'glob';
-export function run() {
+'use strict';
+exports.__esModule = true;
+exports.run = void 0;
+var path = require('path');
+var Mocha = require('mocha');
+var glob = require('glob');
+function run() {
     // Create the mocha test
-    const mocha = new Mocha({
+    var mocha = new Mocha({
         ui: 'tdd',
         color: true,
     });
-    const testsRoot = path.resolve(__dirname, '..');
-    return new Promise((c, e) => {
-        glob('**/**.test.js', { cwd: testsRoot }, (err, files) => {
+    var testsRoot = path.resolve(__dirname, '..');
+    return new Promise(function (c, e) {
+        glob('**/**.test.js', { cwd: testsRoot }, function (err, files) {
             if (err) {
                 return e(err);
             }
             // Add files to the test suite
-            files.forEach((f) => mocha.addFile(path.resolve(testsRoot, f)));
+            files.forEach(function (f) {
+                return mocha.addFile(path.resolve(testsRoot, f));
+            });
             try {
                 // Run the mocha test
-                mocha.run((failures) => {
+                mocha.run(function (failures) {
                     if (failures > 0) {
-                        e(new Error(`${failures} tests failed.`));
-                    }
-                    else {
+                        e(new Error(failures + ' tests failed.'));
+                    } else {
                         c();
                     }
                 });
-            }
-            catch (err) {
+            } catch (err) {
                 console.error(err);
                 e(err);
             }
         });
     });
 }
+exports.run = run;
