@@ -22,7 +22,6 @@ import {
     ZAPPY_NAMES,
     ROCKY_NAMES,
 } from '../common/names';
-import { PetSpecification } from '../extension/extension';
 
 export class InvalidStateException {}
 
@@ -83,7 +82,7 @@ export class PetCollection implements IPetCollection {
     }
 
     locate(name: string): PetElement | undefined {
-        return this._pets.find((collection, value, obj) => {
+        return this._pets.find((collection) => {
             return collection.pet.name() === name;
         });
     }

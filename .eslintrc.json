@@ -6,7 +6,8 @@
         "sourceType": "module"
     },
     "plugins": [
-        "@typescript-eslint"
+        "@typescript-eslint",
+        "unused-imports"
     ],
     "rules": {
         "@typescript-eslint/naming-convention": "warn",
@@ -14,6 +15,9 @@
         "curly": "warn",
         "eqeqeq": "warn",
         "no-throw-literal": "warn",
-        "semi": "off"
+        "semi": "off",
+        "no-unused-vars": "error",
+        "unused-imports/no-unused-imports": "error",
+        "prefer-const": "error"
     }
 }
