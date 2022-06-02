@@ -6,10 +6,6 @@
     postUpdateOptions: ['yarnDedupeHighest'],
     packageRules: [
         {
-            matchPackageNames: ['react', 'react-dom'],
-            groupName: 'react',
-        },
-        {
             matchPackagePrefixes: ['@babel/'],
             excludePackageNames: ['@babel/parser'],
             groupName: 'babel',
