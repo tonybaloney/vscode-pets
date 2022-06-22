@@ -59,6 +59,10 @@ Set `vscode-pets.theme` to `"castle"` for them to roam the ramparts!
 
 ![castle](https://github.com/tonybaloney/vscode-pet/raw/master/screenshots/castle.gif)
 
+## More options
+
+From the VSCode preferences, search for **vscode-pets** for more options. In particular you can move the panel to the sidebar, or change the pet type and theme.
+
 ## Contributing
 
 ### Ideas and discussion
