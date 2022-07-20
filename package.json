@@ -179,6 +179,7 @@
         "test": "node ./out/extension/test/runTest.js"
     },
     "devDependencies": {
+        "@rbarilani/remove-source-map-url-webpack-plugin": "^1.1.0",
         "@types/glob": "^7.1.3",
         "@types/mocha": "^9.1.1",
         "@types/node": "^18.0.0",

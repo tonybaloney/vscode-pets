@@ -1,5 +1,6 @@
 //webpack.config.js
 const path = require('path');
+var removeSourceMapUrlWebpackPlugin = require('@rbarilani/remove-source-map-url-webpack-plugin');
 
 module.exports = {
   mode: "development",
@@ -15,6 +16,11 @@ module.exports = {
       type: 'global'
     }
   },
+  plugins: [
+    new removeSourceMapUrlWebpackPlugin({
+      test: /main-bundle\.js$/
+    })
+  ],
   resolve: {
     extensions: [".ts", ".tsx", ".js"],
   },
