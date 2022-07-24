@@ -14,6 +14,7 @@ import {
 import {
     CAT_NAMES,
     DOG_NAMES,
+    COCKATIEL_NAMES,
     CRAB_NAMES,
     SNAKE_NAMES,
     CLIPPY_NAMES,
@@ -796,6 +797,51 @@ export class RubberDuck extends BasePetType {
     }
 }
 
+export class Cockatiel extends BasePetType {
+    label = 'cockatiel';
+    sequence = {
+        startingState: States.sitIdle,
+        sequenceStates: [
+            {
+                state: States.sitIdle,
+                possibleNextStates: [States.walkRight, States.runRight],
+            },
+            {
+                state: States.walkRight,
+                possibleNextStates: [States.walkLeft, States.runLeft],
+            },
+            {
+                state: States.runRight,
+                possibleNextStates: [States.walkLeft, States.runLeft],
+            },
+            {
+                state: States.walkLeft,
+                possibleNextStates: [States.sitIdle],
+            },
+            {
+                state: States.runLeft,
+                possibleNextStates: [States.sitIdle],
+            },
+            {
+                state: States.chase,
+                possibleNextStates: [States.idleWithBall],
+            },
+            {
+                state: States.idleWithBall,
+                possibleNextStates: [
+                    States.walkRight,
+                    States.walkLeft,
+                    States.runLeft,
+                    States.runRight,
+                ],
+            },
+        ],
+    };
+    emoji(): string {
+        return '🦜';
+    }
+}
+
 export class Crab extends BasePetType {
     label = 'crab';
     sequence = {
@@ -1021,6 +1067,21 @@ export function createPet(
             floor,
             name,
             PetSpeed.slow,
+        );
+    } else if (petType === 'cockatiel') {
+        if (name === undefined) {
+            name = getPetName(COCKATIEL_NAMES, PetType.cockatiel, Cockatiel.count + 1);
+        }
+        return new Cockatiel(
+            el,
+            collision,
+            size,
+            left,
+            bottom,
+            petRoot,
+            floor,
+            name,
+            PetSpeed.normal,
         );
     } else if (petType === 'crab') {
         if (name === undefined) {
