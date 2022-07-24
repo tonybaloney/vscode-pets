@@ -22,6 +22,7 @@ const DEFAULT_THEME = Theme.none;
 const ALL_PETS = [
     PetType.cat,
     PetType.clippy,
+    PetType.cockatiel,
     PetType.crab,
     PetType.dog,
     PetType.rocky,
@@ -307,6 +308,9 @@ export function activate(context: vscode.ExtensionContext) {
                             placeHolder: 'Select a color',
                         })) as PetColor;
                         break;
+                    case PetType.cockatiel:
+                        petColor = PetColor.gray;
+                        break;
                     case PetType.crab:
                         petColor = PetColor.red;
                         break;
@@ -513,6 +517,9 @@ function normalizeColor(petColor: PetColor, petType: PetType): PetColor {
     }
     if (petType === PetType.rubberduck || petType === PetType.zappy) {
         return PetColor.yellow;
+    }
+    if (petType === PetType.cockatiel) {
+        return PetColor.gray;
     }
     if (petType === PetType.crab) {
         return PetColor.red;

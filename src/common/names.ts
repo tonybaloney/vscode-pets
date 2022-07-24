@@ -199,3 +199,16 @@ export const ROCKY_NAMES: Map<number, string> = new Map<number, string>([
     [9, 'Boulder'],
     [10, 'Rockefeller'],
 ]);
+
+export const COCKATIEL_NAMES: Map<number, string> = new Map<number, string>([
+    [1, 'Cocktail'],
+    [2, 'Pipsqueak'],
+    [3, 'Sir Chirps a Lot'],
+    [4, 'Nibbles'],
+    [5, 'Lord of the Wings'],
+    [6, 'Girl Nest Door'],
+    [7, 'Wingman'],
+    [8, 'Meryl Cheep'],
+    [9, 'Jack Sparrow'],
+    [10, 'Godfeather'],
+]);
