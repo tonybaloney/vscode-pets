@@ -1070,7 +1070,11 @@ export function createPet(
         );
     } else if (petType === 'cockatiel') {
         if (name === undefined) {
-            name = getPetName(COCKATIEL_NAMES, PetType.cockatiel, Cockatiel.count + 1);
+            name = getPetName(
+                COCKATIEL_NAMES,
+                PetType.cockatiel,
+                Cockatiel.count + 1,
+            );
         }
         return new Cockatiel(
             el,
