@@ -214,6 +214,7 @@ exports.COCKATIEL_NAMES = new Map([
     [8, 'Meryl Cheep'],
     [9, 'Jack Sparrow'],
     [10, 'Godfeather'],
+    [11, 'Mickey'],
 ]);
 
 
