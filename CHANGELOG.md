@@ -5,6 +5,7 @@ All notable changes to the "vscode-pets" extension will be documented in this fi
 ## [1.11.0]
 
 - Added a cockatiel 🦜 as a new pet. Credit @marcduiker
+- Added a white dog as an option.
 
 ## [1.10.0]
 
