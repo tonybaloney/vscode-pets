@@ -111,7 +111,8 @@
                             "green",
                             "yellow",
                             "gray",
-                            "red"
+                            "red",
+                            "white"
                         ],
                         "default": "brown",
                         "description": "Pet color",
@@ -175,8 +176,8 @@
         "compile": "npm run compile:panel && npm run compile:extension",
         "watch": "tsc -watch -p ./tsconfig.extension.json",
         "pretest": "npm run compile && npm run lint",
-        "lint": "eslint src --ext ts && prettier --check .",
-        "lint:fix": "eslint src --ext ts --fix && prettier --write .",
+        "lint": "eslint src --ext ts && prettier --check src",
+        "lint:fix": "eslint src --ext ts --fix && prettier --write src",
         "test": "node ./out/extension/test/runTest.js"
     },
     "devDependencies": {
