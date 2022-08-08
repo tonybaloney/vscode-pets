@@ -2,6 +2,10 @@
 
 All notable changes to the "vscode-pets" extension will be documented in this file.
 
+## [1.11.0]
+
+- Added a cockatiel 🦜 as a new pet. Credit @marcduiker
+
 ## [1.10.0]
 
 - The Squirrel button on the status bar is also a shortcut to add a pet. Credit @Harry-Hopkinson

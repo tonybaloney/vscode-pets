@@ -10,7 +10,7 @@
 
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.ROCKY_NAMES = exports.ZAPPY_NAMES = exports.DUCK_NAMES = exports.SNAKE_NAMES = exports.TOTORO_NAMES = exports.CLIPPY_NAMES = exports.CRAB_NAMES = exports.DOG_NAMES = exports.CAT_NAMES = exports.PET_NAMES = void 0;
+exports.COCKATIEL_NAMES = exports.ROCKY_NAMES = exports.ZAPPY_NAMES = exports.DUCK_NAMES = exports.SNAKE_NAMES = exports.TOTORO_NAMES = exports.CLIPPY_NAMES = exports.CRAB_NAMES = exports.DOG_NAMES = exports.CAT_NAMES = exports.PET_NAMES = void 0;
 exports.PET_NAMES = new Map([
     [1, 'Bella'],
     [2, 'Charlie'],
@@ -202,6 +202,19 @@ exports.ROCKY_NAMES = new Map([
     [8, 'Big Granite'],
     [9, 'Boulder'],
     [10, 'Rockefeller'],
+]);
+exports.COCKATIEL_NAMES = new Map([
+    [1, 'Cocktail'],
+    [2, 'Pipsqueak'],
+    [3, 'Sir Chirps a Lot'],
+    [4, 'Nibbles'],
+    [5, 'Lord of the Wings'],
+    [6, 'Girl Nest Door'],
+    [7, 'Wingman'],
+    [8, 'Meryl Cheep'],
+    [9, 'Jack Sparrow'],
+    [10, 'Godfeather'],
+    [11, 'Mickey'],
 ]);
 
 
@@ -501,7 +514,7 @@ window.addEventListener('resize', function () {
 
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.createPet = exports.InvalidPetException = exports.Rocky = exports.Zappy = exports.Crab = exports.RubberDuck = exports.Clippy = exports.Snake = exports.Dog = exports.Cat = exports.Totoro = exports.PetCollection = exports.PetElement = exports.InvalidStateException = void 0;
+exports.createPet = exports.InvalidPetException = exports.Rocky = exports.Zappy = exports.Crab = exports.Cockatiel = exports.RubberDuck = exports.Clippy = exports.Snake = exports.Dog = exports.Cat = exports.Totoro = exports.PetCollection = exports.PetElement = exports.InvalidStateException = void 0;
 const states_1 = __webpack_require__(/*! ./states */ "./src/panel/states.ts");
 const names_1 = __webpack_require__(/*! ../common/names */ "./src/common/names.ts");
 class InvalidStateException {
@@ -1160,6 +1173,51 @@ class RubberDuck extends BasePetType {
     }
 }
 exports.RubberDuck = RubberDuck;
+class Cockatiel extends BasePetType {
+    label = 'cockatiel';
+    sequence = {
+        startingState: "sit-idle" /* States.sitIdle */,
+        sequenceStates: [
+            {
+                state: "sit-idle" /* States.sitIdle */,
+                possibleNextStates: ["walk-right" /* States.walkRight */, "run-right" /* States.runRight */],
+            },
+            {
+                state: "walk-right" /* States.walkRight */,
+                possibleNextStates: ["walk-left" /* States.walkLeft */, "run-left" /* States.runLeft */],
+            },
+            {
+                state: "run-right" /* States.runRight */,
+                possibleNextStates: ["walk-left" /* States.walkLeft */, "run-left" /* States.runLeft */],
+            },
+            {
+                state: "walk-left" /* States.walkLeft */,
+                possibleNextStates: ["sit-idle" /* States.sitIdle */],
+            },
+            {
+                state: "run-left" /* States.runLeft */,
+                possibleNextStates: ["sit-idle" /* States.sitIdle */],
+            },
+            {
+                state: "chase" /* States.chase */,
+                possibleNextStates: ["idle-with-ball" /* States.idleWithBall */],
+            },
+            {
+                state: "idle-with-ball" /* States.idleWithBall */,
+                possibleNextStates: [
+                    "walk-right" /* States.walkRight */,
+                    "walk-left" /* States.walkLeft */,
+                    "run-left" /* States.runLeft */,
+                    "run-right" /* States.runRight */,
+                ],
+            },
+        ],
+    };
+    emoji() {
+        return '🦜';
+    }
+}
+exports.Cockatiel = Cockatiel;
 class Crab extends BasePetType {
     label = 'crab';
     sequence = {
@@ -1318,6 +1376,12 @@ function createPet(petType, el, collision, size, left, bottom, petRoot, floor, n
             name = getPetName(names_1.CLIPPY_NAMES, "clippy" /* PetType.clippy */, Clippy.count + 1);
         }
         return new Clippy(el, collision, size, left, bottom, petRoot, floor, name, 2 /* PetSpeed.slow */);
+    }
+    else if (petType === 'cockatiel') {
+        if (name === undefined) {
+            name = getPetName(names_1.COCKATIEL_NAMES, "cockatiel" /* PetType.cockatiel */, Cockatiel.count + 1);
+        }
+        return new Cockatiel(el, collision, size, left, bottom, petRoot, floor, name, 3 /* PetSpeed.normal */);
     }
     else if (petType === 'crab') {
         if (name === undefined) {
