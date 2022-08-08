@@ -38,6 +38,7 @@ const ALL_COLORS = [
     PetColor.yellow,
     PetColor.gray,
     PetColor.red,
+    PetColor.white,
     PetColor.null,
 ];
 const ALL_SCALES = [PetSize.nano, PetSize.medium, PetSize.large];
@@ -291,8 +292,13 @@ export function activate(context: vscode.ExtensionContext) {
                         petColor = PetColor.gray;
                         break;
                     case PetType.cat:
-                    case PetType.dog:
                         choices = [PetColor.black, PetColor.brown];
+                        petColor = (await vscode.window.showQuickPick(choices, {
+                            placeHolder: 'Select a color',
+                        })) as PetColor;
+                        break;
+                    case PetType.dog:
+                        choices = [PetColor.black, PetColor.brown, PetColor.white];
                         petColor = (await vscode.window.showQuickPick(choices, {
                             placeHolder: 'Select a color',
                         })) as PetColor;
@@ -524,8 +530,14 @@ function normalizeColor(petColor: PetColor, petType: PetType): PetColor {
     if (petType === PetType.crab) {
         return PetColor.red;
     }
-    if (
-        (petType === PetType.dog || petType === PetType.cat) &&
+    if (petType === PetType.dog &&
+        petColor !== PetColor.brown &&
+        petColor !== PetColor.white &&
+        petColor !== PetColor.black
+    ) {
+        return PetColor.brown;
+    }
+    if (petType === PetType.cat &&
         petColor !== PetColor.brown &&
         petColor !== PetColor.black
     ) {

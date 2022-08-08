@@ -5,6 +5,7 @@ export const enum PetColor {
     yellow = 'yellow',
     gray = 'gray',
     red = 'red',
+    white = 'white',
     null = 'null',
 }
 

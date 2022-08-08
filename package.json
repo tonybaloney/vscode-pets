@@ -111,7 +111,8 @@
                             "green",
                             "yellow",
                             "gray",
-                            "red"
+                            "red",
+                            "white"
                         ],
                         "default": "brown",
                         "description": "Pet color",
