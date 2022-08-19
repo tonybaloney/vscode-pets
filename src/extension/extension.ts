@@ -44,6 +44,23 @@ const ALL_COLORS = [
 const ALL_SCALES = [PetSize.nano, PetSize.medium, PetSize.large];
 const ALL_THEMES = [Theme.none, Theme.forest, Theme.castle];
 
+class PetQuickPickItem implements vscode.QuickPickItem {
+    constructor(public readonly name_: string, public readonly type: string) {
+        this.name = name_;
+        this.label = name_;
+        this.description = type;
+    }
+
+    name: string;
+    label: string;
+    kind?: vscode.QuickPickItemKind | undefined;
+    description?: string | undefined;
+    detail?: string | undefined;
+    picked?: boolean | undefined;
+    alwaysShow?: boolean | undefined;
+    buttons?: readonly vscode.QuickInputButton[] | undefined;
+}
+
 let webviewViewProvider: PetWebviewViewProvider;
 
 function getConfiguredSize(): PetSize {
@@ -159,6 +176,37 @@ export function storeCollectionAsMemento(
 let petPlaygroundStatusBar: vscode.StatusBarItem;
 let spawnPetStatusBar: vscode.StatusBarItem;
 
+function handleRemovePetMessage(message: WebviewMessage)
+{
+    var petList = Array();
+    switch (message.command) {
+        case 'list-pets':
+            message.text.split('\n').forEach((pet) => {
+                var parts = pet.split(',');
+                petList.push({type: parts[0], name: parts[1]});
+            });
+    }
+    vscode.window.showQuickPick<PetQuickPickItem>(
+        petList.map((val) => { return new PetQuickPickItem(
+            val.name,
+            val.type,
+        );}),
+        { placeHolder: 'Select the pet to remove.' }
+    ).then((pet: PetQuickPickItem | undefined) => {
+        if (
+            pet &&
+            getConfigurationPosition() === ExtPosition.explorer &&
+            webviewViewProvider
+        ) {
+            webviewViewProvider.deletePet(pet.name);
+        } else if (pet && PetPanel.currentPanel) {
+            PetPanel.currentPanel.deletePet(pet.name);
+        } else {
+            console.log("Pet session not activated.");
+        }
+    });
+}
+
 export function activate(context: vscode.ExtensionContext) {
     context.subscriptions.push(
         vscode.commands.registerCommand('vscode-pets.start', () => {
@@ -257,16 +305,19 @@ export function activate(context: vscode.ExtensionContext) {
     );
 
     context.subscriptions.push(
-        vscode.commands.registerCommand('vscode-pets.delete-pets', () => {
+        vscode.commands.registerCommand('vscode-pets.delete-pet', async () =>{
             if (
                 getConfigurationPosition() === ExtPosition.explorer &&
                 webviewViewProvider
             ) {
-                webviewViewProvider.deletePet();
+                webviewViewProvider.listPets();
+                webviewViewProvider.getWebview().onDidReceiveMessage(handleRemovePetMessage);
+
             } else if (PetPanel.currentPanel) {
-                PetPanel.currentPanel.deletePet();
+                PetPanel.currentPanel.listPets();
+                PetPanel.currentPanel.getWebview().onDidReceiveMessage(handleRemovePetMessage);
             }
-        }),
+        })
     );
 
     context.subscriptions.push(
@@ -390,7 +441,7 @@ export function activate(context: vscode.ExtensionContext) {
     );
 
     context.subscriptions.push(
-        vscode.commands.registerCommand('vscode-pets.reset-pets', () => {
+        vscode.commands.registerCommand('vscode-pets.delete-pets', () => {
             if (
                 getConfigurationPosition() === ExtPosition.explorer &&
                 webviewViewProvider
@@ -400,7 +451,7 @@ export function activate(context: vscode.ExtensionContext) {
                     context,
                     getConfiguredSize(),
                 );
-                collection.splice(0, collection.length);
+                collection = [];
                 storeCollectionAsMemento(context, collection);
             } else if (PetPanel.currentPanel) {
                 PetPanel.currentPanel.resetPets();
@@ -408,7 +459,7 @@ export function activate(context: vscode.ExtensionContext) {
                     context,
                     getConfiguredSize(),
                 );
-                collection.splice(0, collection.length);
+                collection = [];
                 storeCollectionAsMemento(context, collection);
             } else {
                 vscode.window.showErrorMessage(
@@ -632,8 +683,12 @@ class PetWebviewContainer {
         this.getWebview().postMessage({ command: 'set-size', size: spec.size });
     }
 
-    public deletePet() {
-        this.getWebview().postMessage({ command: 'delete-pet' });
+    public listPets() {
+        this.getWebview().postMessage({ command: 'list-pets' });
+    }
+
+    public deletePet(petName: string) {
+        this.getWebview().postMessage({ command: 'delete-pet', name: petName});
     }
 
     protected getWebview(): vscode.Webview {
@@ -790,8 +845,12 @@ class PetPanel extends PetWebviewContainer {
         this.getWebview().postMessage({ command: 'reset-pet' });
     }
 
-    public deletePet(): void {
-        this.getWebview().postMessage({ command: 'delete-pet' });
+    public listPets() {
+        this.getWebview().postMessage({ command: 'list-pets' });
+    }
+
+    public deletePet(petName: string): void {
+        this.getWebview().postMessage({ command: 'delete-pet', name: petName});
     }
 
     public static revive(
