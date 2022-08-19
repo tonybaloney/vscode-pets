@@ -45,10 +45,14 @@ const ALL_SCALES = [PetSize.nano, PetSize.medium, PetSize.large];
 const ALL_THEMES = [Theme.none, Theme.forest, Theme.castle];
 
 class PetQuickPickItem implements vscode.QuickPickItem {
-    constructor(public readonly name_: string, public readonly type: string) {
+    constructor(
+        public readonly name_: string,
+        public readonly type: string,
+        public readonly color: string,
+    ) {
         this.name = name_;
         this.label = name_;
-        this.description = type;
+        this.description = `${color} ${type}`;
     }
 
     name: string;
@@ -207,7 +211,7 @@ async function handleRemovePetMessage(
     await vscode.window
         .showQuickPick<PetQuickPickItem>(
             petList.map((val) => {
-                return new PetQuickPickItem(val.name, val.type);
+                return new PetQuickPickItem(val.name, val.type, val.color);
             }),
             { placeHolder: 'Select the pet to remove.' },
         )
