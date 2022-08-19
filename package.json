@@ -45,12 +45,17 @@
                 {
                     "command": "vscode-pets.spawn-pet",
                     "when": "view == vscode-pets.petsView",
-                    "group": "navigation"
+                    "group": "navigation@1"
                 },
                 {
                     "command": "vscode-pets.throw-ball",
                     "when": "view == vscode-pets.petsView",
-                    "group": "navigation"
+                    "group": "navigation@2"
+                },
+                {
+                    "command": "vscode-pets.delete-pet",
+                    "when": "view == vscode-pets.petsView",
+                    "group": "navigation@3"
                 }
             ]
         },
@@ -80,20 +85,18 @@
                 }
             },
             {
-                "command": "vscode-pets.delete-pets",
-                "title": "Send additional pets to a farm",
+                "command": "vscode-pets.delete-pet",
+                "title": "Remove pet",
                 "category": "Pet Coding",
-                "when": "focusedView == vscode-pets.petsView && vscode-pets.position == 'explorer'",
-                "icon": {
+                "icon" : {
                     "dark": "media/icon/dark-trash.svg",
                     "light": "media/icon/light-trash.svg"
                 }
             },
             {
-                "command": "vscode-pets.reset-pets",
-                "title": "Reset pets",
+                "command": "vscode-pets.delete-pets",
+                "title": "Remove all pets",
                 "category": "Pet Coding",
-                "when": "focusedView == vscode-pets.petsView && vscode-pets.position == 'explorer'",
                 "icon": {
                     "dark": "media/icon/dark-trash.svg",
                     "light": "media/icon/light-trash.svg"
