@@ -478,7 +478,9 @@ function petPanelApp(basePetUri, theme, themeKind, petColor, petSize, petType) {
                 var pets = exports.allPets.pets();
                 vscode.postMessage({
                     command: 'list-pets',
-                    text: pets.map((pet) => `${pet.type},${pet.pet.name()}`).join('\n'),
+                    text: pets
+                        .map((pet) => `${pet.type},${pet.pet.name()},${pet.color}`)
+                        .join('\n'),
                 });
                 break;
             case 'delete-pet':
@@ -582,7 +584,9 @@ class PetCollection {
                 pet.remove();
             }
         });
-        this._pets = this._pets.filter((pet) => { return pet.pet.name() !== name; });
+        this._pets = this._pets.filter((pet) => {
+            return pet.pet.name() !== name;
+        });
     }
     seekNewFriends() {
         if (this._pets.length <= 1) {
