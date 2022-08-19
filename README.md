@@ -49,6 +49,12 @@ Run the "Spawn additional pet" command (`vscode-pets.spawn-pet`) and select the 
 
 Extra pets will not persist between closing and restarting VS Code.
 
+## Removing pets
+
+You can remove all pets (except the 1 configured) by running the "Remove all pets" command (`vscode-pets.delete-pets`) from the command pallette.
+
+You can remove specific pets by running the "Remove pet" command (`vscode-pets.delete-pet`) from the command pallette.
+
 ## Themes
 
 Configure `vscode-pets.theme` to `"forest"` and let your pets play in a spooky forest.
