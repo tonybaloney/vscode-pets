@@ -370,7 +370,12 @@ export function petPanelApp(
                 var pets = allPets.pets();
                 vscode.postMessage({
                     command: 'list-pets',
-                    text: pets.map((pet) => `${pet.type},${pet.pet.name()}`).join('\n'),
+                    text: pets
+                        .map(
+                            (pet) =>
+                                `${pet.type},${pet.pet.name()},${pet.color}`,
+                        )
+                        .join('\n'),
                 });
                 break;
             case 'delete-pet':

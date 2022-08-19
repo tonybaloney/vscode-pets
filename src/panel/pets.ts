@@ -97,7 +97,9 @@ export class PetCollection implements IPetCollection {
                 pet.remove();
             }
         });
-        this._pets = this._pets.filter((pet) => { return pet.pet.name() !== name; });
+        this._pets = this._pets.filter((pet) => {
+            return pet.pet.name() !== name;
+        });
     }
 
     seekNewFriends(): string[] {
