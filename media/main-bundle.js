@@ -474,18 +474,33 @@ function petPanelApp(basePetUri, theme, themeKind, petColor, petSize, petType) {
                 exports.allPets.push(addPetToPanel(message.type, basePetUri, message.color, petSize, randomStartPosition(), floor, floor, undefined));
                 saveState();
                 break;
+            case 'list-pets':
+                var pets = exports.allPets.pets();
+                vscode.postMessage({
+                    command: 'list-pets',
+                    text: pets
+                        .map((pet) => `${pet.type},${pet.pet.name()},${pet.color}`)
+                        .join('\n'),
+                });
+                break;
             case 'delete-pet':
-                var pet = exports.allPets.locate(message.id);
+                var pet = exports.allPets.locate(message.name);
                 if (pet) {
-                    pet.remove();
+                    exports.allPets.remove(message.name);
                     saveState();
+                    vscode.postMessage({
+                        command: 'info',
+                        text: '👋 Removed pet ' + message.name,
+                    });
+                }
+                else {
+                    vscode.postMessage({
+                        command: 'error',
+                        text: `Could not find pet ${message.name}`,
+                    });
                 }
                 break;
             case 'reset-pet':
-                exports.allPets.pets().forEach((pet) => {
-                    pet.el.remove();
-                    pet.collision.remove();
-                });
                 exports.allPets.reset();
                 exports.allPets.push(addPetToPanel(petType, basePetUri, petColor, petSize, randomStartPosition(), floor, floor, undefined));
                 petCounter = 1;
@@ -553,6 +568,9 @@ class PetCollection {
         this._pets.push(pet);
     }
     reset() {
+        this._pets.forEach((pet) => {
+            pet.remove();
+        });
         this._pets = [];
     }
     locate(name) {
@@ -561,15 +579,13 @@ class PetCollection {
         });
     }
     remove(name) {
-        for (var i = 0; i < this._pets.length; i++) {
-            if (this._pets[i].pet.name() === name) {
-                this._pets.splice(i, 1);
-            }
-        }
         this._pets.forEach((pet) => {
             if (pet.pet.name() === name) {
                 pet.remove();
             }
+        });
+        this._pets = this._pets.filter((pet) => {
+            return pet.pet.name() !== name;
         });
     }
     seekNewFriends() {

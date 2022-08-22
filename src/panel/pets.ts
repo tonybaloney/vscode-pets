@@ -64,7 +64,7 @@ export interface IPetCollection {
 }
 
 export class PetCollection implements IPetCollection {
-    _pets: Array<PetElement>;
+    private _pets: Array<PetElement>;
 
     constructor() {
         this._pets = new Array(0);
@@ -79,6 +79,9 @@ export class PetCollection implements IPetCollection {
     }
 
     reset() {
+        this._pets.forEach((pet) => {
+            pet.remove();
+        });
         this._pets = [];
     }
 
@@ -89,15 +92,13 @@ export class PetCollection implements IPetCollection {
     }
 
     remove(name: string): any {
-        for (var i = 0; i < this._pets.length; i++) {
-            if (this._pets[i].pet.name() === name) {
-                this._pets.splice(i, 1);
-            }
-        }
         this._pets.forEach((pet) => {
             if (pet.pet.name() === name) {
                 pet.remove();
             }
+        });
+        this._pets = this._pets.filter((pet) => {
+            return pet.pet.name() !== name;
         });
     }
 
