@@ -365,18 +365,36 @@ export function petPanelApp(
                 );
                 saveState();
                 break;
+
+            case 'list-pets':
+                var pets = allPets.pets();
+                vscode.postMessage({
+                    command: 'list-pets',
+                    text: pets
+                        .map(
+                            (pet) =>
+                                `${pet.type},${pet.pet.name()},${pet.color}`,
+                        )
+                        .join('\n'),
+                });
+                break;
             case 'delete-pet':
-                var pet = allPets.locate(message.id);
+                var pet = allPets.locate(message.name);
                 if (pet) {
-                    pet.remove();
+                    allPets.remove(message.name);
                     saveState();
+                    vscode.postMessage({
+                        command: 'info',
+                        text: '👋 Removed pet ' + message.name,
+                    });
+                } else {
+                    vscode.postMessage({
+                        command: 'error',
+                        text: `Could not find pet ${message.name}`,
+                    });
                 }
                 break;
             case 'reset-pet':
-                allPets.pets().forEach((pet) => {
-                    pet.el.remove();
-                    pet.collision.remove();
-                });
                 allPets.reset();
                 allPets.push(
                     addPetToPanel(

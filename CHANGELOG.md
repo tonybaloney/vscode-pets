@@ -2,6 +2,10 @@
 
 All notable changes to the "vscode-pets" extension will be documented in this file.
 
+## [1.12.0]
+
+- Added a "delete pet" command, `vscode-pets.delete-pet`
+
 ## [1.11.0]
 
 - Added a cockatiel 🦜 as a new pet. Credit @marcduiker
