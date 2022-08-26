@@ -502,8 +502,7 @@ function petPanelApp(basePetUri, theme, themeKind, petColor, petSize, petType) {
                 break;
             case 'reset-pet':
                 exports.allPets.reset();
-                exports.allPets.push(addPetToPanel(petType, basePetUri, petColor, petSize, randomStartPosition(), floor, floor, undefined));
-                petCounter = 1;
+                petCounter = 0;
                 saveState();
                 break;
             case 'pause-pet':
