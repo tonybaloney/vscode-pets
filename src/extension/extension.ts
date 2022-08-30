@@ -365,10 +365,7 @@ export function activate(context: vscode.ExtensionContext) {
 
     context.subscriptions.push(
         vscode.commands.registerCommand('vscode-pets.spawn-pet', async () => {
-            if (
-                PetPanel.currentPanel ||
-                getConfigurationPosition() === ExtPosition.explorer
-            ) {
+            if (PetPanel.currentPanel) {
                 const petType = await vscode.window.showQuickPick(ALL_PETS, {
                     placeHolder: 'Select a pet',
                 });
@@ -436,9 +433,13 @@ export function activate(context: vscode.ExtensionContext) {
                         'Cancelled Spawning Pet',
                     );
                 } else if (spec) {
-                    const panel = getPetPanel();
-                    if (panel) {
-                        panel.spawnPet(spec);
+                    if (getConfigurationPosition() === ExtPosition.explorer) {
+                        PetPanel.currentPanel!.spawnPet(spec);
+                    } else {
+                        const panel = getPetPanel();
+                        if (panel) {
+                            panel.spawnPet(spec);
+                        }
                     }
                 }
                 var collection = PetSpecification.collectionFromMemento(
