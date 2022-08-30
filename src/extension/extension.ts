@@ -483,10 +483,10 @@ export function activate(context: vscode.ExtensionContext) {
     );
 
     context.subscriptions.push(
-        vscode.commands.registerCommand('vscode-pets.delete-pets', () => {
+        vscode.commands.registerCommand('vscode-pets.reset-pets', () => {
             const panel = getPetPanel();
-            if (panel) {
-                webviewViewProvider.resetPets();
+            if (panel !== undefined) {
+                panel.resetPets();
                 storeCollectionAsMemento(context, []);
             }
         }),
@@ -615,6 +615,7 @@ function normalizeColor(petColor: PetColor, petType: PetType): PetColor {
 
 interface IPetPanel {
     throwBall(): void;
+    resetPets(): void;
     spawnPet(spec: PetSpecification): void;
     deletePet(petName: string): void;
     listPets(): void;
@@ -694,6 +695,12 @@ class PetWebviewContainer implements IPetPanel {
     public throwBall() {
         this.getWebview().postMessage({
             command: 'throw-ball',
+        });
+    }
+
+    public resetPets(): void {
+        this.getWebview().postMessage({
+            command: 'reset-pet',
         });
     }
 
@@ -982,12 +989,7 @@ class PetWebviewViewProvider extends PetWebviewContainer {
     }
 
     public resetPets() {
-        this.getWebview().postMessage({
-            command: 'reset-pet',
-            type: this.petType(),
-            color: this.petColor(),
-            size: this.petSize(),
-        });
+        this.getWebview().postMessage({ command: 'reset-pet' });
     }
 
     getWebview(): vscode.Webview {
