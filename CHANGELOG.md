@@ -2,6 +2,11 @@
 
 All notable changes to the "vscode-pets" extension will be documented in this file.
 
+## [1.13.0]
+
+- Fix the remove all pets command. Credit @Harry-Hopkinson
+- Fix error while spawning pet. Credit @Harry-Hopkinson
+
 ## [1.12.0]
 
 - Added a "delete pet" command, `vscode-pets.delete-pet`
