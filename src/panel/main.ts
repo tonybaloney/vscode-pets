@@ -396,19 +396,7 @@ export function petPanelApp(
                 break;
             case 'reset-pet':
                 allPets.reset();
-                allPets.push(
-                    addPetToPanel(
-                        petType,
-                        basePetUri,
-                        petColor,
-                        petSize,
-                        randomStartPosition(),
-                        floor,
-                        floor,
-                        undefined,
-                    ),
-                );
-                petCounter = 1;
+                petCounter = 0;
                 saveState();
                 break;
             case 'pause-pet':
