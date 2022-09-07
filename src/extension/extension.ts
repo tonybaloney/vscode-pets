@@ -246,7 +246,7 @@ function getPetPanel(): IPetPanel | undefined {
     } else if (PetPanel.currentPanel) {
         return PetPanel.currentPanel;
     } else {
-        vscode.window.showErrorMessage("Please open a Pet's Playground first.");
+        return undefined;
     }
 }
 
@@ -359,6 +359,34 @@ export function activate(context: vscode.ExtensionContext) {
                     handleRemovePetMessage,
                     context,
                 );
+            } else {
+                const spec = PetSpecification.fromConfiguration();
+                PetPanel.createOrShow(
+                    context.extensionUri,
+                    context.extensionPath,
+                    spec.color,
+                    spec.type,
+                    spec.size,
+                    getConfiguredTheme(),
+                    getConfiguredThemeKind(),
+                );
+                if (PetPanel.currentPanel) {
+                    var collection = PetSpecification.collectionFromMemento(
+                        context,
+                        getConfiguredSize(),
+                    );
+                    collection.forEach((item) => {
+                        PetPanel.currentPanel!.spawnPet(item);
+                    });
+                    storeCollectionAsMemento(context, collection);
+                } else {
+                    var collection = PetSpecification.collectionFromMemento(
+                        context,
+                        getConfiguredSize(),
+                    );
+                    collection.push(spec);
+                    storeCollectionAsMemento(context, collection);
+                }
             }
         }),
     );
@@ -478,11 +506,42 @@ export function activate(context: vscode.ExtensionContext) {
     );
 
     context.subscriptions.push(
-        vscode.commands.registerCommand('vscode-pets.reset-pets', () => {
+        vscode.commands.registerCommand('vscode-pets.remove-all-pets', () => {
             const panel = getPetPanel();
             if (panel !== undefined) {
                 panel.resetPets();
                 storeCollectionAsMemento(context, []);
+            } else {
+                const spec = PetSpecification.fromConfiguration();
+                PetPanel.createOrShow(
+                    context.extensionUri,
+                    context.extensionPath,
+                    spec.color,
+                    spec.type,
+                    spec.size,
+                    getConfiguredTheme(),
+                    getConfiguredThemeKind(),
+                );
+                if (PetPanel.currentPanel) {
+                    var collection = PetSpecification.collectionFromMemento(
+                        context,
+                        getConfiguredSize(),
+                    );
+                    collection.forEach((item) => {
+                        PetPanel.currentPanel!.spawnPet(item);
+                    });
+                    storeCollectionAsMemento(context, collection);
+                } else {
+                    var collection = PetSpecification.collectionFromMemento(
+                        context,
+                        getConfiguredSize(),
+                    );
+                    collection.push(spec);
+                    storeCollectionAsMemento(context, collection);
+                }
+                vscode.window.showInformationMessage(
+                    "A Pet Playground has been created. You can now use the 'Remove All Pets' Command to remove all pets.",
+                );
             }
         }),
     );
