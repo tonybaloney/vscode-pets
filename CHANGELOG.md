@@ -2,6 +2,10 @@
 
 All notable changes to the "vscode-pets" extension will be documented in this file.
 
+## [1.13.1]
+
+- Fixes Spawning pet in explorer opens panel by @tonybaloney in https://github.com/tonybaloney/vscode-pets/pull/132
+
 ## [1.13.0]
 
 - Fix the remove all pets command. Credit @Harry-Hopkinson
