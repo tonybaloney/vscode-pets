@@ -88,13 +88,13 @@
                 "command": "vscode-pets.delete-pet",
                 "title": "Remove pet",
                 "category": "Pet Coding",
-                "icon" : {
+                "icon": {
                     "dark": "media/icon/dark-trash.svg",
                     "light": "media/icon/light-trash.svg"
                 }
             },
             {
-                "command": "vscode-pets.delete-pets",
+                "command": "vscode-pets.remove-all-pets",
                 "title": "Remove all pets",
                 "category": "Pet Coding",
                 "icon": {
