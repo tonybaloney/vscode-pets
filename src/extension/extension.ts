@@ -149,7 +149,7 @@ export class PetSpecification {
         for (let index = 0; index < contextTypes.length; index++) {
             result.push(
                 new PetSpecification(
-                    contextColors![index],
+                    contextColors?.[index] ?? DEFAULT_COLOR,
                     contextTypes[index],
                     size,
                 ),
@@ -287,7 +287,7 @@ export function activate(context: vscode.ExtensionContext) {
                         getConfiguredSize(),
                     );
                     collection.forEach((item) => {
-                        PetPanel.currentPanel!.spawnPet(item);
+                        PetPanel.currentPanel?.spawnPet(item);
                     });
                 }
             }
@@ -355,7 +355,7 @@ export function activate(context: vscode.ExtensionContext) {
             const panel = getPetPanel();
             if (panel !== undefined) {
                 panel.listPets();
-                getWebview()!.onDidReceiveMessage(
+                getWebview()?.onDidReceiveMessage(
                     handleRemovePetMessage,
                     context,
                 );
@@ -376,7 +376,7 @@ export function activate(context: vscode.ExtensionContext) {
                         getConfiguredSize(),
                     );
                     collection.forEach((item) => {
-                        PetPanel.currentPanel!.spawnPet(item);
+                        PetPanel.currentPanel?.spawnPet(item);
                     });
                     storeCollectionAsMemento(context, collection);
                 } else {
@@ -487,7 +487,7 @@ export function activate(context: vscode.ExtensionContext) {
                         getConfiguredSize(),
                     );
                     collection.forEach((item) => {
-                        PetPanel.currentPanel!.spawnPet(item);
+                        PetPanel.currentPanel?.spawnPet(item);
                     });
                     storeCollectionAsMemento(context, collection);
                 } else {
@@ -528,7 +528,7 @@ export function activate(context: vscode.ExtensionContext) {
                         getConfiguredSize(),
                     );
                     collection.forEach((item) => {
-                        PetPanel.currentPanel!.spawnPet(item);
+                        PetPanel.currentPanel?.spawnPet(item);
                     });
                     storeCollectionAsMemento(context, collection);
                 } else {
@@ -1042,12 +1042,14 @@ class PetWebviewViewProvider extends PetWebviewContainer {
         this._update();
     }
 
-    public resetPets() {
-        this.getWebview().postMessage({ command: 'reset-pet' });
-    }
-
     getWebview(): vscode.Webview {
-        return this._webviewView!.webview;
+        if (this._webviewView === undefined) {
+            throw new Error(
+                'Panel not active, make sure the pets view is visible before running this command.',
+            );
+        } else {
+            return this._webviewView.webview;
+        }
     }
 }
 

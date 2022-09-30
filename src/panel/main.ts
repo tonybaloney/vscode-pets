@@ -149,14 +149,12 @@ export function saveState() {
     state.petStates = new Array();
 
     allPets.pets().forEach((petItem) => {
-        state.petStates!.push({
+        state.petStates?.push({
             petName: petItem.pet.name(),
             petColor: petItem.color,
             petType: petItem.type,
             petState: petItem.pet.getState(),
-            petFriend: petItem.pet.friend()
-                ? petItem.pet.friend().name()
-                : undefined,
+            petFriend: petItem.pet.friend()?.name() ?? undefined,
             elLeft: petItem.el.style.left,
             elBottom: petItem.el.style.bottom,
         });
@@ -171,11 +169,11 @@ function recoverState(basePetUri: string, petSize: PetSize, floor: number) {
     if (state.petCounter === undefined || isNaN(state.petCounter)) {
         petCounter = 1;
     } else {
-        petCounter = state.petCounter!;
+        petCounter = state.petCounter ?? 1;
     }
 
     var recoveryMap: Map<IPetType, PetElementState> = new Map();
-    state.petStates!.forEach((p) => {
+    state.petStates?.forEach((p) => {
         // Fixes a bug related to duck animations
         if ((p.petType as string) === 'rubber duck') {
             (p.petType as string) = 'rubber-duck';
@@ -183,12 +181,12 @@ function recoverState(basePetUri: string, petSize: PetSize, floor: number) {
 
         try {
             var newPet = addPetToPanel(
-                p.petType!,
+                p.petType ?? PetType.cat,
                 basePetUri,
-                p.petColor!,
+                p.petColor ?? PetColor.brown,
                 petSize,
-                parseInt(p.elLeft!),
-                parseInt(p.elBottom!),
+                parseInt(p.elLeft ?? '0'),
+                parseInt(p.elBottom ?? '0'),
                 floor,
                 p.petName,
             );
@@ -202,7 +200,9 @@ function recoverState(basePetUri: string, petSize: PetSize, floor: number) {
     });
     recoveryMap.forEach((state, pet) => {
         // Recover previous state.
-        pet.recoverState(state.petState!);
+        if (state.petState !== undefined) {
+            pet.recoverState(state.petState);
+        }
 
         // Resolve friend relationships
         var friend = undefined;
@@ -240,6 +240,7 @@ export function petPanelApp(
     const ballRadius: number = calculateBallRadius(petSize);
     var floor = 0;
     // Apply Theme backgrounds
+    const foregroundEl = document.getElementById('foreground');
     if (theme !== Theme.none) {
         var _themeKind = '';
         switch (themeKind) {
@@ -256,14 +257,14 @@ export function petPanelApp(
         }
 
         document.body.style.backgroundImage = `url('${basePetUri}/backgrounds/${theme}/background-${_themeKind}-${petSize}.png')`;
-        document.getElementById(
-            'foreground',
-        )!.style.backgroundImage = `url('${basePetUri}/backgrounds/${theme}/foreground-${_themeKind}-${petSize}.png')`;
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        foregroundEl!.style.backgroundImage = `url('${basePetUri}/backgrounds/${theme}/foreground-${_themeKind}-${petSize}.png')`;
 
         floor = calculateFloor(petSize, theme); // Themes have pets at a specified height from the ground
     } else {
         document.body.style.backgroundImage = '';
-        document.getElementById('foreground')!.style.backgroundImage = '';
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        foregroundEl!.style.backgroundImage = '';
     }
 
     /// Bouncing ball components, credit https://stackoverflow.com/a/29982343
