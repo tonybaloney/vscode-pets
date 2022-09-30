@@ -1042,12 +1042,12 @@ class PetWebviewViewProvider extends PetWebviewContainer {
         this._update();
     }
 
-    public resetPets() {
-        this.getWebview().postMessage({ command: 'reset-pet' });
-    }
-
     getWebview(): vscode.Webview {
-        return this._webviewView!.webview;
+        if (this._webviewView === undefined) {
+            throw new Error('Panel not active, make sure the pets view is visible before running this command.');
+        } else {
+            return this._webviewView.webview;
+        }
     }
 }
 
