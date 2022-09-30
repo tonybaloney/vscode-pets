@@ -4,10 +4,10 @@
 		"target": "esnext",
 		"outDir": "out",
 		"lib": [
-			"es6"
+			"es6", "DOM"
 		],
 		"sourceMap": true,
-		"rootDirs": ["extension", "common"],
+		"rootDirs": ["panel", "common", "test", "extension"],
 		"strict": true   /* enable all strict type-checking options */
 		/* Additional Checks */
 		// "noImplicitReturns": true, /* Report error when not all code paths in function return a value. */
@@ -16,8 +16,5 @@
 	},
 	"exclude": [
 		"node_modules",
-		".vscode-test",
-		"src/panel",
-		"src/test"
 	]
 }
