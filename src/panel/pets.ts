@@ -172,7 +172,7 @@ export interface IPetType {
     name(): string;
     emoji(): string;
     hasFriend(): boolean;
-    friend(): IPetType;
+    friend(): IPetType | undefined;
     makeFriendsWith(friend: IPetType): boolean;
     isPlaying(): boolean;
 }
@@ -303,7 +303,7 @@ abstract class BasePetType implements IPetType {
     recoverState(state: PetInstanceState) {
         // TODO : Resolve a bug where if it was swiping before, it would fail
         // because holdState is no longer valid.
-        this.currentStateEnum = state.currentStateEnum!;
+        this.currentStateEnum = state.currentStateEnum ?? States.sitIdle;
         this.currentState = resolveState(this.currentStateEnum, this);
 
         if (!isStateAboveGround(this.currentStateEnum)) {
@@ -391,7 +391,7 @@ abstract class BasePetType implements IPetType {
             this.isMoving()
         ) {
             if (
-                this.friend().isPlaying() &&
+                this.friend()?.isPlaying() &&
                 !isStateAboveGround(this.currentStateEnum)
             ) {
                 this.currentState = resolveState(States.chaseFriend, this);
@@ -431,8 +431,8 @@ abstract class BasePetType implements IPetType {
         return this._friend !== undefined;
     }
 
-    friend(): IPetType {
-        return this._friend!;
+    friend(): IPetType | undefined {
+        return this._friend;
     }
 
     name(): string {
@@ -968,7 +968,7 @@ function getPetName(
     count: number,
 ): string {
     if (collection.has(count)) {
-        return collection.get(count)!;
+        return collection.get(count) ?? label + count;
     } else {
         return label + count;
     }

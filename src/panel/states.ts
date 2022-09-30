@@ -310,10 +310,11 @@ export class ChaseFriendState implements IState {
     }
 
     nextFrame(): FrameResult {
-        if (!this.pet.friend().isPlaying()) {
+        if (!this.pet.hasFriend() || !this.pet.friend()?.isPlaying()) {
             return FrameResult.stateCancel; // Friend is no longer playing.
         }
-        if (this.pet.left() > this.pet.friend().left()) {
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        if (this.pet.left() > this.pet.friend()!.left()) {
             this.horizontalDirection = HorizontalDirection.left;
             this.pet.positionLeft(this.pet.left() - this.pet.speed());
         } else {
