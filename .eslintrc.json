@@ -18,6 +18,7 @@
         "semi": "off",
         "no-unused-vars": "error",
         "unused-imports/no-unused-imports": "error",
-        "prefer-const": "error"
+        "prefer-const": "error",
+        "@typescript-eslint/no-non-null-assertion": "warn"
     }
 }
