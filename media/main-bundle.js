@@ -316,14 +316,12 @@ function saveState() {
     var state = new states_1.PetPanelState();
     state.petStates = new Array();
     exports.allPets.pets().forEach((petItem) => {
-        state.petStates.push({
+        state.petStates?.push({
             petName: petItem.pet.name(),
             petColor: petItem.color,
             petType: petItem.type,
             petState: petItem.pet.getState(),
-            petFriend: petItem.pet.friend()
-                ? petItem.pet.friend().name()
-                : undefined,
+            petFriend: petItem.pet.friend()?.name() ?? undefined,
             elLeft: petItem.el.style.left,
             elBottom: petItem.el.style.bottom,
         });
@@ -338,16 +336,16 @@ function recoverState(basePetUri, petSize, floor) {
         petCounter = 1;
     }
     else {
-        petCounter = state.petCounter;
+        petCounter = state.petCounter ?? 1;
     }
     var recoveryMap = new Map();
-    state.petStates.forEach((p) => {
+    state.petStates?.forEach((p) => {
         // Fixes a bug related to duck animations
         if (p.petType === 'rubber duck') {
             p.petType = 'rubber-duck';
         }
         try {
-            var newPet = addPetToPanel(p.petType, basePetUri, p.petColor, petSize, parseInt(p.elLeft), parseInt(p.elBottom), floor, p.petName);
+            var newPet = addPetToPanel(p.petType ?? "cat" /* PetType.cat */, basePetUri, p.petColor ?? "brown" /* PetColor.brown */, petSize, parseInt(p.elLeft ?? '0'), parseInt(p.elBottom ?? '0'), floor, p.petName);
             exports.allPets.push(newPet);
             recoveryMap.set(newPet.pet, p);
         }
@@ -357,7 +355,9 @@ function recoverState(basePetUri, petSize, floor) {
     });
     recoveryMap.forEach((state, pet) => {
         // Recover previous state.
-        pet.recoverState(state.petState);
+        if (state.petState !== undefined) {
+            pet.recoverState(state.petState);
+        }
         // Resolve friend relationships
         var friend = undefined;
         if (state.petFriend) {
@@ -383,6 +383,7 @@ function petPanelApp(basePetUri, theme, themeKind, petColor, petSize, petType) {
     const ballRadius = calculateBallRadius(petSize);
     var floor = 0;
     // Apply Theme backgrounds
+    const foregroundEl = document.getElementById('foreground');
     if (theme !== "none" /* Theme.none */) {
         var _themeKind = '';
         switch (themeKind) {
@@ -398,12 +399,14 @@ function petPanelApp(basePetUri, theme, themeKind, petColor, petSize, petType) {
                 break;
         }
         document.body.style.backgroundImage = `url('${basePetUri}/backgrounds/${theme}/background-${_themeKind}-${petSize}.png')`;
-        document.getElementById('foreground').style.backgroundImage = `url('${basePetUri}/backgrounds/${theme}/foreground-${_themeKind}-${petSize}.png')`;
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        foregroundEl.style.backgroundImage = `url('${basePetUri}/backgrounds/${theme}/foreground-${_themeKind}-${petSize}.png')`;
         floor = calculateFloor(petSize, theme); // Themes have pets at a specified height from the ground
     }
     else {
         document.body.style.backgroundImage = '';
-        document.getElementById('foreground').style.backgroundImage = '';
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        foregroundEl.style.backgroundImage = '';
     }
     /// Bouncing ball components, credit https://stackoverflow.com/a/29982343
     const gravity = 0.2, damping = 0.9, traction = 0.8;
@@ -721,7 +724,7 @@ class BasePetType {
     recoverState(state) {
         // TODO : Resolve a bug where if it was swiping before, it would fail
         // because holdState is no longer valid.
-        this.currentStateEnum = state.currentStateEnum;
+        this.currentStateEnum = state.currentStateEnum ?? "sit-idle" /* States.sitIdle */;
         this.currentState = (0, states_1.resolveState)(this.currentStateEnum, this);
         if (!(0, states_1.isStateAboveGround)(this.currentStateEnum)) {
             // Reset the bottom of the sprite to the floor as the theme
@@ -790,7 +793,7 @@ class BasePetType {
         if (this.hasFriend() &&
             this.currentStateEnum !== "chase-friend" /* States.chaseFriend */ &&
             this.isMoving()) {
-            if (this.friend().isPlaying() &&
+            if (this.friend()?.isPlaying() &&
                 !(0, states_1.isStateAboveGround)(this.currentStateEnum)) {
                 this.currentState = (0, states_1.resolveState)("chase-friend" /* States.chaseFriend */, this);
                 this.currentStateEnum = "chase-friend" /* States.chaseFriend */;
@@ -1355,7 +1358,7 @@ class InvalidPetException {
 exports.InvalidPetException = InvalidPetException;
 function getPetName(collection, label, count) {
     if (collection.has(count)) {
-        return collection.get(count);
+        return collection.get(count) ?? (label + count);
     }
     else {
         return label + count;
@@ -1697,9 +1700,10 @@ class ChaseFriendState {
         this.pet = pet;
     }
     nextFrame() {
-        if (!this.pet.friend().isPlaying()) {
+        if (!this.pet.hasFriend() || !this.pet.friend()?.isPlaying()) {
             return FrameResult.stateCancel; // Friend is no longer playing.
         }
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         if (this.pet.left() > this.pet.friend().left()) {
             this.horizontalDirection = HorizontalDirection.left;
             this.pet.positionLeft(this.pet.left() - this.pet.speed());
