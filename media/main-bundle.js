@@ -1358,7 +1358,7 @@ class InvalidPetException {
 exports.InvalidPetException = InvalidPetException;
 function getPetName(collection, label, count) {
     if (collection.has(count)) {
-        return collection.get(count) ?? (label + count);
+        return collection.get(count) ?? label + count;
     }
     else {
         return label + count;
