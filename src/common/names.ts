@@ -199,6 +199,7 @@ export const DOG_NAMES: Map<number, string> = new Map<number, string>([
     [96, 'Spot'],
     [97, 'Harry'],
     [98, 'Bolt'],
+    [99, 'Ein'],
 ]);
 
 export const CRAB_NAMES: Map<number, string> = new Map<number, string>([
