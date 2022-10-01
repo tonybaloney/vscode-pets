@@ -211,7 +211,7 @@ export const DOG_NAMES: Map<number, string> = new Map<number, string>([
     [102, 'Spot'],
     [103, 'Harry'],
     [104, 'Bolt'],
-    [106, 'Julia'],
+]);
 
 export const CRAB_NAMES: Map<number, string> = new Map<number, string>([
     [1, 'Ferris'],
