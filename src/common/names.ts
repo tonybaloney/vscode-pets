@@ -104,6 +104,7 @@ export const CAT_NAMES: Map<number, string> = new Map<number, string>([
     [105, 'Julia'],
     [106, 'Ginger'],
     [107, 'Daisy'],
+    [108, 'Amelia'],
 ]);
 
 export const DOG_NAMES: Map<number, string> = new Map<number, string>([
@@ -223,6 +224,7 @@ export const CRAB_NAMES: Map<number, string> = new Map<number, string>([
     [8, 'Oscar'],
     [9, 'Lucy'],
     [10, 'Bailey'],
+    [11, 'Crabito'],
 ]);
 
 export const CLIPPY_NAMES: Map<number, string> = new Map<number, string>([
@@ -249,6 +251,7 @@ export const TOTORO_NAMES: Map<number, string> = new Map<number, string>([
     [8, 'Oscar'],
     [9, 'Lucy'],
     [10, 'Bailey'],
+    [11, 'Big fella'],
 ]);
 
 export const SNAKE_NAMES: Map<number, string> = new Map<number, string>([
@@ -275,6 +278,8 @@ export const DUCK_NAMES: Map<number, string> = new Map<number, string>([
     [8, 'Oscar'],
     [9, 'Lucy'],
     [10, 'Bailey'],
+    [11, 'Peaches'],
+    [12, 'Quackers'],
 ]);
 
 export const ZAPPY_NAMES: Map<number, string> = new Map<number, string>([
@@ -301,6 +306,7 @@ export const ROCKY_NAMES: Map<number, string> = new Map<number, string>([
     [8, 'Big Granite'],
     [9, 'Boulder'],
     [10, 'Rockefeller'],
+    [11, 'Pebble'],
 ]);
 
 export const COCKATIEL_NAMES: Map<number, string> = new Map<number, string>([
