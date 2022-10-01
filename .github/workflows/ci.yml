@@ -29,3 +29,12 @@ jobs:
               uses: GabrielBB/xvfb-action@v1.6
               with:
                 run: npm run test
+            - name: Run coverage
+              uses: GabrielBB/xvfb-action@v1.6
+              with:
+                run: npm run test:coverage
+            - uses: codecov/codecov-action@v3
+              with:
+                fail_ci_if_error: true # optional (default = false)
+                verbose: true # optional (default = false)
+                directory: ./coverage
