@@ -268,21 +268,32 @@ export function petPanelApp(
     }
 
     /// Bouncing ball components, credit https://stackoverflow.com/a/29982343
-    const gravity: number = 0.2,
+    const gravity: number = 0.6,
         damping: number = 0.9,
-        traction: number = 0.8;
+        traction: number = 0.8,
+        interval: number = 1000 / 24; // msec for single frame
+    let then: number = 0; // last draw
     var ballState: BallState;
 
     function resetBall() {
         canvas.style.display = 'block';
-        ballState = new BallState(100, 100, 2, 5);
+        ballState = new BallState(100, 100, 4, 5);
     }
 
     function throwBall() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
         if (!ballState.paused) {
             requestAnimationFrame(throwBall);
         }
+
+        // throttling the frame rate
+        const now = Date.now();
+        const elapsed = now - then;
+        if (elapsed <= interval) {
+            return;
+        }
+        then = now - (elapsed % interval);
+
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
 
         if (ballState.cx + ballRadius >= canvas.width) {
             ballState.vx = -ballState.vx * damping;
