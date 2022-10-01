@@ -25,4 +25,7 @@ jobs:
             - run: npm ci
             - run: npm run compile
             - run: npm run lint
-            - run: npm run test
+            - name: Run unit and integration tests
+              uses: GabrielBB/xvfb-action@v1.6
+              with:
+                run: npm run test
