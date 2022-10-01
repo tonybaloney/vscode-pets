@@ -55,7 +55,7 @@ export const CAT_NAMES: Map<number, string> = new Map<number, string>([
     [54, 'Rusty'],
     [55, 'Gus'],
     [56, 'Baxter'],
-    [57, 'Dexter']
+    [57, 'Dexter'],
     [59, 'Willow'],
     [60, 'Barney'],
     [61, 'Bruno'],
