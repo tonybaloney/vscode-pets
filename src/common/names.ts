@@ -101,7 +101,7 @@ export const CAT_NAMES: Map<number, string> = new Map<number, string>([
     [102, 'Spot'],
     [103, 'Harry'],
     [104, 'Bolt'],
-    [105, 'Julia'], 
+    [105, 'Julia'],
     [106, 'Ginger'],
     [107, 'Daisy'],
 ]);
