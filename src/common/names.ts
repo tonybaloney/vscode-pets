@@ -308,6 +308,8 @@ export const ROCKY_NAMES: Map<number, string> = new Map<number, string>([
     [9, 'Boulder'],
     [10, 'Rockefeller'],
     [11, 'Pebble'],
+    [12, 'Rocksanne'],
+    [13, 'Rockstar'],
 ]);
 
 export const COCKATIEL_NAMES: Map<number, string> = new Map<number, string>([
