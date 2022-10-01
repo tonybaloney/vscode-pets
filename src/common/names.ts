@@ -172,7 +172,6 @@ export const DOG_NAMES: Map<number, string> = new Map<number, string>([
     [63, 'Honey'],
     [64, 'Milly'],
     [65, 'Murphy'],
-    [66, 'Simba'],
     [67, 'Holly'],
     [68, 'Benji'],
     [69, 'Henry'],
