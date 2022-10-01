@@ -257,7 +257,7 @@ export const TOTORO_NAMES: Map<number, string> = new Map<number, string>([
 export const SNAKE_NAMES: Map<number, string> = new Map<number, string>([
     [1, 'Sneaky'],
     [2, 'Mr Slippery'],
-    [3, 'Hissy Elliot'],
+    [3, 'Hissy Elliott'],
     [4, 'Molly'],
     [5, 'Coco'],
     [6, 'Buddy'],
