@@ -278,8 +278,10 @@ export const DUCK_NAMES: Map<number, string> = new Map<number, string>([
     [8, 'Oscar'],
     [9, 'Lucy'],
     [10, 'Bailey'],
-    [11, 'Peaches'],
-    [12, 'Quackers'],
+    [11, 'Beaky'],
+    [12, 'Jemima'],
+    [13, 'Peaches'],
+    [14, 'Quackers'],
 ]);
 
 export const ZAPPY_NAMES: Map<number, string> = new Map<number, string>([
@@ -293,6 +295,7 @@ export const ZAPPY_NAMES: Map<number, string> = new Map<number, string>([
     [8, 'Little z'],
     [9, 'The Flash'],
     [10, 'Thor'],
+    [11, 'Electric Bolt'],
 ]);
 
 export const ROCKY_NAMES: Map<number, string> = new Map<number, string>([
