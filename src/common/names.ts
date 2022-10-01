@@ -323,4 +323,5 @@ export const COCKATIEL_NAMES: Map<number, string> = new Map<number, string>([
     [9, 'Jack Sparrow'],
     [10, 'Godfeather'],
     [11, 'Mickey'],
+    [12, 'Kanye Nest'],
 ]);
