@@ -12,23 +12,22 @@ declare global {
     namespace NodeJS {
         interface Global {
             document: Document;
-            window: Window;
-            navigator: Navigator;
         }
     }
 }
 
 const { window } = new JSDOM('<!doctype html><html><body></body></html>');
 global.document = window.document;
-global.window = global.document.defaultView;
 
 suite('Pets Test Suite', () => {
     vscode.window.showInformationMessage('Start all tests.');
 
     test('Test pet collection', () => {
         var collection = new pets.PetCollection();
-        const petImageEl = new HTMLImageElement();
-        const petDivEl = new HTMLDivElement();
+        const petImageEl = global.document.createElement(
+            'image',
+        ) as HTMLImageElement;
+        const petDivEl = global.document.createElement('div') as HTMLDivElement;
         const testPet = pets.createPet(
             'cat',
             petImageEl,
@@ -40,9 +39,9 @@ suite('Pets Test Suite', () => {
             0,
             'Jerry',
         );
-        assert(testPet instanceof pets.Cat);
-        assert(testPet.emoji() === '🐱');
-        assert(testPet.name() === 'Jerry');
+        assert.ok(testPet instanceof pets.Cat);
+        assert.equal(testPet.emoji(), '🐱');
+        assert.equal(testPet.name(), 'Jerry');
 
         const testPetElement = new pets.PetElement(
             petImageEl,
@@ -51,15 +50,15 @@ suite('Pets Test Suite', () => {
             PetColor.brown,
             PetType.cat,
         );
-        assert(testPetElement.color === PetColor.brown);
-        assert(testPetElement.type === PetType.cat);
+        assert.strictEqual(testPetElement.color, PetColor.brown);
+        assert.strictEqual(testPetElement.type, PetType.cat);
 
-        assert(collection.locate('Jerry') === undefined);
+        assert.strictEqual(collection.locate('Jerry'), undefined);
 
         collection.push(testPetElement);
-        assert(collection.locate('Jerry') === testPetElement);
+        assert.strictEqual(collection.locate('Jerry'), testPetElement);
 
         collection.remove('Jerry');
-        assert(collection.locate('Jerry') === undefined);
+        assert.strictEqual(collection.locate('Jerry'), undefined);
     });
 });
