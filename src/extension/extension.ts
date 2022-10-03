@@ -13,6 +13,7 @@ import {
 const EXTRA_PETS_KEY = 'vscode-pets.extra-pets';
 const EXTRA_PETS_KEY_TYPES = EXTRA_PETS_KEY + '.types';
 const EXTRA_PETS_KEY_COLORS = EXTRA_PETS_KEY + '.colors';
+const EXTRA_PETS_KEY_NAMES = EXTRA_PETS_KEY + '.names';
 const DEFAULT_PET_SCALE = PetSize.nano;
 const DEFAULT_COLOR = PetColor.brown;
 const DEFAULT_PET_TYPE = PetType.cat;
@@ -147,6 +148,10 @@ export class PetSpecification {
             EXTRA_PETS_KEY_COLORS,
             [],
         );
+        var contextNames = context.globalState.get<string[]>(
+            EXTRA_PETS_KEY_NAMES,
+            [],
+        );
         var result: PetSpecification[] = new Array();
         for (let index = 0; index < contextTypes.length; index++) {
             result.push(
@@ -154,6 +159,7 @@ export class PetSpecification {
                     contextColors?.[index] ?? DEFAULT_COLOR,
                     contextTypes[index],
                     size,
+                    contextNames[index],
                 ),
             );
         }
@@ -167,15 +173,19 @@ export function storeCollectionAsMemento(
 ) {
     var contextTypes = new Array(collection.length);
     var contextColors = new Array(collection.length);
+    var contextNames = new Array(collection.length);
     for (let index = 0; index < collection.length; index++) {
         contextTypes[index] = collection[index].type;
         contextColors[index] = collection[index].color;
+        contextNames[index] = collection[index].name;
     }
     context.globalState.update(EXTRA_PETS_KEY_TYPES, contextTypes);
     context.globalState.update(EXTRA_PETS_KEY_COLORS, contextColors);
+    context.globalState.update(EXTRA_PETS_KEY_NAMES, contextNames);
     context.globalState.setKeysForSync([
         EXTRA_PETS_KEY_TYPES,
         EXTRA_PETS_KEY_COLORS,
+        EXTRA_PETS_KEY_NAMES,
     ]);
 }
 
