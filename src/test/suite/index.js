@@ -6,6 +6,8 @@ export function run() {
     const mocha = new Mocha({
         ui: 'tdd',
         color: true,
+        require: ['ts-node/register', 'source-map-support/register'],
+        recursive: true,
     });
     const testsRoot = path.resolve(__dirname, '..');
     return new Promise((c, e) => {
