@@ -372,7 +372,7 @@ export function petPanelApp(
                         randomStartPosition(),
                         floor,
                         floor,
-                        undefined,
+                        message.name,
                     ),
                 );
                 saveState();
