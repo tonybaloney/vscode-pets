@@ -101,6 +101,11 @@
                     "dark": "media/icon/dark-trash.svg",
                     "light": "media/icon/light-trash.svg"
                 }
+            },
+            {
+                "command": "vscode-pets.rollcall",
+                "title": "Rollcall",
+                "category": "Pet Coding"
             }
         ],
         "configuration": [

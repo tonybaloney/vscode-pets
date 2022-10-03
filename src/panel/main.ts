@@ -390,6 +390,21 @@ export function petPanelApp(
                         .join('\n'),
                 });
                 break;
+
+            case 'roll-call':
+                var pets = allPets.pets();
+                // go through every single
+                // pet and then print out their name
+                pets.forEach((pet) => {
+                    vscode.postMessage({
+                        command: 'info',
+                        text: `Type ${
+                            pet.type
+                        }, Name ${pet.pet.name()}, Color ${
+                            pet.color
+                        } Assigned for Duty!`,
+                    });
+                });
             case 'delete-pet':
                 var pet = allPets.locate(message.name);
                 if (pet) {
