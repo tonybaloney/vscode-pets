@@ -9,6 +9,18 @@ import {
     Theme,
     WebviewMessage,
 } from '../common/types';
+import {
+    CAT_NAMES,
+    DOG_NAMES,
+    COCKATIEL_NAMES,
+    CRAB_NAMES,
+    SNAKE_NAMES,
+    CLIPPY_NAMES,
+    TOTORO_NAMES,
+    DUCK_NAMES,
+    ZAPPY_NAMES,
+    ROCKY_NAMES,
+} from '../common/names';
 
 const EXTRA_PETS_KEY = 'vscode-pets.extra-pets';
 const EXTRA_PETS_KEY_TYPES = EXTRA_PETS_KEY + '.types';
@@ -241,6 +253,7 @@ async function handleRemovePetMessage(
                                 item.color,
                                 item.type,
                                 PetSize.medium,
+                                item.name,
                             );
                         });
                     storeCollectionAsMemento(this, collection);
@@ -460,10 +473,32 @@ export function activate(context: vscode.ExtensionContext) {
                         petColor = PetColor.yellow;
                         break;
                 }
+                const names = (
+                    {
+                        [PetType.cat]: CAT_NAMES,
+                        [PetType.dog]: DOG_NAMES,
+                        [PetType.cockatiel]: COCKATIEL_NAMES,
+                        [PetType.crab]: CRAB_NAMES,
+                        [PetType.snake]: SNAKE_NAMES,
+                        [PetType.clippy]: CLIPPY_NAMES,
+                        [PetType.totoro]: TOTORO_NAMES,
+                        [PetType.rubberduck]: DUCK_NAMES,
+                        [PetType.zappy]: ZAPPY_NAMES,
+                        [PetType.rocky]: ROCKY_NAMES,
+                    } as Record<PetType, Map<number, string>>
+                )[petType as PetType];
+                const name = await vscode.window.showInputBox({
+                    placeHolder: 'Leave blank for a random name',
+                    prompt: 'Name your pet',
+                    value: [...names.values()][
+                        Math.floor(Math.random() * names.size)
+                    ],
+                });
                 const spec = new PetSpecification(
                     petColor,
                     petType as PetType,
                     getConfiguredSize(),
+                    name,
                 );
                 if (
                     spec.type === null ||
@@ -775,6 +810,7 @@ class PetWebviewContainer implements IPetPanel {
             command: 'spawn-pet',
             type: spec.type,
             color: spec.color,
+            name: spec.name,
         });
         this.getWebview().postMessage({ command: 'set-size', size: spec.size });
     }
