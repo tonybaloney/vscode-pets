@@ -109,11 +109,13 @@ export class PetSpecification {
     color: PetColor;
     type: PetType;
     size: PetSize;
+    name?: string;
 
-    constructor(color: PetColor, type: PetType, size: PetSize) {
+    constructor(color: PetColor, type: PetType, size: PetSize, name?: string) {
         this.color = color;
         this.type = type;
         this.size = size;
+        this.name = name;
     }
 
     static fromConfiguration(): PetSpecification {
