@@ -398,11 +398,9 @@ export function petPanelApp(
                 pets.forEach((pet) => {
                     vscode.postMessage({
                         command: 'info',
-                        text: `Type ${
-                            pet.type
-                        }, Name ${pet.pet.name()}, Color ${
+                        text: `${pet.pet.emoji()} ${pet.pet.name()} (${
                             pet.color
-                        } Assigned for Duty!`,
+                        }: ${pet.pet.hello()}`,
                     });
                 });
             case 'delete-pet':

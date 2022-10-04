@@ -154,6 +154,7 @@ export interface IPetType {
     chase(ballState: BallState, canvas: HTMLCanvasElement): void;
     speed(): number;
     isMoving(): boolean;
+    hello(): string;
 
     // State API
     getState(): PetInstanceState;
@@ -281,6 +282,11 @@ abstract class BasePetType implements IPetType {
 
     floor(): number {
         return this._floor;
+    }
+
+    hello(): string {
+        // return the sound of the name of the animal
+        return ` says hello 👋!`;
     }
 
     getState(): PetInstanceState {

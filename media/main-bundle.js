@@ -111,6 +111,7 @@ exports.CAT_NAMES = new Map([
     [97, 'Ginger'],
     [98, 'Daisy'],
     [99, 'Amelia'],
+    [100, 'Oliver'],
 ]);
 exports.DOG_NAMES = new Map([
     [1, 'Bella'],
@@ -212,6 +213,7 @@ exports.DOG_NAMES = new Map([
     [97, 'Harry'],
     [98, 'Bolt'],
     [99, 'Ein'],
+    [100, 'Maddy'],
 ]);
 exports.CRAB_NAMES = new Map([
     [1, 'Ferris'],
@@ -225,6 +227,8 @@ exports.CRAB_NAMES = new Map([
     [9, 'Lucy'],
     [10, 'Bailey'],
     [11, 'Crabito'],
+    [12, 'Percy'],
+    [13, 'Rocky'],
 ]);
 exports.CLIPPY_NAMES = new Map([
     [1, 'Clippy'],
@@ -277,6 +281,7 @@ exports.DUCK_NAMES = new Map([
     [12, 'Jemima'],
     [13, 'Peaches'],
     [14, 'Quackers'],
+    [15, 'Jelly Beans'],
 ]);
 exports.ZAPPY_NAMES = new Map([
     [1, 'Zappy'],
@@ -607,7 +612,7 @@ function petPanelApp(basePetUri, theme, themeKind, petColor, petSize, petType) {
                 pets.forEach((pet) => {
                     vscode.postMessage({
                         command: 'info',
-                        text: `Type ${pet.type}, Name ${pet.pet.name()}, Color ${pet.color} Assigned for Duty!`,
+                        text: `${pet.pet.emoji()} ${pet.pet.name()} (${pet.color}: ${pet.pet.hello()}`,
                     });
                 });
             case 'delete-pet':
@@ -831,6 +836,10 @@ class BasePetType {
     }
     floor() {
         return this._floor;
+    }
+    hello() {
+        // return the sound of the name of the animal
+        return ` says hello 👋!`;
     }
     getState() {
         return { currentStateEnum: this.currentStateEnum };
