@@ -214,6 +214,8 @@ export const CRAB_NAMES: Map<number, string> = new Map<number, string>([
     [9, 'Lucy'],
     [10, 'Bailey'],
     [11, 'Crabito'],
+    [12, 'Percy'],
+    [13, 'Rocky'],
 ]);
 
 export const CLIPPY_NAMES: Map<number, string> = new Map<number, string>([
