@@ -366,7 +366,7 @@ export function activate(context: vscode.ExtensionContext) {
     );
 
     context.subscriptions.push(
-        vscode.commands.registerCommand('vscode-pets.rollcall', async () => {
+        vscode.commands.registerCommand('vscode-pets.roll-call', async () => {
             const panel = getPetPanel();
             if (panel !== undefined) {
                 panel.rollCall();
