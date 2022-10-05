@@ -11,18 +11,6 @@ import {
     PetInstanceState,
     isStateAboveGround,
 } from './states';
-import {
-    CAT_NAMES,
-    DOG_NAMES,
-    COCKATIEL_NAMES,
-    CRAB_NAMES,
-    SNAKE_NAMES,
-    CLIPPY_NAMES,
-    TOTORO_NAMES,
-    DUCK_NAMES,
-    ZAPPY_NAMES,
-    ROCKY_NAMES,
-} from '../common/names';
 
 export class InvalidStateException {}
 
@@ -966,17 +954,11 @@ export class Rocky extends BasePetType {
     }
 }
 
-export class InvalidPetException {}
+export class InvalidPetException {
+    message?: string;
 
-function getPetName(
-    collection: Map<number, string>,
-    label: string,
-    count: number,
-): string {
-    if (collection.has(count)) {
-        return collection.get(count) ?? label + count;
-    } else {
-        return label + count;
+    constructor(message?: string) {
+        this.message = message;
     }
 }
 
@@ -989,12 +971,12 @@ export function createPet(
     bottom: number,
     petRoot: string,
     floor: number,
-    name: string | undefined,
+    name: string,
 ): IPetType {
+    if (name === undefined) {
+        throw new InvalidPetException('name is undefined');
+    }
     if (petType === 'totoro') {
-        if (name === undefined) {
-            name = getPetName(TOTORO_NAMES, PetType.totoro, Totoro.count + 1);
-        }
         return new Totoro(
             el,
             collision,
@@ -1008,13 +990,6 @@ export function createPet(
         );
     }
     if (petType === 'cat') {
-        if (name === undefined) {
-            name = getPetName(
-                CAT_NAMES,
-                PetType.cat,
-                Cat.count + Dog.count + 1,
-            );
-        } // Cat and dog share the same name list
         return new Cat(
             el,
             collision,
@@ -1027,13 +1002,6 @@ export function createPet(
             PetSpeed.normal,
         );
     } else if (petType === 'dog') {
-        if (name === undefined) {
-            name = getPetName(
-                DOG_NAMES,
-                PetType.dog,
-                Dog.count + Cat.count + 1,
-            );
-        } // Cat and dog share the same name list
         return new Dog(
             el,
             collision,
@@ -1046,9 +1014,6 @@ export function createPet(
             PetSpeed.normal,
         );
     } else if (petType === 'snake') {
-        if (name === undefined) {
-            name = getPetName(SNAKE_NAMES, PetType.snake, Snake.count + 1);
-        }
         return new Snake(
             el,
             collision,
@@ -1061,9 +1026,6 @@ export function createPet(
             PetSpeed.verySlow,
         );
     } else if (petType === 'clippy') {
-        if (name === undefined) {
-            name = getPetName(CLIPPY_NAMES, PetType.clippy, Clippy.count + 1);
-        }
         return new Clippy(
             el,
             collision,
@@ -1076,13 +1038,6 @@ export function createPet(
             PetSpeed.slow,
         );
     } else if (petType === 'cockatiel') {
-        if (name === undefined) {
-            name = getPetName(
-                COCKATIEL_NAMES,
-                PetType.cockatiel,
-                Cockatiel.count + 1,
-            );
-        }
         return new Cockatiel(
             el,
             collision,
@@ -1095,9 +1050,6 @@ export function createPet(
             PetSpeed.normal,
         );
     } else if (petType === 'crab') {
-        if (name === undefined) {
-            name = getPetName(CRAB_NAMES, PetType.crab, Crab.count + 1);
-        }
         return new Crab(
             el,
             collision,
@@ -1110,13 +1062,6 @@ export function createPet(
             PetSpeed.slow,
         );
     } else if (petType === 'rubber-duck') {
-        if (name === undefined) {
-            name = getPetName(
-                DUCK_NAMES,
-                PetType.rubberduck,
-                RubberDuck.count + 1,
-            );
-        }
         return new RubberDuck(
             el,
             collision,
@@ -1129,9 +1074,6 @@ export function createPet(
             PetSpeed.fast,
         );
     } else if (petType === 'zappy') {
-        if (name === undefined) {
-            name = getPetName(ZAPPY_NAMES, PetType.zappy, Zappy.count + 1);
-        }
         return new Zappy(
             el,
             collision,
@@ -1144,9 +1086,6 @@ export function createPet(
             PetSpeed.veryFast,
         );
     } else if (petType === 'rocky') {
-        if (name === undefined) {
-            name = getPetName(ROCKY_NAMES, PetType.rocky, Rocky.count + 1);
-        }
         return new Rocky(
             el,
             collision,

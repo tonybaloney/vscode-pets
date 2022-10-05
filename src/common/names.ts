@@ -1,3 +1,5 @@
+import { PetType } from './types';
+
 export const CAT_NAMES: Map<number, string> = new Map<number, string>([
     [1, 'Bella'],
     [2, 'Charlie'],
@@ -323,3 +325,48 @@ export const COCKATIEL_NAMES: Map<number, string> = new Map<number, string>([
     [13, 'Dame Judi Finch'],
     [14, 'Kanye Nest'],
 ]);
+
+export function randomName(type: PetType): string {
+    var collection: Map<number, string>;
+
+    switch (type) {
+        case PetType.cat:
+            collection = CAT_NAMES;
+            break;
+        case PetType.dog:
+            collection = DOG_NAMES;
+            break;
+        case PetType.crab:
+            collection = CRAB_NAMES;
+            break;
+        case PetType.clippy:
+            collection = CLIPPY_NAMES;
+            break;
+        case PetType.totoro:
+            collection = TOTORO_NAMES;
+            break;
+        case PetType.snake:
+            collection = SNAKE_NAMES;
+            break;
+        case PetType.rubberduck:
+            collection = DUCK_NAMES;
+            break;
+        case PetType.zappy:
+            collection = ZAPPY_NAMES;
+            break;
+        case PetType.rocky:
+            collection = ROCKY_NAMES;
+            break;
+        case PetType.cockatiel:
+            collection = COCKATIEL_NAMES;
+            break;
+        default:
+            collection = CAT_NAMES;
+            break;
+    }
+
+    return (
+        collection.get(Math.floor(Math.random() * collection.size) + 1) ??
+        'Unknown'
+    );
+}
