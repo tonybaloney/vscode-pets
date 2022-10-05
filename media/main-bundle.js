@@ -10,7 +10,7 @@
 
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.COCKATIEL_NAMES = exports.ROCKY_NAMES = exports.ZAPPY_NAMES = exports.DUCK_NAMES = exports.SNAKE_NAMES = exports.TOTORO_NAMES = exports.CLIPPY_NAMES = exports.CRAB_NAMES = exports.DOG_NAMES = exports.CAT_NAMES = void 0;
+exports.randomName = exports.COCKATIEL_NAMES = exports.ROCKY_NAMES = exports.ZAPPY_NAMES = exports.DUCK_NAMES = exports.SNAKE_NAMES = exports.TOTORO_NAMES = exports.CLIPPY_NAMES = exports.CRAB_NAMES = exports.DOG_NAMES = exports.CAT_NAMES = void 0;
 exports.CAT_NAMES = new Map([
     [1, 'Bella'],
     [2, 'Charlie'],
@@ -327,6 +327,47 @@ exports.COCKATIEL_NAMES = new Map([
     [13, 'Dame Judi Finch'],
     [14, 'Kanye Nest'],
 ]);
+function randomName(type) {
+    var collection;
+    switch (type) {
+        case "cat" /* PetType.cat */:
+            collection = exports.CAT_NAMES;
+            break;
+        case "dog" /* PetType.dog */:
+            collection = exports.DOG_NAMES;
+            break;
+        case "crab" /* PetType.crab */:
+            collection = exports.CRAB_NAMES;
+            break;
+        case "clippy" /* PetType.clippy */:
+            collection = exports.CLIPPY_NAMES;
+            break;
+        case "totoro" /* PetType.totoro */:
+            collection = exports.TOTORO_NAMES;
+            break;
+        case "snake" /* PetType.snake */:
+            collection = exports.SNAKE_NAMES;
+            break;
+        case "rubber-duck" /* PetType.rubberduck */:
+            collection = exports.DUCK_NAMES;
+            break;
+        case "zappy" /* PetType.zappy */:
+            collection = exports.ZAPPY_NAMES;
+            break;
+        case "rocky" /* PetType.rocky */:
+            collection = exports.ROCKY_NAMES;
+            break;
+        case "cockatiel" /* PetType.cockatiel */:
+            collection = exports.COCKATIEL_NAMES;
+            break;
+        default:
+            collection = exports.CAT_NAMES;
+            break;
+    }
+    return (collection.get(Math.floor(Math.random() * collection.size) + 1) ??
+        'Unknown');
+}
+exports.randomName = randomName;
 
 
 /***/ }),
@@ -340,6 +381,8 @@ exports.COCKATIEL_NAMES = new Map([
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.petPanelApp = exports.saveState = exports.allPets = void 0;
+// This script will be run within the webview itself
+const names_1 = __webpack_require__(/*! ../common/names */ "./src/common/names.ts");
 const pets_1 = __webpack_require__(/*! ./pets */ "./src/panel/pets.ts");
 const states_1 = __webpack_require__(/*! ./states */ "./src/panel/states.ts");
 const vscode = window.acquireVsCodeApi();
@@ -417,7 +460,7 @@ function addPetToPanel(petType, basePetUri, petColor, petSize, left, bottom, flo
     collisionElement.className = 'collision';
     document.getElementById('petsContainer').appendChild(collisionElement);
     const root = basePetUri + '/' + petType + '/' + petColor;
-    console.log('Creating new pet : ', petType, root);
+    console.log('Creating new pet : ', petType, root, petColor, petSize, name);
     var newPet = (0, pets_1.createPet)(petType, petSpriteElement, collisionElement, petSize, left, bottom, root, floor, name);
     petCounter++;
     startAnimations(collisionElement, newPet);
@@ -456,7 +499,7 @@ function recoverState(basePetUri, petSize, floor) {
             p.petType = 'rubber-duck';
         }
         try {
-            var newPet = addPetToPanel(p.petType ?? "cat" /* PetType.cat */, basePetUri, p.petColor ?? "brown" /* PetColor.brown */, petSize, parseInt(p.elLeft ?? '0'), parseInt(p.elBottom ?? '0'), floor, p.petName);
+            var newPet = addPetToPanel(p.petType ?? "cat" /* PetType.cat */, basePetUri, p.petColor ?? "brown" /* PetColor.brown */, petSize, parseInt(p.elLeft ?? '0'), parseInt(p.elBottom ?? '0'), floor, p.petName ?? (0, names_1.randomName)(p.petType ?? "cat" /* PetType.cat */));
             exports.allPets.push(newPet);
             recoveryMap.set(newPet.pet, p);
         }
@@ -571,7 +614,7 @@ function petPanelApp(basePetUri, theme, themeKind, petColor, petSize, petType) {
     if (!state) {
         console.log('No state, starting a new session.');
         petCounter = 1;
-        exports.allPets.push(addPetToPanel(petType, basePetUri, petColor, petSize, randomStartPosition(), floor, floor, undefined));
+        exports.allPets.push(addPetToPanel(petType, basePetUri, petColor, petSize, randomStartPosition(), floor, floor, (0, names_1.randomName)(petType)));
         saveState();
     }
     else {
@@ -593,7 +636,7 @@ function petPanelApp(basePetUri, theme, themeKind, petColor, petSize, petType) {
                 });
                 break;
             case 'spawn-pet':
-                exports.allPets.push(addPetToPanel(message.type, basePetUri, message.color, petSize, randomStartPosition(), floor, floor, undefined));
+                exports.allPets.push(addPetToPanel(message.type, basePetUri, message.color, petSize, randomStartPosition(), floor, floor, message.name ?? (0, names_1.randomName)(message.type)));
                 saveState();
                 break;
             case 'list-pets':
@@ -662,7 +705,6 @@ window.addEventListener('resize', function () {
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.createPet = exports.InvalidPetException = exports.Rocky = exports.Zappy = exports.Crab = exports.Cockatiel = exports.RubberDuck = exports.Clippy = exports.Snake = exports.Dog = exports.Cat = exports.Totoro = exports.PetCollection = exports.PetElement = exports.InvalidStateException = void 0;
 const states_1 = __webpack_require__(/*! ./states */ "./src/panel/states.ts");
-const names_1 = __webpack_require__(/*! ../common/names */ "./src/common/names.ts");
 class InvalidStateException {
 }
 exports.InvalidStateException = InvalidStateException;
@@ -1487,75 +1529,44 @@ class Rocky extends BasePetType {
 }
 exports.Rocky = Rocky;
 class InvalidPetException {
+    message;
+    constructor(message) {
+        this.message = message;
+    }
 }
 exports.InvalidPetException = InvalidPetException;
-function getPetName(collection, label, count) {
-    if (collection.has(count)) {
-        return collection.get(count) ?? label + count;
-    }
-    else {
-        return label + count;
-    }
-}
 function createPet(petType, el, collision, size, left, bottom, petRoot, floor, name) {
+    if (name === undefined) {
+        throw new InvalidPetException('name is undefined');
+    }
     if (petType === 'totoro') {
-        if (name === undefined) {
-            name = getPetName(names_1.TOTORO_NAMES, "totoro" /* PetType.totoro */, Totoro.count + 1);
-        }
         return new Totoro(el, collision, size, left, bottom, petRoot, floor, name, 3 /* PetSpeed.normal */);
     }
     if (petType === 'cat') {
-        if (name === undefined) {
-            name = getPetName(names_1.CAT_NAMES, "cat" /* PetType.cat */, Cat.count + Dog.count + 1);
-        } // Cat and dog share the same name list
         return new Cat(el, collision, size, left, bottom, petRoot, floor, name, 3 /* PetSpeed.normal */);
     }
     else if (petType === 'dog') {
-        if (name === undefined) {
-            name = getPetName(names_1.DOG_NAMES, "dog" /* PetType.dog */, Dog.count + Cat.count + 1);
-        } // Cat and dog share the same name list
         return new Dog(el, collision, size, left, bottom, petRoot, floor, name, 3 /* PetSpeed.normal */);
     }
     else if (petType === 'snake') {
-        if (name === undefined) {
-            name = getPetName(names_1.SNAKE_NAMES, "snake" /* PetType.snake */, Snake.count + 1);
-        }
         return new Snake(el, collision, size, left, bottom, petRoot, floor, name, 1 /* PetSpeed.verySlow */);
     }
     else if (petType === 'clippy') {
-        if (name === undefined) {
-            name = getPetName(names_1.CLIPPY_NAMES, "clippy" /* PetType.clippy */, Clippy.count + 1);
-        }
         return new Clippy(el, collision, size, left, bottom, petRoot, floor, name, 2 /* PetSpeed.slow */);
     }
     else if (petType === 'cockatiel') {
-        if (name === undefined) {
-            name = getPetName(names_1.COCKATIEL_NAMES, "cockatiel" /* PetType.cockatiel */, Cockatiel.count + 1);
-        }
         return new Cockatiel(el, collision, size, left, bottom, petRoot, floor, name, 3 /* PetSpeed.normal */);
     }
     else if (petType === 'crab') {
-        if (name === undefined) {
-            name = getPetName(names_1.CRAB_NAMES, "crab" /* PetType.crab */, Crab.count + 1);
-        }
         return new Crab(el, collision, size, left, bottom, petRoot, floor, name, 2 /* PetSpeed.slow */);
     }
     else if (petType === 'rubber-duck') {
-        if (name === undefined) {
-            name = getPetName(names_1.DUCK_NAMES, "rubber-duck" /* PetType.rubberduck */, RubberDuck.count + 1);
-        }
         return new RubberDuck(el, collision, size, left, bottom, petRoot, floor, name, 4 /* PetSpeed.fast */);
     }
     else if (petType === 'zappy') {
-        if (name === undefined) {
-            name = getPetName(names_1.ZAPPY_NAMES, "zappy" /* PetType.zappy */, Zappy.count + 1);
-        }
         return new Zappy(el, collision, size, left, bottom, petRoot, floor, name, 5 /* PetSpeed.veryFast */);
     }
     else if (petType === 'rocky') {
-        if (name === undefined) {
-            name = getPetName(names_1.ROCKY_NAMES, "rocky" /* PetType.rocky */, Rocky.count + 1);
-        }
         return new Rocky(el, collision, size, left, bottom, petRoot, floor, name, 0 /* PetSpeed.still */);
     }
     throw new InvalidPetException();

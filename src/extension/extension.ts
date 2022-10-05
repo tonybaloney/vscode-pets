@@ -9,18 +9,7 @@ import {
     Theme,
     WebviewMessage,
 } from '../common/types';
-import {
-    CAT_NAMES,
-    DOG_NAMES,
-    COCKATIEL_NAMES,
-    CRAB_NAMES,
-    SNAKE_NAMES,
-    CLIPPY_NAMES,
-    TOTORO_NAMES,
-    DUCK_NAMES,
-    ZAPPY_NAMES,
-    ROCKY_NAMES,
-} from '../common/names';
+import { randomName } from '../common/names';
 
 const EXTRA_PETS_KEY = 'vscode-pets.extra-pets';
 const EXTRA_PETS_KEY_TYPES = EXTRA_PETS_KEY + '.types';
@@ -122,13 +111,17 @@ export class PetSpecification {
     color: PetColor;
     type: PetType;
     size: PetSize;
-    name?: string;
+    name: string;
 
     constructor(color: PetColor, type: PetType, size: PetSize, name?: string) {
         this.color = color;
         this.type = type;
         this.size = size;
-        this.name = name;
+        if (!name) {
+            this.name = randomName(type);
+        } else {
+            this.name = name;
+        }
     }
 
     static fromConfiguration(): PetSpecification {
@@ -314,6 +307,8 @@ export function activate(context: vscode.ExtensionContext) {
                     collection.forEach((item) => {
                         PetPanel.currentPanel?.spawnPet(item);
                     });
+                    // Store the collection in the memento, incase any of the null values (e.g. name) have been set
+                    storeCollectionAsMemento(context, collection);
                 }
             }
         }),
@@ -458,26 +453,10 @@ export function activate(context: vscode.ExtensionContext) {
                         petColor = PetColor.yellow;
                         break;
                 }
-                const names = (
-                    {
-                        [PetType.cat]: CAT_NAMES,
-                        [PetType.dog]: DOG_NAMES,
-                        [PetType.cockatiel]: COCKATIEL_NAMES,
-                        [PetType.crab]: CRAB_NAMES,
-                        [PetType.snake]: SNAKE_NAMES,
-                        [PetType.clippy]: CLIPPY_NAMES,
-                        [PetType.totoro]: TOTORO_NAMES,
-                        [PetType.rubberduck]: DUCK_NAMES,
-                        [PetType.zappy]: ZAPPY_NAMES,
-                        [PetType.rocky]: ROCKY_NAMES,
-                    } as Record<PetType, Map<number, string>>
-                )[petType as PetType];
                 const name = await vscode.window.showInputBox({
                     placeHolder: 'Leave blank for a random name',
                     prompt: 'Name your pet',
-                    value: [...names.values()][
-                        Math.floor(Math.random() * names.size)
-                    ],
+                    value: randomName(petType as PetType),
                 });
                 const spec = new PetSpecification(
                     petColor,
