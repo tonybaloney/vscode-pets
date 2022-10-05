@@ -1536,7 +1536,7 @@ class InvalidPetException {
 }
 exports.InvalidPetException = InvalidPetException;
 function createPet(petType, el, collision, size, left, bottom, petRoot, floor, name) {
-    if (name === undefined) {
+    if (name === undefined || name === null || name === '') {
         throw new InvalidPetException('name is undefined');
     }
     if (petType === 'totoro') {
