@@ -973,7 +973,7 @@ export function createPet(
     floor: number,
     name: string,
 ): IPetType {
-    if (name === undefined) {
+    if (name === undefined || name === null || name === '') {
         throw new InvalidPetException('name is undefined');
     }
     if (petType === 'totoro') {
