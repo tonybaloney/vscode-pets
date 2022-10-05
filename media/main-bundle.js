@@ -10,8 +10,110 @@
 
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.COCKATIEL_NAMES = exports.ROCKY_NAMES = exports.ZAPPY_NAMES = exports.DUCK_NAMES = exports.SNAKE_NAMES = exports.TOTORO_NAMES = exports.CLIPPY_NAMES = exports.CRAB_NAMES = exports.DOG_NAMES = exports.CAT_NAMES = exports.PET_NAMES = void 0;
-exports.PET_NAMES = new Map([
+exports.COCKATIEL_NAMES = exports.ROCKY_NAMES = exports.ZAPPY_NAMES = exports.DUCK_NAMES = exports.SNAKE_NAMES = exports.TOTORO_NAMES = exports.CLIPPY_NAMES = exports.CRAB_NAMES = exports.DOG_NAMES = exports.CAT_NAMES = void 0;
+exports.CAT_NAMES = new Map([
+    [1, 'Bella'],
+    [2, 'Charlie'],
+    [3, 'Molly'],
+    [4, 'Coco'],
+    [5, 'Ruby'],
+    [6, 'Oscar'],
+    [7, 'Lucy'],
+    [8, 'Bailey'],
+    [9, 'Milo'],
+    [10, 'Daisy'],
+    [11, 'Archie'],
+    [12, 'Ollie'],
+    [13, 'Rosie'],
+    [14, 'Lola'],
+    [15, 'Frankie'],
+    [16, 'Roxy'],
+    [17, 'Poppy'],
+    [18, 'Luna'],
+    [19, 'Jack'],
+    [20, 'Millie'],
+    [21, 'Teddy'],
+    [22, 'Cooper'],
+    [23, 'Bear'],
+    [24, 'Rocky'],
+    [25, 'Alfie'],
+    [26, 'Hugo'],
+    [27, 'Bonnie'],
+    [28, 'Pepper'],
+    [29, 'Lily'],
+    [30, 'Tilly'],
+    [31, 'Leo'],
+    [32, 'Maggie'],
+    [33, 'George'],
+    [34, 'Mia'],
+    [35, 'Marley'],
+    [36, 'Harley'],
+    [37, 'Chloe'],
+    [38, 'Lulu'],
+    [39, 'Missy'],
+    [40, 'Jasper'],
+    [41, 'Billy'],
+    [42, 'Nala'],
+    [43, 'Monty'],
+    [44, 'Ziggy'],
+    [45, 'Winston'],
+    [46, 'Zeus'],
+    [47, 'Zoe'],
+    [48, 'Stella'],
+    [49, 'Sasha'],
+    [50, 'Rusty'],
+    [51, 'Gus'],
+    [52, 'Baxter'],
+    [53, 'Dexter'],
+    [54, 'Willow'],
+    [55, 'Barney'],
+    [56, 'Bruno'],
+    [57, 'Penny'],
+    [58, 'Honey'],
+    [59, 'Milly'],
+    [60, 'Murphy'],
+    [61, 'Simba'],
+    [62, 'Holly'],
+    [63, 'Benji'],
+    [64, 'Henry'],
+    [65, 'Lilly'],
+    [66, 'Pippa'],
+    [67, 'Shadow'],
+    [68, 'Sam'],
+    [69, 'Lucky'],
+    [70, 'Ellie'],
+    [71, 'Duke'],
+    [72, 'Jessie'],
+    [73, 'Cookie'],
+    [74, 'Harvey'],
+    [75, 'Bruce'],
+    [76, 'Jax'],
+    [77, 'Rex'],
+    [78, 'Louie'],
+    [79, 'Jet'],
+    [80, 'Banjo'],
+    [81, 'Beau'],
+    [82, 'Ella'],
+    [83, 'Ralph'],
+    [84, 'Loki'],
+    [85, 'Lexi'],
+    [86, 'Chester'],
+    [87, 'Sophie'],
+    [88, 'Chilli'],
+    [89, 'Billie'],
+    [90, 'Louis'],
+    [91, 'Scout'],
+    [92, 'Cleo'],
+    [93, 'Purfect'],
+    [94, 'Spot'],
+    [95, 'Bolt'],
+    [96, 'Julia'],
+    [97, 'Ginger'],
+    [98, 'Daisy'],
+    [99, 'Amelia'],
+    [100, 'Oliver'],
+]);
+exports.DOG_NAMES = new Map([
     [1, 'Bella'],
     [2, 'Charlie'],
     [3, 'Max'],
@@ -45,80 +147,74 @@ exports.PET_NAMES = new Map([
     [31, 'Bonnie'],
     [32, 'Pepper'],
     [33, 'Lily'],
-    [34, 'Tilly'],
-    [35, 'Leo'],
-    [36, 'Maggie'],
-    [37, 'George'],
-    [38, 'Mia'],
-    [39, 'Marley'],
-    [40, 'Harley'],
-    [41, 'Chloe'],
-    [42, 'Lulu'],
-    [43, 'Missy'],
-    [44, 'Jasper'],
-    [45, 'Billy'],
-    [46, 'Nala'],
-    [47, 'Monty'],
-    [48, 'Ziggy'],
-    [49, 'Winston'],
-    [50, 'Zeus'],
-    [51, 'Zoe'],
-    [52, 'Stella'],
-    [53, 'Sasha'],
-    [54, 'Rusty'],
-    [55, 'Gus'],
-    [56, 'Baxter'],
-    [57, 'Dexter'],
-    [58, 'Diesel'],
-    [59, 'Willow'],
-    [60, 'Barney'],
-    [61, 'Bruno'],
-    [62, 'Penny'],
-    [63, 'Honey'],
-    [64, 'Milly'],
-    [65, 'Murphy'],
-    [66, 'Simba'],
-    [67, 'Holly'],
-    [68, 'Benji'],
-    [69, 'Henry'],
-    [70, 'Lilly'],
-    [71, 'Pippa'],
-    [72, 'Shadow'],
-    [73, 'Sam'],
-    [74, 'Buster'],
-    [75, 'Lucky'],
-    [76, 'Ellie'],
-    [77, 'Duke'],
-    [78, 'Jessie'],
-    [79, 'Cookie'],
-    [80, 'Harvey'],
-    [81, 'Bruce'],
-    [82, 'Jax'],
-    [83, 'Rex'],
-    [84, 'Louie'],
-    [85, 'Bentley'],
-    [86, 'Jet'],
-    [87, 'Banjo'],
-    [88, 'Beau'],
-    [89, 'Ella'],
-    [90, 'Ralph'],
-    [91, 'Loki'],
-    [92, 'Lexi'],
-    [93, 'Chester'],
-    [94, 'Sophie'],
-    [95, 'Chilli'],
-    [96, 'Billie'],
-    [97, 'Louis'],
-    [98, 'Scout'],
-    [99, 'Charlie'],
-    [100, 'Cleo'],
-    [101, 'Purfect'],
-    [102, 'Spot'],
-    [103, 'Harry'],
-    [104, 'Bolt'],
+    [34, 'Leo'],
+    [35, 'Maggie'],
+    [36, 'George'],
+    [37, 'Mia'],
+    [38, 'Marley'],
+    [39, 'Harley'],
+    [40, 'Chloe'],
+    [41, 'Lulu'],
+    [42, 'Jasper'],
+    [43, 'Billy'],
+    [44, 'Nala'],
+    [45, 'Monty'],
+    [46, 'Ziggy'],
+    [47, 'Winston'],
+    [48, 'Zeus'],
+    [49, 'Zoe'],
+    [50, 'Stella'],
+    [51, 'Sasha'],
+    [52, 'Rusty'],
+    [53, 'Gus'],
+    [54, 'Baxter'],
+    [55, 'Dexter'],
+    [56, 'Diesel'],
+    [57, 'Willow'],
+    [58, 'Barney'],
+    [59, 'Bruno'],
+    [60, 'Penny'],
+    [61, 'Honey'],
+    [62, 'Milly'],
+    [63, 'Murphy'],
+    [64, 'Holly'],
+    [65, 'Benji'],
+    [66, 'Henry'],
+    [67, 'Lilly'],
+    [68, 'Pippa'],
+    [69, 'Shadow'],
+    [70, 'Sam'],
+    [71, 'Buster'],
+    [72, 'Lucky'],
+    [73, 'Ellie'],
+    [74, 'Duke'],
+    [75, 'Jessie'],
+    [76, 'Cookie'],
+    [77, 'Harvey'],
+    [78, 'Bruce'],
+    [79, 'Jax'],
+    [80, 'Rex'],
+    [81, 'Louie'],
+    [82, 'Bentley'],
+    [83, 'Jet'],
+    [84, 'Banjo'],
+    [85, 'Beau'],
+    [86, 'Ella'],
+    [87, 'Ralph'],
+    [88, 'Loki'],
+    [89, 'Lexi'],
+    [90, 'Chester'],
+    [91, 'Sophie'],
+    [92, 'Billie'],
+    [93, 'Louis'],
+    [94, 'Charlie'],
+    [95, 'Cleo'],
+    [96, 'Spot'],
+    [97, 'Harry'],
+    [98, 'Bolt'],
+    [99, 'Ein'],
+    [100, 'Maddy'],
 ]);
-exports.CAT_NAMES = exports.PET_NAMES;
-exports.DOG_NAMES = exports.PET_NAMES;
 exports.CRAB_NAMES = new Map([
     [1, 'Ferris'],
     [2, 'Pinchy'],
@@ -130,6 +226,9 @@ exports.CRAB_NAMES = new Map([
     [8, 'Oscar'],
     [9, 'Lucy'],
     [10, 'Bailey'],
+    [11, 'Crabito'],
+    [12, 'Percy'],
+    [13, 'Rocky'],
 ]);
 exports.CLIPPY_NAMES = new Map([
     [1, 'Clippy'],
@@ -154,18 +253,18 @@ exports.TOTORO_NAMES = new Map([
     [8, 'Oscar'],
     [9, 'Lucy'],
     [10, 'Bailey'],
+    [11, 'Big fella'],
 ]);
 exports.SNAKE_NAMES = new Map([
     [1, 'Sneaky'],
     [2, 'Mr Slippery'],
-    [3, 'Max'],
+    [3, 'Hissy Elliott'],
     [4, 'Molly'],
     [5, 'Coco'],
     [6, 'Buddy'],
     [7, 'Ruby'],
-    [8, 'Oscar'],
-    [9, 'Lucy'],
-    [10, 'Bailey'],
+    [8, 'Bailey'],
+    [9, 'Max'],
 ]);
 exports.DUCK_NAMES = new Map([
     [1, 'Quacky'],
@@ -178,6 +277,11 @@ exports.DUCK_NAMES = new Map([
     [8, 'Oscar'],
     [9, 'Lucy'],
     [10, 'Bailey'],
+    [11, 'Beaky'],
+    [12, 'Jemima'],
+    [13, 'Peaches'],
+    [14, 'Quackers'],
+    [15, 'Jelly Beans'],
 ]);
 exports.ZAPPY_NAMES = new Map([
     [1, 'Zappy'],
@@ -190,6 +294,7 @@ exports.ZAPPY_NAMES = new Map([
     [8, 'Little z'],
     [9, 'The Flash'],
     [10, 'Thor'],
+    [11, 'Electric Bolt'],
 ]);
 exports.ROCKY_NAMES = new Map([
     [1, 'Rocky'],
@@ -202,6 +307,9 @@ exports.ROCKY_NAMES = new Map([
     [8, 'Big Granite'],
     [9, 'Boulder'],
     [10, 'Rockefeller'],
+    [11, 'Pebble'],
+    [12, 'Rocksanne'],
+    [13, 'Rockstar'],
 ]);
 exports.COCKATIEL_NAMES = new Map([
     [1, 'Cocktail'],
@@ -215,6 +323,9 @@ exports.COCKATIEL_NAMES = new Map([
     [9, 'Jack Sparrow'],
     [10, 'Godfeather'],
     [11, 'Mickey'],
+    [12, 'Baquack Obama'],
+    [13, 'Dame Judi Finch'],
+    [14, 'Kanye Nest'],
 ]);
 
 
@@ -409,17 +520,25 @@ function petPanelApp(basePetUri, theme, themeKind, petColor, petSize, petType) {
         foregroundEl.style.backgroundImage = '';
     }
     /// Bouncing ball components, credit https://stackoverflow.com/a/29982343
-    const gravity = 0.2, damping = 0.9, traction = 0.8;
+    const gravity = 0.6, damping = 0.9, traction = 0.8, interval = 1000 / 24; // msec for single frame
+    let then = 0; // last draw
     var ballState;
     function resetBall() {
         canvas.style.display = 'block';
-        ballState = new states_1.BallState(100, 100, 2, 5);
+        ballState = new states_1.BallState(100, 100, 4, 5);
     }
     function throwBall() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
         if (!ballState.paused) {
             requestAnimationFrame(throwBall);
         }
+        // throttling the frame rate
+        const now = Date.now();
+        const elapsed = now - then;
+        if (elapsed <= interval) {
+            return;
+        }
+        then = now - (elapsed % interval);
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
         if (ballState.cx + ballRadius >= canvas.width) {
             ballState.vx = -ballState.vx * damping;
             ballState.cx = canvas.width - ballRadius;
@@ -486,6 +605,16 @@ function petPanelApp(basePetUri, theme, themeKind, petColor, petSize, petType) {
                         .join('\n'),
                 });
                 break;
+            case 'roll-call':
+                var pets = exports.allPets.pets();
+                // go through every single
+                // pet and then print out their name
+                pets.forEach((pet) => {
+                    vscode.postMessage({
+                        command: 'info',
+                        text: `${pet.pet.emoji()} ${pet.pet.name()} (${pet.color} ${pet.type}): ${pet.pet.hello()}`,
+                    });
+                });
             case 'delete-pet':
                 var pet = exports.allPets.locate(message.name);
                 if (pet) {
@@ -707,6 +836,10 @@ class BasePetType {
     }
     floor() {
         return this._floor;
+    }
+    hello() {
+        // return the sound of the name of the animal
+        return ` says hello 👋!`;
     }
     getState() {
         return { currentStateEnum: this.currentStateEnum };
