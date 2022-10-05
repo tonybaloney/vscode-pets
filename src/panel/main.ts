@@ -1,4 +1,5 @@
 // This script will be run within the webview itself
+import { randomName } from '../common/names';
 import {
     PetSize,
     PetColor,
@@ -106,7 +107,7 @@ function addPetToPanel(
     left: number,
     bottom: number,
     floor: number,
-    name: string | undefined,
+    name: string,
 ): PetElement {
     var petSpriteElement: HTMLImageElement = document.createElement('img');
     petSpriteElement.className = 'pet';
@@ -121,7 +122,7 @@ function addPetToPanel(
     );
 
     const root = basePetUri + '/' + petType + '/' + petColor;
-    console.log('Creating new pet : ', petType, root);
+    console.log('Creating new pet : ', petType, root, petColor, petSize, name);
     var newPet = createPet(
         petType,
         petSpriteElement,
@@ -188,7 +189,7 @@ function recoverState(basePetUri: string, petSize: PetSize, floor: number) {
                 parseInt(p.elLeft ?? '0'),
                 parseInt(p.elBottom ?? '0'),
                 floor,
-                p.petName,
+                p.petName ?? randomName(p.petType ?? PetType.cat),
             );
             allPets.push(newPet);
             recoveryMap.set(newPet.pet, p);
@@ -338,7 +339,7 @@ export function petPanelApp(
                 randomStartPosition(),
                 floor,
                 floor,
-                undefined,
+                randomName(petType),
             ),
         );
         saveState();
@@ -372,7 +373,7 @@ export function petPanelApp(
                         randomStartPosition(),
                         floor,
                         floor,
-                        undefined,
+                        message.name ?? randomName(message.type),
                     ),
                 );
                 saveState();
