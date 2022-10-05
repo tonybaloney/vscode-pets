@@ -101,11 +101,11 @@ The cat and dog media assets for this extension were licensed from itch.io.
 
 Thanks to all the contributors to this project:
 
--   @marcduiker
--   @Vicente015
--   @Yukaii
--   @robconery
--   @JING1201
--   @aclaughan
--   @Tarang74
--   @Harry-Hopkinson
+-   [@marcduiker](https://github.com/marcduiker)
+-   [@Vicente015](https://github.com/Vicente015)
+-   [@Yukaii](https://github.com/Yukaii)
+-   [@robconery](https://github.com/robconery)
+-   [@JING1201](https://github.com/JING1201)
+-   [@aclaughan](https://github.com/aclaughan)
+-   [@Tarang74](https://github.com/Tarang74)
+-   [@Harry-Hopkinson](https://github.com/Harry-Hopkinson)

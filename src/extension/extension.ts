@@ -385,33 +385,18 @@ export function activate(context: vscode.ExtensionContext) {
                     context,
                 );
             } else {
-                const spec = PetSpecification.fromConfiguration();
-                PetPanel.createOrShow(
-                    context.extensionUri,
-                    context.extensionPath,
-                    spec.color,
-                    spec.type,
-                    spec.size,
-                    getConfiguredTheme(),
-                    getConfiguredThemeKind(),
-                );
-                if (PetPanel.currentPanel) {
-                    var collection = PetSpecification.collectionFromMemento(
-                        context,
-                        getConfiguredSize(),
-                    );
-                    collection.forEach((item) => {
-                        PetPanel.currentPanel?.spawnPet(item);
-                    });
-                    storeCollectionAsMemento(context, collection);
-                } else {
-                    var collection = PetSpecification.collectionFromMemento(
-                        context,
-                        getConfiguredSize(),
-                    );
-                    collection.push(spec);
-                    storeCollectionAsMemento(context, collection);
-                }
+                createPetPlayground(context);
+            }
+        }),
+    );
+
+    context.subscriptions.push(
+        vscode.commands.registerCommand('vscode-pets.roll-call', async () => {
+            const panel = getPetPanel();
+            if (panel !== undefined) {
+                panel.rollCall();
+            } else {
+                createPetPlayground(context);
             }
         }),
     );
@@ -518,33 +503,7 @@ export function activate(context: vscode.ExtensionContext) {
                 collection.push(spec);
                 storeCollectionAsMemento(context, collection);
             } else {
-                const spec = PetSpecification.fromConfiguration();
-                PetPanel.createOrShow(
-                    context.extensionUri,
-                    context.extensionPath,
-                    spec.color,
-                    spec.type,
-                    spec.size,
-                    getConfiguredTheme(),
-                    getConfiguredThemeKind(),
-                );
-                if (PetPanel.currentPanel) {
-                    var collection = PetSpecification.collectionFromMemento(
-                        context,
-                        getConfiguredSize(),
-                    );
-                    collection.forEach((item) => {
-                        PetPanel.currentPanel?.spawnPet(item);
-                    });
-                    storeCollectionAsMemento(context, collection);
-                } else {
-                    var collection = PetSpecification.collectionFromMemento(
-                        context,
-                        getConfiguredSize(),
-                    );
-                    collection.push(spec);
-                    storeCollectionAsMemento(context, collection);
-                }
+                createPetPlayground(context);
                 vscode.window.showInformationMessage(
                     "A Pet Playground has been created. You can now use the 'Spawn Additional Pet' Command to add more pets.",
                 );
@@ -559,33 +518,7 @@ export function activate(context: vscode.ExtensionContext) {
                 panel.resetPets();
                 storeCollectionAsMemento(context, []);
             } else {
-                const spec = PetSpecification.fromConfiguration();
-                PetPanel.createOrShow(
-                    context.extensionUri,
-                    context.extensionPath,
-                    spec.color,
-                    spec.type,
-                    spec.size,
-                    getConfiguredTheme(),
-                    getConfiguredThemeKind(),
-                );
-                if (PetPanel.currentPanel) {
-                    var collection = PetSpecification.collectionFromMemento(
-                        context,
-                        getConfiguredSize(),
-                    );
-                    collection.forEach((item) => {
-                        PetPanel.currentPanel?.spawnPet(item);
-                    });
-                    storeCollectionAsMemento(context, collection);
-                } else {
-                    var collection = PetSpecification.collectionFromMemento(
-                        context,
-                        getConfiguredSize(),
-                    );
-                    collection.push(spec);
-                    storeCollectionAsMemento(context, collection);
-                }
+                createPetPlayground(context);
                 vscode.window.showInformationMessage(
                     "A Pet Playground has been created. You can now use the 'Remove All Pets' Command to remove all pets.",
                 );
@@ -720,6 +653,7 @@ interface IPetPanel {
     spawnPet(spec: PetSpecification): void;
     deletePet(petName: string): void;
     listPets(): void;
+    rollCall(): void;
     themeKind(): vscode.ColorThemeKind;
     updatePetColor(newColor: PetColor): void;
     updatePetType(newType: PetType): void;
@@ -817,6 +751,10 @@ class PetWebviewContainer implements IPetPanel {
 
     public listPets() {
         this.getWebview().postMessage({ command: 'list-pets' });
+    }
+
+    public rollCall(): void {
+        this.getWebview().postMessage({ command: 'roll-call' });
     }
 
     public deletePet(petName: string) {
@@ -979,6 +917,10 @@ class PetPanel extends PetWebviewContainer implements IPetPanel {
         this.getWebview().postMessage({ command: 'list-pets' });
     }
 
+    public rollCall(): void {
+        this.getWebview().postMessage({ command: 'roll-call' });
+    }
+
     public deletePet(petName: string): void {
         this.getWebview().postMessage({ command: 'delete-pet', name: petName });
     }
@@ -1109,4 +1051,34 @@ function getNonce() {
         text += possible.charAt(Math.floor(Math.random() * possible.length));
     }
     return text;
+}
+
+function createPetPlayground(context: vscode.ExtensionContext) {
+    const spec = PetSpecification.fromConfiguration();
+    PetPanel.createOrShow(
+        context.extensionUri,
+        context.extensionPath,
+        spec.color,
+        spec.type,
+        spec.size,
+        getConfiguredTheme(),
+        getConfiguredThemeKind(),
+    );
+    if (PetPanel.currentPanel) {
+        var collection = PetSpecification.collectionFromMemento(
+            context,
+            getConfiguredSize(),
+        );
+        collection.forEach((item) => {
+            PetPanel.currentPanel?.spawnPet(item);
+        });
+        storeCollectionAsMemento(context, collection);
+    } else {
+        var collection = PetSpecification.collectionFromMemento(
+            context,
+            getConfiguredSize(),
+        );
+        collection.push(spec);
+        storeCollectionAsMemento(context, collection);
+    }
 }
