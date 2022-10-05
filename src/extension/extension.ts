@@ -9,10 +9,12 @@ import {
     Theme,
     WebviewMessage,
 } from '../common/types';
+import { randomName } from '../common/names';
 
 const EXTRA_PETS_KEY = 'vscode-pets.extra-pets';
 const EXTRA_PETS_KEY_TYPES = EXTRA_PETS_KEY + '.types';
 const EXTRA_PETS_KEY_COLORS = EXTRA_PETS_KEY + '.colors';
+const EXTRA_PETS_KEY_NAMES = EXTRA_PETS_KEY + '.names';
 const DEFAULT_PET_SCALE = PetSize.nano;
 const DEFAULT_COLOR = PetColor.brown;
 const DEFAULT_PET_TYPE = PetType.cat;
@@ -109,11 +111,17 @@ export class PetSpecification {
     color: PetColor;
     type: PetType;
     size: PetSize;
+    name: string;
 
-    constructor(color: PetColor, type: PetType, size: PetSize) {
+    constructor(color: PetColor, type: PetType, size: PetSize, name?: string) {
         this.color = color;
         this.type = type;
         this.size = size;
+        if (!name) {
+            this.name = randomName(type);
+        } else {
+            this.name = name;
+        }
     }
 
     static fromConfiguration(): PetSpecification {
@@ -145,6 +153,10 @@ export class PetSpecification {
             EXTRA_PETS_KEY_COLORS,
             [],
         );
+        var contextNames = context.globalState.get<string[]>(
+            EXTRA_PETS_KEY_NAMES,
+            [],
+        );
         var result: PetSpecification[] = new Array();
         for (let index = 0; index < contextTypes.length; index++) {
             result.push(
@@ -152,6 +164,7 @@ export class PetSpecification {
                     contextColors?.[index] ?? DEFAULT_COLOR,
                     contextTypes[index],
                     size,
+                    contextNames[index],
                 ),
             );
         }
@@ -165,15 +178,19 @@ export function storeCollectionAsMemento(
 ) {
     var contextTypes = new Array(collection.length);
     var contextColors = new Array(collection.length);
+    var contextNames = new Array(collection.length);
     for (let index = 0; index < collection.length; index++) {
         contextTypes[index] = collection[index].type;
         contextColors[index] = collection[index].color;
+        contextNames[index] = collection[index].name;
     }
     context.globalState.update(EXTRA_PETS_KEY_TYPES, contextTypes);
     context.globalState.update(EXTRA_PETS_KEY_COLORS, contextColors);
+    context.globalState.update(EXTRA_PETS_KEY_NAMES, contextNames);
     context.globalState.setKeysForSync([
         EXTRA_PETS_KEY_TYPES,
         EXTRA_PETS_KEY_COLORS,
+        EXTRA_PETS_KEY_NAMES,
     ]);
 }
 
@@ -229,6 +246,7 @@ async function handleRemovePetMessage(
                                 item.color,
                                 item.type,
                                 PetSize.medium,
+                                item.name,
                             );
                         });
                     storeCollectionAsMemento(this, collection);
@@ -289,6 +307,8 @@ export function activate(context: vscode.ExtensionContext) {
                     collection.forEach((item) => {
                         PetPanel.currentPanel?.spawnPet(item);
                     });
+                    // Store the collection in the memento, incase any of the null values (e.g. name) have been set
+                    storeCollectionAsMemento(context, collection);
                 }
             }
         }),
@@ -433,10 +453,16 @@ export function activate(context: vscode.ExtensionContext) {
                         petColor = PetColor.yellow;
                         break;
                 }
+                const name = await vscode.window.showInputBox({
+                    placeHolder: 'Leave blank for a random name',
+                    prompt: 'Name your pet',
+                    value: randomName(petType as PetType),
+                });
                 const spec = new PetSpecification(
                     petColor,
                     petType as PetType,
                     getConfiguredSize(),
+                    name,
                 );
                 if (
                     spec.type === null ||
@@ -697,6 +723,7 @@ class PetWebviewContainer implements IPetPanel {
             command: 'spawn-pet',
             type: spec.type,
             color: spec.color,
+            name: spec.name,
         });
         this.getWebview().postMessage({ command: 'set-size', size: spec.size });
     }
