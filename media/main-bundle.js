@@ -612,7 +612,7 @@ function petPanelApp(basePetUri, theme, themeKind, petColor, petSize, petType) {
                 pets.forEach((pet) => {
                     vscode.postMessage({
                         command: 'info',
-                        text: `${pet.pet.emoji()} ${pet.pet.name()} (${pet.color}: ${pet.pet.hello()}`,
+                        text: `${pet.pet.emoji()} ${pet.pet.name()} (${pet.color} ${pet.type}): ${pet.pet.hello()}`,
                     });
                 });
             case 'delete-pet':

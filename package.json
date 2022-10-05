@@ -104,7 +104,7 @@
             },
             {
                 "command": "vscode-pets.roll-call",
-                "title": "Rollcall",
+                "title": "Roll-call",
                 "category": "Pet Coding"
             }
         ],

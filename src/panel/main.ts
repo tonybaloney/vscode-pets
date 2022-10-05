@@ -400,7 +400,7 @@ export function petPanelApp(
                         command: 'info',
                         text: `${pet.pet.emoji()} ${pet.pet.name()} (${
                             pet.color
-                        }: ${pet.pet.hello()}`,
+                        } ${pet.type}): ${pet.pet.hello()}`,
                     });
                 });
             case 'delete-pet':
