@@ -454,7 +454,7 @@ export function activate(context: vscode.ExtensionContext) {
                         break;
                 }
 
-                if (petColor == undefined) {
+                if (petColor === undefined) {
                     return vscode.window.showErrorMessage(
                         'Cancelled Spawning Pet',
                     );
