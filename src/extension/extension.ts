@@ -453,6 +453,13 @@ export function activate(context: vscode.ExtensionContext) {
                         petColor = PetColor.yellow;
                         break;
                 }
+
+                if (petColor == undefined) {
+                    return vscode.window.showErrorMessage(
+                        'Cancelled Spawning Pet',
+                    );
+                }
+
                 const name = await vscode.window.showInputBox({
                     placeHolder: 'Leave blank for a random name',
                     prompt: 'Name your pet',
