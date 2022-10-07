@@ -168,7 +168,8 @@
                         "enum": [
                             "none",
                             "forest",
-                            "castle"
+                            "castle",
+                            "beach"
                         ],
                         "default": "none",
                         "description": "Background theme assets for your pets"

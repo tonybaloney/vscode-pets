@@ -424,6 +424,16 @@ function calculateFloor(size, theme) {
                 default:
                     return 45;
             }
+        case "beach" /* Theme.beach */:
+            switch (size) {
+                case "medium" /* PetSize.medium */:
+                    return 80;
+                case "large" /* PetSize.large */:
+                    return 120;
+                case "nano" /* PetSize.nano */:
+                default:
+                    return 45;
+            }
     }
     return 0;
 }
