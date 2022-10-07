@@ -518,8 +518,7 @@ export class Totoro extends BasePetType {
         return '🐾';
     }
     hello(): string {
-        // TODO: #184 Add a custom message for this pe
-        return ` says hello 👋!`;
+        return `Try Laughing. Then Whatever Scares You Will Go Away. 🎭`;
     }
 }
 export class Cat extends BasePetType {
