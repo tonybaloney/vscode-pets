@@ -44,7 +44,7 @@ const ALL_COLORS = [
     PetColor.null,
 ];
 const ALL_SCALES = [PetSize.nano, PetSize.medium, PetSize.large];
-const ALL_THEMES = [Theme.none, Theme.forest, Theme.castle];
+const ALL_THEMES = [Theme.none, Theme.forest, Theme.castle, Theme.beach];
 
 class PetQuickPickItem implements vscode.QuickPickItem {
     constructor(
