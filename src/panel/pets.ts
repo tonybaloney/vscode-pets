@@ -221,7 +221,7 @@ abstract class BasePetType implements IPetType {
         this.currentState = resolveState(this.currentStateEnum, this);
 
         this._name = name;
-        this._speed = speed; // TODO #183 : Add a random modifier (+/- 30%) to this value.
+        this._speed = this.randomiseSpeed(speed);
 
         // Increment the static count of the Pet class that the constructor belongs to
         (this.constructor as any).count += 1;
@@ -283,6 +283,13 @@ abstract class BasePetType implements IPetType {
 
     speed(): number {
         return this._speed;
+    }
+
+    randomiseSpeed(speed: number) : number{
+        let min = speed * 0.7;
+        let max = speed * 1.3;
+        let newSpeed = Math.random() * (max - min) + min;
+        return newSpeed
     }
 
     isMoving(): boolean {
