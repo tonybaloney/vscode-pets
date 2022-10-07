@@ -403,6 +403,9 @@ export function activate(context: vscode.ExtensionContext) {
                 const petType = await vscode.window.showQuickPick(ALL_PETS, {
                     placeHolder: 'Select a pet',
                 });
+                if (petType === undefined) {
+                    return;
+                }
                 var petColor: PetColor = DEFAULT_COLOR;
                 var choices;
                 switch (petType as PetType) {
@@ -453,6 +456,11 @@ export function activate(context: vscode.ExtensionContext) {
                         petColor = PetColor.yellow;
                         break;
                 }
+
+                if (petColor === undefined) {
+                    return;
+                }
+
                 const name = await vscode.window.showInputBox({
                     placeHolder: 'Leave blank for a random name',
                     prompt: 'Name your pet',
@@ -464,11 +472,7 @@ export function activate(context: vscode.ExtensionContext) {
                     getConfiguredSize(),
                     name,
                 );
-                if (
-                    spec.type === null ||
-                    spec.color === null ||
-                    spec.size === null
-                ) {
+                if (!spec.type || !spec.color || !spec.size) {
                     return vscode.window.showErrorMessage(
                         'Cancelled Spawning Pet',
                     );
