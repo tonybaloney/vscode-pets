@@ -285,7 +285,7 @@ abstract class BasePetType implements IPetType {
         return this._speed;
     }
 
-    randomizeSpeed(speed: number) : number {
+    randomizeSpeed(speed: number): number {
         const min = speed * 0.7;
         const max = speed * 1.3;
         const newSpeed = Math.random() * (max - min) + min;
