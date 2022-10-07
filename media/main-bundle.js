@@ -837,7 +837,7 @@ class BasePetType {
         this.currentStateEnum = this.sequence.startingState;
         this.currentState = (0, states_1.resolveState)(this.currentStateEnum, this);
         this._name = name;
-        this._speed = speed;
+        this._speed = speed; // TODO: Add a random modifier (+/- 30%) to this value.
         // Increment the static count of the Pet class that the constructor belongs to
         this.constructor.count += 1;
     }
