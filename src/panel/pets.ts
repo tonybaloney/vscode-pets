@@ -589,8 +589,7 @@ export class Cat extends BasePetType {
         return '🐱';
     }
     hello(): string {
-        // TODO: #185 Add a custom message for cat
-        return ` says hello 👋!`;
+        return `brrr... Meow!`;
     }
 }
 
