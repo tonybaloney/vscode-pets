@@ -1,6 +1,6 @@
 # VS Code Pets
 
-![icon](https://github.com/tonybaloney/vscode-pet/raw/master/icon.png)
+![icon](https://github.com/tonybaloney/vscode-pets/raw/master/icon.png)
 
 Puts a small, bored cat, an enthusiastic dog, a feisty snake, a rubber duck, or Clippy 📎 in your code editor.
 
@@ -8,7 +8,7 @@ Puts a small, bored cat, an enthusiastic dog, a feisty snake, a rubber duck, or 
 
 Run the "Start pet coding session" action to see the panel.
 
-![screenshot](https://github.com/tonybaloney/vscode-pet/raw/master/screenshots/screenshot.gif)
+![screenshot](https://github.com/tonybaloney/vscode-pets/raw/master/screenshots/screenshot.gif)
 
 ## Installation
 
@@ -22,7 +22,7 @@ Run the "Start pet coding session" command (`vscode-pets.start`)
 
 You can choose either pet type and pet color:
 
-![screenshot2](https://github.com/tonybaloney/vscode-pet/raw/master/screenshots/screenshot-2.gif)
+![screenshot2](https://github.com/tonybaloney/vscode-pets/raw/master/screenshots/screenshot-2.gif)
 
 * Snake can only be green
 * Rubber duck & Zappy can only be yellow
@@ -33,7 +33,7 @@ You can choose either pet type and pet color:
 
 Pets will interact with you
 
-![screenshot3](https://github.com/tonybaloney/vscode-pet/raw/master/screenshots/screenshot-3.gif)
+![screenshot3](https://github.com/tonybaloney/vscode-pets/raw/master/screenshots/screenshot-3.gif)
 
 ## Throwing a ball
 
@@ -41,7 +41,7 @@ Play catch with your pet! Run the "Throw ball" command (`vscode-pets.throw-ball`
 
 * Rocky will not run & catch a ball. Have you ever seen a rock run after a ball? Neither have we.
 
-![screenshot4](https://github.com/tonybaloney/vscode-pet/raw/master/screenshots/screenshot-4.gif)
+![screenshot4](https://github.com/tonybaloney/vscode-pets/raw/master/screenshots/screenshot-4.gif)
 
 ## Adding extra pets
 
@@ -59,11 +59,15 @@ You can remove specific pets by running the "Remove pet" command (`vscode-pets.d
 
 Configure `vscode-pets.theme` to `"forest"` and let your pets play in a spooky forest.
 
-![forest](https://github.com/tonybaloney/vscode-pet/raw/master/screenshots/forest.gif)
+![forest](https://github.com/tonybaloney/vscode-pets/raw/master/screenshots/forest.gif)
 
 Set `vscode-pets.theme` to `"castle"` for them to roam the ramparts!
 
-![castle](https://github.com/tonybaloney/vscode-pet/raw/master/screenshots/castle.gif)
+![castle](https://github.com/tonybaloney/vscode-pets/raw/master/screenshots/castle.gif)
+
+Set `vscode-pets.theme` to `"beach"` for your friends to play by the ocean.
+
+![beach](https://github.com/tonybaloney/vscode-pets/raw/master/screenshots/beach-pose.png)
 
 ## More options
 
