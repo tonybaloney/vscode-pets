@@ -837,7 +837,7 @@ class BasePetType {
         this.currentStateEnum = this.sequence.startingState;
         this.currentState = (0, states_1.resolveState)(this.currentStateEnum, this);
         this._name = name;
-        this._speed = speed; // TODO: Add a random modifier (+/- 30%) to this value.
+        this._speed = speed; // TODO #183 : Add a random modifier (+/- 30%) to this value.
         // Increment the static count of the Pet class that the constructor belongs to
         this.constructor.count += 1;
     }
@@ -1083,6 +1083,10 @@ class Totoro extends BasePetType {
     emoji() {
         return '🐾';
     }
+    hello() {
+        // TODO: #184 Add a custom message for this pe
+        return ` says hello 👋!`;
+    }
 }
 exports.Totoro = Totoro;
 class Cat extends BasePetType {
@@ -1158,6 +1162,10 @@ class Cat extends BasePetType {
     emoji() {
         return '🐱';
     }
+    hello() {
+        // TODO: #185 Add a custom message for cat
+        return ` says hello 👋!`;
+    }
 }
 exports.Cat = Cat;
 class Dog extends BasePetType {
@@ -1221,6 +1229,10 @@ class Dog extends BasePetType {
     emoji() {
         return '🐶';
     }
+    hello() {
+        // TODO: #186 Add a custom message for dog
+        return ` says hello 👋!`;
+    }
 }
 exports.Dog = Dog;
 class Snake extends BasePetType {
@@ -1274,6 +1286,10 @@ class Snake extends BasePetType {
     emoji() {
         return '🐍';
     }
+    hello() {
+        // TODO: #187 Add a custom message for snake
+        return ` says hello 👋!`;
+    }
 }
 exports.Snake = Snake;
 class Clippy extends BasePetType {
@@ -1318,6 +1334,10 @@ class Clippy extends BasePetType {
     };
     emoji() {
         return '📎';
+    }
+    hello() {
+        // TODO: #188 Add a custom message for clippy
+        return ` says hello 👋!`;
     }
 }
 exports.Clippy = Clippy;
@@ -1364,6 +1384,10 @@ class RubberDuck extends BasePetType {
     emoji() {
         return '🐥';
     }
+    hello() {
+        // TODO: #190 Add a custom message for duck
+        return ` says hello 👋!`;
+    }
 }
 exports.RubberDuck = RubberDuck;
 class Cockatiel extends BasePetType {
@@ -1408,6 +1432,10 @@ class Cockatiel extends BasePetType {
     };
     emoji() {
         return '🦜';
+    }
+    hello() {
+        // TODO: #191 Add a custom message for cockatiel
+        return ` says hello 👋!`;
     }
 }
 exports.Cockatiel = Cockatiel;
@@ -1454,6 +1482,10 @@ class Crab extends BasePetType {
     emoji() {
         return '🦀';
     }
+    hello() {
+        // TODO: #192 Add a custom message for crab
+        return ` says hello 👋!`;
+    }
 }
 exports.Crab = Crab;
 class Zappy extends BasePetType {
@@ -1499,6 +1531,10 @@ class Zappy extends BasePetType {
     emoji() {
         return '⚡';
     }
+    hello() {
+        // TODO: #193 Add a custom message for zappy
+        return ` says hello 👋!`;
+    }
 }
 exports.Zappy = Zappy;
 class Rocky extends BasePetType {
@@ -1525,6 +1561,10 @@ class Rocky extends BasePetType {
     }
     canChase() {
         return false;
+    }
+    hello() {
+        // TODO: #194 Add a custom message for rock
+        return ` says hello 👋!`;
     }
 }
 exports.Rocky = Rocky;
