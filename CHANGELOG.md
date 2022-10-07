@@ -2,6 +2,37 @@
 
 All notable changes to the "vscode-pets" extension will be documented in this file.
 
+## [1.14.0]
+
+## New Features
+
+* Add Roll Call command by @Harry-Hopkinson in https://github.com/tonybaloney/vscode-pets/pull/175
+* Add the ability to set a custom name for a pet by @ccjmne in https://github.com/tonybaloney/vscode-pets/pull/176
+* Fix Pet's not spawning when cancelling the operation. by @Harry-Hopkinson in https://github.com/tonybaloney/vscode-pets/pull/182
+
+* split cat and dog names by @tonybaloney in https://github.com/tonybaloney/vscode-pets/pull/147
+* Update names.ts by @GorillaTV in https://github.com/tonybaloney/vscode-pets/pull/150
+* Update names.ts by @jasminejell in https://github.com/tonybaloney/vscode-pets/pull/151
+* Update names.ts by @MerryHoppins in https://github.com/tonybaloney/vscode-pets/pull/152
+* remove simba from dog names by @GorillaTV in https://github.com/tonybaloney/vscode-pets/pull/154
+* added amelia, crabito, big fella, peaches, quackers and pebble by @jasminejell in https://github.com/tonybaloney/vscode-pets/pull/153
+* I added Jemima, Bolty and Beaky by @MerryHoppins in https://github.com/tonybaloney/vscode-pets/pull/155
+* I have added Hissy Elliot by @MerryHoppins in https://github.com/tonybaloney/vscode-pets/pull/156
+* Added Kanye nest by @jasminejell in https://github.com/tonybaloney/vscode-pets/pull/158
+* Add Dame Judi Finch by @GorillaTV in https://github.com/tonybaloney/vscode-pets/pull/160
+* I added Baquack Obama by @MerryHoppins in https://github.com/tonybaloney/vscode-pets/pull/159
+* Removed 'Purfect' from DOG NAMES by @jasminejell in https://github.com/tonybaloney/vscode-pets/pull/163
+* I added Rocksanne and Rockstar by @GorillaTV in https://github.com/tonybaloney/vscode-pets/pull/165
+* removed the un-cat names by @pranayjalan254 in https://github.com/tonybaloney/vscode-pets/pull/164
+* Removed some un-dog-like names by @slayeh17 in https://github.com/tonybaloney/vscode-pets/pull/166
+* Throttling frame rate for consistent ball animation by @sakatam in https://github.com/tonybaloney/vscode-pets/pull/167
+* add: new dog name called 'Ein' by @Kiotlin in https://github.com/tonybaloney/vscode-pets/pull/169
+* More integration testing by @tonybaloney in https://github.com/tonybaloney/vscode-pets/pull/168
+* names: Add New cat name by @Divyanshu-Modi in https://github.com/tonybaloney/vscode-pets/pull/170
+* Add links to contributors' section by @willtheorangeguy in https://github.com/tonybaloney/vscode-pets/pull/171
+* added Maddy as Dog and Jelly Beans as Duck by @Chirag-18 in https://github.com/tonybaloney/vscode-pets/pull/174
+* (names.ts) add crab names by @JavaVista in https://github.com/tonybaloney/vscode-pets/pull/178
+
 ## [1.13.3]
 
 - Raise a more meaningful error when the explorer window is closed and a command is run by @tonybaloney in https://github.com/tonybaloney/vscode-pets/pull/145
