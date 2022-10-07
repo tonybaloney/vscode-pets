@@ -718,8 +718,7 @@ export class Snake extends BasePetType {
         return '🐍';
     }
     hello(): string {
-        // TODO: #187 Add a custom message for snake
-        return ` says hello 👋!`;
+        return `Sss... Oh. Oh my gosh! I'm a snake!`;
     }
 }
 
@@ -768,7 +767,7 @@ export class Clippy extends BasePetType {
     }
     hello(): string {
         // TODO: #188 Add a custom message for clippy
-        return `Sss... Oh. Oh my gosh! I'm a snake!`;
+        return ` says hello 👋!`;
     }
 }
 
