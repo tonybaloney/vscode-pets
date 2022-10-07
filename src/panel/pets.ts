@@ -510,6 +510,10 @@ export class Totoro extends BasePetType {
     emoji(): string {
         return '🐾';
     }
+    hello(): string {
+        // TODO: #184 Add a custom message for this pe
+        return ` says hello 👋!`;
+    }
 }
 export class Cat extends BasePetType {
     label = 'cat';
@@ -584,6 +588,10 @@ export class Cat extends BasePetType {
     emoji(): string {
         return '🐱';
     }
+    hello(): string {
+        // TODO: #185 Add a custom message for cat
+        return ` says hello 👋!`;
+    }
 }
 
 export class Dog extends BasePetType {
@@ -647,6 +655,10 @@ export class Dog extends BasePetType {
     emoji(): string {
         return '🐶';
     }
+    hello(): string {
+        // TODO: #186 Add a custom message for dog
+        return ` says hello 👋!`;
+    }
 }
 
 export class Snake extends BasePetType {
@@ -700,6 +712,10 @@ export class Snake extends BasePetType {
     emoji(): string {
         return '🐍';
     }
+    hello(): string {
+        // TODO: #187 Add a custom message for snake
+        return ` says hello 👋!`;
+    }
 }
 
 export class Clippy extends BasePetType {
@@ -744,6 +760,10 @@ export class Clippy extends BasePetType {
     };
     emoji(): string {
         return '📎';
+    }
+    hello(): string {
+        // TODO: #188 Add a custom message for clippy
+        return ` says hello 👋!`;
     }
 }
 
@@ -790,6 +810,10 @@ export class RubberDuck extends BasePetType {
     emoji(): string {
         return '🐥';
     }
+    hello(): string {
+        // TODO: #190 Add a custom message for duck
+        return ` says hello 👋!`;
+    }
 }
 
 export class Cockatiel extends BasePetType {
@@ -834,6 +858,10 @@ export class Cockatiel extends BasePetType {
     };
     emoji(): string {
         return '🦜';
+    }
+    hello(): string {
+        // TODO: #191 Add a custom message for cockatiel
+        return ` says hello 👋!`;
     }
 }
 
@@ -880,6 +908,10 @@ export class Crab extends BasePetType {
     emoji(): string {
         return '🦀';
     }
+    hello(): string {
+        // TODO: #192 Add a custom message for crab
+        return ` says hello 👋!`;
+    }
 }
 
 export class Zappy extends BasePetType {
@@ -925,6 +957,10 @@ export class Zappy extends BasePetType {
     emoji(): string {
         return '⚡';
     }
+    hello(): string {
+        // TODO: #193 Add a custom message for zappy
+        return ` says hello 👋!`;
+    }
 }
 
 export class Rocky extends BasePetType {
@@ -951,6 +987,10 @@ export class Rocky extends BasePetType {
     }
     canChase(): boolean {
         return false;
+    }
+    hello(): string {
+        // TODO: #194 Add a custom message for rock
+        return ` says hello 👋!`;
     }
 }
 
