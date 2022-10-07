@@ -286,10 +286,10 @@ abstract class BasePetType implements IPetType {
     }
 
     randomizeSpeed(speed: number) : number {
-        let min = speed * 0.7;
-        let max = speed * 1.3;
-        let newSpeed = Math.random() * (max - min) + min;
-        return newSpeed
+        const min = speed * 0.7;
+        const max = speed * 1.3;
+        const newSpeed = Math.random() * (max - min) + min;
+        return newSpeed;
     }
 
     isMoving(): boolean {
