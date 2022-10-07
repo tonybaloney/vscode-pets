@@ -847,7 +847,7 @@ class BasePetType {
         this.currentStateEnum = this.sequence.startingState;
         this.currentState = (0, states_1.resolveState)(this.currentStateEnum, this);
         this._name = name;
-        this._speed = speed; // TODO #183 : Add a random modifier (+/- 30%) to this value.
+        this._speed = this.randomizeSpeed(speed);
         // Increment the static count of the Pet class that the constructor belongs to
         this.constructor.count += 1;
     }
@@ -898,6 +898,12 @@ class BasePetType {
     }
     speed() {
         return this._speed;
+    }
+    randomizeSpeed(speed) {
+        const min = speed * 0.7;
+        const max = speed * 1.3;
+        const newSpeed = Math.random() * (max - min) + min;
+        return newSpeed;
     }
     isMoving() {
         return this._speed !== 0 /* PetSpeed.still */;
@@ -1173,8 +1179,7 @@ class Cat extends BasePetType {
         return '🐱';
     }
     hello() {
-        // TODO: #185 Add a custom message for cat
-        return ` says hello 👋!`;
+        return `brrr... Meow!`;
     }
 }
 exports.Cat = Cat;
