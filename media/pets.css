@@ -130,3 +130,42 @@ img.pet {
 	bottom:0px;
 	z-index: 999;
 }
+
+.bubble {
+	position: absolute;
+	text-align: center;
+	background-color: #fff;
+	font-family: sans-serif;
+}
+
+.bubble-nano {
+	width: 60px;
+	line-height: 1.4em;
+	margin: 40px auto;
+	border: 8px solid #333;
+	border-radius: 10px;
+	font-size: 9px;
+	padding: 10px;
+}
+
+.bubble:before,
+.bubble:after {
+	content: ' ';
+	position: absolute;
+	width: 0;
+	height: 0;
+}
+
+.bubble-nano:before {
+	left: 30px;
+	bottom: -50px;
+	border: 25px solid;
+	border-color: #333 transparent transparent #333;
+}
+
+.bubble-nano:after {
+	left: 38px;
+	bottom: -30px;
+	border: 15px solid;
+	border-color: #fff transparent transparent #fff;
+}
