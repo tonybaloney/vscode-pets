@@ -768,7 +768,7 @@ export class Clippy extends BasePetType {
     }
     hello(): string {
         // TODO: #188 Add a custom message for clippy
-        return ` says hello 👋!`;
+        return `Sss... Oh. Oh my gosh! I'm a snake!`;
     }
 }
 
