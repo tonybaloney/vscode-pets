@@ -989,8 +989,7 @@ export class Rocky extends BasePetType {
         return false;
     }
     hello(): string {
-        // TODO: #194 Add a custom message for rock
-        return ` 👋 I'm rock! i always Rock`;
+        return ` 👋 I'm rock! I always Rock`;
     }
 }
 
