@@ -469,12 +469,24 @@ function addPetToPanel(petType, basePetUri, petColor, petSize, left, bottom, flo
     var collisionElement = document.createElement('div');
     collisionElement.className = 'collision';
     document.getElementById('petsContainer').appendChild(collisionElement);
+    var speechBubbleElement = document.createElement('div');
+    speechBubbleElement.className = `bubble bubble-${petSize}`;
+    document.getElementById('petsContainer').appendChild(speechBubbleElement);
     const root = basePetUri + '/' + petType + '/' + petColor;
     console.log('Creating new pet : ', petType, root, petColor, petSize, name);
-    var newPet = (0, pets_1.createPet)(petType, petSpriteElement, collisionElement, petSize, left, bottom, root, floor, name);
-    petCounter++;
-    startAnimations(collisionElement, newPet);
-    return new pets_1.PetElement(petSpriteElement, collisionElement, newPet, petColor, petType);
+    try {
+        var newPet = (0, pets_1.createPet)(petType, petSpriteElement, collisionElement, speechBubbleElement, petSize, left, bottom, root, floor, name);
+        petCounter++;
+        startAnimations(collisionElement, newPet);
+    }
+    catch (e) {
+        // Remove elements
+        petSpriteElement.remove();
+        collisionElement.remove();
+        speechBubbleElement.remove();
+        throw e;
+    }
+    return new pets_1.PetElement(petSpriteElement, collisionElement, speechBubbleElement, newPet, petColor, petType);
 }
 function saveState() {
     var state = new states_1.PetPanelState();
@@ -721,18 +733,21 @@ exports.InvalidStateException = InvalidStateException;
 class PetElement {
     el;
     collision;
+    speech;
     pet;
     color;
     type;
     remove() {
         this.el.remove();
         this.collision.remove();
+        this.speech.remove();
         this.color = "null" /* PetColor.null */;
         this.type = "null" /* PetType.null */;
     }
-    constructor(el, collision, pet, color, type) {
+    constructor(el, collision, speech, pet, color, type) {
         this.el = el;
         this.collision = collision;
+        this.speech = speech;
         this.pet = pet;
         this.color = color;
         this.type = type;
@@ -829,6 +844,7 @@ class BasePetType {
     holdStateEnum;
     el;
     collision;
+    speech;
     _left;
     _bottom;
     petRoot;
@@ -836,9 +852,11 @@ class BasePetType {
     _friend;
     _name;
     _speed;
-    constructor(spriteElement, collisionElement, size, left, bottom, petRoot, floor, name, speed) {
+    _size;
+    constructor(spriteElement, collisionElement, speechElement, size, left, bottom, petRoot, floor, name, speed) {
         this.el = spriteElement;
         this.collision = collisionElement;
+        this.speech = speechElement;
         this.petRoot = petRoot;
         this._floor = floor;
         this._left = left;
@@ -848,6 +866,7 @@ class BasePetType {
         this.currentState = (0, states_1.resolveState)(this.currentStateEnum, this);
         this._name = name;
         this._speed = speed; // TODO #183 : Add a random modifier (+/- 30%) to this value.
+        this._size = size;
         // Increment the static count of the Pet class that the constructor belongs to
         this.constructor.count += 1;
     }
@@ -862,6 +881,8 @@ class BasePetType {
         this.collision.style.bottom = `${bottom}px`;
         this.collision.style.width = `${calculateSpriteWidth(petSize)}px`;
         this.collision.style.height = `${calculateSpriteWidth(petSize)}px`;
+        this.speech.style.left = `${left}px`;
+        this.speech.style.bottom = `${bottom + calculateSpriteWidth(petSize)}px`;
     }
     left() {
         return this._left;
@@ -869,19 +890,21 @@ class BasePetType {
     bottom() {
         return this._bottom;
     }
+    repositionAccompanyingElements() {
+        this.collision.style.left = `${this._left}px`;
+        this.collision.style.bottom = `${this._bottom}px`;
+        this.speech.style.left = `${this._left}px`;
+        this.speech.style.bottom = `${this._bottom + calculateSpriteWidth(this._size)}px`;
+    }
     positionBottom(bottom) {
         this._bottom = bottom;
         this.el.style.bottom = `${this._bottom}px`;
-        this.el.style.bottom = `${this._bottom}px`;
-        this.collision.style.left = `${this._left}px`;
-        this.collision.style.bottom = `${this._bottom}px`;
+        this.repositionAccompanyingElements();
     }
     positionLeft(left) {
         this._left = left;
         this.el.style.left = `${this._left}px`;
-        this.el.style.left = `${this._left}px`;
-        this.collision.style.left = `${this._left}px`;
-        this.collision.style.bottom = `${this._bottom}px`;
+        this.repositionAccompanyingElements();
     }
     width() {
         return this.el.width;
@@ -1585,41 +1608,41 @@ class InvalidPetException {
     }
 }
 exports.InvalidPetException = InvalidPetException;
-function createPet(petType, el, collision, size, left, bottom, petRoot, floor, name) {
+function createPet(petType, el, collision, speech, size, left, bottom, petRoot, floor, name) {
     if (name === undefined || name === null || name === '') {
         throw new InvalidPetException('name is undefined');
     }
     if (petType === 'totoro') {
-        return new Totoro(el, collision, size, left, bottom, petRoot, floor, name, 3 /* PetSpeed.normal */);
+        return new Totoro(el, collision, speech, size, left, bottom, petRoot, floor, name, 3 /* PetSpeed.normal */);
     }
     if (petType === 'cat') {
-        return new Cat(el, collision, size, left, bottom, petRoot, floor, name, 3 /* PetSpeed.normal */);
+        return new Cat(el, collision, speech, size, left, bottom, petRoot, floor, name, 3 /* PetSpeed.normal */);
     }
     else if (petType === 'dog') {
-        return new Dog(el, collision, size, left, bottom, petRoot, floor, name, 3 /* PetSpeed.normal */);
+        return new Dog(el, collision, speech, size, left, bottom, petRoot, floor, name, 3 /* PetSpeed.normal */);
     }
     else if (petType === 'snake') {
-        return new Snake(el, collision, size, left, bottom, petRoot, floor, name, 1 /* PetSpeed.verySlow */);
+        return new Snake(el, collision, speech, size, left, bottom, petRoot, floor, name, 1 /* PetSpeed.verySlow */);
     }
     else if (petType === 'clippy') {
-        return new Clippy(el, collision, size, left, bottom, petRoot, floor, name, 2 /* PetSpeed.slow */);
+        return new Clippy(el, collision, speech, size, left, bottom, petRoot, floor, name, 2 /* PetSpeed.slow */);
     }
     else if (petType === 'cockatiel') {
-        return new Cockatiel(el, collision, size, left, bottom, petRoot, floor, name, 3 /* PetSpeed.normal */);
+        return new Cockatiel(el, collision, speech, size, left, bottom, petRoot, floor, name, 3 /* PetSpeed.normal */);
     }
     else if (petType === 'crab') {
-        return new Crab(el, collision, size, left, bottom, petRoot, floor, name, 2 /* PetSpeed.slow */);
+        return new Crab(el, collision, speech, size, left, bottom, petRoot, floor, name, 2 /* PetSpeed.slow */);
     }
     else if (petType === 'rubber-duck') {
-        return new RubberDuck(el, collision, size, left, bottom, petRoot, floor, name, 4 /* PetSpeed.fast */);
+        return new RubberDuck(el, collision, speech, size, left, bottom, petRoot, floor, name, 4 /* PetSpeed.fast */);
     }
     else if (petType === 'zappy') {
-        return new Zappy(el, collision, size, left, bottom, petRoot, floor, name, 5 /* PetSpeed.veryFast */);
+        return new Zappy(el, collision, speech, size, left, bottom, petRoot, floor, name, 5 /* PetSpeed.veryFast */);
     }
     else if (petType === 'rocky') {
-        return new Rocky(el, collision, size, left, bottom, petRoot, floor, name, 0 /* PetSpeed.still */);
+        return new Rocky(el, collision, speech, size, left, bottom, petRoot, floor, name, 0 /* PetSpeed.still */);
     }
-    throw new InvalidPetException();
+    throw new InvalidPetException("Pet type doesn't exist");
 }
 exports.createPet = createPet;
 

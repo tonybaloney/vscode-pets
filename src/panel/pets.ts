@@ -17,12 +17,14 @@ export class InvalidStateException {}
 export class PetElement {
     el: HTMLImageElement;
     collision: HTMLDivElement;
+    speech: HTMLDivElement;
     pet: IPetType;
     color: PetColor;
     type: PetType;
     remove() {
         this.el.remove();
         this.collision.remove();
+        this.speech.remove();
         this.color = PetColor.null;
         this.type = PetType.null;
     }
@@ -30,12 +32,14 @@ export class PetElement {
     constructor(
         el: HTMLImageElement,
         collision: HTMLDivElement,
+        speech: HTMLDivElement,
         pet: IPetType,
         color: PetColor,
         type: PetType,
     ) {
         this.el = el;
         this.collision = collision;
+        this.speech = speech;
         this.pet = pet;
         this.color = color;
         this.type = type;
@@ -191,6 +195,7 @@ abstract class BasePetType implements IPetType {
     holdStateEnum: States | undefined;
     private el: HTMLImageElement;
     private collision: HTMLDivElement;
+    private speech: HTMLDivElement;
     private _left: number;
     private _bottom: number;
     petRoot: string;
@@ -198,10 +203,12 @@ abstract class BasePetType implements IPetType {
     _friend: IPetType | undefined;
     private _name: string;
     private _speed: number;
+    private _size: PetSize;
 
     constructor(
         spriteElement: HTMLImageElement,
         collisionElement: HTMLDivElement,
+        speechElement: HTMLDivElement,
         size: PetSize,
         left: number,
         bottom: number,
@@ -212,6 +219,7 @@ abstract class BasePetType implements IPetType {
     ) {
         this.el = spriteElement;
         this.collision = collisionElement;
+        this.speech = speechElement;
         this.petRoot = petRoot;
         this._floor = floor;
         this._left = left;
@@ -222,6 +230,7 @@ abstract class BasePetType implements IPetType {
 
         this._name = name;
         this._speed = speed; // TODO #183 : Add a random modifier (+/- 30%) to this value.
+        this._size = size;
 
         // Increment the static count of the Pet class that the constructor belongs to
         (this.constructor as any).count += 1;
@@ -238,6 +247,8 @@ abstract class BasePetType implements IPetType {
         this.collision.style.bottom = `${bottom}px`;
         this.collision.style.width = `${calculateSpriteWidth(petSize)}px`;
         this.collision.style.height = `${calculateSpriteWidth(petSize)}px`;
+        this.speech.style.left = `${left}px`;
+        this.speech.style.bottom = `${bottom + calculateSpriteWidth(petSize)}px`;
     }
 
     left(): number {
@@ -248,20 +259,23 @@ abstract class BasePetType implements IPetType {
         return this._bottom;
     }
 
+    private repositionAccompanyingElements() {
+        this.collision.style.left = `${this._left}px`;
+        this.collision.style.bottom = `${this._bottom}px`;
+        this.speech.style.left = `${this._left}px`;
+        this.speech.style.bottom = `${this._bottom + calculateSpriteWidth(this._size)}px`;
+    }
+
     positionBottom(bottom: number): void {
         this._bottom = bottom;
         this.el.style.bottom = `${this._bottom}px`;
-        this.el.style.bottom = `${this._bottom}px`;
-        this.collision.style.left = `${this._left}px`;
-        this.collision.style.bottom = `${this._bottom}px`;
+        this.repositionAccompanyingElements();
     }
 
     positionLeft(left: number): void {
         this._left = left;
         this.el.style.left = `${this._left}px`;
-        this.el.style.left = `${this._left}px`;
-        this.collision.style.left = `${this._left}px`;
-        this.collision.style.bottom = `${this._bottom}px`;
+        this.repositionAccompanyingElements();
     }
 
     width(): number {
@@ -1006,6 +1020,7 @@ export function createPet(
     petType: string,
     el: HTMLImageElement,
     collision: HTMLDivElement,
+    speech: HTMLDivElement,
     size: PetSize,
     left: number,
     bottom: number,
@@ -1020,6 +1035,7 @@ export function createPet(
         return new Totoro(
             el,
             collision,
+            speech,
             size,
             left,
             bottom,
@@ -1033,6 +1049,7 @@ export function createPet(
         return new Cat(
             el,
             collision,
+            speech,
             size,
             left,
             bottom,
@@ -1045,6 +1062,7 @@ export function createPet(
         return new Dog(
             el,
             collision,
+            speech,
             size,
             left,
             bottom,
@@ -1057,6 +1075,7 @@ export function createPet(
         return new Snake(
             el,
             collision,
+            speech,
             size,
             left,
             bottom,
@@ -1069,6 +1088,7 @@ export function createPet(
         return new Clippy(
             el,
             collision,
+            speech,
             size,
             left,
             bottom,
@@ -1081,6 +1101,7 @@ export function createPet(
         return new Cockatiel(
             el,
             collision,
+            speech,
             size,
             left,
             bottom,
@@ -1093,6 +1114,7 @@ export function createPet(
         return new Crab(
             el,
             collision,
+            speech,
             size,
             left,
             bottom,
@@ -1105,6 +1127,7 @@ export function createPet(
         return new RubberDuck(
             el,
             collision,
+            speech,
             size,
             left,
             bottom,
@@ -1117,6 +1140,7 @@ export function createPet(
         return new Zappy(
             el,
             collision,
+            speech,
             size,
             left,
             bottom,
@@ -1129,6 +1153,7 @@ export function createPet(
         return new Rocky(
             el,
             collision,
+            speech,
             size,
             left,
             bottom,
@@ -1138,5 +1163,5 @@ export function createPet(
             PetSpeed.still,
         );
     }
-    throw new InvalidPetException();
+    throw new InvalidPetException("Pet type doesn't exist");
 }
