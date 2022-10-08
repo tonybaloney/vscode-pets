@@ -28,7 +28,9 @@ suite('Pets Test Suite', () => {
             'image',
         ) as HTMLImageElement;
         const petDivEl = global.document.createElement('div') as HTMLDivElement;
-        const petSpeechEl = global.document.createElement('div') as HTMLDivElement;
+        const petSpeechEl = global.document.createElement(
+            'div',
+        ) as HTMLDivElement;
         const testPet = pets.createPet(
             'cat',
             petImageEl,
