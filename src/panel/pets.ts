@@ -816,7 +816,7 @@ export class RubberDuck extends BasePetType {
     }
     hello(): string {
         // TODO: #190 Add a custom message for duck
-        return ` says hello 👋!`;
+        return ` Hi, I'm Donald Duck and I love to Quack around 👋!`;
     }
 }
 
