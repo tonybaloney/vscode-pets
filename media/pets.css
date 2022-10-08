@@ -135,14 +135,34 @@ img.pet {
 	position: absolute;
 	text-align: center;
 	background-color: #fff;
-	font-family: sans-serif;
+	font-family: silkscreen, sans-serif;
 }
 
 .bubble-nano {
 	width: 60px;
 	line-height: 1.4em;
-	margin: 40px auto;
-	border: 8px solid #333;
+	margin: 0px auto;
+	border: 2px solid #333;
+	border-radius: 10px;
+	font-size: 9px;
+	padding: 10px;
+}
+
+.bubble-medium {
+	width: 60px;
+	line-height: 1.4em;
+	margin: 0px auto;
+	border: 2px solid #333;
+	border-radius: 10px;
+	font-size: 9px;
+	padding: 10px;
+}
+
+.bubble-large {
+	width: 60px;
+	line-height: 1.4em;
+	margin: 0px auto;
+	border: 2px solid #333;
 	border-radius: 10px;
 	font-size: 9px;
 	padding: 10px;
@@ -157,15 +177,43 @@ img.pet {
 }
 
 .bubble-nano:before {
-	left: 30px;
-	bottom: -50px;
-	border: 25px solid;
+	left: 10px;
+	bottom: -15px;
+	border: 7px solid;
 	border-color: #333 transparent transparent #333;
 }
 
 .bubble-nano:after {
-	left: 38px;
-	bottom: -30px;
-	border: 15px solid;
+	left: 12px;
+	bottom: -10px;
+	border: 5px solid;
+	border-color: #fff transparent transparent #fff;
+}
+
+.bubble-medium:before {
+	left: 10px;
+	bottom: -15px;
+	border: 7px solid;
+	border-color: #333 transparent transparent #333;
+}
+
+.bubble-medium:after {
+	left: 12px;
+	bottom: -10px;
+	border: 5px solid;
+	border-color: #fff transparent transparent #fff;
+}
+
+.bubble-large:before {
+	left: 10px;
+	bottom: -15px;
+	border: 7px solid;
+	border-color: #333 transparent transparent #333;
+}
+
+.bubble-large:after {
+	left: 12px;
+	bottom: -10px;
+	border: 5px solid;
 	border-color: #fff transparent transparent #fff;
 }

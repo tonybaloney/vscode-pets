@@ -14,7 +14,6 @@ import {
     PetCollection,
     PetElement,
     IPetCollection,
-    InvalidPetException,
 } from './pets';
 import { BallState, PetElementState, PetPanelState } from './states';
 
@@ -134,6 +133,7 @@ function addPetToPanel(
 
     var speechBubbleElement: HTMLDivElement = document.createElement('div');
     speechBubbleElement.className = `bubble bubble-${petSize}`;
+    speechBubbleElement.innerText = 'Hello!';
     (document.getElementById('petsContainer') as HTMLDivElement).appendChild(
         speechBubbleElement,
     );
@@ -155,14 +155,14 @@ function addPetToPanel(
         );
         petCounter++;
         startAnimations(collisionElement, newPet);
-    } catch (e: any){
+    } catch (e: any) {
         // Remove elements
         petSpriteElement.remove();
         collisionElement.remove();
         speechBubbleElement.remove();
         throw e;
     }
-    
+
     return new PetElement(
         petSpriteElement,
         collisionElement,

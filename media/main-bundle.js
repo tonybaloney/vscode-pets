@@ -471,6 +471,7 @@ function addPetToPanel(petType, basePetUri, petColor, petSize, left, bottom, flo
     document.getElementById('petsContainer').appendChild(collisionElement);
     var speechBubbleElement = document.createElement('div');
     speechBubbleElement.className = `bubble bubble-${petSize}`;
+    speechBubbleElement.innerText = 'Hello!';
     document.getElementById('petsContainer').appendChild(speechBubbleElement);
     const root = basePetUri + '/' + petType + '/' + petColor;
     console.log('Creating new pet : ', petType, root, petColor, petSize, name);
@@ -883,6 +884,7 @@ class BasePetType {
         this.collision.style.height = `${calculateSpriteWidth(petSize)}px`;
         this.speech.style.left = `${left}px`;
         this.speech.style.bottom = `${bottom + calculateSpriteWidth(petSize)}px`;
+        this.hideSpeechBubble();
     }
     left() {
         return this._left;
@@ -948,6 +950,12 @@ class BasePetType {
             this.currentStateEnum !== "chase" /* States.chase */ &&
             this.isMoving());
     }
+    showSpeechBubble() {
+        this.speech.style.display = 'block';
+    }
+    hideSpeechBubble() {
+        this.speech.style.display = 'none';
+    }
     swipe() {
         if (this.currentStateEnum === "swipe" /* States.swipe */) {
             return;
@@ -956,6 +964,7 @@ class BasePetType {
         this.holdStateEnum = this.currentStateEnum;
         this.currentStateEnum = "swipe" /* States.swipe */;
         this.currentState = (0, states_1.resolveState)(this.currentStateEnum, this);
+        this.showSpeechBubble();
     }
     chase(ballState, canvas) {
         this.currentStateEnum = "chase" /* States.chase */;
@@ -1016,6 +1025,7 @@ class BasePetType {
                 this.currentStateEnum = this.holdStateEnum;
                 this.holdState = undefined;
                 this.holdStateEnum = undefined;
+                this.hideSpeechBubble();
                 return;
             }
             var nextState = this.chooseNextState(this.currentStateEnum);

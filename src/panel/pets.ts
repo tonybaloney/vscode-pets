@@ -248,7 +248,10 @@ abstract class BasePetType implements IPetType {
         this.collision.style.width = `${calculateSpriteWidth(petSize)}px`;
         this.collision.style.height = `${calculateSpriteWidth(petSize)}px`;
         this.speech.style.left = `${left}px`;
-        this.speech.style.bottom = `${bottom + calculateSpriteWidth(petSize)}px`;
+        this.speech.style.bottom = `${
+            bottom + calculateSpriteWidth(petSize)
+        }px`;
+        this.hideSpeechBubble();
     }
 
     left(): number {
@@ -263,7 +266,9 @@ abstract class BasePetType implements IPetType {
         this.collision.style.left = `${this._left}px`;
         this.collision.style.bottom = `${this._bottom}px`;
         this.speech.style.left = `${this._left}px`;
-        this.speech.style.bottom = `${this._bottom + calculateSpriteWidth(this._size)}px`;
+        this.speech.style.bottom = `${
+            this._bottom + calculateSpriteWidth(this._size)
+        }px`;
     }
 
     positionBottom(bottom: number): void {
@@ -333,6 +338,14 @@ abstract class BasePetType implements IPetType {
         );
     }
 
+    showSpeechBubble() {
+        this.speech.style.display = 'block';
+    }
+
+    hideSpeechBubble() {
+        this.speech.style.display = 'none';
+    }
+
     swipe() {
         if (this.currentStateEnum === States.swipe) {
             return;
@@ -341,6 +354,7 @@ abstract class BasePetType implements IPetType {
         this.holdStateEnum = this.currentStateEnum;
         this.currentStateEnum = States.swipe;
         this.currentState = resolveState(this.currentStateEnum, this);
+        this.showSpeechBubble();
     }
 
     chase(ballState: BallState, canvas: HTMLCanvasElement) {
@@ -416,6 +430,7 @@ abstract class BasePetType implements IPetType {
                 this.currentStateEnum = this.holdStateEnum;
                 this.holdState = undefined;
                 this.holdStateEnum = undefined;
+                this.hideSpeechBubble();
                 return;
             }
 
