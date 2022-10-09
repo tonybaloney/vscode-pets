@@ -800,7 +800,7 @@ export class Clippy extends BasePetType {
     }
     hello(): string {
         // TODO: #188 Add a custom message for clippy
-        return ` Hi, I'm Clippy, would you like some assitance today? 👋!`;
+        return ` Hi, I'm Clippy, would you like some assistance today? 👋!`;
     }
 }
 
