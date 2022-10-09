@@ -912,7 +912,6 @@ export class Crab extends BasePetType {
         return '🦀';
     }
     hello(): string {
-        // TODO: #192 Add a custom message for crab
         return ` Hi, I'm Crabsolutely Clawsome Crab 👋!`;
     }
 }
