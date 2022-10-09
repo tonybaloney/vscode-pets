@@ -799,7 +799,6 @@ export class Clippy extends BasePetType {
         return '📎';
     }
     hello(): string {
-        // TODO: #188 Add a custom message for clippy
         return ` Hi, I'm Clippy, would you like some assistance today? 👋!`;
     }
 }
