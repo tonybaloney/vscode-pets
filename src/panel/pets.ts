@@ -125,8 +125,8 @@ export class PetCollection implements IPetCollection {
                     if (
                         petInCollection.pet.makeFriendsWith(potentialFriend.pet)
                     ) {
-                        potentialFriend.pet.showSpeechBubble("❤️", 2000);
-                        petInCollection.pet.showSpeechBubble("❤️", 2000);
+                        potentialFriend.pet.showSpeechBubble('❤️', 2000);
+                        petInCollection.pet.showSpeechBubble('❤️', 2000);
                     }
                 }
             });
@@ -351,7 +351,7 @@ abstract class BasePetType implements IPetType {
         this.speech.style.display = 'block';
         setTimeout(() => {
             this.hideSpeechBubble();
-        }   , duration);
+        }, duration);
     }
 
     hideSpeechBubble() {
@@ -366,7 +366,7 @@ abstract class BasePetType implements IPetType {
         this.holdStateEnum = this.currentStateEnum;
         this.currentStateEnum = States.swipe;
         this.currentState = resolveState(this.currentStateEnum, this);
-        this.showSpeechBubble("👋");
+        this.showSpeechBubble('👋');
     }
 
     chase(ballState: BallState, canvas: HTMLCanvasElement) {
