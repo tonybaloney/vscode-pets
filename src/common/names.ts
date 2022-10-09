@@ -101,6 +101,7 @@ export const CAT_NAMES: Map<number, string> = new Map<number, string>([
     [98, 'Daisy'],
     [99, 'Amelia'],
     [100, 'Oliver'],
+    [101, 'Sushi']
 ]);
 
 export const DOG_NAMES: Map<number, string> = new Map<number, string>([
@@ -204,6 +205,7 @@ export const DOG_NAMES: Map<number, string> = new Map<number, string>([
     [98, 'Bolt'],
     [99, 'Ein'],
     [100, 'Maddy'],
+    [101, 'Ramen'],
 ]);
 
 export const CRAB_NAMES: Map<number, string> = new Map<number, string>([
@@ -259,6 +261,7 @@ export const SNAKE_NAMES: Map<number, string> = new Map<number, string>([
     [7, 'Ruby'],
     [8, 'Bailey'],
     [9, 'Max'],
+    [10, 'Noodle']
 ]);
 
 export const DUCK_NAMES: Map<number, string> = new Map<number, string>([

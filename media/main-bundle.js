@@ -1386,8 +1386,7 @@ class Clippy extends BasePetType {
         return '📎';
     }
     hello() {
-        // TODO: #188 Add a custom message for clippy
-        return ` says hello 👋!`;
+        return ` Hi, I'm Clippy, would you like some assistance today? 👋!`;
     }
 }
 exports.Clippy = Clippy;
@@ -1435,8 +1434,7 @@ class RubberDuck extends BasePetType {
         return '🐥';
     }
     hello() {
-        // TODO: #190 Add a custom message for duck
-        return ` says hello 👋!`;
+        return ` Hi, I love to quack around 👋!`;
     }
 }
 exports.RubberDuck = RubberDuck;
@@ -1533,8 +1531,7 @@ class Crab extends BasePetType {
         return '🦀';
     }
     hello() {
-        // TODO: #192 Add a custom message for crab
-        return ` says hello 👋!`;
+        return ` Hi, I'm Crabsolutely Clawsome Crab 👋!`;
     }
 }
 exports.Crab = Crab;
@@ -1583,7 +1580,7 @@ class Zappy extends BasePetType {
     }
     hello() {
         // TODO: #193 Add a custom message for zappy
-        return ` says hello 👋!`;
+        return ` Hello this is Zappy! Do I look familiar?? I am the mascot for Azure Functions😉`;
     }
 }
 exports.Zappy = Zappy;
