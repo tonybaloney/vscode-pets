@@ -259,6 +259,7 @@ export const SNAKE_NAMES: Map<number, string> = new Map<number, string>([
     [7, 'Ruby'],
     [8, 'Bailey'],
     [9, 'Max'],
+    [10, 'Misunderstood Animal who did nothing to you'],
 ]);
 
 export const DUCK_NAMES: Map<number, string> = new Map<number, string>([
@@ -307,6 +308,8 @@ export const ROCKY_NAMES: Map<number, string> = new Map<number, string>([
     [11, 'Pebble'],
     [12, 'Rocksanne'],
     [13, 'Rockstar'],
+    [14, 'Dwayne Johnson'],
+    [15, 'Roll'],
 ]);
 
 export const COCKATIEL_NAMES: Map<number, string> = new Map<number, string>([
