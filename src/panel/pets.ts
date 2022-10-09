@@ -229,8 +229,8 @@ abstract class BasePetType implements IPetType {
         this.currentState = resolveState(this.currentStateEnum, this);
 
         this._name = name;
-        this._speed = speed; // TODO #183 : Add a random modifier (+/- 30%) to this value.
         this._size = size;
+        this._speed = this.randomizeSpeed(speed);
 
         // Increment the static count of the Pet class that the constructor belongs to
         (this.constructor as any).count += 1;
@@ -302,6 +302,13 @@ abstract class BasePetType implements IPetType {
 
     speed(): number {
         return this._speed;
+    }
+
+    randomizeSpeed(speed: number): number {
+        const min = speed * 0.7;
+        const max = speed * 1.3;
+        const newSpeed = Math.random() * (max - min) + min;
+        return newSpeed;
     }
 
     isMoving(): boolean {
@@ -540,8 +547,7 @@ export class Totoro extends BasePetType {
         return '🐾';
     }
     hello(): string {
-        // TODO: #184 Add a custom message for this pe
-        return ` says hello 👋!`;
+        return `Try Laughing. Then Whatever Scares You Will Go Away. 🎭`;
     }
 }
 export class Cat extends BasePetType {
@@ -618,8 +624,7 @@ export class Cat extends BasePetType {
         return '🐱';
     }
     hello(): string {
-        // TODO: #185 Add a custom message for cat
-        return ` says hello 👋!`;
+        return `brrr... Meow!`;
     }
 }
 
@@ -686,7 +691,7 @@ export class Dog extends BasePetType {
     }
     hello(): string {
         // TODO: #186 Add a custom message for dog
-        return ` says hello 👋!`;
+        return ` Every dog has its day - and today is woof day! Today I just want to bark. Take me on a walk`;
     }
 }
 
@@ -742,8 +747,7 @@ export class Snake extends BasePetType {
         return '🐍';
     }
     hello(): string {
-        // TODO: #187 Add a custom message for snake
-        return ` says hello 👋!`;
+        return `Sss... Oh. Oh my gosh! I'm a snake!`;
     }
 }
 
@@ -1018,8 +1022,7 @@ export class Rocky extends BasePetType {
         return false;
     }
     hello(): string {
-        // TODO: #194 Add a custom message for rock
-        return ` says hello 👋!`;
+        return ` 👋 I'm rock! I always Rock`;
     }
 }
 
