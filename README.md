@@ -6,7 +6,7 @@ Puts a small, bored cat, an enthusiastic dog, a feisty snake, a rubber duck, or 
 
 [![Visual Studio Marketplace Version](https://img.shields.io/visual-studio-marketplace/v/tonybaloney.vscode-pets?color=blue&logo=visual-studio)](https://marketplace.visualstudio.com/items?itemName=tonybaloney.vscode-pets&WT.mc_id=python-17801-anthonyshaw)
 
-Run the "Start pet coding session" action to see the panel.
+Run the "Start pet coding session" action form the command palette.
 
 ![screenshot](https://github.com/tonybaloney/vscode-pets/raw/master/screenshots/screenshot.gif)
 
@@ -20,7 +20,7 @@ Run the "Start pet coding session" command (`vscode-pets.start`)
 
 ## Configuring your pet
 
-You can choose either pet type and pet color:
+You can choose either pet type and pet color from the VS Code Settings and search for "pets":
 
 ![screenshot2](https://github.com/tonybaloney/vscode-pets/raw/master/screenshots/screenshot-2.gif)
 
