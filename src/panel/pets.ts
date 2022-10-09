@@ -125,9 +125,8 @@ export class PetCollection implements IPetCollection {
                     if (
                         petInCollection.pet.makeFriendsWith(potentialFriend.pet)
                     ) {
-                        messages.push(
-                            `${petInCollection.pet.name()} (${petInCollection.pet.emoji()}): I'm now friends ❤️ with ${potentialFriend.pet.name()} (${potentialFriend.pet.emoji()})`,
-                        );
+                        potentialFriend.pet.showSpeechBubble("❤️", 2000);
+                        petInCollection.pet.showSpeechBubble("❤️", 2000);
                     }
                 }
             });
@@ -168,6 +167,8 @@ export interface IPetType {
     friend(): IPetType | undefined;
     makeFriendsWith(friend: IPetType): boolean;
     isPlaying(): boolean;
+
+    showSpeechBubble(message: string, duration: number): void;
 }
 
 function calculateSpriteWidth(size: PetSize): number {
@@ -338,8 +339,12 @@ abstract class BasePetType implements IPetType {
         );
     }
 
-    showSpeechBubble() {
+    showSpeechBubble(message: string, duration: number = 3000) {
+        this.speech.innerHTML = message;
         this.speech.style.display = 'block';
+        setTimeout(() => {
+            this.hideSpeechBubble();
+        }   , duration);
     }
 
     hideSpeechBubble() {
@@ -354,7 +359,7 @@ abstract class BasePetType implements IPetType {
         this.holdStateEnum = this.currentStateEnum;
         this.currentStateEnum = States.swipe;
         this.currentState = resolveState(this.currentStateEnum, this);
-        this.showSpeechBubble();
+        this.showSpeechBubble("👋");
     }
 
     chase(ballState: BallState, canvas: HTMLCanvasElement) {
@@ -430,7 +435,6 @@ abstract class BasePetType implements IPetType {
                 this.currentStateEnum = this.holdStateEnum;
                 this.holdState = undefined;
                 this.holdStateEnum = undefined;
-                this.hideSpeechBubble();
                 return;
             }
 

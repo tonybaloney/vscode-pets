@@ -809,7 +809,8 @@ class PetCollection {
                     // We found a possible new friend..
                     console.log(petInCollection.pet.name(), ' wants to be friends with ', potentialFriend.pet.name(), '.');
                     if (petInCollection.pet.makeFriendsWith(potentialFriend.pet)) {
-                        messages.push(`${petInCollection.pet.name()} (${petInCollection.pet.emoji()}): I'm now friends ❤️ with ${potentialFriend.pet.name()} (${potentialFriend.pet.emoji()})`);
+                        potentialFriend.pet.showSpeechBubble("❤️", 2000);
+                        petInCollection.pet.showSpeechBubble("❤️", 2000);
                     }
                 }
             });
@@ -950,8 +951,12 @@ class BasePetType {
             this.currentStateEnum !== "chase" /* States.chase */ &&
             this.isMoving());
     }
-    showSpeechBubble() {
+    showSpeechBubble(message, duration = 3000) {
+        this.speech.innerHTML = message;
         this.speech.style.display = 'block';
+        setTimeout(() => {
+            this.hideSpeechBubble();
+        }, duration);
     }
     hideSpeechBubble() {
         this.speech.style.display = 'none';
@@ -964,7 +969,7 @@ class BasePetType {
         this.holdStateEnum = this.currentStateEnum;
         this.currentStateEnum = "swipe" /* States.swipe */;
         this.currentState = (0, states_1.resolveState)(this.currentStateEnum, this);
-        this.showSpeechBubble();
+        this.showSpeechBubble("👋");
     }
     chase(ballState, canvas) {
         this.currentStateEnum = "chase" /* States.chase */;
@@ -1025,7 +1030,6 @@ class BasePetType {
                 this.currentStateEnum = this.holdStateEnum;
                 this.holdState = undefined;
                 this.holdStateEnum = undefined;
-                this.hideSpeechBubble();
                 return;
             }
             var nextState = this.chooseNextState(this.currentStateEnum);
