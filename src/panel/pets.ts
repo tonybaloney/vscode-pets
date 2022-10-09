@@ -959,7 +959,7 @@ export class Zappy extends BasePetType {
     }
     hello(): string {
         // TODO: #193 Add a custom message for zappy
-        return ` Hello this is Zappy! Do I look familiar?? I am part of Azure functions😉`;
+        return ` Hello this is Zappy! Do I look familiar?? I am the mascot for Azure Functions😉`;
     }
 }
 
