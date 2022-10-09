@@ -809,8 +809,8 @@ class PetCollection {
                     // We found a possible new friend..
                     console.log(petInCollection.pet.name(), ' wants to be friends with ', potentialFriend.pet.name(), '.');
                     if (petInCollection.pet.makeFriendsWith(potentialFriend.pet)) {
-                        potentialFriend.pet.showSpeechBubble("❤️", 2000);
-                        petInCollection.pet.showSpeechBubble("❤️", 2000);
+                        potentialFriend.pet.showSpeechBubble('❤️', 2000);
+                        petInCollection.pet.showSpeechBubble('❤️', 2000);
                     }
                 }
             });
@@ -867,8 +867,8 @@ class BasePetType {
         this.currentStateEnum = this.sequence.startingState;
         this.currentState = (0, states_1.resolveState)(this.currentStateEnum, this);
         this._name = name;
-        this._speed = this.randomizeSpeed(speed);
         this._size = size;
+        this._speed = this.randomizeSpeed(speed);
         // Increment the static count of the Pet class that the constructor belongs to
         this.constructor.count += 1;
     }
@@ -975,7 +975,7 @@ class BasePetType {
         this.holdStateEnum = this.currentStateEnum;
         this.currentStateEnum = "swipe" /* States.swipe */;
         this.currentState = (0, states_1.resolveState)(this.currentStateEnum, this);
-        this.showSpeechBubble("👋");
+        this.showSpeechBubble('👋');
     }
     chase(ballState, canvas) {
         this.currentStateEnum = "chase" /* States.chase */;
@@ -1137,8 +1137,7 @@ class Totoro extends BasePetType {
         return '🐾';
     }
     hello() {
-        // TODO: #184 Add a custom message for this pe
-        return ` says hello 👋!`;
+        return `Try Laughing. Then Whatever Scares You Will Go Away. 🎭`;
     }
 }
 exports.Totoro = Totoro;
@@ -1283,7 +1282,7 @@ class Dog extends BasePetType {
     }
     hello() {
         // TODO: #186 Add a custom message for dog
-        return ` says hello 👋!`;
+        return ` Every dog has its day - and today is woof day! Today I just want to bark. Take me on a walk`;
     }
 }
 exports.Dog = Dog;
@@ -1339,8 +1338,7 @@ class Snake extends BasePetType {
         return '🐍';
     }
     hello() {
-        // TODO: #187 Add a custom message for snake
-        return ` says hello 👋!`;
+        return `Sss... Oh. Oh my gosh! I'm a snake!`;
     }
 }
 exports.Snake = Snake;
@@ -1615,8 +1613,7 @@ class Rocky extends BasePetType {
         return false;
     }
     hello() {
-        // TODO: #194 Add a custom message for rock
-        return ` says hello 👋!`;
+        return ` 👋 I'm rock! I always Rock`;
     }
 }
 exports.Rocky = Rocky;
