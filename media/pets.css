@@ -130,3 +130,54 @@ img.pet {
 	bottom:0px;
 	z-index: 999;
 }
+
+.bubble {
+	position: absolute;
+	text-align: center;
+	background-color: #fff;
+	font-family: silkscreen, sans-serif;
+	width: 60px;
+	line-height: 1.4em;
+	margin: 0px auto;
+	border: 2px solid #333;
+	border-radius: 10px;
+	padding: 10px;
+}
+
+.bubble-nano {
+	font-size: 9px;
+}
+
+.bubble-medium {
+	font-size: 12px;
+}
+
+.bubble-large {
+	font-size: 16px;
+}
+
+.bubble:before,
+.bubble:after {
+	content: ' ';
+	position: absolute;
+	width: 0;
+	height: 0;
+}
+
+.bubble-nano:before,
+.bubble-medium:before,
+.bubble-large:before {
+	left: 10px;
+	bottom: -15px;
+	border: 7px solid;
+	border-color: #333 transparent transparent #333;
+}
+
+.bubble-nano:after,
+.bubble-medium:after,
+.bubble-large:after {
+	left: 12px;
+	bottom: -10px;
+	border: 5px solid;
+	border-color: #fff transparent transparent #fff;
+}

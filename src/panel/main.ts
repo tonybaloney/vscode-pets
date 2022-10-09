@@ -131,24 +131,42 @@ function addPetToPanel(
         collisionElement,
     );
 
+    var speechBubbleElement: HTMLDivElement = document.createElement('div');
+    speechBubbleElement.className = `bubble bubble-${petSize}`;
+    speechBubbleElement.innerText = 'Hello!';
+    (document.getElementById('petsContainer') as HTMLDivElement).appendChild(
+        speechBubbleElement,
+    );
+
     const root = basePetUri + '/' + petType + '/' + petColor;
     console.log('Creating new pet : ', petType, root, petColor, petSize, name);
-    var newPet = createPet(
-        petType,
-        petSpriteElement,
-        collisionElement,
-        petSize,
-        left,
-        bottom,
-        root,
-        floor,
-        name,
-    );
-    petCounter++;
-    startAnimations(collisionElement, newPet);
+    try {
+        var newPet = createPet(
+            petType,
+            petSpriteElement,
+            collisionElement,
+            speechBubbleElement,
+            petSize,
+            left,
+            bottom,
+            root,
+            floor,
+            name,
+        );
+        petCounter++;
+        startAnimations(collisionElement, newPet);
+    } catch (e: any) {
+        // Remove elements
+        petSpriteElement.remove();
+        collisionElement.remove();
+        speechBubbleElement.remove();
+        throw e;
+    }
+
     return new PetElement(
         petSpriteElement,
         collisionElement,
+        speechBubbleElement,
         newPet,
         petColor,
         petType,
