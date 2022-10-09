@@ -777,6 +777,13 @@ class PetWebviewContainer implements IPetPanel {
             'media',
             'pets.css',
         );
+        const silkScreenFontPath = webview.asWebviewUri(
+            vscode.Uri.joinPath(
+                this._extensionUri,
+                'media',
+                'Silkscreen-Regular.ttf',
+            ),
+        );
 
         // Uri to load styles into webview
         const stylesResetUri = webview.asWebviewUri(styleResetPath);
@@ -800,12 +807,19 @@ class PetWebviewContainer implements IPetPanel {
 				-->
 				<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src ${
                     webview.cspSource
-                }; img-src ${
+                } 'nonce-${nonce}'; img-src ${
             webview.cspSource
-        } https:; script-src 'nonce-${nonce}';">
+        } https:; script-src 'nonce-${nonce}';
+                font-src ${webview.cspSource};">
 				<meta name="viewport" content="width=device-width, initial-scale=1.0">
-				<link href="${stylesResetUri}" rel="stylesheet">
-				<link href="${stylesMainUri}" rel="stylesheet">
+				<link href="${stylesResetUri}" rel="stylesheet" nonce="${nonce}">
+				<link href="${stylesMainUri}" rel="stylesheet" nonce="${nonce}">
+                <style nonce="${nonce}">
+                @font-face {
+                    font-family: 'silkscreen';
+                    src: url('${silkScreenFontPath}') format('truetype');
+                }
+                </style>
 				<title>VS Code Pets</title>
 			</head>
 			<body>

@@ -17,12 +17,14 @@ export class InvalidStateException {}
 export class PetElement {
     el: HTMLImageElement;
     collision: HTMLDivElement;
+    speech: HTMLDivElement;
     pet: IPetType;
     color: PetColor;
     type: PetType;
     remove() {
         this.el.remove();
         this.collision.remove();
+        this.speech.remove();
         this.color = PetColor.null;
         this.type = PetType.null;
     }
@@ -30,12 +32,14 @@ export class PetElement {
     constructor(
         el: HTMLImageElement,
         collision: HTMLDivElement,
+        speech: HTMLDivElement,
         pet: IPetType,
         color: PetColor,
         type: PetType,
     ) {
         this.el = el;
         this.collision = collision;
+        this.speech = speech;
         this.pet = pet;
         this.color = color;
         this.type = type;
@@ -121,9 +125,8 @@ export class PetCollection implements IPetCollection {
                     if (
                         petInCollection.pet.makeFriendsWith(potentialFriend.pet)
                     ) {
-                        messages.push(
-                            `${petInCollection.pet.name()} (${petInCollection.pet.emoji()}): I'm now friends ❤️ with ${potentialFriend.pet.name()} (${potentialFriend.pet.emoji()})`,
-                        );
+                        potentialFriend.pet.showSpeechBubble('❤️', 2000);
+                        petInCollection.pet.showSpeechBubble('❤️', 2000);
                     }
                 }
             });
@@ -164,6 +167,8 @@ export interface IPetType {
     friend(): IPetType | undefined;
     makeFriendsWith(friend: IPetType): boolean;
     isPlaying(): boolean;
+
+    showSpeechBubble(message: string, duration: number): void;
 }
 
 function calculateSpriteWidth(size: PetSize): number {
@@ -191,6 +196,7 @@ abstract class BasePetType implements IPetType {
     holdStateEnum: States | undefined;
     private el: HTMLImageElement;
     private collision: HTMLDivElement;
+    private speech: HTMLDivElement;
     private _left: number;
     private _bottom: number;
     petRoot: string;
@@ -198,10 +204,12 @@ abstract class BasePetType implements IPetType {
     _friend: IPetType | undefined;
     private _name: string;
     private _speed: number;
+    private _size: PetSize;
 
     constructor(
         spriteElement: HTMLImageElement,
         collisionElement: HTMLDivElement,
+        speechElement: HTMLDivElement,
         size: PetSize,
         left: number,
         bottom: number,
@@ -212,6 +220,7 @@ abstract class BasePetType implements IPetType {
     ) {
         this.el = spriteElement;
         this.collision = collisionElement;
+        this.speech = speechElement;
         this.petRoot = petRoot;
         this._floor = floor;
         this._left = left;
@@ -221,6 +230,7 @@ abstract class BasePetType implements IPetType {
         this.currentState = resolveState(this.currentStateEnum, this);
 
         this._name = name;
+        this._size = size;
         this._speed = this.randomizeSpeed(speed);
 
         // Increment the static count of the Pet class that the constructor belongs to
@@ -238,6 +248,11 @@ abstract class BasePetType implements IPetType {
         this.collision.style.bottom = `${bottom}px`;
         this.collision.style.width = `${calculateSpriteWidth(petSize)}px`;
         this.collision.style.height = `${calculateSpriteWidth(petSize)}px`;
+        this.speech.style.left = `${left}px`;
+        this.speech.style.bottom = `${
+            bottom + calculateSpriteWidth(petSize)
+        }px`;
+        this.hideSpeechBubble();
     }
 
     left(): number {
@@ -248,20 +263,25 @@ abstract class BasePetType implements IPetType {
         return this._bottom;
     }
 
+    private repositionAccompanyingElements() {
+        this.collision.style.left = `${this._left}px`;
+        this.collision.style.bottom = `${this._bottom}px`;
+        this.speech.style.left = `${this._left}px`;
+        this.speech.style.bottom = `${
+            this._bottom + calculateSpriteWidth(this._size)
+        }px`;
+    }
+
     positionBottom(bottom: number): void {
         this._bottom = bottom;
         this.el.style.bottom = `${this._bottom}px`;
-        this.el.style.bottom = `${this._bottom}px`;
-        this.collision.style.left = `${this._left}px`;
-        this.collision.style.bottom = `${this._bottom}px`;
+        this.repositionAccompanyingElements();
     }
 
     positionLeft(left: number): void {
         this._left = left;
         this.el.style.left = `${this._left}px`;
-        this.el.style.left = `${this._left}px`;
-        this.collision.style.left = `${this._left}px`;
-        this.collision.style.bottom = `${this._bottom}px`;
+        this.repositionAccompanyingElements();
     }
 
     width(): number {
@@ -326,6 +346,18 @@ abstract class BasePetType implements IPetType {
         );
     }
 
+    showSpeechBubble(message: string, duration: number = 3000) {
+        this.speech.innerHTML = message;
+        this.speech.style.display = 'block';
+        setTimeout(() => {
+            this.hideSpeechBubble();
+        }, duration);
+    }
+
+    hideSpeechBubble() {
+        this.speech.style.display = 'none';
+    }
+
     swipe() {
         if (this.currentStateEnum === States.swipe) {
             return;
@@ -334,6 +366,7 @@ abstract class BasePetType implements IPetType {
         this.holdStateEnum = this.currentStateEnum;
         this.currentStateEnum = States.swipe;
         this.currentState = resolveState(this.currentStateEnum, this);
+        this.showSpeechBubble('👋');
     }
 
     chase(ballState: BallState, canvas: HTMLCanvasElement) {
@@ -1008,6 +1041,7 @@ export function createPet(
     petType: string,
     el: HTMLImageElement,
     collision: HTMLDivElement,
+    speech: HTMLDivElement,
     size: PetSize,
     left: number,
     bottom: number,
@@ -1022,6 +1056,7 @@ export function createPet(
         return new Totoro(
             el,
             collision,
+            speech,
             size,
             left,
             bottom,
@@ -1035,6 +1070,7 @@ export function createPet(
         return new Cat(
             el,
             collision,
+            speech,
             size,
             left,
             bottom,
@@ -1047,6 +1083,7 @@ export function createPet(
         return new Dog(
             el,
             collision,
+            speech,
             size,
             left,
             bottom,
@@ -1059,6 +1096,7 @@ export function createPet(
         return new Snake(
             el,
             collision,
+            speech,
             size,
             left,
             bottom,
@@ -1071,6 +1109,7 @@ export function createPet(
         return new Clippy(
             el,
             collision,
+            speech,
             size,
             left,
             bottom,
@@ -1083,6 +1122,7 @@ export function createPet(
         return new Cockatiel(
             el,
             collision,
+            speech,
             size,
             left,
             bottom,
@@ -1095,6 +1135,7 @@ export function createPet(
         return new Crab(
             el,
             collision,
+            speech,
             size,
             left,
             bottom,
@@ -1107,6 +1148,7 @@ export function createPet(
         return new RubberDuck(
             el,
             collision,
+            speech,
             size,
             left,
             bottom,
@@ -1119,6 +1161,7 @@ export function createPet(
         return new Zappy(
             el,
             collision,
+            speech,
             size,
             left,
             bottom,
@@ -1131,6 +1174,7 @@ export function createPet(
         return new Rocky(
             el,
             collision,
+            speech,
             size,
             left,
             bottom,
@@ -1140,5 +1184,5 @@ export function createPet(
             PetSpeed.still,
         );
     }
-    throw new InvalidPetException();
+    throw new InvalidPetException("Pet type doesn't exist");
 }
