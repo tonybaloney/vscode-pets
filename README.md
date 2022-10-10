@@ -100,6 +100,7 @@ Something is not working as it should? Please [open an issue](https://github.com
 **Expected/Actual Results** - Explain what you expected to happen and what actually happened.  
 **Steps to Reproduce** - The steps to follow should be comprehensive, easy to understand, and short. We want to experience the bug first-hand.  
 **Environment** - Share the current version information by copying from `Help` and clicking `About`.
+
 ```
 Version: 1.72.0  
 Commit: 64bbfbf67ada9953918d72e1df2f4d8e537d340e  
