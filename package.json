@@ -1,7 +1,7 @@
 {
     "name": "vscode-pets",
     "displayName": "vscode-pets",
-    "description": "%vscodePets.description%",
+    "description": "Pets for your VS Code",
     "version": "1.14.0",
     "engines": {
         "vscode": "^1.68.0"
@@ -234,6 +234,5 @@
             "text-summary"
         ],
         "report-dir": "coverage"
-    },
-    "dependencies": {}
+    }
 }
