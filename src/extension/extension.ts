@@ -231,7 +231,12 @@ async function handleRemovePetMessage(
             petList.map((val) => {
                 return new PetQuickPickItem(val.name, val.type, val.color);
             }),
-            { placeHolder: 'Select the pet to remove.' },
+            {
+                placeHolder: localize.localize(
+                    'selectPetToRemove',
+                    'Select the pet to remove.',
+                ),
+            },
         )
         .then((pet: PetQuickPickItem | undefined) => {
             if (pet) {
@@ -402,15 +407,21 @@ export function activate(context: vscode.ExtensionContext) {
         vscode.commands.registerCommand('vscode-pets.spawn-pet', async () => {
             const panel = getPetPanel();
             if (panel) {
-                const petType = await vscode.window.showQuickPick(ALL_PETS, {
-                    placeHolder: 'Select a pet',
-                });
-                if (petType === undefined) {
+                const selectedPetType = await vscode.window.showQuickPick(
+                    localize.stringListAsQuickPickItemList<PetType>(ALL_PETS),
+                    {
+                        placeHolder: localize.localize(
+                            'selectPet',
+                            'Select a pet',
+                        ),
+                    },
+                );
+                if (selectedPetType === undefined) {
                     return;
                 }
                 var petColor: PetColor = DEFAULT_COLOR;
                 var choices;
-                switch (petType as PetType) {
+                switch (selectedPetType.value) {
                     case PetType.rubberduck:
                         petColor = PetColor.yellow;
                         break;
@@ -423,9 +434,22 @@ export function activate(context: vscode.ExtensionContext) {
                         break;
                     case PetType.cat:
                         choices = [PetColor.black, PetColor.brown];
-                        petColor = (await vscode.window.showQuickPick(choices, {
-                            placeHolder: 'Select a color',
-                        })) as PetColor;
+                        var selectedColor = await vscode.window.showQuickPick(
+                            localize.stringListAsQuickPickItemList<PetColor>(
+                                choices,
+                            ),
+                            {
+                                placeHolder: localize.localize(
+                                    'selectColor',
+                                    'Select a color',
+                                ),
+                            },
+                        );
+                        if (selectedColor === undefined) {
+                            return;
+                        }
+                        petColor = selectedColor.value;
+
                         break;
                     case PetType.dog:
                         choices = [
@@ -433,9 +457,21 @@ export function activate(context: vscode.ExtensionContext) {
                             PetColor.brown,
                             PetColor.white,
                         ];
-                        petColor = (await vscode.window.showQuickPick(choices, {
-                            placeHolder: 'Select a color',
-                        })) as PetColor;
+                        var selectedColor = await vscode.window.showQuickPick(
+                            localize.stringListAsQuickPickItemList<PetColor>(
+                                choices,
+                            ),
+                            {
+                                placeHolder: localize.localize(
+                                    'selectColor',
+                                    'Select a color',
+                                ),
+                            },
+                        );
+                        if (selectedColor === undefined) {
+                            return;
+                        }
+                        petColor = selectedColor.value;
                         break;
                     case PetType.clippy:
                         choices = [
@@ -444,9 +480,21 @@ export function activate(context: vscode.ExtensionContext) {
                             PetColor.green,
                             PetColor.yellow,
                         ];
-                        petColor = (await vscode.window.showQuickPick(choices, {
-                            placeHolder: 'Select a color',
-                        })) as PetColor;
+                        var selectedColor = await vscode.window.showQuickPick(
+                            localize.stringListAsQuickPickItemList<PetColor>(
+                                choices,
+                            ),
+                            {
+                                placeHolder: localize.localize(
+                                    'selectColor',
+                                    'Select a color',
+                                ),
+                            },
+                        );
+                        if (selectedColor === undefined) {
+                            return;
+                        }
+                        petColor = selectedColor.value;
                         break;
                     case PetType.cockatiel:
                         petColor = PetColor.gray;
@@ -464,19 +512,25 @@ export function activate(context: vscode.ExtensionContext) {
                 }
 
                 const name = await vscode.window.showInputBox({
-                    placeHolder: 'Leave blank for a random name',
-                    prompt: 'Name your pet',
-                    value: randomName(petType as PetType),
+                    placeHolder: localize.localize(
+                        'leaveBlank',
+                        'Leave blank for a random name',
+                    ),
+                    prompt: localize.localize('nameYourPet', 'Name your pet'),
+                    value: randomName(selectedPetType.value),
                 });
                 const spec = new PetSpecification(
                     petColor,
-                    petType as PetType,
+                    selectedPetType.value,
                     getConfiguredSize(),
                     name,
                 );
                 if (!spec.type || !spec.color || !spec.size) {
-                    return vscode.window.showErrorMessage(
-                        'Cancelled Spawning Pet',
+                    return vscode.window.showWarningMessage(
+                        localize.localize(
+                            'cancelledSpawningPet',
+                            'Cancelled Spawning Pet',
+                        ),
                     );
                 } else if (spec) {
                     panel.spawnPet(spec);
@@ -490,7 +544,10 @@ export function activate(context: vscode.ExtensionContext) {
             } else {
                 createPetPlayground(context);
                 vscode.window.showInformationMessage(
-                    "A Pet Playground has been created. You can now use the 'Spawn Additional Pet' Command to add more pets.",
+                    localize.localize(
+                        'spawnPetWithClosedPlayground',
+                        "A Pet Playground has been created. You can now use the 'Spawn Additional Pet' Command to add more pets.",
+                    ),
                 );
             }
         }),
@@ -505,7 +562,10 @@ export function activate(context: vscode.ExtensionContext) {
             } else {
                 createPetPlayground(context);
                 vscode.window.showInformationMessage(
-                    "A Pet Playground has been created. You can now use the 'Remove All Pets' Command to remove all pets.",
+                    localize.localize(
+                        'removePetsWithClosedPlayground',
+                        "A Pet Playground has been created. You can now use the 'Remove All Pets' Command to remove all pets.",
+                    ),
                 );
             }
         }),
@@ -569,7 +629,7 @@ export function activate(context: vscode.ExtensionContext) {
 
 function updateStatusBar(): void {
     spawnPetStatusBar.text = `$(squirrel)`;
-    spawnPetStatusBar.tooltip = localize.localize('vscodePets.spawnPet', 'Spawn Pet');
+    spawnPetStatusBar.tooltip = localize.localize('spawnPet', 'Spawn Pet');
     spawnPetStatusBar.show();
 }
 
@@ -891,7 +951,7 @@ class PetPanel extends PetWebviewContainer implements IPetPanel {
         // Otherwise, create a new panel.
         const panel = vscode.window.createWebviewPanel(
             PetPanel.viewType,
-            localize.localize("vscodePets.petPanel", 'Pet Panel'),
+            localize.localize('petPanel', 'Pet Panel'),
             vscode.ViewColumn.Two,
             getWebviewOptions(extensionUri),
         );

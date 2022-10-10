@@ -1,5 +1,31 @@
 {
-    "vscodePets.description": "Pets for your VS Code",
-    "vscodePets.spawnPet": "Spawn PETTO",
-    "vscodePets.petPanel": "ペトロパネル"
+    "vscodePets.spawnPet": "スポーンペット",
+    "vscodePets.petPanel": "ペットパネル",
+    "vscodePets.selectPet": "ペットを選択",
+    "vscodePets.selectColor": "色を選択",
+    "vscodePets.selectPetToRemove": "Select the pet to remove.",
+    "vscodePets.leaveBlank": "Leave blank for a random name",
+    "vscodePets.nameYourPet": "Name your pet", 
+    "vscodePets.cancelledSpawningPet":"Cancelled Spawning Pet",
+    "vscodePets.spawnPetWithClosedPlayground": "A Pet Playground has been created. You can now use the \"Spawn Additional Pet\" Command to add more pets.",
+    "vscodePets.removePetsWithClosedPlayground":  "A Pet Playground has been created. You can now use the \"Remove All Pets\" Command to remove all pets.",
+
+    "vscodePets.black": "Black",
+    "vscodePets.brown": "Brown",
+    "vscodePets.green": "Green",
+    "vscodePets.yellow": "Yellow",
+    "vscodePets.gray": "Gray",
+    "vscodePets.red": "Red",
+    "vscodePets.white": "White",
+
+    "vscodePets.cat": "猫",
+    "vscodePets.clippy": "クリッピー",
+    "vscodePets.cockatiel": "オカメインコ",
+    "vscodePets.crab": "カニ",
+    "vscodePets.dog": "犬",
+    "vscodePets.rocky": "石",
+    "vscodePets.rubber-duck": "ゴム製のアヒル",
+    "vscodePets.snake": "蛇",
+    "vscodePets.totoro": "トトロ",
+    "vscodePets.zappy": "ザッピー"
 }
