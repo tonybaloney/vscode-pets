@@ -212,7 +212,7 @@
         "ts-loader": "^9.3.0",
         "typescript": "^4.7.4",
         "typescript-eslint": "^0.0.1-alpha.0",
-        "vscode-nls-dev": "^4.0.3",
+        "vscode-nls-i18n": "^0.2.4",
         "vscode-test": "^1.4.0",
         "webpack": "^5.73.0",
         "webpack-cli": "^4.10.0"
@@ -235,7 +235,5 @@
         ],
         "report-dir": "coverage"
     },
-    "dependencies": {
-        "vscode-nls": "^5.2.0"
-    }
+    "dependencies": {}
 }
