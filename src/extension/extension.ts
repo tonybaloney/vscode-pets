@@ -10,6 +10,7 @@ import {
     WebviewMessage,
 } from '../common/types';
 import { randomName } from '../common/names';
+import * as localize from '../common/localize';
 
 const EXTRA_PETS_KEY = 'vscode-pets.extra-pets';
 const EXTRA_PETS_KEY_TYPES = EXTRA_PETS_KEY + '.types';
@@ -280,6 +281,7 @@ function getWebview(): vscode.Webview | undefined {
 }
 
 export function activate(context: vscode.ExtensionContext) {
+    localize.activate(context);
     context.subscriptions.push(
         vscode.commands.registerCommand('vscode-pets.start', () => {
             if (
@@ -567,7 +569,7 @@ export function activate(context: vscode.ExtensionContext) {
 
 function updateStatusBar(): void {
     spawnPetStatusBar.text = `$(squirrel)`;
-    spawnPetStatusBar.tooltip = 'Spawn Pet';
+    spawnPetStatusBar.tooltip = localize.localize('vscodePets.spawnPet', 'Spawn Pet');
     spawnPetStatusBar.show();
 }
 
@@ -889,7 +891,7 @@ class PetPanel extends PetWebviewContainer implements IPetPanel {
         // Otherwise, create a new panel.
         const panel = vscode.window.createWebviewPanel(
             PetPanel.viewType,
-            'Pet Panel',
+            localize.localize("vscodePets.petPanel", 'Pet Panel'),
             vscode.ViewColumn.Two,
             getWebviewOptions(extensionUri),
         );

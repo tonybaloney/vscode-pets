@@ -1,3 +1,5 @@
 {
-    "vscodePets.description": "Pets for your VS Code"
+    "vscodePets.description": "Pets for your VS Code",
+    "vscodePets.spawnPet": "Spawn Pet",
+    "vscodePets.petPanel": "Pet Panel"
 }

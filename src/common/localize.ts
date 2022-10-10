@@ -1,10 +1,7 @@
-/*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
- *  Licensed under the MIT License. See License.txt in the project root for license information.
- *--------------------------------------------------------------------------------------------*/
+import * as vscode from 'vscode';
 
-import * as nls from 'vscode-nls';
+export const { init, localize } = require("vscode-nls-i18n");
 
-nls.config({ messageFormat: nls.MessageFormat.bundle, bundleFormat: nls.BundleFormat.standalone });
-
-export const localize: nls.LocalizeFunc = nls.loadMessageBundle();
+export function activate(context: vscode.ExtensionContext) {
+  init(context.extensionPath);
+}
