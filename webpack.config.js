@@ -2,6 +2,21 @@
 const path = require('path');
 var removeSourceMapUrlWebpackPlugin = require('@rbarilani/remove-source-map-url-webpack-plugin');
 
+const loaders = [];
+
+loaders.push({
+  test: /\.ts$/,
+  exclude: /node_modules/,
+  use: [
+      {
+          loader: 'ts-loader',
+          options: {
+            configFile : 'tsconfig.panel.json'
+          }
+      },
+  ],
+});
+
 module.exports = {
   mode: "development",
   devtool: "inline-source-map",
@@ -25,18 +40,6 @@ module.exports = {
     extensions: [".ts", ".tsx", ".js"],
   },
   module: {
-    rules: [
-      { 
-        test: /\.ts?$/,
-        use: [
-          {
-            loader: "ts-loader",
-            options: {
-              configFile : 'tsconfig.panel.json'
-            }
-          }
-        ]
-      }
-    ]
+    rules: loaders
   },
 };
