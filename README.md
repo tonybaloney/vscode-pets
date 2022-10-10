@@ -12,9 +12,20 @@ Run the "Start pet coding session" action to see the panel.
 
 ## Installation
 
-Get from the [VS Code marketplace](https://marketplace.visualstudio.com/items?itemName=tonybaloney.vscode-pets&WT.mc_id=python-17801-anthonyshaw)
+Get from the [VS Code marketplace](https://marketplace.visualstudio.com/items?itemName=tonybaloney.vscode-pets&WT.mc_id=python-17801-anthonyshaw).
+
+OR
+
+With VS Code open, search for `vscode-pets` in the extension panel (`Ctrl+Shift+X` on Windows/Linux or `Cmd(⌘)+Shift+X` on MacOS) and click install.
+
+OR
+
+With VS Code open, launch VS Code Quick Open (`Ctrl+P` on Windows/Linux or `Cmd(⌘)+P` on MacOS), paste the following command, and press enter.
+
+`ext install tonybaloney.vscode-pets`
 
 ## Showing your pet
+Open the command palette with `Ctrl+Shift+P` on Windows/Linux or `Cmd(⌘)+Shift+P` on MacOS.  
 
 Run the "Start pet coding session" command (`vscode-pets.start`)
 
@@ -31,7 +42,7 @@ You can choose either pet type and pet color:
 
 ## Playing
 
-Pets will interact with you
+Pets will interact with you within the open Pet Panel.
 
 ![screenshot3](https://github.com/tonybaloney/vscode-pets/raw/master/screenshots/screenshot-3.gif)
 
@@ -51,9 +62,9 @@ Extra pets will not persist between closing and restarting VS Code.
 
 ## Removing pets
 
-You can remove all pets (except the 1 configured) by running the "Remove all pets" command (`vscode-pets.delete-pets`) from the command pallette.
+You can remove all pets (except the 1 configured) by running the "Remove all pets" command (`vscode-pets.delete-pets`) from the command palette.
 
-You can remove specific pets by running the "Remove pet" command (`vscode-pets.delete-pet`) from the command pallette.
+You can remove specific pets by running the "Remove pet" command (`vscode-pets.delete-pet`) from the command palette.
 
 ## Themes
 
@@ -81,7 +92,25 @@ Have an awesome idea for a new feature? Please [open an issue](https://github.co
 
 ### Reporting bugs
 
-Something is not working as it should? Please [open an issue](https://github.com/tonybaloney/vscode-pets/issues/new) giving as much information as you can.
+Something is not working as it should? Please [open an issue](https://github.com/tonybaloney/vscode-pets/issues/new) giving as much information as you can. Writing an effective bug report is a valueable skill as a Software Engineer, refer to the given example below for advice.
+
+**Title** - Clearly summarize what the bug is with specific details.  
+**Summary** - If the title is too long, include a summary with additional details.  
+**Visual/Screenshot** - A picture is always worth the time. Include one if possible.  
+**Expected/Actual Results** - Explain what you expected to happen and what actually happened.  
+**Steps to Reproduce** - The steps to follow should be comprehensive, easy to understand, and short. We want to experience the bug first-hand.  
+**Environment** - Share the current version information by copying from `Help` and clicking `About`.
+```
+Version: 1.72.0  
+Commit: 64bbfbf67ada9953918d72e1df2f4d8e537d340e  
+Date: 2022-10-04T23:20:47.539Z
+Electron: 19.0.17
+Chromium: 102.0.5005.167
+Node.js: 16.14.2
+V8: 10.2.154.15-electron.0
+OS: Linux x64 5.19.12-200.fc36.x86_64
+Sandboxed: No
+```
 
 ### Write code
 
@@ -91,7 +120,8 @@ Want to contribute to vscode-pets? Feel free to [fork the repository](https://gi
 
 -   Run `npm install`.
 -   Run `npm run compile`.
--   Go to the debug panel on sidebar and launch the development version with the extension loaded (first option in the debug profiles).
+-   Go to the debug panel on the sidebar and launch the development version with the extension loaded (first option in the debug profiles).
+-   Refer to [VS Code Extension Documentation](https://code.visualstudio.com/api) for additional resources.
 
 ## Credits
 
