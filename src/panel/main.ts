@@ -264,12 +264,12 @@ let canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D;
 function initCanvas() {
     canvas = document.getElementById('petCanvas') as HTMLCanvasElement;
     if (!canvas) {
-        console.log("Canvas not ready");
+        console.log('Canvas not ready');
         return;
     }
     ctx = canvas.getContext('2d') as CanvasRenderingContext2D;
     if (!ctx) {
-        console.log("Canvas context not ready");
+        console.log('Canvas context not ready');
         return;
     }
     ctx.canvas.width = window.innerWidth;
