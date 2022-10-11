@@ -1,19 +1,45 @@
 import * as path from 'path';
 import * as Mocha from 'mocha';
 import * as glob from 'glob';
+import { join } from 'path';
 
-export function run(): Promise<void> {
+function setupCoverage() {
+    const NYC = require('nyc');
+    const nyc = new NYC({
+        cwd: join(__dirname, '..', '..', '..'),
+        exclude: ['**/test/**', '.vscode-test/**'],
+        reporter: ['text', 'html'],
+        all: true,
+        instrument: true,
+        hookRequire: true,
+        hookRunInContext: true,
+        hookRunInThisContext: true,
+    });
+
+    nyc.reset();
+    nyc.wrap();
+
+    return nyc;
+}
+
+export async function run(): Promise<void> {
+    const nyc = process.env.COVERAGE ? setupCoverage() : null;
+
     // Create the mocha test
     const mocha = new Mocha({
         ui: 'tdd',
         color: true,
-        require: ['ts-node/register', 'source-map-support/register'],
+        require: [
+            'ts-node/register',
+            'source-map-support/register',
+            'jsdom-global/register',
+        ],
     });
 
     const testsRoot = path.resolve(__dirname, '..');
 
     return new Promise((c, e) => {
-        glob('**/**.test.js', { cwd: testsRoot }, (err, files) => {
+        glob('**/**.test.js', { cwd: testsRoot }, async (err, files) => {
             if (err) {
                 return e(err);
             }
@@ -33,6 +59,11 @@ export function run(): Promise<void> {
             } catch (err) {
                 console.error(err);
                 e(err);
+            } finally {
+                if (nyc) {
+                    nyc.writeCoverageFile();
+                    await nyc.report();
+                }
             }
         });
     });
