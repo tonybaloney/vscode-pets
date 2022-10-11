@@ -2,7 +2,7 @@
     "vscodePets.spawnPet": "Générer un animal",
     "vscodePets.petPanel": "Panneau pour animaux",
     "vscodePets.selectPet": "Sélectionnez un animal",
-    "vscodePets.selectColor": "Sélectionnez un couleur",
+    "vscodePets.selectColor": "Sélectionnez une couleur",
     "vscodePets.selectPetToRemove": "Sélectionnez l'animal à supprimer.",
     "vscodePets.leaveBlank": "Laisser vide pour un nom aléatoire",
     "vscodePets.nameYourPet": "Nommez votre animal", 
@@ -14,7 +14,7 @@
     "vscodePets.brown": "Brun",
     "vscodePets.green": "Vert",
     "vscodePets.yellow": "Jaune",
-    "vscodePets.gray": "Gris ",
+    "vscodePets.gray": "Gris",
     "vscodePets.red": "Rouge",
     "vscodePets.white": "Blanc",
 
