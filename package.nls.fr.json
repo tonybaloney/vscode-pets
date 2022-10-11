@@ -1,0 +1,31 @@
+{
+    "vscodePets.spawnPet": "Générer un animal",
+    "vscodePets.petPanel": "Panneau pour animaux",
+    "vscodePets.selectPet": "Sélectionnez un animal",
+    "vscodePets.selectColor": "Sélectionnez un couleur",
+    "vscodePets.selectPetToRemove": "Sélectionnez l'animal à supprimer.",
+    "vscodePets.leaveBlank": "Laisser vide pour un nom aléatoire",
+    "vscodePets.nameYourPet": "Nommez votre animal", 
+    "vscodePets.cancelledSpawningPet":"Générer un animal a été annulé",
+    "vscodePets.spawnPetWithClosedPlayground": "Une place de jeux pour animaux a été créée. Vous pouvez désormais utiliser la Commande \"Spawn Additional Pet\" pour ajouter d'autres animaux.",
+    "vscodePets.removePetsWithClosedPlayground": "Une place de jeux pour animaux a été créée. Vous pouvez désormais utiliser la Commande \"Remove All Pets\" pour supprimer tous les animaux.",
+
+    "vscodePets.black": "Noir",
+    "vscodePets.brown": "Brun",
+    "vscodePets.green": "Vert",
+    "vscodePets.yellow": "Jaune",
+    "vscodePets.gray": "Gris ",
+    "vscodePets.red": "Rouge",
+    "vscodePets.white": "Blanc",
+
+    "vscodePets.cat": "Chat",
+    "vscodePets.clippy": "Clippy",
+    "vscodePets.cockatiel": "Calopsitte",
+    "vscodePets.crab": "Crabe",
+    "vscodePets.dog": "Chien",
+    "vscodePets.rocky": "Rocky",
+    "vscodePets.rubber-duck": "Canard en Caoutchouc",
+    "vscodePets.snake": "Serpent",
+    "vscodePets.totoro": "Totoro",
+    "vscodePets.zappy": "Zappy"
+}
