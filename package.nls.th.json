@@ -1,0 +1,31 @@
+{
+    "vscodePets.spawnPet": "สร้างน้อง",
+    "vscodePets.petPanel": "คอกน้อง",
+    "vscodePets.selectPet": "เลือกน้อง",
+    "vscodePets.selectColor": "เลือกสี",
+    "vscodePets.selectPetToRemove": "เลือกน้องที่จะลบออก",
+    "vscodePets.leaveBlank": "ปล่อยว่างไว้เพื่อสุ่มชื่อ",
+    "vscodePets.nameYourPet": "ตั้งชื่อน้อง", 
+    "vscodePets.cancelledSpawningPet":"ยกเลิกการให้กำเนิดน้อง",
+    "vscodePets.spawnPetWithClosedPlayground": "คอกของน้องได้ถูกสร้างแล้ว. คุณสามารถใช้คำสั่ง \"สร้างน้องเพิ่ม\" เพื่อเพิ่มจำนวนน้อง",
+    "vscodePets.removePetsWithClosedPlayground":  "คอกของน้องได้ถูกสร้างแล้ว. คุณสามารถใช้คำสั่ง \"ลบน้องออก\" เพื่อลบน้องออกได้",
+
+    "vscodePets.black": "ดำ",
+    "vscodePets.brown": "น้ำตาล",
+    "vscodePets.green": "เขียว",
+    "vscodePets.yellow": "เหลือง",
+    "vscodePets.gray": "เทา",
+    "vscodePets.red": "แดง",
+    "vscodePets.white": "ขาว",
+
+    "vscodePets.cat": "แมว",
+    "vscodePets.clippy": "คลิปปี้",
+    "vscodePets.cockatiel": "นกแก้ว",
+    "vscodePets.crab": "ปู",
+    "vscodePets.dog": "หมา",
+    "vscodePets.rocky": "ก้อนหิน",
+    "vscodePets.rubber-duck": "เป็ดยาง",
+    "vscodePets.snake": "งู",
+    "vscodePets.totoro": "โตโตโร่",
+    "vscodePets.zappy": "แซปปี้"
+}
