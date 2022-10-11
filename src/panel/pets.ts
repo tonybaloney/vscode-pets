@@ -895,7 +895,7 @@ export class Cockatiel extends BasePetType {
     }
     hello(): string {
         // TODO: #191 Add a custom message for cockatiel
-        return ` says hello 👋!`;
+        return ` Hello, I'm a good bird 👋!`;
     }
 }
 
