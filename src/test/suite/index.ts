@@ -8,7 +8,7 @@ function setupCoverage() {
     const nyc = new NYC({
         cwd: join(__dirname, '..', '..', '..'),
         exclude: ['**/test/**', '.vscode-test/**'],
-        reporter: ['text', 'html'],
+        reporter: ['text', 'html', 'lcov'],
         all: true,
         instrument: true,
         hookRequire: true,
