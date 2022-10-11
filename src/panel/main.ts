@@ -20,7 +20,7 @@ import { BallState, PetElementState, PetPanelState } from './states';
 /* This is how the VS Code API can be invoked from the panel */
 declare global {
     interface VscodeStateApi {
-        getState(): PetPanelState; // API is actually Any, but we want it to be typed.
+        getState(): PetPanelState | undefined; // API is actually Any, but we want it to be typed.
         setState(state: PetPanelState): void;
         postMessage(message: WebviewMessage): void;
     }
@@ -92,20 +92,26 @@ function handleMouseOver(e: MouseEvent) {
     });
 }
 
-function startAnimations(collision: HTMLDivElement, pet: IPetType) {
-    const vscode = window.acquireVsCodeApi();
+function startAnimations(
+    collision: HTMLDivElement,
+    pet: IPetType,
+    stateApi?: VscodeStateApi,
+) {
+    if (!stateApi) {
+        stateApi = window.acquireVsCodeApi();
+    }
 
     collision.addEventListener('mouseover', handleMouseOver);
     setInterval(() => {
         var updates = allPets.seekNewFriends();
         updates.forEach((message) => {
-            vscode.postMessage({
+            stateApi?.postMessage({
                 text: message,
                 command: 'info',
             });
         });
         pet.nextFrame();
-        saveState(vscode);
+        saveState(stateApi);
     }, 100);
 }
 
@@ -118,6 +124,7 @@ function addPetToPanel(
     bottom: number,
     floor: number,
     name: string,
+    stateApi?: VscodeStateApi,
 ): PetElement {
     var petSpriteElement: HTMLImageElement = document.createElement('img');
     petSpriteElement.className = 'pet';
@@ -154,7 +161,7 @@ function addPetToPanel(
             name,
         );
         petCounter++;
-        startAnimations(collisionElement, newPet);
+        startAnimations(collisionElement, newPet, stateApi);
     } catch (e: any) {
         // Remove elements
         petSpriteElement.remove();
@@ -205,15 +212,18 @@ function recoverState(
         stateApi = window.acquireVsCodeApi();
     }
     var state = stateApi.getState();
-
-    if (state.petCounter === undefined || isNaN(state.petCounter)) {
+    if (!state) {
         petCounter = 1;
     } else {
-        petCounter = state.petCounter ?? 1;
+        if (state.petCounter === undefined || isNaN(state.petCounter)) {
+            petCounter = 1;
+        } else {
+            petCounter = state.petCounter ?? 1;
+        }
     }
 
     var recoveryMap: Map<IPetType, PetElementState> = new Map();
-    state.petStates?.forEach((p) => {
+    state?.petStates?.forEach((p) => {
         // Fixes a bug related to duck animations
         if ((p.petType as string) === 'rubber duck') {
             (p.petType as string) = 'rubber-duck';
@@ -229,6 +239,7 @@ function recoverState(
                 parseInt(p.elBottom ?? '0'),
                 floor,
                 p.petName ?? randomName(p.petType ?? PetType.cat),
+                stateApi,
             );
             allPets.push(newPet);
             recoveryMap.set(newPet.pet, p);
@@ -393,6 +404,7 @@ export function petPanelApp(
                 floor,
                 floor,
                 randomName(petType),
+                stateApi,
             ),
         );
         saveState(stateApi);
@@ -427,6 +439,7 @@ export function petPanelApp(
                         floor,
                         floor,
                         message.name ?? randomName(message.type),
+                        stateApi,
                     ),
                 );
                 saveState(stateApi);
