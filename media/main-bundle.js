@@ -112,6 +112,13 @@ exports.CAT_NAMES = new Map([
     [98, 'Daisy'],
     [99, 'Amelia'],
     [100, 'Oliver'],
+    [101, 'Ghost'],
+    [102, 'Midnight'],
+    [103, 'Pumpkin'],
+    [105, 'Shadow'],
+    [106, 'Binx'],
+    [107, 'Riley'],
+    [108, 'Lenny'],
 ]);
 exports.DOG_NAMES = new Map([
     [1, 'Bella'],
@@ -214,6 +221,11 @@ exports.DOG_NAMES = new Map([
     [98, 'Bolt'],
     [99, 'Ein'],
     [100, 'Maddy'],
+    [101, 'Ghost'],
+    [102, 'Midnight'],
+    [103, 'Pumpkin'],
+    [105, 'Shadow'],
+    [106, 'Sparky'],
 ]);
 exports.CRAB_NAMES = new Map([
     [1, 'Ferris'],
@@ -385,7 +397,6 @@ exports.petPanelApp = exports.saveState = exports.allPets = void 0;
 const names_1 = __webpack_require__(/*! ../common/names */ "./src/common/names.ts");
 const pets_1 = __webpack_require__(/*! ./pets */ "./src/panel/pets.ts");
 const states_1 = __webpack_require__(/*! ./states */ "./src/panel/states.ts");
-const vscode = window.acquireVsCodeApi();
 exports.allPets = new pets_1.PetCollection();
 var petCounter;
 function calculateBallRadius(size) {
@@ -449,6 +460,7 @@ function handleMouseOver(e) {
     });
 }
 function startAnimations(collision, pet) {
+    const vscode = window.acquireVsCodeApi();
     collision.addEventListener('mouseover', handleMouseOver);
     setInterval(() => {
         var updates = exports.allPets.seekNewFriends();
@@ -459,7 +471,7 @@ function startAnimations(collision, pet) {
             });
         });
         pet.nextFrame();
-        saveState();
+        saveState(vscode);
     }, 100);
 }
 function addPetToPanel(petType, basePetUri, petColor, petSize, left, bottom, floor, name) {
@@ -489,7 +501,10 @@ function addPetToPanel(petType, basePetUri, petColor, petSize, left, bottom, flo
     }
     return new pets_1.PetElement(petSpriteElement, collisionElement, speechBubbleElement, newPet, petColor, petType);
 }
-function saveState() {
+function saveState(stateApi) {
+    if (!stateApi) {
+        stateApi = window.acquireVsCodeApi();
+    }
     var state = new states_1.PetPanelState();
     state.petStates = new Array();
     exports.allPets.pets().forEach((petItem) => {
@@ -504,11 +519,14 @@ function saveState() {
         });
     });
     state.petCounter = petCounter;
-    vscode.setState(state);
+    stateApi.setState(state);
 }
 exports.saveState = saveState;
-function recoverState(basePetUri, petSize, floor) {
-    var state = vscode.getState();
+function recoverState(basePetUri, petSize, floor, stateApi) {
+    if (!stateApi) {
+        stateApi = window.acquireVsCodeApi();
+    }
+    var state = stateApi.getState();
     if (state.petCounter === undefined || isNaN(state.petCounter)) {
         petCounter = 1;
     }
@@ -551,14 +569,25 @@ function randomStartPosition() {
 let canvas, ctx;
 function initCanvas() {
     canvas = document.getElementById('petCanvas');
+    if (!canvas) {
+        console.log("Canvas not ready");
+        return;
+    }
     ctx = canvas.getContext('2d');
+    if (!ctx) {
+        console.log("Canvas context not ready");
+        return;
+    }
     ctx.canvas.width = window.innerWidth;
     ctx.canvas.height = window.innerHeight;
 }
 // It cannot access the main VS Code APIs directly.
-function petPanelApp(basePetUri, theme, themeKind, petColor, petSize, petType) {
+function petPanelApp(basePetUri, theme, themeKind, petColor, petSize, petType, stateApi) {
     const ballRadius = calculateBallRadius(petSize);
     var floor = 0;
+    if (!stateApi) {
+        stateApi = window.acquireVsCodeApi();
+    }
     // Apply Theme backgrounds
     const foregroundEl = document.getElementById('foreground');
     if (theme !== "none" /* Theme.none */) {
@@ -590,7 +619,9 @@ function petPanelApp(basePetUri, theme, themeKind, petColor, petSize, petType) {
     let then = 0; // last draw
     var ballState;
     function resetBall() {
-        canvas.style.display = 'block';
+        if (canvas) {
+            canvas.style.display = 'block';
+        }
         ballState = new states_1.BallState(100, 100, 4, 5);
     }
     function throwBall() {
@@ -633,16 +664,16 @@ function petPanelApp(basePetUri, theme, themeKind, petColor, petSize, petType) {
     }
     console.log('Starting pet session', petColor, basePetUri, petType);
     // New session
-    var state = vscode.getState();
+    var state = stateApi.getState();
     if (!state) {
         console.log('No state, starting a new session.');
         petCounter = 1;
         exports.allPets.push(addPetToPanel(petType, basePetUri, petColor, petSize, randomStartPosition(), floor, floor, (0, names_1.randomName)(petType)));
-        saveState();
+        saveState(stateApi);
     }
     else {
         console.log('Recovering state - ', state);
-        recoverState(basePetUri, petSize, floor);
+        recoverState(basePetUri, petSize, floor, stateApi);
     }
     initCanvas();
     // Handle messages sent from the extension to the webview
@@ -660,11 +691,11 @@ function petPanelApp(basePetUri, theme, themeKind, petColor, petSize, petType) {
                 break;
             case 'spawn-pet':
                 exports.allPets.push(addPetToPanel(message.type, basePetUri, message.color, petSize, randomStartPosition(), floor, floor, message.name ?? (0, names_1.randomName)(message.type)));
-                saveState();
+                saveState(stateApi);
                 break;
             case 'list-pets':
                 var pets = exports.allPets.pets();
-                vscode.postMessage({
+                stateApi?.postMessage({
                     command: 'list-pets',
                     text: pets
                         .map((pet) => `${pet.type},${pet.pet.name()},${pet.color}`)
@@ -676,7 +707,7 @@ function petPanelApp(basePetUri, theme, themeKind, petColor, petSize, petType) {
                 // go through every single
                 // pet and then print out their name
                 pets.forEach((pet) => {
-                    vscode.postMessage({
+                    stateApi?.postMessage({
                         command: 'info',
                         text: `${pet.pet.emoji()} ${pet.pet.name()} (${pet.color} ${pet.type}): ${pet.pet.hello()}`,
                     });
@@ -685,14 +716,14 @@ function petPanelApp(basePetUri, theme, themeKind, petColor, petSize, petType) {
                 var pet = exports.allPets.locate(message.name);
                 if (pet) {
                     exports.allPets.remove(message.name);
-                    saveState();
-                    vscode.postMessage({
+                    saveState(stateApi);
+                    stateApi?.postMessage({
                         command: 'info',
                         text: '👋 Removed pet ' + message.name,
                     });
                 }
                 else {
-                    vscode.postMessage({
+                    stateApi?.postMessage({
                         command: 'error',
                         text: `Could not find pet ${message.name}`,
                     });
@@ -701,11 +732,11 @@ function petPanelApp(basePetUri, theme, themeKind, petColor, petSize, petType) {
             case 'reset-pet':
                 exports.allPets.reset();
                 petCounter = 0;
-                saveState();
+                saveState(stateApi);
                 break;
             case 'pause-pet':
                 petCounter = 1;
-                saveState();
+                saveState(stateApi);
                 break;
         }
     });
@@ -1386,8 +1417,7 @@ class Clippy extends BasePetType {
         return '📎';
     }
     hello() {
-        // TODO: #188 Add a custom message for clippy
-        return ` says hello 👋!`;
+        return ` Hi, I'm Clippy, would you like some assistance today? 👋!`;
     }
 }
 exports.Clippy = Clippy;
