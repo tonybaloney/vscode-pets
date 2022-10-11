@@ -17,7 +17,7 @@ import * as pets from '../../panel/pets';
 
 function mockPanelWindow() {
     const html =
-        '<!doctype html><html><body><canvas id="petCanvas"></canvas><div id="petsContainer"></div><div id="foreground"></div></body></html>';
+        '<!doctype html><html><body><div id="petsContainer"></div><div id="foreground"></div></body></html>';
 
     var jsdom = require('jsdom');
     var document = new jsdom.JSDOM(html);
@@ -169,5 +169,32 @@ suite('Pets Test Suite', () => {
             document.getElementById('foreground')?.style.backgroundImage,
             '',
         );
+    });
+
+    test('Test post message to panel', () => {
+        const mockState = new MockState();
+        panel.allPets.reset();
+        mockState.reset();
+        panel.petPanelApp(
+            'https://test.com',
+            Theme.none,
+            ColorThemeKind.dark,
+            PetColor.black,
+            PetSize.large,
+            PetType.cat,
+            mockState,
+        );
+
+        assert.strictEqual(document.body.style.backgroundImage, '');
+        assert.strictEqual(
+            document.getElementById('foreground')?.style.backgroundImage,
+            '',
+        );
+        const message = new MessageEvent('command', {
+            data: { message: 'roll-call' },
+        });
+        window.postMessage(message, '/');
+
+        // assert.notEqual(mockState.getMessages().length, 0);
     });
 });
