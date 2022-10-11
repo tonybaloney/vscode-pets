@@ -65,3 +65,28 @@ export class WebviewMessage {
         this.command = command;
     }
 }
+
+export const ALL_PETS = [
+    PetType.cat,
+    PetType.clippy,
+    PetType.cockatiel,
+    PetType.crab,
+    PetType.dog,
+    PetType.rocky,
+    PetType.rubberduck,
+    PetType.snake,
+    PetType.totoro,
+    PetType.zappy,
+];
+export const ALL_COLORS = [
+    PetColor.black,
+    PetColor.brown,
+    PetColor.green,
+    PetColor.yellow,
+    PetColor.gray,
+    PetColor.red,
+    PetColor.white,
+    PetColor.null,
+];
+export const ALL_SCALES = [PetSize.nano, PetSize.medium, PetSize.large];
+export const ALL_THEMES = [Theme.none, Theme.forest, Theme.castle, Theme.beach];

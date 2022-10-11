@@ -10,6 +10,7 @@ import {
     Theme,
     ColorThemeKind,
     WebviewMessage,
+    ALL_PETS,
 } from '../../common/types';
 import { PetElementState, PetPanelState } from '../../panel/states';
 import * as pets from '../../panel/pets';
@@ -29,10 +30,13 @@ function mockPanelWindow() {
 
 class MockState implements VscodeStateApi {
     counter: number = 1;
-    states: Array<PetElementState> = [];
+    states: Array<PetElementState> | undefined = undefined;
     sentMessages: Array<WebviewMessage> = [];
 
-    getState(): PetPanelState {
+    getState(): PetPanelState | undefined {
+        if (!this.states) {
+            return undefined;
+        }
         return {
             petCounter: this.counter,
             petStates: this.states,
@@ -52,6 +56,11 @@ class MockState implements VscodeStateApi {
 
     getMessages(): Array<WebviewMessage> {
         return this.sentMessages;
+    }
+
+    reset() {
+        this.counter = 1;
+        this.states = undefined;
     }
 }
 
@@ -107,11 +116,47 @@ suite('Pets Test Suite', () => {
         assert.strictEqual(collection.locate('Jerry'), undefined);
     });
 
-    test('Test panel app initialization', () => {
+    ALL_PETS.forEach((petType) => {
+        test(
+            'Test panel app initialization with theme and ' + String(petType),
+            () => {
+                const mockState = new MockState();
+                panel.allPets.reset();
+                mockState.reset();
+                panel.petPanelApp(
+                    'https://test.com',
+                    Theme.beach,
+                    ColorThemeKind.dark,
+                    PetColor.black,
+                    PetSize.large,
+                    petType,
+                    mockState,
+                );
+
+                assert.notStrictEqual(document.body.style.backgroundImage, '');
+                assert.notStrictEqual(
+                    document.getElementById('foreground')?.style
+                        .backgroundImage,
+                    '',
+                );
+
+                assert.equal(mockState.getState()?.petStates?.length, 1);
+
+                const firstPet: PetElementState = (mockState.getState()
+                    ?.petStates ?? [])[0];
+                assert.equal(firstPet.petType, petType);
+                assert.equal(firstPet.petColor, PetColor.black);
+            },
+        );
+    });
+
+    test('Test panel app initialization with no theme', () => {
         const mockState = new MockState();
+        panel.allPets.reset();
+        mockState.reset();
         panel.petPanelApp(
             'https://test.com',
-            Theme.beach,
+            Theme.none,
             ColorThemeKind.dark,
             PetColor.black,
             PetSize.large,
@@ -119,8 +164,8 @@ suite('Pets Test Suite', () => {
             mockState,
         );
 
-        assert.notStrictEqual(document.body.style.backgroundImage, '');
-        assert.notStrictEqual(
+        assert.strictEqual(document.body.style.backgroundImage, '');
+        assert.strictEqual(
             document.getElementById('foreground')?.style.backgroundImage,
             '',
         );

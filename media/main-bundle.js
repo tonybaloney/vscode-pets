@@ -459,22 +459,24 @@ function handleMouseOver(e) {
         }
     });
 }
-function startAnimations(collision, pet) {
-    const vscode = window.acquireVsCodeApi();
+function startAnimations(collision, pet, stateApi) {
+    if (!stateApi) {
+        stateApi = window.acquireVsCodeApi();
+    }
     collision.addEventListener('mouseover', handleMouseOver);
     setInterval(() => {
         var updates = exports.allPets.seekNewFriends();
         updates.forEach((message) => {
-            vscode.postMessage({
+            stateApi?.postMessage({
                 text: message,
                 command: 'info',
             });
         });
         pet.nextFrame();
-        saveState(vscode);
+        saveState(stateApi);
     }, 100);
 }
-function addPetToPanel(petType, basePetUri, petColor, petSize, left, bottom, floor, name) {
+function addPetToPanel(petType, basePetUri, petColor, petSize, left, bottom, floor, name, stateApi) {
     var petSpriteElement = document.createElement('img');
     petSpriteElement.className = 'pet';
     document.getElementById('petsContainer').appendChild(petSpriteElement);
@@ -490,7 +492,7 @@ function addPetToPanel(petType, basePetUri, petColor, petSize, left, bottom, flo
     try {
         var newPet = (0, pets_1.createPet)(petType, petSpriteElement, collisionElement, speechBubbleElement, petSize, left, bottom, root, floor, name);
         petCounter++;
-        startAnimations(collisionElement, newPet);
+        startAnimations(collisionElement, newPet, stateApi);
     }
     catch (e) {
         // Remove elements
@@ -527,20 +529,25 @@ function recoverState(basePetUri, petSize, floor, stateApi) {
         stateApi = window.acquireVsCodeApi();
     }
     var state = stateApi.getState();
-    if (state.petCounter === undefined || isNaN(state.petCounter)) {
+    if (!state) {
         petCounter = 1;
     }
     else {
-        petCounter = state.petCounter ?? 1;
+        if (state.petCounter === undefined || isNaN(state.petCounter)) {
+            petCounter = 1;
+        }
+        else {
+            petCounter = state.petCounter ?? 1;
+        }
     }
     var recoveryMap = new Map();
-    state.petStates?.forEach((p) => {
+    state?.petStates?.forEach((p) => {
         // Fixes a bug related to duck animations
         if (p.petType === 'rubber duck') {
             p.petType = 'rubber-duck';
         }
         try {
-            var newPet = addPetToPanel(p.petType ?? "cat" /* PetType.cat */, basePetUri, p.petColor ?? "brown" /* PetColor.brown */, petSize, parseInt(p.elLeft ?? '0'), parseInt(p.elBottom ?? '0'), floor, p.petName ?? (0, names_1.randomName)(p.petType ?? "cat" /* PetType.cat */));
+            var newPet = addPetToPanel(p.petType ?? "cat" /* PetType.cat */, basePetUri, p.petColor ?? "brown" /* PetColor.brown */, petSize, parseInt(p.elLeft ?? '0'), parseInt(p.elBottom ?? '0'), floor, p.petName ?? (0, names_1.randomName)(p.petType ?? "cat" /* PetType.cat */), stateApi);
             exports.allPets.push(newPet);
             recoveryMap.set(newPet.pet, p);
         }
@@ -668,7 +675,7 @@ function petPanelApp(basePetUri, theme, themeKind, petColor, petSize, petType, s
     if (!state) {
         console.log('No state, starting a new session.');
         petCounter = 1;
-        exports.allPets.push(addPetToPanel(petType, basePetUri, petColor, petSize, randomStartPosition(), floor, floor, (0, names_1.randomName)(petType)));
+        exports.allPets.push(addPetToPanel(petType, basePetUri, petColor, petSize, randomStartPosition(), floor, floor, (0, names_1.randomName)(petType), stateApi));
         saveState(stateApi);
     }
     else {
@@ -690,7 +697,7 @@ function petPanelApp(basePetUri, theme, themeKind, petColor, petSize, petType, s
                 });
                 break;
             case 'spawn-pet':
-                exports.allPets.push(addPetToPanel(message.type, basePetUri, message.color, petSize, randomStartPosition(), floor, floor, message.name ?? (0, names_1.randomName)(message.type)));
+                exports.allPets.push(addPetToPanel(message.type, basePetUri, message.color, petSize, randomStartPosition(), floor, floor, message.name ?? (0, names_1.randomName)(message.type), stateApi));
                 saveState(stateApi);
                 break;
             case 'list-pets':
