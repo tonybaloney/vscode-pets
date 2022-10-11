@@ -232,6 +232,7 @@ export const CRAB_NAMES: Map<number, string> = new Map<number, string>([
     [11, 'Crabito'],
     [12, 'Percy'],
     [13, 'Rocky'],
+    [14, 'Mr. Krabs'],
 ]);
 
 export const CLIPPY_NAMES: Map<number, string> = new Map<number, string>([
@@ -271,6 +272,7 @@ export const SNAKE_NAMES: Map<number, string> = new Map<number, string>([
     [7, 'Ruby'],
     [8, 'Bailey'],
     [9, 'Max'],
+    [10, 'Seb'],
 ]);
 
 export const DUCK_NAMES: Map<number, string> = new Map<number, string>([
@@ -289,6 +291,7 @@ export const DUCK_NAMES: Map<number, string> = new Map<number, string>([
     [13, 'Peaches'],
     [14, 'Quackers'],
     [15, 'Jelly Beans'],
+    [16, 'Donald'],
 ]);
 
 export const ZAPPY_NAMES: Map<number, string> = new Map<number, string>([

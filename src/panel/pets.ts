@@ -694,7 +694,6 @@ export class Dog extends BasePetType {
         return '🐶';
     }
     hello(): string {
-        // TODO: #186 Add a custom message for dog
         return ` Every dog has its day - and today is woof day! Today I just want to bark. Take me on a walk`;
     }
 }
