@@ -1,0 +1,31 @@
+{
+    "vscodePets.spawnPet": "Lav et kæledyr",
+    "vscodePets.petPanel": "Kæledyrs panel",
+    "vscodePets.selectPet": "Vælg et kæledyr",
+    "vscodePets.selectColor": "Vælg en farve",
+    "vscodePets.selectPetToRemove": "Vælg kæledyret der skal fjernes",
+    "vscodePets.leaveBlank": "Udelad for et tilfældigt navn",
+    "vscodePets.nameYourPet": "Navngiv dit kæledyr", 
+    "vscodePets.cancelledSpawningPet":"Undlod at lave kæledyr",
+    "vscodePets.spawnPetWithClosedPlayground": "En kæledyrslegeplads er blevet lavet. Du kan nu bruge \"Spawn Additional Pet\" kommandoen til at tilføje flere kæledyr.",
+    "vscodePets.removePetsWithClosedPlayground":  "En kæledyrslegeplads er blevet lavet. Du kan nu bruge \"Remove All Pets\" kommandoen til at fjerne alle kæledyr.",
+
+    "vscodePets.black": "Sort",
+    "vscodePets.brown": "Brun",
+    "vscodePets.green": "Grøn",
+    "vscodePets.yellow": "Gul",
+    "vscodePets.gray": "Grå",
+    "vscodePets.red": "Rød",
+    "vscodePets.white": "Hvid",
+
+    "vscodePets.cat": "Kat",
+    "vscodePets.clippy": "Clippy",
+    "vscodePets.cockatiel": "Kakadue",
+    "vscodePets.crab": "Krabbe",
+    "vscodePets.dog": "Hund",
+    "vscodePets.rocky": "Rocky",
+    "vscodePets.rubber-duck": "Gummiand",
+    "vscodePets.snake": "Slange",
+    "vscodePets.totoro": "Totoro",
+    "vscodePets.zappy": "Zappy"
+}
