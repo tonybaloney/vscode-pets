@@ -146,6 +146,20 @@ suite('Pets Test Suite', () => {
                     ?.petStates ?? [])[0];
                 assert.equal(firstPet.petType, petType);
                 assert.equal(firstPet.petColor, PetColor.black);
+
+                const createdPets = panel.allPets.pets();
+                assert.notEqual(createdPets.at(0), undefined);
+
+                assert.equal(createdPets.at(0)?.color, PetColor.black);
+
+                /// Cycle 1000 frames
+                for (var i = 0; i < 1000; i++) {
+                    createdPets.at(0)?.pet.nextFrame();
+                    assert.notEqual(
+                        createdPets.at(0)?.pet.getState(),
+                        undefined,
+                    );
+                }
             },
         );
     });
