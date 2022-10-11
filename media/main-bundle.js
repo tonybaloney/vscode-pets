@@ -570,12 +570,12 @@ let canvas, ctx;
 function initCanvas() {
     canvas = document.getElementById('petCanvas');
     if (!canvas) {
-        console.log("Canvas not ready");
+        console.log('Canvas not ready');
         return;
     }
     ctx = canvas.getContext('2d');
     if (!ctx) {
-        console.log("Canvas context not ready");
+        console.log('Canvas context not ready');
         return;
     }
     ctx.canvas.width = window.innerWidth;
