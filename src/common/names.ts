@@ -124,7 +124,7 @@ export const DOG_NAMES: Map<number, string> = new Map<number, string>([
     [10, 'Bailey'],
     [11, 'Milo'],
     [12, 'Daisy'],
-    [13, 'Archie'],
+    [13, 'Poco'],
     [14, 'Ollie'],
     [15, 'Rosie'],
     [16, 'Lola'],
@@ -179,7 +179,7 @@ export const DOG_NAMES: Map<number, string> = new Map<number, string>([
     [65, 'Benji'],
     [66, 'Henry'],
     [67, 'Lilly'],
-    [68, 'Pippa'],
+    
     [69, 'Shadow'],
     [70, 'Sam'],
     [71, 'Buster'],
@@ -212,7 +212,7 @@ export const DOG_NAMES: Map<number, string> = new Map<number, string>([
     [98, 'Bolt'],
     [99, 'Ein'],
     [100, 'Maddy'],
-    [101, 'Ghost'],
+    
     [102, 'Midnight'],
     [103, 'Pumpkin'],
     [105, 'Shadow'],
