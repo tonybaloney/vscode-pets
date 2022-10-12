@@ -108,6 +108,7 @@ export const CAT_NAMES: Map<number, string> = new Map<number, string>([
     [106, 'Binx'],
     [107, 'Riley'],
     [108, 'Lenny'],
+    [109, 'Mango'],
 ]);
 
 export const DOG_NAMES: Map<number, string> = new Map<number, string>([
@@ -216,6 +217,8 @@ export const DOG_NAMES: Map<number, string> = new Map<number, string>([
     [103, 'Pumpkin'],
     [105, 'Shadow'],
     [106, 'Sparky'],
+    [107, 'Linus'],
+    [108, 'Cody'],
 ]);
 
 export const CRAB_NAMES: Map<number, string> = new Map<number, string>([
