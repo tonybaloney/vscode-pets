@@ -1,0 +1,31 @@
+{
+    "vscodePets.spawnPet": "Haustier erzeugen",
+    "vscodePets.petPanel": "Haustier Panel",
+    "vscodePets.selectPet": "Wähle ein Haustier",
+    "vscodePets.selectColor": "Wähle eine Farbe",
+    "vscodePets.selectPetToRemove": "Wähle ein Haustier zu eliminieren.",
+    "vscodePets.leaveBlank": "Leer lassen für einen zufälligen namen",
+    "vscodePets.nameYourPet": "Nenne dein Haustier", 
+    "vscodePets.cancelledSpawningPet": "Generieren von Haustieren wurde abgebrochen",
+    "vscodePets.spawnPetWithClosedPlayground": "Ein Haustier Spielplatz wurde erstellt. Sie können jetzt den Befehl \"Spawn Additional Pet\" verwenden, um weitere Haustiere hinzuzufügen.",
+    "vscodePets.removePetsWithClosedPlayground": "Ein Haustier Spielplatz wurde erstellt. Sie können jetzt den Befehl \"Remove All Pets\" verwenden, um alle Haustiere zu entfernen.",
+
+    "vscodePets.black": "Schwarz",
+    "vscodePets.brown": "Braun",
+    "vscodePets.green": "Grün",
+    "vscodePets.yellow": "Gelb",
+    "vscodePets.gray": "Grau",
+    "vscodePets.red": "Rot",
+    "vscodePets.white": "Weiß",
+
+    "vscodePets.cat": "Katze",
+    "vscodePets.clippy": "Clippy",
+    "vscodePets.cockatiel": "Nymphensittich",
+    "vscodePets.crab": "Krebs",
+    "vscodePets.dog": "Hund",
+    "vscodePets.rocky": "Rocky",
+    "vscodePets.rubber-duck": "Quietscheentchen",
+    "vscodePets.snake": "Schlange",
+    "vscodePets.totoro": "Totoro",
+    "vscodePets.zappy": "Zappy"
+}
