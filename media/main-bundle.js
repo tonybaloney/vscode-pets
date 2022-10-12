@@ -119,6 +119,7 @@ exports.CAT_NAMES = new Map([
     [106, 'Binx'],
     [107, 'Riley'],
     [108, 'Lenny'],
+    [109, 'Mango'],
 ]);
 exports.DOG_NAMES = new Map([
     [1, 'Bella'],
@@ -226,6 +227,8 @@ exports.DOG_NAMES = new Map([
     [103, 'Pumpkin'],
     [105, 'Shadow'],
     [106, 'Sparky'],
+    [107, 'Linus'],
+    [108, 'Cody'],
 ]);
 exports.CRAB_NAMES = new Map([
     [1, 'Ferris'],
@@ -241,6 +244,16 @@ exports.CRAB_NAMES = new Map([
     [11, 'Crabito'],
     [12, 'Percy'],
     [13, 'Rocky'],
+    [14, 'Mr. Krabs'],
+    [15, 'Shelly'],
+    [16, 'Santa Claws'],
+    [17, 'Clawdia'],
+    [18, 'Scuttle'],
+    [19, 'Snappy'],
+    [20, 'Hermit'],
+    [21, 'Horseshoe'],
+    [22, 'Snapper'],
+    [23, 'Coconut'],
 ]);
 exports.CLIPPY_NAMES = new Map([
     [1, 'Clippy'],
@@ -277,6 +290,7 @@ exports.SNAKE_NAMES = new Map([
     [7, 'Ruby'],
     [8, 'Bailey'],
     [9, 'Max'],
+    [10, 'Seb'],
 ]);
 exports.DUCK_NAMES = new Map([
     [1, 'Quacky'],
@@ -294,6 +308,7 @@ exports.DUCK_NAMES = new Map([
     [13, 'Peaches'],
     [14, 'Quackers'],
     [15, 'Jelly Beans'],
+    [16, 'Donald'],
 ]);
 exports.ZAPPY_NAMES = new Map([
     [1, 'Zappy'],
@@ -1319,7 +1334,6 @@ class Dog extends BasePetType {
         return '🐶';
     }
     hello() {
-        // TODO: #186 Add a custom message for dog
         return ` Every dog has its day - and today is woof day! Today I just want to bark. Take me on a walk`;
     }
 }
@@ -1521,7 +1535,7 @@ class Cockatiel extends BasePetType {
     }
     hello() {
         // TODO: #191 Add a custom message for cockatiel
-        return ` says hello 👋!`;
+        return ` Hello, I'm a good bird 👋!`;
     }
 }
 exports.Cockatiel = Cockatiel;
