@@ -189,10 +189,9 @@
         "lint": "eslint src --ext ts && prettier --check src",
         "lint:fix": "eslint src --ext ts --fix && prettier --write src",
         "test": "node ./out/test/runTest.js",
-        "test:coverage": "nyc npm run test"
+        "test:coverage": "COVERAGE=1 node ./out/test/runTest.js"
     },
     "devDependencies": {
-        "@istanbuljs/nyc-config-typescript": "^1.0.2",
         "@rbarilani/remove-source-map-url-webpack-plugin": "^1.1.0",
         "@types/glob": "^7.1.3",
         "@types/jsdom": "^20.0.0",
@@ -206,6 +205,7 @@
         "glob": "^8.0.3",
         "gulp": "^4.0.2",
         "jsdom": "^20.0.0",
+        "jsdom-global": "^3.0.2",
         "mocha": "^10.0.0",
         "nyc": "^15.1.0",
         "prettier": "^2.7.1",
@@ -216,23 +216,5 @@
         "vscode-test": "^1.4.0",
         "webpack": "^5.73.0",
         "webpack-cli": "^4.10.0"
-    },
-    "nyc": {
-        "extends": "@istanbuljs/nyc-config-typescript",
-        "check-coverage": true,
-        "all": true,
-        "include": [
-            "src/**/!(*.test.*).[tj]s?(x)"
-        ],
-        "exclude": [
-            "src/_tests_/**/*.*"
-        ],
-        "reporter": [
-            "html",
-            "lcov",
-            "text",
-            "text-summary"
-        ],
-        "report-dir": "coverage"
     }
 }

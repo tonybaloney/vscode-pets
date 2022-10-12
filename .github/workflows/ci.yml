@@ -34,6 +34,7 @@ jobs:
               continue-on-error: true
               with:
                 run: npm run test:coverage
-            # - uses: codecov/codecov-action@v3
-            #   with:
-            #     directory: ./coverage
+            - uses: codecov/codecov-action@v3
+              with:
+                directory: ./coverage
+                token: ${{ secrets.CODECOV_TOKEN }}
