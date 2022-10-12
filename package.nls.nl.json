@@ -1,0 +1,31 @@
+{
+    "vscodePets.spawnPet": "Spawn Huisdier",
+    "vscodePets.petPanel": "Dierenpaneel",
+    "vscodePets.selectPet": "Selecteer een huisdier",
+    "vscodePets.selectColor": "Selecteer een kleur",
+    "vscodePets.selectPetToRemove": "Selecteer het huisdier dat u wilt verwijderen.",
+    "vscodePets.leaveBlank": "Laat leeg voor een willekeurige naam",
+    "vscodePets.nameYourPet": "Geef je huisdier een naam", 
+    "vscodePets.cancelledSpawningPet":"Geannuleerd paaidier",
+    "vscodePets.spawnPetWithClosedPlayground": "Er is een dierenspeeltuin gemaakt. U kunt nu de \"Extra huisdier spawnen\" Commando om meer huisdieren toe te voegen.",
+    "vscodePets.removePetsWithClosedPlayground":  "Er is een dierenspeeltuin gemaakt. U kunt nu de \"Alle huisdieren verwijderen\" Commando om meer huisdieren te verwijderen.",
+
+    "vscodePets.black": "Zwart",
+    "vscodePets.brown": "Bruin",
+    "vscodePets.green": "Groente",
+    "vscodePets.yellow": "Geel",
+    "vscodePets.gray": "Grijs",
+    "vscodePets.red": "Rood",
+    "vscodePets.white": "Wit",
+
+    "vscodePets.cat": "Kat",
+    "vscodePets.clippy": "Clippy",
+    "vscodePets.cockatiel": "Valkparkiet",
+    "vscodePets.crab": "Krab",
+    "vscodePets.dog": "Hond",
+    "vscodePets.rocky": "Rocky",
+    "vscodePets.rubber-duck": "Badeend",
+    "vscodePets.snake": "Snake",
+    "vscodePets.totoro": "Totoro",
+    "vscodePets.zappy": "Zappy"
+}
