@@ -219,6 +219,7 @@ export const DOG_NAMES: Map<number, string> = new Map<number, string>([
     [106, 'Sparky'],
     [107, 'Linus'],
     [108, 'Cody'],
+    [109, 'Puddles'],
 ]);
 
 export const CRAB_NAMES: Map<number, string> = new Map<number, string>([
@@ -285,6 +286,25 @@ export const SNAKE_NAMES: Map<number, string> = new Map<number, string>([
     [8, 'Bailey'],
     [9, 'Max'],
     [10, 'Seb'],
+    [11, 'Mr.Hiss'],
+    [12, 'Miss.Hiss'],
+    [13, 'Snaku'],
+    [14, 'Kaa'],
+    [15, 'Madame Snake'],
+    [16, 'Sir Hiss'],
+    [17, 'My Python'],
+    [18, 'The Anaconda'],
+    [19, 'Loki'],
+    [20, 'Steelix'],
+    [21, 'Gyarados'],
+    [22, 'SandaConda'],
+    [23, 'Seviper'],
+    [24, 'Ekanes'],
+    [25, 'Arbok'],
+    [26, 'Snivy'],
+    [27, 'Servine'],
+    [28, 'Serperior'],
+    [29, 'Hiss Speed'],
 ]);
 
 export const DUCK_NAMES: Map<number, string> = new Map<number, string>([
@@ -304,6 +324,30 @@ export const DUCK_NAMES: Map<number, string> = new Map<number, string>([
     [14, 'Quackers'],
     [15, 'Jelly Beans'],
     [16, 'Donald'],
+    [17, 'Psyduck'],
+    [18, 'Waddles'],
+    [19, 'Mr.Quack'],
+    [20, 'Louie'],
+    [21, 'Golduck'],
+    [22, 'Daisy'],
+    [23, 'Pickles'],
+    [24, 'Ducky Duck'],
+    [25, 'Mrs Fluffs'],
+    [26, 'Squeek'],
+    [27, 'Ace'],
+    [28, 'Little Rey'],
+    [29, 'Kylo'],
+    [30, 'Skywalker'],
+    [31, 'Princess Laya'],
+    [32, 'Chewy'],
+    [33, 'Rubberduck'],
+    [34, 'Mrs. Beak'],
+    [35, 'April'],  
+    [36, 'Tutu'],
+    [37, 'Billy the duck'],
+    [38, 'Ducky'],
+    [39, 'Neco'],
+    [40, 'Dodo'],
 ]);
 
 export const ZAPPY_NAMES: Map<number, string> = new Map<number, string>([
@@ -318,6 +362,9 @@ export const ZAPPY_NAMES: Map<number, string> = new Map<number, string>([
     [9, 'The Flash'],
     [10, 'Thor'],
     [11, 'Electric Bolt'],
+    [12, 'Azula'],
+    [13, 'Lightning Bolt'],
+    [14, 'Power'],
 ]);
 
 export const ROCKY_NAMES: Map<number, string> = new Map<number, string>([
@@ -334,6 +381,16 @@ export const ROCKY_NAMES: Map<number, string> = new Map<number, string>([
     [11, 'Pebble'],
     [12, 'Rocksanne'],
     [13, 'Rockstar'],
+    [14, 'Onix'],
+    [15, 'Rock and Roll'],
+    [16, 'Dolomite'],
+    [17, 'Granite'],
+    [18, 'Miss Marble'],
+    [19, 'Rock On'],
+    [20, 'Amberstone'],
+    [21, 'Rock With Me'],
+    [22, 'Rock On It!'],
+    [23, 'Rock Out'] 
 ]);
 
 export const COCKATIEL_NAMES: Map<number, string> = new Map<number, string>([
