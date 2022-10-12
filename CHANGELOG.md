@@ -2,6 +2,10 @@
 
 All notable changes to the "vscode-pets" extension will be documented in this file.
 
+## [1.15.1]
+
+* Fixed bug in missing package in the bundled VSIX causing the extension not to activate.
+
 ## [1.15.0]
 
 ## What's Changed
