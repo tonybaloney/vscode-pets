@@ -2,13 +2,56 @@
 
 All notable changes to the "vscode-pets" extension will be documented in this file.
 
+## [1.15.0]
+
+## What's Changed
+
+### New Features
+
+* Add beach theme by @tonybaloney in https://github.com/tonybaloney/vscode-pets/pull/195
+* Pets have speech bubbles by @tonybaloney in https://github.com/tonybaloney/vscode-pets/pull/204
+* Extension localizes into local languages for basic messages and the spawn pet action.
+
+### Improvements
+
+* Add a custom hello message for cat by @gulyapulya in https://github.com/tonybaloney/vscode-pets/pull/197
+* Added method to randomise speed by +/- 30% to prevent pets from overlapping so much by @jyorien in https://github.com/tonybaloney/vscode-pets/pull/196
+* Added message from dog by @Aman0307 in https://github.com/tonybaloney/vscode-pets/pull/198
+* custom quote for tororo by @batunpc in https://github.com/tonybaloney/vscode-pets/pull/199
+* added rock message by @mehraankush in https://github.com/tonybaloney/vscode-pets/pull/201
+* Added snake message by @Ladam0203 in https://github.com/tonybaloney/vscode-pets/pull/202
+* Switched Clippy and Snake's message, removed TODO from snake by @Ladam0203 in https://github.com/tonybaloney/vscode-pets/pull/203
+* Added Duck Message by @akk312000 in https://github.com/tonybaloney/vscode-pets/pull/206
+* Added message from Zappy by @Aman0307 in https://github.com/tonybaloney/vscode-pets/pull/207
+* Added Crab Message by @akk312000 in https://github.com/tonybaloney/vscode-pets/pull/208
+* Added Clippy Message by @akk312000 in https://github.com/tonybaloney/vscode-pets/pull/209
+* Add halloween themed cat and dog names by @shawnspears in https://github.com/tonybaloney/vscode-pets/pull/217
+* Localisation of basic functionality by @tonybaloney in https://github.com/tonybaloney/vscode-pets/pull/210
+* Add Code of Conduct by @kjaymiller in https://github.com/tonybaloney/vscode-pets/pull/222
+* docs: fleshed out installation and bug reporting by @kev-odin in https://github.com/tonybaloney/vscode-pets/pull/220
+* Added Two Cat Names by @sudo-jarvis in https://github.com/tonybaloney/vscode-pets/pull/219
+* Add portuguese translation to package.nls.json by @joao-vitor-souza in https://github.com/tonybaloney/vscode-pets/pull/231
+* Translate the basic string file to Spanish by @oleksis in https://github.com/tonybaloney/vscode-pets/pull/232
+* Adding Thai translation by @yothinix in https://github.com/tonybaloney/vscode-pets/pull/234
+* Translate the basic strings file to French by @oleksis in https://github.com/tonybaloney/vscode-pets/pull/233
+* Add new pet names by @icextreme in https://github.com/tonybaloney/vscode-pets/pull/236
+* Add danish translation by @AnneKir in https://github.com/tonybaloney/vscode-pets/pull/239
+* Add a custom message for cockatiel by @oleksis in https://github.com/tonybaloney/vscode-pets/pull/240
+* Translate the basic strings to German by @oleksis in https://github.com/tonybaloney/vscode-pets/pull/244
+* Add new crab names by @Technickel-Dev in https://github.com/tonybaloney/vscode-pets/pull/245
+* Added pet names by @zeepk in https://github.com/tonybaloney/vscode-pets/pull/247
+* add Dutch json by @paco9595 in https://github.com/tonybaloney/vscode-pets/pull/246
+* More testing by @tonybaloney in https://github.com/tonybaloney/vscode-pets/pull/235
+
 ## [1.14.0]
 
-## New Features
+### New Features
 
 * Add Roll Call command by @Harry-Hopkinson in https://github.com/tonybaloney/vscode-pets/pull/175
 * Add the ability to set a custom name for a pet by @ccjmne in https://github.com/tonybaloney/vscode-pets/pull/176
 * Fix Pet's not spawning when cancelling the operation. by @Harry-Hopkinson in https://github.com/tonybaloney/vscode-pets/pull/182
+
+### Improvements
 
 * split cat and dog names by @tonybaloney in https://github.com/tonybaloney/vscode-pets/pull/147
 * Update names.ts by @GorillaTV in https://github.com/tonybaloney/vscode-pets/pull/150
