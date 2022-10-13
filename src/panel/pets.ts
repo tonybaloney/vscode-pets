@@ -18,6 +18,7 @@ export class PetElement {
     el: HTMLImageElement;
     collision: HTMLDivElement;
     speech: HTMLDivElement;
+    nameTag: HTMLDivElement;
     pet: IPetType;
     color: PetColor;
     type: PetType;
@@ -25,6 +26,7 @@ export class PetElement {
         this.el.remove();
         this.collision.remove();
         this.speech.remove();
+        this.nameTag.remove();
         this.color = PetColor.null;
         this.type = PetType.null;
     }
@@ -33,6 +35,7 @@ export class PetElement {
         el: HTMLImageElement,
         collision: HTMLDivElement,
         speech: HTMLDivElement,
+        nameTag: HTMLDivElement,
         pet: IPetType,
         color: PetColor,
         type: PetType,
@@ -40,6 +43,7 @@ export class PetElement {
         this.el = el;
         this.collision = collision;
         this.speech = speech;
+        this.nameTag = nameTag;
         this.pet = pet;
         this.color = color;
         this.type = type;
@@ -169,6 +173,8 @@ export interface IPetType {
     isPlaying(): boolean;
 
     showSpeechBubble(message: string, duration: number): void;
+    showNameTag(): void;
+    hideNameTag(): void;
 }
 
 function calculateSpriteWidth(size: PetSize): number {
@@ -197,6 +203,8 @@ abstract class BasePetType implements IPetType {
     private el: HTMLImageElement;
     private collision: HTMLDivElement;
     private speech: HTMLDivElement;
+    private nameTag: HTMLDivElement;
+    private _displayNameTag: boolean;
     private _left: number;
     private _bottom: number;
     petRoot: string;
@@ -210,6 +218,8 @@ abstract class BasePetType implements IPetType {
         spriteElement: HTMLImageElement,
         collisionElement: HTMLDivElement,
         speechElement: HTMLDivElement,
+        nameTagElement: HTMLDivElement,
+        displayNameTag: boolean,
         size: PetSize,
         left: number,
         bottom: number,
@@ -221,11 +231,12 @@ abstract class BasePetType implements IPetType {
         this.el = spriteElement;
         this.collision = collisionElement;
         this.speech = speechElement;
+        this.nameTag = nameTagElement;
+        this._displayNameTag = displayNameTag;
         this.petRoot = petRoot;
         this._floor = floor;
         this._left = left;
         this._bottom = bottom;
-        this.initSprite(size, left, bottom);
         this.currentStateEnum = this.sequence.startingState;
         this.currentState = resolveState(this.currentStateEnum, this);
 
@@ -233,6 +244,7 @@ abstract class BasePetType implements IPetType {
         this._size = size;
         this._speed = this.randomizeSpeed(speed);
 
+        this.initSprite(size, left, bottom);
         // Increment the static count of the Pet class that the constructor belongs to
         (this.constructor as any).count += 1;
     }
@@ -244,15 +256,14 @@ abstract class BasePetType implements IPetType {
         this.el.style.height = 'auto';
         this.el.style.maxWidth = `${calculateSpriteWidth(petSize)}px`;
         this.el.style.maxHeight = `${calculateSpriteWidth(petSize)}px`;
-        this.collision.style.left = `${left}px`;
-        this.collision.style.bottom = `${bottom}px`;
         this.collision.style.width = `${calculateSpriteWidth(petSize)}px`;
         this.collision.style.height = `${calculateSpriteWidth(petSize)}px`;
-        this.speech.style.left = `${left}px`;
-        this.speech.style.bottom = `${
-            bottom + calculateSpriteWidth(petSize)
-        }px`;
         this.hideSpeechBubble();
+        this.nameTag.innerHTML = this._name;
+        if (!this._displayNameTag) {
+            this.hideNameTag();
+        }
+        this.repositionAccompanyingElements();
     }
 
     left(): number {
@@ -268,6 +279,10 @@ abstract class BasePetType implements IPetType {
         this.collision.style.bottom = `${this._bottom}px`;
         this.speech.style.left = `${this._left}px`;
         this.speech.style.bottom = `${
+            this._bottom + calculateSpriteWidth(this._size)
+        }px`;
+        this.nameTag.style.left = `${this._left}px`;
+        this.nameTag.style.bottom = `${
             this._bottom + calculateSpriteWidth(this._size)
         }px`;
     }
@@ -349,13 +364,28 @@ abstract class BasePetType implements IPetType {
     showSpeechBubble(message: string, duration: number = 3000) {
         this.speech.innerHTML = message;
         this.speech.style.display = 'block';
+        // Hide name tag temporarily to not conflict with speech bubble
+        this.hideNameTag();
         setTimeout(() => {
             this.hideSpeechBubble();
+            // Bring back name tag when speech is done
+            this.showNameTag();
         }, duration);
     }
 
     hideSpeechBubble() {
         this.speech.style.display = 'none';
+    }
+
+    showNameTag() {
+        if (!this._displayNameTag) {
+            return;
+        }
+        this.nameTag.style.display = 'block';
+    }
+
+    hideNameTag() {
+        this.nameTag.style.display = 'none';
     }
 
     swipe() {
@@ -1039,6 +1069,8 @@ export function createPet(
     el: HTMLImageElement,
     collision: HTMLDivElement,
     speech: HTMLDivElement,
+    nameTag: HTMLDivElement,
+    displayNameTag: boolean,
     size: PetSize,
     left: number,
     bottom: number,
@@ -1054,6 +1086,8 @@ export function createPet(
             el,
             collision,
             speech,
+            nameTag,
+            displayNameTag,
             size,
             left,
             bottom,
@@ -1068,6 +1102,8 @@ export function createPet(
             el,
             collision,
             speech,
+            nameTag,
+            displayNameTag,
             size,
             left,
             bottom,
@@ -1081,6 +1117,8 @@ export function createPet(
             el,
             collision,
             speech,
+            nameTag,
+            displayNameTag,
             size,
             left,
             bottom,
@@ -1094,6 +1132,8 @@ export function createPet(
             el,
             collision,
             speech,
+            nameTag,
+            displayNameTag,
             size,
             left,
             bottom,
@@ -1107,6 +1147,8 @@ export function createPet(
             el,
             collision,
             speech,
+            nameTag,
+            displayNameTag,
             size,
             left,
             bottom,
@@ -1120,6 +1162,8 @@ export function createPet(
             el,
             collision,
             speech,
+            nameTag,
+            displayNameTag,
             size,
             left,
             bottom,
@@ -1133,6 +1177,8 @@ export function createPet(
             el,
             collision,
             speech,
+            nameTag,
+            displayNameTag,
             size,
             left,
             bottom,
@@ -1146,6 +1192,8 @@ export function createPet(
             el,
             collision,
             speech,
+            nameTag,
+            displayNameTag,
             size,
             left,
             bottom,
@@ -1159,6 +1207,8 @@ export function createPet(
             el,
             collision,
             speech,
+            nameTag,
+            displayNameTag,
             size,
             left,
             bottom,
@@ -1172,6 +1222,8 @@ export function createPet(
             el,
             collision,
             speech,
+            nameTag,
+            displayNameTag,
             size,
             left,
             bottom,

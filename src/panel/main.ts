@@ -112,6 +112,7 @@ function startAnimations(collision: HTMLDivElement, pet: IPetType) {
 function addPetToPanel(
     petType: PetType,
     basePetUri: string,
+    displayNameTag: boolean,
     petColor: PetColor,
     petSize: PetSize,
     left: number,
@@ -138,6 +139,12 @@ function addPetToPanel(
         speechBubbleElement,
     );
 
+    var nameTagElement: HTMLDivElement = document.createElement('div');
+    nameTagElement.className = `name-tag name-tag-${petSize}`;
+    (document.getElementById('petsContainer') as HTMLDivElement).appendChild(
+        nameTagElement,
+    );
+
     const root = basePetUri + '/' + petType + '/' + petColor;
     console.log('Creating new pet : ', petType, root, petColor, petSize, name);
     try {
@@ -146,6 +153,8 @@ function addPetToPanel(
             petSpriteElement,
             collisionElement,
             speechBubbleElement,
+            nameTagElement,
+            displayNameTag,
             petSize,
             left,
             bottom,
@@ -160,6 +169,7 @@ function addPetToPanel(
         petSpriteElement.remove();
         collisionElement.remove();
         speechBubbleElement.remove();
+        nameTagElement.remove();
         throw e;
     }
 
@@ -167,6 +177,7 @@ function addPetToPanel(
         petSpriteElement,
         collisionElement,
         speechBubbleElement,
+        nameTagElement,
         newPet,
         petColor,
         petType,
@@ -192,7 +203,12 @@ export function saveState() {
     vscode.setState(state);
 }
 
-function recoverState(basePetUri: string, petSize: PetSize, floor: number) {
+function recoverState(
+    basePetUri: string,
+    displayNameTag: boolean,
+    petSize: PetSize,
+    floor: number,
+) {
     var state = vscode.getState();
 
     if (state.petCounter === undefined || isNaN(state.petCounter)) {
@@ -212,6 +228,7 @@ function recoverState(basePetUri: string, petSize: PetSize, floor: number) {
             var newPet = addPetToPanel(
                 p.petType ?? PetType.cat,
                 basePetUri,
+                displayNameTag,
                 p.petColor ?? PetColor.brown,
                 petSize,
                 parseInt(p.elLeft ?? '0'),
@@ -262,6 +279,7 @@ export function petPanelApp(
     basePetUri: string,
     theme: Theme,
     themeKind: ColorThemeKind,
+    displayNameTag: boolean,
     petColor: PetColor,
     petSize: PetSize,
     petType: PetType,
@@ -362,6 +380,7 @@ export function petPanelApp(
             addPetToPanel(
                 petType,
                 basePetUri,
+                displayNameTag,
                 petColor,
                 petSize,
                 randomStartPosition(),
@@ -373,7 +392,7 @@ export function petPanelApp(
         saveState();
     } else {
         console.log('Recovering state - ', state);
-        recoverState(basePetUri, petSize, floor);
+        recoverState(basePetUri, displayNameTag, petSize, floor);
     }
 
     initCanvas();
@@ -396,6 +415,7 @@ export function petPanelApp(
                     addPetToPanel(
                         message.type,
                         basePetUri,
+                        displayNameTag,
                         message.color,
                         petSize,
                         randomStartPosition(),

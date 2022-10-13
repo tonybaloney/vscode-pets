@@ -111,6 +111,11 @@
         "configuration": [
             {
                 "properties": {
+                    "vscode-pets.displayNameTag": {
+                        "type": "boolean",
+                        "default": false,
+                        "description": "Display pets name above them"
+                    },
                     "vscode-pets.petColor": {
                         "type": "string",
                         "enum": [

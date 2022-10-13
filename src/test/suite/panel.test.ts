@@ -31,11 +31,16 @@ suite('Pets Test Suite', () => {
         const petSpeechEl = global.document.createElement(
             'div',
         ) as HTMLDivElement;
+        const petNameTagEl = global.document.createElement(
+            'div',
+        ) as HTMLDivElement;
         const testPet = pets.createPet(
             'cat',
             petImageEl,
             petDivEl,
             petSpeechEl,
+            petNameTagEl,
+            true,
             PetSize.medium,
             0,
             0,
@@ -51,6 +56,7 @@ suite('Pets Test Suite', () => {
             petImageEl,
             petDivEl,
             petSpeechEl,
+            petNameTagEl,
             testPet,
             PetColor.brown,
             PetType.cat,

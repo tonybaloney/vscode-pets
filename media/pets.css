@@ -4,6 +4,9 @@
 	--input-padding-horizontal: 4px;
 	--input-margin-vertical: 4px;
 	--input-margin-horizontal: 0;
+	--font-size-nano: 9px;
+	--font-size-medium: 12px;
+	--font-size-large: 16px;
 }
 
 body {
@@ -145,15 +148,15 @@ img.pet {
 }
 
 .bubble-nano {
-	font-size: 9px;
+	font-size: var(--font-size-nano);
 }
 
 .bubble-medium {
-	font-size: 12px;
+	font-size: var(--font-size-medium);
 }
 
 .bubble-large {
-	font-size: 16px;
+	font-size: var(--font-size-large);
 }
 
 .bubble:before,
@@ -180,4 +183,21 @@ img.pet {
 	bottom: -10px;
 	border: 5px solid;
 	border-color: #fff transparent transparent #fff;
+}
+
+.name-tag {
+	position: absolute;
+	font-family: silkscreen, sans-serif;
+}
+
+.name-tag-nano {
+	font-size: var(--font-size-nano);
+}
+
+.name-tag-medium {
+	font-size: var(--font-size-medium);
+}
+
+.name-tag-large {
+	font-size: var(--font-size-large);
 }

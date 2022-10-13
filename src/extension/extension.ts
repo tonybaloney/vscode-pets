@@ -21,6 +21,7 @@ const DEFAULT_COLOR = PetColor.brown;
 const DEFAULT_PET_TYPE = PetType.cat;
 const DEFAULT_POSITION = ExtPosition.panel;
 const DEFAULT_THEME = Theme.none;
+const DEFAULT_DISPLAY_NAME_TAG = false;
 
 const ALL_PETS = [
     PetType.cat,
@@ -98,6 +99,12 @@ function getConfigurationPosition() {
     return vscode.workspace
         .getConfiguration('vscode-pets')
         .get<ExtPosition>('position', DEFAULT_POSITION);
+}
+
+function getConfigurationDisplayNameTag() {
+    return vscode.workspace
+        .getConfiguration('vscode-pets')
+        .get<boolean>('displayNameTag', DEFAULT_DISPLAY_NAME_TAG);
 }
 
 function updateExtensionPositionContext() {
@@ -299,6 +306,7 @@ export function activate(context: vscode.ExtensionContext) {
                 PetPanel.createOrShow(
                     context.extensionUri,
                     context.extensionPath,
+                    getConfigurationDisplayNameTag(),
                     spec.color,
                     spec.type,
                     spec.size,
@@ -353,6 +361,7 @@ export function activate(context: vscode.ExtensionContext) {
     webviewViewProvider = new PetWebviewViewProvider(
         context.extensionUri,
         context.extensionPath,
+        getConfigurationDisplayNameTag(),
         spec.color,
         spec.type,
         spec.size,
@@ -576,6 +585,7 @@ export function activate(context: vscode.ExtensionContext) {
         vscode.workspace.onDidChangeConfiguration(
             (e: vscode.ConfigurationChangeEvent): void => {
                 if (
+                    e.affectsConfiguration('vscode-pets.displayNameTag') ||
                     e.affectsConfiguration('vscode-pets.petColor') ||
                     e.affectsConfiguration('vscode-pets.petType') ||
                     e.affectsConfiguration('vscode-pets.petSize') ||
@@ -585,6 +595,9 @@ export function activate(context: vscode.ExtensionContext) {
                     const spec = PetSpecification.fromConfiguration();
                     const panel = getPetPanel();
                     if (panel) {
+                        panel.updateDisplayNameTag(
+                            getConfigurationDisplayNameTag(),
+                        );
                         panel.updatePetColor(spec.color);
                         panel.updatePetSize(spec.size);
                         panel.updatePetType(spec.type);
@@ -616,6 +629,7 @@ export function activate(context: vscode.ExtensionContext) {
                     webviewPanel,
                     context.extensionUri,
                     context.extensionPath,
+                    getConfigurationDisplayNameTag(),
                     spec.color,
                     spec.type,
                     spec.size,
@@ -700,6 +714,7 @@ interface IPetPanel {
     listPets(): void;
     rollCall(): void;
     themeKind(): vscode.ColorThemeKind;
+    updateDisplayNameTag(displayNameTag: boolean): void;
     updatePetColor(newColor: PetColor): void;
     updatePetType(newType: PetType): void;
     updatePetSize(newSize: PetSize): void;
@@ -711,6 +726,7 @@ class PetWebviewContainer implements IPetPanel {
     protected _extensionUri: vscode.Uri;
     protected _disposables: vscode.Disposable[] = [];
     protected _petMediaPath: string;
+    protected _displayNameTag: boolean;
     protected _petColor: PetColor;
     protected _petType: PetType;
     protected _petSize: PetSize;
@@ -720,6 +736,7 @@ class PetWebviewContainer implements IPetPanel {
     constructor(
         extensionUri: vscode.Uri,
         extensionPath: string,
+        displayNameTag: boolean,
         color: PetColor,
         type: PetType,
         size: PetSize,
@@ -728,11 +745,16 @@ class PetWebviewContainer implements IPetPanel {
     ) {
         this._extensionUri = extensionUri;
         this._petMediaPath = path.join(extensionPath, 'media');
+        this._displayNameTag = displayNameTag;
         this._petColor = color;
         this._petType = type;
         this._petSize = size;
         this._theme = theme;
         this._themeKind = themeKind;
+    }
+
+    public displayNameTag(): boolean {
+        return this._displayNameTag;
     }
 
     public petColor(): PetColor {
@@ -753,6 +775,10 @@ class PetWebviewContainer implements IPetPanel {
 
     public themeKind(): vscode.ColorThemeKind {
         return this._themeKind;
+    }
+
+    public updateDisplayNameTag(displayNameTag: boolean) {
+        this._displayNameTag = displayNameTag;
     }
 
     public updatePetColor(newColor: PetColor) {
@@ -889,7 +915,7 @@ class PetWebviewContainer implements IPetPanel {
 				<div id="petsContainer"></div>
 				<div id="foreground"></div>	
 				<script nonce="${nonce}" src="${scriptUri}"></script>
-				<script nonce="${nonce}">petApp.petPanelApp("${basePetUri}", "${this.theme()}", ${this.themeKind()}, "${this.petColor()}", "${this.petSize()}", "${this.petType()}");</script>
+				<script nonce="${nonce}">petApp.petPanelApp("${basePetUri}", "${this.theme()}", ${this.themeKind()}, ${this.displayNameTag()}, "${this.petColor()}", "${this.petSize()}", "${this.petType()}");</script>
 			</body>
 			</html>`;
     }
@@ -922,6 +948,7 @@ class PetPanel extends PetWebviewContainer implements IPetPanel {
     public static createOrShow(
         extensionUri: vscode.Uri,
         extensionPath: string,
+        displayNameTag: boolean,
         petColor: PetColor,
         petType: PetType,
         petSize: PetSize,
@@ -960,6 +987,7 @@ class PetPanel extends PetWebviewContainer implements IPetPanel {
             panel,
             extensionUri,
             extensionPath,
+            displayNameTag,
             petColor,
             petType,
             petSize,
@@ -988,6 +1016,7 @@ class PetPanel extends PetWebviewContainer implements IPetPanel {
         panel: vscode.WebviewPanel,
         extensionUri: vscode.Uri,
         extensionPath: string,
+        displayNameTag: boolean,
         petColor: PetColor,
         petType: PetType,
         petSize: PetSize,
@@ -998,6 +1027,7 @@ class PetPanel extends PetWebviewContainer implements IPetPanel {
             panel,
             extensionUri,
             extensionPath,
+            displayNameTag,
             petColor,
             petType,
             petSize,
@@ -1010,13 +1040,23 @@ class PetPanel extends PetWebviewContainer implements IPetPanel {
         panel: vscode.WebviewPanel,
         extensionUri: vscode.Uri,
         extensionPath: string,
+        displayNameTag: boolean,
         color: PetColor,
         type: PetType,
         size: PetSize,
         theme: Theme,
         themeKind: ColorThemeKind,
     ) {
-        super(extensionUri, extensionPath, color, type, size, theme, themeKind);
+        super(
+            extensionUri,
+            extensionPath,
+            displayNameTag,
+            color,
+            type,
+            size,
+            theme,
+            themeKind,
+        );
 
         this._panel = panel;
 
@@ -1117,6 +1157,7 @@ function createPetPlayground(context: vscode.ExtensionContext) {
     PetPanel.createOrShow(
         context.extensionUri,
         context.extensionPath,
+        getConfigurationDisplayNameTag(),
         spec.color,
         spec.type,
         spec.size,
