@@ -122,7 +122,7 @@ suite('Pets Test Suite', () => {
         assert.strictEqual(collection.locate('Jerry'), undefined);
     });
 
-    ALL_PETS.forEach((petType) => {
+    ALL_PETS.forEach((petType: PetType) => {
         test(
             'Test panel app initialization with theme and ' + String(petType),
             () => {
@@ -133,6 +133,7 @@ suite('Pets Test Suite', () => {
                     'https://test.com',
                     Theme.beach,
                     ColorThemeKind.dark,
+                    true,
                     PetColor.black,
                     PetSize.large,
                     petType,
@@ -178,6 +179,7 @@ suite('Pets Test Suite', () => {
             'https://test.com',
             Theme.none,
             ColorThemeKind.dark,
+            true,
             PetColor.black,
             PetSize.large,
             PetType.cat,
@@ -199,6 +201,7 @@ suite('Pets Test Suite', () => {
             'https://test.com',
             Theme.none,
             ColorThemeKind.dark,
+            true,
             PetColor.black,
             PetSize.large,
             PetType.cat,
