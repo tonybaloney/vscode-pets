@@ -8,6 +8,10 @@ import {
     ExtPosition,
     Theme,
     WebviewMessage,
+    ALL_COLORS,
+    ALL_PETS,
+    ALL_SCALES,
+    ALL_THEMES,
 } from '../common/types';
 import { randomName } from '../common/names';
 import * as localize from '../common/localize';
@@ -22,31 +26,6 @@ const DEFAULT_PET_TYPE = PetType.cat;
 const DEFAULT_POSITION = ExtPosition.panel;
 const DEFAULT_THEME = Theme.none;
 const DEFAULT_DISPLAY_NAME_TAG = false;
-
-const ALL_PETS = [
-    PetType.cat,
-    PetType.clippy,
-    PetType.cockatiel,
-    PetType.crab,
-    PetType.dog,
-    PetType.rocky,
-    PetType.rubberduck,
-    PetType.snake,
-    PetType.totoro,
-    PetType.zappy,
-];
-const ALL_COLORS = [
-    PetColor.black,
-    PetColor.brown,
-    PetColor.green,
-    PetColor.yellow,
-    PetColor.gray,
-    PetColor.red,
-    PetColor.white,
-    PetColor.null,
-];
-const ALL_SCALES = [PetSize.nano, PetSize.medium, PetSize.large];
-const ALL_THEMES = [Theme.none, Theme.forest, Theme.castle, Theme.beach];
 
 class PetQuickPickItem implements vscode.QuickPickItem {
     constructor(
