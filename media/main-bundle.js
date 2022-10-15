@@ -309,6 +309,7 @@ exports.DUCK_NAMES = new Map([
     [14, 'Quackers'],
     [15, 'Jelly Beans'],
     [16, 'Donald'],
+    [17, 'Chad'],
 ]);
 exports.ZAPPY_NAMES = new Map([
     [1, 'Zappy'],
