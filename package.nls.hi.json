@@ -1,0 +1,31 @@
+{
+    "vscodePets.spawnPet": "नया पालतू जानवर जोड़े",
+    "vscodePets.petPanel": "पालतू जानवरों का पैनल",
+    "vscodePets.selectPet": "एक पालतू जानवर चुनें",
+    "vscodePets.selectColor": "एक रंग चुनें",
+    "vscodePets.selectPetToRemove": "हटाने के लिए पालतू जानवर का चयन करें।",
+    "vscodePets.leaveBlank": "यादृच्छिक नाम के लिए खाली छोड़ दें",
+    "vscodePets.nameYourPet": "अपने पालतू जानवर को नाम दें", 
+    "vscodePets.cancelledSpawningPet":"स्पॉनिंग पेट रद्द",
+    "vscodePets.spawnPetWithClosedPlayground": "एक खेल का मैदान बनाया गया है। अब आप अधिक पालतू जानवरों को जोड़ने के लिए \"Spawn Additional Pet\" कमांड का उपयोग कर सकते हैं।",
+    "vscodePets.removePetsWithClosedPlayground":  "एक खेल का मैदान बनाया गया है। अब आप सभी पालतू जानवरों को हटाने के लिए \"Remove All Pets\" कमांड का उपयोग कर सकते हैं।",
+
+    "vscodePets.black": "काला",
+    "vscodePets.brown": "भूरा",
+    "vscodePets.green": "हरा",
+    "vscodePets.yellow": "पीला",
+    "vscodePets.gray": "स्लेटी",
+    "vscodePets.red": "लाल",
+    "vscodePets.white": "सफेद",
+
+    "vscodePets.cat": "बिल्ली",
+    "vscodePets.clippy": "क्लिप्पी",
+    "vscodePets.cockatiel": "तोता",
+    "vscodePets.crab": "केकड़ा",
+    "vscodePets.dog": "कुत्ता",
+    "vscodePets.rocky": "चट्टान",
+    "vscodePets.rubber-duck": "बतख",
+    "vscodePets.snake": "साँप",
+    "vscodePets.totoro": "टोटोरो",
+    "vscodePets.zappy": "जैपी"
+}
