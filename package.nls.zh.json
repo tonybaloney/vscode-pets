@@ -7,8 +7,8 @@
   "vscodePets.leaveBlank": "留空白名称",
   "vscodePets.nameYourPet": "命名您的宠物",
   "vscodePets.cancelledSpawningPet": "取消产卵宠物",
-  "vscodePets.spawnPetWithClosedPlayground": "已经创建了一个宠物游乐场。 现在，您可以使用“ Spawn额外PET”命令添加更多宠物。",
-  "vscodePets.removePetsWithClosedPlayground": "已经创建了一个宠物游乐场。 现在，您可以使用“删除所有宠物”命令去除所有宠物。",
+  "vscodePets.spawnPetWithClosedPlayground": "已经创建了一个宠物游乐场。 现在，您可以使用\"Spawn Additional Pet\"命令添加更多宠物。",
+  "vscodePets.removePetsWithClosedPlayground": "已经创建了一个宠物游乐场。 现在，您可以使用\"Remove All Pets\"命令去除所有宠物。",
   "vscodePets.black": "黑色的",
   "vscodePets.brown": "棕色的",
   "vscodePets.green": "绿色的",
@@ -25,5 +25,5 @@
   "vscodePets.rubber-duck": "橡皮鸭",
   "vscodePets.snake": "蛇",
   "vscodePets.totoro": "托托罗",
-  "vscodePets.zappy": "Zappy"
+  "vscodePets.zappy": "活泼的"
 }
