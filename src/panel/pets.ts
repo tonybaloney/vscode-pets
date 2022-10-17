@@ -1060,17 +1060,7 @@ export function createPet(
         string,
         number,
         string,
-    ] = [
-        el,
-        collision,
-        speech,
-        size,
-        left,
-        bottom,
-        petRoot,
-        floor,
-        name,
-    ];
+    ] = [el, collision, speech, size, left, bottom, petRoot, floor, name];
 
     switch (petType) {
         case PetType.cat:
