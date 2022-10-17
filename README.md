@@ -146,7 +146,7 @@ Want to contribute to vscode-pets? Feel free to [fork the repository](https://gi
 
 ### Drawing and Animations
 
-If you want to contribute improvements to the animations, additional pet colors or even new pets, clone the repository and work in the media/ folder.  
+If you want to contribute improvements to the animations, additional pet colors or even new pets, clone the repository and work in the `media/` folder.  
 
 Most drawings are done in [aseprite](https://www.aseprite.org/) because you can edit GIFs directly. However, you are free to use any tool to make the animations. Animations should be 8 frames per second. The style of the extension is to have pixelated creatures (although not limited to an 8-bit color canvas).  
 
