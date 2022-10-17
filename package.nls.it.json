@@ -1,0 +1,31 @@
+{
+    "vscodePets.spawnPet": "Genera un animale",
+    "vscodePets.petPanel": "Panello dell'animale",
+    "vscodePets.selectPet": "Seleziona un animale",
+    "vscodePets.selectColor": "Seleziona un colore",
+    "vscodePets.selectPetToRemove": "Selezione l'animale da rimuovere.",
+    "vscodePets.leaveBlank": "Lascia vuoto per un nome casuale",
+    "vscodePets.nameYourPet": "Dai un nome al tuo animale", 
+    "vscodePets.cancelledSpawningPet":"Generazione animale annullata",
+    "vscodePets.spawnPetWithClosedPlayground": "È stata creata un'area giochi per animali. Puoi ora usare il comando \"Spawn Additional Pet\" per aggiungere più animali.",
+    "vscodePets.removePetsWithClosedPlayground":  "È stata creata un'area giochi per animali. Puoi ora usare il comando \"Remove All Pets\" per rimuovere tutti gli animali.",
+
+    "vscodePets.black": "Nero",
+    "vscodePets.brown": "Marrone",
+    "vscodePets.green": "Verde",
+    "vscodePets.yellow": "Giallo",
+    "vscodePets.gray": "Grigio",
+    "vscodePets.red": "Rosso",
+    "vscodePets.white": "Bianco",
+
+    "vscodePets.cat": "Gatto",
+    "vscodePets.clippy": "Clippy",
+    "vscodePets.cockatiel": "Calopsitta",
+    "vscodePets.crab": "Granchio",
+    "vscodePets.dog": "Cane",
+    "vscodePets.rocky": "Rocky",
+    "vscodePets.rubber-duck": "Paperella di Gomma",
+    "vscodePets.snake": "Serpente",
+    "vscodePets.totoro": "Totoro",
+    "vscodePets.zappy": "Zappy"
+}
