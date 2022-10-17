@@ -116,6 +116,9 @@ export const CAT_NAMES: Map<number, string> = new Map<number, string>([
     [114, 'Bob'],
     [115, 'Clyde'],
     [116, 'Simon'],
+    [117, 'Mimmo'],
+    [118, 'Carlotta'],
+    [119, 'Felix'],
 ]);
 
 export const DOG_NAMES: Map<number, string> = new Map<number, string>([
