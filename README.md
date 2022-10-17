@@ -2,7 +2,7 @@
 
 ![icon](https://github.com/tonybaloney/vscode-pets/raw/master/icon.png)
 
-Puts a small, bored cat, an enthusiastic dog, a feisty snake, a rubber duck, or Clippy 📎 in your code editor.
+Puts a small, bored cat, an enthusiastic dog, a feisty snake, a rubber duck, or Clippy 📎 in your code editor to boost productivity.
 
 [![Visual Studio Marketplace Version](https://img.shields.io/visual-studio-marketplace/v/tonybaloney.vscode-pets?color=blue&logo=visual-studio)](https://marketplace.visualstudio.com/items?itemName=tonybaloney.vscode-pets&WT.mc_id=python-17801-anthonyshaw)
 
@@ -23,18 +23,20 @@ With VS Code open, launch VS Code Quick Open (`Ctrl+P` on Windows/Linux or `Cmd(
 `ext install tonybaloney.vscode-pets`
 
 ## Using VS Code Pets
-Congrats on installing joy! Enjoy interacting with these cute pixelated pets. Read below to get a full understanding of this extension. 
+
+Congrats on installing joy! Enjoy interacting with these cute pixelated pets. Read below to get a full understanding of this extension. Not convinced? Watch our extension spotlight on [Visual Studio Code](https://www.youtube.com/watch?v=aE6Ifj_KstI).
 
 Available commands are prefaced with `Pet Coding` in the Command Palette:
 * Start pet coding session
 * Spawn extra pet
-* Remove pet
-* Roll-call
-* Remove all pets
 * Throw ball
+* Roll-call
+* Remove pet
+* Remove all pets
 
 ## Configure vscode-pets in the VS Code settings
-Open the setting panel with `Ctrl + ,` on Windows/Linux. In the search bar, enter “vscode-pets” to see all available options.
+
+Open the setting panel with `Ctrl+,` on Windows/Linux or `Cmd(⌘)+,` on MacOS. In the search bar, enter “vscode-pets” to see all available options.
 
 Set a default color, size, pet type, position, and theme when you open a Pet Panel.
 
@@ -46,29 +48,24 @@ Set a default color, size, pet type, position, and theme when you open a Pet Pan
 
 ![screenshot2](https://github.com/tonybaloney/vscode-pets/raw/master/screenshots/screenshot-2.gif)
 
+### Restrictions
+
 * Snake can only be green
 * Rubber duck & Zappy can only be yellow
 * Ferris the crab can only be red
 * Rocky can only be gray
 
 ## Start pet coding session to show your pet
+
 Open the command palette with `Ctrl+Shift+P` on Windows/Linux or `Cmd(⌘)+Shift+P` on MacOS.  
 
 Run the "Start pet coding session" command (`vscode-pets.start`)
 
 ## Playing
 
-Pets will interact with your mouse pointer within the open Pet Panel.
+Pets will interact with your mouse pointer within the open Pet Panel. Additionally, pets will display text bubbles as you move your mouse over the pet.
 
 ![screenshot3](https://github.com/tonybaloney/vscode-pets/raw/master/screenshots/screenshot-3.gif)
-
-## Throwing a ball
-
-Play catch with your pet! Run the "Throw ball" command (`vscode-pets.throw-ball`).
-
-* Rocky will not run & catch a ball. Have you ever seen a rock run after a ball? Neither have we.
-
-![screenshot4](https://github.com/tonybaloney/vscode-pets/raw/master/screenshots/screenshot-4.gif)
 
 ## Adding extra pets
 
@@ -78,15 +75,27 @@ Extra pets will not persist between closing and restarting VS Code.
 
 ![pet-select](https://github.com/tonybaloney/vscode-pets/raw/master/screenshots/pet-select.png)
 
-## Removing pets
+## Throwing a ball
+
+Play catch with your pet! Run the "Throw ball" command (`vscode-pets.throw-ball`).
+
+* Rocky will not run & catch a ball. Have you ever seen a rock run after a ball? Neither have we.
+
+![screenshot4](https://github.com/tonybaloney/vscode-pets/raw/master/screenshots/screenshot-4.gif)
+
+## Roll-call with your pets
+
+Get a description of your current pets within VS Code. Run the "Roll-call" command (`vscode-pets.roll-call`) from the command palette.
+
+![pet-roll-call](https://github.com/tonybaloney/vscode-pets/raw/master/screenshots/pet-roll-call.png)
+
+## Removing a single pet or multiple pets
 
 You can remove all pets (except the 1 configured) by running the "Remove all pets" command (`vscode-pets.delete-pets`) from the command palette.
 
 You can remove specific pets by running the "Remove pet" command (`vscode-pets.delete-pet`) from the command palette.
 
-## Roll-call with your pets
-
-Get a description of your current pets within VS Code. 
+![pet-remove](https://github.com/tonybaloney/vscode-pets/raw/master/screenshots/pet-remove.png)
 
 ## Themes
 
@@ -136,9 +145,10 @@ Sandboxed: No
 Want to contribute to vscode-pets? Feel free to [fork the repository](https://github.com/tonybaloney/vscode-pets/fork) and submit a pull request.
 
 ### Drawing and Animations
-If you want to contribute improvements to the animations, additional pet colors or even new pets, clone the repository and work in the media/ folder.  
 
-Most drawings are done in aseprite because you can edit the GIFs directly. However, use any tool to make the animations. Animations should be 8 frames per second. The style of the extension is to have pixelated creatures (although not limited to an 8-bit color canvas).  
+If you want to contribute improvements to the animations, additional pet colors or even new pets, clone the repository and work in the `media/` folder.  
+
+Most drawings are done in [aseprite](https://www.aseprite.org/) because you can edit GIFs directly. However, you are free to use any tool to make the animations. Animations should be 8 frames per second. The style of the extension is to have pixelated creatures (although not limited to an 8-bit color canvas).  
 
 Don't worry if you don't have enough coding experience to add the changes to the extension to support the new animations, we can help you with that.  
 
@@ -149,6 +159,7 @@ The minimum set of behaviors is:
 * holding green ball
 
 ### Testing the changes  
+
 -   Run `npm install`.
 -   Run `npm run compile`.
 -   Go to the debug panel on the sidebar and launch the development version with the extension loaded (first option in the debug profiles).
