@@ -7,7 +7,7 @@
   "vscodePets.leaveBlank": "留空则随机一个名称",
   "vscodePets.nameYourPet": "为您的宠物命名",
   "vscodePets.cancelledSpawningPet": "取消创建宠物",
-  "vscodePets.spawnPetWithClosedPlayground": "已经创建了一个宠物游乐场。 现在，您可以使用\"Spawn Additional Pet\"命令添加更多宠物。",
+  "vscodePets.spawnPetWithClosedPlayground": "已经创建了一个宠物游乐场。 现在，您可以使用 \"Spawn Additional Pet\" 命令添加更多宠物。",
   "vscodePets.removePetsWithClosedPlayground": "已经创建了一个宠物游乐场。 现在，您可以使用 \"Spawn Additional Pet\" 命令添加更多宠物。",
   "vscodePets.black": "黑色的",
   "vscodePets.brown": "棕色的",
