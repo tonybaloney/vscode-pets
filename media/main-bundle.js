@@ -476,7 +476,7 @@ function handleMouseOver(e) {
 }
 function startAnimations(collision, pet, stateApi) {
     if (!stateApi) {
-        stateApi = window.acquireVsCodeApi();
+        stateApi = acquireVsCodeApi();
     }
     collision.addEventListener('mouseover', handleMouseOver);
     setInterval(() => {
@@ -520,7 +520,7 @@ function addPetToPanel(petType, basePetUri, petColor, petSize, left, bottom, flo
 }
 function saveState(stateApi) {
     if (!stateApi) {
-        stateApi = window.acquireVsCodeApi();
+        stateApi = acquireVsCodeApi();
     }
     var state = new states_1.PetPanelState();
     state.petStates = new Array();
@@ -536,14 +536,14 @@ function saveState(stateApi) {
         });
     });
     state.petCounter = petCounter;
-    stateApi.setState(state);
+    stateApi?.setState(state);
 }
 exports.saveState = saveState;
 function recoverState(basePetUri, petSize, floor, stateApi) {
     if (!stateApi) {
-        stateApi = window.acquireVsCodeApi();
+        stateApi = acquireVsCodeApi();
     }
-    var state = stateApi.getState();
+    var state = stateApi?.getState();
     if (!state) {
         petCounter = 1;
     }
@@ -608,7 +608,7 @@ function petPanelApp(basePetUri, theme, themeKind, petColor, petSize, petType, s
     const ballRadius = calculateBallRadius(petSize);
     var floor = 0;
     if (!stateApi) {
-        stateApi = window.acquireVsCodeApi();
+        stateApi = acquireVsCodeApi();
     }
     // Apply Theme backgrounds
     const foregroundEl = document.getElementById('foreground');
@@ -686,7 +686,7 @@ function petPanelApp(basePetUri, theme, themeKind, petColor, petSize, petType, s
     }
     console.log('Starting pet session', petColor, basePetUri, petType);
     // New session
-    var state = stateApi.getState();
+    var state = stateApi?.getState();
     if (!state) {
         console.log('No state, starting a new session.');
         petCounter = 1;
