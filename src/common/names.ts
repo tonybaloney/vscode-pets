@@ -109,6 +109,16 @@ export const CAT_NAMES: Map<number, string> = new Map<number, string>([
     [107, 'Riley'],
     [108, 'Lenny'],
     [109, 'Mango'],
+    [110, 'Alex'],
+    [111, 'Boo'],
+    [112, 'Botas'],
+    [113, 'Romeo'],
+    [114, 'Bob'],
+    [115, 'Clyde'],
+    [116, 'Simon'],
+    [117, 'Mimmo'],
+    [118, 'Carlotta'],
+    [119, 'Felix'],
 ]);
 
 export const DOG_NAMES: Map<number, string> = new Map<number, string>([
@@ -219,6 +229,33 @@ export const DOG_NAMES: Map<number, string> = new Map<number, string>([
     [106, 'Sparky'],
     [107, 'Linus'],
     [108, 'Cody'],
+    [109, 'Slinky'],
+    [110, 'Toto'],
+    [111, 'Balto'],
+    [112, 'Golfo'],
+    [113, 'Pongo'],
+    [114, 'Beethoven'],
+    [115, 'Hachiko'],
+    [116, 'Scooby'],
+    [117, 'Clifford'],
+    [118, 'Astro'],
+    [119, 'Goofy'],
+    [120, 'Chip'],
+    [121, 'Einstein'],
+    [122, 'Fang'],
+    [123, 'Truman'],
+    [124, 'Uggie'],
+    [125, 'Bingo'],
+    [126, 'Blue'],
+    [127, 'Cometa'],
+    [128, 'Krypto'],
+    [129, 'Huesos'],
+    [130, 'Odie'],
+    [131, 'Snoopy'],
+    [132, 'Aisha'],
+    [133, 'Moly'],
+    [134, 'Chiquita'],
+    [135, 'Chavela'],
 ]);
 
 export const CRAB_NAMES: Map<number, string> = new Map<number, string>([
@@ -304,6 +341,7 @@ export const DUCK_NAMES: Map<number, string> = new Map<number, string>([
     [14, 'Quackers'],
     [15, 'Jelly Beans'],
     [16, 'Donald'],
+    [17, 'Chady'],
 ]);
 
 export const ZAPPY_NAMES: Map<number, string> = new Map<number, string>([

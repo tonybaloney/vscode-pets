@@ -1081,157 +1081,55 @@ export function createPet(
     if (name === undefined || name === null || name === '') {
         throw new InvalidPetException('name is undefined');
     }
-    if (petType === 'totoro') {
-        return new Totoro(
-            el,
-            collision,
-            speech,
-            nameTag,
-            displayNameTag,
-            size,
-            left,
-            bottom,
-            petRoot,
-            floor,
-            name,
-            PetSpeed.normal,
-        );
+
+    const standardPetArguments: [
+        HTMLImageElement,
+        HTMLDivElement,
+        HTMLDivElement,
+        HTMLDivElement,
+        boolean,
+        PetSize,
+        number,
+        number,
+        string,
+        number,
+        string,
+    ] = [
+        el,
+        collision,
+        speech,
+        nameTag,
+        displayNameTag,
+        size,
+        left,
+        bottom,
+        petRoot,
+        floor,
+        name,
+    ];
+
+    switch (petType) {
+        case PetType.cat:
+            return new Cat(...standardPetArguments, PetSpeed.normal);
+        case PetType.dog:
+            return new Dog(...standardPetArguments, PetSpeed.normal);
+        case PetType.crab:
+            return new Crab(...standardPetArguments, PetSpeed.slow);
+        case PetType.clippy:
+            return new Clippy(...standardPetArguments, PetSpeed.slow);
+        case PetType.totoro:
+            return new Totoro(...standardPetArguments, PetSpeed.normal);
+        case PetType.snake:
+            return new Snake(...standardPetArguments, PetSpeed.verySlow);
+        case PetType.rubberduck:
+            return new RubberDuck(...standardPetArguments, PetSpeed.fast);
+        case PetType.zappy:
+            return new Zappy(...standardPetArguments, PetSpeed.veryFast);
+        case PetType.rocky:
+            return new Rocky(...standardPetArguments, PetSpeed.still);
+        case PetType.cockatiel:
+            return new Cockatiel(...standardPetArguments, PetSpeed.normal);
+        default:
+            throw new InvalidPetException("Pet type doesn't exist");
     }
-    if (petType === 'cat') {
-        return new Cat(
-            el,
-            collision,
-            speech,
-            nameTag,
-            displayNameTag,
-            size,
-            left,
-            bottom,
-            petRoot,
-            floor,
-            name,
-            PetSpeed.normal,
-        );
-    } else if (petType === 'dog') {
-        return new Dog(
-            el,
-            collision,
-            speech,
-            nameTag,
-            displayNameTag,
-            size,
-            left,
-            bottom,
-            petRoot,
-            floor,
-            name,
-            PetSpeed.normal,
-        );
-    } else if (petType === 'snake') {
-        return new Snake(
-            el,
-            collision,
-            speech,
-            nameTag,
-            displayNameTag,
-            size,
-            left,
-            bottom,
-            petRoot,
-            floor,
-            name,
-            PetSpeed.verySlow,
-        );
-    } else if (petType === 'clippy') {
-        return new Clippy(
-            el,
-            collision,
-            speech,
-            nameTag,
-            displayNameTag,
-            size,
-            left,
-            bottom,
-            petRoot,
-            floor,
-            name,
-            PetSpeed.slow,
-        );
-    } else if (petType === 'cockatiel') {
-        return new Cockatiel(
-            el,
-            collision,
-            speech,
-            nameTag,
-            displayNameTag,
-            size,
-            left,
-            bottom,
-            petRoot,
-            floor,
-            name,
-            PetSpeed.normal,
-        );
-    } else if (petType === 'crab') {
-        return new Crab(
-            el,
-            collision,
-            speech,
-            nameTag,
-            displayNameTag,
-            size,
-            left,
-            bottom,
-            petRoot,
-            floor,
-            name,
-            PetSpeed.slow,
-        );
-    } else if (petType === 'rubber-duck') {
-        return new RubberDuck(
-            el,
-            collision,
-            speech,
-            nameTag,
-            displayNameTag,
-            size,
-            left,
-            bottom,
-            petRoot,
-            floor,
-            name,
-            PetSpeed.fast,
-        );
-    } else if (petType === 'zappy') {
-        return new Zappy(
-            el,
-            collision,
-            speech,
-            nameTag,
-            displayNameTag,
-            size,
-            left,
-            bottom,
-            petRoot,
-            floor,
-            name,
-            PetSpeed.veryFast,
-        );
-    } else if (petType === 'rocky') {
-        return new Rocky(
-            el,
-            collision,
-            speech,
-            nameTag,
-            displayNameTag,
-            size,
-            left,
-            bottom,
-            petRoot,
-            floor,
-            name,
-            PetSpeed.still,
-        );
-    }
-    throw new InvalidPetException("Pet type doesn't exist");
 }
