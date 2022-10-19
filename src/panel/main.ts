@@ -24,9 +24,7 @@ declare global {
         setState(state: PetPanelState): void;
         postMessage(message: WebviewMessage): void;
     }
-    interface Window {
-        acquireVsCodeApi(): VscodeStateApi;
-    }
+    function acquireVsCodeApi(): VscodeStateApi;
 }
 
 export var allPets: IPetCollection = new PetCollection();
@@ -98,7 +96,7 @@ function startAnimations(
     stateApi?: VscodeStateApi,
 ) {
     if (!stateApi) {
-        stateApi = window.acquireVsCodeApi();
+        stateApi = acquireVsCodeApi();
     }
 
     collision.addEventListener('mouseover', handleMouseOver);
@@ -182,7 +180,7 @@ function addPetToPanel(
 
 export function saveState(stateApi?: VscodeStateApi) {
     if (!stateApi) {
-        stateApi = window.acquireVsCodeApi();
+        stateApi = acquireVsCodeApi();
     }
     var state = new PetPanelState();
     state.petStates = new Array();
@@ -199,7 +197,7 @@ export function saveState(stateApi?: VscodeStateApi) {
         });
     });
     state.petCounter = petCounter;
-    stateApi.setState(state);
+    stateApi?.setState(state);
 }
 
 function recoverState(
@@ -209,9 +207,9 @@ function recoverState(
     stateApi?: VscodeStateApi,
 ) {
     if (!stateApi) {
-        stateApi = window.acquireVsCodeApi();
+        stateApi = acquireVsCodeApi();
     }
-    var state = stateApi.getState();
+    var state = stateApi?.getState();
     if (!state) {
         petCounter = 1;
     } else {
@@ -300,7 +298,7 @@ export function petPanelApp(
     const ballRadius: number = calculateBallRadius(petSize);
     var floor = 0;
     if (!stateApi) {
-        stateApi = window.acquireVsCodeApi();
+        stateApi = acquireVsCodeApi();
     }
     // Apply Theme backgrounds
     const foregroundEl = document.getElementById('foreground');
@@ -390,7 +388,7 @@ export function petPanelApp(
 
     console.log('Starting pet session', petColor, basePetUri, petType);
     // New session
-    var state = stateApi.getState();
+    var state = stateApi?.getState();
     if (!state) {
         console.log('No state, starting a new session.');
         petCounter = 1;
