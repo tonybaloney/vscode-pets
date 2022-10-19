@@ -120,6 +120,16 @@ exports.CAT_NAMES = new Map([
     [107, 'Riley'],
     [108, 'Lenny'],
     [109, 'Mango'],
+    [110, 'Alex'],
+    [111, 'Boo'],
+    [112, 'Botas'],
+    [113, 'Romeo'],
+    [114, 'Bob'],
+    [115, 'Clyde'],
+    [116, 'Simon'],
+    [117, 'Mimmo'],
+    [118, 'Carlotta'],
+    [119, 'Felix'],
 ]);
 exports.DOG_NAMES = new Map([
     [1, 'Bella'],
@@ -229,6 +239,33 @@ exports.DOG_NAMES = new Map([
     [106, 'Sparky'],
     [107, 'Linus'],
     [108, 'Cody'],
+    [109, 'Slinky'],
+    [110, 'Toto'],
+    [111, 'Balto'],
+    [112, 'Golfo'],
+    [113, 'Pongo'],
+    [114, 'Beethoven'],
+    [115, 'Hachiko'],
+    [116, 'Scooby'],
+    [117, 'Clifford'],
+    [118, 'Astro'],
+    [119, 'Goofy'],
+    [120, 'Chip'],
+    [121, 'Einstein'],
+    [122, 'Fang'],
+    [123, 'Truman'],
+    [124, 'Uggie'],
+    [125, 'Bingo'],
+    [126, 'Blue'],
+    [127, 'Cometa'],
+    [128, 'Krypto'],
+    [129, 'Huesos'],
+    [130, 'Odie'],
+    [131, 'Snoopy'],
+    [132, 'Aisha'],
+    [133, 'Moly'],
+    [134, 'Chiquita'],
+    [135, 'Chavela'],
 ]);
 exports.CRAB_NAMES = new Map([
     [1, 'Ferris'],
@@ -309,6 +346,7 @@ exports.DUCK_NAMES = new Map([
     [14, 'Quackers'],
     [15, 'Jelly Beans'],
     [16, 'Donald'],
+    [17, 'Chady'],
 ]);
 exports.ZAPPY_NAMES = new Map([
     [1, 'Zappy'],
@@ -1677,37 +1715,31 @@ function createPet(petType, el, collision, speech, size, left, bottom, petRoot, 
     if (name === undefined || name === null || name === '') {
         throw new InvalidPetException('name is undefined');
     }
-    if (petType === 'totoro') {
-        return new Totoro(el, collision, speech, size, left, bottom, petRoot, floor, name, 3 /* PetSpeed.normal */);
+    const standardPetArguments = [el, collision, speech, size, left, bottom, petRoot, floor, name];
+    switch (petType) {
+        case "cat" /* PetType.cat */:
+            return new Cat(...standardPetArguments, 3 /* PetSpeed.normal */);
+        case "dog" /* PetType.dog */:
+            return new Dog(...standardPetArguments, 3 /* PetSpeed.normal */);
+        case "crab" /* PetType.crab */:
+            return new Crab(...standardPetArguments, 2 /* PetSpeed.slow */);
+        case "clippy" /* PetType.clippy */:
+            return new Clippy(...standardPetArguments, 2 /* PetSpeed.slow */);
+        case "totoro" /* PetType.totoro */:
+            return new Totoro(...standardPetArguments, 3 /* PetSpeed.normal */);
+        case "snake" /* PetType.snake */:
+            return new Snake(...standardPetArguments, 1 /* PetSpeed.verySlow */);
+        case "rubber-duck" /* PetType.rubberduck */:
+            return new RubberDuck(...standardPetArguments, 4 /* PetSpeed.fast */);
+        case "zappy" /* PetType.zappy */:
+            return new Zappy(...standardPetArguments, 5 /* PetSpeed.veryFast */);
+        case "rocky" /* PetType.rocky */:
+            return new Rocky(...standardPetArguments, 0 /* PetSpeed.still */);
+        case "cockatiel" /* PetType.cockatiel */:
+            return new Cockatiel(...standardPetArguments, 3 /* PetSpeed.normal */);
+        default:
+            throw new InvalidPetException("Pet type doesn't exist");
     }
-    if (petType === 'cat') {
-        return new Cat(el, collision, speech, size, left, bottom, petRoot, floor, name, 3 /* PetSpeed.normal */);
-    }
-    else if (petType === 'dog') {
-        return new Dog(el, collision, speech, size, left, bottom, petRoot, floor, name, 3 /* PetSpeed.normal */);
-    }
-    else if (petType === 'snake') {
-        return new Snake(el, collision, speech, size, left, bottom, petRoot, floor, name, 1 /* PetSpeed.verySlow */);
-    }
-    else if (petType === 'clippy') {
-        return new Clippy(el, collision, speech, size, left, bottom, petRoot, floor, name, 2 /* PetSpeed.slow */);
-    }
-    else if (petType === 'cockatiel') {
-        return new Cockatiel(el, collision, speech, size, left, bottom, petRoot, floor, name, 3 /* PetSpeed.normal */);
-    }
-    else if (petType === 'crab') {
-        return new Crab(el, collision, speech, size, left, bottom, petRoot, floor, name, 2 /* PetSpeed.slow */);
-    }
-    else if (petType === 'rubber-duck') {
-        return new RubberDuck(el, collision, speech, size, left, bottom, petRoot, floor, name, 4 /* PetSpeed.fast */);
-    }
-    else if (petType === 'zappy') {
-        return new Zappy(el, collision, speech, size, left, bottom, petRoot, floor, name, 5 /* PetSpeed.veryFast */);
-    }
-    else if (petType === 'rocky') {
-        return new Rocky(el, collision, speech, size, left, bottom, petRoot, floor, name, 0 /* PetSpeed.still */);
-    }
-    throw new InvalidPetException("Pet type doesn't exist");
 }
 exports.createPet = createPet;
 
