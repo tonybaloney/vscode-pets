@@ -434,6 +434,7 @@ export function activate(context: vscode.ExtensionContext) {
                         choices = [
                             PetColor.black,
                             PetColor.brown,
+                            PetColor.red,
                             PetColor.white,
                         ];
                         var selectedColor = await vscode.window.showQuickPick(
@@ -656,6 +657,7 @@ function normalizeColor(petColor: PetColor, petType: PetType): PetColor {
     if (
         petType === PetType.dog &&
         petColor !== PetColor.brown &&
+        petColor !== PetColor.red &&
         petColor !== PetColor.white &&
         petColor !== PetColor.black
     ) {
