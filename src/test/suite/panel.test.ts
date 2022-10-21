@@ -93,8 +93,8 @@ suite('Pets Test Suite', () => {
             'Jerry',
         );
         assert.ok(testPet instanceof pets.Cat);
-        assert.equal(testPet.emoji(), '🐱');
-        assert.equal(testPet.name(), 'Jerry');
+        assert.equal(testPet.emoji, '🐱');
+        assert.equal(testPet.name, 'Jerry');
 
         const testPetElement = new pets.PetElement(
             petImageEl,
