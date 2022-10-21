@@ -82,7 +82,7 @@ function handleMouseOver(e: MouseEvent) {
     var el = e.currentTarget as HTMLDivElement;
     allPets.pets().forEach((element) => {
         if (element.collision === el) {
-            if (!element.pet.canSwipe()) {
+            if (!element.pet.canSwipe) {
                 return;
             }
             element.pet.swipe();
@@ -187,11 +187,11 @@ export function saveState(stateApi?: VscodeStateApi) {
 
     allPets.pets().forEach((petItem) => {
         state.petStates?.push({
-            petName: petItem.pet.name(),
+            petName: petItem.pet.name,
             petColor: petItem.color,
             petType: petItem.type,
             petState: petItem.pet.getState(),
-            petFriend: petItem.pet.friend()?.name() ?? undefined,
+            petFriend: petItem.pet.friend?.name ?? undefined,
             elLeft: petItem.el.style.left,
             elBottom: petItem.el.style.bottom,
         });
@@ -421,7 +421,7 @@ export function petPanelApp(
                 resetBall();
                 throwBall();
                 allPets.pets().forEach((petEl) => {
-                    if (petEl.pet.canChase()) {
+                    if (petEl.pet.canChase) {
                         petEl.pet.chase(ballState, canvas);
                     }
                 });
@@ -449,8 +449,7 @@ export function petPanelApp(
                     command: 'list-pets',
                     text: pets
                         .map(
-                            (pet) =>
-                                `${pet.type},${pet.pet.name()},${pet.color}`,
+                            (pet) => `${pet.type},${pet.pet.name},${pet.color}`,
                         )
                         .join('\n'),
                 });
@@ -463,9 +462,7 @@ export function petPanelApp(
                 pets.forEach((pet) => {
                     stateApi?.postMessage({
                         command: 'info',
-                        text: `${pet.pet.emoji()} ${pet.pet.name()} (${
-                            pet.color
-                        } ${pet.type}): ${pet.pet.hello()}`,
+                        text: `${pet.pet.emoji} ${pet.pet.name} (${pet.color} ${pet.type}): ${pet.pet.hello}`,
                     });
                 });
             case 'delete-pet':
