@@ -255,11 +255,11 @@ abstract class BasePetType implements IPetType {
         this.hideSpeechBubble();
     }
 
-    public get left(): number {
+    get left(): number {
         return this._left;
     }
 
-    public get bottom(): number {
+    get bottom(): number {
         return this._bottom;
     }
 
