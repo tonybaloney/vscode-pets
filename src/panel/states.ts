@@ -199,14 +199,14 @@ export class WalkRightState implements IState {
     nextFrame(): FrameResult {
         this.idleCounter++;
         this.pet.positionLeft(
-            this.pet.left() + this.pet.speed() * this.speedMultiplier,
+            this.pet.left + this.pet.speed * this.speedMultiplier,
         );
         if (
-            this.pet.isMoving() &&
-            this.pet.left() >= this.leftBoundary - this.pet.width()
+            this.pet.isMoving &&
+            this.pet.left >= this.leftBoundary - this.pet.width
         ) {
             return FrameResult.stateComplete;
-        } else if (!this.pet.isMoving() && this.idleCounter > this.holdTime) {
+        } else if (!this.pet.isMoving && this.idleCounter > this.holdTime) {
             return FrameResult.stateComplete;
         }
         return FrameResult.stateContinue;
@@ -229,11 +229,11 @@ export class WalkLeftState implements IState {
 
     nextFrame(): FrameResult {
         this.pet.positionLeft(
-            this.pet.left() - this.pet.speed() * this.speedMultiplier,
+            this.pet.left - this.pet.speed * this.speedMultiplier,
         );
-        if (this.pet.isMoving() && this.pet.left() <= 0) {
+        if (this.pet.isMoving && this.pet.left <= 0) {
             return FrameResult.stateComplete;
-        } else if (!this.pet.isMoving() && this.idleCounter > this.holdTime) {
+        } else if (!this.pet.isMoving && this.idleCounter > this.holdTime) {
             return FrameResult.stateComplete;
         }
         return FrameResult.stateContinue;
@@ -276,19 +276,19 @@ export class ChaseState implements IState {
         if (this.ballState.paused) {
             return FrameResult.stateCancel; // Ball is already caught
         }
-        if (this.pet.left() > this.ballState.cx) {
+        if (this.pet.left > this.ballState.cx) {
             this.horizontalDirection = HorizontalDirection.left;
-            this.pet.positionLeft(this.pet.left() - this.pet.speed());
+            this.pet.positionLeft(this.pet.left - this.pet.speed);
         } else {
             this.horizontalDirection = HorizontalDirection.right;
-            this.pet.positionLeft(this.pet.left() + this.pet.speed());
+            this.pet.positionLeft(this.pet.left + this.pet.speed);
         }
 
         if (
             this.canvas.height - this.ballState.cy <
-                this.pet.width() + this.pet.floor() &&
-            this.ballState.cx < this.pet.left() &&
-            this.pet.left() < this.ballState.cx + 15
+                this.pet.width + this.pet.floor &&
+            this.ballState.cx < this.pet.left &&
+            this.pet.left < this.ballState.cx + 15
         ) {
             // hide ball
             this.canvas.style.display = 'none';
@@ -310,16 +310,16 @@ export class ChaseFriendState implements IState {
     }
 
     nextFrame(): FrameResult {
-        if (!this.pet.hasFriend() || !this.pet.friend()?.isPlaying()) {
+        if (!this.pet.hasFriend || !this.pet.friend?.isPlaying) {
             return FrameResult.stateCancel; // Friend is no longer playing.
         }
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        if (this.pet.left() > this.pet.friend()!.left()) {
+        if (this.pet.left > this.pet.friend!.left) {
             this.horizontalDirection = HorizontalDirection.left;
-            this.pet.positionLeft(this.pet.left() - this.pet.speed());
+            this.pet.positionLeft(this.pet.left - this.pet.speed);
         } else {
             this.horizontalDirection = HorizontalDirection.right;
-            this.pet.positionLeft(this.pet.left() + this.pet.speed());
+            this.pet.positionLeft(this.pet.left + this.pet.speed);
         }
 
         return FrameResult.stateContinue;
@@ -337,8 +337,8 @@ export class ClimbWallLeftState implements IState {
     }
 
     nextFrame(): FrameResult {
-        this.pet.positionBottom(this.pet.bottom() + 1);
-        if (this.pet.bottom() >= 100) {
+        this.pet.positionBottom(this.pet.bottom + 1);
+        if (this.pet.bottom >= 100) {
             return FrameResult.stateComplete;
         }
         return FrameResult.stateContinue;
@@ -356,9 +356,9 @@ export class JumpDownLeftState implements IState {
     }
 
     nextFrame(): FrameResult {
-        this.pet.positionBottom(this.pet.bottom() - 5);
-        if (this.pet.bottom() <= this.pet.floor()) {
-            this.pet.positionBottom(this.pet.floor());
+        this.pet.positionBottom(this.pet.bottom - 5);
+        if (this.pet.bottom <= this.pet.floor) {
+            this.pet.positionBottom(this.pet.floor);
             return FrameResult.stateComplete;
         }
         return FrameResult.stateContinue;

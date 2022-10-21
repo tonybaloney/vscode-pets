@@ -79,18 +79,18 @@ export class PetCollection implements IPetCollection {
 
     locate(name: string): PetElement | undefined {
         return this._pets.find((collection) => {
-            return collection.pet.name() === name;
+            return collection.pet.name === name;
         });
     }
 
     remove(name: string): any {
         this._pets.forEach((pet) => {
-            if (pet.pet.name() === name) {
+            if (pet.pet.name === name) {
                 pet.remove();
             }
         });
         this._pets = this._pets.filter((pet) => {
-            return pet.pet.name() !== name;
+            return pet.pet.name !== name;
         });
     }
 
@@ -100,26 +100,26 @@ export class PetCollection implements IPetCollection {
         } // You can't be friends with yourself.
         var messages = new Array<string>(0);
         this._pets.forEach((petInCollection) => {
-            if (petInCollection.pet.hasFriend()) {
+            if (petInCollection.pet.hasFriend) {
                 return;
             } // I already have a friend!
             this._pets.forEach((potentialFriend) => {
-                if (potentialFriend.pet.hasFriend()) {
+                if (potentialFriend.pet.hasFriend) {
                     return;
                 } // Already has a friend. sorry.
-                if (!potentialFriend.pet.canChase()) {
+                if (!potentialFriend.pet.canChase) {
                     return;
                 } // Pet is busy doing something else.
                 if (
-                    potentialFriend.pet.left() > petInCollection.pet.left() &&
-                    potentialFriend.pet.left() <
-                        petInCollection.pet.left() + petInCollection.pet.width()
+                    potentialFriend.pet.left > petInCollection.pet.left &&
+                    potentialFriend.pet.left <
+                        petInCollection.pet.left + petInCollection.pet.width
                 ) {
                     // We found a possible new friend..
                     console.log(
-                        petInCollection.pet.name(),
+                        petInCollection.pet.name,
                         ' wants to be friends with ',
-                        potentialFriend.pet.name(),
+                        potentialFriend.pet.name,
                         '.',
                     );
                     if (
@@ -139,13 +139,13 @@ export interface IPetType {
     nextFrame(): void;
 
     // Special methods for actions
-    canSwipe(): boolean;
-    canChase(): boolean;
+    canSwipe: boolean;
+    canChase: boolean;
     swipe(): void;
     chase(ballState: BallState, canvas: HTMLCanvasElement): void;
-    speed(): number;
-    isMoving(): boolean;
-    hello(): string;
+    speed: number;
+    isMoving: boolean;
+    hello: string;
 
     // State API
     getState(): PetInstanceState;
@@ -153,20 +153,20 @@ export interface IPetType {
     recoverFriend(friend: IPetType): void;
 
     // Positioning
-    bottom(): number;
-    left(): number;
+    bottom: number;
+    left: number;
     positionBottom(bottom: number): void;
     positionLeft(left: number): void;
-    width(): number;
-    floor(): number;
+    width: number;
+    floor: number;
 
     // Friends API
-    name(): string;
-    emoji(): string;
-    hasFriend(): boolean;
-    friend(): IPetType | undefined;
+    name: string;
+    emoji: string;
+    hasFriend: boolean;
+    friend: IPetType | undefined;
     makeFriendsWith(friend: IPetType): boolean;
-    isPlaying(): boolean;
+    isPlaying: boolean;
 
     showSpeechBubble(message: string, duration: number): void;
 }
@@ -255,11 +255,11 @@ abstract class BasePetType implements IPetType {
         this.hideSpeechBubble();
     }
 
-    left(): number {
+    get left(): number {
         return this._left;
     }
 
-    bottom(): number {
+    get bottom(): number {
         return this._bottom;
     }
 
@@ -284,15 +284,15 @@ abstract class BasePetType implements IPetType {
         this.repositionAccompanyingElements();
     }
 
-    width(): number {
+    get width(): number {
         return this.el.width;
     }
 
-    floor(): number {
+    get floor(): number {
         return this._floor;
     }
 
-    hello(): string {
+    get hello(): string {
         // return the sound of the name of the animal
         return ` says hello 👋!`;
     }
@@ -301,7 +301,7 @@ abstract class BasePetType implements IPetType {
         return { currentStateEnum: this.currentStateEnum };
     }
 
-    speed(): number {
+    get speed(): number {
         return this._speed;
     }
 
@@ -312,7 +312,7 @@ abstract class BasePetType implements IPetType {
         return newSpeed;
     }
 
-    isMoving(): boolean {
+    get isMoving(): boolean {
         return this._speed !== PetSpeed.still;
     }
 
@@ -330,19 +330,19 @@ abstract class BasePetType implements IPetType {
         if (!isStateAboveGround(this.currentStateEnum)) {
             // Reset the bottom of the sprite to the floor as the theme
             // has likely changed.
-            this.positionBottom(this.floor());
+            this.positionBottom(this.floor);
         }
     }
 
-    canSwipe() {
+    get canSwipe() {
         return !isStateAboveGround(this.currentStateEnum);
     }
 
-    canChase() {
+    get canChase() {
         return (
             !isStateAboveGround(this.currentStateEnum) &&
             this.currentStateEnum !== States.chase &&
-            this.isMoving()
+            this.isMoving
         );
     }
 
@@ -420,12 +420,12 @@ abstract class BasePetType implements IPetType {
 
         // What's my buddy doing?
         if (
-            this.hasFriend() &&
+            this.hasFriend &&
             this.currentStateEnum !== States.chaseFriend &&
-            this.isMoving()
+            this.isMoving
         ) {
             if (
-                this.friend()?.isPlaying() &&
+                this.friend?.isPlaying &&
                 !isStateAboveGround(this.currentStateEnum)
             ) {
                 this.currentState = resolveState(States.chaseFriend, this);
@@ -461,33 +461,33 @@ abstract class BasePetType implements IPetType {
         }
     }
 
-    hasFriend(): boolean {
+    get hasFriend(): boolean {
         return this._friend !== undefined;
     }
 
-    friend(): IPetType | undefined {
+    get friend(): IPetType | undefined {
         return this._friend;
     }
 
-    name(): string {
+    get name(): string {
         return this._name;
     }
 
     makeFriendsWith(friend: IPetType): boolean {
         this._friend = friend;
-        console.log(this.name(), ": I'm now friends ❤️ with ", friend.name());
+        console.log(this.name, ": I'm now friends ❤️ with ", friend.name);
         return true;
     }
 
-    isPlaying(): boolean {
+    get isPlaying(): boolean {
         return (
-            this.isMoving() &&
+            this.isMoving &&
             (this.currentStateEnum === States.runRight ||
                 this.currentStateEnum === States.runLeft)
         );
     }
 
-    emoji(): string {
+    get emoji(): string {
         return '🐶';
     }
 }
@@ -547,10 +547,10 @@ export class Totoro extends BasePetType {
             },
         ],
     };
-    emoji(): string {
+    get emoji(): string {
         return '🐾';
     }
-    hello(): string {
+    get hello(): string {
         return `Try Laughing. Then Whatever Scares You Will Go Away. 🎭`;
     }
 }
@@ -624,10 +624,10 @@ export class Cat extends BasePetType {
             },
         ],
     };
-    emoji(): string {
+    get emoji(): string {
         return '🐱';
     }
-    hello(): string {
+    get hello(): string {
         return `brrr... Meow!`;
     }
 }
@@ -690,10 +690,10 @@ export class Dog extends BasePetType {
             },
         ],
     };
-    emoji(): string {
+    get emoji(): string {
         return '🐶';
     }
-    hello(): string {
+    get hello(): string {
         return ` Every dog has its day - and today is woof day! Today I just want to bark. Take me on a walk`;
     }
 }
@@ -746,10 +746,10 @@ export class Snake extends BasePetType {
             },
         ],
     };
-    emoji(): string {
+    get emoji(): string {
         return '🐍';
     }
-    hello(): string {
+    get hello(): string {
         return `Sss... Oh. Oh my gosh! I'm a snake!`;
     }
 }
@@ -794,10 +794,10 @@ export class Clippy extends BasePetType {
             },
         ],
     };
-    emoji(): string {
+    get emoji(): string {
         return '📎';
     }
-    hello(): string {
+    get hello(): string {
         return ` Hi, I'm Clippy, would you like some assistance today? 👋!`;
     }
 }
@@ -842,10 +842,10 @@ export class RubberDuck extends BasePetType {
             },
         ],
     };
-    emoji(): string {
+    get emoji(): string {
         return '🐥';
     }
-    hello(): string {
+    get hello(): string {
         return ` Hi, I love to quack around 👋!`;
     }
 }
@@ -890,10 +890,10 @@ export class Cockatiel extends BasePetType {
             },
         ],
     };
-    emoji(): string {
+    get emoji(): string {
         return '🦜';
     }
-    hello(): string {
+    get hello(): string {
         // TODO: #191 Add a custom message for cockatiel
         return ` Hello, I'm a good bird 👋!`;
     }
@@ -939,10 +939,10 @@ export class Crab extends BasePetType {
             },
         ],
     };
-    emoji(): string {
+    get emoji(): string {
         return '🦀';
     }
-    hello(): string {
+    get hello(): string {
         return ` Hi, I'm Crabsolutely Clawsome Crab 👋!`;
     }
 }
@@ -987,10 +987,10 @@ export class Zappy extends BasePetType {
             },
         ],
     };
-    emoji(): string {
+    get emoji(): string {
         return '⚡';
     }
-    hello(): string {
+    get hello(): string {
         // TODO: #193 Add a custom message for zappy
         return ` Hello this is Zappy! Do I look familiar?? I am the mascot for Azure Functions😉`;
     }
@@ -1015,13 +1015,13 @@ export class Rocky extends BasePetType {
             },
         ],
     };
-    emoji(): string {
+    get emoji(): string {
         return '💎';
     }
-    canChase(): boolean {
+    get canChase(): boolean {
         return false;
     }
-    hello(): string {
+    get hello(): string {
         return ` 👋 I'm rock! I always Rock`;
     }
 }
