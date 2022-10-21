@@ -47,7 +47,7 @@ export class PetElement {
 }
 
 export interface IPetCollection {
-    pets(): Array<PetElement>;
+    pets: Array<PetElement>;
     push(pet: PetElement): void;
     reset(): void;
     seekNewFriends(): string[];
@@ -62,7 +62,7 @@ export class PetCollection implements IPetCollection {
         this._pets = new Array(0);
     }
 
-    pets() {
+    public get pets() {
         return this._pets;
     }
 

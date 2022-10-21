@@ -147,7 +147,7 @@ suite('Pets Test Suite', () => {
                 assert.equal(firstPet.petType, petType);
                 assert.equal(firstPet.petColor, PetColor.black);
 
-                const createdPets = panel.allPets.pets();
+                const createdPets = panel.allPets.pets;
                 assert.notEqual(createdPets.at(0), undefined);
 
                 assert.equal(createdPets.at(0)?.color, PetColor.black);
