@@ -80,7 +80,7 @@ function calculateFloor(size: PetSize, theme: Theme): number {
 
 function handleMouseOver(e: MouseEvent) {
     var el = e.currentTarget as HTMLDivElement;
-    allPets.pets().forEach((element) => {
+    allPets.pets.forEach((element) => {
         if (element.collision === el) {
             if (!element.pet.canSwipe) {
                 return;
@@ -185,7 +185,7 @@ export function saveState(stateApi?: VscodeStateApi) {
     var state = new PetPanelState();
     state.petStates = new Array();
 
-    allPets.pets().forEach((petItem) => {
+    allPets.pets.forEach((petItem) => {
         state.petStates?.push({
             petName: petItem.pet.name,
             petColor: petItem.color,
@@ -420,7 +420,7 @@ export function petPanelApp(
             case 'throw-ball':
                 resetBall();
                 throwBall();
-                allPets.pets().forEach((petEl) => {
+                allPets.pets.forEach((petEl) => {
                     if (petEl.pet.canChase) {
                         petEl.pet.chase(ballState, canvas);
                     }
@@ -444,7 +444,7 @@ export function petPanelApp(
                 break;
 
             case 'list-pets':
-                var pets = allPets.pets();
+                var pets = allPets.pets;
                 stateApi?.postMessage({
                     command: 'list-pets',
                     text: pets
@@ -456,7 +456,7 @@ export function petPanelApp(
                 break;
 
             case 'roll-call':
-                var pets = allPets.pets();
+                var pets = allPets.pets;
                 // go through every single
                 // pet and then print out their name
                 pets.forEach((pet) => {

@@ -342,6 +342,13 @@ export const DUCK_NAMES: ReadonlyArray<string> = [
     'Jelly Beans',
     'Donald',
     'Chady',
+    'Waddles',
+    'Bill',
+    'Bubbles',
+    'James Pond',
+    'Moby Duck',
+    'Quack Sparrow',
+    'Peanut',
 ];
 
 export const ZAPPY_NAMES: ReadonlyArray<string> = [
