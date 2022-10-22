@@ -256,6 +256,7 @@ export const DOG_NAMES: ReadonlyArray<string> = [
     'Moly',
     'Chiquita',
     'Chavela',
+    'Puddles',
 ];
 
 export const CRAB_NAMES: ReadonlyArray<string> = [
@@ -322,6 +323,22 @@ export const SNAKE_NAMES: ReadonlyArray<string> = [
     'Bailey',
     'Max',
     'Seb',
+    'Mr Hiss',
+    'Miss Hiss',
+    'Snaku',
+    'Kaa',
+    'Madame Snake',
+    'Sir Hiss',
+    'Loki',
+    'Steelix',
+    'Gyarados',
+    'Seviper',
+    'Ekanes',
+    'Arbok',
+    'Arbok',
+    'Snivy',
+    'Servine',
+    'Serperior',
 ];
 
 export const DUCK_NAMES: ReadonlyArray<string> = [
@@ -349,6 +366,25 @@ export const DUCK_NAMES: ReadonlyArray<string> = [
     'Moby Duck',
     'Quack Sparrow',
     'Peanut',
+    'Waddles',
+    'Psyduck',
+    'Mr Quack',
+    'Louie',
+    'Golduck',
+    'Daisy',
+    'Pickles',
+    'Ducky Duck',
+    'Mrs Fluffs',
+    'Squeek',
+    'Ace',
+    'Rubberduck',
+    'Mrs Beak',
+    'April',  
+    'Tutu',
+    'Billy the duck',
+    'Ducky',
+    'Neco',
+    'Dodo',
 ];
 
 export const ZAPPY_NAMES: ReadonlyArray<string> = [
@@ -363,6 +399,13 @@ export const ZAPPY_NAMES: ReadonlyArray<string> = [
     'The Flash',
     'Thor',
     'Electric Bolt',
+    'Azula',
+    'Lightning Bolt',
+    'Power',
+    'Sonic',
+    'Speedy',
+    'Flash',
+    'Rush',
 ];
 
 export const ROCKY_NAMES: ReadonlyArray<string> = [
@@ -379,6 +422,16 @@ export const ROCKY_NAMES: ReadonlyArray<string> = [
     'Pebble',
     'Rocksanne',
     'Rockstar',
+    'Onix',
+    'Rock and Roll',
+    'Dolomite',
+    'Granite',
+    'Miss Marble',
+    'Rock On',
+    'Amberstone',
+    'Rock With Me',
+    'Rock On It',
+    'Rock Out',
 ];
 
 export const COCKATIEL_NAMES: ReadonlyArray<string> = [
@@ -396,6 +449,25 @@ export const COCKATIEL_NAMES: ReadonlyArray<string> = [
     'Baquack Obama',
     'Dame Judi Finch',
     'Kanye Nest',
+    'Speck',
+    'Cheecky',
+    'Arthur',
+    'Paco',
+    'Bobo',
+    'Walt',
+    'Happy',
+    'Junior',
+    'Coco',
+    'Yoyo',
+    'Milo',
+    'Skipper',
+    'Scarlet',
+    'Diva',
+    'Ursula',
+    'Donna',
+    'Lola',
+    'Kiko',
+    'Luna',
 ];
 
 export function randomName(type: PetType): string {
