@@ -404,7 +404,6 @@ export const ZAPPY_NAMES: ReadonlyArray<string> = [
     'Power',
     'Sonic',
     'Speedy',
-    'Flash',
     'Rush',
 ];
 
