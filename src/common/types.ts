@@ -11,6 +11,7 @@ export const enum PetColor {
 
 export const enum PetType {
     cat = 'cat',
+    chicken = 'chicken',
     clippy = 'clippy',
     cockatiel = 'cockatiel',
     crab = 'crab',
