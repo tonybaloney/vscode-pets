@@ -17,6 +17,7 @@
     "keywords": [
         "pet",
         "cat",
+        "chicken",
         "dog",
         "pets",
         "clippy",
@@ -130,6 +131,7 @@
                         "type": "string",
                         "enum": [
                             "cat",
+                            "chicken",
                             "crab",
                             "clippy",
                             "cockatiel",
