@@ -25,7 +25,12 @@
     "license": "MIT",
     "icon": "icon.png",
     "activationEvents": [
-        "*"
+        "onCommand:vscode-pets.start",
+        "onCommand:vscode-pets.throw-ball",
+        "onCommand:vscode-pets.spawn-pet",
+        "onCommand:vscode-pets.delete-pet",
+        "onCommand:vscode-pets.remove-all-pets",
+        "onCommand:vscode-pets.roll-call"
     ],
     "main": "./out/extension/extension.js",
     "contributes": {
