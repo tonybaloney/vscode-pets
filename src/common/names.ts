@@ -119,6 +119,7 @@ export const CAT_NAMES: ReadonlyArray<string> = [
     'Mimmo',
     'Carlotta',
     'Felix',
+    'Duchess',
 ];
 
 export const DOG_NAMES: ReadonlyArray<string> = [
@@ -256,6 +257,8 @@ export const DOG_NAMES: ReadonlyArray<string> = [
     'Moly',
     'Chiquita',
     'Chavela',
+    'Tramp',
+    'Lady',
     'Puddles',
 ];
 
@@ -283,6 +286,7 @@ export const CRAB_NAMES: ReadonlyArray<string> = [
     'Horseshoe',
     'Snapper',
     'Coconut',
+    'Sebastian',
 ];
 
 export const CLIPPY_NAMES: ReadonlyArray<string> = [
@@ -323,6 +327,7 @@ export const SNAKE_NAMES: ReadonlyArray<string> = [
     'Bailey',
     'Max',
     'Seb',
+    'Kaa',
     'Mr Hiss',
     'Miss Hiss',
     'Snaku',
