@@ -377,7 +377,7 @@ export const DUCK_NAMES: ReadonlyArray<string> = [
     'Ace',
     'Rubberduck',
     'Mrs Beak',
-    'April',  
+    'April',
     'Tutu',
     'Billy the duck',
     'Ducky',
