@@ -272,7 +272,7 @@ export function activate(context: vscode.ExtensionContext) {
                 getConfigurationPosition() === ExtPosition.explorer &&
                 webviewViewProvider
             ) {
-                vscode.commands.executeCommand('vscode-pets.petsView.focus');
+                vscode.commands.executeCommand('petsView.focus');
             } else {
                 const spec = PetSpecification.fromConfiguration();
                 PetPanel.createOrShow(
@@ -1049,7 +1049,7 @@ class PetPanel extends PetWebviewContainer implements IPetPanel {
 }
 
 class PetWebviewViewProvider extends PetWebviewContainer {
-    public static readonly viewType = 'vscode-pets.petsView';
+    public static readonly viewType = 'petsView';
 
     private _webviewView?: vscode.WebviewView;
 

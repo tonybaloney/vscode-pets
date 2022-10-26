@@ -30,7 +30,10 @@
         "onCommand:vscode-pets.spawn-pet",
         "onCommand:vscode-pets.delete-pet",
         "onCommand:vscode-pets.remove-all-pets",
-        "onCommand:vscode-pets.roll-call"
+        "onCommand:vscode-pets.roll-call",
+        "onWebviewPanel:petCoding",
+        "onView:explorer",
+        "onView:petsView"
     ],
     "main": "./out/extension/extension.js",
     "contributes": {
@@ -38,7 +41,7 @@
             "explorer": [
                 {
                     "type": "webview",
-                    "id": "vscode-pets.petsView",
+                    "id": "petsView",
                     "name": "VS Code Pets",
                     "when": "vscode-pets.position == 'explorer'",
                     "icon": "media/dog.svg"
@@ -49,17 +52,17 @@
             "view/title": [
                 {
                     "command": "vscode-pets.spawn-pet",
-                    "when": "view == vscode-pets.petsView",
+                    "when": "view == petsView",
                     "group": "navigation@1"
                 },
                 {
                     "command": "vscode-pets.throw-ball",
-                    "when": "view == vscode-pets.petsView",
+                    "when": "view == petsView",
                     "group": "navigation@2"
                 },
                 {
                     "command": "vscode-pets.delete-pet",
-                    "when": "view == vscode-pets.petsView",
+                    "when": "view == petsView",
                     "group": "navigation@3"
                 }
             ]
