@@ -11,504 +11,482 @@
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.randomName = exports.COCKATIEL_NAMES = exports.ROCKY_NAMES = exports.ZAPPY_NAMES = exports.DUCK_NAMES = exports.SNAKE_NAMES = exports.TOTORO_NAMES = exports.CLIPPY_NAMES = exports.CRAB_NAMES = exports.DOG_NAMES = exports.CAT_NAMES = void 0;
-exports.CAT_NAMES = new Map([
-    [1, 'Bella'],
-    [2, 'Charlie'],
-    [3, 'Molly'],
-    [4, 'Coco'],
-    [5, 'Ruby'],
-    [6, 'Oscar'],
-    [7, 'Lucy'],
-    [8, 'Bailey'],
-    [9, 'Milo'],
-    [10, 'Daisy'],
-    [11, 'Archie'],
-    [12, 'Ollie'],
-    [13, 'Rosie'],
-    [14, 'Lola'],
-    [15, 'Frankie'],
-    [16, 'Roxy'],
-    [17, 'Poppy'],
-    [18, 'Luna'],
-    [19, 'Jack'],
-    [20, 'Millie'],
-    [21, 'Teddy'],
-    [22, 'Cooper'],
-    [23, 'Bear'],
-    [24, 'Rocky'],
-    [25, 'Alfie'],
-    [26, 'Hugo'],
-    [27, 'Bonnie'],
-    [28, 'Pepper'],
-    [29, 'Lily'],
-    [30, 'Tilly'],
-    [31, 'Leo'],
-    [32, 'Maggie'],
-    [33, 'George'],
-    [34, 'Mia'],
-    [35, 'Marley'],
-    [36, 'Harley'],
-    [37, 'Chloe'],
-    [38, 'Lulu'],
-    [39, 'Missy'],
-    [40, 'Jasper'],
-    [41, 'Billy'],
-    [42, 'Nala'],
-    [43, 'Monty'],
-    [44, 'Ziggy'],
-    [45, 'Winston'],
-    [46, 'Zeus'],
-    [47, 'Zoe'],
-    [48, 'Stella'],
-    [49, 'Sasha'],
-    [50, 'Rusty'],
-    [51, 'Gus'],
-    [52, 'Baxter'],
-    [53, 'Dexter'],
-    [54, 'Willow'],
-    [55, 'Barney'],
-    [56, 'Bruno'],
-    [57, 'Penny'],
-    [58, 'Honey'],
-    [59, 'Milly'],
-    [60, 'Murphy'],
-    [61, 'Simba'],
-    [62, 'Holly'],
-    [63, 'Benji'],
-    [64, 'Henry'],
-    [65, 'Lilly'],
-    [66, 'Pippa'],
-    [67, 'Shadow'],
-    [68, 'Sam'],
-    [69, 'Lucky'],
-    [70, 'Ellie'],
-    [71, 'Duke'],
-    [72, 'Jessie'],
-    [73, 'Cookie'],
-    [74, 'Harvey'],
-    [75, 'Bruce'],
-    [76, 'Jax'],
-    [77, 'Rex'],
-    [78, 'Louie'],
-    [79, 'Jet'],
-    [80, 'Banjo'],
-    [81, 'Beau'],
-    [82, 'Ella'],
-    [83, 'Ralph'],
-    [84, 'Loki'],
-    [85, 'Lexi'],
-    [86, 'Chester'],
-    [87, 'Sophie'],
-    [88, 'Chilli'],
-    [89, 'Billie'],
-    [90, 'Louis'],
-    [91, 'Scout'],
-    [92, 'Cleo'],
-    [93, 'Purfect'],
-    [94, 'Spot'],
-    [95, 'Bolt'],
-    [96, 'Julia'],
-    [97, 'Ginger'],
-    [98, 'Daisy'],
-    [99, 'Amelia'],
-    [100, 'Oliver'],
-    [101, 'Ghost'],
-    [102, 'Midnight'],
-    [103, 'Pumpkin'],
-    [105, 'Shadow'],
-    [106, 'Binx'],
-    [107, 'Riley'],
-    [108, 'Lenny'],
-    [109, 'Mango'],
-    [110, 'Alex'],
-    [111, 'Boo'],
-    [112, 'Botas'],
-    [113, 'Romeo'],
-    [114, 'Bob'],
-    [115, 'Clyde'],
-    [116, 'Simon'],
-    [117, 'Mimmo'],
-    [118, 'Carlotta'],
-    [119, 'Felix'],
-]);
-exports.DOG_NAMES = new Map([
-    [1, 'Bella'],
-    [2, 'Charlie'],
-    [3, 'Max'],
-    [4, 'Molly'],
-    [5, 'Coco'],
-    [6, 'Buddy'],
-    [7, 'Ruby'],
-    [8, 'Oscar'],
-    [9, 'Lucy'],
-    [10, 'Bailey'],
-    [11, 'Milo'],
-    [12, 'Daisy'],
-    [13, 'Archie'],
-    [14, 'Ollie'],
-    [15, 'Rosie'],
-    [16, 'Lola'],
-    [17, 'Frankie'],
-    [18, 'Toby'],
-    [19, 'Roxy'],
-    [20, 'Poppy'],
-    [21, 'Luna'],
-    [22, 'Jack'],
-    [23, 'Millie'],
-    [24, 'Teddy'],
-    [25, 'Harry'],
-    [26, 'Cooper'],
-    [27, 'Bear'],
-    [28, 'Rocky'],
-    [29, 'Alfie'],
-    [30, 'Hugo'],
-    [31, 'Bonnie'],
-    [32, 'Pepper'],
-    [33, 'Lily'],
-    [34, 'Leo'],
-    [35, 'Maggie'],
-    [36, 'George'],
-    [37, 'Mia'],
-    [38, 'Marley'],
-    [39, 'Harley'],
-    [40, 'Chloe'],
-    [41, 'Lulu'],
-    [42, 'Jasper'],
-    [43, 'Billy'],
-    [44, 'Nala'],
-    [45, 'Monty'],
-    [46, 'Ziggy'],
-    [47, 'Winston'],
-    [48, 'Zeus'],
-    [49, 'Zoe'],
-    [50, 'Stella'],
-    [51, 'Sasha'],
-    [52, 'Rusty'],
-    [53, 'Gus'],
-    [54, 'Baxter'],
-    [55, 'Dexter'],
-    [56, 'Diesel'],
-    [57, 'Willow'],
-    [58, 'Barney'],
-    [59, 'Bruno'],
-    [60, 'Penny'],
-    [61, 'Honey'],
-    [62, 'Milly'],
-    [63, 'Murphy'],
-    [64, 'Holly'],
-    [65, 'Benji'],
-    [66, 'Henry'],
-    [67, 'Lilly'],
-    [68, 'Pippa'],
-    [69, 'Shadow'],
-    [70, 'Sam'],
-    [71, 'Buster'],
-    [72, 'Lucky'],
-    [73, 'Ellie'],
-    [74, 'Duke'],
-    [75, 'Jessie'],
-    [76, 'Cookie'],
-    [77, 'Harvey'],
-    [78, 'Bruce'],
-    [79, 'Jax'],
-    [80, 'Rex'],
-    [81, 'Louie'],
-    [82, 'Bentley'],
-    [83, 'Jet'],
-    [84, 'Banjo'],
-    [85, 'Beau'],
-    [86, 'Ella'],
-    [87, 'Ralph'],
-    [88, 'Loki'],
-    [89, 'Lexi'],
-    [90, 'Chester'],
-    [91, 'Sophie'],
-    [92, 'Billie'],
-    [93, 'Louis'],
-    [94, 'Charlie'],
-    [95, 'Cleo'],
-    [96, 'Spot'],
-    [97, 'Harry'],
-    [98, 'Bolt'],
-    [99, 'Ein'],
-    [100, 'Maddy'],
-    [101, 'Ghost'],
-    [102, 'Midnight'],
-    [103, 'Pumpkin'],
-    [104, 'James']
-    [105, 'Shadow'],
-    [106, 'Sparky'],
-    [107, 'Linus'],
-    [108, 'Cody'],
-    [109, 'Slinky'],
-    [110, 'Toto'],
-    [111, 'Balto'],
-    [112, 'Golfo'],
-    [113, 'Pongo'],
-    [114, 'Beethoven'],
-    [115, 'Hachiko'],
-    [116, 'Scooby'],
-    [117, 'Clifford'],
-    [118, 'Astro'],
-    [119, 'Goofy'],
-    [120, 'Chip'],
-    [121, 'Einstein'],
-    [122, 'Fang'],
-    [123, 'Truman'],
-    [124, 'Uggie'],
-    [125, 'Bingo'],
-    [126, 'Blue'],
-    [127, 'Cometa'],
-    [128, 'Krypto'],
-    [129, 'Huesos'],
-    [130, 'Odie'],
-    [131, 'Snoopy'],
-    [132, 'Aisha'],
-    [133, 'Moly'],
-    [134, 'Chiquita'],
-    [135, 'Chavela'],
-    [136, 'Puddles'],    
-]);
-exports.CRAB_NAMES = new Map([
-    [1, 'Ferris'],
-    [2, 'Pinchy'],
-    [3, 'Grabby'],
-    [4, 'Big Red'],
-    [5, 'Crabby'],
-    [6, 'Buddy'],
-    [7, 'Ruby Red'],
-    [8, 'Oscar'],
-    [9, 'Lucy'],
-    [10, 'Bailey'],
-    [11, 'Crabito'],
-    [12, 'Percy'],
-    [13, 'Rocky'],
-    [14, 'Mr. Krabs'],
-    [15, 'Shelly'],
-    [16, 'Santa Claws'],
-    [17, 'Clawdia'],
-    [18, 'Scuttle'],
-    [19, 'Snappy'],
-    [20, 'Hermit'],
-    [21, 'Horseshoe'],
-    [22, 'Snapper'],
-    [23, 'Coconut'],
-]);
-exports.CLIPPY_NAMES = new Map([
-    [1, 'Clippy'],
-    [2, 'Karl Klammer'],
-    [3, 'Clippy Jr.'],
-    [4, 'Molly'],
-    [5, 'Coco'],
-    [6, 'Buddy'],
-    [7, 'Ruby'],
-    [8, 'Oscar'],
-    [9, 'Lucy'],
-    [10, 'Bailey'],
-]);
-exports.TOTORO_NAMES = new Map([
-    [1, 'Totoro'],
-    [2, 'トトロ'],
-    [3, 'Max'],
-    [4, 'Molly'],
-    [5, 'Coco'],
-    [6, 'Buddy'],
-    [7, 'Ruby'],
-    [8, 'Oscar'],
-    [9, 'Lucy'],
-    [10, 'Bailey'],
-    [11, 'Big fella'],
-]);
-exports.SNAKE_NAMES = new Map([
-    [1, 'Sneaky'],
-    [2, 'Mr Slippery'],
-    [3, 'Hissy Elliott'],
-    [4, 'Molly'],
-    [5, 'Coco'],
-    [6, 'Buddy'],
-    [7, 'Ruby'],
-    [8, 'Bailey'],
-    [9, 'Max'],
-    [10, 'Seb'],
-    [11, 'Mr Hiss'],
-    [12, 'Miss Hiss'],
-    [13, 'Snaku'],
-    [14, 'Kaa'],
-    [15, 'Madame Snake'],
-    [16, 'Sir Hiss'],
-    [17, 'Loki'],
-    [18, 'Steelix'],
-    [19, 'Gyarados'],
-    [20, 'Seviper'],
-    [21, 'Ekanes'],
-    [22, 'Arbok'],
-    [23, 'Snivy'],
-    [24, 'Servine'],
-    [25, 'Serperior'],  
-]);
-exports.DUCK_NAMES = new Map([
-    [1, 'Quacky'],
-    [2, 'Floaty'],
-    [3, 'Duck'],
-    [4, 'Molly'],
-    [5, 'Sunshine'],
-    [6, 'Buddy'],
-    [7, 'Chirpy'],
-    [8, 'Oscar'],
-    [9, 'Lucy'],
-    [10, 'Bailey'],
-    [11, 'Beaky'],
-    [12, 'Jemima'],
-    [13, 'Peaches'],
-    [14, 'Quackers'],
-    [15, 'Jelly Beans'],
-    [16, 'Donald'],
-    [17, 'Chady'],
-    [18, 'Waddles'],
-    [19, 'Bill'],
-    [20, 'Bubbles'],
-    [21, 'James Pond'],
-    [22, 'Moby Duck'],
-    [23, 'Quack Sparrow'],
-    [24, 'Peanut'],
-    [25, 'Psyduck'],
-    [26, 'Waddles'],
-    [27, 'Mr Quack'],
-    [28, 'Louie'],
-    [29, 'Golduck'],
-    [30, 'Daisy'],
-    [31, 'Pickles'],
-    [32, 'Ducky Duck'],
-    [33, 'Mrs Fluffs'],
-    [34, 'Squeek'],
-    [35, 'Ace'],
-    [36, 'Rubberduck'],
-    [37, 'Mrs Beak'],
-    [38, 'April'],  
-    [39, 'Tutu'],
-    [40, 'Billy the duck'],
-    [41, 'Ducky'],
-    [42, 'Neco'],
-    [43, 'Dodo'],
-]);
-exports.ZAPPY_NAMES = new Map([
-    [1, 'Zappy'],
-    [2, 'Zippy'],
-    [3, 'Zappy Jr.'],
-    [4, 'Zoppy'],
-    [5, 'Zuppy'],
-    [6, 'Zeppy'],
-    [7, 'Big Z'],
-    [8, 'Little z'],
-    [9, 'The Flash'],
-    [10, 'Thor'],
-    [11, 'Electric Bolt'],
-    [12, 'Azula'],
-    [13, 'Lightning Bolt'],
-    [14, 'Power'],
-    [15, 'Sonic'],
-    [16, 'Speedy'],
-    [17, 'Rush'],
-]);
-exports.ROCKY_NAMES = new Map([
-    [1, 'Rocky'],
-    [2, 'The Rock'],
-    [3, 'Quartzy'],
-    [4, 'Rocky I'],
-    [5, 'Rocky II'],
-    [6, 'Rocky III'],
-    [7, 'Pebbles Sr.'],
-    [8, 'Big Granite'],
-    [9, 'Boulder'],
-    [10, 'Rockefeller'],
-    [11, 'Pebble'],
-    [12, 'Rocksanne'],
-    [13, 'Rockstar'],
-    [14, 'Onix'],
-    [15, 'Rock and Roll'],
-    [16, 'Dolomite'],
-    [17, 'Granite'],
-    [18, 'Miss Marble'],
-    [19, 'Rock On'],
-    [20, 'Amberstone'],
-    [21, 'Rock With Me'],
-    [22, 'Rock On It'],
-    [23, 'Rock Out'],
-]);
-exports.COCKATIEL_NAMES = new Map([
-    [1, 'Cocktail'],
-    [2, 'Pipsqueak'],
-    [3, 'Sir Chirps a Lot'],
-    [4, 'Nibbles'],
-    [5, 'Lord of the Wings'],
-    [6, 'Girl Nest Door'],
-    [7, 'Wingman'],
-    [8, 'Meryl Cheep'],
-    [9, 'Jack Sparrow'],
-    [10, 'Godfeather'],
-    [11, 'Mickey'],
-    [12, 'Baquack Obama'],
-    [13, 'Dame Judi Finch'],
-    [14, 'Kanye Nest'],
-    [15, 'Speck'],
-    [16, 'Cheecky'],
-    [17, 'Arthur'],
-    [18, 'Paco'],
-    [19, 'Bobo'],
-    [20, 'Walt'],
-    [21, 'Happy'],
-    [22, 'Junior'],
-    [23, 'Coco'],
-    [24, 'Yoyo'],
-    [25, 'Milo'],
-    [26, 'Skipper'],
-    [27, 'Scarlet'],
-    [28, 'Diva'],
-    [29, 'Ursula'],
-    [30, 'Donna'],
-    [31, 'Lola'],
-    [32, 'Kiko'],
-    [33, 'Luna'],
-]);
+exports.CAT_NAMES = [
+    'Bella',
+    'Charlie',
+    'Molly',
+    'Coco',
+    'Ruby',
+    'Oscar',
+    'Lucy',
+    'Bailey',
+    'Milo',
+    'Daisy',
+    'Archie',
+    'Ollie',
+    'Rosie',
+    'Lola',
+    'Frankie',
+    'Roxy',
+    'Poppy',
+    'Luna',
+    'Jack',
+    'Millie',
+    'Teddy',
+    'Cooper',
+    'Bear',
+    'Rocky',
+    'Alfie',
+    'Hugo',
+    'Bonnie',
+    'Pepper',
+    'Lily',
+    'Tilly',
+    'Leo',
+    'Maggie',
+    'George',
+    'Mia',
+    'Marley',
+    'Harley',
+    'Chloe',
+    'Lulu',
+    'Missy',
+    'Jasper',
+    'Billy',
+    'Nala',
+    'Monty',
+    'Ziggy',
+    'Winston',
+    'Zeus',
+    'Zoe',
+    'Stella',
+    'Sasha',
+    'Rusty',
+    'Gus',
+    'Baxter',
+    'Dexter',
+    'Willow',
+    'Barney',
+    'Bruno',
+    'Penny',
+    'Honey',
+    'Milly',
+    'Murphy',
+    'Simba',
+    'Holly',
+    'Benji',
+    'Henry',
+    'Lilly',
+    'Pippa',
+    'Shadow',
+    'Sam',
+    'Lucky',
+    'Ellie',
+    'Duke',
+    'Jessie',
+    'Cookie',
+    'Harvey',
+    'Bruce',
+    'Jax',
+    'Rex',
+    'Louie',
+    'Jet',
+    'Banjo',
+    'Beau',
+    'Ella',
+    'Ralph',
+    'Loki',
+    'Lexi',
+    'Chester',
+    'Sophie',
+    'Chilli',
+    'Billie',
+    'Louis',
+    'Scout',
+    'Cleo',
+    'Purfect',
+    'Spot',
+    'Bolt',
+    'Julia',
+    'Ginger',
+    'Daisy',
+    'Amelia',
+    'Oliver',
+    'Ghost',
+    'Midnight',
+    'Pumpkin',
+    'Shadow',
+    'Binx',
+    'Riley',
+    'Lenny',
+    'Mango',
+    'Alex',
+    'Boo',
+    'Botas',
+    'Romeo',
+    'Bob',
+    'Clyde',
+    'Simon',
+    'Mimmo',
+    'Carlotta',
+    'Felix',
+    'Duchess',
+];
+exports.DOG_NAMES = [
+    'Bella',
+    'Charlie',
+    'Max',
+    'Molly',
+    'Coco',
+    'Buddy',
+    'Ruby',
+    'Oscar',
+    'Lucy',
+    'Bailey',
+    'Milo',
+    'Daisy',
+    'Archie',
+    'Ollie',
+    'Rosie',
+    'Lola',
+    'Frankie',
+    'Toby',
+    'Roxy',
+    'Poppy',
+    'Luna',
+    'Jack',
+    'Millie',
+    'Teddy',
+    'Harry',
+    'Cooper',
+    'Bear',
+    'Rocky',
+    'Alfie',
+    'Hugo',
+    'Bonnie',
+    'Pepper',
+    'Lily',
+    'Leo',
+    'Maggie',
+    'George',
+    'Mia',
+    'Marley',
+    'Harley',
+    'Chloe',
+    'Lulu',
+    'Jasper',
+    'Billy',
+    'Nala',
+    'Monty',
+    'Ziggy',
+    'Winston',
+    'Zeus',
+    'Zoe',
+    'Stella',
+    'Sasha',
+    'Rusty',
+    'Gus',
+    'Baxter',
+    'Dexter',
+    'Diesel',
+    'Willow',
+    'Barney',
+    'Bruno',
+    'Penny',
+    'Honey',
+    'Milly',
+    'Murphy',
+    'Holly',
+    'Benji',
+    'Henry',
+    'Lilly',
+    'Pippa',
+    'Shadow',
+    'Sam',
+    'Buster',
+    'Lucky',
+    'Ellie',
+    'Duke',
+    'Jessie',
+    'Cookie',
+    'Harvey',
+    'Bruce',
+    'Jax',
+    'Rex',
+    'Louie',
+    'Bentley',
+    'Jet',
+    'Banjo',
+    'Beau',
+    'Ella',
+    'Ralph',
+    'Loki',
+    'Lexi',
+    'Chester',
+    'Sophie',
+    'Billie',
+    'Louis',
+    'Charlie',
+    'Cleo',
+    'Spot',
+    'Harry',
+    'Bolt',
+    'Ein',
+    'Maddy',
+    'Ghost',
+    'Midnight',
+    'Pumpkin',
+    'Shadow',
+    'Sparky',
+    'Linus',
+    'Cody',
+    'Slinky',
+    'Toto',
+    'Balto',
+    'Golfo',
+    'Pongo',
+    'Beethoven',
+    'Hachiko',
+    'Scooby',
+    'Clifford',
+    'Astro',
+    'Goofy',
+    'Chip',
+    'Einstein',
+    'Fang',
+    'Truman',
+    'Uggie',
+    'Bingo',
+    'Blue',
+    'Cometa',
+    'Krypto',
+    'Huesos',
+    'Odie',
+    'Snoopy',
+    'Aisha',
+    'Moly',
+    'Chiquita',
+    'Chavela',
+    'Tramp',
+    'Lady',
+    'Puddles',
+];
+exports.CRAB_NAMES = [
+    'Ferris',
+    'Pinchy',
+    'Grabby',
+    'Big Red',
+    'Crabby',
+    'Buddy',
+    'Ruby Red',
+    'Oscar',
+    'Lucy',
+    'Bailey',
+    'Crabito',
+    'Percy',
+    'Rocky',
+    'Mr. Krabs',
+    'Shelly',
+    'Santa Claws',
+    'Clawdia',
+    'Scuttle',
+    'Snappy',
+    'Hermit',
+    'Horseshoe',
+    'Snapper',
+    'Coconut',
+    'Sebastian',
+];
+exports.CLIPPY_NAMES = [
+    'Clippy',
+    'Karl Klammer',
+    'Clippy Jr.',
+    'Molly',
+    'Coco',
+    'Buddy',
+    'Ruby',
+    'Oscar',
+    'Lucy',
+    'Bailey',
+];
+exports.TOTORO_NAMES = [
+    'Totoro',
+    'トトロ',
+    'Max',
+    'Molly',
+    'Coco',
+    'Buddy',
+    'Ruby',
+    'Oscar',
+    'Lucy',
+    'Bailey',
+    'Big fella',
+];
+exports.SNAKE_NAMES = [
+    'Sneaky',
+    'Mr Slippery',
+    'Hissy Elliott',
+    'Molly',
+    'Coco',
+    'Buddy',
+    'Ruby',
+    'Bailey',
+    'Max',
+    'Seb',
+    'Kaa',
+    'Mr Hiss',
+    'Miss Hiss',
+    'Snaku',
+    'Kaa',
+    'Madame Snake',
+    'Sir Hiss',
+    'Loki',
+    'Steelix',
+    'Gyarados',
+    'Seviper',
+    'Ekanes',
+    'Arbok',
+    'Snivy',
+    'Servine',
+    'Serperior',
+];
+exports.DUCK_NAMES = [
+    'Quacky',
+    'Floaty',
+    'Duck',
+    'Molly',
+    'Sunshine',
+    'Buddy',
+    'Chirpy',
+    'Oscar',
+    'Lucy',
+    'Bailey',
+    'Beaky',
+    'Jemima',
+    'Peaches',
+    'Quackers',
+    'Jelly Beans',
+    'Donald',
+    'Chady',
+    'Waddles',
+    'Bill',
+    'Bubbles',
+    'James Pond',
+    'Moby Duck',
+    'Quack Sparrow',
+    'Peanut',
+    'Psyduck',
+    'Mr Quack',
+    'Louie',
+    'Golduck',
+    'Daisy',
+    'Pickles',
+    'Ducky Duck',
+    'Mrs Fluffs',
+    'Squeek',
+    'Ace',
+    'Rubberduck',
+    'Mrs Beak',
+    'April',
+    'Tutu',
+    'Billy the duck',
+    'Ducky',
+    'Neco',
+    'Dodo',
+];
+exports.ZAPPY_NAMES = [
+    'Zappy',
+    'Zippy',
+    'Zappy Jr.',
+    'Zoppy',
+    'Zuppy',
+    'Zeppy',
+    'Big Z',
+    'Little z',
+    'The Flash',
+    'Thor',
+    'Electric Bolt',
+    'Azula',
+    'Lightning Bolt',
+    'Power',
+    'Sonic',
+    'Speedy',
+    'Rush',
+];
+exports.ROCKY_NAMES = [
+    'Rocky',
+    'The Rock',
+    'Quartzy',
+    'Rocky I',
+    'Rocky II',
+    'Rocky III',
+    'Pebbles Sr.',
+    'Big Granite',
+    'Boulder',
+    'Rockefeller',
+    'Pebble',
+    'Rocksanne',
+    'Rockstar',
+    'Onix',
+    'Rock and Roll',
+    'Dolomite',
+    'Granite',
+    'Miss Marble',
+    'Rock On',
+    'Amberstone',
+    'Rock With Me',
+    'Rock On It',
+    'Rock Out',
+];
+exports.COCKATIEL_NAMES = [
+    'Cocktail',
+    'Pipsqueak',
+    'Sir Chirps a Lot',
+    'Nibbles',
+    'Lord of the Wings',
+    'Girl Nest Door',
+    'Wingman',
+    'Meryl Cheep',
+    'Jack Sparrow',
+    'Godfeather',
+    'Mickey',
+    'Baquack Obama',
+    'Dame Judi Finch',
+    'Kanye Nest',
+    'Speck',
+    'Cheecky',
+    'Arthur',
+    'Paco',
+    'Bobo',
+    'Walt',
+    'Happy',
+    'Junior',
+    'Coco',
+    'Yoyo',
+    'Milo',
+    'Skipper',
+    'Scarlet',
+    'Diva',
+    'Ursula',
+    'Donna',
+    'Lola',
+    'Kiko',
+    'Luna',
+];
 function randomName(type) {
-    var collection;
-    switch (type) {
-        case "cat" /* PetType.cat */:
-            collection = exports.CAT_NAMES;
-            break;
-        case "dog" /* PetType.dog */:
-            collection = exports.DOG_NAMES;
-            break;
-        case "crab" /* PetType.crab */:
-            collection = exports.CRAB_NAMES;
-            break;
-        case "clippy" /* PetType.clippy */:
-            collection = exports.CLIPPY_NAMES;
-            break;
-        case "totoro" /* PetType.totoro */:
-            collection = exports.TOTORO_NAMES;
-            break;
-        case "snake" /* PetType.snake */:
-            collection = exports.SNAKE_NAMES;
-            break;
-        case "rubber-duck" /* PetType.rubberduck */:
-            collection = exports.DUCK_NAMES;
-            break;
-        case "zappy" /* PetType.zappy */:
-            collection = exports.ZAPPY_NAMES;
-            break;
-        case "rocky" /* PetType.rocky */:
-            collection = exports.ROCKY_NAMES;
-            break;
-        case "cockatiel" /* PetType.cockatiel */:
-            collection = exports.COCKATIEL_NAMES;
-            break;
-        default:
-            collection = exports.CAT_NAMES;
-            break;
-    }
-    return (collection.get(Math.floor(Math.random() * collection.size) + 1) ??
-        'Unknown');
+    const collection = {
+        ["cat" /* PetType.cat */]: exports.CAT_NAMES,
+        ["dog" /* PetType.dog */]: exports.DOG_NAMES,
+        ["crab" /* PetType.crab */]: exports.CRAB_NAMES,
+        ["clippy" /* PetType.clippy */]: exports.CLIPPY_NAMES,
+        ["totoro" /* PetType.totoro */]: exports.TOTORO_NAMES,
+        ["snake" /* PetType.snake */]: exports.SNAKE_NAMES,
+        ["rubber-duck" /* PetType.rubberduck */]: exports.DUCK_NAMES,
+        ["zappy" /* PetType.zappy */]: exports.ZAPPY_NAMES,
+        ["rocky" /* PetType.rocky */]: exports.ROCKY_NAMES,
+        ["cockatiel" /* PetType.cockatiel */]: exports.COCKATIEL_NAMES,
+    }[type] ?? exports.CAT_NAMES;
+    return (collection[Math.floor(Math.random() * collection.length)] ?? 'Unknown');
 }
 exports.randomName = randomName;
 
@@ -581,9 +559,9 @@ function calculateFloor(size, theme) {
 }
 function handleMouseOver(e) {
     var el = e.currentTarget;
-    exports.allPets.pets().forEach((element) => {
+    exports.allPets.pets.forEach((element) => {
         if (element.collision === el) {
-            if (!element.pet.canSwipe()) {
+            if (!element.pet.canSwipe) {
                 return;
             }
             element.pet.swipe();
@@ -640,13 +618,13 @@ function saveState(stateApi) {
     }
     var state = new states_1.PetPanelState();
     state.petStates = new Array();
-    exports.allPets.pets().forEach((petItem) => {
+    exports.allPets.pets.forEach((petItem) => {
         state.petStates?.push({
-            petName: petItem.pet.name(),
+            petName: petItem.pet.name,
             petColor: petItem.color,
             petType: petItem.type,
             petState: petItem.pet.getState(),
-            petFriend: petItem.pet.friend()?.name() ?? undefined,
+            petFriend: petItem.pet.friend?.name ?? undefined,
             elLeft: petItem.el.style.left,
             elBottom: petItem.el.style.bottom,
         });
@@ -821,8 +799,8 @@ function petPanelApp(basePetUri, theme, themeKind, petColor, petSize, petType, s
             case 'throw-ball':
                 resetBall();
                 throwBall();
-                exports.allPets.pets().forEach((petEl) => {
-                    if (petEl.pet.canChase()) {
+                exports.allPets.pets.forEach((petEl) => {
+                    if (petEl.pet.canChase) {
                         petEl.pet.chase(ballState, canvas);
                     }
                 });
@@ -832,22 +810,22 @@ function petPanelApp(basePetUri, theme, themeKind, petColor, petSize, petType, s
                 saveState(stateApi);
                 break;
             case 'list-pets':
-                var pets = exports.allPets.pets();
+                var pets = exports.allPets.pets;
                 stateApi?.postMessage({
                     command: 'list-pets',
                     text: pets
-                        .map((pet) => `${pet.type},${pet.pet.name()},${pet.color}`)
+                        .map((pet) => `${pet.type},${pet.pet.name},${pet.color}`)
                         .join('\n'),
                 });
                 break;
             case 'roll-call':
-                var pets = exports.allPets.pets();
+                var pets = exports.allPets.pets;
                 // go through every single
                 // pet and then print out their name
                 pets.forEach((pet) => {
                     stateApi?.postMessage({
                         command: 'info',
-                        text: `${pet.pet.emoji()} ${pet.pet.name()} (${pet.color} ${pet.type}): ${pet.pet.hello()}`,
+                        text: `${pet.pet.emoji} ${pet.pet.name} (${pet.color} ${pet.type}): ${pet.pet.hello}`,
                     });
                 });
             case 'delete-pet':
@@ -929,7 +907,7 @@ class PetCollection {
     constructor() {
         this._pets = new Array(0);
     }
-    pets() {
+    get pets() {
         return this._pets;
     }
     push(pet) {
@@ -943,17 +921,17 @@ class PetCollection {
     }
     locate(name) {
         return this._pets.find((collection) => {
-            return collection.pet.name() === name;
+            return collection.pet.name === name;
         });
     }
     remove(name) {
         this._pets.forEach((pet) => {
-            if (pet.pet.name() === name) {
+            if (pet.pet.name === name) {
                 pet.remove();
             }
         });
         this._pets = this._pets.filter((pet) => {
-            return pet.pet.name() !== name;
+            return pet.pet.name !== name;
         });
     }
     seekNewFriends() {
@@ -962,21 +940,21 @@ class PetCollection {
         } // You can't be friends with yourself.
         var messages = new Array(0);
         this._pets.forEach((petInCollection) => {
-            if (petInCollection.pet.hasFriend()) {
+            if (petInCollection.pet.hasFriend) {
                 return;
             } // I already have a friend!
             this._pets.forEach((potentialFriend) => {
-                if (potentialFriend.pet.hasFriend()) {
+                if (potentialFriend.pet.hasFriend) {
                     return;
                 } // Already has a friend. sorry.
-                if (!potentialFriend.pet.canChase()) {
+                if (!potentialFriend.pet.canChase) {
                     return;
                 } // Pet is busy doing something else.
-                if (potentialFriend.pet.left() > petInCollection.pet.left() &&
-                    potentialFriend.pet.left() <
-                        petInCollection.pet.left() + petInCollection.pet.width()) {
+                if (potentialFriend.pet.left > petInCollection.pet.left &&
+                    potentialFriend.pet.left <
+                        petInCollection.pet.left + petInCollection.pet.width) {
                     // We found a possible new friend..
-                    console.log(petInCollection.pet.name(), ' wants to be friends with ', potentialFriend.pet.name(), '.');
+                    console.log(petInCollection.pet.name, ' wants to be friends with ', potentialFriend.pet.name, '.');
                     if (petInCollection.pet.makeFriendsWith(potentialFriend.pet)) {
                         potentialFriend.pet.showSpeechBubble('❤️', 2000);
                         petInCollection.pet.showSpeechBubble('❤️', 2000);
@@ -1056,10 +1034,10 @@ class BasePetType {
         this.speech.style.bottom = `${bottom + calculateSpriteWidth(petSize)}px`;
         this.hideSpeechBubble();
     }
-    left() {
+    get left() {
         return this._left;
     }
-    bottom() {
+    get bottom() {
         return this._bottom;
     }
     repositionAccompanyingElements() {
@@ -1078,20 +1056,20 @@ class BasePetType {
         this.el.style.left = `${this._left}px`;
         this.repositionAccompanyingElements();
     }
-    width() {
+    get width() {
         return this.el.width;
     }
-    floor() {
+    get floor() {
         return this._floor;
     }
-    hello() {
+    get hello() {
         // return the sound of the name of the animal
         return ` says hello 👋!`;
     }
     getState() {
         return { currentStateEnum: this.currentStateEnum };
     }
-    speed() {
+    get speed() {
         return this._speed;
     }
     randomizeSpeed(speed) {
@@ -1100,7 +1078,7 @@ class BasePetType {
         const newSpeed = Math.random() * (max - min) + min;
         return newSpeed;
     }
-    isMoving() {
+    get isMoving() {
         return this._speed !== 0 /* PetSpeed.still */;
     }
     recoverFriend(friend) {
@@ -1115,16 +1093,16 @@ class BasePetType {
         if (!(0, states_1.isStateAboveGround)(this.currentStateEnum)) {
             // Reset the bottom of the sprite to the floor as the theme
             // has likely changed.
-            this.positionBottom(this.floor());
+            this.positionBottom(this.floor);
         }
     }
-    canSwipe() {
+    get canSwipe() {
         return !(0, states_1.isStateAboveGround)(this.currentStateEnum);
     }
-    canChase() {
+    get canChase() {
         return (!(0, states_1.isStateAboveGround)(this.currentStateEnum) &&
             this.currentStateEnum !== "chase" /* States.chase */ &&
-            this.isMoving());
+            this.isMoving);
     }
     showSpeechBubble(message, duration = 3000) {
         this.speech.innerHTML = message;
@@ -1187,10 +1165,10 @@ class BasePetType {
         }
         this.setAnimation(this.currentState.spriteLabel);
         // What's my buddy doing?
-        if (this.hasFriend() &&
+        if (this.hasFriend &&
             this.currentStateEnum !== "chase-friend" /* States.chaseFriend */ &&
-            this.isMoving()) {
-            if (this.friend()?.isPlaying() &&
+            this.isMoving) {
+            if (this.friend?.isPlaying &&
                 !(0, states_1.isStateAboveGround)(this.currentStateEnum)) {
                 this.currentState = (0, states_1.resolveState)("chase-friend" /* States.chaseFriend */, this);
                 this.currentStateEnum = "chase-friend" /* States.chaseFriend */;
@@ -1224,26 +1202,26 @@ class BasePetType {
             }
         }
     }
-    hasFriend() {
+    get hasFriend() {
         return this._friend !== undefined;
     }
-    friend() {
+    get friend() {
         return this._friend;
     }
-    name() {
+    get name() {
         return this._name;
     }
     makeFriendsWith(friend) {
         this._friend = friend;
-        console.log(this.name(), ": I'm now friends ❤️ with ", friend.name());
+        console.log(this.name, ": I'm now friends ❤️ with ", friend.name);
         return true;
     }
-    isPlaying() {
-        return (this.isMoving() &&
+    get isPlaying() {
+        return (this.isMoving &&
             (this.currentStateEnum === "run-right" /* States.runRight */ ||
                 this.currentStateEnum === "run-left" /* States.runLeft */));
     }
-    emoji() {
+    get emoji() {
         return '🐶';
     }
 }
@@ -1302,10 +1280,10 @@ class Totoro extends BasePetType {
             },
         ],
     };
-    emoji() {
+    get emoji() {
         return '🐾';
     }
-    hello() {
+    get hello() {
         return `Try Laughing. Then Whatever Scares You Will Go Away. 🎭`;
     }
 }
@@ -1380,10 +1358,10 @@ class Cat extends BasePetType {
             },
         ],
     };
-    emoji() {
+    get emoji() {
         return '🐱';
     }
-    hello() {
+    get hello() {
         return `brrr... Meow!`;
     }
 }
@@ -1446,10 +1424,10 @@ class Dog extends BasePetType {
             },
         ],
     };
-    emoji() {
+    get emoji() {
         return '🐶';
     }
-    hello() {
+    get hello() {
         return ` Every dog has its day - and today is woof day! Today I just want to bark. Take me on a walk`;
     }
 }
@@ -1502,10 +1480,10 @@ class Snake extends BasePetType {
             },
         ],
     };
-    emoji() {
+    get emoji() {
         return '🐍';
     }
-    hello() {
+    get hello() {
         return `Sss... Oh. Oh my gosh! I'm a snake!`;
     }
 }
@@ -1550,10 +1528,10 @@ class Clippy extends BasePetType {
             },
         ],
     };
-    emoji() {
+    get emoji() {
         return '📎';
     }
-    hello() {
+    get hello() {
         return ` Hi, I'm Clippy, would you like some assistance today? 👋!`;
     }
 }
@@ -1598,10 +1576,10 @@ class RubberDuck extends BasePetType {
             },
         ],
     };
-    emoji() {
+    get emoji() {
         return '🐥';
     }
-    hello() {
+    get hello() {
         return ` Hi, I love to quack around 👋!`;
     }
 }
@@ -1646,10 +1624,10 @@ class Cockatiel extends BasePetType {
             },
         ],
     };
-    emoji() {
+    get emoji() {
         return '🦜';
     }
-    hello() {
+    get hello() {
         // TODO: #191 Add a custom message for cockatiel
         return ` Hello, I'm a good bird 👋!`;
     }
@@ -1695,10 +1673,10 @@ class Crab extends BasePetType {
             },
         ],
     };
-    emoji() {
+    get emoji() {
         return '🦀';
     }
-    hello() {
+    get hello() {
         return ` Hi, I'm Crabsolutely Clawsome Crab 👋!`;
     }
 }
@@ -1743,10 +1721,10 @@ class Zappy extends BasePetType {
             },
         ],
     };
-    emoji() {
+    get emoji() {
         return '⚡';
     }
-    hello() {
+    get hello() {
         // TODO: #193 Add a custom message for zappy
         return ` Hello this is Zappy! Do I look familiar?? I am the mascot for Azure Functions😉`;
     }
@@ -1771,13 +1749,13 @@ class Rocky extends BasePetType {
             },
         ],
     };
-    emoji() {
+    get emoji() {
         return '💎';
     }
-    canChase() {
+    get canChase() {
         return false;
     }
-    hello() {
+    get hello() {
         return ` 👋 I'm rock! I always Rock`;
     }
 }
@@ -1793,37 +1771,31 @@ function createPet(petType, el, collision, speech, size, left, bottom, petRoot, 
     if (name === undefined || name === null || name === '') {
         throw new InvalidPetException('name is undefined');
     }
-    if (petType === 'totoro') {
-        return new Totoro(el, collision, speech, size, left, bottom, petRoot, floor, name, 3 /* PetSpeed.normal */);
+    const standardPetArguments = [el, collision, speech, size, left, bottom, petRoot, floor, name];
+    switch (petType) {
+        case "cat" /* PetType.cat */:
+            return new Cat(...standardPetArguments, 3 /* PetSpeed.normal */);
+        case "dog" /* PetType.dog */:
+            return new Dog(...standardPetArguments, 3 /* PetSpeed.normal */);
+        case "crab" /* PetType.crab */:
+            return new Crab(...standardPetArguments, 2 /* PetSpeed.slow */);
+        case "clippy" /* PetType.clippy */:
+            return new Clippy(...standardPetArguments, 2 /* PetSpeed.slow */);
+        case "totoro" /* PetType.totoro */:
+            return new Totoro(...standardPetArguments, 3 /* PetSpeed.normal */);
+        case "snake" /* PetType.snake */:
+            return new Snake(...standardPetArguments, 1 /* PetSpeed.verySlow */);
+        case "rubber-duck" /* PetType.rubberduck */:
+            return new RubberDuck(...standardPetArguments, 4 /* PetSpeed.fast */);
+        case "zappy" /* PetType.zappy */:
+            return new Zappy(...standardPetArguments, 5 /* PetSpeed.veryFast */);
+        case "rocky" /* PetType.rocky */:
+            return new Rocky(...standardPetArguments, 0 /* PetSpeed.still */);
+        case "cockatiel" /* PetType.cockatiel */:
+            return new Cockatiel(...standardPetArguments, 3 /* PetSpeed.normal */);
+        default:
+            throw new InvalidPetException("Pet type doesn't exist");
     }
-    if (petType === 'cat') {
-        return new Cat(el, collision, speech, size, left, bottom, petRoot, floor, name, 3 /* PetSpeed.normal */);
-    }
-    else if (petType === 'dog') {
-        return new Dog(el, collision, speech, size, left, bottom, petRoot, floor, name, 3 /* PetSpeed.normal */);
-    }
-    else if (petType === 'snake') {
-        return new Snake(el, collision, speech, size, left, bottom, petRoot, floor, name, 1 /* PetSpeed.verySlow */);
-    }
-    else if (petType === 'clippy') {
-        return new Clippy(el, collision, speech, size, left, bottom, petRoot, floor, name, 2 /* PetSpeed.slow */);
-    }
-    else if (petType === 'cockatiel') {
-        return new Cockatiel(el, collision, speech, size, left, bottom, petRoot, floor, name, 3 /* PetSpeed.normal */);
-    }
-    else if (petType === 'crab') {
-        return new Crab(el, collision, speech, size, left, bottom, petRoot, floor, name, 2 /* PetSpeed.slow */);
-    }
-    else if (petType === 'rubber-duck') {
-        return new RubberDuck(el, collision, speech, size, left, bottom, petRoot, floor, name, 4 /* PetSpeed.fast */);
-    }
-    else if (petType === 'zappy') {
-        return new Zappy(el, collision, speech, size, left, bottom, petRoot, floor, name, 5 /* PetSpeed.veryFast */);
-    }
-    else if (petType === 'rocky') {
-        return new Rocky(el, collision, speech, size, left, bottom, petRoot, floor, name, 0 /* PetSpeed.still */);
-    }
-    throw new InvalidPetException("Pet type doesn't exist");
 }
 exports.createPet = createPet;
 
@@ -2002,12 +1974,12 @@ class WalkRightState {
     }
     nextFrame() {
         this.idleCounter++;
-        this.pet.positionLeft(this.pet.left() + this.pet.speed() * this.speedMultiplier);
-        if (this.pet.isMoving() &&
-            this.pet.left() >= this.leftBoundary - this.pet.width()) {
+        this.pet.positionLeft(this.pet.left + this.pet.speed * this.speedMultiplier);
+        if (this.pet.isMoving &&
+            this.pet.left >= this.leftBoundary - this.pet.width) {
             return FrameResult.stateComplete;
         }
-        else if (!this.pet.isMoving() && this.idleCounter > this.holdTime) {
+        else if (!this.pet.isMoving && this.idleCounter > this.holdTime) {
             return FrameResult.stateComplete;
         }
         return FrameResult.stateContinue;
@@ -2027,11 +1999,11 @@ class WalkLeftState {
         this.idleCounter = 0;
     }
     nextFrame() {
-        this.pet.positionLeft(this.pet.left() - this.pet.speed() * this.speedMultiplier);
-        if (this.pet.isMoving() && this.pet.left() <= 0) {
+        this.pet.positionLeft(this.pet.left - this.pet.speed * this.speedMultiplier);
+        if (this.pet.isMoving && this.pet.left <= 0) {
             return FrameResult.stateComplete;
         }
-        else if (!this.pet.isMoving() && this.idleCounter > this.holdTime) {
+        else if (!this.pet.isMoving && this.idleCounter > this.holdTime) {
             return FrameResult.stateComplete;
         }
         return FrameResult.stateContinue;
@@ -2068,18 +2040,18 @@ class ChaseState {
         if (this.ballState.paused) {
             return FrameResult.stateCancel; // Ball is already caught
         }
-        if (this.pet.left() > this.ballState.cx) {
+        if (this.pet.left > this.ballState.cx) {
             this.horizontalDirection = HorizontalDirection.left;
-            this.pet.positionLeft(this.pet.left() - this.pet.speed());
+            this.pet.positionLeft(this.pet.left - this.pet.speed);
         }
         else {
             this.horizontalDirection = HorizontalDirection.right;
-            this.pet.positionLeft(this.pet.left() + this.pet.speed());
+            this.pet.positionLeft(this.pet.left + this.pet.speed);
         }
         if (this.canvas.height - this.ballState.cy <
-            this.pet.width() + this.pet.floor() &&
-            this.ballState.cx < this.pet.left() &&
-            this.pet.left() < this.ballState.cx + 15) {
+            this.pet.width + this.pet.floor &&
+            this.ballState.cx < this.pet.left &&
+            this.pet.left < this.ballState.cx + 15) {
             // hide ball
             this.canvas.style.display = 'none';
             this.ballState.paused = true;
@@ -2098,17 +2070,17 @@ class ChaseFriendState {
         this.pet = pet;
     }
     nextFrame() {
-        if (!this.pet.hasFriend() || !this.pet.friend()?.isPlaying()) {
+        if (!this.pet.hasFriend || !this.pet.friend?.isPlaying) {
             return FrameResult.stateCancel; // Friend is no longer playing.
         }
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        if (this.pet.left() > this.pet.friend().left()) {
+        if (this.pet.left > this.pet.friend.left) {
             this.horizontalDirection = HorizontalDirection.left;
-            this.pet.positionLeft(this.pet.left() - this.pet.speed());
+            this.pet.positionLeft(this.pet.left - this.pet.speed);
         }
         else {
             this.horizontalDirection = HorizontalDirection.right;
-            this.pet.positionLeft(this.pet.left() + this.pet.speed());
+            this.pet.positionLeft(this.pet.left + this.pet.speed);
         }
         return FrameResult.stateContinue;
     }
@@ -2123,8 +2095,8 @@ class ClimbWallLeftState {
         this.pet = pet;
     }
     nextFrame() {
-        this.pet.positionBottom(this.pet.bottom() + 1);
-        if (this.pet.bottom() >= 100) {
+        this.pet.positionBottom(this.pet.bottom + 1);
+        if (this.pet.bottom >= 100) {
             return FrameResult.stateComplete;
         }
         return FrameResult.stateContinue;
@@ -2140,9 +2112,9 @@ class JumpDownLeftState {
         this.pet = pet;
     }
     nextFrame() {
-        this.pet.positionBottom(this.pet.bottom() - 5);
-        if (this.pet.bottom() <= this.pet.floor()) {
-            this.pet.positionBottom(this.pet.floor());
+        this.pet.positionBottom(this.pet.bottom - 5);
+        if (this.pet.bottom <= this.pet.floor) {
+            this.pet.positionBottom(this.pet.floor);
             return FrameResult.stateComplete;
         }
         return FrameResult.stateContinue;
