@@ -33,7 +33,8 @@
         "onCommand:vscode-pets.roll-call",
         "onWebviewPanel:petCoding",
         "onView:explorer",
-        "onView:petsView"
+        "onView:petsView",
+        "onStartupFinished"
     ],
     "main": "./out/extension/extension.js",
     "contributes": {
