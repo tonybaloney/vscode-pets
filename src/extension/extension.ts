@@ -211,8 +211,7 @@ async function handleRemovePetMessage(
                 return new PetQuickPickItem(val.name, val.type, val.color);
             }),
             {
-                placeHolder: localize.localize(
-                    'selectPetToRemove',
+                placeHolder: vscode.l10n.t(
                     'Select the pet to remove.',
                 ),
             },
@@ -389,8 +388,7 @@ export function activate(context: vscode.ExtensionContext) {
                 const selectedPetType = await vscode.window.showQuickPick(
                     localize.stringListAsQuickPickItemList<PetType>(ALL_PETS),
                     {
-                        placeHolder: localize.localize(
-                            'selectPet',
+                        placeHolder: vscode.l10n.t(
                             'Select a pet',
                         ),
                     },
@@ -422,8 +420,7 @@ export function activate(context: vscode.ExtensionContext) {
                                 choices,
                             ),
                             {
-                                placeHolder: localize.localize(
-                                    'selectColor',
+                                placeHolder: vscode.l10n.t(
                                     'Select a color',
                                 ),
                             },
@@ -445,8 +442,7 @@ export function activate(context: vscode.ExtensionContext) {
                                 choices,
                             ),
                             {
-                                placeHolder: localize.localize(
-                                    'selectColor',
+                                placeHolder: vscode.l10n.t(
                                     'Select a color',
                                 ),
                             },
@@ -468,8 +464,7 @@ export function activate(context: vscode.ExtensionContext) {
                                 choices,
                             ),
                             {
-                                placeHolder: localize.localize(
-                                    'selectColor',
+                                placeHolder: vscode.l10n.t(
                                     'Select a color',
                                 ),
                             },
@@ -495,11 +490,10 @@ export function activate(context: vscode.ExtensionContext) {
                 }
 
                 const name = await vscode.window.showInputBox({
-                    placeHolder: localize.localize(
-                        'leaveBlank',
+                    placeHolder: vscode.l10n.t(
                         'Leave blank for a random name',
                     ),
-                    prompt: localize.localize('nameYourPet', 'Name your pet'),
+                    prompt: vscode.l10n.t('Name your pet'),
                     value: randomName(selectedPetType.value),
                 });
                 const spec = new PetSpecification(
@@ -510,8 +504,7 @@ export function activate(context: vscode.ExtensionContext) {
                 );
                 if (!spec.type || !spec.color || !spec.size) {
                     return vscode.window.showWarningMessage(
-                        localize.localize(
-                            'cancelledSpawningPet',
+                        vscode.l10n.t(
                             'Cancelled Spawning Pet',
                         ),
                     );
@@ -527,8 +520,7 @@ export function activate(context: vscode.ExtensionContext) {
             } else {
                 createPetPlayground(context);
                 vscode.window.showInformationMessage(
-                    localize.localize(
-                        'spawnPetWithClosedPlayground',
+                    vscode.l10n.t(
                         "A Pet Playground has been created. You can now use the 'Spawn Additional Pet' Command to add more pets.",
                     ),
                 );
@@ -545,8 +537,7 @@ export function activate(context: vscode.ExtensionContext) {
             } else {
                 createPetPlayground(context);
                 vscode.window.showInformationMessage(
-                    localize.localize(
-                        'removePetsWithClosedPlayground',
+                    vscode.l10n.t(
                         "A Pet Playground has been created. You can now use the 'Remove All Pets' Command to remove all pets.",
                     ),
                 );
@@ -612,7 +603,7 @@ export function activate(context: vscode.ExtensionContext) {
 
 function updateStatusBar(): void {
     spawnPetStatusBar.text = `$(squirrel)`;
-    spawnPetStatusBar.tooltip = localize.localize('spawnPet', 'Spawn Pet');
+    spawnPetStatusBar.tooltip = vscode.l10n.t('Spawn Pet');
     spawnPetStatusBar.show();
 }
 
@@ -935,7 +926,7 @@ class PetPanel extends PetWebviewContainer implements IPetPanel {
         // Otherwise, create a new panel.
         const panel = vscode.window.createWebviewPanel(
             PetPanel.viewType,
-            localize.localize('petPanel', 'Pet Panel'),
+            vscode.l10n.t('Pet Panel'),
             vscode.ViewColumn.Two,
             getWebviewOptions(extensionUri),
         );
@@ -1077,8 +1068,8 @@ class PetWebviewViewProvider extends PetWebviewContainer {
 
     getWebview(): vscode.Webview {
         if (this._webviewView === undefined) {
-            throw new Error(
-                'Panel not active, make sure the pets view is visible before running this command.',
+            throw new Error(vscode.l10n.t(
+                'Panel not active, make sure the pets view is visible before running this command.'),
             );
         } else {
             return this._webviewView.webview;
