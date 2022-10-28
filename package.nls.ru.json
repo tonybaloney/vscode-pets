@@ -1,0 +1,31 @@
+{
+    "vscodePets.spawnPet": "Создать питомца",
+    "vscodePets.petPanel": "Панель с питомцами",
+    "vscodePets.selectPet": "Выберите питомца",
+    "vscodePets.selectColor": "Выберите цвет",
+    "vscodePets.selectPetToRemove": "Выберите питомца которого нужно удалить.",
+    "vscodePets.leaveBlank": "Оставьте пустым для случайного имени",
+    "vscodePets.nameYourPet": "Назовите вашего питомца", 
+    "vscodePets.cancelledSpawningPet": "Создание питомца отменено",
+    "vscodePets.spawnPetWithClosedPlayground": "Создана площадка для питомцев. Теперь вы можете использовать команду \"Spawn Additional Pet\", чтобы добавить новых питомцев.",
+    "vscodePets.removePetsWithClosedPlayground":  "Создана площадка для питомцев. Теперь вы можете использовать команду \"Remove All Pets\", чтобы удалить всех питомцев.",
+
+    "vscodePets.black": "Чёрный",
+    "vscodePets.brown": "Коричневый",
+    "vscodePets.green": "Зелёный",
+    "vscodePets.yellow": "Жёлтый",
+    "vscodePets.gray": "Серый",
+    "vscodePets.red": "Красный",
+    "vscodePets.white": "Белый",
+
+    "vscodePets.cat": "Кот",
+    "vscodePets.clippy": "Скрепка",
+    "vscodePets.cockatiel": "Корелла",
+    "vscodePets.crab": "Краб",
+    "vscodePets.dog": "Собака",
+    "vscodePets.rocky": "Камень",
+    "vscodePets.rubber-duck": "Резиновая уточка",
+    "vscodePets.snake": "Змея",
+    "vscodePets.totoro": "Тоторо",
+    "vscodePets.zappy": "Молния"
+}
