@@ -80,9 +80,9 @@ function calculateFloor(size: PetSize, theme: Theme): number {
 
 function handleMouseOver(e: MouseEvent) {
     var el = e.currentTarget as HTMLDivElement;
-    allPets.pets().forEach((element) => {
+    allPets.pets.forEach((element) => {
         if (element.collision === el) {
-            if (!element.pet.canSwipe()) {
+            if (!element.pet.canSwipe) {
                 return;
             }
             element.pet.swipe();
@@ -185,13 +185,13 @@ export function saveState(stateApi?: VscodeStateApi) {
     var state = new PetPanelState();
     state.petStates = new Array();
 
-    allPets.pets().forEach((petItem) => {
+    allPets.pets.forEach((petItem) => {
         state.petStates?.push({
-            petName: petItem.pet.name(),
+            petName: petItem.pet.name,
             petColor: petItem.color,
             petType: petItem.type,
             petState: petItem.pet.getState(),
-            petFriend: petItem.pet.friend()?.name() ?? undefined,
+            petFriend: petItem.pet.friend?.name ?? undefined,
             elLeft: petItem.el.style.left,
             elBottom: petItem.el.style.bottom,
         });
@@ -420,8 +420,8 @@ export function petPanelApp(
             case 'throw-ball':
                 resetBall();
                 throwBall();
-                allPets.pets().forEach((petEl) => {
-                    if (petEl.pet.canChase()) {
+                allPets.pets.forEach((petEl) => {
+                    if (petEl.pet.canChase) {
                         petEl.pet.chase(ballState, canvas);
                     }
                 });
@@ -444,28 +444,25 @@ export function petPanelApp(
                 break;
 
             case 'list-pets':
-                var pets = allPets.pets();
+                var pets = allPets.pets;
                 stateApi?.postMessage({
                     command: 'list-pets',
                     text: pets
                         .map(
-                            (pet) =>
-                                `${pet.type},${pet.pet.name()},${pet.color}`,
+                            (pet) => `${pet.type},${pet.pet.name},${pet.color}`,
                         )
                         .join('\n'),
                 });
                 break;
 
             case 'roll-call':
-                var pets = allPets.pets();
+                var pets = allPets.pets;
                 // go through every single
                 // pet and then print out their name
                 pets.forEach((pet) => {
                     stateApi?.postMessage({
                         command: 'info',
-                        text: `${pet.pet.emoji()} ${pet.pet.name()} (${
-                            pet.color
-                        } ${pet.type}): ${pet.pet.hello()}`,
+                        text: `${pet.pet.emoji} ${pet.pet.name} (${pet.color} ${pet.type}): ${pet.pet.hello}`,
                     });
                 });
             case 'delete-pet':

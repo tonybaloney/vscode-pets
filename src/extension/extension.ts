@@ -272,7 +272,7 @@ export function activate(context: vscode.ExtensionContext) {
                 getConfigurationPosition() === ExtPosition.explorer &&
                 webviewViewProvider
             ) {
-                vscode.commands.executeCommand('vscode-pets.petsView.focus');
+                vscode.commands.executeCommand('petsView.focus');
             } else {
                 const spec = PetSpecification.fromConfiguration();
                 PetPanel.createOrShow(
@@ -412,7 +412,7 @@ export function activate(context: vscode.ExtensionContext) {
                         petColor = PetColor.gray;
                         break;
                     case PetType.cat:
-                        choices = [PetColor.black, PetColor.brown];
+                        choices = [PetColor.black, PetColor.brown, PetColor.white];
                         var selectedColor = await vscode.window.showQuickPick(
                             localize.stringListAsQuickPickItemList<PetColor>(
                                 choices,
@@ -664,7 +664,8 @@ function normalizeColor(petColor: PetColor, petType: PetType): PetColor {
     if (
         petType === PetType.cat &&
         petColor !== PetColor.brown &&
-        petColor !== PetColor.black
+        petColor !== PetColor.black &&
+        petColor !== PetColor.white
     ) {
         return PetColor.brown;
     }
@@ -1049,7 +1050,7 @@ class PetPanel extends PetWebviewContainer implements IPetPanel {
 }
 
 class PetWebviewViewProvider extends PetWebviewContainer {
-    public static readonly viewType = 'vscode-pets.petsView';
+    public static readonly viewType = 'petsView';
 
     private _webviewView?: vscode.WebviewView;
 
