@@ -4,8 +4,9 @@
     "description": "Pets for your VS Code",
     "version": "1.15.1",
     "engines": {
-        "vscode": "^1.68.0"
+        "vscode": "^1.72.0"
     },
+    "l10n": "./l10n",
     "repository": {
         "type": "github",
         "url": "https://github.com/tonybaloney/vscode-pets"
@@ -210,9 +211,10 @@
         "@types/jsdom": "^20.0.0",
         "@types/mocha": "^9.1.1",
         "@types/node": "^18.0.0",
-        "@types/vscode": "^1.68.0",
+        "@types/vscode": "^1.72.0",
         "@typescript-eslint/eslint-plugin": "^5.29.0",
         "@typescript-eslint/parser": "^5.29.0",
+        "@vscode/l10n-dev": "^0.0.16",
         "@vscode/test-web": "^0.0.31",
         "eslint": "^8.18.0",
         "eslint-plugin-unused-imports": "^2.0.0",
@@ -233,6 +235,6 @@
         "webpack-cli": "^4.10.0"
     },
     "dependencies": {
-        "vscode-nls": "^5.2.0"
+        "@vscode/l10n": "^0.0.5"
     }
 }

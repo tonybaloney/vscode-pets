@@ -1,0 +1,13 @@
+{
+	"Select the pet to remove.": "Select the pet to remove.",
+	"Select a pet": "Select a pet",
+	"Select a color": "Select a color",
+	"Leave blank for a random name": "Leave blank for a random name",
+	"Name your pet": "Name your pet",
+	"Cancelled Spawning Pet": "Cancelled Spawning Pet",
+	"A Pet Playground has been created. You can now use the 'Spawn Additional Pet' Command to add more pets.": "A Pet Playground has been created. You can now use the 'Spawn Additional Pet' Command to add more pets.",
+	"A Pet Playground has been created. You can now use the 'Remove All Pets' Command to remove all pets.": "A Pet Playground has been created. You can now use the 'Remove All Pets' Command to remove all pets.",
+	"Spawn Pet": "Spawn Pet",
+	"Pet Panel": "Pet Panel",
+	"Panel not active, make sure the pets view is visible before running this command.": "Panel not active, make sure the pets view is visible before running this command."
+}
