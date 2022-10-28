@@ -412,7 +412,11 @@ export function activate(context: vscode.ExtensionContext) {
                         petColor = PetColor.gray;
                         break;
                     case PetType.cat:
-                        choices = [PetColor.black, PetColor.brown, PetColor.white];
+                        choices = [
+                            PetColor.black,
+                            PetColor.brown,
+                            PetColor.white,
+                        ];
                         var selectedColor = await vscode.window.showQuickPick(
                             localize.stringListAsQuickPickItemList<PetColor>(
                                 choices,
