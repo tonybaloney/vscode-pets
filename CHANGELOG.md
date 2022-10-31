@@ -2,6 +2,16 @@
 
 All notable changes to the "vscode-pets" extension will be documented in this file.
 
+## [1.16.1]
+
+## New pets
+
+* Add Mod the dotnet bot
+
+## Other updates
+
+* Move pet definitions and names into one file per pet.
+
 ## [1.16.0]
 
 ## Major updates

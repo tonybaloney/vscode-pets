@@ -488,6 +488,9 @@ export function activate(context: vscode.ExtensionContext) {
                     case PetType.zappy:
                         petColor = PetColor.yellow;
                         break;
+                    case PetType.mod:
+                        petColor = PetColor.purple;
+                        break;
                 }
 
                 if (petColor === undefined) {
