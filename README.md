@@ -175,13 +175,4 @@ The cat and dog media assets for this extension were licensed from itch.io.
 
 ## Thank you
 
-Thanks to all the contributors to this project:
-
--   [@marcduiker](https://github.com/marcduiker)
--   [@Vicente015](https://github.com/Vicente015)
--   [@Yukaii](https://github.com/Yukaii)
--   [@robconery](https://github.com/robconery)
--   [@JING1201](https://github.com/JING1201)
--   [@aclaughan](https://github.com/aclaughan)
--   [@Tarang74](https://github.com/Tarang74)
--   [@Harry-Hopkinson](https://github.com/Harry-Hopkinson)
+Thanks to all the [contributors](https://github.com/tonybaloney/vscode-pets/graphs/contributors) to this project.
