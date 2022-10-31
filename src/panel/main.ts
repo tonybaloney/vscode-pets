@@ -9,12 +9,7 @@ import {
     WebviewMessage,
 } from '../common/types';
 import { IPetType } from './states';
-import {
-    createPet,
-    PetCollection,
-    PetElement,
-    IPetCollection,
-} from './pets';
+import { createPet, PetCollection, PetElement, IPetCollection } from './pets';
 import { BallState, PetElementState, PetPanelState } from './states';
 
 /* This is how the VS Code API can be invoked from the panel */
