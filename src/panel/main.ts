@@ -8,9 +8,9 @@ import {
     ColorThemeKind,
     WebviewMessage,
 } from '../common/types';
+import { IPetType } from './states';
 import {
     createPet,
-    IPetType,
     PetCollection,
     PetElement,
     IPetCollection,

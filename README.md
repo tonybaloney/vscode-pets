@@ -40,9 +40,9 @@ Open the setting panel with `Ctrl+,` on Windows/Linux or `Cmd(⌘)+,` on MacOS. 
 
 Set a default color, size, pet type, position, and theme when you open a Pet Panel.
 
-* Pet Color: black, brown, green, yellow, gray, red, white
+* Pet Color: black, brown, green, yellow, gray, purple, red, white
 * Pet Size: nano, medium, large
-* Pet Type: cat, crab, clippy, cockatiel, dog, rocky, rubber duck, snake, totoro, zappy
+* Pet Type: cat, crab, clippy, cockatiel, dog, mod, rocky, rubber duck, snake, totoro, zappy
 * Position: panel, explorer
 * Theme: none, forest, castle, beach
 
@@ -54,6 +54,7 @@ Set a default color, size, pet type, position, and theme when you open a Pet Pan
 * Rubber duck & Zappy can only be yellow
 * Ferris the crab can only be red
 * Rocky can only be gray
+* Mod can only be purple
 
 ## Start pet coding session to show your pet
 
@@ -169,7 +170,7 @@ The minimum set of behaviors is:
 
 The cat and dog media assets for this extension were licensed from itch.io.
 
-[Marc Duiker](https://twitter.com/marcduiker) created the Clippy, Rocky, Zappy, rubber duck, snake, cockatiel, and Ferris the crab media assets.
+[Marc Duiker](https://twitter.com/marcduiker) created the Clippy, Rocky, Zappy, rubber duck, snake, cockatiel, Ferris the crab, and Mod the dotnet bot media assets.
 
 [Karen Rustad Tölva](https://www.aldeka.net) designed the original concept of Ferris the crab.
 

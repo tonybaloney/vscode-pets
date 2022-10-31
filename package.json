@@ -128,6 +128,7 @@
                             "green",
                             "yellow",
                             "gray",
+                            "purple",
                             "red",
                             "white"
                         ],
@@ -143,6 +144,7 @@
                             "clippy",
                             "cockatiel",
                             "dog",
+                            "mod",
                             "rocky",
                             "rubber-duck",
                             "snake",

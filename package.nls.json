@@ -15,6 +15,7 @@
     "vscodePets.green": "Green",
     "vscodePets.yellow": "Yellow",
     "vscodePets.gray": "Gray",
+    "vscodePets.purple": "Purple",
     "vscodePets.red": "Red",
     "vscodePets.white": "White",
 
@@ -23,6 +24,7 @@
     "vscodePets.cockatiel": "Cockatiel",
     "vscodePets.crab": "Crab",
     "vscodePets.dog": "Dog",
+    "vscodePets.mod": "Mod",
     "vscodePets.rocky": "Rocky",
     "vscodePets.rubber-duck": "Rubber Duck",
     "vscodePets.snake": "Snake",
