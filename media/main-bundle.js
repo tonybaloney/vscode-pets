@@ -190,9 +190,7 @@ class BasePetType {
         return !(0, states_1.isStateAboveGround)(this.currentStateEnum);
     }
     get canChase() {
-        return (!(0, states_1.isStateAboveGround)(this.currentStateEnum) &&
-            this.currentStateEnum !== "chase" /* States.chase */ &&
-            this.isMoving);
+        return !(0, states_1.isStateAboveGround)(this.currentStateEnum) && this.isMoving;
     }
     showSpeechBubble(message, duration = 3000) {
         this.speech.innerHTML = message;
