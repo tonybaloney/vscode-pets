@@ -560,6 +560,9 @@ function petPanelApp(basePetUri, theme, themeKind, petColor, petSize, petType, s
     let then = 0; // last draw
     var ballState;
     function resetBall() {
+        if (ballState) {
+            ballState.paused = true;
+        }
         if (canvas) {
             canvas.style.display = 'block';
         }

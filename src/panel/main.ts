@@ -332,6 +332,9 @@ export function petPanelApp(
     var ballState: BallState;
 
     function resetBall() {
+        if (ballState) {
+            ballState.paused = true;
+        }
         if (canvas) {
             canvas.style.display = 'block';
         }
