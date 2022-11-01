@@ -185,7 +185,6 @@ export abstract class BasePetType implements IPetType {
     get canChase() {
         return (
             !isStateAboveGround(this.currentStateEnum) &&
-            this.currentStateEnum !== States.chase &&
             this.isMoving
         );
     }
