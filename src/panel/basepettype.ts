@@ -183,10 +183,7 @@ export abstract class BasePetType implements IPetType {
     }
 
     get canChase() {
-        return (
-            !isStateAboveGround(this.currentStateEnum) &&
-            this.isMoving
-        );
+        return !isStateAboveGround(this.currentStateEnum) && this.isMoving;
     }
 
     showSpeechBubble(message: string, duration: number = 3000) {
