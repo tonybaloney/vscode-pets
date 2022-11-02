@@ -10,6 +10,8 @@
         "type": "github",
         "url": "https://github.com/tonybaloney/vscode-pets"
     },
+    "homepage": "https://tonybaloney.github.io/vscode-pets",
+    "bugs": "https://github.com/tonybaloney/vscode-pets/issues",
     "publisher": "tonybaloney",
     "categories": [
         "Other"
