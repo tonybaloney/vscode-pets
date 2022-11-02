@@ -2,7 +2,7 @@
 
 All notable changes to the "vscode-pets" extension will be documented in this file.
 
-## [1.16.1]
+## [1.17.0]
 
 ## New pets
 
@@ -10,7 +10,10 @@ All notable changes to the "vscode-pets" extension will be documented in this fi
 
 ## Other updates
 
-* Move pet definitions and names into one file per pet.
+* Add Mod and refactor to smaller files by @marcduiker in https://github.com/tonybaloney/vscode-pets/pull/296
+* Fixes rethrow bug where pets won't chase the second ball and original chase isn't cancelled.  by @tonybaloney in https://github.com/tonybaloney/vscode-pets/pull/298
+* Reset previous ball on rethrow by @tonybaloney in https://github.com/tonybaloney/vscode-pets/pull/300
+* Fix brown cat ratio for run and change spritesheet by @tonybaloney in https://github.com/tonybaloney/vscode-pets/pull/299
 
 ## [1.16.0]
 
