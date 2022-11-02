@@ -2,6 +2,11 @@
 
 All notable changes to the "vscode-pets" extension will be documented in this file.
 
+## [1.17.1]
+
+* Change default position by @tonybaloney in https://github.com/tonybaloney/vscode-pets/pull/303
+* Add docs site by @tonybaloney in https://github.com/tonybaloney/vscode-pets/pull/301
+
 ## [1.17.0]
 
 ## New pets
