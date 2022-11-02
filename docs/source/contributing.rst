@@ -11,12 +11,12 @@ Reporting bugs
 
 Something is not working as it should? Please `open an issue <https://github.com/tonybaloney/vscode-pets/issues/new>`_ giving as much information as you can. Writing an effective bug report is a valuable skill as a Software Engineer, refer to the given example below for advice.
 
-**Title** - Clearly summarize what the bug is with specific details.  
-**Summary** - If the title is too long, include a summary with additional details.  
-**Visual/Screenshot** - A picture is always worth the time. Include one if possible.  
-**Expected/Actual Results** - Explain what you expected to happen and what actually happened.  
-**Steps to Reproduce** - The steps to follow should be comprehensive, easy to understand, and short. We want to experience the bug first-hand.  
-**Environment** - Share the current version information by copying from `Help` and clicking `About`.
+* Title - Clearly summarize what the bug is with specific details.  
+* Summary - If the title is too long, include a summary with additional details.  
+* Visual/Screenshot - A picture is always worth the time. Include one if possible.  
+* Expected/Actual Results - Explain what you expected to happen and what actually happened.  
+* Steps to Reproduce - The steps to follow should be comprehensive, easy to understand, and short. We want to experience the bug first-hand.  
+* Environment - Share the current version information by copying from `Help` and clicking `About`.
 
 
    Version: 1.72.0  
