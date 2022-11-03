@@ -507,6 +507,15 @@ function recoverState(basePetUri, petSize, floor, stateApi) {
 function randomStartPosition() {
     return Math.floor(Math.random() * (window.innerWidth * 0.7));
 }
+// function scale(
+//     value: number,
+//     oldMin: number,
+//     oldMax: number,
+//     newMin: number,
+//     newMax: number,
+// ): number {
+//     return ((value - oldMin) * (newMax - newMin)) / (oldMax - oldMin) + newMin;
+// }
 let canvas, ctx;
 function initCanvas() {
     canvas = document.getElementById('petCanvas');
@@ -568,6 +577,50 @@ function petPanelApp(basePetUri, theme, themeKind, petColor, petSize, petType, s
         }
         ballState = new states_1.BallState(100, 100, 4, 5);
     }
+    function toggleDynamicThrowOn() {
+        let startMouseX;
+        let startMouseY;
+        let endMouseX;
+        let endMouseY;
+        window.onmousedown = (e) => {
+            if (ballState) {
+                ballState.paused = true;
+            }
+            if (canvas) {
+                canvas.style.display = 'block';
+            }
+            startMouseX = e.offsetX;
+            startMouseY = e.offsetY;
+            // ballState = new BallState(startMouseX, startMouseY, 0, 0);
+            window.onmousemove = (ev) => {
+                endMouseX = ev.clientX;
+                endMouseY = ev.clientY;
+                ballState = new states_1.BallState(endMouseX, endMouseY, endMouseX - startMouseX, endMouseY - startMouseY);
+                startMouseX = endMouseX;
+                startMouseY = endMouseY;
+            };
+            window.onmouseup = (ev) => {
+                ev.preventDefault();
+                window.onmouseup = null;
+                window.onmousemove = null;
+                exports.allPets.pets.forEach((petEl) => {
+                    if (petEl.pet.canChase) {
+                        petEl.pet.chase(ballState, canvas);
+                    }
+                });
+                throwBall();
+            };
+        };
+    }
+    function toggleDynamicThrowOff() {
+        window.onmousedown = null;
+        if (ballState) {
+            ballState.paused = true;
+        }
+        if (canvas) {
+            canvas.style.display = 'block';
+        }
+    }
     function throwBall() {
         if (!ballState.paused) {
             requestAnimationFrame(throwBall);
@@ -624,6 +677,12 @@ function petPanelApp(basePetUri, theme, themeKind, petColor, petSize, petType, s
     window.addEventListener('message', (event) => {
         const message = event.data; // The json data that the extension sent
         switch (message.command) {
+            case 'ball-in-hand':
+                toggleDynamicThrowOn();
+                break;
+            case 'ball-out-of-hand':
+                toggleDynamicThrowOff();
+                break;
             case 'throw-ball':
                 resetBall();
                 throwBall();

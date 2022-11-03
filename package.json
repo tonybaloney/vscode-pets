@@ -28,6 +28,8 @@
     "icon": "icon.png",
     "activationEvents": [
         "onCommand:vscode-pets.start",
+        "onCommand:vscode-pets.ball-in-hand",
+        "onCommand:vscode-pets.ball-out-of-hand",
         "onCommand:vscode-pets.throw-ball",
         "onCommand:vscode-pets.spawn-pet",
         "onCommand:vscode-pets.delete-pet",
@@ -76,6 +78,24 @@
                 "title": "Start pet coding session",
                 "category": "Pet Coding",
                 "icon": "media/dog.svg"
+            },
+            {
+                "command": "vscode-pets.ball-in-hand",
+                "title": "Ball In Hand",
+                "category": "Pet Coding",
+                "icon": {
+                    "dark": "media/icon/dark-circle-outline.svg",
+                    "light": "media/icon/light-circle-outline.svg"
+                }
+            },
+            {
+                "command": "vscode-pets.ball-out-of-hand",
+                "title": "Ball Out Of Hand",
+                "category": "Pet Coding",
+                "icon": {
+                    "dark": "media/icon/dark-circle-outline.svg",
+                    "light": "media/icon/light-circle-outline.svg"
+                }
             },
             {
                 "command": "vscode-pets.throw-ball",
