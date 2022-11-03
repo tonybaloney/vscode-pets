@@ -1,8 +1,18 @@
+<div align='center'>
+
 # VS Code Pets
 
 ![icon](https://github.com/tonybaloney/vscode-pets/raw/master/icon.png)
+</div>    
 
-Puts a small, bored cat, an enthusiastic dog, a feisty snake, a rubber duck, or Clippy 📎 in your code editor to boost productivity.
+<p align="center">
+    Puts a small, bored cat, an enthusiastic dog, a feisty snake, a rubber duck, or Clippy 📎 in your code editor to boost productivity.
+    <br>
+    <br>
+    <a href="https://github.com/tonybaloney/vscode-pets/issues/new?assignees=&labels=feature&template=bug_report.md&title=">Report a Bug</a>
+    ·
+    <a href="https://github.com/tonybaloney/vscode-pets/issues/new?assignees=&labels=feature&template=feature_request.md&title=">Request feature</a>
+</p>
 
 [![Visual Studio Marketplace Version](https://img.shields.io/visual-studio-marketplace/v/tonybaloney.vscode-pets?color=blue&logo=visual-studio)](https://marketplace.visualstudio.com/items?itemName=tonybaloney.vscode-pets&WT.mc_id=python-17801-anthonyshaw)
 
