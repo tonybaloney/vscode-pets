@@ -348,6 +348,15 @@ export function activate(context: vscode.ExtensionContext) {
     );
 
     context.subscriptions.push(
+        vscode.commands.registerCommand('vscode-pets.ball-in-hand', () => {
+            const panel = getPetPanel();
+            if (panel !== undefined) {
+                panel.handleDynamicThrow();
+            }
+        }),
+    );
+
+    context.subscriptions.push(
         vscode.commands.registerCommand('vscode-pets.throw-ball', () => {
             const panel = getPetPanel();
             if (panel !== undefined) {
@@ -680,6 +689,7 @@ function normalizeColor(petColor: PetColor, petType: PetType): PetColor {
 }
 
 interface IPetPanel {
+    handleDynamicThrow(): void;
     throwBall(): void;
     resetPets(): void;
     spawnPet(spec: PetSpecification): void;
@@ -757,6 +767,12 @@ class PetWebviewContainer implements IPetPanel {
     public updateTheme(newTheme: Theme, themeKind: vscode.ColorThemeKind) {
         this._theme = newTheme;
         this._themeKind = themeKind;
+    }
+
+    public handleDynamicThrow(): void {
+        this.getWebview().postMessage({
+            command: 'ball-in-hand',
+        });
     }
 
     public throwBall() {
