@@ -91,21 +91,13 @@ export class BallState {
     vx: number;
     vy: number;
     paused: boolean;
-    inHand: boolean;
 
-    constructor(
-        cx: number,
-        cy: number,
-        vx: number,
-        vy: number,
-        inHand = false,
-    ) {
+    constructor(cx: number, cy: number, vx: number, vy: number) {
         this.cx = cx;
         this.cy = cy;
         this.vx = vx;
         this.vy = vy;
         this.paused = false;
-        this.inHand = inHand;
     }
 }
 
