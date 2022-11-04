@@ -507,15 +507,9 @@ function recoverState(basePetUri, petSize, floor, stateApi) {
 function randomStartPosition() {
     return Math.floor(Math.random() * (window.innerWidth * 0.7));
 }
-// function scale(
-//     value: number,
-//     oldMin: number,
-//     oldMax: number,
-//     newMin: number,
-//     newMax: number,
-// ): number {
-//     return ((value - oldMin) * (newMax - newMin)) / (oldMax - oldMin) + newMin;
-// }
+function scale(value, oldMin, oldMax, newMin, newMax) {
+    return ((value - oldMin) * (newMax - newMin)) / (oldMax - oldMin) + newMin;
+}
 let canvas, ctx;
 function initCanvas() {
     canvas = document.getElementById('petCanvas');
@@ -591,18 +585,22 @@ function petPanelApp(basePetUri, theme, themeKind, petColor, petSize, petType, s
             }
             startMouseX = e.offsetX;
             startMouseY = e.offsetY;
-            // ballState = new BallState(startMouseX, startMouseY, 0, 0);
+            ballState = new states_1.BallState(endMouseX, endMouseY, 0, 0, true);
             window.onmousemove = (ev) => {
+                if (ballState) {
+                    ballState.paused = true;
+                }
                 endMouseX = ev.clientX;
                 endMouseY = ev.clientY;
-                ballState = new states_1.BallState(endMouseX, endMouseY, endMouseX - startMouseX, endMouseY - startMouseY);
-                startMouseX = endMouseX;
-                startMouseY = endMouseY;
+                ballState = new states_1.BallState(endMouseX, endMouseY, 0, 0, true);
             };
             window.onmouseup = (ev) => {
                 ev.preventDefault();
                 window.onmouseup = null;
                 window.onmousemove = null;
+                ballState = new states_1.BallState(endMouseX, endMouseY, scale(endMouseX - startMouseX, -ctx.canvas.width, ctx.canvas.width, -20, 20), scale(endMouseY - startMouseY, -ctx.canvas.height, ctx.canvas.height, -20, 20), false);
+                startMouseX = endMouseX;
+                startMouseY = endMouseY;
                 exports.allPets.pets.forEach((petEl) => {
                     if (petEl.pet.canChase) {
                         petEl.pet.chase(ballState, canvas);
@@ -625,7 +623,6 @@ function petPanelApp(basePetUri, theme, themeKind, petColor, petSize, petType, s
         if (!ballState.paused) {
             requestAnimationFrame(throwBall);
         }
-        // throttling the frame rate
         const now = Date.now();
         const elapsed = now - then;
         if (elapsed <= interval) {
@@ -633,27 +630,30 @@ function petPanelApp(basePetUri, theme, themeKind, petColor, petSize, petType, s
         }
         then = now - (elapsed % interval);
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-        if (ballState.cx + ballRadius >= canvas.width) {
-            ballState.vx = -ballState.vx * damping;
-            ballState.cx = canvas.width - ballRadius;
+        if (!ballState.inHand) {
+            // throttling the frame rate
+            if (ballState.cx + ballRadius >= canvas.width) {
+                ballState.vx = -ballState.vx * damping;
+                ballState.cx = canvas.width - ballRadius;
+            }
+            else if (ballState.cx - ballRadius <= 0) {
+                ballState.vx = -ballState.vx * damping;
+                ballState.cx = ballRadius;
+            }
+            if (ballState.cy + ballRadius + floor >= canvas.height) {
+                ballState.vy = -ballState.vy * damping;
+                ballState.cy = canvas.height - ballRadius - floor;
+                // traction here
+                ballState.vx *= traction;
+            }
+            else if (ballState.cy - ballRadius <= 0) {
+                ballState.vy = -ballState.vy * damping;
+                ballState.cy = ballRadius;
+            }
+            ballState.vy += gravity;
+            ballState.cx += ballState.vx;
+            ballState.cy += ballState.vy;
         }
-        else if (ballState.cx - ballRadius <= 0) {
-            ballState.vx = -ballState.vx * damping;
-            ballState.cx = ballRadius;
-        }
-        if (ballState.cy + ballRadius + floor >= canvas.height) {
-            ballState.vy = -ballState.vy * damping;
-            ballState.cy = canvas.height - ballRadius - floor;
-            // traction here
-            ballState.vx *= traction;
-        }
-        else if (ballState.cy - ballRadius <= 0) {
-            ballState.vy = -ballState.vy * damping;
-            ballState.cy = ballRadius;
-        }
-        ballState.vy += gravity;
-        ballState.cx += ballState.vx;
-        ballState.cy += ballState.vy;
         ctx.beginPath();
         ctx.arc(ballState.cx, ballState.cy, ballRadius, 0, 2 * Math.PI, false);
         ctx.fillStyle = '#2ed851';
@@ -2226,12 +2226,14 @@ class BallState {
     vx;
     vy;
     paused;
-    constructor(cx, cy, vx, vy) {
+    inHand;
+    constructor(cx, cy, vx, vy, inHand = false) {
         this.cx = cx;
         this.cy = cy;
         this.vx = vx;
         this.vy = vy;
         this.paused = false;
+        this.inHand = inHand;
     }
 }
 exports.BallState = BallState;
