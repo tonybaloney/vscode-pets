@@ -348,6 +348,18 @@ export function activate(context: vscode.ExtensionContext) {
     );
 
     context.subscriptions.push(
+        vscode.commands.registerCommand(
+            'vscode-pets.toggle-dynamic-throw',
+            () => {
+                const panel = getPetPanel();
+                if (panel !== undefined) {
+                    panel.toggleDynamicThrow();
+                }
+            },
+        ),
+    );
+
+    context.subscriptions.push(
         vscode.commands.registerCommand('vscode-pets.dynamic-throw-on', () => {
             const panel = getPetPanel();
             if (panel !== undefined) {
@@ -698,6 +710,7 @@ function normalizeColor(petColor: PetColor, petType: PetType): PetColor {
 }
 
 interface IPetPanel {
+    toggleDynamicThrow(): void;
     dynamicThrowOn(): void;
     dynamicThrowOff(): void;
     throwBall(): void;
@@ -777,6 +790,12 @@ class PetWebviewContainer implements IPetPanel {
     public updateTheme(newTheme: Theme, themeKind: vscode.ColorThemeKind) {
         this._theme = newTheme;
         this._themeKind = themeKind;
+    }
+
+    public toggleDynamicThrow(): void {
+        this.getWebview().postMessage({
+            command: 'toggle-dynamic-throw',
+        });
     }
 
     public dynamicThrowOn(): void {

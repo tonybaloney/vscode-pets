@@ -28,6 +28,7 @@
     "icon": "icon.png",
     "activationEvents": [
         "onCommand:vscode-pets.start",
+        "onCommand:vscode-pets.toggle-dynamic-throw",
         "onCommand:vscode-pets.dynamic-throw-on",
         "onCommand:vscode-pets.dynamic-throw-off",
         "onCommand:vscode-pets.throw-ball",
@@ -66,9 +67,14 @@
                     "group": "navigation@2"
                 },
                 {
-                    "command": "vscode-pets.delete-pet",
+                    "command": "vscode-pets.toggle-dynamic-throw",
                     "when": "view == petsView",
                     "group": "navigation@3"
+                },
+                {
+                    "command": "vscode-pets.delete-pet",
+                    "when": "view == petsView",
+                    "group": "navigation@4"
                 }
             ]
         },
@@ -80,8 +86,17 @@
                 "icon": "media/dog.svg"
             },
             {
+                "command": "vscode-pets.toggle-dynamic-throw",
+                "title": "Toggle Dynamic Throwing",
+                "category": "Pet Coding",
+                "icon": {
+                    "dark": "media/icon/dark-circle-outline.svg",
+                    "light": "media/icon/light-circle-outline.svg"
+                }
+            },
+            {
                 "command": "vscode-pets.dynamic-throw-on",
-                "title": "Toggle Dynamic Throwing On",
+                "title": "Turn Dynamic Throwing On",
                 "category": "Pet Coding",
                 "icon": {
                     "dark": "media/icon/dark-circle-outline.svg",
@@ -90,7 +105,7 @@
             },
             {
                 "command": "vscode-pets.dynamic-throw-off",
-                "title": "Toggle Dynamic Throwing Off",
+                "title": "Turn Dynamic Throwing Off",
                 "category": "Pet Coding",
                 "icon": {
                     "dark": "media/icon/dark-circle-outline.svg",

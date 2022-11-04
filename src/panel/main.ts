@@ -341,7 +341,7 @@ export function petPanelApp(
         ballState = new BallState(100, 100, 4, 5);
     }
 
-    function toggleDynamicThrowOn() {
+    function dynamicThrowOn() {
         let startMouseX: number;
         let startMouseY: number;
         let endMouseX: number;
@@ -400,7 +400,7 @@ export function petPanelApp(
             };
         };
     }
-    function toggleDynamicThrowOff() {
+    function dynamicThrowOff() {
         window.onmousedown = null;
         if (ballState) {
             ballState.paused = true;
@@ -482,15 +482,25 @@ export function petPanelApp(
 
     initCanvas();
 
+    let dynamicThrowToggle = false;
     // Handle messages sent from the extension to the webview
     window.addEventListener('message', (event): void => {
         const message = event.data; // The json data that the extension sent
         switch (message.command) {
+            case 'toggle-dynamic-throw':
+                if (dynamicThrowToggle) {
+                    dynamicThrowOff();
+                    dynamicThrowToggle = false;
+                } else {
+                    dynamicThrowOn();
+                    dynamicThrowToggle = true;
+                }
+                break;
             case 'dynamic-throw-on':
-                toggleDynamicThrowOn();
+                dynamicThrowOn();
                 break;
             case 'dynamic-throw-off':
-                toggleDynamicThrowOff();
+                dynamicThrowOff();
                 break;
             case 'throw-ball':
                 resetBall();
