@@ -262,15 +262,15 @@ function recoverState(
 function randomStartPosition(): number {
     return Math.floor(Math.random() * (window.innerWidth * 0.7));
 }
-// function scale(
-//     value: number,
-//     oldMin: number,
-//     oldMax: number,
-//     newMin: number,
-//     newMax: number,
-// ): number {
-//     return ((value - oldMin) * (newMax - newMin)) / (oldMax - oldMin) + newMin;
-// }
+function scale(
+    value: number,
+    oldMin: number,
+    oldMax: number,
+    newMin: number,
+    newMax: number,
+): number {
+    return ((value - oldMin) * (newMax - newMin)) / (oldMax - oldMin) + newMin;
+}
 
 let canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D;
 
@@ -364,10 +364,15 @@ export function petPanelApp(
             }
             startMouseX = e.offsetX;
             startMouseY = e.offsetY;
-            // ballState = new BallState(startMouseX, startMouseY, 0, 0);
+            ballState = new BallState(endMouseX, endMouseY, 0, 0, true);
+
             window.onmousemove = (ev) => {
+                if (ballState) {
+                    ballState.paused = true;
+                }
                 endMouseX = ev.clientX;
                 endMouseY = ev.clientY;
+                ballState = new BallState(endMouseX, endMouseY, 0, 0, true);
             };
             window.onmouseup = (ev) => {
                 ev.preventDefault();
@@ -377,8 +382,21 @@ export function petPanelApp(
                 ballState = new BallState(
                     endMouseX,
                     endMouseY,
-                    endMouseX - startMouseX,
-                    endMouseY - startMouseY,
+                    scale(
+                        endMouseX - startMouseX,
+                        -ctx.canvas.width,
+                        ctx.canvas.width,
+                        -20,
+                        20,
+                    ),
+                    scale(
+                        endMouseY - startMouseY,
+                        -ctx.canvas.height,
+                        ctx.canvas.height,
+                        -20,
+                        20,
+                    ),
+                    false,
                 );
                 startMouseX = endMouseX;
                 startMouseY = endMouseY;
@@ -405,7 +423,6 @@ export function petPanelApp(
             requestAnimationFrame(throwBall);
         }
 
-        // throttling the frame rate
         const now = Date.now();
         const elapsed = now - then;
         if (elapsed <= interval) {
@@ -415,27 +432,31 @@ export function petPanelApp(
 
         ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-        if (ballState.cx + ballRadius >= canvas.width) {
-            ballState.vx = -ballState.vx * damping;
-            ballState.cx = canvas.width - ballRadius;
-        } else if (ballState.cx - ballRadius <= 0) {
-            ballState.vx = -ballState.vx * damping;
-            ballState.cx = ballRadius;
-        }
-        if (ballState.cy + ballRadius + floor >= canvas.height) {
-            ballState.vy = -ballState.vy * damping;
-            ballState.cy = canvas.height - ballRadius - floor;
-            // traction here
-            ballState.vx *= traction;
-        } else if (ballState.cy - ballRadius <= 0) {
-            ballState.vy = -ballState.vy * damping;
-            ballState.cy = ballRadius;
-        }
+        if (!ballState.inHand) {
+            // throttling the frame rate
 
-        ballState.vy += gravity;
+            if (ballState.cx + ballRadius >= canvas.width) {
+                ballState.vx = -ballState.vx * damping;
+                ballState.cx = canvas.width - ballRadius;
+            } else if (ballState.cx - ballRadius <= 0) {
+                ballState.vx = -ballState.vx * damping;
+                ballState.cx = ballRadius;
+            }
+            if (ballState.cy + ballRadius + floor >= canvas.height) {
+                ballState.vy = -ballState.vy * damping;
+                ballState.cy = canvas.height - ballRadius - floor;
+                // traction here
+                ballState.vx *= traction;
+            } else if (ballState.cy - ballRadius <= 0) {
+                ballState.vy = -ballState.vy * damping;
+                ballState.cy = ballRadius;
+            }
 
-        ballState.cx += ballState.vx;
-        ballState.cy += ballState.vy;
+            ballState.vy += gravity;
+
+            ballState.cx += ballState.vx;
+            ballState.cy += ballState.vy;
+        }
 
         ctx.beginPath();
         ctx.arc(ballState.cx, ballState.cy, ballRadius, 0, 2 * Math.PI, false);
