@@ -28,8 +28,8 @@
     "icon": "icon.png",
     "activationEvents": [
         "onCommand:vscode-pets.start",
-        "onCommand:vscode-pets.ball-in-hand",
-        "onCommand:vscode-pets.ball-out-of-hand",
+        "onCommand:vscode-pets.dynamic-throw-on",
+        "onCommand:vscode-pets.dynamic-throw-off",
         "onCommand:vscode-pets.throw-ball",
         "onCommand:vscode-pets.spawn-pet",
         "onCommand:vscode-pets.delete-pet",
@@ -80,8 +80,8 @@
                 "icon": "media/dog.svg"
             },
             {
-                "command": "vscode-pets.ball-in-hand",
-                "title": "Ball In Hand",
+                "command": "vscode-pets.dynamic-throw-on",
+                "title": "Toggle Dynamic Throwing On",
                 "category": "Pet Coding",
                 "icon": {
                     "dark": "media/icon/dark-circle-outline.svg",
@@ -89,8 +89,8 @@
                 }
             },
             {
-                "command": "vscode-pets.ball-out-of-hand",
-                "title": "Ball Out Of Hand",
+                "command": "vscode-pets.dynamic-throw-off",
+                "title": "Toggle Dynamic Throwing Off",
                 "category": "Pet Coding",
                 "icon": {
                     "dark": "media/icon/dark-circle-outline.svg",

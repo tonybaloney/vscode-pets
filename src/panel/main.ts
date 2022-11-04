@@ -262,15 +262,6 @@ function recoverState(
 function randomStartPosition(): number {
     return Math.floor(Math.random() * (window.innerWidth * 0.7));
 }
-function scale(
-    value: number,
-    oldMin: number,
-    oldMax: number,
-    newMin: number,
-    newMax: number,
-): number {
-    return ((value - oldMin) * (newMax - newMin)) / (oldMax - oldMin) + newMin;
-}
 
 let canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D;
 
@@ -362,17 +353,32 @@ export function petPanelApp(
             if (canvas) {
                 canvas.style.display = 'block';
             }
-            startMouseX = e.offsetX;
-            startMouseY = e.offsetY;
-            ballState = new BallState(endMouseX, endMouseY, 0, 0, true);
+            endMouseX = e.clientX;
+            endMouseY = e.clientY;
+            startMouseX = e.clientX;
+            startMouseY = e.clientY;
+            ballState = new BallState(e.clientX, e.clientY, 0, 0);
+
+            allPets.pets.forEach((petEl) => {
+                if (petEl.pet.canChase) {
+                    petEl.pet.chase(ballState, canvas);
+                }
+            });
+            ballState.paused = true;
+
+            drawBall();
 
             window.onmousemove = (ev) => {
+                ev.preventDefault();
                 if (ballState) {
                     ballState.paused = true;
                 }
+                startMouseX = endMouseX;
+                startMouseY = endMouseY;
                 endMouseX = ev.clientX;
                 endMouseY = ev.clientY;
-                ballState = new BallState(endMouseX, endMouseY, 0, 0, true);
+                ballState = new BallState(ev.clientX, ev.clientY, 0, 0);
+                drawBall();
             };
             window.onmouseup = (ev) => {
                 ev.preventDefault();
@@ -382,24 +388,9 @@ export function petPanelApp(
                 ballState = new BallState(
                     endMouseX,
                     endMouseY,
-                    scale(
-                        endMouseX - startMouseX,
-                        -ctx.canvas.width,
-                        ctx.canvas.width,
-                        -20,
-                        20,
-                    ),
-                    scale(
-                        endMouseY - startMouseY,
-                        -ctx.canvas.height,
-                        ctx.canvas.height,
-                        -20,
-                        20,
-                    ),
-                    false,
+                    endMouseX - startMouseX,
+                    endMouseY - startMouseY,
                 );
-                startMouseX = endMouseX;
-                startMouseY = endMouseY;
                 allPets.pets.forEach((petEl) => {
                     if (petEl.pet.canChase) {
                         petEl.pet.chase(ballState, canvas);
@@ -415,7 +406,7 @@ export function petPanelApp(
             ballState.paused = true;
         }
         if (canvas) {
-            canvas.style.display = 'block';
+            canvas.style.display = 'none';
         }
     }
     function throwBall() {
@@ -423,6 +414,7 @@ export function petPanelApp(
             requestAnimationFrame(throwBall);
         }
 
+        // throttling the frame rate
         const now = Date.now();
         const elapsed = now - then;
         if (elapsed <= interval) {
@@ -430,33 +422,32 @@ export function petPanelApp(
         }
         then = now - (elapsed % interval);
 
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-        if (!ballState.inHand) {
-            // throttling the frame rate
-
-            if (ballState.cx + ballRadius >= canvas.width) {
-                ballState.vx = -ballState.vx * damping;
-                ballState.cx = canvas.width - ballRadius;
-            } else if (ballState.cx - ballRadius <= 0) {
-                ballState.vx = -ballState.vx * damping;
-                ballState.cx = ballRadius;
-            }
-            if (ballState.cy + ballRadius + floor >= canvas.height) {
-                ballState.vy = -ballState.vy * damping;
-                ballState.cy = canvas.height - ballRadius - floor;
-                // traction here
-                ballState.vx *= traction;
-            } else if (ballState.cy - ballRadius <= 0) {
-                ballState.vy = -ballState.vy * damping;
-                ballState.cy = ballRadius;
-            }
-
-            ballState.vy += gravity;
-
-            ballState.cx += ballState.vx;
-            ballState.cy += ballState.vy;
+        if (ballState.cx + ballRadius >= canvas.width) {
+            ballState.vx = -ballState.vx * damping;
+            ballState.cx = canvas.width - ballRadius;
+        } else if (ballState.cx - ballRadius <= 0) {
+            ballState.vx = -ballState.vx * damping;
+            ballState.cx = ballRadius;
         }
+        if (ballState.cy + ballRadius + floor >= canvas.height) {
+            ballState.vy = -ballState.vy * damping;
+            ballState.cy = canvas.height - ballRadius - floor;
+            // traction here
+            ballState.vx *= traction;
+        } else if (ballState.cy - ballRadius <= 0) {
+            ballState.vy = -ballState.vy * damping;
+            ballState.cy = ballRadius;
+        }
+
+        ballState.vy += gravity;
+
+        ballState.cx += ballState.vx;
+        ballState.cy += ballState.vy;
+        drawBall();
+    }
+
+    function drawBall() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
 
         ctx.beginPath();
         ctx.arc(ballState.cx, ballState.cy, ballRadius, 0, 2 * Math.PI, false);
@@ -495,10 +486,10 @@ export function petPanelApp(
     window.addEventListener('message', (event): void => {
         const message = event.data; // The json data that the extension sent
         switch (message.command) {
-            case 'ball-in-hand':
+            case 'dynamic-throw-on':
                 toggleDynamicThrowOn();
                 break;
-            case 'ball-out-of-hand':
+            case 'dynamic-throw-off':
                 toggleDynamicThrowOff();
                 break;
             case 'throw-ball':

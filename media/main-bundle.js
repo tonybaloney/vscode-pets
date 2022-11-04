@@ -507,9 +507,6 @@ function recoverState(basePetUri, petSize, floor, stateApi) {
 function randomStartPosition() {
     return Math.floor(Math.random() * (window.innerWidth * 0.7));
 }
-function scale(value, oldMin, oldMax, newMin, newMax) {
-    return ((value - oldMin) * (newMax - newMin)) / (oldMax - oldMin) + newMin;
-}
 let canvas, ctx;
 function initCanvas() {
     canvas = document.getElementById('petCanvas');
@@ -583,24 +580,35 @@ function petPanelApp(basePetUri, theme, themeKind, petColor, petSize, petType, s
             if (canvas) {
                 canvas.style.display = 'block';
             }
-            startMouseX = e.offsetX;
-            startMouseY = e.offsetY;
-            ballState = new states_1.BallState(endMouseX, endMouseY, 0, 0, true);
+            endMouseX = e.clientX;
+            endMouseY = e.clientY;
+            startMouseX = e.clientX;
+            startMouseY = e.clientY;
+            ballState = new states_1.BallState(e.clientX, e.clientY, 0, 0);
+            exports.allPets.pets.forEach((petEl) => {
+                if (petEl.pet.canChase) {
+                    petEl.pet.chase(ballState, canvas);
+                }
+            });
+            ballState.paused = true;
+            drawBall();
             window.onmousemove = (ev) => {
+                ev.preventDefault();
                 if (ballState) {
                     ballState.paused = true;
                 }
+                startMouseX = endMouseX;
+                startMouseY = endMouseY;
                 endMouseX = ev.clientX;
                 endMouseY = ev.clientY;
-                ballState = new states_1.BallState(endMouseX, endMouseY, 0, 0, true);
+                ballState = new states_1.BallState(ev.clientX, ev.clientY, 0, 0);
+                drawBall();
             };
             window.onmouseup = (ev) => {
                 ev.preventDefault();
                 window.onmouseup = null;
                 window.onmousemove = null;
-                ballState = new states_1.BallState(endMouseX, endMouseY, scale(endMouseX - startMouseX, -ctx.canvas.width, ctx.canvas.width, -20, 20), scale(endMouseY - startMouseY, -ctx.canvas.height, ctx.canvas.height, -20, 20), false);
-                startMouseX = endMouseX;
-                startMouseY = endMouseY;
+                ballState = new states_1.BallState(endMouseX, endMouseY, endMouseX - startMouseX, endMouseY - startMouseY);
                 exports.allPets.pets.forEach((petEl) => {
                     if (petEl.pet.canChase) {
                         petEl.pet.chase(ballState, canvas);
@@ -616,44 +624,45 @@ function petPanelApp(basePetUri, theme, themeKind, petColor, petSize, petType, s
             ballState.paused = true;
         }
         if (canvas) {
-            canvas.style.display = 'block';
+            canvas.style.display = 'none';
         }
     }
     function throwBall() {
         if (!ballState.paused) {
             requestAnimationFrame(throwBall);
         }
+        // throttling the frame rate
         const now = Date.now();
         const elapsed = now - then;
         if (elapsed <= interval) {
             return;
         }
         then = now - (elapsed % interval);
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        if (!ballState.inHand) {
-            // throttling the frame rate
-            if (ballState.cx + ballRadius >= canvas.width) {
-                ballState.vx = -ballState.vx * damping;
-                ballState.cx = canvas.width - ballRadius;
-            }
-            else if (ballState.cx - ballRadius <= 0) {
-                ballState.vx = -ballState.vx * damping;
-                ballState.cx = ballRadius;
-            }
-            if (ballState.cy + ballRadius + floor >= canvas.height) {
-                ballState.vy = -ballState.vy * damping;
-                ballState.cy = canvas.height - ballRadius - floor;
-                // traction here
-                ballState.vx *= traction;
-            }
-            else if (ballState.cy - ballRadius <= 0) {
-                ballState.vy = -ballState.vy * damping;
-                ballState.cy = ballRadius;
-            }
-            ballState.vy += gravity;
-            ballState.cx += ballState.vx;
-            ballState.cy += ballState.vy;
+        if (ballState.cx + ballRadius >= canvas.width) {
+            ballState.vx = -ballState.vx * damping;
+            ballState.cx = canvas.width - ballRadius;
         }
+        else if (ballState.cx - ballRadius <= 0) {
+            ballState.vx = -ballState.vx * damping;
+            ballState.cx = ballRadius;
+        }
+        if (ballState.cy + ballRadius + floor >= canvas.height) {
+            ballState.vy = -ballState.vy * damping;
+            ballState.cy = canvas.height - ballRadius - floor;
+            // traction here
+            ballState.vx *= traction;
+        }
+        else if (ballState.cy - ballRadius <= 0) {
+            ballState.vy = -ballState.vy * damping;
+            ballState.cy = ballRadius;
+        }
+        ballState.vy += gravity;
+        ballState.cx += ballState.vx;
+        ballState.cy += ballState.vy;
+        drawBall();
+    }
+    function drawBall() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
         ctx.beginPath();
         ctx.arc(ballState.cx, ballState.cy, ballRadius, 0, 2 * Math.PI, false);
         ctx.fillStyle = '#2ed851';
@@ -677,10 +686,10 @@ function petPanelApp(basePetUri, theme, themeKind, petColor, petSize, petType, s
     window.addEventListener('message', (event) => {
         const message = event.data; // The json data that the extension sent
         switch (message.command) {
-            case 'ball-in-hand':
+            case 'dynamic-throw-on':
                 toggleDynamicThrowOn();
                 break;
-            case 'ball-out-of-hand':
+            case 'dynamic-throw-off':
                 toggleDynamicThrowOff();
                 break;
             case 'throw-ball':
@@ -2226,14 +2235,12 @@ class BallState {
     vx;
     vy;
     paused;
-    inHand;
-    constructor(cx, cy, vx, vy, inHand = false) {
+    constructor(cx, cy, vx, vy) {
         this.cx = cx;
         this.cy = cy;
         this.vx = vx;
         this.vy = vy;
         this.paused = false;
-        this.inHand = inHand;
     }
 }
 exports.BallState = BallState;
