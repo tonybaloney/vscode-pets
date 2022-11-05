@@ -13,7 +13,6 @@ import {
     ALL_SCALES,
     ALL_THEMES,
 } from '../common/types';
-import { allPets } from '../panel/main';
 import { randomName } from '../common/names';
 import * as localize from '../common/localize';
 import * as fs from 'fs';
