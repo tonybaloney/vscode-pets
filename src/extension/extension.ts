@@ -13,8 +13,10 @@ import {
     ALL_SCALES,
     ALL_THEMES,
 } from '../common/types';
+import { allPets } from '../panel/main';
 import { randomName } from '../common/names';
 import * as localize from '../common/localize';
+import * as fs from 'fs';
 
 const EXTRA_PETS_KEY = 'vscode-pets.extra-pets';
 const EXTRA_PETS_KEY_TYPES = EXTRA_PETS_KEY + '.types';
@@ -380,6 +382,91 @@ export function activate(context: vscode.ExtensionContext) {
                 createPetPlayground(context);
             }
         }),
+    );
+
+    context.subscriptions.push(
+        vscode.commands.registerCommand(
+            'vscode-pets.export-pet-list',
+            async () => {
+                const pets = PetSpecification.collectionFromMemento(
+                    context,
+                    getConfiguredSize(),
+                );
+                let petList = '';
+                for (let i = 0; i < pets.length; i++) {
+                    const pet = pets[i];
+                    petList += `Type: ${pet.type} Color: ${pet.color} Size: ${pet.size} \n`;
+                }
+
+                fs.writeFile(
+                    path.join(
+                        vscode.workspace.workspaceFolders![0].uri.fsPath,
+                        'vscodePets.txt',
+                    ),
+                    String(petList),
+                    (err) => {
+                        if (err) {
+                            vscode.window.showErrorMessage(err.message);
+                        }
+                    },
+                );
+            },
+        ),
+    );
+
+    context.subscriptions.push(
+        vscode.commands.registerCommand(
+            'vscode-pets.import-pet-list',
+            async () => {
+                // load the vscodePets.txt file
+                // parse the file
+                // add the pets to the collection
+                const petsToLoad = fs.readFileSync(
+                    path.join(
+                        vscode.workspace.workspaceFolders![0].uri.fsPath,
+                        'vscodePets.txt',
+                    ),
+                    'utf8',
+                );
+                // check if empty
+                if (petsToLoad.length === 0) {
+                    vscode.window.showErrorMessage(
+                        'File to load empty. Make sure you have a file called vscodePets.txt in your workspace',
+                    );
+                    return;
+                }
+                // load the pets into the collection
+                const collection = PetSpecification.collectionFromMemento(
+                    context,
+                    getConfiguredSize(),
+                );
+                // fetch just the pet types
+                const petTypes: any = petsToLoad.split('Type: ');
+                const petSize: any = petsToLoad.split('Size: ');
+                const petColor: any = petsToLoad.split('Color: ');
+                // remove the first element as it is empty
+                petTypes.shift();
+                // add the pets to the collection
+                for (let i = 0; i < petTypes.length; i++) {
+                    const petType: any = petTypes[i];
+                    const pet = new PetSpecification(
+                        petType,
+                        petTypes,
+                        petSize,
+                        petColor,
+                    );
+                    collection.push(pet);
+                }
+                // load the pets
+                const panel = getPetPanel();
+                if (panel !== undefined) {
+                    panel.listPets();
+                } else {
+                    createPetPlayground(context);
+                }
+                storeCollectionAsMemento(context, collection);
+            },
+        ),
     );
 
     context.subscriptions.push(
