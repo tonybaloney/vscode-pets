@@ -435,33 +435,27 @@ export function activate(context: vscode.ExtensionContext) {
                     return;
                 }
                 // load the pets into the collection
-                const collection = PetSpecification.collectionFromMemento(
+                var collection = PetSpecification.collectionFromMemento(
                     context,
                     getConfiguredSize(),
                 );
                 // fetch just the pet types
                 const petTypes: any = petsToLoad.split('Type: ');
-                const petSize: any = petsToLoad.split('Size: ');
-                const petColor: any = petsToLoad.split('Color: ');
-                // remove the first element as it is empty
-                petTypes.shift();
-                // add the pets to the collection
-                for (let i = 0; i < petTypes.length; i++) {
-                    const petType: any = petTypes[i];
-                    const pet = new PetSpecification(
-                        petType,
-                        petTypes,
-                        petSize,
-                        petColor,
-                    );
-                    collection.push(pet);
-                }
-                // load the pets
                 const panel = getPetPanel();
-                if (panel !== undefined) {
-                    panel.listPets();
-                } else {
-                    createPetPlayground(context);
+                for (let i = 1; i < petTypes.length; i++) {
+                    const pet = petTypes[i];
+                    const petType = pet.split(' ')[0];
+                    const petColor = pet.split('Color: ')[1].split(' ')[0];
+                    const petSize = pet.split('Size: ')[1].split(' ')[0];
+                    const petSpec = new PetSpecification(
+                        petColor,
+                        petType,
+                        petSize,
+                    );
+                    collection.push(petSpec);
+                    if (panel !== undefined) {
+                        panel.spawnPet(petSpec);
+                    }
                 }
                 storeCollectionAsMemento(context, collection);
             },
