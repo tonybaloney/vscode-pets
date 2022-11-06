@@ -399,6 +399,7 @@ export function activate(context: vscode.ExtensionContext) {
 
                 fs.writeFile(
                     path.join(
+                        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
                         vscode.workspace.workspaceFolders![0].uri.fsPath,
                         'vscodePets.txt',
                     ),
@@ -422,6 +423,7 @@ export function activate(context: vscode.ExtensionContext) {
                 // add the pets to the collection
                 const petsToLoad = fs.readFileSync(
                     path.join(
+                        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
                         vscode.workspace.workspaceFolders![0].uri.fsPath,
                         'vscodePets.txt',
                     ),
