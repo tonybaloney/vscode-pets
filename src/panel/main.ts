@@ -496,12 +496,6 @@ export function petPanelApp(
                     dynamicThrowToggle = true;
                 }
                 break;
-            case 'dynamic-throw-on':
-                dynamicThrowOn();
-                break;
-            case 'dynamic-throw-off':
-                dynamicThrowOff();
-                break;
             case 'throw-ball':
                 resetBall();
                 throwBall();
