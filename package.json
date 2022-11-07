@@ -88,8 +88,8 @@
                 "title": "Toggle Dynamic Throwing",
                 "category": "Pet Coding",
                 "icon": {
-                    "dark": "media/icon/dark-circle-outline.svg",
-                    "light": "media/icon/light-circle-outline.svg"
+                    "dark": "media/icon/dark-throw-outline.svg",
+                    "light": "media/icon/light-throw-outline.svg"
                 }
             },
             {
