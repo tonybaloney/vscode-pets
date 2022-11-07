@@ -15,7 +15,6 @@ import {
 } from '../common/types';
 import { randomName } from '../common/names';
 import * as localize from '../common/localize';
-import * as fs from 'fs';
 
 const EXTRA_PETS_KEY = 'vscode-pets.extra-pets';
 const EXTRA_PETS_KEY_TYPES = EXTRA_PETS_KEY + '.types';
@@ -397,18 +396,15 @@ export function activate(context: vscode.ExtensionContext) {
                     petList += `Type: ${pet.type} Color: ${pet.color} Size: ${pet.size} \n`;
                 }
 
-                fs.writeFile(
-                    path.join(
-                        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-                        vscode.workspace.workspaceFolders![0].uri.fsPath,
-                        'vscodePets.txt',
+                await vscode.workspace.fs.writeFile(
+                    vscode.Uri.file(
+                        path.join(
+                            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+                            vscode.workspace.workspaceFolders![0].uri.fsPath,
+                            'vscodePets.txt',
+                        ),
                     ),
-                    String(petList),
-                    (err) => {
-                        if (err) {
-                            vscode.window.showErrorMessage(err.message);
-                        }
-                    },
+                    Buffer.from(petList),
                 );
             },
         ),
@@ -418,17 +414,17 @@ export function activate(context: vscode.ExtensionContext) {
         vscode.commands.registerCommand(
             'vscode-pets.import-pet-list',
             async () => {
-                // load the vscodePets.txt file
-                // parse the file
-                // add the pets to the collection
-                const petsToLoad = fs.readFileSync(
-                    path.join(
-                        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-                        vscode.workspace.workspaceFolders![0].uri.fsPath,
-                        'vscodePets.txt',
-                    ),
-                    'utf8',
-                );
+                const petsToLoad: Uint8Array =
+                    await vscode.workspace.fs.readFile(
+                        vscode.Uri.file(
+                            path.join(
+                                // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+                                vscode.workspace.workspaceFolders![0].uri
+                                    .fsPath,
+                                'vscodePets.txt',
+                            ),
+                        ),
+                    );
                 // check if empty
                 if (petsToLoad.length === 0) {
                     vscode.window.showErrorMessage(
@@ -442,7 +438,7 @@ export function activate(context: vscode.ExtensionContext) {
                     getConfiguredSize(),
                 );
                 // fetch just the pet types
-                const petTypes: any = petsToLoad.split('Type: ');
+                const petTypes: any = petsToLoad.toString().split('Type: ');
                 const panel = getPetPanel();
                 for (let i = 1; i < petTypes.length; i++) {
                     const pet = petTypes[i];

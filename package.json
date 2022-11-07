@@ -242,7 +242,6 @@
         "webpack-cli": "^4.10.0"
     },
     "dependencies": {
-        "fs": "^0.0.1-security",
         "vscode-nls-i18n": "^0.2.4"
     }
 }
