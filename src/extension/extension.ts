@@ -360,24 +360,6 @@ export function activate(context: vscode.ExtensionContext) {
     );
 
     context.subscriptions.push(
-        vscode.commands.registerCommand('vscode-pets.dynamic-throw-on', () => {
-            const panel = getPetPanel();
-            if (panel !== undefined) {
-                panel.dynamicThrowOn();
-            }
-        }),
-    );
-
-    context.subscriptions.push(
-        vscode.commands.registerCommand('vscode-pets.dynamic-throw-off', () => {
-            const panel = getPetPanel();
-            if (panel !== undefined) {
-                panel.dynamicThrowOff();
-            }
-        }),
-    );
-
-    context.subscriptions.push(
         vscode.commands.registerCommand('vscode-pets.throw-ball', () => {
             const panel = getPetPanel();
             if (panel !== undefined) {
@@ -711,8 +693,6 @@ function normalizeColor(petColor: PetColor, petType: PetType): PetColor {
 
 interface IPetPanel {
     toggleDynamicThrow(): void;
-    dynamicThrowOn(): void;
-    dynamicThrowOff(): void;
     throwBall(): void;
     resetPets(): void;
     spawnPet(spec: PetSpecification): void;
@@ -795,18 +775,6 @@ class PetWebviewContainer implements IPetPanel {
     public toggleDynamicThrow(): void {
         this.getWebview().postMessage({
             command: 'toggle-dynamic-throw',
-        });
-    }
-
-    public dynamicThrowOn(): void {
-        this.getWebview().postMessage({
-            command: 'dynamic-throw-on',
-        });
-    }
-
-    public dynamicThrowOff(): void {
-        this.getWebview().postMessage({
-            command: 'dynamic-throw-off',
         });
     }
 
