@@ -65,14 +65,9 @@
                     "group": "navigation@2"
                 },
                 {
-                    "command": "vscode-pets.toggle-dynamic-throw",
-                    "when": "view == petsView",
-                    "group": "navigation@3"
-                },
-                {
                     "command": "vscode-pets.delete-pet",
                     "when": "view == petsView",
-                    "group": "navigation@4"
+                    "group": "navigation@3"
                 }
             ]
         },
