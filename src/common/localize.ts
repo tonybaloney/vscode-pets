@@ -1,6 +1,5 @@
 import * as vscode from 'vscode';
 
-
 export class TranslatedQuickPickItem<T> implements vscode.QuickPickItem {
     label: string;
     value: T;
