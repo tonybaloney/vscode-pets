@@ -224,9 +224,7 @@ async function handleRemovePetMessage(
                 return new PetQuickPickItem(val.name, val.type, val.color);
             }),
             {
-                placeHolder: vscode.l10n.t(
-                    'Select the pet to remove.',
-                ),
+                placeHolder: vscode.l10n.t('Select the pet to remove.'),
             },
         )
         .then((pet: PetQuickPickItem | undefined) => {
@@ -402,9 +400,7 @@ export function activate(context: vscode.ExtensionContext) {
                 const selectedPetType = await vscode.window.showQuickPick(
                     localize.stringListAsQuickPickItemList<PetType>(ALL_PETS),
                     {
-                        placeHolder: vscode.l10n.t(
-                            'Select a pet',
-                        ),
+                        placeHolder: vscode.l10n.t('Select a pet'),
                     },
                 );
                 if (selectedPetType === undefined) {
@@ -434,9 +430,7 @@ export function activate(context: vscode.ExtensionContext) {
                                 choices,
                             ),
                             {
-                                placeHolder: vscode.l10n.t(
-                                    'Select a color',
-                                ),
+                                placeHolder: vscode.l10n.t('Select a color'),
                             },
                         );
                         if (selectedColor === undefined) {
@@ -456,9 +450,7 @@ export function activate(context: vscode.ExtensionContext) {
                                 choices,
                             ),
                             {
-                                placeHolder: vscode.l10n.t(
-                                    'Select a color',
-                                ),
+                                placeHolder: vscode.l10n.t('Select a color'),
                             },
                         );
                         if (selectedColor === undefined) {
@@ -478,9 +470,7 @@ export function activate(context: vscode.ExtensionContext) {
                                 choices,
                             ),
                             {
-                                placeHolder: vscode.l10n.t(
-                                    'Select a color',
-                                ),
+                                placeHolder: vscode.l10n.t('Select a color'),
                             },
                         );
                         if (selectedColor === undefined) {
@@ -507,9 +497,7 @@ export function activate(context: vscode.ExtensionContext) {
                 }
 
                 const name = await vscode.window.showInputBox({
-                    placeHolder: vscode.l10n.t(
-                        'Leave blank for a random name',
-                    ),
+                    placeHolder: vscode.l10n.t('Leave blank for a random name'),
                     prompt: vscode.l10n.t('Name your pet'),
                     value: randomName(selectedPetType.value),
                 });
@@ -521,9 +509,7 @@ export function activate(context: vscode.ExtensionContext) {
                 );
                 if (!spec.type || !spec.color || !spec.size) {
                     return vscode.window.showWarningMessage(
-                        vscode.l10n.t(
-                            'Cancelled Spawning Pet',
-                        ),
+                        vscode.l10n.t('Cancelled Spawning Pet'),
                     );
                 } else if (spec) {
                     panel.spawnPet(spec);
@@ -1121,8 +1107,10 @@ class PetWebviewViewProvider extends PetWebviewContainer {
 
     getWebview(): vscode.Webview {
         if (this._webviewView === undefined) {
-            throw new Error(vscode.l10n.t(
-                'Panel not active, make sure the pets view is visible before running this command.'),
+            throw new Error(
+                vscode.l10n.t(
+                    'Panel not active, make sure the pets view is visible before running this command.',
+                ),
             );
         } else {
             return this._webviewView.webview;
