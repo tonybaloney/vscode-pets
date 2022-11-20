@@ -288,6 +288,7 @@ export function petPanelApp(
     petColor: PetColor,
     petSize: PetSize,
     petType: PetType,
+    throwBallWithMouse: boolean,
     stateApi?: VscodeStateApi,
 ) {
     const ballRadius: number = calculateBallRadius(petSize);
@@ -346,6 +347,7 @@ export function petPanelApp(
         let startMouseY: number;
         let endMouseX: number;
         let endMouseY: number;
+        console.log('Enabling dynamic throw');
         window.onmousedown = (e) => {
             if (ballState) {
                 ballState.paused = true;
@@ -401,6 +403,7 @@ export function petPanelApp(
         };
     }
     function dynamicThrowOff() {
+        console.log('Disabling dynamic throw');
         window.onmousedown = null;
         if (ballState) {
             ballState.paused = true;
@@ -455,7 +458,14 @@ export function petPanelApp(
         ctx.fill();
     }
 
-    console.log('Starting pet session', petColor, basePetUri, petType);
+    console.log(
+        'Starting pet session',
+        petColor,
+        basePetUri,
+        petType,
+        throwBallWithMouse,
+    );
+
     // New session
     var state = stateApi?.getState();
     if (!state) {
@@ -482,18 +492,21 @@ export function petPanelApp(
 
     initCanvas();
 
-    let dynamicThrowToggle = false;
+    if (throwBallWithMouse) {
+        dynamicThrowOn();
+    } else {
+        dynamicThrowOff();
+    }
+
     // Handle messages sent from the extension to the webview
     window.addEventListener('message', (event): void => {
         const message = event.data; // The json data that the extension sent
         switch (message.command) {
             case 'throw-with-mouse':
-                if (dynamicThrowToggle) {
-                    dynamicThrowOff();
-                    dynamicThrowToggle = false;
-                } else {
+                if (message.enabled) {
                     dynamicThrowOn();
-                    dynamicThrowToggle = true;
+                } else {
+                    dynamicThrowOff();
                 }
                 break;
             case 'throw-ball':
