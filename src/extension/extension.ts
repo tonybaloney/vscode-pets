@@ -913,7 +913,7 @@ class PetWebviewContainer implements IPetPanel {
 				<div id="petsContainer"></div>
 				<div id="foreground"></div>	
 				<script nonce="${nonce}" src="${scriptUri}"></script>
-				<script nonce="${nonce}">petApp.petPanelApp("${basePetUri}", "${this.theme()}", ${this.themeKind()}, "${this.petColor()}", "${this.petSize()}", "${this.petType()}", ${this.throwBallWithMouse});</script>
+				<script nonce="${nonce}">petApp.petPanelApp("${basePetUri}", "${this.theme()}", ${this.themeKind()}, "${this.petColor()}", "${this.petSize()}", "${this.petType()}", ${this.throwBallWithMouse()});</script>
 			</body>
 			</html>`;
     }
@@ -1045,7 +1045,16 @@ class PetPanel extends PetWebviewContainer implements IPetPanel {
         themeKind: ColorThemeKind,
         throwBallWithMouse: boolean,
     ) {
-        super(extensionUri, extensionPath, color, type, size, theme, themeKind, throwBallWithMouse);
+        super(
+            extensionUri,
+            extensionPath,
+            color,
+            type,
+            size,
+            theme,
+            themeKind,
+            throwBallWithMouse,
+        );
 
         this._panel = panel;
 

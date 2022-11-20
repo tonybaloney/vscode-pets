@@ -347,6 +347,7 @@ export function petPanelApp(
         let startMouseY: number;
         let endMouseX: number;
         let endMouseY: number;
+        console.log('Enabling dynamic throw');
         window.onmousedown = (e) => {
             if (ballState) {
                 ballState.paused = true;
@@ -402,6 +403,7 @@ export function petPanelApp(
         };
     }
     function dynamicThrowOff() {
+        console.log('Disabling dynamic throw');
         window.onmousedown = null;
         if (ballState) {
             ballState.paused = true;
@@ -456,7 +458,14 @@ export function petPanelApp(
         ctx.fill();
     }
 
-    console.log('Starting pet session', petColor, basePetUri, petType);
+    console.log(
+        'Starting pet session',
+        petColor,
+        basePetUri,
+        petType,
+        throwBallWithMouse,
+    );
+
     // New session
     var state = stateApi?.getState();
     if (!state) {
@@ -483,15 +492,21 @@ export function petPanelApp(
 
     initCanvas();
 
+    if (throwBallWithMouse) {
+        dynamicThrowOn();
+    } else {
+        dynamicThrowOff();
+    }
+
     // Handle messages sent from the extension to the webview
     window.addEventListener('message', (event): void => {
         const message = event.data; // The json data that the extension sent
         switch (message.command) {
             case 'throw-with-mouse':
                 if (message.enabled) {
-                    dynamicThrowOff();
-                } else {
                     dynamicThrowOn();
+                } else {
+                    dynamicThrowOff();
                 }
                 break;
             case 'throw-ball':
