@@ -348,15 +348,12 @@ export function activate(context: vscode.ExtensionContext) {
     );
 
     context.subscriptions.push(
-        vscode.commands.registerCommand(
-            'vscode-pets.toggle-dynamic-throw',
-            () => {
-                const panel = getPetPanel();
-                if (panel !== undefined) {
-                    panel.toggleDynamicThrow();
-                }
-            },
-        ),
+        vscode.commands.registerCommand('vscode-pets.throw-with-mouse', () => {
+            const panel = getPetPanel();
+            if (panel !== undefined) {
+                panel.toggleDynamicThrow();
+            }
+        }),
     );
 
     context.subscriptions.push(
@@ -774,7 +771,7 @@ class PetWebviewContainer implements IPetPanel {
 
     public toggleDynamicThrow(): void {
         this.getWebview().postMessage({
-            command: 'toggle-dynamic-throw',
+            command: 'throw-with-mouse',
         });
     }
 
