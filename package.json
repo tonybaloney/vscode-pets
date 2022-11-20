@@ -28,7 +28,7 @@
     "icon": "icon.png",
     "activationEvents": [
         "onCommand:vscode-pets.start",
-        "onCommand:vscode-pets.toggle-dynamic-throw",
+        "onCommand:vscode-pets.throw-with-mouse",
         "onCommand:vscode-pets.throw-ball",
         "onCommand:vscode-pets.spawn-pet",
         "onCommand:vscode-pets.delete-pet",
@@ -79,8 +79,8 @@
                 "icon": "media/dog.svg"
             },
             {
-                "command": "vscode-pets.toggle-dynamic-throw",
-                "title": "Toggle Dynamic Throwing",
+                "command": "vscode-pets.throw-with-mouse",
+                "title": "Throw ball with mouse",
                 "category": "Pet Coding",
                 "icon": {
                     "dark": "media/icon/dark-throw-outline.svg",

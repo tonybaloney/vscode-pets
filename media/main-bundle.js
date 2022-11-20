@@ -687,7 +687,7 @@ function petPanelApp(basePetUri, theme, themeKind, petColor, petSize, petType, s
     window.addEventListener('message', (event) => {
         const message = event.data; // The json data that the extension sent
         switch (message.command) {
-            case 'toggle-dynamic-throw':
+            case 'throw-with-mouse':
                 if (dynamicThrowToggle) {
                     dynamicThrowOff();
                     dynamicThrowToggle = false;
