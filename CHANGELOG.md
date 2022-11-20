@@ -2,6 +2,66 @@
 
 All notable changes to the "vscode-pets" extension will be documented in this file.
 
+## [1.18.0]
+
+* Fixed cats sizes when ball caught by @gulyapulya in https://github.com/tonybaloney/vscode-pets/pull/313
+* Added pet interaction, Dynamic throwing! by @Luke-G-Cordova in https://github.com/tonybaloney/vscode-pets/pull/307 and https://github.com/tonybaloney/vscode-pets/pull/314
+
+## [1.17.2]
+
+* Readme Update  by @AnderMendoza in https://github.com/tonybaloney/vscode-pets/pull/305
+* Fix Mod Catching Ball Bug by @Harry-Hopkinson in https://github.com/tonybaloney/vscode-pets/pull/310
+
+## [1.17.1]
+
+* Change default position by @tonybaloney in https://github.com/tonybaloney/vscode-pets/pull/303
+* Add docs site by @tonybaloney in https://github.com/tonybaloney/vscode-pets/pull/301
+
+## [1.17.0]
+
+## New pets
+
+* Add Mod the dotnet bot
+
+## Other updates
+
+* Add Mod and refactor to smaller files by @marcduiker in https://github.com/tonybaloney/vscode-pets/pull/296
+* Fixes rethrow bug where pets won't chase the second ball and original chase isn't cancelled.  by @tonybaloney in https://github.com/tonybaloney/vscode-pets/pull/298
+* Reset previous ball on rethrow by @tonybaloney in https://github.com/tonybaloney/vscode-pets/pull/300
+* Fix brown cat ratio for run and change spritesheet by @tonybaloney in https://github.com/tonybaloney/vscode-pets/pull/299
+
+## [1.16.0]
+
+## Major updates
+
+* Add Romanian translation by @andrewdoro in https://github.com/tonybaloney/vscode-pets/pull/258
+* Add Korean translation by @3-24 in https://github.com/tonybaloney/vscode-pets/pull/259
+* Add Polish translation by @wooojek in https://github.com/tonybaloney/vscode-pets/pull/262
+* Add Hindi translation by @devXprite in https://github.com/tonybaloney/vscode-pets/pull/253
+* Improve Japanese translation by @dafujii in https://github.com/tonybaloney/vscode-pets/pull/271
+* adding white cat option by @Dpschu2 in https://github.com/tonybaloney/vscode-pets/pull/294
+* Translate the basic strings to Italian by @Francesca-Belfiore in https://github.com/tonybaloney/vscode-pets/pull/268
+* Add Chinese Translation by @ashishkashyap31 in https://github.com/tonybaloney/vscode-pets/pull/266
+* Make extension compatible with other ecosystems by using the generic state API by @xoriath in https://github.com/tonybaloney/vscode-pets/pull/275
+* Add russian translation by @Romanok2805 in https://github.com/tonybaloney/vscode-pets/pull/278
+
+## Other updates
+
+* add pet names by @paco9595 in https://github.com/tonybaloney/vscode-pets/pull/248
+* feat: improve readability of readme documentation by @kev-odin in https://github.com/tonybaloney/vscode-pets/pull/265
+** Reduce code duplication on createPet function by @Technickel-Dev in https://github.com/tonybaloney/vscode-pets/pull/270
+* docs: add png for settings and fixed typos by @kev-odin in https://github.com/tonybaloney/vscode-pets/pull/269
+* Add my cats'names by @Danilo-Mannucci in https://github.com/tonybaloney/vscode-pets/pull/273
+* Update names.ts by @Atharvasaraiya in https://github.com/tonybaloney/vscode-pets/pull/263
+* Enforce unique, sequential ID for pet names by @ccjmne in https://github.com/tonybaloney/vscode-pets/pull/279
+* Add new duck names by @KComrade53 in https://github.com/tonybaloney/vscode-pets/pull/284
+* Change PetCollection.pets to be a getter by @KComrade53 in https://github.com/tonybaloney/vscode-pets/pull/285
+* Change relevant pet fields to getters by @KComrade53 in https://github.com/tonybaloney/vscode-pets/pull/286
+* Added new pet names by @ShabanaNaik in https://github.com/tonybaloney/vscode-pets/pull/287
+* Add pet names by @9112Michael in https://github.com/tonybaloney/vscode-pets/pull/289
+* Avoid `*` activating extension by @joyceerhl in https://github.com/tonybaloney/vscode-pets/pull/290
+* Updated name.ts by @simransia in https://github.com/tonybaloney/vscode-pets/pull/293
+
 ## [1.15.1]
 
 * Fixed bug in missing package in the bundled VSIX causing the extension not to activate.

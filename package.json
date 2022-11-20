@@ -2,15 +2,17 @@
     "name": "vscode-pets",
     "displayName": "vscode-pets",
     "description": "Pets for your VS Code",
-    "version": "1.15.1",
+    "version": "1.19.0",
     "engines": {
-        "vscode": "^1.72.0"
+        "vscode": "^1.73.0"
     },
     "l10n": "./l10n",
     "repository": {
         "type": "github",
         "url": "https://github.com/tonybaloney/vscode-pets"
     },
+    "homepage": "https://tonybaloney.github.io/vscode-pets",
+    "bugs": "https://github.com/tonybaloney/vscode-pets/issues",
     "publisher": "tonybaloney",
     "categories": [
         "Other"
@@ -27,6 +29,7 @@
     "icon": "icon.png",
     "activationEvents": [
         "onCommand:vscode-pets.start",
+        "onCommand:vscode-pets.throw-with-mouse",
         "onCommand:vscode-pets.throw-ball",
         "onCommand:vscode-pets.spawn-pet",
         "onCommand:vscode-pets.delete-pet",
@@ -76,6 +79,15 @@
                 "title": "Start pet coding session",
                 "category": "Pet Coding",
                 "icon": "media/dog.svg"
+            },
+            {
+                "command": "vscode-pets.throw-with-mouse",
+                "title": "Throw ball with mouse",
+                "category": "Pet Coding",
+                "icon": {
+                    "dark": "media/icon/dark-throw-outline.svg",
+                    "light": "media/icon/light-throw-outline.svg"
+                }
             },
             {
                 "command": "vscode-pets.throw-ball",
@@ -130,6 +142,7 @@
                             "green",
                             "yellow",
                             "gray",
+                            "purple",
                             "red",
                             "white"
                         ],
@@ -145,6 +158,7 @@
                             "clippy",
                             "cockatiel",
                             "dog",
+                            "mod",
                             "rocky",
                             "rubber-duck",
                             "snake",
@@ -171,7 +185,7 @@
                             "panel",
                             "explorer"
                         ],
-                        "default": "panel",
+                        "default": "explorer",
                         "description": "VSCode pets webview position"
                     },
                     "vscode-pets.theme": {
@@ -184,6 +198,11 @@
                         ],
                         "default": "none",
                         "description": "Background theme assets for your pets"
+                    },
+                    "vscode-pets.throwBallWithMouse": {
+                        "type": "boolean",
+                        "default": false,
+                        "description": "Throw ball with mouse"
                     }
                 }
             }
@@ -211,10 +230,10 @@
         "@types/jsdom": "^20.0.0",
         "@types/mocha": "^9.1.1",
         "@types/node": "^18.0.0",
-        "@types/vscode": "^1.72.0",
+        "@types/vscode": "^1.73.0",
         "@typescript-eslint/eslint-plugin": "^5.29.0",
         "@typescript-eslint/parser": "^5.29.0",
-        "@vscode/l10n-dev": "^0.0.16",
+        "@vscode/l10n-dev": "^0.0.19",
         "@vscode/test-web": "^0.0.31",
         "eslint": "^8.18.0",
         "eslint-plugin-unused-imports": "^2.0.0",
@@ -235,6 +254,6 @@
         "webpack-cli": "^4.10.0"
     },
     "dependencies": {
-        "@vscode/l10n": "^0.0.5"
+        "@vscode/l10n": "^0.0.10"
     }
 }
