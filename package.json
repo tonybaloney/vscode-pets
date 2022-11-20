@@ -28,6 +28,7 @@
     "icon": "icon.png",
     "activationEvents": [
         "onCommand:vscode-pets.start",
+        "onCommand:vscode-pets.throw-with-mouse",
         "onCommand:vscode-pets.throw-ball",
         "onCommand:vscode-pets.spawn-pet",
         "onCommand:vscode-pets.delete-pet",
@@ -76,6 +77,15 @@
                 "title": "Start pet coding session",
                 "category": "Pet Coding",
                 "icon": "media/dog.svg"
+            },
+            {
+                "command": "vscode-pets.throw-with-mouse",
+                "title": "Throw ball with mouse",
+                "category": "Pet Coding",
+                "icon": {
+                    "dark": "media/icon/dark-throw-outline.svg",
+                    "light": "media/icon/light-throw-outline.svg"
+                }
             },
             {
                 "command": "vscode-pets.throw-ball",
