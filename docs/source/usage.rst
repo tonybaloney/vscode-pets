@@ -78,7 +78,10 @@ You can also use the "Throw ball" command (`vscode-pets.throw-ball`).
 
 * Rocky will not run & catch a ball. Have you ever seen a rock run after a ball? Neither have we.
 
-.. image:: _static/screenshot-4.gif
+Want to challenge your pets to a harder game of fetch? Enable the "Throw ball with mouse" (`vscode-pets.throwBallWithMouse`) option in the settings. 
+Then use the mouse to click and throw the ball:
+
+.. image:: _static/throw-ball-with-mouse.gif
 
 Roll-call with your pets
 ------------------------

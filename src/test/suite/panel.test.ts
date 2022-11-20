@@ -131,6 +131,7 @@ suite('Pets Test Suite', () => {
                     PetColor.black,
                     PetSize.large,
                     petType,
+                    false,
                     mockState,
                 );
 
@@ -176,6 +177,7 @@ suite('Pets Test Suite', () => {
             PetColor.black,
             PetSize.large,
             PetType.cat,
+            false,
             mockState,
         );
 
@@ -197,6 +199,7 @@ suite('Pets Test Suite', () => {
             PetColor.black,
             PetSize.large,
             PetType.cat,
+            false,
             mockState,
         );
 

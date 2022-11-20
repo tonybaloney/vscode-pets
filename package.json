@@ -196,6 +196,11 @@
                         ],
                         "default": "none",
                         "description": "Background theme assets for your pets"
+                    },
+                    "vscode-pets.throwBallWithMouse": {
+                        "type": "boolean",
+                        "default": false,
+                        "description": "Throw ball with mouse"
                     }
                 }
             }

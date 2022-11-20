@@ -523,7 +523,7 @@ function initCanvas() {
     ctx.canvas.height = window.innerHeight;
 }
 // It cannot access the main VS Code APIs directly.
-function petPanelApp(basePetUri, theme, themeKind, petColor, petSize, petType, stateApi) {
+function petPanelApp(basePetUri, theme, themeKind, petColor, petSize, petType, throwBallWithMouse, stateApi) {
     const ballRadius = calculateBallRadius(petSize);
     var floor = 0;
     if (!stateApi) {
@@ -573,6 +573,7 @@ function petPanelApp(basePetUri, theme, themeKind, petColor, petSize, petType, s
         let startMouseY;
         let endMouseX;
         let endMouseY;
+        console.log('Enabling dynamic throw');
         window.onmousedown = (e) => {
             if (ballState) {
                 ballState.paused = true;
@@ -619,6 +620,7 @@ function petPanelApp(basePetUri, theme, themeKind, petColor, petSize, petType, s
         };
     }
     function dynamicThrowOff() {
+        console.log('Disabling dynamic throw');
         window.onmousedown = null;
         if (ballState) {
             ballState.paused = true;
@@ -668,7 +670,7 @@ function petPanelApp(basePetUri, theme, themeKind, petColor, petSize, petType, s
         ctx.fillStyle = '#2ed851';
         ctx.fill();
     }
-    console.log('Starting pet session', petColor, basePetUri, petType);
+    console.log('Starting pet session', petColor, basePetUri, petType, throwBallWithMouse);
     // New session
     var state = stateApi?.getState();
     if (!state) {
@@ -682,19 +684,22 @@ function petPanelApp(basePetUri, theme, themeKind, petColor, petSize, petType, s
         recoverState(basePetUri, petSize, floor, stateApi);
     }
     initCanvas();
-    let dynamicThrowToggle = false;
+    if (throwBallWithMouse) {
+        dynamicThrowOn();
+    }
+    else {
+        dynamicThrowOff();
+    }
     // Handle messages sent from the extension to the webview
     window.addEventListener('message', (event) => {
         const message = event.data; // The json data that the extension sent
         switch (message.command) {
             case 'throw-with-mouse':
-                if (dynamicThrowToggle) {
-                    dynamicThrowOff();
-                    dynamicThrowToggle = false;
+                if (message.enabled) {
+                    dynamicThrowOn();
                 }
                 else {
-                    dynamicThrowOn();
-                    dynamicThrowToggle = true;
+                    dynamicThrowOff();
                 }
                 break;
             case 'throw-ball':
