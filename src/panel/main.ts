@@ -341,6 +341,74 @@ export function petPanelApp(
         ballState = new BallState(100, 100, 4, 5);
     }
 
+    function dynamicThrowOn() {
+        let startMouseX: number;
+        let startMouseY: number;
+        let endMouseX: number;
+        let endMouseY: number;
+        window.onmousedown = (e) => {
+            if (ballState) {
+                ballState.paused = true;
+            }
+            if (canvas) {
+                canvas.style.display = 'block';
+            }
+            endMouseX = e.clientX;
+            endMouseY = e.clientY;
+            startMouseX = e.clientX;
+            startMouseY = e.clientY;
+            ballState = new BallState(e.clientX, e.clientY, 0, 0);
+
+            allPets.pets.forEach((petEl) => {
+                if (petEl.pet.canChase) {
+                    petEl.pet.chase(ballState, canvas);
+                }
+            });
+            ballState.paused = true;
+
+            drawBall();
+
+            window.onmousemove = (ev) => {
+                ev.preventDefault();
+                if (ballState) {
+                    ballState.paused = true;
+                }
+                startMouseX = endMouseX;
+                startMouseY = endMouseY;
+                endMouseX = ev.clientX;
+                endMouseY = ev.clientY;
+                ballState = new BallState(ev.clientX, ev.clientY, 0, 0);
+                drawBall();
+            };
+            window.onmouseup = (ev) => {
+                ev.preventDefault();
+                window.onmouseup = null;
+                window.onmousemove = null;
+
+                ballState = new BallState(
+                    endMouseX,
+                    endMouseY,
+                    endMouseX - startMouseX,
+                    endMouseY - startMouseY,
+                );
+                allPets.pets.forEach((petEl) => {
+                    if (petEl.pet.canChase) {
+                        petEl.pet.chase(ballState, canvas);
+                    }
+                });
+                throwBall();
+            };
+        };
+    }
+    function dynamicThrowOff() {
+        window.onmousedown = null;
+        if (ballState) {
+            ballState.paused = true;
+        }
+        if (canvas) {
+            canvas.style.display = 'none';
+        }
+    }
     function throwBall() {
         if (!ballState.paused) {
             requestAnimationFrame(throwBall);
@@ -353,8 +421,6 @@ export function petPanelApp(
             return;
         }
         then = now - (elapsed % interval);
-
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
 
         if (ballState.cx + ballRadius >= canvas.width) {
             ballState.vx = -ballState.vx * damping;
@@ -377,6 +443,11 @@ export function petPanelApp(
 
         ballState.cx += ballState.vx;
         ballState.cy += ballState.vy;
+        drawBall();
+    }
+
+    function drawBall() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
 
         ctx.beginPath();
         ctx.arc(ballState.cx, ballState.cy, ballRadius, 0, 2 * Math.PI, false);
@@ -411,10 +482,20 @@ export function petPanelApp(
 
     initCanvas();
 
+    let dynamicThrowToggle = false;
     // Handle messages sent from the extension to the webview
     window.addEventListener('message', (event): void => {
         const message = event.data; // The json data that the extension sent
         switch (message.command) {
+            case 'throw-with-mouse':
+                if (dynamicThrowToggle) {
+                    dynamicThrowOff();
+                    dynamicThrowToggle = false;
+                } else {
+                    dynamicThrowOn();
+                    dynamicThrowToggle = true;
+                }
+                break;
             case 'throw-ball':
                 resetBall();
                 throwBall();
