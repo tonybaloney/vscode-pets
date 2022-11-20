@@ -67,6 +67,7 @@ class MockState implements VscodeStateApi {
 mockPanelWindow();
 
 import * as panel from '../../panel/main';
+import { Cat } from '../../panel/pets/cat';
 
 suite('Pets Test Suite', () => {
     vscode.window.showInformationMessage('Start all tests.');
@@ -92,7 +93,7 @@ suite('Pets Test Suite', () => {
             0,
             'Jerry',
         );
-        assert.ok(testPet instanceof pets.Cat);
+        assert.ok(testPet instanceof Cat);
         assert.equal(testPet.emoji, '🐱');
         assert.equal(testPet.name, 'Jerry');
 
@@ -130,6 +131,7 @@ suite('Pets Test Suite', () => {
                     PetColor.black,
                     PetSize.large,
                     petType,
+                    false,
                     mockState,
                 );
 
@@ -175,6 +177,7 @@ suite('Pets Test Suite', () => {
             PetColor.black,
             PetSize.large,
             PetType.cat,
+            false,
             mockState,
         );
 
@@ -196,6 +199,7 @@ suite('Pets Test Suite', () => {
             PetColor.black,
             PetSize.large,
             PetType.cat,
+            false,
             mockState,
         );
 
