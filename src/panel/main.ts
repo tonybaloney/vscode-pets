@@ -288,6 +288,7 @@ export function petPanelApp(
     petColor: PetColor,
     petSize: PetSize,
     petType: PetType,
+    throwBallWithMouse: boolean,
     stateApi?: VscodeStateApi,
 ) {
     const ballRadius: number = calculateBallRadius(petSize);
@@ -482,18 +483,15 @@ export function petPanelApp(
 
     initCanvas();
 
-    let dynamicThrowToggle = false;
     // Handle messages sent from the extension to the webview
     window.addEventListener('message', (event): void => {
         const message = event.data; // The json data that the extension sent
         switch (message.command) {
             case 'throw-with-mouse':
-                if (dynamicThrowToggle) {
+                if (message.enabled) {
                     dynamicThrowOff();
-                    dynamicThrowToggle = false;
                 } else {
                     dynamicThrowOn();
-                    dynamicThrowToggle = true;
                 }
                 break;
             case 'throw-ball':
