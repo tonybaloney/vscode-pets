@@ -2,7 +2,7 @@
     "name": "vscode-pets",
     "displayName": "vscode-pets",
     "description": "Pets for your VS Code",
-    "version": "1.17.2",
+    "version": "1.18.0",
     "engines": {
         "vscode": "^1.68.0"
     },
