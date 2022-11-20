@@ -277,7 +277,6 @@ function getWebview(): vscode.Webview | undefined {
 }
 
 export function activate(context: vscode.ExtensionContext) {
-    localize.activate(context);
     context.subscriptions.push(
         vscode.commands.registerCommand('vscode-pets.start', () => {
             if (
