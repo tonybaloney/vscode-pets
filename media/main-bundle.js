@@ -783,7 +783,7 @@ window.addEventListener('resize', function () {
 
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.availableColors = exports.createPet = exports.InvalidPetException = exports.PetCollection = exports.PetElement = void 0;
+exports.normalizeColor = exports.availableColors = exports.createPet = exports.InvalidPetException = exports.PetCollection = exports.PetElement = void 0;
 const cat_1 = __webpack_require__(/*! ./pets/cat */ "./src/panel/pets/cat.ts");
 const clippy_1 = __webpack_require__(/*! ./pets/clippy */ "./src/panel/pets/clippy.ts");
 const cockatiel_1 = __webpack_require__(/*! ./pets/cockatiel */ "./src/panel/pets/cockatiel.ts");
@@ -952,6 +952,22 @@ function availableColors(petType) {
     }
 }
 exports.availableColors = availableColors;
+/**
+ * Some pets can only have certain colors, this makes sure they haven't been misconfigured.
+ * @param petColor
+ * @param petType
+ * @returns normalized color
+ */
+function normalizeColor(petColor, petType) {
+    const colors = availableColors(petType);
+    if (colors.includes(petColor)) {
+        return petColor;
+    }
+    else {
+        return colors[0];
+    }
+}
+exports.normalizeColor = normalizeColor;
 
 
 /***/ }),
