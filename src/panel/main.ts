@@ -8,12 +8,14 @@ import {
     ColorThemeKind,
     WebviewMessage,
 } from '../common/types';
+import { IPetType } from './states';
 import {
     createPet,
-    IPetType,
     PetCollection,
     PetElement,
     IPetCollection,
+    availableColors,
+    InvalidPetException,
 } from './pets';
 import { BallState, PetElementState, PetPanelState } from './states';
 
@@ -80,9 +82,9 @@ function calculateFloor(size: PetSize, theme: Theme): number {
 
 function handleMouseOver(e: MouseEvent) {
     var el = e.currentTarget as HTMLDivElement;
-    allPets.pets().forEach((element) => {
+    allPets.pets.forEach((element) => {
         if (element.collision === el) {
-            if (!element.pet.canSwipe()) {
+            if (!element.pet.canSwipe) {
                 return;
             }
             element.pet.swipe();
@@ -146,6 +148,9 @@ function addPetToPanel(
     const root = basePetUri + '/' + petType + '/' + petColor;
     console.log('Creating new pet : ', petType, root, petColor, petSize, name);
     try {
+        if (!availableColors(petType).includes(petColor)) {
+            throw new InvalidPetException('Invalid color for pet type');
+        }
         var newPet = createPet(
             petType,
             petSpriteElement,
@@ -185,13 +190,13 @@ export function saveState(stateApi?: VscodeStateApi) {
     var state = new PetPanelState();
     state.petStates = new Array();
 
-    allPets.pets().forEach((petItem) => {
+    allPets.pets.forEach((petItem) => {
         state.petStates?.push({
-            petName: petItem.pet.name(),
+            petName: petItem.pet.name,
             petColor: petItem.color,
             petType: petItem.type,
             petState: petItem.pet.getState(),
-            petFriend: petItem.pet.friend()?.name() ?? undefined,
+            petFriend: petItem.pet.friend?.name ?? undefined,
             elLeft: petItem.el.style.left,
             elBottom: petItem.el.style.bottom,
         });
@@ -293,6 +298,7 @@ export function petPanelApp(
     petColor: PetColor,
     petSize: PetSize,
     petType: PetType,
+    throwBallWithMouse: boolean,
     stateApi?: VscodeStateApi,
 ) {
     const ballRadius: number = calculateBallRadius(petSize);
@@ -337,12 +343,85 @@ export function petPanelApp(
     var ballState: BallState;
 
     function resetBall() {
+        if (ballState) {
+            ballState.paused = true;
+        }
         if (canvas) {
             canvas.style.display = 'block';
         }
         ballState = new BallState(100, 100, 4, 5);
     }
 
+    function dynamicThrowOn() {
+        let startMouseX: number;
+        let startMouseY: number;
+        let endMouseX: number;
+        let endMouseY: number;
+        console.log('Enabling dynamic throw');
+        window.onmousedown = (e) => {
+            if (ballState) {
+                ballState.paused = true;
+            }
+            if (canvas) {
+                canvas.style.display = 'block';
+            }
+            endMouseX = e.clientX;
+            endMouseY = e.clientY;
+            startMouseX = e.clientX;
+            startMouseY = e.clientY;
+            ballState = new BallState(e.clientX, e.clientY, 0, 0);
+
+            allPets.pets.forEach((petEl) => {
+                if (petEl.pet.canChase) {
+                    petEl.pet.chase(ballState, canvas);
+                }
+            });
+            ballState.paused = true;
+
+            drawBall();
+
+            window.onmousemove = (ev) => {
+                ev.preventDefault();
+                if (ballState) {
+                    ballState.paused = true;
+                }
+                startMouseX = endMouseX;
+                startMouseY = endMouseY;
+                endMouseX = ev.clientX;
+                endMouseY = ev.clientY;
+                ballState = new BallState(ev.clientX, ev.clientY, 0, 0);
+                drawBall();
+            };
+            window.onmouseup = (ev) => {
+                ev.preventDefault();
+                window.onmouseup = null;
+                window.onmousemove = null;
+
+                ballState = new BallState(
+                    endMouseX,
+                    endMouseY,
+                    endMouseX - startMouseX,
+                    endMouseY - startMouseY,
+                );
+                allPets.pets.forEach((petEl) => {
+                    if (petEl.pet.canChase) {
+                        petEl.pet.chase(ballState, canvas);
+                    }
+                });
+                throwBall();
+            };
+        };
+    }
+    function dynamicThrowOff() {
+        console.log('Disabling dynamic throw');
+        window.onmousedown = null;
+        if (ballState) {
+            ballState.paused = true;
+        }
+        if (canvas) {
+            canvas.style.display = 'none';
+        }
+    }
     function throwBall() {
         if (!ballState.paused) {
             requestAnimationFrame(throwBall);
@@ -355,8 +434,6 @@ export function petPanelApp(
             return;
         }
         then = now - (elapsed % interval);
-
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
 
         if (ballState.cx + ballRadius >= canvas.width) {
             ballState.vx = -ballState.vx * damping;
@@ -379,6 +456,11 @@ export function petPanelApp(
 
         ballState.cx += ballState.vx;
         ballState.cy += ballState.vy;
+        drawBall();
+    }
+
+    function drawBall() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
 
         ctx.beginPath();
         ctx.arc(ballState.cx, ballState.cy, ballRadius, 0, 2 * Math.PI, false);
@@ -386,7 +468,14 @@ export function petPanelApp(
         ctx.fill();
     }
 
-    console.log('Starting pet session', petColor, basePetUri, petType);
+    console.log(
+        'Starting pet session',
+        petColor,
+        basePetUri,
+        petType,
+        throwBallWithMouse,
+    );
+
     // New session
     var state = stateApi?.getState();
     if (!state) {
@@ -413,15 +502,28 @@ export function petPanelApp(
 
     initCanvas();
 
+    if (throwBallWithMouse) {
+        dynamicThrowOn();
+    } else {
+        dynamicThrowOff();
+    }
+
     // Handle messages sent from the extension to the webview
     window.addEventListener('message', (event): void => {
         const message = event.data; // The json data that the extension sent
         switch (message.command) {
+            case 'throw-with-mouse':
+                if (message.enabled) {
+                    dynamicThrowOn();
+                } else {
+                    dynamicThrowOff();
+                }
+                break;
             case 'throw-ball':
                 resetBall();
                 throwBall();
-                allPets.pets().forEach((petEl) => {
-                    if (petEl.pet.canChase()) {
+                allPets.pets.forEach((petEl) => {
+                    if (petEl.pet.canChase) {
                         petEl.pet.chase(ballState, canvas);
                     }
                 });
@@ -444,28 +546,25 @@ export function petPanelApp(
                 break;
 
             case 'list-pets':
-                var pets = allPets.pets();
+                var pets = allPets.pets;
                 stateApi?.postMessage({
                     command: 'list-pets',
                     text: pets
                         .map(
-                            (pet) =>
-                                `${pet.type},${pet.pet.name()},${pet.color}`,
+                            (pet) => `${pet.type},${pet.pet.name},${pet.color}`,
                         )
                         .join('\n'),
                 });
                 break;
 
             case 'roll-call':
-                var pets = allPets.pets();
+                var pets = allPets.pets;
                 // go through every single
                 // pet and then print out their name
                 pets.forEach((pet) => {
                     stateApi?.postMessage({
                         command: 'info',
-                        text: `${pet.pet.emoji()} ${pet.pet.name()} (${
-                            pet.color
-                        } ${pet.type}): ${pet.pet.hello()}`,
+                        text: `${pet.pet.emoji} ${pet.pet.name} (${pet.color} ${pet.type}): ${pet.pet.hello}`,
                     });
                 });
             case 'delete-pet':

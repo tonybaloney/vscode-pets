@@ -15,6 +15,7 @@ import {
 } from '../common/types';
 import { randomName } from '../common/names';
 import * as localize from '../common/localize';
+import { availableColors, normalizeColor } from '../panel/pets';
 
 const EXTRA_PETS_KEY = 'vscode-pets.extra-pets';
 const EXTRA_PETS_KEY_TYPES = EXTRA_PETS_KEY + '.types';
@@ -77,6 +78,19 @@ function getConfigurationPosition() {
     return vscode.workspace
         .getConfiguration('vscode-pets')
         .get<ExtPosition>('position', DEFAULT_POSITION);
+}
+
+function getThrowWithMouseConfiguration(): boolean {
+    return vscode.workspace
+        .getConfiguration('vscode-pets')
+        .get<boolean>('throwBallWithMouse', true);
+}
+
+function updatePanelThrowWithMouse(): void {
+    const panel = getPetPanel();
+    if (panel !== undefined) {
+        panel.setThrowWithMouse(getThrowWithMouseConfiguration());
+    }
 }
 
 function updateExtensionPositionContext() {
@@ -211,10 +225,7 @@ async function handleRemovePetMessage(
                 return new PetQuickPickItem(val.name, val.type, val.color);
             }),
             {
-                placeHolder: localize.localize(
-                    'selectPetToRemove',
-                    'Select the pet to remove.',
-                ),
+                placeHolder: vscode.l10n.t('Select the pet to remove.'),
             },
         )
         .then((pet: PetQuickPickItem | undefined) => {
@@ -265,14 +276,13 @@ function getWebview(): vscode.Webview | undefined {
 }
 
 export function activate(context: vscode.ExtensionContext) {
-    localize.activate(context);
     context.subscriptions.push(
         vscode.commands.registerCommand('vscode-pets.start', () => {
             if (
                 getConfigurationPosition() === ExtPosition.explorer &&
                 webviewViewProvider
             ) {
-                vscode.commands.executeCommand('vscode-pets.petsView.focus');
+                vscode.commands.executeCommand('petsView.focus');
             } else {
                 const spec = PetSpecification.fromConfiguration();
                 PetPanel.createOrShow(
@@ -283,6 +293,7 @@ export function activate(context: vscode.ExtensionContext) {
                     spec.size,
                     getConfiguredTheme(),
                     getConfiguredThemeKind(),
+                    getThrowWithMouseConfiguration(),
                 );
 
                 if (PetPanel.currentPanel) {
@@ -337,6 +348,7 @@ export function activate(context: vscode.ExtensionContext) {
         spec.size,
         getConfiguredTheme(),
         getConfiguredThemeKind(),
+        getThrowWithMouseConfiguration(),
     );
     updateExtensionPositionContext();
 
@@ -383,108 +395,133 @@ export function activate(context: vscode.ExtensionContext) {
     );
 
     context.subscriptions.push(
+        vscode.commands.registerCommand(
+            'vscode-pets.export-pet-list',
+            async () => {
+                const pets = PetSpecification.collectionFromMemento(
+                    context,
+                    getConfiguredSize(),
+                );
+                const petJson = JSON.stringify(pets, null, 2);
+                const fileName = `pets-${Date.now()}.json`;
+                if (!vscode.workspace.workspaceFolders) {
+                    vscode.window.showErrorMessage(
+                        vscode.l10n.t(
+                            'You must have a folder or workspace open to export pets.',
+                        ),
+                    );
+                    return;
+                }
+                const filePath = vscode.Uri.joinPath(
+                    vscode.workspace.workspaceFolders[0].uri,
+                    fileName,
+                );
+                const newUri = vscode.Uri.file(fileName).with({
+                    scheme: 'untitled',
+                    path: filePath.fsPath,
+                });
+                vscode.workspace.openTextDocument(newUri).then((doc) => {
+                    vscode.window.showTextDocument(doc).then((editor) => {
+                        editor.edit((edit) => {
+                            edit.insert(new vscode.Position(0, 0), petJson);
+                        });
+                    });
+                });
+            },
+        ),
+    );
+
+    context.subscriptions.push(
+        vscode.commands.registerCommand(
+            'vscode-pets.import-pet-list',
+            async () => {
+                const options: vscode.OpenDialogOptions = {
+                    canSelectMany: false,
+                    openLabel: 'Open pets.json',
+                    filters: {
+                        'JSON files': ['json'],
+                    },
+                };
+                const fileUri = await vscode.window.showOpenDialog(options);
+
+                if (fileUri && fileUri[0]) {
+                    console.log('Selected file: ' + fileUri[0].fsPath);
+                    try {
+                        const fileContents = await vscode.workspace.fs.readFile(
+                            fileUri[0],
+                        );
+                        const petsToLoad = JSON.parse(
+                            String.fromCharCode.apply(
+                                null,
+                                Array.from(fileContents),
+                            ),
+                        );
+
+                        // load the pets into the collection
+                        var collection = PetSpecification.collectionFromMemento(
+                            context,
+                            getConfiguredSize(),
+                        );
+                        // fetch just the pet types
+                        const panel = getPetPanel();
+                        for (let i = 0; i < petsToLoad.length; i++) {
+                            const pet = petsToLoad[i];
+                            const petSpec = new PetSpecification(
+                                normalizeColor(pet.color, pet.type),
+                                pet.type,
+                                pet.size,
+                                pet.name,
+                            );
+                            collection.push(petSpec);
+                            if (panel !== undefined) {
+                                panel.spawnPet(petSpec);
+                            }
+                        }
+                        storeCollectionAsMemento(context, collection);
+                    } catch (e: any) {
+                        vscode.window.showErrorMessage(
+                            vscode.l10n.t(
+                                'Failed to import pets: {0}',
+                                e?.message,
+                            ),
+                        );
+                    }
+                }
+            },
+        ),
+    );
+
+    context.subscriptions.push(
         vscode.commands.registerCommand('vscode-pets.spawn-pet', async () => {
             const panel = getPetPanel();
             if (panel) {
                 const selectedPetType = await vscode.window.showQuickPick(
                     localize.stringListAsQuickPickItemList<PetType>(ALL_PETS),
                     {
-                        placeHolder: localize.localize(
-                            'selectPet',
-                            'Select a pet',
-                        ),
+                        placeHolder: vscode.l10n.t('Select a pet'),
                     },
                 );
                 if (selectedPetType === undefined) {
                     return;
                 }
                 var petColor: PetColor = DEFAULT_COLOR;
-                var choices;
-                switch (selectedPetType.value) {
-                    case PetType.rubberduck:
-                        petColor = PetColor.yellow;
-                        break;
-                    case PetType.snake:
-                        petColor = PetColor.green;
-                        break;
-                    case PetType.rocky:
-                    case PetType.totoro:
-                        petColor = PetColor.gray;
-                        break;
-                    case PetType.cat:
-                        choices = [PetColor.black, PetColor.brown];
-                        var selectedColor = await vscode.window.showQuickPick(
-                            localize.stringListAsQuickPickItemList<PetColor>(
-                                choices,
-                            ),
-                            {
-                                placeHolder: localize.localize(
-                                    'selectColor',
-                                    'Select a color',
-                                ),
-                            },
-                        );
-                        if (selectedColor === undefined) {
-                            return;
-                        }
-                        petColor = selectedColor.value;
+                const possibleColors = availableColors(selectedPetType.value);
 
-                        break;
-                    case PetType.dog:
-                        choices = [
-                            PetColor.black,
-                            PetColor.brown,
-                            PetColor.red,
-                            PetColor.white,
-                        ];
-                        var selectedColor = await vscode.window.showQuickPick(
-                            localize.stringListAsQuickPickItemList<PetColor>(
-                                choices,
-                            ),
-                            {
-                                placeHolder: localize.localize(
-                                    'selectColor',
-                                    'Select a color',
-                                ),
-                            },
-                        );
-                        if (selectedColor === undefined) {
-                            return;
-                        }
-                        petColor = selectedColor.value;
-                        break;
-                    case PetType.clippy:
-                        choices = [
-                            PetColor.black,
-                            PetColor.brown,
-                            PetColor.green,
-                            PetColor.yellow,
-                        ];
-                        var selectedColor = await vscode.window.showQuickPick(
-                            localize.stringListAsQuickPickItemList<PetColor>(
-                                choices,
-                            ),
-                            {
-                                placeHolder: localize.localize(
-                                    'selectColor',
-                                    'Select a color',
-                                ),
-                            },
-                        );
-                        if (selectedColor === undefined) {
-                            return;
-                        }
-                        petColor = selectedColor.value;
-                        break;
-                    case PetType.cockatiel:
-                        petColor = PetColor.gray;
-                        break;
-                    case PetType.crab:
-                        petColor = PetColor.red;
-                        break;
-                    case PetType.zappy:
-                        petColor = PetColor.yellow;
-                        break;
+                if (possibleColors.length > 1) {
+                    var selectedColor = await vscode.window.showQuickPick(
+                        localize.stringListAsQuickPickItemList<PetColor>(
+                            possibleColors,
+                        ),
+                        {
+                            placeHolder: vscode.l10n.t('Select a color'),
+                        },
+                    );
+                    if (selectedColor === undefined) {
+                        return;
+                    }
+                    petColor = selectedColor.value;
+                } else {
+                    petColor = possibleColors[0];
                 }
 
                 if (petColor === undefined) {
@@ -492,11 +529,8 @@ export function activate(context: vscode.ExtensionContext) {
                 }
 
                 const name = await vscode.window.showInputBox({
-                    placeHolder: localize.localize(
-                        'leaveBlank',
-                        'Leave blank for a random name',
-                    ),
-                    prompt: localize.localize('nameYourPet', 'Name your pet'),
+                    placeHolder: vscode.l10n.t('Leave blank for a random name'),
+                    prompt: vscode.l10n.t('Name your pet'),
                     value: randomName(selectedPetType.value),
                 });
                 const spec = new PetSpecification(
@@ -507,10 +541,7 @@ export function activate(context: vscode.ExtensionContext) {
                 );
                 if (!spec.type || !spec.color || !spec.size) {
                     return vscode.window.showWarningMessage(
-                        localize.localize(
-                            'cancelledSpawningPet',
-                            'Cancelled Spawning Pet',
-                        ),
+                        vscode.l10n.t('Cancelled Spawning Pet'),
                     );
                 } else if (spec) {
                     panel.spawnPet(spec);
@@ -524,8 +555,7 @@ export function activate(context: vscode.ExtensionContext) {
             } else {
                 createPetPlayground(context);
                 vscode.window.showInformationMessage(
-                    localize.localize(
-                        'spawnPetWithClosedPlayground',
+                    vscode.l10n.t(
                         "A Pet Playground has been created. You can now use the 'Spawn Additional Pet' Command to add more pets.",
                     ),
                 );
@@ -542,8 +572,7 @@ export function activate(context: vscode.ExtensionContext) {
             } else {
                 createPetPlayground(context);
                 vscode.window.showInformationMessage(
-                    localize.localize(
-                        'removePetsWithClosedPlayground',
+                    vscode.l10n.t(
                         "A Pet Playground has been created. You can now use the 'Remove All Pets' Command to remove all pets.",
                     ),
                 );
@@ -579,6 +608,10 @@ export function activate(context: vscode.ExtensionContext) {
                 if (e.affectsConfiguration('vscode-pets.position')) {
                     updateExtensionPositionContext();
                 }
+
+                if (e.affectsConfiguration('vscode-pets.throwBallWithMouse')) {
+                    updatePanelThrowWithMouse();
+                }
             },
         ),
     );
@@ -601,6 +634,7 @@ export function activate(context: vscode.ExtensionContext) {
                     spec.size,
                     getConfiguredTheme(),
                     getConfiguredThemeKind(),
+                    getThrowWithMouseConfiguration(),
                 );
             },
         });
@@ -609,7 +643,7 @@ export function activate(context: vscode.ExtensionContext) {
 
 function updateStatusBar(): void {
     spawnPetStatusBar.text = `$(squirrel)`;
-    spawnPetStatusBar.tooltip = localize.localize('spawnPet', 'Spawn Pet');
+    spawnPetStatusBar.tooltip = vscode.l10n.t('Spawn Pet');
     spawnPetStatusBar.show();
 }
 
@@ -632,47 +666,6 @@ function getWebviewOptions(
     };
 }
 
-/**
- * Some pets can only have certain colors, this makes sure they haven't been misconfigured.
- * @param petColor
- * @param petType
- * @returns normalized color
- */
-function normalizeColor(petColor: PetColor, petType: PetType): PetColor {
-    if (petType === PetType.totoro || petType === PetType.rocky) {
-        return PetColor.gray;
-    }
-    if (petType === PetType.snake) {
-        return PetColor.green;
-    }
-    if (petType === PetType.rubberduck || petType === PetType.zappy) {
-        return PetColor.yellow;
-    }
-    if (petType === PetType.cockatiel) {
-        return PetColor.gray;
-    }
-    if (petType === PetType.crab) {
-        return PetColor.red;
-    }
-    if (
-        petType === PetType.dog &&
-        petColor !== PetColor.brown &&
-        petColor !== PetColor.red &&
-        petColor !== PetColor.white &&
-        petColor !== PetColor.black
-    ) {
-        return PetColor.brown;
-    }
-    if (
-        petType === PetType.cat &&
-        petColor !== PetColor.brown &&
-        petColor !== PetColor.black
-    ) {
-        return PetColor.brown;
-    }
-    return petColor;
-}
-
 interface IPetPanel {
     throwBall(): void;
     resetPets(): void;
@@ -681,11 +674,13 @@ interface IPetPanel {
     listPets(): void;
     rollCall(): void;
     themeKind(): vscode.ColorThemeKind;
+    throwBallWithMouse(): boolean;
     updatePetColor(newColor: PetColor): void;
     updatePetType(newType: PetType): void;
     updatePetSize(newSize: PetSize): void;
     updateTheme(newTheme: Theme, themeKind: vscode.ColorThemeKind): void;
     update(): void;
+    setThrowWithMouse(newThrowWithMouse: boolean): void;
 }
 
 class PetWebviewContainer implements IPetPanel {
@@ -697,6 +692,7 @@ class PetWebviewContainer implements IPetPanel {
     protected _petSize: PetSize;
     protected _theme: Theme;
     protected _themeKind: vscode.ColorThemeKind;
+    protected _throwBallWithMouse: boolean;
 
     constructor(
         extensionUri: vscode.Uri,
@@ -706,6 +702,7 @@ class PetWebviewContainer implements IPetPanel {
         size: PetSize,
         theme: Theme,
         themeKind: ColorThemeKind,
+        throwBallWithMouse: boolean,
     ) {
         this._extensionUri = extensionUri;
         this._petMediaPath = path.join(extensionPath, 'media');
@@ -714,6 +711,7 @@ class PetWebviewContainer implements IPetPanel {
         this._petSize = size;
         this._theme = theme;
         this._themeKind = themeKind;
+        this._throwBallWithMouse = throwBallWithMouse;
     }
 
     public petColor(): PetColor {
@@ -736,6 +734,10 @@ class PetWebviewContainer implements IPetPanel {
         return this._themeKind;
     }
 
+    public throwBallWithMouse(): boolean {
+        return this._throwBallWithMouse;
+    }
+
     public updatePetColor(newColor: PetColor) {
         this._petColor = newColor;
     }
@@ -751,6 +753,14 @@ class PetWebviewContainer implements IPetPanel {
     public updateTheme(newTheme: Theme, themeKind: vscode.ColorThemeKind) {
         this._theme = newTheme;
         this._themeKind = themeKind;
+    }
+
+    public setThrowWithMouse(newThrowWithMouse: boolean): void {
+        this._throwBallWithMouse = newThrowWithMouse;
+        this.getWebview().postMessage({
+            command: 'throw-with-mouse',
+            enabled: newThrowWithMouse,
+        });
     }
 
     public throwBall() {
@@ -870,7 +880,7 @@ class PetWebviewContainer implements IPetPanel {
 				<div id="petsContainer"></div>
 				<div id="foreground"></div>	
 				<script nonce="${nonce}" src="${scriptUri}"></script>
-				<script nonce="${nonce}">petApp.petPanelApp("${basePetUri}", "${this.theme()}", ${this.themeKind()}, "${this.petColor()}", "${this.petSize()}", "${this.petType()}");</script>
+				<script nonce="${nonce}">petApp.petPanelApp("${basePetUri}", "${this.theme()}", ${this.themeKind()}, "${this.petColor()}", "${this.petSize()}", "${this.petType()}", ${this.throwBallWithMouse()});</script>
 			</body>
 			</html>`;
     }
@@ -908,6 +918,7 @@ class PetPanel extends PetWebviewContainer implements IPetPanel {
         petSize: PetSize,
         theme: Theme,
         themeKind: ColorThemeKind,
+        throwBallWithMouse: boolean,
     ) {
         const column = vscode.window.activeTextEditor
             ? vscode.window.activeTextEditor.viewColumn
@@ -932,7 +943,7 @@ class PetPanel extends PetWebviewContainer implements IPetPanel {
         // Otherwise, create a new panel.
         const panel = vscode.window.createWebviewPanel(
             PetPanel.viewType,
-            localize.localize('petPanel', 'Pet Panel'),
+            vscode.l10n.t('Pet Panel'),
             vscode.ViewColumn.Two,
             getWebviewOptions(extensionUri),
         );
@@ -946,6 +957,7 @@ class PetPanel extends PetWebviewContainer implements IPetPanel {
             petSize,
             theme,
             themeKind,
+            throwBallWithMouse,
         );
     }
 
@@ -974,6 +986,7 @@ class PetPanel extends PetWebviewContainer implements IPetPanel {
         petSize: PetSize,
         theme: Theme,
         themeKind: ColorThemeKind,
+        throwBallWithMouse: boolean,
     ) {
         PetPanel.currentPanel = new PetPanel(
             panel,
@@ -984,6 +997,7 @@ class PetPanel extends PetWebviewContainer implements IPetPanel {
             petSize,
             theme,
             themeKind,
+            throwBallWithMouse,
         );
     }
 
@@ -996,8 +1010,18 @@ class PetPanel extends PetWebviewContainer implements IPetPanel {
         size: PetSize,
         theme: Theme,
         themeKind: ColorThemeKind,
+        throwBallWithMouse: boolean,
     ) {
-        super(extensionUri, extensionPath, color, type, size, theme, themeKind);
+        super(
+            extensionUri,
+            extensionPath,
+            color,
+            type,
+            size,
+            theme,
+            themeKind,
+            throwBallWithMouse,
+        );
 
         this._panel = panel;
 
@@ -1051,7 +1075,7 @@ class PetPanel extends PetWebviewContainer implements IPetPanel {
 }
 
 class PetWebviewViewProvider extends PetWebviewContainer {
-    public static readonly viewType = 'vscode-pets.petsView';
+    public static readonly viewType = 'petsView';
 
     private _webviewView?: vscode.WebviewView;
 
@@ -1075,7 +1099,9 @@ class PetWebviewViewProvider extends PetWebviewContainer {
     getWebview(): vscode.Webview {
         if (this._webviewView === undefined) {
             throw new Error(
-                'Panel not active, make sure the pets view is visible before running this command.',
+                vscode.l10n.t(
+                    'Panel not active, make sure the pets view is visible before running this command.',
+                ),
             );
         } else {
             return this._webviewView.webview;
@@ -1103,6 +1129,7 @@ function createPetPlayground(context: vscode.ExtensionContext) {
         spec.size,
         getConfiguredTheme(),
         getConfiguredThemeKind(),
+        getThrowWithMouseConfiguration(),
     );
     if (PetPanel.currentPanel) {
         var collection = PetSpecification.collectionFromMemento(
