@@ -67,6 +67,7 @@ class MockState implements VscodeStateApi {
 mockPanelWindow();
 
 import * as panel from '../../panel/main';
+import { Cat } from '../../panel/pets/cat';
 
 suite('Pets Test Suite', () => {
     vscode.window.showInformationMessage('Start all tests.');
@@ -92,9 +93,9 @@ suite('Pets Test Suite', () => {
             0,
             'Jerry',
         );
-        assert.ok(testPet instanceof pets.Cat);
-        assert.equal(testPet.emoji(), '🐱');
-        assert.equal(testPet.name(), 'Jerry');
+        assert.ok(testPet instanceof Cat);
+        assert.equal(testPet.emoji, '🐱');
+        assert.equal(testPet.name, 'Jerry');
 
         const testPetElement = new pets.PetElement(
             petImageEl,
@@ -121,15 +122,17 @@ suite('Pets Test Suite', () => {
             'Test panel app initialization with theme and ' + String(petType),
             () => {
                 const mockState = new MockState();
+                const color = pets.normalizeColor(PetColor.black, petType);
                 panel.allPets.reset();
                 mockState.reset();
                 panel.petPanelApp(
                     'https://test.com',
                     Theme.beach,
                     ColorThemeKind.dark,
-                    PetColor.black,
+                    color,
                     PetSize.large,
                     petType,
+                    false,
                     mockState,
                 );
 
@@ -145,12 +148,12 @@ suite('Pets Test Suite', () => {
                 const firstPet: PetElementState = (mockState.getState()
                     ?.petStates ?? [])[0];
                 assert.equal(firstPet.petType, petType);
-                assert.equal(firstPet.petColor, PetColor.black);
+                assert.equal(firstPet.petColor, color);
 
-                const createdPets = panel.allPets.pets();
+                const createdPets = panel.allPets.pets;
                 assert.notEqual(createdPets.at(0), undefined);
 
-                assert.equal(createdPets.at(0)?.color, PetColor.black);
+                assert.equal(createdPets.at(0)?.color, color);
 
                 /// Cycle 1000 frames
                 for (var i = 0; i < 1000; i++) {
@@ -175,6 +178,7 @@ suite('Pets Test Suite', () => {
             PetColor.black,
             PetSize.large,
             PetType.cat,
+            false,
             mockState,
         );
 
@@ -196,6 +200,7 @@ suite('Pets Test Suite', () => {
             PetColor.black,
             PetSize.large,
             PetType.cat,
+            false,
             mockState,
         );
 

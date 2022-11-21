@@ -6,6 +6,10 @@
 	--input-margin-horizontal: 0;
 }
 
+*{
+	user-select: none;
+}
+
 body {
 	padding: 0 var(--container-paddding);
 	color: var(--vscode-foreground);
