@@ -6,7 +6,7 @@
 
 "files": [
   {
-    "source": "package.nls.json",
-    "translation": "package.nls.%two_letters_code%.json"
+    "source": "l10n/bundle.l10n.json",
+    "translation": "l10n/bundle.l10n.%two_letters_code%.json"
   }
 ]
