@@ -1,0 +1,4 @@
+ignore:
+    # ignore because of errors
+    # due to edge cases
+    - src/common/names.ts

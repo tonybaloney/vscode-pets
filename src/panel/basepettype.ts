@@ -1,4 +1,4 @@
-import { PetSize, PetSpeed } from '../common/types';
+import { PetColor, PetSize, PetSpeed } from '../common/types';
 import { IPetType } from './states';
 import { ISequenceTree } from './sequences';
 import {
@@ -22,6 +22,7 @@ export abstract class BasePetType implements IPetType {
         startingState: States.sitIdle,
         sequenceStates: [],
     };
+    static possibleColors: PetColor[];
     currentState: IState;
     currentStateEnum: States;
     holdState: IState | undefined;

@@ -1,8 +1,10 @@
+import { PetColor } from '../../common/types';
 import { BasePetType } from '../basepettype';
 import { States } from '../states';
 
 export class RubberDuck extends BasePetType {
     label = 'rubber-duck';
+    static possibleColors = [PetColor.yellow];
     sequence = {
         startingState: States.sitIdle,
         sequenceStates: [

@@ -15,6 +15,7 @@ import {
 } from '../common/types';
 import { randomName } from '../common/names';
 import * as localize from '../common/localize';
+import { availableColors, normalizeColor } from '../panel/pets';
 
 const EXTRA_PETS_KEY = 'vscode-pets.extra-pets';
 const EXTRA_PETS_KEY_TYPES = EXTRA_PETS_KEY + '.types';
@@ -394,6 +395,103 @@ export function activate(context: vscode.ExtensionContext) {
     );
 
     context.subscriptions.push(
+        vscode.commands.registerCommand(
+            'vscode-pets.export-pet-list',
+            async () => {
+                const pets = PetSpecification.collectionFromMemento(
+                    context,
+                    getConfiguredSize(),
+                );
+                const petJson = JSON.stringify(pets, null, 2);
+                const fileName = `pets-${Date.now()}.json`;
+                if (!vscode.workspace.workspaceFolders) {
+                    vscode.window.showErrorMessage(
+                        vscode.l10n.t(
+                            'You must have a folder or workspace open to export pets.',
+                        ),
+                    );
+                    return;
+                }
+                const filePath = vscode.Uri.joinPath(
+                    vscode.workspace.workspaceFolders[0].uri,
+                    fileName,
+                );
+                const newUri = vscode.Uri.file(fileName).with({
+                    scheme: 'untitled',
+                    path: filePath.fsPath,
+                });
+                vscode.workspace.openTextDocument(newUri).then((doc) => {
+                    vscode.window.showTextDocument(doc).then((editor) => {
+                        editor.edit((edit) => {
+                            edit.insert(new vscode.Position(0, 0), petJson);
+                        });
+                    });
+                });
+            },
+        ),
+    );
+
+    context.subscriptions.push(
+        vscode.commands.registerCommand(
+            'vscode-pets.import-pet-list',
+            async () => {
+                const options: vscode.OpenDialogOptions = {
+                    canSelectMany: false,
+                    openLabel: 'Open pets.json',
+                    filters: {
+                        'JSON files': ['json'],
+                    },
+                };
+                const fileUri = await vscode.window.showOpenDialog(options);
+
+                if (fileUri && fileUri[0]) {
+                    console.log('Selected file: ' + fileUri[0].fsPath);
+                    try {
+                        const fileContents = await vscode.workspace.fs.readFile(
+                            fileUri[0],
+                        );
+                        const petsToLoad = JSON.parse(
+                            String.fromCharCode.apply(
+                                null,
+                                Array.from(fileContents),
+                            ),
+                        );
+
+                        // load the pets into the collection
+                        var collection = PetSpecification.collectionFromMemento(
+                            context,
+                            getConfiguredSize(),
+                        );
+                        // fetch just the pet types
+                        const panel = getPetPanel();
+                        for (let i = 0; i < petsToLoad.length; i++) {
+                            const pet = petsToLoad[i];
+                            const petSpec = new PetSpecification(
+                                normalizeColor(pet.color, pet.type),
+                                pet.type,
+                                pet.size,
+                                pet.name,
+                            );
+                            collection.push(petSpec);
+                            if (panel !== undefined) {
+                                panel.spawnPet(petSpec);
+                            }
+                        }
+                        storeCollectionAsMemento(context, collection);
+                    } catch (e: any) {
+                        vscode.window.showErrorMessage(
+                            vscode.l10n.t(
+                                'Failed to import pets: {0}',
+                                e?.message,
+                            ),
+                        );
+                    }
+                }
+            },
+        ),
+    );
+
+    context.subscriptions.push(
         vscode.commands.registerCommand('vscode-pets.spawn-pet', async () => {
             const panel = getPetPanel();
             if (panel) {
@@ -407,89 +505,23 @@ export function activate(context: vscode.ExtensionContext) {
                     return;
                 }
                 var petColor: PetColor = DEFAULT_COLOR;
-                var choices;
-                switch (selectedPetType.value) {
-                    case PetType.rubberduck:
-                        petColor = PetColor.yellow;
-                        break;
-                    case PetType.snake:
-                        petColor = PetColor.green;
-                        break;
-                    case PetType.rocky:
-                    case PetType.totoro:
-                        petColor = PetColor.gray;
-                        break;
-                    case PetType.cat:
-                        choices = [
-                            PetColor.black,
-                            PetColor.brown,
-                            PetColor.white,
-                        ];
-                        var selectedColor = await vscode.window.showQuickPick(
-                            localize.stringListAsQuickPickItemList<PetColor>(
-                                choices,
-                            ),
-                            {
-                                placeHolder: vscode.l10n.t('Select a color'),
-                            },
-                        );
-                        if (selectedColor === undefined) {
-                            return;
-                        }
-                        petColor = selectedColor.value;
+                const possibleColors = availableColors(selectedPetType.value);
 
-                        break;
-                    case PetType.dog:
-                        choices = [
-                            PetColor.black,
-                            PetColor.brown,
-                            PetColor.white,
-                        ];
-                        var selectedColor = await vscode.window.showQuickPick(
-                            localize.stringListAsQuickPickItemList<PetColor>(
-                                choices,
-                            ),
-                            {
-                                placeHolder: vscode.l10n.t('Select a color'),
-                            },
-                        );
-                        if (selectedColor === undefined) {
-                            return;
-                        }
-                        petColor = selectedColor.value;
-                        break;
-                    case PetType.clippy:
-                        choices = [
-                            PetColor.black,
-                            PetColor.brown,
-                            PetColor.green,
-                            PetColor.yellow,
-                        ];
-                        var selectedColor = await vscode.window.showQuickPick(
-                            localize.stringListAsQuickPickItemList<PetColor>(
-                                choices,
-                            ),
-                            {
-                                placeHolder: vscode.l10n.t('Select a color'),
-                            },
-                        );
-                        if (selectedColor === undefined) {
-                            return;
-                        }
-                        petColor = selectedColor.value;
-                        break;
-                    case PetType.cockatiel:
-                        petColor = PetColor.gray;
-                        break;
-                    case PetType.crab:
-                        petColor = PetColor.red;
-                        break;
-                    case PetType.zappy:
-                        petColor = PetColor.yellow;
-                        break;
-                    case PetType.mod:
-                        petColor = PetColor.purple;
-                        break;
+                if (possibleColors.length > 1) {
+                    var selectedColor = await vscode.window.showQuickPick(
+                        localize.stringListAsQuickPickItemList<PetColor>(
+                            possibleColors,
+                        ),
+                        {
+                            placeHolder: vscode.l10n.t('Select a color'),
+                        },
+                    );
+                    if (selectedColor === undefined) {
+                        return;
+                    }
+                    petColor = selectedColor.value;
+                } else {
+                    petColor = possibleColors[0];
                 }
 
                 if (petColor === undefined) {
@@ -632,47 +664,6 @@ function getWebviewOptions(
         // And restrict the webview to only loading content from our extension's `media` directory.
         localResourceRoots: [vscode.Uri.joinPath(extensionUri, 'media')],
     };
-}
-
-/**
- * Some pets can only have certain colors, this makes sure they haven't been misconfigured.
- * @param petColor
- * @param petType
- * @returns normalized color
- */
-function normalizeColor(petColor: PetColor, petType: PetType): PetColor {
-    if (petType === PetType.totoro || petType === PetType.rocky) {
-        return PetColor.gray;
-    }
-    if (petType === PetType.snake) {
-        return PetColor.green;
-    }
-    if (petType === PetType.rubberduck || petType === PetType.zappy) {
-        return PetColor.yellow;
-    }
-    if (petType === PetType.cockatiel) {
-        return PetColor.gray;
-    }
-    if (petType === PetType.crab) {
-        return PetColor.red;
-    }
-    if (
-        petType === PetType.dog &&
-        petColor !== PetColor.brown &&
-        petColor !== PetColor.white &&
-        petColor !== PetColor.black
-    ) {
-        return PetColor.brown;
-    }
-    if (
-        petType === PetType.cat &&
-        petColor !== PetColor.brown &&
-        petColor !== PetColor.black &&
-        petColor !== PetColor.white
-    ) {
-        return PetColor.brown;
-    }
-    return petColor;
 }
 
 interface IPetPanel {

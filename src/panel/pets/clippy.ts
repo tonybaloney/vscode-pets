@@ -1,8 +1,15 @@
+import { PetColor } from '../../common/types';
 import { BasePetType } from '../basepettype';
 import { States } from '../states';
 
 export class Clippy extends BasePetType {
     label = 'clippy';
+    static possibleColors = [
+        PetColor.black,
+        PetColor.brown,
+        PetColor.green,
+        PetColor.yellow,
+    ];
     sequence = {
         startingState: States.sitIdle,
         sequenceStates: [

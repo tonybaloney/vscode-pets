@@ -35,6 +35,8 @@
         "onCommand:vscode-pets.delete-pet",
         "onCommand:vscode-pets.remove-all-pets",
         "onCommand:vscode-pets.roll-call",
+        "onCommand:vscode-pets.export-pet-list",
+        "onCommand:vscode-pets.import-pet-list",
         "onWebviewPanel:petCoding",
         "onView:explorer",
         "onView:petsView",
@@ -97,6 +99,16 @@
                     "dark": "media/icon/dark-circle-outline.svg",
                     "light": "media/icon/light-circle-outline.svg"
                 }
+            },
+            {
+                "command": "vscode-pets.export-pet-list",
+                "title": "Export pet list",
+                "category": "Pet Coding"
+            },
+            {
+                "command": "vscode-pets.import-pet-list",
+                "title": "Import pet list",
+                "category": "Pet Coding"
             },
             {
                 "command": "vscode-pets.spawn-pet",
@@ -250,7 +262,7 @@
         "typescript": "^4.7.4",
         "typescript-eslint": "^0.0.1-alpha.0",
         "vscode-test": "^1.4.0",
-        "webpack": "^5.73.0",
+        "webpack": "5.74.0",
         "webpack-cli": "^4.10.0"
     },
     "dependencies": {
