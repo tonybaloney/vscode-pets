@@ -122,13 +122,14 @@ suite('Pets Test Suite', () => {
             'Test panel app initialization with theme and ' + String(petType),
             () => {
                 const mockState = new MockState();
+                const color = pets.normalizeColor(PetColor.black, petType);
                 panel.allPets.reset();
                 mockState.reset();
                 panel.petPanelApp(
                     'https://test.com',
                     Theme.beach,
                     ColorThemeKind.dark,
-                    pets.normalizeColor(PetColor.black, petType),
+                    color,
                     PetSize.large,
                     petType,
                     false,
@@ -147,12 +148,12 @@ suite('Pets Test Suite', () => {
                 const firstPet: PetElementState = (mockState.getState()
                     ?.petStates ?? [])[0];
                 assert.equal(firstPet.petType, petType);
-                assert.equal(firstPet.petColor, PetColor.black);
+                assert.equal(firstPet.petColor, color);
 
                 const createdPets = panel.allPets.pets;
                 assert.notEqual(createdPets.at(0), undefined);
 
-                assert.equal(createdPets.at(0)?.color, PetColor.black);
+                assert.equal(createdPets.at(0)?.color, color);
 
                 /// Cycle 1000 frames
                 for (var i = 0; i < 1000; i++) {
