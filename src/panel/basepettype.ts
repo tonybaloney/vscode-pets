@@ -22,7 +22,7 @@ export abstract class BasePetType implements IPetType {
         startingState: States.sitIdle,
         sequenceStates: [],
     };
-    static readonly possibleColors: PetColor[];
+    static possibleColors: PetColor[];
     currentState: IState;
     currentStateEnum: States;
     holdState: IState | undefined;

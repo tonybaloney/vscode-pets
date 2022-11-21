@@ -4,7 +4,7 @@ import { States } from '../states';
 
 export class Dog extends BasePetType {
     label = 'dog';
-    possibleColors = [PetColor.black, PetColor.brown, PetColor.white];
+    static possibleColors = [PetColor.black, PetColor.brown, PetColor.white];
     sequence = {
         startingState: States.sitIdle,
         sequenceStates: [

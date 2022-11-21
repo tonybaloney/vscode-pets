@@ -4,7 +4,7 @@ import { States } from '../states';
 
 export class Clippy extends BasePetType {
     label = 'clippy';
-    possibleColors = [
+    static possibleColors = [
         PetColor.black,
         PetColor.brown,
         PetColor.green,

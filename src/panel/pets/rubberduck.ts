@@ -4,7 +4,7 @@ import { States } from '../states';
 
 export class RubberDuck extends BasePetType {
     label = 'rubber-duck';
-    possibleColors = [PetColor.yellow];
+    static possibleColors = [PetColor.yellow];
     sequence = {
         startingState: States.sitIdle,
         sequenceStates: [

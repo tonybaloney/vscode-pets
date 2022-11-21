@@ -4,7 +4,7 @@ import { States } from '../states';
 
 export class Totoro extends BasePetType {
     label = 'totoro';
-    possibleColors = [PetColor.gray];
+    static possibleColors = [PetColor.gray];
     sequence = {
         startingState: States.sitIdle,
         sequenceStates: [
