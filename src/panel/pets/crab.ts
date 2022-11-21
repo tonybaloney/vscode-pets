@@ -1,8 +1,10 @@
+import { PetColor } from '../../common/types';
 import { BasePetType } from '../basepettype';
 import { States } from '../states';
 
 export class Crab extends BasePetType {
     label = 'crab';
+    possibleColors = [PetColor.red];
     sequence = {
         startingState: States.sitIdle,
         sequenceStates: [
