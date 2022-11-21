@@ -1,8 +1,10 @@
+import { PetColor } from '../../common/types';
 import { BasePetType } from '../basepettype';
 import { States } from '../states';
 
 export class Rocky extends BasePetType {
     label = 'rocky';
+    possibleColors = [PetColor.gray];
     sequence = {
         startingState: States.sitIdle,
         sequenceStates: [

@@ -196,3 +196,32 @@ export function createPet(
             throw new InvalidPetException("Pet type doesn't exist");
     }
 }
+
+export function availableColors(petType: PetType): PetColor[] {
+    switch (petType) {
+        case PetType.cat:
+            return Cat.possibleColors;
+        case PetType.dog:
+            return Dog.possibleColors;
+        case PetType.crab:
+            return Crab.possibleColors;
+        case PetType.clippy:
+            return Clippy.possibleColors;
+        case PetType.mod:
+            return Mod.possibleColors;
+        case PetType.totoro:
+            return Totoro.possibleColors;
+        case PetType.snake:
+            return Snake.possibleColors;
+        case PetType.rubberduck:
+            return RubberDuck.possibleColors;
+        case PetType.zappy:
+            return Zappy.possibleColors;
+        case PetType.rocky:
+            return Rocky.possibleColors;
+        case PetType.cockatiel:
+            return Cockatiel.possibleColors;
+        default:
+            throw new InvalidPetException("Pet type doesn't exist");
+    }
+}

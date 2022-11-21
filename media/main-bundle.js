@@ -63,6 +63,7 @@ class BasePetType {
         startingState: "sit-idle" /* States.sitIdle */,
         sequenceStates: [],
     };
+    static possibleColors;
     currentState;
     currentStateEnum;
     holdState;
@@ -424,6 +425,9 @@ function addPetToPanel(petType, basePetUri, petColor, petSize, left, bottom, flo
     const root = basePetUri + '/' + petType + '/' + petColor;
     console.log('Creating new pet : ', petType, root, petColor, petSize, name);
     try {
+        if (!(0, pets_1.availableColors)(petType).includes(petColor)) {
+            throw new pets_1.InvalidPetException('Invalid color for pet type');
+        }
         var newPet = (0, pets_1.createPet)(petType, petSpriteElement, collisionElement, speechBubbleElement, petSize, left, bottom, root, floor, name);
         petCounter++;
         startAnimations(collisionElement, newPet, stateApi);
@@ -779,7 +783,7 @@ window.addEventListener('resize', function () {
 
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.createPet = exports.InvalidPetException = exports.PetCollection = exports.PetElement = void 0;
+exports.availableColors = exports.createPet = exports.InvalidPetException = exports.PetCollection = exports.PetElement = void 0;
 const cat_1 = __webpack_require__(/*! ./pets/cat */ "./src/panel/pets/cat.ts");
 const clippy_1 = __webpack_require__(/*! ./pets/clippy */ "./src/panel/pets/clippy.ts");
 const cockatiel_1 = __webpack_require__(/*! ./pets/cockatiel */ "./src/panel/pets/cockatiel.ts");
@@ -919,6 +923,35 @@ function createPet(petType, el, collision, speech, size, left, bottom, petRoot, 
     }
 }
 exports.createPet = createPet;
+function availableColors(petType) {
+    switch (petType) {
+        case "cat" /* PetType.cat */:
+            return cat_1.Cat.possibleColors;
+        case "dog" /* PetType.dog */:
+            return dog_1.Dog.possibleColors;
+        case "crab" /* PetType.crab */:
+            return crab_1.Crab.possibleColors;
+        case "clippy" /* PetType.clippy */:
+            return clippy_1.Clippy.possibleColors;
+        case "mod" /* PetType.mod */:
+            return mod_1.Mod.possibleColors;
+        case "totoro" /* PetType.totoro */:
+            return totoro_1.Totoro.possibleColors;
+        case "snake" /* PetType.snake */:
+            return snake_1.Snake.possibleColors;
+        case "rubber-duck" /* PetType.rubberduck */:
+            return rubberduck_1.RubberDuck.possibleColors;
+        case "zappy" /* PetType.zappy */:
+            return zappy_1.Zappy.possibleColors;
+        case "rocky" /* PetType.rocky */:
+            return rocky_1.Rocky.possibleColors;
+        case "cockatiel" /* PetType.cockatiel */:
+            return cockatiel_1.Cockatiel.possibleColors;
+        default:
+            throw new InvalidPetException("Pet type doesn't exist");
+    }
+}
+exports.availableColors = availableColors;
 
 
 /***/ }),
@@ -935,6 +968,7 @@ exports.CAT_NAMES = exports.Cat = void 0;
 const basepettype_1 = __webpack_require__(/*! ../basepettype */ "./src/panel/basepettype.ts");
 class Cat extends basepettype_1.BasePetType {
     label = 'cat';
+    possibleColors = ["black" /* PetColor.black */, "brown" /* PetColor.brown */, "white" /* PetColor.white */];
     sequence = {
         startingState: "sit-idle" /* States.sitIdle */,
         sequenceStates: [
@@ -1148,6 +1182,12 @@ exports.CLIPPY_NAMES = exports.Clippy = void 0;
 const basepettype_1 = __webpack_require__(/*! ../basepettype */ "./src/panel/basepettype.ts");
 class Clippy extends basepettype_1.BasePetType {
     label = 'clippy';
+    possibleColors = [
+        "black" /* PetColor.black */,
+        "brown" /* PetColor.brown */,
+        "green" /* PetColor.green */,
+        "yellow" /* PetColor.yellow */,
+    ];
     sequence = {
         startingState: "sit-idle" /* States.sitIdle */,
         sequenceStates: [
@@ -1222,6 +1262,7 @@ exports.COCKATIEL_NAMES = exports.Cockatiel = void 0;
 const basepettype_1 = __webpack_require__(/*! ../basepettype */ "./src/panel/basepettype.ts");
 class Cockatiel extends basepettype_1.BasePetType {
     label = 'cockatiel';
+    possibleColors = ["gray" /* PetColor.gray */];
     sequence = {
         startingState: "sit-idle" /* States.sitIdle */,
         sequenceStates: [
@@ -1320,6 +1361,7 @@ exports.CRAB_NAMES = exports.Crab = void 0;
 const basepettype_1 = __webpack_require__(/*! ../basepettype */ "./src/panel/basepettype.ts");
 class Crab extends basepettype_1.BasePetType {
     label = 'crab';
+    possibleColors = ["red" /* PetColor.red */];
     sequence = {
         startingState: "sit-idle" /* States.sitIdle */,
         sequenceStates: [
@@ -1434,6 +1476,7 @@ exports.DOG_NAMES = exports.Dog = void 0;
 const basepettype_1 = __webpack_require__(/*! ../basepettype */ "./src/panel/basepettype.ts");
 class Dog extends basepettype_1.BasePetType {
     label = 'dog';
+    possibleColors = ["black" /* PetColor.black */, "brown" /* PetColor.brown */, "white" /* PetColor.white */];
     sequence = {
         startingState: "sit-idle" /* States.sitIdle */,
         sequenceStates: [
@@ -1653,6 +1696,7 @@ exports.MOD_NAMES = exports.Mod = void 0;
 const basepettype_1 = __webpack_require__(/*! ../basepettype */ "./src/panel/basepettype.ts");
 class Mod extends basepettype_1.BasePetType {
     label = 'mod';
+    possibleColors = ["purple" /* PetColor.purple */];
     sequence = {
         startingState: "sit-idle" /* States.sitIdle */,
         sequenceStates: [
@@ -1723,6 +1767,7 @@ exports.ROCKY_NAMES = exports.Rocky = void 0;
 const basepettype_1 = __webpack_require__(/*! ../basepettype */ "./src/panel/basepettype.ts");
 class Rocky extends basepettype_1.BasePetType {
     label = 'rocky';
+    possibleColors = ["gray" /* PetColor.gray */];
     sequence = {
         startingState: "sit-idle" /* States.sitIdle */,
         sequenceStates: [
@@ -1792,6 +1837,7 @@ exports.DUCK_NAMES = exports.RubberDuck = void 0;
 const basepettype_1 = __webpack_require__(/*! ../basepettype */ "./src/panel/basepettype.ts");
 class RubberDuck extends basepettype_1.BasePetType {
     label = 'rubber-duck';
+    possibleColors = ["yellow" /* PetColor.yellow */];
     sequence = {
         startingState: "sit-idle" /* States.sitIdle */,
         sequenceStates: [
@@ -1914,6 +1960,7 @@ exports.SNAKE_NAMES = exports.Snake = void 0;
 const basepettype_1 = __webpack_require__(/*! ../basepettype */ "./src/panel/basepettype.ts");
 class Snake extends basepettype_1.BasePetType {
     label = 'snake';
+    possibleColors = ["green" /* PetColor.green */];
     sequence = {
         startingState: "sit-idle" /* States.sitIdle */,
         sequenceStates: [
@@ -2038,6 +2085,7 @@ exports.TOTORO_NAMES = exports.Totoro = void 0;
 const basepettype_1 = __webpack_require__(/*! ../basepettype */ "./src/panel/basepettype.ts");
 class Totoro extends basepettype_1.BasePetType {
     label = 'totoro';
+    possibleColors = ["gray" /* PetColor.gray */];
     sequence = {
         startingState: "sit-idle" /* States.sitIdle */,
         sequenceStates: [
@@ -2128,6 +2176,7 @@ exports.ZAPPY_NAMES = exports.Zappy = void 0;
 const basepettype_1 = __webpack_require__(/*! ../basepettype */ "./src/panel/basepettype.ts");
 class Zappy extends basepettype_1.BasePetType {
     label = 'zappy';
+    possibleColors = ["yellow" /* PetColor.yellow */];
     sequence = {
         startingState: "sit-idle" /* States.sitIdle */,
         sequenceStates: [
