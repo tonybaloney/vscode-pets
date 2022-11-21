@@ -225,3 +225,18 @@ export function availableColors(petType: PetType): PetColor[] {
             throw new InvalidPetException("Pet type doesn't exist");
     }
 }
+
+/**
+ * Some pets can only have certain colors, this makes sure they haven't been misconfigured.
+ * @param petColor
+ * @param petType
+ * @returns normalized color
+ */
+export function normalizeColor(petColor: PetColor, petType: PetType): PetColor {
+    const colors = availableColors(petType);
+    if (colors.includes(petColor)) {
+        return petColor;
+    } else {
+        return colors[0];
+    }
+}
