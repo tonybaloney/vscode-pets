@@ -2,10 +2,11 @@
     "name": "vscode-pets",
     "displayName": "vscode-pets",
     "description": "Pets for your VS Code",
-    "version": "1.17.1",
+    "version": "1.19.0",
     "engines": {
-        "vscode": "^1.68.0"
+        "vscode": "^1.73.0"
     },
+    "l10n": "./l10n",
     "repository": {
         "type": "github",
         "url": "https://github.com/tonybaloney/vscode-pets"
@@ -28,6 +29,7 @@
     "icon": "icon.png",
     "activationEvents": [
         "onCommand:vscode-pets.start",
+        "onCommand:vscode-pets.throw-with-mouse",
         "onCommand:vscode-pets.throw-ball",
         "onCommand:vscode-pets.spawn-pet",
         "onCommand:vscode-pets.delete-pet",
@@ -41,6 +43,7 @@
         "onStartupFinished"
     ],
     "main": "./out/extension/extension.js",
+    "browser": "./dist/web/extension-web.js",
     "contributes": {
         "views": {
             "explorer": [
@@ -78,6 +81,15 @@
                 "title": "Start pet coding session",
                 "category": "Pet Coding",
                 "icon": "media/dog.svg"
+            },
+            {
+                "command": "vscode-pets.throw-with-mouse",
+                "title": "Throw ball with mouse",
+                "category": "Pet Coding",
+                "icon": {
+                    "dark": "media/icon/dark-throw-outline.svg",
+                    "light": "media/icon/light-throw-outline.svg"
+                }
             },
             {
                 "command": "vscode-pets.throw-ball",
@@ -198,6 +210,11 @@
                         ],
                         "default": "none",
                         "description": "Background theme assets for your pets"
+                    },
+                    "vscode-pets.throwBallWithMouse": {
+                        "type": "boolean",
+                        "default": false,
+                        "description": "Throw ball with mouse"
                     }
                 }
             }
@@ -208,13 +225,16 @@
         "compile:panel": "webpack",
         "compile:extension": "tsc -p ./tsconfig.extension.json",
         "compile:test": "tsc -p ./tsconfig.test.json",
-        "compile": "npm run compile:panel && npm run compile:extension && npm run compile:test",
+        "compile:web": "webpack",
+        "compile": "npm run compile:panel && npm run compile:extension && npm run compile:test && npm run compile:web",
         "watch": "tsc -watch -p ./tsconfig.extension.json",
+        "watch:web": "webpack --watch",
         "pretest": "npm run compile && npm run lint",
         "lint": "eslint src --ext ts && prettier --check src",
         "lint:fix": "eslint src --ext ts --fix && prettier --write src",
         "test": "node ./out/test/runTest.js",
-        "test:coverage": "COVERAGE=1 node ./out/test/runTest.js"
+        "test:coverage": "COVERAGE=1 node ./out/test/runTest.js",
+        "test:web": "vscode-test-web --browserType=chromium --extensionDevelopmentPath=. --extensionTestsPath=dist/web/test/suite/index.js"
     },
     "devDependencies": {
         "@rbarilani/remove-source-map-url-webpack-plugin": "^1.1.0",
@@ -222,9 +242,11 @@
         "@types/jsdom": "^20.0.0",
         "@types/mocha": "^9.1.1",
         "@types/node": "^18.0.0",
-        "@types/vscode": "^1.68.0",
+        "@types/vscode": "^1.73.0",
         "@typescript-eslint/eslint-plugin": "^5.29.0",
         "@typescript-eslint/parser": "^5.29.0",
+        "@vscode/l10n-dev": "^0.0.19",
+        "@vscode/test-web": "^0.0.31",
         "eslint": "^8.18.0",
         "eslint-plugin-unused-imports": "^2.0.0",
         "glob": "^8.0.3",
@@ -233,7 +255,9 @@
         "jsdom-global": "^3.0.2",
         "mocha": "^10.0.0",
         "nyc": "^15.1.0",
+        "path-browserify": "^1.0.1",
         "prettier": "^2.7.1",
+        "process": "^0.11.10",
         "ts-loader": "^9.3.0",
         "typescript": "^4.7.4",
         "typescript-eslint": "^0.0.1-alpha.0",
@@ -242,6 +266,6 @@
         "webpack-cli": "^4.10.0"
     },
     "dependencies": {
-        "vscode-nls-i18n": "^0.2.4"
+        "@vscode/l10n": "^0.0.10"
     }
 }

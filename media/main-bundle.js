@@ -523,7 +523,7 @@ function initCanvas() {
     ctx.canvas.height = window.innerHeight;
 }
 // It cannot access the main VS Code APIs directly.
-function petPanelApp(basePetUri, theme, themeKind, petColor, petSize, petType, stateApi) {
+function petPanelApp(basePetUri, theme, themeKind, petColor, petSize, petType, throwBallWithMouse, stateApi) {
     const ballRadius = calculateBallRadius(petSize);
     var floor = 0;
     if (!stateApi) {
@@ -568,6 +568,67 @@ function petPanelApp(basePetUri, theme, themeKind, petColor, petSize, petType, s
         }
         ballState = new states_1.BallState(100, 100, 4, 5);
     }
+    function dynamicThrowOn() {
+        let startMouseX;
+        let startMouseY;
+        let endMouseX;
+        let endMouseY;
+        console.log('Enabling dynamic throw');
+        window.onmousedown = (e) => {
+            if (ballState) {
+                ballState.paused = true;
+            }
+            if (canvas) {
+                canvas.style.display = 'block';
+            }
+            endMouseX = e.clientX;
+            endMouseY = e.clientY;
+            startMouseX = e.clientX;
+            startMouseY = e.clientY;
+            ballState = new states_1.BallState(e.clientX, e.clientY, 0, 0);
+            exports.allPets.pets.forEach((petEl) => {
+                if (petEl.pet.canChase) {
+                    petEl.pet.chase(ballState, canvas);
+                }
+            });
+            ballState.paused = true;
+            drawBall();
+            window.onmousemove = (ev) => {
+                ev.preventDefault();
+                if (ballState) {
+                    ballState.paused = true;
+                }
+                startMouseX = endMouseX;
+                startMouseY = endMouseY;
+                endMouseX = ev.clientX;
+                endMouseY = ev.clientY;
+                ballState = new states_1.BallState(ev.clientX, ev.clientY, 0, 0);
+                drawBall();
+            };
+            window.onmouseup = (ev) => {
+                ev.preventDefault();
+                window.onmouseup = null;
+                window.onmousemove = null;
+                ballState = new states_1.BallState(endMouseX, endMouseY, endMouseX - startMouseX, endMouseY - startMouseY);
+                exports.allPets.pets.forEach((petEl) => {
+                    if (petEl.pet.canChase) {
+                        petEl.pet.chase(ballState, canvas);
+                    }
+                });
+                throwBall();
+            };
+        };
+    }
+    function dynamicThrowOff() {
+        console.log('Disabling dynamic throw');
+        window.onmousedown = null;
+        if (ballState) {
+            ballState.paused = true;
+        }
+        if (canvas) {
+            canvas.style.display = 'none';
+        }
+    }
     function throwBall() {
         if (!ballState.paused) {
             requestAnimationFrame(throwBall);
@@ -579,7 +640,6 @@ function petPanelApp(basePetUri, theme, themeKind, petColor, petSize, petType, s
             return;
         }
         then = now - (elapsed % interval);
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
         if (ballState.cx + ballRadius >= canvas.width) {
             ballState.vx = -ballState.vx * damping;
             ballState.cx = canvas.width - ballRadius;
@@ -601,12 +661,16 @@ function petPanelApp(basePetUri, theme, themeKind, petColor, petSize, petType, s
         ballState.vy += gravity;
         ballState.cx += ballState.vx;
         ballState.cy += ballState.vy;
+        drawBall();
+    }
+    function drawBall() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
         ctx.beginPath();
         ctx.arc(ballState.cx, ballState.cy, ballRadius, 0, 2 * Math.PI, false);
         ctx.fillStyle = '#2ed851';
         ctx.fill();
     }
-    console.log('Starting pet session', petColor, basePetUri, petType);
+    console.log('Starting pet session', petColor, basePetUri, petType, throwBallWithMouse);
     // New session
     var state = stateApi?.getState();
     if (!state) {
@@ -620,10 +684,24 @@ function petPanelApp(basePetUri, theme, themeKind, petColor, petSize, petType, s
         recoverState(basePetUri, petSize, floor, stateApi);
     }
     initCanvas();
+    if (throwBallWithMouse) {
+        dynamicThrowOn();
+    }
+    else {
+        dynamicThrowOff();
+    }
     // Handle messages sent from the extension to the webview
     window.addEventListener('message', (event) => {
         const message = event.data; // The json data that the extension sent
         switch (message.command) {
+            case 'throw-with-mouse':
+                if (message.enabled) {
+                    dynamicThrowOn();
+                }
+                else {
+                    dynamicThrowOff();
+                }
+                break;
             case 'throw-ball':
                 resetBall();
                 throwBall();
