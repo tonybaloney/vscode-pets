@@ -401,22 +401,29 @@ export function activate(context: vscode.ExtensionContext) {
                     context,
                     getConfiguredSize(),
                 );
-                let petList = '';
-                for (let i = 0; i < pets.length; i++) {
-                    const pet = pets[i];
-                    petList += `Type: ${pet.type} Color: ${pet.color} Size: ${pet.size} \n`;
-                }
-
-                await vscode.workspace.fs.writeFile(
-                    vscode.Uri.file(
-                        path.join(
-                            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-                            vscode.workspace.workspaceFolders![0].uri.fsPath,
-                            'vscodePets.txt',
+                const petJson = JSON.stringify(pets, null, 2);
+                const fileName = 'pets.json';
+                if (!vscode.workspace.workspaceFolders) {
+                    vscode.window.showErrorMessage(
+                        vscode.l10n.t(
+                            'You must have a folder or workspace open to export pets.',
                         ),
-                    ),
-                    Buffer.from(petList),
-                );
+                    );
+                    return;
+                }
+                const workspacePath =
+                    vscode.workspace.workspaceFolders[0].uri.fsPath;
+                const newUri = vscode.Uri.file(fileName).with({
+                    scheme: 'untitled',
+                    path: path.join(workspacePath, fileName),
+                });
+                vscode.workspace.openTextDocument(newUri).then((doc) => {
+                    vscode.window.showTextDocument(doc).then((editor) => {
+                        editor.edit((edit) => {
+                            edit.insert(new vscode.Position(0, 0), petJson);
+                        });
+                    });
+                });
             },
         ),
     );
@@ -425,48 +432,53 @@ export function activate(context: vscode.ExtensionContext) {
         vscode.commands.registerCommand(
             'vscode-pets.import-pet-list',
             async () => {
-                const petsToLoad: Uint8Array =
-                    await vscode.workspace.fs.readFile(
-                        vscode.Uri.file(
-                            path.join(
-                                // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-                                vscode.workspace.workspaceFolders![0].uri
-                                    .fsPath,
-                                'vscodePets.txt',
+                const options: vscode.OpenDialogOptions = {
+                    canSelectMany: false,
+                    openLabel: 'Open pets.json',
+                    filters: {
+                        'JSON files': ['json'],
+                    },
+                };
+                const fileUri = await vscode.window.showOpenDialog(options);
+
+                if (fileUri && fileUri[0]) {
+                    console.log('Selected file: ' + fileUri[0].fsPath);
+                    try {
+                        const fileContents = await vscode.workspace.fs.readFile(
+                            fileUri[0],
+                        );
+                        const petsToLoad = JSON.parse(fileContents.toString());
+
+                        // load the pets into the collection
+                        var collection = PetSpecification.collectionFromMemento(
+                            context,
+                            getConfiguredSize(),
+                        );
+                        // fetch just the pet types
+                        const panel = getPetPanel();
+                        for (let i = 0; i < petsToLoad.length; i++) {
+                            const pet = petsToLoad[i];
+                            const petSpec = new PetSpecification(
+                                pet.color,
+                                pet.type,
+                                pet.size,
+                                pet.name,
+                            );
+                            collection.push(petSpec);
+                            if (panel !== undefined) {
+                                panel.spawnPet(petSpec);
+                            }
+                        }
+                        storeCollectionAsMemento(context, collection);
+                    } catch (e: any) {
+                        vscode.window.showErrorMessage(
+                            vscode.l10n.t(
+                                'Failed to import pets: {0}',
+                                e?.message,
                             ),
-                        ),
-                    );
-                // check if empty
-                if (petsToLoad.length === 0) {
-                    vscode.window.showErrorMessage(
-                        'File to load empty. Make sure you have a file called vscodePets.txt in your workspace',
-                    );
-                    return;
-                }
-                // load the pets into the collection
-                var collection = PetSpecification.collectionFromMemento(
-                    context,
-                    getConfiguredSize(),
-                );
-                // fetch just the pet types
-                const petTypes: any = petsToLoad.toString().split('Type: ');
-                const panel = getPetPanel();
-                for (let i = 1; i < petTypes.length; i++) {
-                    const pet = petTypes[i];
-                    const petType = pet.split(' ')[0];
-                    const petColor = pet.split('Color: ')[1].split(' ')[0];
-                    const petSize = pet.split('Size: ')[1].split(' ')[0];
-                    const petSpec = new PetSpecification(
-                        petColor,
-                        petType,
-                        petSize,
-                    );
-                    collection.push(petSpec);
-                    if (panel !== undefined) {
-                        panel.spawnPet(petSpec);
+                        );
                     }
                 }
-                storeCollectionAsMemento(context, collection);
             },
         ),
     );
