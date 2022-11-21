@@ -9,7 +9,14 @@ import {
     WebviewMessage,
 } from '../common/types';
 import { IPetType } from './states';
-import { createPet, PetCollection, PetElement, IPetCollection } from './pets';
+import {
+    createPet,
+    PetCollection,
+    PetElement,
+    IPetCollection,
+    availableColors,
+    InvalidPetException,
+} from './pets';
 import { BallState, PetElementState, PetPanelState } from './states';
 
 /* This is how the VS Code API can be invoked from the panel */
@@ -141,6 +148,9 @@ function addPetToPanel(
     const root = basePetUri + '/' + petType + '/' + petColor;
     console.log('Creating new pet : ', petType, root, petColor, petSize, name);
     try {
+        if (!availableColors(petType).includes(petColor)) {
+            throw new InvalidPetException('Invalid color for pet type');
+        }
         var newPet = createPet(
             petType,
             petSpriteElement,
