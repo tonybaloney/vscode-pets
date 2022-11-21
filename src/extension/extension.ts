@@ -15,7 +15,7 @@ import {
 } from '../common/types';
 import { randomName } from '../common/names';
 import * as localize from '../common/localize';
-import { availableColors } from '../panel/pets';
+import { availableColors, normalizeColor } from '../panel/pets';
 
 const EXTRA_PETS_KEY = 'vscode-pets.extra-pets';
 const EXTRA_PETS_KEY_TYPES = EXTRA_PETS_KEY + '.types';
@@ -664,21 +664,6 @@ function getWebviewOptions(
         // And restrict the webview to only loading content from our extension's `media` directory.
         localResourceRoots: [vscode.Uri.joinPath(extensionUri, 'media')],
     };
-}
-
-/**
- * Some pets can only have certain colors, this makes sure they haven't been misconfigured.
- * @param petColor
- * @param petType
- * @returns normalized color
- */
-function normalizeColor(petColor: PetColor, petType: PetType): PetColor {
-    const colors = availableColors(petType);
-    if (colors.includes(petColor)) {
-        return petColor;
-    } else {
-        return colors[0];
-    }
 }
 
 interface IPetPanel {

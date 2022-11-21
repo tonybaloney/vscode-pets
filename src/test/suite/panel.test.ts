@@ -128,7 +128,7 @@ suite('Pets Test Suite', () => {
                     'https://test.com',
                     Theme.beach,
                     ColorThemeKind.dark,
-                    PetColor.black,
+                    pets.normalizeColor(PetColor.black, petType),
                     PetSize.large,
                     petType,
                     false,
