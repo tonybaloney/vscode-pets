@@ -2,6 +2,16 @@
 
 All notable changes to the "vscode-pets" extension will be documented in this file.
 
+## [1.18.0]
+
+* Fixed cats sizes when ball caught by @gulyapulya in https://github.com/tonybaloney/vscode-pets/pull/313
+* Added pet interaction, Dynamic throwing! by @Luke-G-Cordova in https://github.com/tonybaloney/vscode-pets/pull/307 and https://github.com/tonybaloney/vscode-pets/pull/314
+
+## [1.17.2]
+
+* Readme Update  by @AnderMendoza in https://github.com/tonybaloney/vscode-pets/pull/305
+* Fix Mod Catching Ball Bug by @Harry-Hopkinson in https://github.com/tonybaloney/vscode-pets/pull/310
+
 ## [1.17.1]
 
 * Change default position by @tonybaloney in https://github.com/tonybaloney/vscode-pets/pull/303
