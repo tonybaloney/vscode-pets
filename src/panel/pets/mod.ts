@@ -4,7 +4,7 @@ import { PetColor } from '../../common/types';
 
 export class Mod extends BasePetType {
     label = 'mod';
-    possibleColors = [PetColor.purple];
+    static possibleColors = [PetColor.purple];
     sequence = {
         startingState: States.sitIdle,
         sequenceStates: [
