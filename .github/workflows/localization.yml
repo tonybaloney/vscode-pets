@@ -7,7 +7,9 @@ on:
   schedule:
     - cron: '0 */6 * * *' # Every 6 hours - https://crontab.guru/#0_*/6_*_*_*
   push:
-    branches: [ master, feat/setup-crowdin ]
+    paths:
+      - 'l10n/bundle.l10n.json'
+    branches: [ master ]
 
 jobs:
   synchronize-with-crowdin:
@@ -18,15 +20,11 @@ jobs:
         uses: actions/checkout@v2
 
       - name: crowdin action
-        uses: crowdin/github-action@1.5.0
+        uses: crowdin/github-action@1.5.1
         with:
           # Upload sources to Crowdin
           upload_sources: true
-
-          # Upload translations to Crowdin, only use true at initial run
-          upload_translations: true
-
-          # Make pull request of Crowdin translations
+          # Download translations from Crowdin
           download_translations: true
 
           # To download translations to the specified version branch
