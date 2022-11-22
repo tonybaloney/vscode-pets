@@ -48,7 +48,7 @@ Run the "Start pet coding session" command (`vscode-pets.start`) to see a cat in
 
 ## Credits
 
-The cat and dog media assets for this extension were licensed from itch.io.
+The cat animations were designed by [seethingswarm](https://seethingswarm.itch.io/catset). The dog media assets for this extension were licensed from itch.io.
 
 [Marc Duiker](https://twitter.com/marcduiker) created the Clippy, Rocky, Zappy, rubber duck, snake, cockatiel, Ferris the crab, and Mod the dotnet bot media assets.
 
