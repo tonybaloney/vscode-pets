@@ -1492,7 +1492,12 @@ exports.DOG_NAMES = exports.Dog = void 0;
 const basepettype_1 = __webpack_require__(/*! ../basepettype */ "./src/panel/basepettype.ts");
 class Dog extends basepettype_1.BasePetType {
     label = 'dog';
-    static possibleColors = ["black" /* PetColor.black */, "brown" /* PetColor.brown */, "white" /* PetColor.white */];
+    static possibleColors = [
+        "black" /* PetColor.black */,
+        "brown" /* PetColor.brown */,
+        "white" /* PetColor.white */,
+        "red" /* PetColor.red */,
+    ];
     sequence = {
         startingState: "sit-idle" /* States.sitIdle */,
         sequenceStates: [
