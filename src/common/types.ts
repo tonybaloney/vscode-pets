@@ -52,12 +52,6 @@ export const enum Theme {
     beach = 'beach',
 }
 
-export const enum ColorThemeKind {
-    light = 1,
-    dark = 2,
-    highContrast = 3,
-}
-
 export class WebviewMessage {
     text: string;
     command: string;

@@ -2,57 +2,16 @@
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
-/***/ "./src/common/names.ts":
-/*!*****************************!*\
-  !*** ./src/common/names.ts ***!
-  \*****************************/
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
-
-
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.randomName = void 0;
-const cat_1 = __webpack_require__(/*! ../panel/pets/cat */ "./src/panel/pets/cat.ts");
-const clippy_1 = __webpack_require__(/*! ../panel/pets/clippy */ "./src/panel/pets/clippy.ts");
-const cockatiel_1 = __webpack_require__(/*! ../panel/pets/cockatiel */ "./src/panel/pets/cockatiel.ts");
-const crab_1 = __webpack_require__(/*! ../panel/pets/crab */ "./src/panel/pets/crab.ts");
-const dog_1 = __webpack_require__(/*! ../panel/pets/dog */ "./src/panel/pets/dog.ts");
-const mod_1 = __webpack_require__(/*! ../panel/pets/mod */ "./src/panel/pets/mod.ts");
-const rocky_1 = __webpack_require__(/*! ../panel/pets/rocky */ "./src/panel/pets/rocky.ts");
-const rubberduck_1 = __webpack_require__(/*! ../panel/pets/rubberduck */ "./src/panel/pets/rubberduck.ts");
-const snake_1 = __webpack_require__(/*! ../panel/pets/snake */ "./src/panel/pets/snake.ts");
-const totoro_1 = __webpack_require__(/*! ../panel/pets/totoro */ "./src/panel/pets/totoro.ts");
-const zappy_1 = __webpack_require__(/*! ../panel/pets/zappy */ "./src/panel/pets/zappy.ts");
-function randomName(type) {
-    const collection = {
-        ["cat" /* PetType.cat */]: cat_1.CAT_NAMES,
-        ["dog" /* PetType.dog */]: dog_1.DOG_NAMES,
-        ["crab" /* PetType.crab */]: crab_1.CRAB_NAMES,
-        ["clippy" /* PetType.clippy */]: clippy_1.CLIPPY_NAMES,
-        ["mod" /* PetType.mod */]: mod_1.MOD_NAMES,
-        ["totoro" /* PetType.totoro */]: totoro_1.TOTORO_NAMES,
-        ["snake" /* PetType.snake */]: snake_1.SNAKE_NAMES,
-        ["rubber-duck" /* PetType.rubberduck */]: rubberduck_1.DUCK_NAMES,
-        ["zappy" /* PetType.zappy */]: zappy_1.ZAPPY_NAMES,
-        ["rocky" /* PetType.rocky */]: rocky_1.ROCKY_NAMES,
-        ["cockatiel" /* PetType.cockatiel */]: cockatiel_1.COCKATIEL_NAMES,
-    }[type] ?? cat_1.CAT_NAMES;
-    return (collection[Math.floor(Math.random() * collection.length)] ?? 'Unknown');
-}
-exports.randomName = randomName;
-
-
-/***/ }),
-
-/***/ "./src/panel/basepettype.ts":
-/*!**********************************!*\
-  !*** ./src/panel/basepettype.ts ***!
-  \**********************************/
+/***/ "./src/common/basepettype.ts":
+/*!***********************************!*\
+  !*** ./src/common/basepettype.ts ***!
+  \***********************************/
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.BasePetType = exports.InvalidStateException = void 0;
-const states_1 = __webpack_require__(/*! ./states */ "./src/panel/states.ts");
+const states_1 = __webpack_require__(/*! ./states */ "./src/common/states.ts");
 class InvalidStateException {
 }
 exports.InvalidStateException = InvalidStateException;
@@ -319,482 +278,67 @@ exports.BasePetType = BasePetType;
 
 /***/ }),
 
-/***/ "./src/panel/main.ts":
-/*!***************************!*\
-  !*** ./src/panel/main.ts ***!
-  \***************************/
+/***/ "./src/common/names.ts":
+/*!*****************************!*\
+  !*** ./src/common/names.ts ***!
+  \*****************************/
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.petPanelApp = exports.saveState = exports.allPets = void 0;
-// This script will be run within the webview itself
-const names_1 = __webpack_require__(/*! ../common/names */ "./src/common/names.ts");
-const pets_1 = __webpack_require__(/*! ./pets */ "./src/panel/pets.ts");
-const states_1 = __webpack_require__(/*! ./states */ "./src/panel/states.ts");
-exports.allPets = new pets_1.PetCollection();
-var petCounter;
-function calculateBallRadius(size) {
-    if (size === "nano" /* PetSize.nano */) {
-        return 2;
-    }
-    else if (size === "medium" /* PetSize.medium */) {
-        return 4;
-    }
-    else if (size === "large" /* PetSize.large */) {
-        return 8;
-    }
-    else {
-        return 1; // Shrug
-    }
+exports.randomName = void 0;
+const cat_1 = __webpack_require__(/*! ./pets/cat */ "./src/common/pets/cat.ts");
+const clippy_1 = __webpack_require__(/*! ./pets/clippy */ "./src/common/pets/clippy.ts");
+const cockatiel_1 = __webpack_require__(/*! ./pets/cockatiel */ "./src/common/pets/cockatiel.ts");
+const crab_1 = __webpack_require__(/*! ./pets/crab */ "./src/common/pets/crab.ts");
+const dog_1 = __webpack_require__(/*! ./pets/dog */ "./src/common/pets/dog.ts");
+const mod_1 = __webpack_require__(/*! ./pets/mod */ "./src/common/pets/mod.ts");
+const rocky_1 = __webpack_require__(/*! ./pets/rocky */ "./src/common/pets/rocky.ts");
+const rubberduck_1 = __webpack_require__(/*! ./pets/rubberduck */ "./src/common/pets/rubberduck.ts");
+const snake_1 = __webpack_require__(/*! ./pets/snake */ "./src/common/pets/snake.ts");
+const totoro_1 = __webpack_require__(/*! ./pets/totoro */ "./src/common/pets/totoro.ts");
+const zappy_1 = __webpack_require__(/*! ./pets/zappy */ "./src/common/pets/zappy.ts");
+function randomName(type) {
+    const collection = {
+        ["cat" /* PetType.cat */]: cat_1.CAT_NAMES,
+        ["dog" /* PetType.dog */]: dog_1.DOG_NAMES,
+        ["crab" /* PetType.crab */]: crab_1.CRAB_NAMES,
+        ["clippy" /* PetType.clippy */]: clippy_1.CLIPPY_NAMES,
+        ["mod" /* PetType.mod */]: mod_1.MOD_NAMES,
+        ["totoro" /* PetType.totoro */]: totoro_1.TOTORO_NAMES,
+        ["snake" /* PetType.snake */]: snake_1.SNAKE_NAMES,
+        ["rubber-duck" /* PetType.rubberduck */]: rubberduck_1.DUCK_NAMES,
+        ["zappy" /* PetType.zappy */]: zappy_1.ZAPPY_NAMES,
+        ["rocky" /* PetType.rocky */]: rocky_1.ROCKY_NAMES,
+        ["cockatiel" /* PetType.cockatiel */]: cockatiel_1.COCKATIEL_NAMES,
+    }[type] ?? cat_1.CAT_NAMES;
+    return (collection[Math.floor(Math.random() * collection.length)] ?? 'Unknown');
 }
-function calculateFloor(size, theme) {
-    switch (theme) {
-        case "forest" /* Theme.forest */:
-            switch (size) {
-                case "medium" /* PetSize.medium */:
-                    return 40;
-                case "large" /* PetSize.large */:
-                    return 65;
-                case "nano" /* PetSize.nano */:
-                default:
-                    return 23;
-            }
-        case "castle" /* Theme.castle */:
-            switch (size) {
-                case "medium" /* PetSize.medium */:
-                    return 80;
-                case "large" /* PetSize.large */:
-                    return 120;
-                case "nano" /* PetSize.nano */:
-                default:
-                    return 45;
-            }
-        case "beach" /* Theme.beach */:
-            switch (size) {
-                case "medium" /* PetSize.medium */:
-                    return 80;
-                case "large" /* PetSize.large */:
-                    return 120;
-                case "nano" /* PetSize.nano */:
-                default:
-                    return 45;
-            }
-    }
-    return 0;
-}
-function handleMouseOver(e) {
-    var el = e.currentTarget;
-    exports.allPets.pets.forEach((element) => {
-        if (element.collision === el) {
-            if (!element.pet.canSwipe) {
-                return;
-            }
-            element.pet.swipe();
-        }
-    });
-}
-function startAnimations(collision, pet, stateApi) {
-    if (!stateApi) {
-        stateApi = acquireVsCodeApi();
-    }
-    collision.addEventListener('mouseover', handleMouseOver);
-    setInterval(() => {
-        var updates = exports.allPets.seekNewFriends();
-        updates.forEach((message) => {
-            stateApi?.postMessage({
-                text: message,
-                command: 'info',
-            });
-        });
-        pet.nextFrame();
-        saveState(stateApi);
-    }, 100);
-}
-function addPetToPanel(petType, basePetUri, petColor, petSize, left, bottom, floor, name, stateApi) {
-    var petSpriteElement = document.createElement('img');
-    petSpriteElement.className = 'pet';
-    document.getElementById('petsContainer').appendChild(petSpriteElement);
-    var collisionElement = document.createElement('div');
-    collisionElement.className = 'collision';
-    document.getElementById('petsContainer').appendChild(collisionElement);
-    var speechBubbleElement = document.createElement('div');
-    speechBubbleElement.className = `bubble bubble-${petSize}`;
-    speechBubbleElement.innerText = 'Hello!';
-    document.getElementById('petsContainer').appendChild(speechBubbleElement);
-    const root = basePetUri + '/' + petType + '/' + petColor;
-    console.log('Creating new pet : ', petType, root, petColor, petSize, name);
-    try {
-        if (!(0, pets_1.availableColors)(petType).includes(petColor)) {
-            throw new pets_1.InvalidPetException('Invalid color for pet type');
-        }
-        var newPet = (0, pets_1.createPet)(petType, petSpriteElement, collisionElement, speechBubbleElement, petSize, left, bottom, root, floor, name);
-        petCounter++;
-        startAnimations(collisionElement, newPet, stateApi);
-    }
-    catch (e) {
-        // Remove elements
-        petSpriteElement.remove();
-        collisionElement.remove();
-        speechBubbleElement.remove();
-        throw e;
-    }
-    return new pets_1.PetElement(petSpriteElement, collisionElement, speechBubbleElement, newPet, petColor, petType);
-}
-function saveState(stateApi) {
-    if (!stateApi) {
-        stateApi = acquireVsCodeApi();
-    }
-    var state = new states_1.PetPanelState();
-    state.petStates = new Array();
-    exports.allPets.pets.forEach((petItem) => {
-        state.petStates?.push({
-            petName: petItem.pet.name,
-            petColor: petItem.color,
-            petType: petItem.type,
-            petState: petItem.pet.getState(),
-            petFriend: petItem.pet.friend?.name ?? undefined,
-            elLeft: petItem.el.style.left,
-            elBottom: petItem.el.style.bottom,
-        });
-    });
-    state.petCounter = petCounter;
-    stateApi?.setState(state);
-}
-exports.saveState = saveState;
-function recoverState(basePetUri, petSize, floor, stateApi) {
-    if (!stateApi) {
-        stateApi = acquireVsCodeApi();
-    }
-    var state = stateApi?.getState();
-    if (!state) {
-        petCounter = 1;
-    }
-    else {
-        if (state.petCounter === undefined || isNaN(state.petCounter)) {
-            petCounter = 1;
-        }
-        else {
-            petCounter = state.petCounter ?? 1;
-        }
-    }
-    var recoveryMap = new Map();
-    state?.petStates?.forEach((p) => {
-        // Fixes a bug related to duck animations
-        if (p.petType === 'rubber duck') {
-            p.petType = 'rubber-duck';
-        }
-        try {
-            var newPet = addPetToPanel(p.petType ?? "cat" /* PetType.cat */, basePetUri, p.petColor ?? "brown" /* PetColor.brown */, petSize, parseInt(p.elLeft ?? '0'), parseInt(p.elBottom ?? '0'), floor, p.petName ?? (0, names_1.randomName)(p.petType ?? "cat" /* PetType.cat */), stateApi);
-            exports.allPets.push(newPet);
-            recoveryMap.set(newPet.pet, p);
-        }
-        catch (InvalidPetException) {
-            console.log('State had invalid pet (' + p.petType + '), discarding.');
-        }
-    });
-    recoveryMap.forEach((state, pet) => {
-        // Recover previous state.
-        if (state.petState !== undefined) {
-            pet.recoverState(state.petState);
-        }
-        // Resolve friend relationships
-        var friend = undefined;
-        if (state.petFriend) {
-            friend = exports.allPets.locate(state.petFriend);
-            if (friend) {
-                pet.recoverFriend(friend.pet);
-            }
-        }
-    });
-}
-function randomStartPosition() {
-    return Math.floor(Math.random() * (window.innerWidth * 0.7));
-}
-let canvas, ctx;
-function initCanvas() {
-    canvas = document.getElementById('petCanvas');
-    if (!canvas) {
-        console.log('Canvas not ready');
-        return;
-    }
-    ctx = canvas.getContext('2d');
-    if (!ctx) {
-        console.log('Canvas context not ready');
-        return;
-    }
-    ctx.canvas.width = window.innerWidth;
-    ctx.canvas.height = window.innerHeight;
-}
-// It cannot access the main VS Code APIs directly.
-function petPanelApp(basePetUri, theme, themeKind, petColor, petSize, petType, throwBallWithMouse, stateApi) {
-    const ballRadius = calculateBallRadius(petSize);
-    var floor = 0;
-    if (!stateApi) {
-        stateApi = acquireVsCodeApi();
-    }
-    // Apply Theme backgrounds
-    const foregroundEl = document.getElementById('foreground');
-    if (theme !== "none" /* Theme.none */) {
-        var _themeKind = '';
-        switch (themeKind) {
-            case 2 /* ColorThemeKind.dark */:
-                _themeKind = 'dark';
-                break;
-            case 1 /* ColorThemeKind.light */:
-                _themeKind = 'light';
-                break;
-            case 3 /* ColorThemeKind.highContrast */:
-            default:
-                _themeKind = 'light';
-                break;
-        }
-        document.body.style.backgroundImage = `url('${basePetUri}/backgrounds/${theme}/background-${_themeKind}-${petSize}.png')`;
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        foregroundEl.style.backgroundImage = `url('${basePetUri}/backgrounds/${theme}/foreground-${_themeKind}-${petSize}.png')`;
-        floor = calculateFloor(petSize, theme); // Themes have pets at a specified height from the ground
-    }
-    else {
-        document.body.style.backgroundImage = '';
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        foregroundEl.style.backgroundImage = '';
-    }
-    /// Bouncing ball components, credit https://stackoverflow.com/a/29982343
-    const gravity = 0.6, damping = 0.9, traction = 0.8, interval = 1000 / 24; // msec for single frame
-    let then = 0; // last draw
-    var ballState;
-    function resetBall() {
-        if (ballState) {
-            ballState.paused = true;
-        }
-        if (canvas) {
-            canvas.style.display = 'block';
-        }
-        ballState = new states_1.BallState(100, 100, 4, 5);
-    }
-    function dynamicThrowOn() {
-        let startMouseX;
-        let startMouseY;
-        let endMouseX;
-        let endMouseY;
-        console.log('Enabling dynamic throw');
-        window.onmousedown = (e) => {
-            if (ballState) {
-                ballState.paused = true;
-            }
-            if (canvas) {
-                canvas.style.display = 'block';
-            }
-            endMouseX = e.clientX;
-            endMouseY = e.clientY;
-            startMouseX = e.clientX;
-            startMouseY = e.clientY;
-            ballState = new states_1.BallState(e.clientX, e.clientY, 0, 0);
-            exports.allPets.pets.forEach((petEl) => {
-                if (petEl.pet.canChase) {
-                    petEl.pet.chase(ballState, canvas);
-                }
-            });
-            ballState.paused = true;
-            drawBall();
-            window.onmousemove = (ev) => {
-                ev.preventDefault();
-                if (ballState) {
-                    ballState.paused = true;
-                }
-                startMouseX = endMouseX;
-                startMouseY = endMouseY;
-                endMouseX = ev.clientX;
-                endMouseY = ev.clientY;
-                ballState = new states_1.BallState(ev.clientX, ev.clientY, 0, 0);
-                drawBall();
-            };
-            window.onmouseup = (ev) => {
-                ev.preventDefault();
-                window.onmouseup = null;
-                window.onmousemove = null;
-                ballState = new states_1.BallState(endMouseX, endMouseY, endMouseX - startMouseX, endMouseY - startMouseY);
-                exports.allPets.pets.forEach((petEl) => {
-                    if (petEl.pet.canChase) {
-                        petEl.pet.chase(ballState, canvas);
-                    }
-                });
-                throwBall();
-            };
-        };
-    }
-    function dynamicThrowOff() {
-        console.log('Disabling dynamic throw');
-        window.onmousedown = null;
-        if (ballState) {
-            ballState.paused = true;
-        }
-        if (canvas) {
-            canvas.style.display = 'none';
-        }
-    }
-    function throwBall() {
-        if (!ballState.paused) {
-            requestAnimationFrame(throwBall);
-        }
-        // throttling the frame rate
-        const now = Date.now();
-        const elapsed = now - then;
-        if (elapsed <= interval) {
-            return;
-        }
-        then = now - (elapsed % interval);
-        if (ballState.cx + ballRadius >= canvas.width) {
-            ballState.vx = -ballState.vx * damping;
-            ballState.cx = canvas.width - ballRadius;
-        }
-        else if (ballState.cx - ballRadius <= 0) {
-            ballState.vx = -ballState.vx * damping;
-            ballState.cx = ballRadius;
-        }
-        if (ballState.cy + ballRadius + floor >= canvas.height) {
-            ballState.vy = -ballState.vy * damping;
-            ballState.cy = canvas.height - ballRadius - floor;
-            // traction here
-            ballState.vx *= traction;
-        }
-        else if (ballState.cy - ballRadius <= 0) {
-            ballState.vy = -ballState.vy * damping;
-            ballState.cy = ballRadius;
-        }
-        ballState.vy += gravity;
-        ballState.cx += ballState.vx;
-        ballState.cy += ballState.vy;
-        drawBall();
-    }
-    function drawBall() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        ctx.beginPath();
-        ctx.arc(ballState.cx, ballState.cy, ballRadius, 0, 2 * Math.PI, false);
-        ctx.fillStyle = '#2ed851';
-        ctx.fill();
-    }
-    console.log('Starting pet session', petColor, basePetUri, petType, throwBallWithMouse);
-    // New session
-    var state = stateApi?.getState();
-    if (!state) {
-        console.log('No state, starting a new session.');
-        petCounter = 1;
-        exports.allPets.push(addPetToPanel(petType, basePetUri, petColor, petSize, randomStartPosition(), floor, floor, (0, names_1.randomName)(petType), stateApi));
-        saveState(stateApi);
-    }
-    else {
-        console.log('Recovering state - ', state);
-        recoverState(basePetUri, petSize, floor, stateApi);
-    }
-    initCanvas();
-    if (throwBallWithMouse) {
-        dynamicThrowOn();
-    }
-    else {
-        dynamicThrowOff();
-    }
-    // Handle messages sent from the extension to the webview
-    window.addEventListener('message', (event) => {
-        const message = event.data; // The json data that the extension sent
-        switch (message.command) {
-            case 'throw-with-mouse':
-                if (message.enabled) {
-                    dynamicThrowOn();
-                }
-                else {
-                    dynamicThrowOff();
-                }
-                break;
-            case 'throw-ball':
-                resetBall();
-                throwBall();
-                exports.allPets.pets.forEach((petEl) => {
-                    if (petEl.pet.canChase) {
-                        petEl.pet.chase(ballState, canvas);
-                    }
-                });
-                break;
-            case 'spawn-pet':
-                exports.allPets.push(addPetToPanel(message.type, basePetUri, message.color, petSize, randomStartPosition(), floor, floor, message.name ?? (0, names_1.randomName)(message.type), stateApi));
-                saveState(stateApi);
-                break;
-            case 'list-pets':
-                var pets = exports.allPets.pets;
-                stateApi?.postMessage({
-                    command: 'list-pets',
-                    text: pets
-                        .map((pet) => `${pet.type},${pet.pet.name},${pet.color}`)
-                        .join('\n'),
-                });
-                break;
-            case 'roll-call':
-                var pets = exports.allPets.pets;
-                // go through every single
-                // pet and then print out their name
-                pets.forEach((pet) => {
-                    stateApi?.postMessage({
-                        command: 'info',
-                        text: `${pet.pet.emoji} ${pet.pet.name} (${pet.color} ${pet.type}): ${pet.pet.hello}`,
-                    });
-                });
-            case 'delete-pet':
-                var pet = exports.allPets.locate(message.name);
-                if (pet) {
-                    exports.allPets.remove(message.name);
-                    saveState(stateApi);
-                    stateApi?.postMessage({
-                        command: 'info',
-                        text: '👋 Removed pet ' + message.name,
-                    });
-                }
-                else {
-                    stateApi?.postMessage({
-                        command: 'error',
-                        text: `Could not find pet ${message.name}`,
-                    });
-                }
-                break;
-            case 'reset-pet':
-                exports.allPets.reset();
-                petCounter = 0;
-                saveState(stateApi);
-                break;
-            case 'pause-pet':
-                petCounter = 1;
-                saveState(stateApi);
-                break;
-        }
-    });
-}
-exports.petPanelApp = petPanelApp;
-window.addEventListener('resize', function () {
-    initCanvas();
-});
+exports.randomName = randomName;
 
 
 /***/ }),
 
-/***/ "./src/panel/pets.ts":
-/*!***************************!*\
-  !*** ./src/panel/pets.ts ***!
-  \***************************/
+/***/ "./src/common/pets.ts":
+/*!****************************!*\
+  !*** ./src/common/pets.ts ***!
+  \****************************/
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.normalizeColor = exports.availableColors = exports.createPet = exports.InvalidPetException = exports.PetCollection = exports.PetElement = void 0;
-const cat_1 = __webpack_require__(/*! ./pets/cat */ "./src/panel/pets/cat.ts");
-const clippy_1 = __webpack_require__(/*! ./pets/clippy */ "./src/panel/pets/clippy.ts");
-const cockatiel_1 = __webpack_require__(/*! ./pets/cockatiel */ "./src/panel/pets/cockatiel.ts");
-const crab_1 = __webpack_require__(/*! ./pets/crab */ "./src/panel/pets/crab.ts");
-const dog_1 = __webpack_require__(/*! ./pets/dog */ "./src/panel/pets/dog.ts");
-const mod_1 = __webpack_require__(/*! ./pets/mod */ "./src/panel/pets/mod.ts");
-const rocky_1 = __webpack_require__(/*! ./pets/rocky */ "./src/panel/pets/rocky.ts");
-const rubberduck_1 = __webpack_require__(/*! ./pets/rubberduck */ "./src/panel/pets/rubberduck.ts");
-const snake_1 = __webpack_require__(/*! ./pets/snake */ "./src/panel/pets/snake.ts");
-const totoro_1 = __webpack_require__(/*! ./pets/totoro */ "./src/panel/pets/totoro.ts");
-const zappy_1 = __webpack_require__(/*! ./pets/zappy */ "./src/panel/pets/zappy.ts");
+const cat_1 = __webpack_require__(/*! ./pets/cat */ "./src/common/pets/cat.ts");
+const clippy_1 = __webpack_require__(/*! ./pets/clippy */ "./src/common/pets/clippy.ts");
+const cockatiel_1 = __webpack_require__(/*! ./pets/cockatiel */ "./src/common/pets/cockatiel.ts");
+const crab_1 = __webpack_require__(/*! ./pets/crab */ "./src/common/pets/crab.ts");
+const dog_1 = __webpack_require__(/*! ./pets/dog */ "./src/common/pets/dog.ts");
+const mod_1 = __webpack_require__(/*! ./pets/mod */ "./src/common/pets/mod.ts");
+const rocky_1 = __webpack_require__(/*! ./pets/rocky */ "./src/common/pets/rocky.ts");
+const rubberduck_1 = __webpack_require__(/*! ./pets/rubberduck */ "./src/common/pets/rubberduck.ts");
+const snake_1 = __webpack_require__(/*! ./pets/snake */ "./src/common/pets/snake.ts");
+const totoro_1 = __webpack_require__(/*! ./pets/totoro */ "./src/common/pets/totoro.ts");
+const zappy_1 = __webpack_require__(/*! ./pets/zappy */ "./src/common/pets/zappy.ts");
 class PetElement {
     el;
     collision;
@@ -972,16 +516,16 @@ exports.normalizeColor = normalizeColor;
 
 /***/ }),
 
-/***/ "./src/panel/pets/cat.ts":
-/*!*******************************!*\
-  !*** ./src/panel/pets/cat.ts ***!
-  \*******************************/
+/***/ "./src/common/pets/cat.ts":
+/*!********************************!*\
+  !*** ./src/common/pets/cat.ts ***!
+  \********************************/
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.CAT_NAMES = exports.Cat = void 0;
-const basepettype_1 = __webpack_require__(/*! ../basepettype */ "./src/panel/basepettype.ts");
+const basepettype_1 = __webpack_require__(/*! ../basepettype */ "./src/common/basepettype.ts");
 class Cat extends basepettype_1.BasePetType {
     label = 'cat';
     static possibleColors = ["black" /* PetColor.black */, "brown" /* PetColor.brown */, "white" /* PetColor.white */];
@@ -1186,16 +730,16 @@ exports.CAT_NAMES = [
 
 /***/ }),
 
-/***/ "./src/panel/pets/clippy.ts":
-/*!**********************************!*\
-  !*** ./src/panel/pets/clippy.ts ***!
-  \**********************************/
+/***/ "./src/common/pets/clippy.ts":
+/*!***********************************!*\
+  !*** ./src/common/pets/clippy.ts ***!
+  \***********************************/
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.CLIPPY_NAMES = exports.Clippy = void 0;
-const basepettype_1 = __webpack_require__(/*! ../basepettype */ "./src/panel/basepettype.ts");
+const basepettype_1 = __webpack_require__(/*! ../basepettype */ "./src/common/basepettype.ts");
 class Clippy extends basepettype_1.BasePetType {
     label = 'clippy';
     static possibleColors = [
@@ -1266,16 +810,16 @@ exports.CLIPPY_NAMES = [
 
 /***/ }),
 
-/***/ "./src/panel/pets/cockatiel.ts":
-/*!*************************************!*\
-  !*** ./src/panel/pets/cockatiel.ts ***!
-  \*************************************/
+/***/ "./src/common/pets/cockatiel.ts":
+/*!**************************************!*\
+  !*** ./src/common/pets/cockatiel.ts ***!
+  \**************************************/
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.COCKATIEL_NAMES = exports.Cockatiel = void 0;
-const basepettype_1 = __webpack_require__(/*! ../basepettype */ "./src/panel/basepettype.ts");
+const basepettype_1 = __webpack_require__(/*! ../basepettype */ "./src/common/basepettype.ts");
 class Cockatiel extends basepettype_1.BasePetType {
     label = 'cockatiel';
     static possibleColors = ["gray" /* PetColor.gray */];
@@ -1365,16 +909,16 @@ exports.COCKATIEL_NAMES = [
 
 /***/ }),
 
-/***/ "./src/panel/pets/crab.ts":
-/*!********************************!*\
-  !*** ./src/panel/pets/crab.ts ***!
-  \********************************/
+/***/ "./src/common/pets/crab.ts":
+/*!*********************************!*\
+  !*** ./src/common/pets/crab.ts ***!
+  \*********************************/
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.CRAB_NAMES = exports.Crab = void 0;
-const basepettype_1 = __webpack_require__(/*! ../basepettype */ "./src/panel/basepettype.ts");
+const basepettype_1 = __webpack_require__(/*! ../basepettype */ "./src/common/basepettype.ts");
 class Crab extends basepettype_1.BasePetType {
     label = 'crab';
     static possibleColors = ["red" /* PetColor.red */];
@@ -1480,16 +1024,16 @@ exports.CRAB_NAMES = [
 
 /***/ }),
 
-/***/ "./src/panel/pets/dog.ts":
-/*!*******************************!*\
-  !*** ./src/panel/pets/dog.ts ***!
-  \*******************************/
+/***/ "./src/common/pets/dog.ts":
+/*!********************************!*\
+  !*** ./src/common/pets/dog.ts ***!
+  \********************************/
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.DOG_NAMES = exports.Dog = void 0;
-const basepettype_1 = __webpack_require__(/*! ../basepettype */ "./src/panel/basepettype.ts");
+const basepettype_1 = __webpack_require__(/*! ../basepettype */ "./src/common/basepettype.ts");
 class Dog extends basepettype_1.BasePetType {
     label = 'dog';
     static possibleColors = [
@@ -1705,16 +1249,16 @@ exports.DOG_NAMES = [
 
 /***/ }),
 
-/***/ "./src/panel/pets/mod.ts":
-/*!*******************************!*\
-  !*** ./src/panel/pets/mod.ts ***!
-  \*******************************/
+/***/ "./src/common/pets/mod.ts":
+/*!********************************!*\
+  !*** ./src/common/pets/mod.ts ***!
+  \********************************/
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.MOD_NAMES = exports.Mod = void 0;
-const basepettype_1 = __webpack_require__(/*! ../basepettype */ "./src/panel/basepettype.ts");
+const basepettype_1 = __webpack_require__(/*! ../basepettype */ "./src/common/basepettype.ts");
 class Mod extends basepettype_1.BasePetType {
     label = 'mod';
     static possibleColors = ["purple" /* PetColor.purple */];
@@ -1776,16 +1320,16 @@ exports.MOD_NAMES = [
 
 /***/ }),
 
-/***/ "./src/panel/pets/rocky.ts":
-/*!*********************************!*\
-  !*** ./src/panel/pets/rocky.ts ***!
-  \*********************************/
+/***/ "./src/common/pets/rocky.ts":
+/*!**********************************!*\
+  !*** ./src/common/pets/rocky.ts ***!
+  \**********************************/
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.ROCKY_NAMES = exports.Rocky = void 0;
-const basepettype_1 = __webpack_require__(/*! ../basepettype */ "./src/panel/basepettype.ts");
+const basepettype_1 = __webpack_require__(/*! ../basepettype */ "./src/common/basepettype.ts");
 class Rocky extends basepettype_1.BasePetType {
     label = 'rocky';
     static possibleColors = ["gray" /* PetColor.gray */];
@@ -1846,16 +1390,16 @@ exports.ROCKY_NAMES = [
 
 /***/ }),
 
-/***/ "./src/panel/pets/rubberduck.ts":
-/*!**************************************!*\
-  !*** ./src/panel/pets/rubberduck.ts ***!
-  \**************************************/
+/***/ "./src/common/pets/rubberduck.ts":
+/*!***************************************!*\
+  !*** ./src/common/pets/rubberduck.ts ***!
+  \***************************************/
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.DUCK_NAMES = exports.RubberDuck = void 0;
-const basepettype_1 = __webpack_require__(/*! ../basepettype */ "./src/panel/basepettype.ts");
+const basepettype_1 = __webpack_require__(/*! ../basepettype */ "./src/common/basepettype.ts");
 class RubberDuck extends basepettype_1.BasePetType {
     label = 'rubber-duck';
     static possibleColors = ["yellow" /* PetColor.yellow */];
@@ -1969,16 +1513,16 @@ exports.DUCK_NAMES = [
 
 /***/ }),
 
-/***/ "./src/panel/pets/snake.ts":
-/*!*********************************!*\
-  !*** ./src/panel/pets/snake.ts ***!
-  \*********************************/
+/***/ "./src/common/pets/snake.ts":
+/*!**********************************!*\
+  !*** ./src/common/pets/snake.ts ***!
+  \**********************************/
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.SNAKE_NAMES = exports.Snake = void 0;
-const basepettype_1 = __webpack_require__(/*! ../basepettype */ "./src/panel/basepettype.ts");
+const basepettype_1 = __webpack_require__(/*! ../basepettype */ "./src/common/basepettype.ts");
 class Snake extends basepettype_1.BasePetType {
     label = 'snake';
     static possibleColors = ["green" /* PetColor.green */];
@@ -2094,16 +1638,16 @@ exports.SNAKE_NAMES = [
 
 /***/ }),
 
-/***/ "./src/panel/pets/totoro.ts":
-/*!**********************************!*\
-  !*** ./src/panel/pets/totoro.ts ***!
-  \**********************************/
+/***/ "./src/common/pets/totoro.ts":
+/*!***********************************!*\
+  !*** ./src/common/pets/totoro.ts ***!
+  \***********************************/
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.TOTORO_NAMES = exports.Totoro = void 0;
-const basepettype_1 = __webpack_require__(/*! ../basepettype */ "./src/panel/basepettype.ts");
+const basepettype_1 = __webpack_require__(/*! ../basepettype */ "./src/common/basepettype.ts");
 class Totoro extends basepettype_1.BasePetType {
     label = 'totoro';
     static possibleColors = ["gray" /* PetColor.gray */];
@@ -2185,16 +1729,16 @@ exports.TOTORO_NAMES = [
 
 /***/ }),
 
-/***/ "./src/panel/pets/zappy.ts":
-/*!*********************************!*\
-  !*** ./src/panel/pets/zappy.ts ***!
-  \*********************************/
+/***/ "./src/common/pets/zappy.ts":
+/*!**********************************!*\
+  !*** ./src/common/pets/zappy.ts ***!
+  \**********************************/
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.ZAPPY_NAMES = exports.Zappy = void 0;
-const basepettype_1 = __webpack_require__(/*! ../basepettype */ "./src/panel/basepettype.ts");
+const basepettype_1 = __webpack_require__(/*! ../basepettype */ "./src/common/basepettype.ts");
 class Zappy extends basepettype_1.BasePetType {
     label = 'zappy';
     static possibleColors = ["yellow" /* PetColor.yellow */];
@@ -2268,10 +1812,10 @@ exports.ZAPPY_NAMES = [
 
 /***/ }),
 
-/***/ "./src/panel/states.ts":
-/*!*****************************!*\
-  !*** ./src/panel/states.ts ***!
-  \*****************************/
+/***/ "./src/common/states.ts":
+/*!******************************!*\
+  !*** ./src/common/states.ts ***!
+  \******************************/
 /***/ ((__unused_webpack_module, exports) => {
 
 
@@ -2587,6 +2131,511 @@ class JumpDownLeftState {
     }
 }
 exports.JumpDownLeftState = JumpDownLeftState;
+
+
+/***/ }),
+
+/***/ "./src/common/types.ts":
+/*!*****************************!*\
+  !*** ./src/common/types.ts ***!
+  \*****************************/
+/***/ ((__unused_webpack_module, exports) => {
+
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.ALL_THEMES = exports.ALL_SCALES = exports.ALL_COLORS = exports.ALL_PETS = exports.WebviewMessage = void 0;
+class WebviewMessage {
+    text;
+    command;
+    constructor(text, command) {
+        this.text = text;
+        this.command = command;
+    }
+}
+exports.WebviewMessage = WebviewMessage;
+exports.ALL_PETS = [
+    "cat" /* PetType.cat */,
+    "clippy" /* PetType.clippy */,
+    "cockatiel" /* PetType.cockatiel */,
+    "crab" /* PetType.crab */,
+    "dog" /* PetType.dog */,
+    "mod" /* PetType.mod */,
+    "rocky" /* PetType.rocky */,
+    "rubber-duck" /* PetType.rubberduck */,
+    "snake" /* PetType.snake */,
+    "totoro" /* PetType.totoro */,
+    "zappy" /* PetType.zappy */,
+];
+exports.ALL_COLORS = [
+    "black" /* PetColor.black */,
+    "brown" /* PetColor.brown */,
+    "green" /* PetColor.green */,
+    "yellow" /* PetColor.yellow */,
+    "gray" /* PetColor.gray */,
+    "purple" /* PetColor.purple */,
+    "red" /* PetColor.red */,
+    "white" /* PetColor.white */,
+    "null" /* PetColor.null */,
+];
+exports.ALL_SCALES = ["nano" /* PetSize.nano */, "medium" /* PetSize.medium */, "large" /* PetSize.large */];
+exports.ALL_THEMES = ["none" /* Theme.none */, "forest" /* Theme.forest */, "castle" /* Theme.castle */, "beach" /* Theme.beach */];
+
+
+/***/ }),
+
+/***/ "./src/panel/main.ts":
+/*!***************************!*\
+  !*** ./src/panel/main.ts ***!
+  \***************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.petPanelApp = exports.saveState = exports.allPets = void 0;
+// This script will be run within the webview itself
+const names_1 = __webpack_require__(/*! ../common/names */ "./src/common/names.ts");
+const types_1 = __webpack_require__(/*! ../common/types */ "./src/common/types.ts");
+const pets_1 = __webpack_require__(/*! ../common/pets */ "./src/common/pets.ts");
+const states_1 = __webpack_require__(/*! ../common/states */ "./src/common/states.ts");
+exports.allPets = new pets_1.PetCollection();
+var petCounter;
+function calculateBallRadius(size) {
+    if (size === "nano" /* PetSize.nano */) {
+        return 2;
+    }
+    else if (size === "medium" /* PetSize.medium */) {
+        return 4;
+    }
+    else if (size === "large" /* PetSize.large */) {
+        return 8;
+    }
+    else {
+        return 1; // Shrug
+    }
+}
+function calculateFloor(size, theme) {
+    switch (theme) {
+        case "forest" /* Theme.forest */:
+            switch (size) {
+                case "medium" /* PetSize.medium */:
+                    return 40;
+                case "large" /* PetSize.large */:
+                    return 65;
+                case "nano" /* PetSize.nano */:
+                default:
+                    return 23;
+            }
+        case "castle" /* Theme.castle */:
+            switch (size) {
+                case "medium" /* PetSize.medium */:
+                    return 80;
+                case "large" /* PetSize.large */:
+                    return 120;
+                case "nano" /* PetSize.nano */:
+                default:
+                    return 45;
+            }
+        case "beach" /* Theme.beach */:
+            switch (size) {
+                case "medium" /* PetSize.medium */:
+                    return 80;
+                case "large" /* PetSize.large */:
+                    return 120;
+                case "nano" /* PetSize.nano */:
+                default:
+                    return 45;
+            }
+    }
+    return 0;
+}
+function handleMouseOver(e) {
+    var el = e.currentTarget;
+    exports.allPets.pets.forEach((element) => {
+        if (element.collision === el) {
+            if (!element.pet.canSwipe) {
+                return;
+            }
+            element.pet.swipe();
+        }
+    });
+}
+function startAnimations(collision, pet, stateApi) {
+    if (!stateApi) {
+        stateApi = acquireVsCodeApi();
+    }
+    collision.addEventListener('mouseover', handleMouseOver);
+    setInterval(() => {
+        var updates = exports.allPets.seekNewFriends();
+        updates.forEach((message) => {
+            stateApi?.postMessage({
+                text: message,
+                command: 'info',
+            });
+        });
+        pet.nextFrame();
+        saveState(stateApi);
+    }, 100);
+}
+function addPetToPanel(petType, basePetUri, petColor, petSize, left, bottom, floor, name, stateApi) {
+    var petSpriteElement = document.createElement('img');
+    petSpriteElement.className = 'pet';
+    document.getElementById('petsContainer').appendChild(petSpriteElement);
+    var collisionElement = document.createElement('div');
+    collisionElement.className = 'collision';
+    document.getElementById('petsContainer').appendChild(collisionElement);
+    var speechBubbleElement = document.createElement('div');
+    speechBubbleElement.className = `bubble bubble-${petSize}`;
+    speechBubbleElement.innerText = 'Hello!';
+    document.getElementById('petsContainer').appendChild(speechBubbleElement);
+    const root = basePetUri + '/' + petType + '/' + petColor;
+    console.log('Creating new pet : ', petType, root, petColor, petSize, name);
+    try {
+        if (!(0, pets_1.availableColors)(petType).includes(petColor)) {
+            throw new pets_1.InvalidPetException('Invalid color for pet type');
+        }
+        var newPet = (0, pets_1.createPet)(petType, petSpriteElement, collisionElement, speechBubbleElement, petSize, left, bottom, root, floor, name);
+        petCounter++;
+        startAnimations(collisionElement, newPet, stateApi);
+    }
+    catch (e) {
+        // Remove elements
+        petSpriteElement.remove();
+        collisionElement.remove();
+        speechBubbleElement.remove();
+        throw e;
+    }
+    return new pets_1.PetElement(petSpriteElement, collisionElement, speechBubbleElement, newPet, petColor, petType);
+}
+function saveState(stateApi) {
+    if (!stateApi) {
+        stateApi = acquireVsCodeApi();
+    }
+    var state = new states_1.PetPanelState();
+    state.petStates = new Array();
+    exports.allPets.pets.forEach((petItem) => {
+        state.petStates?.push({
+            petName: petItem.pet.name,
+            petColor: petItem.color,
+            petType: petItem.type,
+            petState: petItem.pet.getState(),
+            petFriend: petItem.pet.friend?.name ?? undefined,
+            elLeft: petItem.el.style.left,
+            elBottom: petItem.el.style.bottom,
+        });
+    });
+    state.petCounter = petCounter;
+    stateApi?.setState(state);
+}
+exports.saveState = saveState;
+function recoverState(basePetUri, petSize, floor, stateApi) {
+    if (!stateApi) {
+        stateApi = acquireVsCodeApi();
+    }
+    var state = stateApi?.getState();
+    if (!state) {
+        petCounter = 1;
+    }
+    else {
+        if (state.petCounter === undefined || isNaN(state.petCounter)) {
+            petCounter = 1;
+        }
+        else {
+            petCounter = state.petCounter ?? 1;
+        }
+    }
+    var recoveryMap = new Map();
+    state?.petStates?.forEach((p) => {
+        // Fixes a bug related to duck animations
+        if (p.petType === 'rubber duck') {
+            p.petType = 'rubber-duck';
+        }
+        try {
+            var newPet = addPetToPanel(p.petType ?? "cat" /* PetType.cat */, basePetUri, p.petColor ?? "brown" /* PetColor.brown */, petSize, parseInt(p.elLeft ?? '0'), parseInt(p.elBottom ?? '0'), floor, p.petName ?? (0, names_1.randomName)(p.petType ?? "cat" /* PetType.cat */), stateApi);
+            exports.allPets.push(newPet);
+            recoveryMap.set(newPet.pet, p);
+        }
+        catch (InvalidPetException) {
+            console.log('State had invalid pet (' + p.petType + '), discarding.');
+        }
+    });
+    recoveryMap.forEach((state, pet) => {
+        // Recover previous state.
+        if (state.petState !== undefined) {
+            pet.recoverState(state.petState);
+        }
+        // Resolve friend relationships
+        var friend = undefined;
+        if (state.petFriend) {
+            friend = exports.allPets.locate(state.petFriend);
+            if (friend) {
+                pet.recoverFriend(friend.pet);
+            }
+        }
+    });
+}
+function randomStartPosition() {
+    return Math.floor(Math.random() * (window.innerWidth * 0.7));
+}
+let canvas, ctx;
+function initCanvas() {
+    canvas = document.getElementById('petCanvas');
+    if (!canvas) {
+        console.log('Canvas not ready');
+        return;
+    }
+    ctx = canvas.getContext('2d');
+    if (!ctx) {
+        console.log('Canvas context not ready');
+        return;
+    }
+    ctx.canvas.width = window.innerWidth;
+    ctx.canvas.height = window.innerHeight;
+}
+// It cannot access the main VS Code APIs directly.
+function petPanelApp(basePetUri, theme, themeKind, petColor, petSize, petType, throwBallWithMouse, stateApi) {
+    const ballRadius = calculateBallRadius(petSize);
+    var floor = 0;
+    if (!stateApi) {
+        stateApi = acquireVsCodeApi();
+    }
+    // Apply Theme backgrounds
+    const foregroundEl = document.getElementById('foreground');
+    if (theme !== "none" /* Theme.none */) {
+        var _themeKind = '';
+        switch (themeKind) {
+            case types_1.ColorThemeKind.dark:
+                _themeKind = 'dark';
+                break;
+            case types_1.ColorThemeKind.light:
+                _themeKind = 'light';
+                break;
+            case types_1.ColorThemeKind.highContrast:
+            default:
+                _themeKind = 'light';
+                break;
+        }
+        document.body.style.backgroundImage = `url('${basePetUri}/backgrounds/${theme}/background-${_themeKind}-${petSize}.png')`;
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        foregroundEl.style.backgroundImage = `url('${basePetUri}/backgrounds/${theme}/foreground-${_themeKind}-${petSize}.png')`;
+        floor = calculateFloor(petSize, theme); // Themes have pets at a specified height from the ground
+    }
+    else {
+        document.body.style.backgroundImage = '';
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        foregroundEl.style.backgroundImage = '';
+    }
+    /// Bouncing ball components, credit https://stackoverflow.com/a/29982343
+    const gravity = 0.6, damping = 0.9, traction = 0.8, interval = 1000 / 24; // msec for single frame
+    let then = 0; // last draw
+    var ballState;
+    function resetBall() {
+        if (ballState) {
+            ballState.paused = true;
+        }
+        if (canvas) {
+            canvas.style.display = 'block';
+        }
+        ballState = new states_1.BallState(100, 100, 4, 5);
+    }
+    function dynamicThrowOn() {
+        let startMouseX;
+        let startMouseY;
+        let endMouseX;
+        let endMouseY;
+        console.log('Enabling dynamic throw');
+        window.onmousedown = (e) => {
+            if (ballState) {
+                ballState.paused = true;
+            }
+            if (canvas) {
+                canvas.style.display = 'block';
+            }
+            endMouseX = e.clientX;
+            endMouseY = e.clientY;
+            startMouseX = e.clientX;
+            startMouseY = e.clientY;
+            ballState = new states_1.BallState(e.clientX, e.clientY, 0, 0);
+            exports.allPets.pets.forEach((petEl) => {
+                if (petEl.pet.canChase) {
+                    petEl.pet.chase(ballState, canvas);
+                }
+            });
+            ballState.paused = true;
+            drawBall();
+            window.onmousemove = (ev) => {
+                ev.preventDefault();
+                if (ballState) {
+                    ballState.paused = true;
+                }
+                startMouseX = endMouseX;
+                startMouseY = endMouseY;
+                endMouseX = ev.clientX;
+                endMouseY = ev.clientY;
+                ballState = new states_1.BallState(ev.clientX, ev.clientY, 0, 0);
+                drawBall();
+            };
+            window.onmouseup = (ev) => {
+                ev.preventDefault();
+                window.onmouseup = null;
+                window.onmousemove = null;
+                ballState = new states_1.BallState(endMouseX, endMouseY, endMouseX - startMouseX, endMouseY - startMouseY);
+                exports.allPets.pets.forEach((petEl) => {
+                    if (petEl.pet.canChase) {
+                        petEl.pet.chase(ballState, canvas);
+                    }
+                });
+                throwBall();
+            };
+        };
+    }
+    function dynamicThrowOff() {
+        console.log('Disabling dynamic throw');
+        window.onmousedown = null;
+        if (ballState) {
+            ballState.paused = true;
+        }
+        if (canvas) {
+            canvas.style.display = 'none';
+        }
+    }
+    function throwBall() {
+        if (!ballState.paused) {
+            requestAnimationFrame(throwBall);
+        }
+        // throttling the frame rate
+        const now = Date.now();
+        const elapsed = now - then;
+        if (elapsed <= interval) {
+            return;
+        }
+        then = now - (elapsed % interval);
+        if (ballState.cx + ballRadius >= canvas.width) {
+            ballState.vx = -ballState.vx * damping;
+            ballState.cx = canvas.width - ballRadius;
+        }
+        else if (ballState.cx - ballRadius <= 0) {
+            ballState.vx = -ballState.vx * damping;
+            ballState.cx = ballRadius;
+        }
+        if (ballState.cy + ballRadius + floor >= canvas.height) {
+            ballState.vy = -ballState.vy * damping;
+            ballState.cy = canvas.height - ballRadius - floor;
+            // traction here
+            ballState.vx *= traction;
+        }
+        else if (ballState.cy - ballRadius <= 0) {
+            ballState.vy = -ballState.vy * damping;
+            ballState.cy = ballRadius;
+        }
+        ballState.vy += gravity;
+        ballState.cx += ballState.vx;
+        ballState.cy += ballState.vy;
+        drawBall();
+    }
+    function drawBall() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.beginPath();
+        ctx.arc(ballState.cx, ballState.cy, ballRadius, 0, 2 * Math.PI, false);
+        ctx.fillStyle = '#2ed851';
+        ctx.fill();
+    }
+    console.log('Starting pet session', petColor, basePetUri, petType, throwBallWithMouse);
+    // New session
+    var state = stateApi?.getState();
+    if (!state) {
+        console.log('No state, starting a new session.');
+        petCounter = 1;
+        exports.allPets.push(addPetToPanel(petType, basePetUri, petColor, petSize, randomStartPosition(), floor, floor, (0, names_1.randomName)(petType), stateApi));
+        saveState(stateApi);
+    }
+    else {
+        console.log('Recovering state - ', state);
+        recoverState(basePetUri, petSize, floor, stateApi);
+    }
+    initCanvas();
+    if (throwBallWithMouse) {
+        dynamicThrowOn();
+    }
+    else {
+        dynamicThrowOff();
+    }
+    // Handle messages sent from the extension to the webview
+    window.addEventListener('message', (event) => {
+        const message = event.data; // The json data that the extension sent
+        switch (message.command) {
+            case 'throw-with-mouse':
+                if (message.enabled) {
+                    dynamicThrowOn();
+                }
+                else {
+                    dynamicThrowOff();
+                }
+                break;
+            case 'throw-ball':
+                resetBall();
+                throwBall();
+                exports.allPets.pets.forEach((petEl) => {
+                    if (petEl.pet.canChase) {
+                        petEl.pet.chase(ballState, canvas);
+                    }
+                });
+                break;
+            case 'spawn-pet':
+                exports.allPets.push(addPetToPanel(message.type, basePetUri, message.color, petSize, randomStartPosition(), floor, floor, message.name ?? (0, names_1.randomName)(message.type), stateApi));
+                saveState(stateApi);
+                break;
+            case 'list-pets':
+                var pets = exports.allPets.pets;
+                stateApi?.postMessage({
+                    command: 'list-pets',
+                    text: pets
+                        .map((pet) => `${pet.type},${pet.pet.name},${pet.color}`)
+                        .join('\n'),
+                });
+                break;
+            case 'roll-call':
+                var pets = exports.allPets.pets;
+                // go through every single
+                // pet and then print out their name
+                pets.forEach((pet) => {
+                    stateApi?.postMessage({
+                        command: 'info',
+                        text: `${pet.pet.emoji} ${pet.pet.name} (${pet.color} ${pet.type}): ${pet.pet.hello}`,
+                    });
+                });
+            case 'delete-pet':
+                var pet = exports.allPets.locate(message.name);
+                if (pet) {
+                    exports.allPets.remove(message.name);
+                    saveState(stateApi);
+                    stateApi?.postMessage({
+                        command: 'info',
+                        text: '👋 Removed pet ' + message.name,
+                    });
+                }
+                else {
+                    stateApi?.postMessage({
+                        command: 'error',
+                        text: `Could not find pet ${message.name}`,
+                    });
+                }
+                break;
+            case 'reset-pet':
+                exports.allPets.reset();
+                petCounter = 0;
+                saveState(stateApi);
+                break;
+            case 'pause-pet':
+                petCounter = 1;
+                saveState(stateApi);
+                break;
+        }
+    });
+}
+exports.petPanelApp = petPanelApp;
+window.addEventListener('resize', function () {
+    initCanvas();
+});
 
 
 /***/ })
