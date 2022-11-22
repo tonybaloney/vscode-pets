@@ -48,7 +48,9 @@ Run the "Start pet coding session" command (`vscode-pets.start`) to see a cat in
 
 ## Credits
 
-The cat animations were designed by [seethingswarm](https://seethingswarm.itch.io/catset). The dog media assets for this extension were licensed from itch.io.
+The cat animations were designed by [seethingswarm](https://seethingswarm.itch.io/catset). The dog media assets for this extension were designed by [NVPH Studio](https://nvph-studio.itch.io/dog-animation-4-different-dogs). 
+
+The forest theme was designed by [edermunizz](https://edermunizz.itch.io/free-pixel-art-forest). The castle assets were created using artwork by [GuttyKreum](https://guttykreum.itch.io/gothic-castle-game-assets).
 
 [Marc Duiker](https://twitter.com/marcduiker) created the Clippy, Rocky, Zappy, rubber duck, snake, cockatiel, Ferris the crab, and Mod the dotnet bot media assets.
 
