@@ -8,7 +8,7 @@ on:
     - cron: '0 */6 * * *' # Every 6 hours - https://crontab.guru/#0_*/6_*_*_*
   push:
     paths:
-      - 'l10n/bundle.l10n.json'
+      - 'l10n'
     branches: [ master ]
 
 jobs:
@@ -26,6 +26,8 @@ jobs:
           upload_sources: true
           # Download translations from Crowdin
           download_translations: true
+          # Upload new translations from the repo to Crowdin
+          upload_translations: true
 
           # To download translations to the specified version branch
           localization_branch_name: l10n_crowdin_translations
