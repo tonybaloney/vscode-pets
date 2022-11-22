@@ -15,7 +15,7 @@ import {
 } from '../common/types';
 import { randomName } from '../common/names';
 import * as localize from '../common/localize';
-import { availableColors, normalizeColor } from '../panel/pets';
+import { availableColors, normalizeColor } from '../common/pets';
 
 const EXTRA_PETS_KEY = 'vscode-pets.extra-pets';
 const EXTRA_PETS_KEY_TYPES = EXTRA_PETS_KEY + '.types';

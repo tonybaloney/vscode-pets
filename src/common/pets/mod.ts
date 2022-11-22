@@ -1,10 +1,10 @@
-import { PetColor } from '../../common/types';
-import { BasePetType } from '../basepettype';
 import { States } from '../states';
+import { BasePetType } from '../basepettype';
+import { PetColor } from '../types';
 
-export class Crab extends BasePetType {
-    label = 'crab';
-    static possibleColors = [PetColor.red];
+export class Mod extends BasePetType {
+    label = 'mod';
+    static possibleColors = [PetColor.purple];
     sequence = {
         startingState: States.sitIdle,
         sequenceStates: [
@@ -44,62 +44,18 @@ export class Crab extends BasePetType {
         ],
     };
     get emoji(): string {
-        return '🦀';
+        return '🤖';
     }
     get hello(): string {
-        return ` Hi, I'm Crabsolutely Clawsome Crab 👋!`;
+        return ` Hi, I'm Mod the dotnet bot, what are you building today?`;
     }
 }
 
-export const CRAB_NAMES: ReadonlyArray<string> = [
-    'Ferris',
-    'Pinchy',
-    'Grabby',
-    'Big Red',
-    'Crabby',
-    'Buddy',
-    'Ruby Red',
-    'Oscar',
-    'Lucy',
-    'Bailey',
-    'Crabito',
-    'Percy',
-    'Rocky',
-    'Mr. Krabs',
-    'Shelly',
-    'Santa Claws',
-    'Clawdia',
-    'Scuttle',
-    'Snappy',
-    'Hermit',
-    'Horseshoe',
-    'Snapper',
-    'Coconut',
-    'Sebastian',
-    'Abby',
-    'Bubbles',
-    'Bait',
-    'Big Mac',
-    'Biggie',
-    'Claws',
-    'Copper',
-    'Crabette',
-    'Crabina',
-    'Crabmister',
-    'Crusty',
-    'Crabcake',
-    'Digger',
-    'Nipper',
-    'Pincer',
-    'Poopsie',
-    'Recluse',
-    'Salty',
-    'Squirt',
-    'Groucho',
-    'Grumpy',
-    'Lenny Krabitz',
-    'Leonardo DaPinchy',
-    'Peeves',
-    'Penny Pincher',
-    'Prickl',
+export const MOD_NAMES: ReadonlyArray<string> = [
+    'Mod',
+    'Moddy',
+    'Dotnetbot',
+    'Bot',
+    'Purple Pal',
+    'Ro Bot',
 ];

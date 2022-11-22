@@ -1,14 +1,14 @@
-import { CAT_NAMES } from '../panel/pets/cat';
-import { CLIPPY_NAMES } from '../panel/pets/clippy';
-import { COCKATIEL_NAMES } from '../panel/pets/cockatiel';
-import { CRAB_NAMES } from '../panel/pets/crab';
-import { DOG_NAMES } from '../panel/pets/dog';
-import { MOD_NAMES } from '../panel/pets/mod';
-import { ROCKY_NAMES } from '../panel/pets/rocky';
-import { DUCK_NAMES } from '../panel/pets/rubberduck';
-import { SNAKE_NAMES } from '../panel/pets/snake';
-import { TOTORO_NAMES } from '../panel/pets/totoro';
-import { ZAPPY_NAMES } from '../panel/pets/zappy';
+import { CAT_NAMES } from './pets/cat';
+import { CLIPPY_NAMES } from './pets/clippy';
+import { COCKATIEL_NAMES } from './pets/cockatiel';
+import { CRAB_NAMES } from './pets/crab';
+import { DOG_NAMES } from './pets/dog';
+import { MOD_NAMES } from './pets/mod';
+import { ROCKY_NAMES } from './pets/rocky';
+import { DUCK_NAMES } from './pets/rubberduck';
+import { SNAKE_NAMES } from './pets/snake';
+import { TOTORO_NAMES } from './pets/totoro';
+import { ZAPPY_NAMES } from './pets/zappy';
 import { PetType } from './types';
 
 export function randomName(type: PetType): string {

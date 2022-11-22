@@ -12,8 +12,8 @@ import {
     WebviewMessage,
     ALL_PETS,
 } from '../../common/types';
-import { PetElementState, PetPanelState } from '../../panel/states';
-import * as pets from '../../panel/pets';
+import { PetElementState, PetPanelState } from '../../common/states';
+import * as pets from '../../common/pets';
 
 function mockPanelWindow() {
     const html =
@@ -67,7 +67,7 @@ class MockState implements VscodeStateApi {
 mockPanelWindow();
 
 import * as panel from '../../panel/main';
-import { Cat } from '../../panel/pets/cat';
+import { Cat } from '../../common/pets/cat';
 
 suite('Pets Test Suite', () => {
     vscode.window.showInformationMessage('Start all tests.');

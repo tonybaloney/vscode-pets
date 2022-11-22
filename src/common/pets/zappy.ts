@@ -1,15 +1,10 @@
-import { PetColor } from '../../common/types';
+import { PetColor } from '../types';
 import { BasePetType } from '../basepettype';
 import { States } from '../states';
 
-export class Clippy extends BasePetType {
-    label = 'clippy';
-    static possibleColors = [
-        PetColor.black,
-        PetColor.brown,
-        PetColor.green,
-        PetColor.yellow,
-    ];
+export class Zappy extends BasePetType {
+    label = 'zappy';
+    static possibleColors = [PetColor.yellow];
     sequence = {
         startingState: States.sitIdle,
         sequenceStates: [
@@ -49,22 +44,30 @@ export class Clippy extends BasePetType {
         ],
     };
     get emoji(): string {
-        return '📎';
+        return '⚡';
     }
     get hello(): string {
-        return ` Hi, I'm Clippy, would you like some assistance today? 👋!`;
+        // TODO: #193 Add a custom message for zappy
+        return ` Hello this is Zappy! Do I look familiar?? I am the mascot for Azure Functions😉`;
     }
 }
 
-export const CLIPPY_NAMES: ReadonlyArray<string> = [
-    'Clippy',
-    'Karl Klammer',
-    'Clippy Jr.',
-    'Molly',
-    'Coco',
-    'Buddy',
-    'Ruby',
-    'Oscar',
-    'Lucy',
-    'Bailey',
+export const ZAPPY_NAMES: ReadonlyArray<string> = [
+    'Zappy',
+    'Zippy',
+    'Zappy Jr.',
+    'Zoppy',
+    'Zuppy',
+    'Zeppy',
+    'Big Z',
+    'Little z',
+    'The Flash',
+    'Thor',
+    'Electric Bolt',
+    'Azula',
+    'Lightning Bolt',
+    'Power',
+    'Sonic',
+    'Speedy',
+    'Rush',
 ];

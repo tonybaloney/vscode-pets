@@ -1,4 +1,4 @@
-import { PetColor, PetSize, PetSpeed, PetType } from '../common/types';
+import { PetColor, PetSize, PetSpeed, PetType } from './types';
 import { Cat } from './pets/cat';
 import { Clippy } from './pets/clippy';
 import { Cockatiel } from './pets/cockatiel';

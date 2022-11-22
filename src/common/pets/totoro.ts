@@ -1,4 +1,4 @@
-import { PetColor } from '../../common/types';
+import { PetColor } from '../types';
 import { BasePetType } from '../basepettype';
 import { States } from '../states';
 

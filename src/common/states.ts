@@ -1,4 +1,4 @@
-import { PetColor, PetType } from '../common/types';
+import { PetColor, PetType } from './types';
 
 export interface IPetType {
     nextFrame(): void;

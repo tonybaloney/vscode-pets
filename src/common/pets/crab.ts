@@ -1,10 +1,10 @@
-import { PetColor } from '../../common/types';
+import { PetColor } from '../types';
 import { BasePetType } from '../basepettype';
 import { States } from '../states';
 
-export class Zappy extends BasePetType {
-    label = 'zappy';
-    static possibleColors = [PetColor.yellow];
+export class Crab extends BasePetType {
+    label = 'crab';
+    static possibleColors = [PetColor.red];
     sequence = {
         startingState: States.sitIdle,
         sequenceStates: [
@@ -44,30 +44,62 @@ export class Zappy extends BasePetType {
         ],
     };
     get emoji(): string {
-        return '⚡';
+        return '🦀';
     }
     get hello(): string {
-        // TODO: #193 Add a custom message for zappy
-        return ` Hello this is Zappy! Do I look familiar?? I am the mascot for Azure Functions😉`;
+        return ` Hi, I'm Crabsolutely Clawsome Crab 👋!`;
     }
 }
 
-export const ZAPPY_NAMES: ReadonlyArray<string> = [
-    'Zappy',
-    'Zippy',
-    'Zappy Jr.',
-    'Zoppy',
-    'Zuppy',
-    'Zeppy',
-    'Big Z',
-    'Little z',
-    'The Flash',
-    'Thor',
-    'Electric Bolt',
-    'Azula',
-    'Lightning Bolt',
-    'Power',
-    'Sonic',
-    'Speedy',
-    'Rush',
+export const CRAB_NAMES: ReadonlyArray<string> = [
+    'Ferris',
+    'Pinchy',
+    'Grabby',
+    'Big Red',
+    'Crabby',
+    'Buddy',
+    'Ruby Red',
+    'Oscar',
+    'Lucy',
+    'Bailey',
+    'Crabito',
+    'Percy',
+    'Rocky',
+    'Mr. Krabs',
+    'Shelly',
+    'Santa Claws',
+    'Clawdia',
+    'Scuttle',
+    'Snappy',
+    'Hermit',
+    'Horseshoe',
+    'Snapper',
+    'Coconut',
+    'Sebastian',
+    'Abby',
+    'Bubbles',
+    'Bait',
+    'Big Mac',
+    'Biggie',
+    'Claws',
+    'Copper',
+    'Crabette',
+    'Crabina',
+    'Crabmister',
+    'Crusty',
+    'Crabcake',
+    'Digger',
+    'Nipper',
+    'Pincer',
+    'Poopsie',
+    'Recluse',
+    'Salty',
+    'Squirt',
+    'Groucho',
+    'Grumpy',
+    'Lenny Krabitz',
+    'Leonardo DaPinchy',
+    'Peeves',
+    'Penny Pincher',
+    'Prickl',
 ];

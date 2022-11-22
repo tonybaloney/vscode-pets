@@ -1,10 +1,10 @@
-import { PetColor } from '../../common/types';
+import { PetColor } from '../types';
 import { BasePetType } from '../basepettype';
 import { States } from '../states';
 
-export class RubberDuck extends BasePetType {
-    label = 'rubber-duck';
-    static possibleColors = [PetColor.yellow];
+export class Cockatiel extends BasePetType {
+    label = 'cockatiel';
+    static possibleColors = [PetColor.gray];
     sequence = {
         startingState: States.sitIdle,
         sequenceStates: [
@@ -44,70 +44,46 @@ export class RubberDuck extends BasePetType {
         ],
     };
     get emoji(): string {
-        return '🐥';
+        return '🦜';
     }
     get hello(): string {
-        return ` Hi, I love to quack around 👋!`;
+        // TODO: #191 Add a custom message for cockatiel
+        return ` Hello, I'm a good bird 👋!`;
     }
 }
 
-export const DUCK_NAMES: ReadonlyArray<string> = [
-    'Quacky',
-    'Floaty',
-    'Duck',
-    'Molly',
-    'Sunshine',
-    'Buddy',
-    'Chirpy',
-    'Oscar',
-    'Lucy',
-    'Bailey',
-    'Beaky',
-    'Jemima',
-    'Peaches',
-    'Quackers',
-    'Jelly Beans',
-    'Donald',
-    'Chady',
-    'Waddles',
-    'Bill',
-    'Bubbles',
-    'James Pond',
-    'Moby Duck',
-    'Quack Sparrow',
-    'Peanut',
-    'Psyduck',
-    'Mr Quack',
-    'Louie',
-    'Golduck',
-    'Daisy',
-    'Pickles',
-    'Ducky Duck',
-    'Mrs Fluffs',
-    'Squeek',
-    'Ace',
-    'Rubberduck',
-    'Mrs Beak',
-    'April',
-    'Tutu',
-    'Billy the duck',
-    'Ducky',
-    'Neco',
-    'Dodo',
-    'Colonel',
-    'Franklin',
-    'Emmett',
-    'Bubba',
-    'Dillard',
-    'Duncan',
-    'Pogo',
-    'Uno',
-    'Peanut',
-    'Nero',
-    'Mowgli',
-    'Eggspresso',
-    'Webster',
-    'Quacker Jack',
-    'Plucker',
-    'Meeko',
+export const COCKATIEL_NAMES: ReadonlyArray<string> = [
+    'Cocktail',
+    'Pipsqueak',
+    'Sir Chirps a Lot',
+    'Nibbles',
+    'Lord of the Wings',
+    'Girl Nest Door',
+    'Wingman',
+    'Meryl Cheep',
+    'Jack Sparrow',
+    'Godfeather',
+    'Mickey',
+    'Baquack Obama',
+    'Dame Judi Finch',
+    'Kanye Nest',
+    'Speck',
+    'Cheecky',
+    'Arthur',
+    'Paco',
+    'Bobo',
+    'Walt',
+    'Happy',
+    'Junior',
+    'Coco',
+    'Yoyo',
+    'Milo',
+    'Skipper',
+    'Scarlet',
+    'Diva',
+    'Ursula',
+    'Donna',
+    'Lola',
+    'Kiko',
+    'Luna',
 ];

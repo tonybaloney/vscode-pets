@@ -1,10 +1,15 @@
-import { States } from '../states';
+import { PetColor } from '../types';
 import { BasePetType } from '../basepettype';
-import { PetColor } from '../../common/types';
+import { States } from '../states';
 
-export class Mod extends BasePetType {
-    label = 'mod';
-    static possibleColors = [PetColor.purple];
+export class Clippy extends BasePetType {
+    label = 'clippy';
+    static possibleColors = [
+        PetColor.black,
+        PetColor.brown,
+        PetColor.green,
+        PetColor.yellow,
+    ];
     sequence = {
         startingState: States.sitIdle,
         sequenceStates: [
@@ -44,18 +49,22 @@ export class Mod extends BasePetType {
         ],
     };
     get emoji(): string {
-        return '🤖';
+        return '📎';
     }
     get hello(): string {
-        return ` Hi, I'm Mod the dotnet bot, what are you building today?`;
+        return ` Hi, I'm Clippy, would you like some assistance today? 👋!`;
     }
 }
 
-export const MOD_NAMES: ReadonlyArray<string> = [
-    'Mod',
-    'Moddy',
-    'Dotnetbot',
-    'Bot',
-    'Purple Pal',
-    'Ro Bot',
+export const CLIPPY_NAMES: ReadonlyArray<string> = [
+    'Clippy',
+    'Karl Klammer',
+    'Clippy Jr.',
+    'Molly',
+    'Coco',
+    'Buddy',
+    'Ruby',
+    'Oscar',
+    'Lucy',
+    'Bailey',
 ];

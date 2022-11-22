@@ -8,7 +8,7 @@ import {
     ColorThemeKind,
     WebviewMessage,
 } from '../common/types';
-import { IPetType } from './states';
+import { IPetType } from '../common/states';
 import {
     createPet,
     PetCollection,
@@ -16,8 +16,8 @@ import {
     IPetCollection,
     availableColors,
     InvalidPetException,
-} from './pets';
-import { BallState, PetElementState, PetPanelState } from './states';
+} from '../common/pets';
+import { BallState, PetElementState, PetPanelState } from '../common/states';
 
 /* This is how the VS Code API can be invoked from the panel */
 declare global {
