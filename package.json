@@ -266,6 +266,7 @@
         "webpack-cli": "^4.10.0"
     },
     "dependencies": {
-        "@vscode/l10n": "^0.0.10"
+        "@vscode/l10n": "^0.0.10",
+        "vsls": "^1.0.4753"
     }
 }
