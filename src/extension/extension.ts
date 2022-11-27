@@ -1,4 +1,5 @@
 import * as vscode from 'vscode';
+import { getApi, Role } from "vsls";
 import {
     PetSize,
     PetColor,
@@ -170,9 +171,21 @@ function getWebview(): vscode.Webview | undefined {
     }
 }
 
-export function activate(context: vscode.ExtensionContext) {
+async function setupVsls(){
+    const api = await getApi();
+    if (api){
+        api.onDidChangeSession(async (e: any) => {
+            if (e.session.role === Role.Host) {
+                // Ready to host
+                
+            }
+        });
+    }
+}
+
+export async function activate(context: vscode.ExtensionContext) {
     context.subscriptions.push(
-        vscode.commands.registerCommand('vscode-pets.start', () => {
+        vscode.commands.registerCommand('vscode-pets.start', async () => {
             if (
                 getConfigurationPosition() === ExtPosition.explorer &&
                 webviewViewProvider
@@ -534,6 +547,7 @@ export function activate(context: vscode.ExtensionContext) {
             },
         });
     }
+    await setupVsls();
 }
 
 function updateStatusBar(): void {
