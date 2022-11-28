@@ -795,6 +795,7 @@ const rubberduck_1 = __webpack_require__(/*! ./pets/rubberduck */ "./src/panel/p
 const snake_1 = __webpack_require__(/*! ./pets/snake */ "./src/panel/pets/snake.ts");
 const totoro_1 = __webpack_require__(/*! ./pets/totoro */ "./src/panel/pets/totoro.ts");
 const zappy_1 = __webpack_require__(/*! ./pets/zappy */ "./src/panel/pets/zappy.ts");
+const rat_1 = __webpack_require__(/*! ./pets/rat */ "./src/panel/pets/rat.ts");
 class PetElement {
     el;
     collision;
@@ -918,6 +919,8 @@ function createPet(petType, el, collision, speech, size, left, bottom, petRoot, 
             return new rocky_1.Rocky(...standardPetArguments, 0 /* PetSpeed.still */);
         case "cockatiel" /* PetType.cockatiel */:
             return new cockatiel_1.Cockatiel(...standardPetArguments, 3 /* PetSpeed.normal */);
+        case "rat" /* PetType.rat */:
+            return new rat_1.Rat(...standardPetArguments, 3 /* PetSpeed.normal */);
         default:
             throw new InvalidPetException("Pet type doesn't exist");
     }
@@ -947,6 +950,8 @@ function availableColors(petType) {
             return rocky_1.Rocky.possibleColors;
         case "cockatiel" /* PetType.cockatiel */:
             return cockatiel_1.Cockatiel.possibleColors;
+        case "rat" /* PetType.rat */:
+            return rat_1.Rat.possibleColors;
         default:
             throw new InvalidPetException("Pet type doesn't exist");
     }
@@ -1771,6 +1776,220 @@ exports.MOD_NAMES = [
     'Bot',
     'Purple Pal',
     'Ro Bot',
+];
+
+
+/***/ }),
+
+/***/ "./src/panel/pets/rat.ts":
+/*!*******************************!*\
+  !*** ./src/panel/pets/rat.ts ***!
+  \*******************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.CAT_NAMES = exports.Rat = void 0;
+const basepettype_1 = __webpack_require__(/*! ../basepettype */ "./src/panel/basepettype.ts");
+class Rat extends basepettype_1.BasePetType {
+    label = 'rat';
+    static possibleColors = ["black" /* PetColor.black */];
+    sequence = {
+        startingState: "sit-idle" /* States.sitIdle */,
+        sequenceStates: [
+            {
+                state: "sit-idle" /* States.sitIdle */,
+                possibleNextStates: ["walk-right" /* States.walkRight */, "run-right" /* States.runRight */],
+            },
+            {
+                state: "walk-right" /* States.walkRight */,
+                possibleNextStates: ["walk-left" /* States.walkLeft */, "run-left" /* States.runLeft */],
+            },
+            {
+                state: "run-right" /* States.runRight */,
+                possibleNextStates: ["walk-left" /* States.walkLeft */, "run-left" /* States.runLeft */],
+            },
+            {
+                state: "walk-left" /* States.walkLeft */,
+                possibleNextStates: [
+                    "sit-idle" /* States.sitIdle */,
+                    "climb-wall-left" /* States.climbWallLeft */,
+                    "walk-right" /* States.walkRight */,
+                    "run-right" /* States.runRight */,
+                ],
+            },
+            {
+                state: "run-left" /* States.runLeft */,
+                possibleNextStates: [
+                    "sit-idle" /* States.sitIdle */,
+                    "climb-wall-left" /* States.climbWallLeft */,
+                    "walk-right" /* States.walkRight */,
+                    "run-right" /* States.runRight */,
+                ],
+            },
+            {
+                state: "climb-wall-left" /* States.climbWallLeft */,
+                possibleNextStates: ["wall-hang-left" /* States.wallHangLeft */],
+            },
+            {
+                state: "wall-hang-left" /* States.wallHangLeft */,
+                possibleNextStates: ["jump-down-left" /* States.jumpDownLeft */],
+            },
+            {
+                state: "jump-down-left" /* States.jumpDownLeft */,
+                possibleNextStates: ["land" /* States.land */],
+            },
+            {
+                state: "land" /* States.land */,
+                possibleNextStates: [
+                    "sit-idle" /* States.sitIdle */,
+                    "walk-right" /* States.walkRight */,
+                    "run-right" /* States.runRight */,
+                ],
+            },
+            {
+                state: "chase" /* States.chase */,
+                possibleNextStates: ["idle-with-ball" /* States.idleWithBall */],
+            },
+            {
+                state: "idle-with-ball" /* States.idleWithBall */,
+                possibleNextStates: [
+                    "walk-right" /* States.walkRight */,
+                    "walk-left" /* States.walkLeft */,
+                    "run-left" /* States.runLeft */,
+                    "run-right" /* States.runRight */,
+                ],
+            },
+        ],
+    };
+    get emoji() {
+        return '🐀';
+    }
+    get hello() {
+        return `Rat noises...`;
+    }
+}
+exports.Rat = Rat;
+exports.CAT_NAMES = [
+    'Bella',
+    'Charlie',
+    'Molly',
+    'Coco',
+    'Ruby',
+    'Oscar',
+    'Lucy',
+    'Bailey',
+    'Milo',
+    'Daisy',
+    'Archie',
+    'Ollie',
+    'Rosie',
+    'Lola',
+    'Frankie',
+    'Roxy',
+    'Poppy',
+    'Luna',
+    'Jack',
+    'Millie',
+    'Teddy',
+    'Cooper',
+    'Bear',
+    'Rocky',
+    'Alfie',
+    'Hugo',
+    'Bonnie',
+    'Pepper',
+    'Lily',
+    'Tilly',
+    'Leo',
+    'Maggie',
+    'George',
+    'Mia',
+    'Marley',
+    'Harley',
+    'Chloe',
+    'Lulu',
+    'Missy',
+    'Jasper',
+    'Billy',
+    'Nala',
+    'Monty',
+    'Ziggy',
+    'Winston',
+    'Zeus',
+    'Zoe',
+    'Stella',
+    'Sasha',
+    'Rusty',
+    'Gus',
+    'Baxter',
+    'Dexter',
+    'Willow',
+    'Barney',
+    'Bruno',
+    'Penny',
+    'Honey',
+    'Milly',
+    'Murphy',
+    'Simba',
+    'Holly',
+    'Benji',
+    'Henry',
+    'Lilly',
+    'Pippa',
+    'Shadow',
+    'Sam',
+    'Lucky',
+    'Ellie',
+    'Duke',
+    'Jessie',
+    'Cookie',
+    'Harvey',
+    'Bruce',
+    'Jax',
+    'Rex',
+    'Louie',
+    'Jet',
+    'Banjo',
+    'Beau',
+    'Ella',
+    'Ralph',
+    'Loki',
+    'Lexi',
+    'Chester',
+    'Sophie',
+    'Chilli',
+    'Billie',
+    'Louis',
+    'Scout',
+    'Cleo',
+    'Purfect',
+    'Spot',
+    'Bolt',
+    'Julia',
+    'Ginger',
+    'Daisy',
+    'Amelia',
+    'Oliver',
+    'Ghost',
+    'Midnight',
+    'Pumpkin',
+    'Shadow',
+    'Binx',
+    'Riley',
+    'Lenny',
+    'Mango',
+    'Alex',
+    'Boo',
+    'Botas',
+    'Romeo',
+    'Bob',
+    'Clyde',
+    'Simon',
+    'Mimmo',
+    'Carlotta',
+    'Felix',
+    'Duchess',
 ];
 
 

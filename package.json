@@ -175,7 +175,8 @@
                             "rubber-duck",
                             "snake",
                             "totoro",
-                            "zappy"
+                            "zappy",
+                            "rat"
                         ],
                         "default": "cat",
                         "description": "Pet type",
