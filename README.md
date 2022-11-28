@@ -46,6 +46,10 @@ Run the "Start pet coding session" command (`vscode-pets.start`) to see a cat in
 
 [Now checkout the documentation to see what else is possible!](https://tonybaloney.github.io/vscode-pets)
 
+## Translation
+
+Visit the [Crowdin Project](https://crowdin.com/project/vscode-pets) in case you'd like to help with the translations. It will be synced automatically to the repository. You can also request a new language in the [Discussions](https://crowdin.com/project/vscode-pets/discussions) section.
+
 ## Credits
 
 The cat animations were designed by [seethingswarm](https://seethingswarm.itch.io/catset). The dog media assets for this extension were designed by [NVPH Studio](https://nvph-studio.itch.io/dog-animation-4-different-dogs). 
