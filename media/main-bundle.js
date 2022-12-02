@@ -1426,11 +1426,8 @@ class Codey extends basepettype_1.BasePetType {
     get emoji() {
         return '🐻';
     }
-    get canChase() {
-        return false;
-    }
     get hello() {
-        return `Hello trailblazers!`;
+        return `🐻 Hello trailblazers!`;
     }
 }
 exports.Codey = Codey;
