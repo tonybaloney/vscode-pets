@@ -2,6 +2,7 @@ import { PetColor, PetSize, PetSpeed, PetType } from '../common/types';
 import { Cat } from './pets/cat';
 import { Clippy } from './pets/clippy';
 import { Cockatiel } from './pets/cockatiel';
+import { Codey } from './pets/codey';
 import { Crab } from './pets/crab';
 import { Dog } from './pets/dog';
 import { Mod } from './pets/mod';
@@ -192,6 +193,8 @@ export function createPet(
             return new Rocky(...standardPetArguments, PetSpeed.still);
         case PetType.cockatiel:
             return new Cockatiel(...standardPetArguments, PetSpeed.normal);
+        case PetType.codey:
+            return new Codey(...standardPetArguments, PetSpeed.normal);
         default:
             throw new InvalidPetException("Pet type doesn't exist");
     }
@@ -221,6 +224,8 @@ export function availableColors(petType: PetType): PetColor[] {
             return Rocky.possibleColors;
         case PetType.cockatiel:
             return Cockatiel.possibleColors;
+        case PetType.codey:
+            return Codey.possibleColors;            
         default:
             throw new InvalidPetException("Pet type doesn't exist");
     }

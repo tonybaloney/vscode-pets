@@ -14,6 +14,7 @@ exports.randomName = void 0;
 const cat_1 = __webpack_require__(/*! ../panel/pets/cat */ "./src/panel/pets/cat.ts");
 const clippy_1 = __webpack_require__(/*! ../panel/pets/clippy */ "./src/panel/pets/clippy.ts");
 const cockatiel_1 = __webpack_require__(/*! ../panel/pets/cockatiel */ "./src/panel/pets/cockatiel.ts");
+const codey_1 = __webpack_require__(/*! ../panel/pets/codey */ "./src/panel/pets/codey.ts");
 const crab_1 = __webpack_require__(/*! ../panel/pets/crab */ "./src/panel/pets/crab.ts");
 const dog_1 = __webpack_require__(/*! ../panel/pets/dog */ "./src/panel/pets/dog.ts");
 const mod_1 = __webpack_require__(/*! ../panel/pets/mod */ "./src/panel/pets/mod.ts");
@@ -35,6 +36,7 @@ function randomName(type) {
         ["zappy" /* PetType.zappy */]: zappy_1.ZAPPY_NAMES,
         ["rocky" /* PetType.rocky */]: rocky_1.ROCKY_NAMES,
         ["cockatiel" /* PetType.cockatiel */]: cockatiel_1.COCKATIEL_NAMES,
+        ["codey" /* PetType.codey */]: codey_1.CODEY_NAMES,
     }[type] ?? cat_1.CAT_NAMES;
     return (collection[Math.floor(Math.random() * collection.length)] ?? 'Unknown');
 }
@@ -787,6 +789,7 @@ exports.normalizeColor = exports.availableColors = exports.createPet = exports.I
 const cat_1 = __webpack_require__(/*! ./pets/cat */ "./src/panel/pets/cat.ts");
 const clippy_1 = __webpack_require__(/*! ./pets/clippy */ "./src/panel/pets/clippy.ts");
 const cockatiel_1 = __webpack_require__(/*! ./pets/cockatiel */ "./src/panel/pets/cockatiel.ts");
+const codey_1 = __webpack_require__(/*! ./pets/codey */ "./src/panel/pets/codey.ts");
 const crab_1 = __webpack_require__(/*! ./pets/crab */ "./src/panel/pets/crab.ts");
 const dog_1 = __webpack_require__(/*! ./pets/dog */ "./src/panel/pets/dog.ts");
 const mod_1 = __webpack_require__(/*! ./pets/mod */ "./src/panel/pets/mod.ts");
@@ -918,6 +921,8 @@ function createPet(petType, el, collision, speech, size, left, bottom, petRoot, 
             return new rocky_1.Rocky(...standardPetArguments, 0 /* PetSpeed.still */);
         case "cockatiel" /* PetType.cockatiel */:
             return new cockatiel_1.Cockatiel(...standardPetArguments, 3 /* PetSpeed.normal */);
+        case "codey" /* PetType.codey */:
+            return new codey_1.Codey(...standardPetArguments, 3 /* PetSpeed.normal */);
         default:
             throw new InvalidPetException("Pet type doesn't exist");
     }
@@ -947,6 +952,8 @@ function availableColors(petType) {
             return rocky_1.Rocky.possibleColors;
         case "cockatiel" /* PetType.cockatiel */:
             return cockatiel_1.Cockatiel.possibleColors;
+        case "codey" /* PetType.codey */:
+            return codey_1.Codey.possibleColors;
         default:
             throw new InvalidPetException("Pet type doesn't exist");
     }
@@ -1360,6 +1367,75 @@ exports.COCKATIEL_NAMES = [
     'Lola',
     'Kiko',
     'Luna',
+];
+
+
+/***/ }),
+
+/***/ "./src/panel/pets/codey.ts":
+/*!*********************************!*\
+  !*** ./src/panel/pets/codey.ts ***!
+  \*********************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.CODEY_NAMES = exports.Codey = void 0;
+const basepettype_1 = __webpack_require__(/*! ../basepettype */ "./src/panel/basepettype.ts");
+class Codey extends basepettype_1.BasePetType {
+    label = 'codey';
+    static possibleColors = ["brown" /* PetColor.brown */];
+    sequence = {
+        startingState: "sit-idle" /* States.sitIdle */,
+        sequenceStates: [
+            {
+                state: "sit-idle" /* States.sitIdle */,
+                possibleNextStates: ["walk-right" /* States.walkRight */, "run-right" /* States.runRight */],
+            },
+            {
+                state: "walk-right" /* States.walkRight */,
+                possibleNextStates: ["walk-left" /* States.walkLeft */, "run-left" /* States.runLeft */],
+            },
+            {
+                state: "run-right" /* States.runRight */,
+                possibleNextStates: ["walk-left" /* States.walkLeft */, "run-left" /* States.runLeft */],
+            },
+            {
+                state: "walk-left" /* States.walkLeft */,
+                possibleNextStates: ["sit-idle" /* States.sitIdle */],
+            },
+            {
+                state: "run-left" /* States.runLeft */,
+                possibleNextStates: ["sit-idle" /* States.sitIdle */],
+            },
+            {
+                state: "chase" /* States.chase */,
+                possibleNextStates: ["idle-with-ball" /* States.idleWithBall */],
+            },
+            {
+                state: "idle-with-ball" /* States.idleWithBall */,
+                possibleNextStates: [
+                    "walk-right" /* States.walkRight */,
+                    "walk-left" /* States.walkLeft */,
+                    "run-left" /* States.runLeft */,
+                    "run-right" /* States.runRight */,
+                ],
+            },
+        ],
+    };
+    get emoji() {
+        return '🐻';
+    }
+    get canChase() {
+        return false;
+    }
+    get hello() {
+        return `Hello trailblazers!`;
+    }
+}
+exports.Codey = Codey;
+exports.CODEY_NAMES = [
+    'Codey'
 ];
 
 
