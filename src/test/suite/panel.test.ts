@@ -8,7 +8,6 @@ import {
     PetType,
     PetColor,
     Theme,
-    ColorThemeKind,
     WebviewMessage,
     ALL_PETS,
 } from '../../common/types';
@@ -128,7 +127,7 @@ suite('Pets Test Suite', () => {
                 panel.petPanelApp(
                     'https://test.com',
                     Theme.beach,
-                    ColorThemeKind.dark,
+                    vscode.ColorThemeKind.Dark,
                     color,
                     PetSize.large,
                     petType,
@@ -174,7 +173,7 @@ suite('Pets Test Suite', () => {
         panel.petPanelApp(
             'https://test.com',
             Theme.none,
-            ColorThemeKind.dark,
+            vscode.ColorThemeKind.Dark,
             PetColor.black,
             PetSize.large,
             PetType.cat,
@@ -196,7 +195,7 @@ suite('Pets Test Suite', () => {
         panel.petPanelApp(
             'https://test.com',
             Theme.none,
-            ColorThemeKind.dark,
+            vscode.ColorThemeKind.Dark,
             PetColor.black,
             PetSize.large,
             PetType.cat,

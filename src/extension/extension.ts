@@ -1,5 +1,4 @@
 import * as vscode from 'vscode';
-import { getApi, Role } from "vsls";
 import {
     PetSize,
     PetColor,
@@ -23,6 +22,7 @@ import {
 import { PetSpecification } from './specification';
 import { IPetPanel, PetPanel } from './panel';
 import { PetWebviewViewProvider } from './webview';
+import { setupVsls } from './liveshare';
 
 class PetQuickPickItem implements vscode.QuickPickItem {
     constructor(
@@ -168,18 +168,6 @@ function getWebview(): vscode.Webview | undefined {
         return webviewViewProvider.getWebview();
     } else if (PetPanel.currentPanel) {
         return PetPanel.currentPanel.getWebview();
-    }
-}
-
-async function setupVsls(){
-    const api = await getApi();
-    if (api){
-        api.onDidChangeSession(async (e: any) => {
-            if (e.session.role === Role.Host) {
-                // Ready to host
-                
-            }
-        });
     }
 }
 
