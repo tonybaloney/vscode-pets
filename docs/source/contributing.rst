@@ -57,3 +57,9 @@ Testing the changes
 -   Run `npm run compile`.
 -   Go to the debug panel on the sidebar and launch the development version with the extension loaded (first option in the debug profiles).
 -   Refer to `VS Code Extension Documentation <https://code.visualstudio.com/api>`_ for additional resources.
+
+Submitting a PR
++++++++++++++++
+
+- Please make sure to run `npm run lint` and verify there are no errors/warnings. 
+- You can run `npm run lint:fix` to fix the lint issues. 
