@@ -225,7 +225,7 @@ export function availableColors(petType: PetType): PetColor[] {
         case PetType.cockatiel:
             return Cockatiel.possibleColors;
         case PetType.codey:
-            return Codey.possibleColors;            
+            return Codey.possibleColors;
         default:
             throw new InvalidPetException("Pet type doesn't exist");
     }

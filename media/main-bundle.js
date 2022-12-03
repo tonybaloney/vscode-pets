@@ -1431,9 +1431,7 @@ class Codey extends basepettype_1.BasePetType {
     }
 }
 exports.Codey = Codey;
-exports.CODEY_NAMES = [
-    'Codey'
-];
+exports.CODEY_NAMES = ['Codey'];
 
 
 /***/ }),

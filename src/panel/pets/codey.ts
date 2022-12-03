@@ -51,6 +51,4 @@ export class Codey extends BasePetType {
     }
 }
 
-export const CODEY_NAMES: ReadonlyArray<string> = [
-    'Codey'
-];
+export const CODEY_NAMES: ReadonlyArray<string> = ['Codey'];
