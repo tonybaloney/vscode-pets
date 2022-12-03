@@ -1,11 +1,11 @@
 // This script will be run within the webview itself
 import { randomName } from '../common/names';
 import {
+    ColorThemeKind,
     PetSize,
     PetColor,
     PetType,
     Theme,
-    ColorThemeKind,
     WebviewMessage,
 } from '../common/types';
 import { IPetType } from '../common/states';
@@ -311,13 +311,16 @@ export function petPanelApp(
     if (theme !== Theme.none) {
         var _themeKind = '';
         switch (themeKind) {
-            case ColorThemeKind.dark:
+            case ColorThemeKind.Dark:
                 _themeKind = 'dark';
                 break;
-            case ColorThemeKind.light:
+            case ColorThemeKind.Light:
                 _themeKind = 'light';
                 break;
-            case ColorThemeKind.highContrast:
+            case ColorThemeKind.HighContrast:
+                _themeKind = 'dark';
+                break;
+            case ColorThemeKind.HighContrastLight:
             default:
                 _themeKind = 'light';
                 break;

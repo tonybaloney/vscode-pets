@@ -88,3 +88,17 @@ export const ALL_COLORS = [
 ];
 export const ALL_SCALES = [PetSize.nano, PetSize.medium, PetSize.large];
 export const ALL_THEMES = [Theme.none, Theme.forest, Theme.castle, Theme.beach];
+
+export const enum ColorThemeKind {
+    // eslint-disable-next-line @typescript-eslint/naming-convention
+    Light = 1,
+    
+    // eslint-disable-next-line @typescript-eslint/naming-convention
+    Dark = 2,
+
+    // eslint-disable-next-line @typescript-eslint/naming-convention
+    HighContrast = 3,
+
+    // eslint-disable-next-line @typescript-eslint/naming-convention
+    HighContrastLight = 4
+}

@@ -4,6 +4,7 @@ import * as assert from 'assert';
 // as well as import your extension to test it
 import * as vscode from 'vscode';
 import {
+    ColorThemeKind,
     PetSize,
     PetType,
     PetColor,
@@ -127,7 +128,7 @@ suite('Pets Test Suite', () => {
                 panel.petPanelApp(
                     'https://test.com',
                     Theme.beach,
-                    vscode.ColorThemeKind.Dark,
+                    ColorThemeKind.Dark,
                     color,
                     PetSize.large,
                     petType,
@@ -173,7 +174,7 @@ suite('Pets Test Suite', () => {
         panel.petPanelApp(
             'https://test.com',
             Theme.none,
-            vscode.ColorThemeKind.Dark,
+            ColorThemeKind.Dark,
             PetColor.black,
             PetSize.large,
             PetType.cat,
@@ -195,7 +196,7 @@ suite('Pets Test Suite', () => {
         panel.petPanelApp(
             'https://test.com',
             Theme.none,
-            vscode.ColorThemeKind.Dark,
+            ColorThemeKind.Dark,
             PetColor.black,
             PetSize.large,
             PetType.cat,

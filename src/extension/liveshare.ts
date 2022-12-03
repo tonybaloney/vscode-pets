@@ -1,4 +1,4 @@
-import * as vsls from "../../node_modules/vsls/vscode";
+import * as vsls from "vsls";
 import { PetSpecification } from "./specification";
 
 const SERVICE_NAME = 'vscode-pets';

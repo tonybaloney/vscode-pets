@@ -2135,54 +2135,6 @@ exports.JumpDownLeftState = JumpDownLeftState;
 
 /***/ }),
 
-/***/ "./src/common/types.ts":
-/*!*****************************!*\
-  !*** ./src/common/types.ts ***!
-  \*****************************/
-/***/ ((__unused_webpack_module, exports) => {
-
-
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.ALL_THEMES = exports.ALL_SCALES = exports.ALL_COLORS = exports.ALL_PETS = exports.WebviewMessage = void 0;
-class WebviewMessage {
-    text;
-    command;
-    constructor(text, command) {
-        this.text = text;
-        this.command = command;
-    }
-}
-exports.WebviewMessage = WebviewMessage;
-exports.ALL_PETS = [
-    "cat" /* PetType.cat */,
-    "clippy" /* PetType.clippy */,
-    "cockatiel" /* PetType.cockatiel */,
-    "crab" /* PetType.crab */,
-    "dog" /* PetType.dog */,
-    "mod" /* PetType.mod */,
-    "rocky" /* PetType.rocky */,
-    "rubber-duck" /* PetType.rubberduck */,
-    "snake" /* PetType.snake */,
-    "totoro" /* PetType.totoro */,
-    "zappy" /* PetType.zappy */,
-];
-exports.ALL_COLORS = [
-    "black" /* PetColor.black */,
-    "brown" /* PetColor.brown */,
-    "green" /* PetColor.green */,
-    "yellow" /* PetColor.yellow */,
-    "gray" /* PetColor.gray */,
-    "purple" /* PetColor.purple */,
-    "red" /* PetColor.red */,
-    "white" /* PetColor.white */,
-    "null" /* PetColor.null */,
-];
-exports.ALL_SCALES = ["nano" /* PetSize.nano */, "medium" /* PetSize.medium */, "large" /* PetSize.large */];
-exports.ALL_THEMES = ["none" /* Theme.none */, "forest" /* Theme.forest */, "castle" /* Theme.castle */, "beach" /* Theme.beach */];
-
-
-/***/ }),
-
 /***/ "./src/panel/main.ts":
 /*!***************************!*\
   !*** ./src/panel/main.ts ***!
@@ -2194,7 +2146,6 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.petPanelApp = exports.saveState = exports.allPets = void 0;
 // This script will be run within the webview itself
 const names_1 = __webpack_require__(/*! ../common/names */ "./src/common/names.ts");
-const types_1 = __webpack_require__(/*! ../common/types */ "./src/common/types.ts");
 const pets_1 = __webpack_require__(/*! ../common/pets */ "./src/common/pets.ts");
 const states_1 = __webpack_require__(/*! ../common/states */ "./src/common/states.ts");
 exports.allPets = new pets_1.PetCollection();
@@ -2403,13 +2354,16 @@ function petPanelApp(basePetUri, theme, themeKind, petColor, petSize, petType, t
     if (theme !== "none" /* Theme.none */) {
         var _themeKind = '';
         switch (themeKind) {
-            case types_1.ColorThemeKind.dark:
+            case 2 /* ColorThemeKind.Dark */:
                 _themeKind = 'dark';
                 break;
-            case types_1.ColorThemeKind.light:
+            case 1 /* ColorThemeKind.Light */:
                 _themeKind = 'light';
                 break;
-            case types_1.ColorThemeKind.highContrast:
+            case 3 /* ColorThemeKind.HighContrast */:
+                _themeKind = 'dark';
+                break;
+            case 4 /* ColorThemeKind.HighContrastLight */:
             default:
                 _themeKind = 'light';
                 break;
