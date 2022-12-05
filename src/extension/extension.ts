@@ -439,7 +439,7 @@ export function activate(context: vscode.ExtensionContext) {
                     canSelectMany: false,
                     openLabel: 'Open pets.json',
                     filters: {
-                        'json': ['json'],
+                        json: ['json'],
                     },
                 };
                 const fileUri = await vscode.window.showOpenDialog(options);
