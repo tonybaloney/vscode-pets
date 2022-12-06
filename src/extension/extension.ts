@@ -1,4 +1,3 @@
-import * as path from 'path';
 import * as vscode from 'vscode';
 import { ColorThemeKind } from 'vscode';
 import {
@@ -287,7 +286,6 @@ export function activate(context: vscode.ExtensionContext) {
                 const spec = PetSpecification.fromConfiguration();
                 PetPanel.createOrShow(
                     context.extensionUri,
-                    context.extensionPath,
                     spec.color,
                     spec.type,
                     spec.size,
@@ -342,7 +340,6 @@ export function activate(context: vscode.ExtensionContext) {
     const spec = PetSpecification.fromConfiguration();
     webviewViewProvider = new PetWebviewViewProvider(
         context.extensionUri,
-        context.extensionPath,
         spec.color,
         spec.type,
         spec.size,
@@ -628,7 +625,6 @@ export function activate(context: vscode.ExtensionContext) {
                 PetPanel.revive(
                     webviewPanel,
                     context.extensionUri,
-                    context.extensionPath,
                     spec.color,
                     spec.type,
                     spec.size,
@@ -686,7 +682,6 @@ interface IPetPanel {
 class PetWebviewContainer implements IPetPanel {
     protected _extensionUri: vscode.Uri;
     protected _disposables: vscode.Disposable[] = [];
-    protected _petMediaPath: string;
     protected _petColor: PetColor;
     protected _petType: PetType;
     protected _petSize: PetSize;
@@ -696,7 +691,6 @@ class PetWebviewContainer implements IPetPanel {
 
     constructor(
         extensionUri: vscode.Uri,
-        extensionPath: string,
         color: PetColor,
         type: PetType,
         size: PetSize,
@@ -705,7 +699,6 @@ class PetWebviewContainer implements IPetPanel {
         throwBallWithMouse: boolean,
     ) {
         this._extensionUri = extensionUri;
-        this._petMediaPath = path.join(extensionPath, 'media');
         this._petColor = color;
         this._petType = type;
         this._petSize = size;
@@ -844,7 +837,7 @@ class PetWebviewContainer implements IPetPanel {
 
         // Get path to resource on disk
         const basePetUri = webview.asWebviewUri(
-            vscode.Uri.file(path.join(this._petMediaPath)),
+            vscode.Uri.joinPath(this._extensionUri, 'media'),
         );
 
         // Use a nonce to only allow specific scripts to be run
@@ -912,7 +905,6 @@ class PetPanel extends PetWebviewContainer implements IPetPanel {
 
     public static createOrShow(
         extensionUri: vscode.Uri,
-        extensionPath: string,
         petColor: PetColor,
         petType: PetType,
         petSize: PetSize,
@@ -951,7 +943,6 @@ class PetPanel extends PetWebviewContainer implements IPetPanel {
         PetPanel.currentPanel = new PetPanel(
             panel,
             extensionUri,
-            extensionPath,
             petColor,
             petType,
             petSize,
@@ -980,7 +971,6 @@ class PetPanel extends PetWebviewContainer implements IPetPanel {
     public static revive(
         panel: vscode.WebviewPanel,
         extensionUri: vscode.Uri,
-        extensionPath: string,
         petColor: PetColor,
         petType: PetType,
         petSize: PetSize,
@@ -991,7 +981,6 @@ class PetPanel extends PetWebviewContainer implements IPetPanel {
         PetPanel.currentPanel = new PetPanel(
             panel,
             extensionUri,
-            extensionPath,
             petColor,
             petType,
             petSize,
@@ -1004,7 +993,6 @@ class PetPanel extends PetWebviewContainer implements IPetPanel {
     private constructor(
         panel: vscode.WebviewPanel,
         extensionUri: vscode.Uri,
-        extensionPath: string,
         color: PetColor,
         type: PetType,
         size: PetSize,
@@ -1014,7 +1002,6 @@ class PetPanel extends PetWebviewContainer implements IPetPanel {
     ) {
         super(
             extensionUri,
-            extensionPath,
             color,
             type,
             size,
@@ -1123,7 +1110,6 @@ function createPetPlayground(context: vscode.ExtensionContext) {
     const spec = PetSpecification.fromConfiguration();
     PetPanel.createOrShow(
         context.extensionUri,
-        context.extensionPath,
         spec.color,
         spec.type,
         spec.size,
