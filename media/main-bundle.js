@@ -6,395 +6,315 @@
 /*!*****************************!*\
   !*** ./src/common/names.ts ***!
   \*****************************/
-/***/ ((__unused_webpack_module, exports) => {
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.randomName = exports.COCKATIEL_NAMES = exports.ROCKY_NAMES = exports.ZAPPY_NAMES = exports.DUCK_NAMES = exports.SNAKE_NAMES = exports.TOTORO_NAMES = exports.CLIPPY_NAMES = exports.CRAB_NAMES = exports.DOG_NAMES = exports.CAT_NAMES = void 0;
-exports.CAT_NAMES = new Map([
-    [1, 'Bella'],
-    [2, 'Charlie'],
-    [3, 'Molly'],
-    [4, 'Coco'],
-    [5, 'Ruby'],
-    [6, 'Oscar'],
-    [7, 'Lucy'],
-    [8, 'Bailey'],
-    [9, 'Milo'],
-    [10, 'Daisy'],
-    [11, 'Archie'],
-    [12, 'Ollie'],
-    [13, 'Rosie'],
-    [14, 'Lola'],
-    [15, 'Frankie'],
-    [16, 'Roxy'],
-    [17, 'Poppy'],
-    [18, 'Luna'],
-    [19, 'Jack'],
-    [20, 'Millie'],
-    [21, 'Teddy'],
-    [22, 'Cooper'],
-    [23, 'Bear'],
-    [24, 'Rocky'],
-    [25, 'Alfie'],
-    [26, 'Hugo'],
-    [27, 'Bonnie'],
-    [28, 'Pepper'],
-    [29, 'Lily'],
-    [30, 'Tilly'],
-    [31, 'Leo'],
-    [32, 'Maggie'],
-    [33, 'George'],
-    [34, 'Mia'],
-    [35, 'Marley'],
-    [36, 'Harley'],
-    [37, 'Chloe'],
-    [38, 'Lulu'],
-    [39, 'Missy'],
-    [40, 'Jasper'],
-    [41, 'Billy'],
-    [42, 'Nala'],
-    [43, 'Monty'],
-    [44, 'Ziggy'],
-    [45, 'Winston'],
-    [46, 'Zeus'],
-    [47, 'Zoe'],
-    [48, 'Stella'],
-    [49, 'Sasha'],
-    [50, 'Rusty'],
-    [51, 'Gus'],
-    [52, 'Baxter'],
-    [53, 'Dexter'],
-    [54, 'Willow'],
-    [55, 'Barney'],
-    [56, 'Bruno'],
-    [57, 'Penny'],
-    [58, 'Honey'],
-    [59, 'Milly'],
-    [60, 'Murphy'],
-    [61, 'Simba'],
-    [62, 'Holly'],
-    [63, 'Benji'],
-    [64, 'Henry'],
-    [65, 'Lilly'],
-    [66, 'Pippa'],
-    [67, 'Shadow'],
-    [68, 'Sam'],
-    [69, 'Lucky'],
-    [70, 'Ellie'],
-    [71, 'Duke'],
-    [72, 'Jessie'],
-    [73, 'Cookie'],
-    [74, 'Harvey'],
-    [75, 'Bruce'],
-    [76, 'Jax'],
-    [77, 'Rex'],
-    [78, 'Louie'],
-    [79, 'Jet'],
-    [80, 'Banjo'],
-    [81, 'Beau'],
-    [82, 'Ella'],
-    [83, 'Ralph'],
-    [84, 'Loki'],
-    [85, 'Lexi'],
-    [86, 'Chester'],
-    [87, 'Sophie'],
-    [88, 'Chilli'],
-    [89, 'Billie'],
-    [90, 'Louis'],
-    [91, 'Scout'],
-    [92, 'Cleo'],
-    [93, 'Purfect'],
-    [94, 'Spot'],
-    [95, 'Bolt'],
-    [96, 'Julia'],
-    [97, 'Ginger'],
-    [98, 'Daisy'],
-    [99, 'Amelia'],
-    [100, 'Oliver'],
-    [101, 'Ghost'],
-    [102, 'Midnight'],
-    [103, 'Pumpkin'],
-    [105, 'Shadow'],
-    [106, 'Binx'],
-    [107, 'Riley'],
-    [108, 'Lenny'],
-    [109, 'Mango'],
-]);
-exports.DOG_NAMES = new Map([
-    [1, 'Bella'],
-    [2, 'Charlie'],
-    [3, 'Max'],
-    [4, 'Molly'],
-    [5, 'Coco'],
-    [6, 'Buddy'],
-    [7, 'Ruby'],
-    [8, 'Oscar'],
-    [9, 'Lucy'],
-    [10, 'Bailey'],
-    [11, 'Milo'],
-    [12, 'Daisy'],
-    [13, 'Archie'],
-    [14, 'Ollie'],
-    [15, 'Rosie'],
-    [16, 'Lola'],
-    [17, 'Frankie'],
-    [18, 'Toby'],
-    [19, 'Roxy'],
-    [20, 'Poppy'],
-    [21, 'Luna'],
-    [22, 'Jack'],
-    [23, 'Millie'],
-    [24, 'Teddy'],
-    [25, 'Harry'],
-    [26, 'Cooper'],
-    [27, 'Bear'],
-    [28, 'Rocky'],
-    [29, 'Alfie'],
-    [30, 'Hugo'],
-    [31, 'Bonnie'],
-    [32, 'Pepper'],
-    [33, 'Lily'],
-    [34, 'Leo'],
-    [35, 'Maggie'],
-    [36, 'George'],
-    [37, 'Mia'],
-    [38, 'Marley'],
-    [39, 'Harley'],
-    [40, 'Chloe'],
-    [41, 'Lulu'],
-    [42, 'Jasper'],
-    [43, 'Billy'],
-    [44, 'Nala'],
-    [45, 'Monty'],
-    [46, 'Ziggy'],
-    [47, 'Winston'],
-    [48, 'Zeus'],
-    [49, 'Zoe'],
-    [50, 'Stella'],
-    [51, 'Sasha'],
-    [52, 'Rusty'],
-    [53, 'Gus'],
-    [54, 'Baxter'],
-    [55, 'Dexter'],
-    [56, 'Diesel'],
-    [57, 'Willow'],
-    [58, 'Barney'],
-    [59, 'Bruno'],
-    [60, 'Penny'],
-    [61, 'Honey'],
-    [62, 'Milly'],
-    [63, 'Murphy'],
-    [64, 'Holly'],
-    [65, 'Benji'],
-    [66, 'Henry'],
-    [67, 'Lilly'],
-    [68, 'Pippa'],
-    [69, 'Shadow'],
-    [70, 'Sam'],
-    [71, 'Buster'],
-    [72, 'Lucky'],
-    [73, 'Ellie'],
-    [74, 'Duke'],
-    [75, 'Jessie'],
-    [76, 'Cookie'],
-    [77, 'Harvey'],
-    [78, 'Bruce'],
-    [79, 'Jax'],
-    [80, 'Rex'],
-    [81, 'Louie'],
-    [82, 'Bentley'],
-    [83, 'Jet'],
-    [84, 'Banjo'],
-    [85, 'Beau'],
-    [86, 'Ella'],
-    [87, 'Ralph'],
-    [88, 'Loki'],
-    [89, 'Lexi'],
-    [90, 'Chester'],
-    [91, 'Sophie'],
-    [92, 'Billie'],
-    [93, 'Louis'],
-    [94, 'Charlie'],
-    [95, 'Cleo'],
-    [96, 'Spot'],
-    [97, 'Harry'],
-    [98, 'Bolt'],
-    [99, 'Ein'],
-    [100, 'Maddy'],
-    [101, 'Ghost'],
-    [102, 'Midnight'],
-    [103, 'Pumpkin'],
-    [105, 'Shadow'],
-    [106, 'Sparky'],
-    [107, 'Linus'],
-    [108, 'Cody'],
-]);
-exports.CRAB_NAMES = new Map([
-    [1, 'Ferris'],
-    [2, 'Pinchy'],
-    [3, 'Grabby'],
-    [4, 'Big Red'],
-    [5, 'Crabby'],
-    [6, 'Buddy'],
-    [7, 'Ruby Red'],
-    [8, 'Oscar'],
-    [9, 'Lucy'],
-    [10, 'Bailey'],
-    [11, 'Crabito'],
-    [12, 'Percy'],
-    [13, 'Rocky'],
-    [14, 'Mr. Krabs'],
-    [15, 'Shelly'],
-    [16, 'Santa Claws'],
-    [17, 'Clawdia'],
-    [18, 'Scuttle'],
-    [19, 'Snappy'],
-    [20, 'Hermit'],
-    [21, 'Horseshoe'],
-    [22, 'Snapper'],
-    [23, 'Coconut'],
-]);
-exports.CLIPPY_NAMES = new Map([
-    [1, 'Clippy'],
-    [2, 'Karl Klammer'],
-    [3, 'Clippy Jr.'],
-    [4, 'Molly'],
-    [5, 'Coco'],
-    [6, 'Buddy'],
-    [7, 'Ruby'],
-    [8, 'Oscar'],
-    [9, 'Lucy'],
-    [10, 'Bailey'],
-]);
-exports.TOTORO_NAMES = new Map([
-    [1, 'Totoro'],
-    [2, 'トトロ'],
-    [3, 'Max'],
-    [4, 'Molly'],
-    [5, 'Coco'],
-    [6, 'Buddy'],
-    [7, 'Ruby'],
-    [8, 'Oscar'],
-    [9, 'Lucy'],
-    [10, 'Bailey'],
-    [11, 'Big fella'],
-]);
-exports.SNAKE_NAMES = new Map([
-    [1, 'Sneaky'],
-    [2, 'Mr Slippery'],
-    [3, 'Hissy Elliott'],
-    [4, 'Molly'],
-    [5, 'Coco'],
-    [6, 'Buddy'],
-    [7, 'Ruby'],
-    [8, 'Bailey'],
-    [9, 'Max'],
-    [10, 'Seb'],
-]);
-exports.DUCK_NAMES = new Map([
-    [1, 'Quacky'],
-    [2, 'Floaty'],
-    [3, 'Duck'],
-    [4, 'Molly'],
-    [5, 'Sunshine'],
-    [6, 'Buddy'],
-    [7, 'Chirpy'],
-    [8, 'Oscar'],
-    [9, 'Lucy'],
-    [10, 'Bailey'],
-    [11, 'Beaky'],
-    [12, 'Jemima'],
-    [13, 'Peaches'],
-    [14, 'Quackers'],
-    [15, 'Jelly Beans'],
-    [16, 'Donald'],
-]);
-exports.ZAPPY_NAMES = new Map([
-    [1, 'Zappy'],
-    [2, 'Zippy'],
-    [3, 'Zappy Jr.'],
-    [4, 'Zoppy'],
-    [5, 'Zuppy'],
-    [6, 'Zeppy'],
-    [7, 'Big Z'],
-    [8, 'Little z'],
-    [9, 'The Flash'],
-    [10, 'Thor'],
-    [11, 'Electric Bolt'],
-]);
-exports.ROCKY_NAMES = new Map([
-    [1, 'Rocky'],
-    [2, 'The Rock'],
-    [3, 'Quartzy'],
-    [4, 'Rocky I'],
-    [5, 'Rocky II'],
-    [6, 'Rocky III'],
-    [7, 'Pebbles Sr.'],
-    [8, 'Big Granite'],
-    [9, 'Boulder'],
-    [10, 'Rockefeller'],
-    [11, 'Pebble'],
-    [12, 'Rocksanne'],
-    [13, 'Rockstar'],
-]);
-exports.COCKATIEL_NAMES = new Map([
-    [1, 'Cocktail'],
-    [2, 'Pipsqueak'],
-    [3, 'Sir Chirps a Lot'],
-    [4, 'Nibbles'],
-    [5, 'Lord of the Wings'],
-    [6, 'Girl Nest Door'],
-    [7, 'Wingman'],
-    [8, 'Meryl Cheep'],
-    [9, 'Jack Sparrow'],
-    [10, 'Godfeather'],
-    [11, 'Mickey'],
-    [12, 'Baquack Obama'],
-    [13, 'Dame Judi Finch'],
-    [14, 'Kanye Nest'],
-]);
+exports.randomName = void 0;
+const cat_1 = __webpack_require__(/*! ../panel/pets/cat */ "./src/panel/pets/cat.ts");
+const clippy_1 = __webpack_require__(/*! ../panel/pets/clippy */ "./src/panel/pets/clippy.ts");
+const cockatiel_1 = __webpack_require__(/*! ../panel/pets/cockatiel */ "./src/panel/pets/cockatiel.ts");
+const crab_1 = __webpack_require__(/*! ../panel/pets/crab */ "./src/panel/pets/crab.ts");
+const dog_1 = __webpack_require__(/*! ../panel/pets/dog */ "./src/panel/pets/dog.ts");
+const mod_1 = __webpack_require__(/*! ../panel/pets/mod */ "./src/panel/pets/mod.ts");
+const rocky_1 = __webpack_require__(/*! ../panel/pets/rocky */ "./src/panel/pets/rocky.ts");
+const rubberduck_1 = __webpack_require__(/*! ../panel/pets/rubberduck */ "./src/panel/pets/rubberduck.ts");
+const snake_1 = __webpack_require__(/*! ../panel/pets/snake */ "./src/panel/pets/snake.ts");
+const totoro_1 = __webpack_require__(/*! ../panel/pets/totoro */ "./src/panel/pets/totoro.ts");
+const zappy_1 = __webpack_require__(/*! ../panel/pets/zappy */ "./src/panel/pets/zappy.ts");
 function randomName(type) {
-    var collection;
-    switch (type) {
-        case "cat" /* PetType.cat */:
-            collection = exports.CAT_NAMES;
-            break;
-        case "dog" /* PetType.dog */:
-            collection = exports.DOG_NAMES;
-            break;
-        case "crab" /* PetType.crab */:
-            collection = exports.CRAB_NAMES;
-            break;
-        case "clippy" /* PetType.clippy */:
-            collection = exports.CLIPPY_NAMES;
-            break;
-        case "totoro" /* PetType.totoro */:
-            collection = exports.TOTORO_NAMES;
-            break;
-        case "snake" /* PetType.snake */:
-            collection = exports.SNAKE_NAMES;
-            break;
-        case "rubber-duck" /* PetType.rubberduck */:
-            collection = exports.DUCK_NAMES;
-            break;
-        case "zappy" /* PetType.zappy */:
-            collection = exports.ZAPPY_NAMES;
-            break;
-        case "rocky" /* PetType.rocky */:
-            collection = exports.ROCKY_NAMES;
-            break;
-        case "cockatiel" /* PetType.cockatiel */:
-            collection = exports.COCKATIEL_NAMES;
-            break;
-        default:
-            collection = exports.CAT_NAMES;
-            break;
-    }
-    return (collection.get(Math.floor(Math.random() * collection.size) + 1) ??
-        'Unknown');
+    const collection = {
+        ["cat" /* PetType.cat */]: cat_1.CAT_NAMES,
+        ["dog" /* PetType.dog */]: dog_1.DOG_NAMES,
+        ["crab" /* PetType.crab */]: crab_1.CRAB_NAMES,
+        ["clippy" /* PetType.clippy */]: clippy_1.CLIPPY_NAMES,
+        ["mod" /* PetType.mod */]: mod_1.MOD_NAMES,
+        ["totoro" /* PetType.totoro */]: totoro_1.TOTORO_NAMES,
+        ["snake" /* PetType.snake */]: snake_1.SNAKE_NAMES,
+        ["rubber-duck" /* PetType.rubberduck */]: rubberduck_1.DUCK_NAMES,
+        ["zappy" /* PetType.zappy */]: zappy_1.ZAPPY_NAMES,
+        ["rocky" /* PetType.rocky */]: rocky_1.ROCKY_NAMES,
+        ["cockatiel" /* PetType.cockatiel */]: cockatiel_1.COCKATIEL_NAMES,
+    }[type] ?? cat_1.CAT_NAMES;
+    return (collection[Math.floor(Math.random() * collection.length)] ?? 'Unknown');
 }
 exports.randomName = randomName;
+
+
+/***/ }),
+
+/***/ "./src/panel/basepettype.ts":
+/*!**********************************!*\
+  !*** ./src/panel/basepettype.ts ***!
+  \**********************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.BasePetType = exports.InvalidStateException = void 0;
+const states_1 = __webpack_require__(/*! ./states */ "./src/panel/states.ts");
+class InvalidStateException {
+}
+exports.InvalidStateException = InvalidStateException;
+class BasePetType {
+    label = 'base';
+    static count = 0;
+    sequence = {
+        startingState: "sit-idle" /* States.sitIdle */,
+        sequenceStates: [],
+    };
+    static possibleColors;
+    currentState;
+    currentStateEnum;
+    holdState;
+    holdStateEnum;
+    el;
+    collision;
+    speech;
+    _left;
+    _bottom;
+    petRoot;
+    _floor;
+    _friend;
+    _name;
+    _speed;
+    _size;
+    constructor(spriteElement, collisionElement, speechElement, size, left, bottom, petRoot, floor, name, speed) {
+        this.el = spriteElement;
+        this.collision = collisionElement;
+        this.speech = speechElement;
+        this.petRoot = petRoot;
+        this._floor = floor;
+        this._left = left;
+        this._bottom = bottom;
+        this.initSprite(size, left, bottom);
+        this.currentStateEnum = this.sequence.startingState;
+        this.currentState = (0, states_1.resolveState)(this.currentStateEnum, this);
+        this._name = name;
+        this._size = size;
+        this._speed = this.randomizeSpeed(speed);
+        // Increment the static count of the Pet class that the constructor belongs to
+        this.constructor.count += 1;
+    }
+    initSprite(petSize, left, bottom) {
+        this.el.style.left = `${left}px`;
+        this.el.style.bottom = `${bottom}px`;
+        this.el.style.width = 'auto';
+        this.el.style.height = 'auto';
+        this.el.style.maxWidth = `${this.calculateSpriteWidth(petSize)}px`;
+        this.el.style.maxHeight = `${this.calculateSpriteWidth(petSize)}px`;
+        this.collision.style.left = `${left}px`;
+        this.collision.style.bottom = `${bottom}px`;
+        this.collision.style.width = `${this.calculateSpriteWidth(petSize)}px`;
+        this.collision.style.height = `${this.calculateSpriteWidth(petSize)}px`;
+        this.speech.style.left = `${left}px`;
+        this.speech.style.bottom = `${bottom + this.calculateSpriteWidth(petSize)}px`;
+        this.hideSpeechBubble();
+    }
+    get left() {
+        return this._left;
+    }
+    get bottom() {
+        return this._bottom;
+    }
+    repositionAccompanyingElements() {
+        this.collision.style.left = `${this._left}px`;
+        this.collision.style.bottom = `${this._bottom}px`;
+        this.speech.style.left = `${this._left}px`;
+        this.speech.style.bottom = `${this._bottom + this.calculateSpriteWidth(this._size)}px`;
+    }
+    calculateSpriteWidth(size) {
+        if (size === "nano" /* PetSize.nano */) {
+            return 30;
+        }
+        else if (size === "medium" /* PetSize.medium */) {
+            return 55;
+        }
+        else if (size === "large" /* PetSize.large */) {
+            return 110;
+        }
+        else {
+            return 30; // Shrug
+        }
+    }
+    positionBottom(bottom) {
+        this._bottom = bottom;
+        this.el.style.bottom = `${this._bottom}px`;
+        this.repositionAccompanyingElements();
+    }
+    positionLeft(left) {
+        this._left = left;
+        this.el.style.left = `${this._left}px`;
+        this.repositionAccompanyingElements();
+    }
+    get width() {
+        return this.el.width;
+    }
+    get floor() {
+        return this._floor;
+    }
+    get hello() {
+        // return the sound of the name of the animal
+        return ` says hello 👋!`;
+    }
+    getState() {
+        return { currentStateEnum: this.currentStateEnum };
+    }
+    get speed() {
+        return this._speed;
+    }
+    randomizeSpeed(speed) {
+        const min = speed * 0.7;
+        const max = speed * 1.3;
+        const newSpeed = Math.random() * (max - min) + min;
+        return newSpeed;
+    }
+    get isMoving() {
+        return this._speed !== 0 /* PetSpeed.still */;
+    }
+    recoverFriend(friend) {
+        // Recover friends..
+        this._friend = friend;
+    }
+    recoverState(state) {
+        // TODO : Resolve a bug where if it was swiping before, it would fail
+        // because holdState is no longer valid.
+        this.currentStateEnum = state.currentStateEnum ?? "sit-idle" /* States.sitIdle */;
+        this.currentState = (0, states_1.resolveState)(this.currentStateEnum, this);
+        if (!(0, states_1.isStateAboveGround)(this.currentStateEnum)) {
+            // Reset the bottom of the sprite to the floor as the theme
+            // has likely changed.
+            this.positionBottom(this.floor);
+        }
+    }
+    get canSwipe() {
+        return !(0, states_1.isStateAboveGround)(this.currentStateEnum);
+    }
+    get canChase() {
+        return !(0, states_1.isStateAboveGround)(this.currentStateEnum) && this.isMoving;
+    }
+    showSpeechBubble(message, duration = 3000) {
+        this.speech.innerHTML = message;
+        this.speech.style.display = 'block';
+        setTimeout(() => {
+            this.hideSpeechBubble();
+        }, duration);
+    }
+    hideSpeechBubble() {
+        this.speech.style.display = 'none';
+    }
+    swipe() {
+        if (this.currentStateEnum === "swipe" /* States.swipe */) {
+            return;
+        }
+        this.holdState = this.currentState;
+        this.holdStateEnum = this.currentStateEnum;
+        this.currentStateEnum = "swipe" /* States.swipe */;
+        this.currentState = (0, states_1.resolveState)(this.currentStateEnum, this);
+        this.showSpeechBubble('👋');
+    }
+    chase(ballState, canvas) {
+        this.currentStateEnum = "chase" /* States.chase */;
+        this.currentState = new states_1.ChaseState(this, ballState, canvas);
+    }
+    faceLeft() {
+        this.el.style.transform = 'scaleX(-1)';
+    }
+    faceRight() {
+        this.el.style.transform = 'scaleX(1)';
+    }
+    setAnimation(face) {
+        if (this.el.src.endsWith(`_${face}_8fps.gif`)) {
+            return;
+        }
+        this.el.src = `${this.petRoot}_${face}_8fps.gif`;
+    }
+    chooseNextState(fromState) {
+        // Work out next state
+        var possibleNextStates = undefined;
+        for (var i = 0; i < this.sequence.sequenceStates.length; i++) {
+            if (this.sequence.sequenceStates[i].state === fromState) {
+                possibleNextStates =
+                    this.sequence.sequenceStates[i].possibleNextStates;
+            }
+        }
+        if (!possibleNextStates) {
+            throw new InvalidStateException();
+        }
+        // randomly choose the next state
+        const idx = Math.floor(Math.random() * possibleNextStates.length);
+        return possibleNextStates[idx];
+    }
+    nextFrame() {
+        if (this.currentState.horizontalDirection === states_1.HorizontalDirection.left) {
+            this.faceLeft();
+        }
+        else if (this.currentState.horizontalDirection === states_1.HorizontalDirection.right) {
+            this.faceRight();
+        }
+        this.setAnimation(this.currentState.spriteLabel);
+        // What's my buddy doing?
+        if (this.hasFriend &&
+            this.currentStateEnum !== "chase-friend" /* States.chaseFriend */ &&
+            this.isMoving) {
+            if (this.friend?.isPlaying &&
+                !(0, states_1.isStateAboveGround)(this.currentStateEnum)) {
+                this.currentState = (0, states_1.resolveState)("chase-friend" /* States.chaseFriend */, this);
+                this.currentStateEnum = "chase-friend" /* States.chaseFriend */;
+                return;
+            }
+        }
+        var frameResult = this.currentState.nextFrame();
+        if (frameResult === states_1.FrameResult.stateComplete) {
+            // If recovering from swipe..
+            if (this.holdState && this.holdStateEnum) {
+                this.currentState = this.holdState;
+                this.currentStateEnum = this.holdStateEnum;
+                this.holdState = undefined;
+                this.holdStateEnum = undefined;
+                return;
+            }
+            var nextState = this.chooseNextState(this.currentStateEnum);
+            this.currentState = (0, states_1.resolveState)(nextState, this);
+            this.currentStateEnum = nextState;
+        }
+        else if (frameResult === states_1.FrameResult.stateCancel) {
+            if (this.currentStateEnum === "chase" /* States.chase */) {
+                var nextState = this.chooseNextState("idle-with-ball" /* States.idleWithBall */);
+                this.currentState = (0, states_1.resolveState)(nextState, this);
+                this.currentStateEnum = nextState;
+            }
+            else if (this.currentStateEnum === "chase-friend" /* States.chaseFriend */) {
+                var nextState = this.chooseNextState("idle-with-ball" /* States.idleWithBall */);
+                this.currentState = (0, states_1.resolveState)(nextState, this);
+                this.currentStateEnum = nextState;
+            }
+        }
+    }
+    get hasFriend() {
+        return this._friend !== undefined;
+    }
+    get friend() {
+        return this._friend;
+    }
+    get name() {
+        return this._name;
+    }
+    makeFriendsWith(friend) {
+        this._friend = friend;
+        console.log(this.name, ": I'm now friends ❤️ with ", friend.name);
+        return true;
+    }
+    get isPlaying() {
+        return (this.isMoving &&
+            (this.currentStateEnum === "run-right" /* States.runRight */ ||
+                this.currentStateEnum === "run-left" /* States.runLeft */));
+    }
+    get emoji() {
+        return '🐶';
+    }
+}
+exports.BasePetType = BasePetType;
 
 
 /***/ }),
@@ -465,9 +385,9 @@ function calculateFloor(size, theme) {
 }
 function handleMouseOver(e) {
     var el = e.currentTarget;
-    exports.allPets.pets().forEach((element) => {
+    exports.allPets.pets.forEach((element) => {
         if (element.collision === el) {
-            if (!element.pet.canSwipe()) {
+            if (!element.pet.canSwipe) {
                 return;
             }
             element.pet.swipe();
@@ -505,6 +425,9 @@ function addPetToPanel(petType, basePetUri, petColor, petSize, left, bottom, flo
     const root = basePetUri + '/' + petType + '/' + petColor;
     console.log('Creating new pet : ', petType, root, petColor, petSize, name);
     try {
+        if (!(0, pets_1.availableColors)(petType).includes(petColor)) {
+            throw new pets_1.InvalidPetException('Invalid color for pet type');
+        }
         var newPet = (0, pets_1.createPet)(petType, petSpriteElement, collisionElement, speechBubbleElement, petSize, left, bottom, root, floor, name);
         petCounter++;
         startAnimations(collisionElement, newPet, stateApi);
@@ -524,13 +447,13 @@ function saveState(stateApi) {
     }
     var state = new states_1.PetPanelState();
     state.petStates = new Array();
-    exports.allPets.pets().forEach((petItem) => {
+    exports.allPets.pets.forEach((petItem) => {
         state.petStates?.push({
-            petName: petItem.pet.name(),
+            petName: petItem.pet.name,
             petColor: petItem.color,
             petType: petItem.type,
             petState: petItem.pet.getState(),
-            petFriend: petItem.pet.friend()?.name() ?? undefined,
+            petFriend: petItem.pet.friend?.name ?? undefined,
             elLeft: petItem.el.style.left,
             elBottom: petItem.el.style.bottom,
         });
@@ -604,7 +527,7 @@ function initCanvas() {
     ctx.canvas.height = window.innerHeight;
 }
 // It cannot access the main VS Code APIs directly.
-function petPanelApp(basePetUri, theme, themeKind, petColor, petSize, petType, stateApi) {
+function petPanelApp(basePetUri, theme, themeKind, petColor, petSize, petType, throwBallWithMouse, stateApi) {
     const ballRadius = calculateBallRadius(petSize);
     var floor = 0;
     if (!stateApi) {
@@ -641,10 +564,74 @@ function petPanelApp(basePetUri, theme, themeKind, petColor, petSize, petType, s
     let then = 0; // last draw
     var ballState;
     function resetBall() {
+        if (ballState) {
+            ballState.paused = true;
+        }
         if (canvas) {
             canvas.style.display = 'block';
         }
         ballState = new states_1.BallState(100, 100, 4, 5);
+    }
+    function dynamicThrowOn() {
+        let startMouseX;
+        let startMouseY;
+        let endMouseX;
+        let endMouseY;
+        console.log('Enabling dynamic throw');
+        window.onmousedown = (e) => {
+            if (ballState) {
+                ballState.paused = true;
+            }
+            if (canvas) {
+                canvas.style.display = 'block';
+            }
+            endMouseX = e.clientX;
+            endMouseY = e.clientY;
+            startMouseX = e.clientX;
+            startMouseY = e.clientY;
+            ballState = new states_1.BallState(e.clientX, e.clientY, 0, 0);
+            exports.allPets.pets.forEach((petEl) => {
+                if (petEl.pet.canChase) {
+                    petEl.pet.chase(ballState, canvas);
+                }
+            });
+            ballState.paused = true;
+            drawBall();
+            window.onmousemove = (ev) => {
+                ev.preventDefault();
+                if (ballState) {
+                    ballState.paused = true;
+                }
+                startMouseX = endMouseX;
+                startMouseY = endMouseY;
+                endMouseX = ev.clientX;
+                endMouseY = ev.clientY;
+                ballState = new states_1.BallState(ev.clientX, ev.clientY, 0, 0);
+                drawBall();
+            };
+            window.onmouseup = (ev) => {
+                ev.preventDefault();
+                window.onmouseup = null;
+                window.onmousemove = null;
+                ballState = new states_1.BallState(endMouseX, endMouseY, endMouseX - startMouseX, endMouseY - startMouseY);
+                exports.allPets.pets.forEach((petEl) => {
+                    if (petEl.pet.canChase) {
+                        petEl.pet.chase(ballState, canvas);
+                    }
+                });
+                throwBall();
+            };
+        };
+    }
+    function dynamicThrowOff() {
+        console.log('Disabling dynamic throw');
+        window.onmousedown = null;
+        if (ballState) {
+            ballState.paused = true;
+        }
+        if (canvas) {
+            canvas.style.display = 'none';
+        }
     }
     function throwBall() {
         if (!ballState.paused) {
@@ -657,7 +644,6 @@ function petPanelApp(basePetUri, theme, themeKind, petColor, petSize, petType, s
             return;
         }
         then = now - (elapsed % interval);
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
         if (ballState.cx + ballRadius >= canvas.width) {
             ballState.vx = -ballState.vx * damping;
             ballState.cx = canvas.width - ballRadius;
@@ -679,12 +665,16 @@ function petPanelApp(basePetUri, theme, themeKind, petColor, petSize, petType, s
         ballState.vy += gravity;
         ballState.cx += ballState.vx;
         ballState.cy += ballState.vy;
+        drawBall();
+    }
+    function drawBall() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
         ctx.beginPath();
         ctx.arc(ballState.cx, ballState.cy, ballRadius, 0, 2 * Math.PI, false);
         ctx.fillStyle = '#2ed851';
         ctx.fill();
     }
-    console.log('Starting pet session', petColor, basePetUri, petType);
+    console.log('Starting pet session', petColor, basePetUri, petType, throwBallWithMouse);
     // New session
     var state = stateApi?.getState();
     if (!state) {
@@ -698,15 +688,29 @@ function petPanelApp(basePetUri, theme, themeKind, petColor, petSize, petType, s
         recoverState(basePetUri, petSize, floor, stateApi);
     }
     initCanvas();
+    if (throwBallWithMouse) {
+        dynamicThrowOn();
+    }
+    else {
+        dynamicThrowOff();
+    }
     // Handle messages sent from the extension to the webview
     window.addEventListener('message', (event) => {
         const message = event.data; // The json data that the extension sent
         switch (message.command) {
+            case 'throw-with-mouse':
+                if (message.enabled) {
+                    dynamicThrowOn();
+                }
+                else {
+                    dynamicThrowOff();
+                }
+                break;
             case 'throw-ball':
                 resetBall();
                 throwBall();
-                exports.allPets.pets().forEach((petEl) => {
-                    if (petEl.pet.canChase()) {
+                exports.allPets.pets.forEach((petEl) => {
+                    if (petEl.pet.canChase) {
                         petEl.pet.chase(ballState, canvas);
                     }
                 });
@@ -716,22 +720,22 @@ function petPanelApp(basePetUri, theme, themeKind, petColor, petSize, petType, s
                 saveState(stateApi);
                 break;
             case 'list-pets':
-                var pets = exports.allPets.pets();
+                var pets = exports.allPets.pets;
                 stateApi?.postMessage({
                     command: 'list-pets',
                     text: pets
-                        .map((pet) => `${pet.type},${pet.pet.name()},${pet.color}`)
+                        .map((pet) => `${pet.type},${pet.pet.name},${pet.color}`)
                         .join('\n'),
                 });
                 break;
             case 'roll-call':
-                var pets = exports.allPets.pets();
+                var pets = exports.allPets.pets;
                 // go through every single
                 // pet and then print out their name
                 pets.forEach((pet) => {
                     stateApi?.postMessage({
                         command: 'info',
-                        text: `${pet.pet.emoji()} ${pet.pet.name()} (${pet.color} ${pet.type}): ${pet.pet.hello()}`,
+                        text: `${pet.pet.emoji} ${pet.pet.name} (${pet.color} ${pet.type}): ${pet.pet.hello}`,
                     });
                 });
             case 'delete-pet':
@@ -779,11 +783,18 @@ window.addEventListener('resize', function () {
 
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.createPet = exports.InvalidPetException = exports.Rocky = exports.Zappy = exports.Crab = exports.Cockatiel = exports.RubberDuck = exports.Clippy = exports.Snake = exports.Dog = exports.Cat = exports.Totoro = exports.PetCollection = exports.PetElement = exports.InvalidStateException = void 0;
-const states_1 = __webpack_require__(/*! ./states */ "./src/panel/states.ts");
-class InvalidStateException {
-}
-exports.InvalidStateException = InvalidStateException;
+exports.normalizeColor = exports.availableColors = exports.createPet = exports.InvalidPetException = exports.PetCollection = exports.PetElement = void 0;
+const cat_1 = __webpack_require__(/*! ./pets/cat */ "./src/panel/pets/cat.ts");
+const clippy_1 = __webpack_require__(/*! ./pets/clippy */ "./src/panel/pets/clippy.ts");
+const cockatiel_1 = __webpack_require__(/*! ./pets/cockatiel */ "./src/panel/pets/cockatiel.ts");
+const crab_1 = __webpack_require__(/*! ./pets/crab */ "./src/panel/pets/crab.ts");
+const dog_1 = __webpack_require__(/*! ./pets/dog */ "./src/panel/pets/dog.ts");
+const mod_1 = __webpack_require__(/*! ./pets/mod */ "./src/panel/pets/mod.ts");
+const rocky_1 = __webpack_require__(/*! ./pets/rocky */ "./src/panel/pets/rocky.ts");
+const rubberduck_1 = __webpack_require__(/*! ./pets/rubberduck */ "./src/panel/pets/rubberduck.ts");
+const snake_1 = __webpack_require__(/*! ./pets/snake */ "./src/panel/pets/snake.ts");
+const totoro_1 = __webpack_require__(/*! ./pets/totoro */ "./src/panel/pets/totoro.ts");
+const zappy_1 = __webpack_require__(/*! ./pets/zappy */ "./src/panel/pets/zappy.ts");
 class PetElement {
     el;
     collision;
@@ -813,7 +824,7 @@ class PetCollection {
     constructor() {
         this._pets = new Array(0);
     }
-    pets() {
+    get pets() {
         return this._pets;
     }
     push(pet) {
@@ -827,17 +838,17 @@ class PetCollection {
     }
     locate(name) {
         return this._pets.find((collection) => {
-            return collection.pet.name() === name;
+            return collection.pet.name === name;
         });
     }
     remove(name) {
         this._pets.forEach((pet) => {
-            if (pet.pet.name() === name) {
+            if (pet.pet.name === name) {
                 pet.remove();
             }
         });
         this._pets = this._pets.filter((pet) => {
-            return pet.pet.name() !== name;
+            return pet.pet.name !== name;
         });
     }
     seekNewFriends() {
@@ -846,21 +857,21 @@ class PetCollection {
         } // You can't be friends with yourself.
         var messages = new Array(0);
         this._pets.forEach((petInCollection) => {
-            if (petInCollection.pet.hasFriend()) {
+            if (petInCollection.pet.hasFriend) {
                 return;
             } // I already have a friend!
             this._pets.forEach((potentialFriend) => {
-                if (potentialFriend.pet.hasFriend()) {
+                if (potentialFriend.pet.hasFriend) {
                     return;
                 } // Already has a friend. sorry.
-                if (!potentialFriend.pet.canChase()) {
+                if (!potentialFriend.pet.canChase) {
                     return;
                 } // Pet is busy doing something else.
-                if (potentialFriend.pet.left() > petInCollection.pet.left() &&
-                    potentialFriend.pet.left() <
-                        petInCollection.pet.left() + petInCollection.pet.width()) {
+                if (potentialFriend.pet.left > petInCollection.pet.left &&
+                    potentialFriend.pet.left <
+                        petInCollection.pet.left + petInCollection.pet.width) {
                     // We found a possible new friend..
-                    console.log(petInCollection.pet.name(), ' wants to be friends with ', potentialFriend.pet.name(), '.');
+                    console.log(petInCollection.pet.name, ' wants to be friends with ', potentialFriend.pet.name, '.');
                     if (petInCollection.pet.makeFriendsWith(potentialFriend.pet)) {
                         potentialFriend.pet.showSpeechBubble('❤️', 2000);
                         petInCollection.pet.showSpeechBubble('❤️', 2000);
@@ -872,267 +883,1230 @@ class PetCollection {
     }
 }
 exports.PetCollection = PetCollection;
-function calculateSpriteWidth(size) {
-    if (size === "nano" /* PetSize.nano */) {
-        return 30;
+class InvalidPetException {
+    message;
+    constructor(message) {
+        this.message = message;
     }
-    else if (size === "medium" /* PetSize.medium */) {
-        return 55;
+}
+exports.InvalidPetException = InvalidPetException;
+function createPet(petType, el, collision, speech, size, left, bottom, petRoot, floor, name) {
+    if (name === undefined || name === null || name === '') {
+        throw new InvalidPetException('name is undefined');
     }
-    else if (size === "large" /* PetSize.large */) {
-        return 110;
+    const standardPetArguments = [el, collision, speech, size, left, bottom, petRoot, floor, name];
+    switch (petType) {
+        case "cat" /* PetType.cat */:
+            return new cat_1.Cat(...standardPetArguments, 3 /* PetSpeed.normal */);
+        case "dog" /* PetType.dog */:
+            return new dog_1.Dog(...standardPetArguments, 3 /* PetSpeed.normal */);
+        case "crab" /* PetType.crab */:
+            return new crab_1.Crab(...standardPetArguments, 2 /* PetSpeed.slow */);
+        case "clippy" /* PetType.clippy */:
+            return new clippy_1.Clippy(...standardPetArguments, 2 /* PetSpeed.slow */);
+        case "mod" /* PetType.mod */:
+            return new mod_1.Mod(...standardPetArguments, 3 /* PetSpeed.normal */);
+        case "totoro" /* PetType.totoro */:
+            return new totoro_1.Totoro(...standardPetArguments, 3 /* PetSpeed.normal */);
+        case "snake" /* PetType.snake */:
+            return new snake_1.Snake(...standardPetArguments, 1 /* PetSpeed.verySlow */);
+        case "rubber-duck" /* PetType.rubberduck */:
+            return new rubberduck_1.RubberDuck(...standardPetArguments, 4 /* PetSpeed.fast */);
+        case "zappy" /* PetType.zappy */:
+            return new zappy_1.Zappy(...standardPetArguments, 5 /* PetSpeed.veryFast */);
+        case "rocky" /* PetType.rocky */:
+            return new rocky_1.Rocky(...standardPetArguments, 0 /* PetSpeed.still */);
+        case "cockatiel" /* PetType.cockatiel */:
+            return new cockatiel_1.Cockatiel(...standardPetArguments, 3 /* PetSpeed.normal */);
+        default:
+            throw new InvalidPetException("Pet type doesn't exist");
+    }
+}
+exports.createPet = createPet;
+function availableColors(petType) {
+    switch (petType) {
+        case "cat" /* PetType.cat */:
+            return cat_1.Cat.possibleColors;
+        case "dog" /* PetType.dog */:
+            return dog_1.Dog.possibleColors;
+        case "crab" /* PetType.crab */:
+            return crab_1.Crab.possibleColors;
+        case "clippy" /* PetType.clippy */:
+            return clippy_1.Clippy.possibleColors;
+        case "mod" /* PetType.mod */:
+            return mod_1.Mod.possibleColors;
+        case "totoro" /* PetType.totoro */:
+            return totoro_1.Totoro.possibleColors;
+        case "snake" /* PetType.snake */:
+            return snake_1.Snake.possibleColors;
+        case "rubber-duck" /* PetType.rubberduck */:
+            return rubberduck_1.RubberDuck.possibleColors;
+        case "zappy" /* PetType.zappy */:
+            return zappy_1.Zappy.possibleColors;
+        case "rocky" /* PetType.rocky */:
+            return rocky_1.Rocky.possibleColors;
+        case "cockatiel" /* PetType.cockatiel */:
+            return cockatiel_1.Cockatiel.possibleColors;
+        default:
+            throw new InvalidPetException("Pet type doesn't exist");
+    }
+}
+exports.availableColors = availableColors;
+/**
+ * Some pets can only have certain colors, this makes sure they haven't been misconfigured.
+ * @param petColor
+ * @param petType
+ * @returns normalized color
+ */
+function normalizeColor(petColor, petType) {
+    const colors = availableColors(petType);
+    if (colors.includes(petColor)) {
+        return petColor;
     }
     else {
-        return 30; // Shrug
+        return colors[0];
     }
 }
-class BasePetType {
-    label = 'base';
-    static count = 0;
+exports.normalizeColor = normalizeColor;
+
+
+/***/ }),
+
+/***/ "./src/panel/pets/cat.ts":
+/*!*******************************!*\
+  !*** ./src/panel/pets/cat.ts ***!
+  \*******************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.CAT_NAMES = exports.Cat = void 0;
+const basepettype_1 = __webpack_require__(/*! ../basepettype */ "./src/panel/basepettype.ts");
+class Cat extends basepettype_1.BasePetType {
+    label = 'cat';
+    static possibleColors = ["black" /* PetColor.black */, "brown" /* PetColor.brown */, "white" /* PetColor.white */];
     sequence = {
         startingState: "sit-idle" /* States.sitIdle */,
-        sequenceStates: [],
+        sequenceStates: [
+            {
+                state: "sit-idle" /* States.sitIdle */,
+                possibleNextStates: ["walk-right" /* States.walkRight */, "run-right" /* States.runRight */],
+            },
+            {
+                state: "walk-right" /* States.walkRight */,
+                possibleNextStates: ["walk-left" /* States.walkLeft */, "run-left" /* States.runLeft */],
+            },
+            {
+                state: "run-right" /* States.runRight */,
+                possibleNextStates: ["walk-left" /* States.walkLeft */, "run-left" /* States.runLeft */],
+            },
+            {
+                state: "walk-left" /* States.walkLeft */,
+                possibleNextStates: [
+                    "sit-idle" /* States.sitIdle */,
+                    "climb-wall-left" /* States.climbWallLeft */,
+                    "walk-right" /* States.walkRight */,
+                    "run-right" /* States.runRight */,
+                ],
+            },
+            {
+                state: "run-left" /* States.runLeft */,
+                possibleNextStates: [
+                    "sit-idle" /* States.sitIdle */,
+                    "climb-wall-left" /* States.climbWallLeft */,
+                    "walk-right" /* States.walkRight */,
+                    "run-right" /* States.runRight */,
+                ],
+            },
+            {
+                state: "climb-wall-left" /* States.climbWallLeft */,
+                possibleNextStates: ["wall-hang-left" /* States.wallHangLeft */],
+            },
+            {
+                state: "wall-hang-left" /* States.wallHangLeft */,
+                possibleNextStates: ["jump-down-left" /* States.jumpDownLeft */],
+            },
+            {
+                state: "jump-down-left" /* States.jumpDownLeft */,
+                possibleNextStates: ["land" /* States.land */],
+            },
+            {
+                state: "land" /* States.land */,
+                possibleNextStates: [
+                    "sit-idle" /* States.sitIdle */,
+                    "walk-right" /* States.walkRight */,
+                    "run-right" /* States.runRight */,
+                ],
+            },
+            {
+                state: "chase" /* States.chase */,
+                possibleNextStates: ["idle-with-ball" /* States.idleWithBall */],
+            },
+            {
+                state: "idle-with-ball" /* States.idleWithBall */,
+                possibleNextStates: [
+                    "walk-right" /* States.walkRight */,
+                    "walk-left" /* States.walkLeft */,
+                    "run-left" /* States.runLeft */,
+                    "run-right" /* States.runRight */,
+                ],
+            },
+        ],
     };
-    currentState;
-    currentStateEnum;
-    holdState;
-    holdStateEnum;
-    el;
-    collision;
-    speech;
-    _left;
-    _bottom;
-    petRoot;
-    _floor;
-    _friend;
-    _name;
-    _speed;
-    _size;
-    constructor(spriteElement, collisionElement, speechElement, size, left, bottom, petRoot, floor, name, speed) {
-        this.el = spriteElement;
-        this.collision = collisionElement;
-        this.speech = speechElement;
-        this.petRoot = petRoot;
-        this._floor = floor;
-        this._left = left;
-        this._bottom = bottom;
-        this.initSprite(size, left, bottom);
-        this.currentStateEnum = this.sequence.startingState;
-        this.currentState = (0, states_1.resolveState)(this.currentStateEnum, this);
-        this._name = name;
-        this._size = size;
-        this._speed = this.randomizeSpeed(speed);
-        // Increment the static count of the Pet class that the constructor belongs to
-        this.constructor.count += 1;
+    get emoji() {
+        return '🐱';
     }
-    initSprite(petSize, left, bottom) {
-        this.el.style.left = `${left}px`;
-        this.el.style.bottom = `${bottom}px`;
-        this.el.style.width = 'auto';
-        this.el.style.height = 'auto';
-        this.el.style.maxWidth = `${calculateSpriteWidth(petSize)}px`;
-        this.el.style.maxHeight = `${calculateSpriteWidth(petSize)}px`;
-        this.collision.style.left = `${left}px`;
-        this.collision.style.bottom = `${bottom}px`;
-        this.collision.style.width = `${calculateSpriteWidth(petSize)}px`;
-        this.collision.style.height = `${calculateSpriteWidth(petSize)}px`;
-        this.speech.style.left = `${left}px`;
-        this.speech.style.bottom = `${bottom + calculateSpriteWidth(petSize)}px`;
-        this.hideSpeechBubble();
-    }
-    left() {
-        return this._left;
-    }
-    bottom() {
-        return this._bottom;
-    }
-    repositionAccompanyingElements() {
-        this.collision.style.left = `${this._left}px`;
-        this.collision.style.bottom = `${this._bottom}px`;
-        this.speech.style.left = `${this._left}px`;
-        this.speech.style.bottom = `${this._bottom + calculateSpriteWidth(this._size)}px`;
-    }
-    positionBottom(bottom) {
-        this._bottom = bottom;
-        this.el.style.bottom = `${this._bottom}px`;
-        this.repositionAccompanyingElements();
-    }
-    positionLeft(left) {
-        this._left = left;
-        this.el.style.left = `${this._left}px`;
-        this.repositionAccompanyingElements();
-    }
-    width() {
-        return this.el.width;
-    }
-    floor() {
-        return this._floor;
-    }
-    hello() {
-        // return the sound of the name of the animal
-        return ` says hello 👋!`;
-    }
-    getState() {
-        return { currentStateEnum: this.currentStateEnum };
-    }
-    speed() {
-        return this._speed;
-    }
-    randomizeSpeed(speed) {
-        const min = speed * 0.7;
-        const max = speed * 1.3;
-        const newSpeed = Math.random() * (max - min) + min;
-        return newSpeed;
-    }
-    isMoving() {
-        return this._speed !== 0 /* PetSpeed.still */;
-    }
-    recoverFriend(friend) {
-        // Recover friends..
-        this._friend = friend;
-    }
-    recoverState(state) {
-        // TODO : Resolve a bug where if it was swiping before, it would fail
-        // because holdState is no longer valid.
-        this.currentStateEnum = state.currentStateEnum ?? "sit-idle" /* States.sitIdle */;
-        this.currentState = (0, states_1.resolveState)(this.currentStateEnum, this);
-        if (!(0, states_1.isStateAboveGround)(this.currentStateEnum)) {
-            // Reset the bottom of the sprite to the floor as the theme
-            // has likely changed.
-            this.positionBottom(this.floor());
-        }
-    }
-    canSwipe() {
-        return !(0, states_1.isStateAboveGround)(this.currentStateEnum);
-    }
-    canChase() {
-        return (!(0, states_1.isStateAboveGround)(this.currentStateEnum) &&
-            this.currentStateEnum !== "chase" /* States.chase */ &&
-            this.isMoving());
-    }
-    showSpeechBubble(message, duration = 3000) {
-        this.speech.innerHTML = message;
-        this.speech.style.display = 'block';
-        setTimeout(() => {
-            this.hideSpeechBubble();
-        }, duration);
-    }
-    hideSpeechBubble() {
-        this.speech.style.display = 'none';
-    }
-    swipe() {
-        if (this.currentStateEnum === "swipe" /* States.swipe */) {
-            return;
-        }
-        this.holdState = this.currentState;
-        this.holdStateEnum = this.currentStateEnum;
-        this.currentStateEnum = "swipe" /* States.swipe */;
-        this.currentState = (0, states_1.resolveState)(this.currentStateEnum, this);
-        this.showSpeechBubble('👋');
-    }
-    chase(ballState, canvas) {
-        this.currentStateEnum = "chase" /* States.chase */;
-        this.currentState = new states_1.ChaseState(this, ballState, canvas);
-    }
-    faceLeft() {
-        this.el.style.transform = 'scaleX(-1)';
-    }
-    faceRight() {
-        this.el.style.transform = 'scaleX(1)';
-    }
-    setAnimation(face) {
-        if (this.el.src.endsWith(`_${face}_8fps.gif`)) {
-            return;
-        }
-        this.el.src = `${this.petRoot}_${face}_8fps.gif`;
-    }
-    chooseNextState(fromState) {
-        // Work out next state
-        var possibleNextStates = undefined;
-        for (var i = 0; i < this.sequence.sequenceStates.length; i++) {
-            if (this.sequence.sequenceStates[i].state === fromState) {
-                possibleNextStates =
-                    this.sequence.sequenceStates[i].possibleNextStates;
-            }
-        }
-        if (!possibleNextStates) {
-            throw new InvalidStateException();
-        }
-        // randomly choose the next state
-        const idx = Math.floor(Math.random() * possibleNextStates.length);
-        return possibleNextStates[idx];
-    }
-    nextFrame() {
-        if (this.currentState.horizontalDirection === states_1.HorizontalDirection.left) {
-            this.faceLeft();
-        }
-        else if (this.currentState.horizontalDirection === states_1.HorizontalDirection.right) {
-            this.faceRight();
-        }
-        this.setAnimation(this.currentState.spriteLabel);
-        // What's my buddy doing?
-        if (this.hasFriend() &&
-            this.currentStateEnum !== "chase-friend" /* States.chaseFriend */ &&
-            this.isMoving()) {
-            if (this.friend()?.isPlaying() &&
-                !(0, states_1.isStateAboveGround)(this.currentStateEnum)) {
-                this.currentState = (0, states_1.resolveState)("chase-friend" /* States.chaseFriend */, this);
-                this.currentStateEnum = "chase-friend" /* States.chaseFriend */;
-                return;
-            }
-        }
-        var frameResult = this.currentState.nextFrame();
-        if (frameResult === states_1.FrameResult.stateComplete) {
-            // If recovering from swipe..
-            if (this.holdState && this.holdStateEnum) {
-                this.currentState = this.holdState;
-                this.currentStateEnum = this.holdStateEnum;
-                this.holdState = undefined;
-                this.holdStateEnum = undefined;
-                return;
-            }
-            var nextState = this.chooseNextState(this.currentStateEnum);
-            this.currentState = (0, states_1.resolveState)(nextState, this);
-            this.currentStateEnum = nextState;
-        }
-        else if (frameResult === states_1.FrameResult.stateCancel) {
-            if (this.currentStateEnum === "chase" /* States.chase */) {
-                var nextState = this.chooseNextState("idle-with-ball" /* States.idleWithBall */);
-                this.currentState = (0, states_1.resolveState)(nextState, this);
-                this.currentStateEnum = nextState;
-            }
-            else if (this.currentStateEnum === "chase-friend" /* States.chaseFriend */) {
-                var nextState = this.chooseNextState("idle-with-ball" /* States.idleWithBall */);
-                this.currentState = (0, states_1.resolveState)(nextState, this);
-                this.currentStateEnum = nextState;
-            }
-        }
-    }
-    hasFriend() {
-        return this._friend !== undefined;
-    }
-    friend() {
-        return this._friend;
-    }
-    name() {
-        return this._name;
-    }
-    makeFriendsWith(friend) {
-        this._friend = friend;
-        console.log(this.name(), ": I'm now friends ❤️ with ", friend.name());
-        return true;
-    }
-    isPlaying() {
-        return (this.isMoving() &&
-            (this.currentStateEnum === "run-right" /* States.runRight */ ||
-                this.currentStateEnum === "run-left" /* States.runLeft */));
-    }
-    emoji() {
-        return '🐶';
+    get hello() {
+        return `brrr... Meow!`;
     }
 }
-class Totoro extends BasePetType {
+exports.Cat = Cat;
+exports.CAT_NAMES = [
+    'Bella',
+    'Charlie',
+    'Molly',
+    'Coco',
+    'Ruby',
+    'Oscar',
+    'Lucy',
+    'Bailey',
+    'Milo',
+    'Daisy',
+    'Archie',
+    'Ollie',
+    'Rosie',
+    'Lola',
+    'Frankie',
+    'Roxy',
+    'Poppy',
+    'Luna',
+    'Jack',
+    'Millie',
+    'Teddy',
+    'Cooper',
+    'Bear',
+    'Rocky',
+    'Alfie',
+    'Hugo',
+    'Bonnie',
+    'Pepper',
+    'Lily',
+    'Tilly',
+    'Leo',
+    'Maggie',
+    'George',
+    'Mia',
+    'Marley',
+    'Harley',
+    'Chloe',
+    'Lulu',
+    'Missy',
+    'Jasper',
+    'Billy',
+    'Nala',
+    'Monty',
+    'Ziggy',
+    'Winston',
+    'Zeus',
+    'Zoe',
+    'Stella',
+    'Sasha',
+    'Rusty',
+    'Gus',
+    'Baxter',
+    'Dexter',
+    'Willow',
+    'Barney',
+    'Bruno',
+    'Penny',
+    'Honey',
+    'Milly',
+    'Murphy',
+    'Simba',
+    'Holly',
+    'Benji',
+    'Henry',
+    'Lilly',
+    'Pippa',
+    'Shadow',
+    'Sam',
+    'Lucky',
+    'Ellie',
+    'Duke',
+    'Jessie',
+    'Cookie',
+    'Harvey',
+    'Bruce',
+    'Jax',
+    'Rex',
+    'Louie',
+    'Jet',
+    'Banjo',
+    'Beau',
+    'Ella',
+    'Ralph',
+    'Loki',
+    'Lexi',
+    'Chester',
+    'Sophie',
+    'Chilli',
+    'Billie',
+    'Louis',
+    'Scout',
+    'Cleo',
+    'Purfect',
+    'Spot',
+    'Bolt',
+    'Julia',
+    'Ginger',
+    'Daisy',
+    'Amelia',
+    'Oliver',
+    'Ghost',
+    'Midnight',
+    'Pumpkin',
+    'Shadow',
+    'Binx',
+    'Riley',
+    'Lenny',
+    'Mango',
+    'Alex',
+    'Boo',
+    'Botas',
+    'Romeo',
+    'Bob',
+    'Clyde',
+    'Simon',
+    'Mimmo',
+    'Carlotta',
+    'Felix',
+    'Duchess',
+];
+
+
+/***/ }),
+
+/***/ "./src/panel/pets/clippy.ts":
+/*!**********************************!*\
+  !*** ./src/panel/pets/clippy.ts ***!
+  \**********************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.CLIPPY_NAMES = exports.Clippy = void 0;
+const basepettype_1 = __webpack_require__(/*! ../basepettype */ "./src/panel/basepettype.ts");
+class Clippy extends basepettype_1.BasePetType {
+    label = 'clippy';
+    static possibleColors = [
+        "black" /* PetColor.black */,
+        "brown" /* PetColor.brown */,
+        "green" /* PetColor.green */,
+        "yellow" /* PetColor.yellow */,
+    ];
+    sequence = {
+        startingState: "sit-idle" /* States.sitIdle */,
+        sequenceStates: [
+            {
+                state: "sit-idle" /* States.sitIdle */,
+                possibleNextStates: ["walk-right" /* States.walkRight */, "run-right" /* States.runRight */],
+            },
+            {
+                state: "walk-right" /* States.walkRight */,
+                possibleNextStates: ["walk-left" /* States.walkLeft */, "run-left" /* States.runLeft */],
+            },
+            {
+                state: "run-right" /* States.runRight */,
+                possibleNextStates: ["walk-left" /* States.walkLeft */, "run-left" /* States.runLeft */],
+            },
+            {
+                state: "walk-left" /* States.walkLeft */,
+                possibleNextStates: ["sit-idle" /* States.sitIdle */],
+            },
+            {
+                state: "run-left" /* States.runLeft */,
+                possibleNextStates: ["sit-idle" /* States.sitIdle */],
+            },
+            {
+                state: "chase" /* States.chase */,
+                possibleNextStates: ["idle-with-ball" /* States.idleWithBall */],
+            },
+            {
+                state: "idle-with-ball" /* States.idleWithBall */,
+                possibleNextStates: [
+                    "walk-right" /* States.walkRight */,
+                    "walk-left" /* States.walkLeft */,
+                    "run-left" /* States.runLeft */,
+                    "run-right" /* States.runRight */,
+                ],
+            },
+        ],
+    };
+    get emoji() {
+        return '📎';
+    }
+    get hello() {
+        return ` Hi, I'm Clippy, would you like some assistance today? 👋!`;
+    }
+}
+exports.Clippy = Clippy;
+exports.CLIPPY_NAMES = [
+    'Clippy',
+    'Karl Klammer',
+    'Clippy Jr.',
+    'Molly',
+    'Coco',
+    'Buddy',
+    'Ruby',
+    'Oscar',
+    'Lucy',
+    'Bailey',
+];
+
+
+/***/ }),
+
+/***/ "./src/panel/pets/cockatiel.ts":
+/*!*************************************!*\
+  !*** ./src/panel/pets/cockatiel.ts ***!
+  \*************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.COCKATIEL_NAMES = exports.Cockatiel = void 0;
+const basepettype_1 = __webpack_require__(/*! ../basepettype */ "./src/panel/basepettype.ts");
+class Cockatiel extends basepettype_1.BasePetType {
+    label = 'cockatiel';
+    static possibleColors = ["gray" /* PetColor.gray */];
+    sequence = {
+        startingState: "sit-idle" /* States.sitIdle */,
+        sequenceStates: [
+            {
+                state: "sit-idle" /* States.sitIdle */,
+                possibleNextStates: ["walk-right" /* States.walkRight */, "run-right" /* States.runRight */],
+            },
+            {
+                state: "walk-right" /* States.walkRight */,
+                possibleNextStates: ["walk-left" /* States.walkLeft */, "run-left" /* States.runLeft */],
+            },
+            {
+                state: "run-right" /* States.runRight */,
+                possibleNextStates: ["walk-left" /* States.walkLeft */, "run-left" /* States.runLeft */],
+            },
+            {
+                state: "walk-left" /* States.walkLeft */,
+                possibleNextStates: ["sit-idle" /* States.sitIdle */],
+            },
+            {
+                state: "run-left" /* States.runLeft */,
+                possibleNextStates: ["sit-idle" /* States.sitIdle */],
+            },
+            {
+                state: "chase" /* States.chase */,
+                possibleNextStates: ["idle-with-ball" /* States.idleWithBall */],
+            },
+            {
+                state: "idle-with-ball" /* States.idleWithBall */,
+                possibleNextStates: [
+                    "walk-right" /* States.walkRight */,
+                    "walk-left" /* States.walkLeft */,
+                    "run-left" /* States.runLeft */,
+                    "run-right" /* States.runRight */,
+                ],
+            },
+        ],
+    };
+    get emoji() {
+        return '🦜';
+    }
+    get hello() {
+        // TODO: #191 Add a custom message for cockatiel
+        return ` Hello, I'm a good bird 👋!`;
+    }
+}
+exports.Cockatiel = Cockatiel;
+exports.COCKATIEL_NAMES = [
+    'Cocktail',
+    'Pipsqueak',
+    'Sir Chirps a Lot',
+    'Nibbles',
+    'Lord of the Wings',
+    'Girl Nest Door',
+    'Wingman',
+    'Meryl Cheep',
+    'Jack Sparrow',
+    'Godfeather',
+    'Mickey',
+    'Baquack Obama',
+    'Dame Judi Finch',
+    'Kanye Nest',
+    'Speck',
+    'Cheecky',
+    'Arthur',
+    'Paco',
+    'Bobo',
+    'Walt',
+    'Happy',
+    'Junior',
+    'Coco',
+    'Yoyo',
+    'Milo',
+    'Skipper',
+    'Scarlet',
+    'Diva',
+    'Ursula',
+    'Donna',
+    'Lola',
+    'Kiko',
+    'Luna',
+];
+
+
+/***/ }),
+
+/***/ "./src/panel/pets/crab.ts":
+/*!********************************!*\
+  !*** ./src/panel/pets/crab.ts ***!
+  \********************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.CRAB_NAMES = exports.Crab = void 0;
+const basepettype_1 = __webpack_require__(/*! ../basepettype */ "./src/panel/basepettype.ts");
+class Crab extends basepettype_1.BasePetType {
+    label = 'crab';
+    static possibleColors = ["red" /* PetColor.red */];
+    sequence = {
+        startingState: "sit-idle" /* States.sitIdle */,
+        sequenceStates: [
+            {
+                state: "sit-idle" /* States.sitIdle */,
+                possibleNextStates: ["walk-right" /* States.walkRight */, "run-right" /* States.runRight */],
+            },
+            {
+                state: "walk-right" /* States.walkRight */,
+                possibleNextStates: ["walk-left" /* States.walkLeft */, "run-left" /* States.runLeft */],
+            },
+            {
+                state: "run-right" /* States.runRight */,
+                possibleNextStates: ["walk-left" /* States.walkLeft */, "run-left" /* States.runLeft */],
+            },
+            {
+                state: "walk-left" /* States.walkLeft */,
+                possibleNextStates: ["sit-idle" /* States.sitIdle */],
+            },
+            {
+                state: "run-left" /* States.runLeft */,
+                possibleNextStates: ["sit-idle" /* States.sitIdle */],
+            },
+            {
+                state: "chase" /* States.chase */,
+                possibleNextStates: ["idle-with-ball" /* States.idleWithBall */],
+            },
+            {
+                state: "idle-with-ball" /* States.idleWithBall */,
+                possibleNextStates: [
+                    "walk-right" /* States.walkRight */,
+                    "walk-left" /* States.walkLeft */,
+                    "run-left" /* States.runLeft */,
+                    "run-right" /* States.runRight */,
+                ],
+            },
+        ],
+    };
+    get emoji() {
+        return '🦀';
+    }
+    get hello() {
+        return ` Hi, I'm Crabsolutely Clawsome Crab 👋!`;
+    }
+}
+exports.Crab = Crab;
+exports.CRAB_NAMES = [
+    'Ferris',
+    'Pinchy',
+    'Grabby',
+    'Big Red',
+    'Crabby',
+    'Buddy',
+    'Ruby Red',
+    'Oscar',
+    'Lucy',
+    'Bailey',
+    'Crabito',
+    'Percy',
+    'Rocky',
+    'Mr. Krabs',
+    'Shelly',
+    'Santa Claws',
+    'Clawdia',
+    'Scuttle',
+    'Snappy',
+    'Hermit',
+    'Horseshoe',
+    'Snapper',
+    'Coconut',
+    'Sebastian',
+    'Abby',
+    'Bubbles',
+    'Bait',
+    'Big Mac',
+    'Biggie',
+    'Claws',
+    'Copper',
+    'Crabette',
+    'Crabina',
+    'Crabmister',
+    'Crusty',
+    'Crabcake',
+    'Digger',
+    'Nipper',
+    'Pincer',
+    'Poopsie',
+    'Recluse',
+    'Salty',
+    'Squirt',
+    'Groucho',
+    'Grumpy',
+    'Lenny Krabitz',
+    'Leonardo DaPinchy',
+    'Peeves',
+    'Penny Pincher',
+    'Prickl',
+];
+
+
+/***/ }),
+
+/***/ "./src/panel/pets/dog.ts":
+/*!*******************************!*\
+  !*** ./src/panel/pets/dog.ts ***!
+  \*******************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.DOG_NAMES = exports.Dog = void 0;
+const basepettype_1 = __webpack_require__(/*! ../basepettype */ "./src/panel/basepettype.ts");
+class Dog extends basepettype_1.BasePetType {
+    label = 'dog';
+    static possibleColors = [
+        "black" /* PetColor.black */,
+        "brown" /* PetColor.brown */,
+        "white" /* PetColor.white */,
+        "red" /* PetColor.red */,
+    ];
+    sequence = {
+        startingState: "sit-idle" /* States.sitIdle */,
+        sequenceStates: [
+            {
+                state: "sit-idle" /* States.sitIdle */,
+                possibleNextStates: [
+                    "walk-right" /* States.walkRight */,
+                    "run-right" /* States.runRight */,
+                    "lie" /* States.lie */,
+                ],
+            },
+            {
+                state: "lie" /* States.lie */,
+                possibleNextStates: ["walk-right" /* States.walkRight */, "run-right" /* States.runRight */],
+            },
+            {
+                state: "walk-right" /* States.walkRight */,
+                possibleNextStates: ["walk-left" /* States.walkLeft */, "run-left" /* States.runLeft */],
+            },
+            {
+                state: "run-right" /* States.runRight */,
+                possibleNextStates: ["walk-left" /* States.walkLeft */, "run-left" /* States.runLeft */],
+            },
+            {
+                state: "walk-left" /* States.walkLeft */,
+                possibleNextStates: [
+                    "sit-idle" /* States.sitIdle */,
+                    "lie" /* States.lie */,
+                    "walk-right" /* States.walkRight */,
+                    "run-right" /* States.runRight */,
+                ],
+            },
+            {
+                state: "run-left" /* States.runLeft */,
+                possibleNextStates: [
+                    "sit-idle" /* States.sitIdle */,
+                    "lie" /* States.lie */,
+                    "walk-right" /* States.walkRight */,
+                    "run-right" /* States.runRight */,
+                ],
+            },
+            {
+                state: "chase" /* States.chase */,
+                possibleNextStates: ["idle-with-ball" /* States.idleWithBall */],
+            },
+            {
+                state: "idle-with-ball" /* States.idleWithBall */,
+                possibleNextStates: [
+                    "walk-right" /* States.walkRight */,
+                    "walk-left" /* States.walkLeft */,
+                    "run-left" /* States.runLeft */,
+                    "run-right" /* States.runRight */,
+                ],
+            },
+        ],
+    };
+    get emoji() {
+        return '🐶';
+    }
+    get hello() {
+        return ` Every dog has its day - and today is woof day! Today I just want to bark. Take me on a walk`;
+    }
+}
+exports.Dog = Dog;
+exports.DOG_NAMES = [
+    'Bella',
+    'Charlie',
+    'Max',
+    'Molly',
+    'Coco',
+    'Buddy',
+    'Ruby',
+    'Oscar',
+    'Lucy',
+    'Bailey',
+    'Milo',
+    'Daisy',
+    'Archie',
+    'Ollie',
+    'Rosie',
+    'Lola',
+    'Frankie',
+    'Toby',
+    'Roxy',
+    'Poppy',
+    'Luna',
+    'Jack',
+    'Millie',
+    'Teddy',
+    'Harry',
+    'Cooper',
+    'Bear',
+    'Rocky',
+    'Alfie',
+    'Hugo',
+    'Bonnie',
+    'Pepper',
+    'Lily',
+    'Leo',
+    'Maggie',
+    'George',
+    'Mia',
+    'Marley',
+    'Harley',
+    'Chloe',
+    'Lulu',
+    'Jasper',
+    'Billy',
+    'Nala',
+    'Monty',
+    'Ziggy',
+    'Winston',
+    'Zeus',
+    'Zoe',
+    'Stella',
+    'Sasha',
+    'Rusty',
+    'Gus',
+    'Baxter',
+    'Dexter',
+    'Diesel',
+    'Willow',
+    'Barney',
+    'Bruno',
+    'Penny',
+    'Honey',
+    'Milly',
+    'Murphy',
+    'Holly',
+    'Benji',
+    'Henry',
+    'Lilly',
+    'Pippa',
+    'Shadow',
+    'Sam',
+    'Buster',
+    'Lucky',
+    'Ellie',
+    'Duke',
+    'Jessie',
+    'Cookie',
+    'Harvey',
+    'Bruce',
+    'Jax',
+    'Rex',
+    'Louie',
+    'Bentley',
+    'Jet',
+    'Banjo',
+    'Beau',
+    'Ella',
+    'Ralph',
+    'Loki',
+    'Lexi',
+    'Chester',
+    'Sophie',
+    'Billie',
+    'Louis',
+    'Charlie',
+    'Cleo',
+    'Spot',
+    'Harry',
+    'Bolt',
+    'Ein',
+    'Maddy',
+    'Ghost',
+    'Midnight',
+    'Pumpkin',
+    'Shadow',
+    'Sparky',
+    'Linus',
+    'Cody',
+    'Slinky',
+    'Toto',
+    'Balto',
+    'Golfo',
+    'Pongo',
+    'Beethoven',
+    'Hachiko',
+    'Scooby',
+    'Clifford',
+    'Astro',
+    'Goofy',
+    'Chip',
+    'Einstein',
+    'Fang',
+    'Truman',
+    'Uggie',
+    'Bingo',
+    'Blue',
+    'Cometa',
+    'Krypto',
+    'Huesos',
+    'Odie',
+    'Snoopy',
+    'Aisha',
+    'Moly',
+    'Chiquita',
+    'Chavela',
+    'Tramp',
+    'Lady',
+    'Puddles',
+];
+
+
+/***/ }),
+
+/***/ "./src/panel/pets/mod.ts":
+/*!*******************************!*\
+  !*** ./src/panel/pets/mod.ts ***!
+  \*******************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.MOD_NAMES = exports.Mod = void 0;
+const basepettype_1 = __webpack_require__(/*! ../basepettype */ "./src/panel/basepettype.ts");
+class Mod extends basepettype_1.BasePetType {
+    label = 'mod';
+    static possibleColors = ["purple" /* PetColor.purple */];
+    sequence = {
+        startingState: "sit-idle" /* States.sitIdle */,
+        sequenceStates: [
+            {
+                state: "sit-idle" /* States.sitIdle */,
+                possibleNextStates: ["walk-right" /* States.walkRight */, "run-right" /* States.runRight */],
+            },
+            {
+                state: "walk-right" /* States.walkRight */,
+                possibleNextStates: ["walk-left" /* States.walkLeft */, "run-left" /* States.runLeft */],
+            },
+            {
+                state: "run-right" /* States.runRight */,
+                possibleNextStates: ["walk-left" /* States.walkLeft */, "run-left" /* States.runLeft */],
+            },
+            {
+                state: "walk-left" /* States.walkLeft */,
+                possibleNextStates: ["sit-idle" /* States.sitIdle */],
+            },
+            {
+                state: "run-left" /* States.runLeft */,
+                possibleNextStates: ["sit-idle" /* States.sitIdle */],
+            },
+            {
+                state: "chase" /* States.chase */,
+                possibleNextStates: ["idle-with-ball" /* States.idleWithBall */],
+            },
+            {
+                state: "idle-with-ball" /* States.idleWithBall */,
+                possibleNextStates: [
+                    "walk-right" /* States.walkRight */,
+                    "walk-left" /* States.walkLeft */,
+                    "run-left" /* States.runLeft */,
+                    "run-right" /* States.runRight */,
+                ],
+            },
+        ],
+    };
+    get emoji() {
+        return '🤖';
+    }
+    get hello() {
+        return ` Hi, I'm Mod the dotnet bot, what are you building today?`;
+    }
+}
+exports.Mod = Mod;
+exports.MOD_NAMES = [
+    'Mod',
+    'Moddy',
+    'Dotnetbot',
+    'Bot',
+    'Purple Pal',
+    'Ro Bot',
+];
+
+
+/***/ }),
+
+/***/ "./src/panel/pets/rocky.ts":
+/*!*********************************!*\
+  !*** ./src/panel/pets/rocky.ts ***!
+  \*********************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.ROCKY_NAMES = exports.Rocky = void 0;
+const basepettype_1 = __webpack_require__(/*! ../basepettype */ "./src/panel/basepettype.ts");
+class Rocky extends basepettype_1.BasePetType {
+    label = 'rocky';
+    static possibleColors = ["gray" /* PetColor.gray */];
+    sequence = {
+        startingState: "sit-idle" /* States.sitIdle */,
+        sequenceStates: [
+            {
+                state: "sit-idle" /* States.sitIdle */,
+                possibleNextStates: ["walk-right" /* States.walkRight */, "run-right" /* States.runRight */],
+            },
+            {
+                state: "walk-right" /* States.walkRight */,
+                possibleNextStates: ["sit-idle" /* States.sitIdle */, "run-right" /* States.runRight */],
+            },
+            {
+                state: "run-right" /* States.runRight */,
+                possibleNextStates: ["sit-idle" /* States.sitIdle */, "walk-right" /* States.walkRight */],
+            },
+        ],
+    };
+    get emoji() {
+        return '💎';
+    }
+    get canChase() {
+        return false;
+    }
+    get hello() {
+        return ` 👋 I'm rock! I always Rock`;
+    }
+}
+exports.Rocky = Rocky;
+exports.ROCKY_NAMES = [
+    'Rocky',
+    'The Rock',
+    'Quartzy',
+    'Rocky I',
+    'Rocky II',
+    'Rocky III',
+    'Pebbles Sr.',
+    'Big Granite',
+    'Boulder',
+    'Rockefeller',
+    'Pebble',
+    'Rocksanne',
+    'Rockstar',
+    'Onix',
+    'Rock and Roll',
+    'Dolomite',
+    'Granite',
+    'Miss Marble',
+    'Rock On',
+    'Amberstone',
+    'Rock With Me',
+    'Rock On It',
+    'Rock Out',
+];
+
+
+/***/ }),
+
+/***/ "./src/panel/pets/rubberduck.ts":
+/*!**************************************!*\
+  !*** ./src/panel/pets/rubberduck.ts ***!
+  \**************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.DUCK_NAMES = exports.RubberDuck = void 0;
+const basepettype_1 = __webpack_require__(/*! ../basepettype */ "./src/panel/basepettype.ts");
+class RubberDuck extends basepettype_1.BasePetType {
+    label = 'rubber-duck';
+    static possibleColors = ["yellow" /* PetColor.yellow */];
+    sequence = {
+        startingState: "sit-idle" /* States.sitIdle */,
+        sequenceStates: [
+            {
+                state: "sit-idle" /* States.sitIdle */,
+                possibleNextStates: ["walk-right" /* States.walkRight */, "run-right" /* States.runRight */],
+            },
+            {
+                state: "walk-right" /* States.walkRight */,
+                possibleNextStates: ["walk-left" /* States.walkLeft */, "run-left" /* States.runLeft */],
+            },
+            {
+                state: "run-right" /* States.runRight */,
+                possibleNextStates: ["walk-left" /* States.walkLeft */, "run-left" /* States.runLeft */],
+            },
+            {
+                state: "walk-left" /* States.walkLeft */,
+                possibleNextStates: ["sit-idle" /* States.sitIdle */],
+            },
+            {
+                state: "run-left" /* States.runLeft */,
+                possibleNextStates: ["sit-idle" /* States.sitIdle */],
+            },
+            {
+                state: "chase" /* States.chase */,
+                possibleNextStates: ["idle-with-ball" /* States.idleWithBall */],
+            },
+            {
+                state: "idle-with-ball" /* States.idleWithBall */,
+                possibleNextStates: [
+                    "walk-right" /* States.walkRight */,
+                    "walk-left" /* States.walkLeft */,
+                    "run-left" /* States.runLeft */,
+                    "run-right" /* States.runRight */,
+                ],
+            },
+        ],
+    };
+    get emoji() {
+        return '🐥';
+    }
+    get hello() {
+        return ` Hi, I love to quack around 👋!`;
+    }
+}
+exports.RubberDuck = RubberDuck;
+exports.DUCK_NAMES = [
+    'Quacky',
+    'Floaty',
+    'Duck',
+    'Molly',
+    'Sunshine',
+    'Buddy',
+    'Chirpy',
+    'Oscar',
+    'Lucy',
+    'Bailey',
+    'Beaky',
+    'Jemima',
+    'Peaches',
+    'Quackers',
+    'Jelly Beans',
+    'Donald',
+    'Chady',
+    'Waddles',
+    'Bill',
+    'Bubbles',
+    'James Pond',
+    'Moby Duck',
+    'Quack Sparrow',
+    'Peanut',
+    'Psyduck',
+    'Mr Quack',
+    'Louie',
+    'Golduck',
+    'Daisy',
+    'Pickles',
+    'Ducky Duck',
+    'Mrs Fluffs',
+    'Squeek',
+    'Ace',
+    'Rubberduck',
+    'Mrs Beak',
+    'April',
+    'Tutu',
+    'Billy the duck',
+    'Ducky',
+    'Neco',
+    'Dodo',
+    'Colonel',
+    'Franklin',
+    'Emmett',
+    'Bubba',
+    'Dillard',
+    'Duncan',
+    'Pogo',
+    'Uno',
+    'Peanut',
+    'Nero',
+    'Mowgli',
+    'Eggspresso',
+    'Webster',
+    'Quacker Jack',
+    'Plucker',
+    'Meeko',
+];
+
+
+/***/ }),
+
+/***/ "./src/panel/pets/snake.ts":
+/*!*********************************!*\
+  !*** ./src/panel/pets/snake.ts ***!
+  \*********************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.SNAKE_NAMES = exports.Snake = void 0;
+const basepettype_1 = __webpack_require__(/*! ../basepettype */ "./src/panel/basepettype.ts");
+class Snake extends basepettype_1.BasePetType {
+    label = 'snake';
+    static possibleColors = ["green" /* PetColor.green */];
+    sequence = {
+        startingState: "sit-idle" /* States.sitIdle */,
+        sequenceStates: [
+            {
+                state: "sit-idle" /* States.sitIdle */,
+                possibleNextStates: ["walk-right" /* States.walkRight */, "run-right" /* States.runRight */],
+            },
+            {
+                state: "walk-right" /* States.walkRight */,
+                possibleNextStates: ["walk-left" /* States.walkLeft */, "run-left" /* States.runLeft */],
+            },
+            {
+                state: "run-right" /* States.runRight */,
+                possibleNextStates: ["walk-left" /* States.walkLeft */, "run-left" /* States.runLeft */],
+            },
+            {
+                state: "walk-left" /* States.walkLeft */,
+                possibleNextStates: [
+                    "sit-idle" /* States.sitIdle */,
+                    "walk-right" /* States.walkRight */,
+                    "run-right" /* States.runRight */,
+                ],
+            },
+            {
+                state: "run-left" /* States.runLeft */,
+                possibleNextStates: [
+                    "sit-idle" /* States.sitIdle */,
+                    "walk-right" /* States.walkRight */,
+                    "run-right" /* States.runRight */,
+                ],
+            },
+            {
+                state: "chase" /* States.chase */,
+                possibleNextStates: ["idle-with-ball" /* States.idleWithBall */],
+            },
+            {
+                state: "idle-with-ball" /* States.idleWithBall */,
+                possibleNextStates: [
+                    "walk-right" /* States.walkRight */,
+                    "walk-left" /* States.walkLeft */,
+                    "run-left" /* States.runLeft */,
+                    "run-right" /* States.runRight */,
+                ],
+            },
+        ],
+    };
+    get emoji() {
+        return '🐍';
+    }
+    get hello() {
+        return `Sss... Oh. Oh my gosh! I'm a snake!`;
+    }
+}
+exports.Snake = Snake;
+exports.SNAKE_NAMES = [
+    'Sneaky',
+    'Mr Slippery',
+    'Hissy Elliott',
+    'Molly',
+    'Coco',
+    'Buddy',
+    'Ruby',
+    'Bailey',
+    'Max',
+    'Seb',
+    'Kaa',
+    'Mr Hiss',
+    'Miss Hiss',
+    'Snaku',
+    'Kaa',
+    'Madame Snake',
+    'Sir Hiss',
+    'Loki',
+    'Steelix',
+    'Gyarados',
+    'Seviper',
+    'Ekanes',
+    'Arbok',
+    'Snivy',
+    'Servine',
+    'Serperior',
+    'Mojo',
+    'Moss',
+    'Nigel',
+    'Tootsie',
+    'Sammy',
+    'Ziggy',
+    'Asmodeus',
+    'Attila',
+    'Basil',
+    'Diablo',
+    'Eden',
+    'Eve',
+    'Heaven',
+    'Hydra',
+    'Indiana',
+    'Jafaar',
+    'Kaa',
+    'Medusa',
+    'Naga',
+    'Severus',
+    'Slytherin',
+    'Snape',
+    'Raven',
+    'Slider',
+    'Slinky',
+    'Stripes',
+];
+
+
+/***/ }),
+
+/***/ "./src/panel/pets/totoro.ts":
+/*!**********************************!*\
+  !*** ./src/panel/pets/totoro.ts ***!
+  \**********************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.TOTORO_NAMES = exports.Totoro = void 0;
+const basepettype_1 = __webpack_require__(/*! ../basepettype */ "./src/panel/basepettype.ts");
+class Totoro extends basepettype_1.BasePetType {
     label = 'totoro';
+    static possibleColors = ["gray" /* PetColor.gray */];
     sequence = {
         startingState: "sit-idle" /* States.sitIdle */,
         sequenceStates: [
@@ -1186,409 +2160,44 @@ class Totoro extends BasePetType {
             },
         ],
     };
-    emoji() {
+    get emoji() {
         return '🐾';
     }
-    hello() {
+    get hello() {
         return `Try Laughing. Then Whatever Scares You Will Go Away. 🎭`;
     }
 }
 exports.Totoro = Totoro;
-class Cat extends BasePetType {
-    label = 'cat';
-    sequence = {
-        startingState: "sit-idle" /* States.sitIdle */,
-        sequenceStates: [
-            {
-                state: "sit-idle" /* States.sitIdle */,
-                possibleNextStates: ["walk-right" /* States.walkRight */, "run-right" /* States.runRight */],
-            },
-            {
-                state: "walk-right" /* States.walkRight */,
-                possibleNextStates: ["walk-left" /* States.walkLeft */, "run-left" /* States.runLeft */],
-            },
-            {
-                state: "run-right" /* States.runRight */,
-                possibleNextStates: ["walk-left" /* States.walkLeft */, "run-left" /* States.runLeft */],
-            },
-            {
-                state: "walk-left" /* States.walkLeft */,
-                possibleNextStates: [
-                    "sit-idle" /* States.sitIdle */,
-                    "climb-wall-left" /* States.climbWallLeft */,
-                    "walk-right" /* States.walkRight */,
-                    "run-right" /* States.runRight */,
-                ],
-            },
-            {
-                state: "run-left" /* States.runLeft */,
-                possibleNextStates: [
-                    "sit-idle" /* States.sitIdle */,
-                    "climb-wall-left" /* States.climbWallLeft */,
-                    "walk-right" /* States.walkRight */,
-                    "run-right" /* States.runRight */,
-                ],
-            },
-            {
-                state: "climb-wall-left" /* States.climbWallLeft */,
-                possibleNextStates: ["wall-hang-left" /* States.wallHangLeft */],
-            },
-            {
-                state: "wall-hang-left" /* States.wallHangLeft */,
-                possibleNextStates: ["jump-down-left" /* States.jumpDownLeft */],
-            },
-            {
-                state: "jump-down-left" /* States.jumpDownLeft */,
-                possibleNextStates: ["land" /* States.land */],
-            },
-            {
-                state: "land" /* States.land */,
-                possibleNextStates: [
-                    "sit-idle" /* States.sitIdle */,
-                    "walk-right" /* States.walkRight */,
-                    "run-right" /* States.runRight */,
-                ],
-            },
-            {
-                state: "chase" /* States.chase */,
-                possibleNextStates: ["idle-with-ball" /* States.idleWithBall */],
-            },
-            {
-                state: "idle-with-ball" /* States.idleWithBall */,
-                possibleNextStates: [
-                    "walk-right" /* States.walkRight */,
-                    "walk-left" /* States.walkLeft */,
-                    "run-left" /* States.runLeft */,
-                    "run-right" /* States.runRight */,
-                ],
-            },
-        ],
-    };
-    emoji() {
-        return '🐱';
-    }
-    hello() {
-        return `brrr... Meow!`;
-    }
-}
-exports.Cat = Cat;
-class Dog extends BasePetType {
-    label = 'dog';
-    sequence = {
-        startingState: "sit-idle" /* States.sitIdle */,
-        sequenceStates: [
-            {
-                state: "sit-idle" /* States.sitIdle */,
-                possibleNextStates: [
-                    "walk-right" /* States.walkRight */,
-                    "run-right" /* States.runRight */,
-                    "lie" /* States.lie */,
-                ],
-            },
-            {
-                state: "lie" /* States.lie */,
-                possibleNextStates: ["walk-right" /* States.walkRight */, "run-right" /* States.runRight */],
-            },
-            {
-                state: "walk-right" /* States.walkRight */,
-                possibleNextStates: ["walk-left" /* States.walkLeft */, "run-left" /* States.runLeft */],
-            },
-            {
-                state: "run-right" /* States.runRight */,
-                possibleNextStates: ["walk-left" /* States.walkLeft */, "run-left" /* States.runLeft */],
-            },
-            {
-                state: "walk-left" /* States.walkLeft */,
-                possibleNextStates: [
-                    "sit-idle" /* States.sitIdle */,
-                    "lie" /* States.lie */,
-                    "walk-right" /* States.walkRight */,
-                    "run-right" /* States.runRight */,
-                ],
-            },
-            {
-                state: "run-left" /* States.runLeft */,
-                possibleNextStates: [
-                    "sit-idle" /* States.sitIdle */,
-                    "lie" /* States.lie */,
-                    "walk-right" /* States.walkRight */,
-                    "run-right" /* States.runRight */,
-                ],
-            },
-            {
-                state: "chase" /* States.chase */,
-                possibleNextStates: ["idle-with-ball" /* States.idleWithBall */],
-            },
-            {
-                state: "idle-with-ball" /* States.idleWithBall */,
-                possibleNextStates: [
-                    "walk-right" /* States.walkRight */,
-                    "walk-left" /* States.walkLeft */,
-                    "run-left" /* States.runLeft */,
-                    "run-right" /* States.runRight */,
-                ],
-            },
-        ],
-    };
-    emoji() {
-        return '🐶';
-    }
-    hello() {
-        return ` Every dog has its day - and today is woof day! Today I just want to bark. Take me on a walk`;
-    }
-}
-exports.Dog = Dog;
-class Snake extends BasePetType {
-    label = 'snake';
-    sequence = {
-        startingState: "sit-idle" /* States.sitIdle */,
-        sequenceStates: [
-            {
-                state: "sit-idle" /* States.sitIdle */,
-                possibleNextStates: ["walk-right" /* States.walkRight */, "run-right" /* States.runRight */],
-            },
-            {
-                state: "walk-right" /* States.walkRight */,
-                possibleNextStates: ["walk-left" /* States.walkLeft */, "run-left" /* States.runLeft */],
-            },
-            {
-                state: "run-right" /* States.runRight */,
-                possibleNextStates: ["walk-left" /* States.walkLeft */, "run-left" /* States.runLeft */],
-            },
-            {
-                state: "walk-left" /* States.walkLeft */,
-                possibleNextStates: [
-                    "sit-idle" /* States.sitIdle */,
-                    "walk-right" /* States.walkRight */,
-                    "run-right" /* States.runRight */,
-                ],
-            },
-            {
-                state: "run-left" /* States.runLeft */,
-                possibleNextStates: [
-                    "sit-idle" /* States.sitIdle */,
-                    "walk-right" /* States.walkRight */,
-                    "run-right" /* States.runRight */,
-                ],
-            },
-            {
-                state: "chase" /* States.chase */,
-                possibleNextStates: ["idle-with-ball" /* States.idleWithBall */],
-            },
-            {
-                state: "idle-with-ball" /* States.idleWithBall */,
-                possibleNextStates: [
-                    "walk-right" /* States.walkRight */,
-                    "walk-left" /* States.walkLeft */,
-                    "run-left" /* States.runLeft */,
-                    "run-right" /* States.runRight */,
-                ],
-            },
-        ],
-    };
-    emoji() {
-        return '🐍';
-    }
-    hello() {
-        return `Sss... Oh. Oh my gosh! I'm a snake!`;
-    }
-}
-exports.Snake = Snake;
-class Clippy extends BasePetType {
-    label = 'clippy';
-    sequence = {
-        startingState: "sit-idle" /* States.sitIdle */,
-        sequenceStates: [
-            {
-                state: "sit-idle" /* States.sitIdle */,
-                possibleNextStates: ["walk-right" /* States.walkRight */, "run-right" /* States.runRight */],
-            },
-            {
-                state: "walk-right" /* States.walkRight */,
-                possibleNextStates: ["walk-left" /* States.walkLeft */, "run-left" /* States.runLeft */],
-            },
-            {
-                state: "run-right" /* States.runRight */,
-                possibleNextStates: ["walk-left" /* States.walkLeft */, "run-left" /* States.runLeft */],
-            },
-            {
-                state: "walk-left" /* States.walkLeft */,
-                possibleNextStates: ["sit-idle" /* States.sitIdle */],
-            },
-            {
-                state: "run-left" /* States.runLeft */,
-                possibleNextStates: ["sit-idle" /* States.sitIdle */],
-            },
-            {
-                state: "chase" /* States.chase */,
-                possibleNextStates: ["idle-with-ball" /* States.idleWithBall */],
-            },
-            {
-                state: "idle-with-ball" /* States.idleWithBall */,
-                possibleNextStates: [
-                    "walk-right" /* States.walkRight */,
-                    "walk-left" /* States.walkLeft */,
-                    "run-left" /* States.runLeft */,
-                    "run-right" /* States.runRight */,
-                ],
-            },
-        ],
-    };
-    emoji() {
-        return '📎';
-    }
-    hello() {
-        return ` Hi, I'm Clippy, would you like some assistance today? 👋!`;
-    }
-}
-exports.Clippy = Clippy;
-class RubberDuck extends BasePetType {
-    label = 'rubber-duck';
-    sequence = {
-        startingState: "sit-idle" /* States.sitIdle */,
-        sequenceStates: [
-            {
-                state: "sit-idle" /* States.sitIdle */,
-                possibleNextStates: ["walk-right" /* States.walkRight */, "run-right" /* States.runRight */],
-            },
-            {
-                state: "walk-right" /* States.walkRight */,
-                possibleNextStates: ["walk-left" /* States.walkLeft */, "run-left" /* States.runLeft */],
-            },
-            {
-                state: "run-right" /* States.runRight */,
-                possibleNextStates: ["walk-left" /* States.walkLeft */, "run-left" /* States.runLeft */],
-            },
-            {
-                state: "walk-left" /* States.walkLeft */,
-                possibleNextStates: ["sit-idle" /* States.sitIdle */],
-            },
-            {
-                state: "run-left" /* States.runLeft */,
-                possibleNextStates: ["sit-idle" /* States.sitIdle */],
-            },
-            {
-                state: "chase" /* States.chase */,
-                possibleNextStates: ["idle-with-ball" /* States.idleWithBall */],
-            },
-            {
-                state: "idle-with-ball" /* States.idleWithBall */,
-                possibleNextStates: [
-                    "walk-right" /* States.walkRight */,
-                    "walk-left" /* States.walkLeft */,
-                    "run-left" /* States.runLeft */,
-                    "run-right" /* States.runRight */,
-                ],
-            },
-        ],
-    };
-    emoji() {
-        return '🐥';
-    }
-    hello() {
-        return ` Hi, I love to quack around 👋!`;
-    }
-}
-exports.RubberDuck = RubberDuck;
-class Cockatiel extends BasePetType {
-    label = 'cockatiel';
-    sequence = {
-        startingState: "sit-idle" /* States.sitIdle */,
-        sequenceStates: [
-            {
-                state: "sit-idle" /* States.sitIdle */,
-                possibleNextStates: ["walk-right" /* States.walkRight */, "run-right" /* States.runRight */],
-            },
-            {
-                state: "walk-right" /* States.walkRight */,
-                possibleNextStates: ["walk-left" /* States.walkLeft */, "run-left" /* States.runLeft */],
-            },
-            {
-                state: "run-right" /* States.runRight */,
-                possibleNextStates: ["walk-left" /* States.walkLeft */, "run-left" /* States.runLeft */],
-            },
-            {
-                state: "walk-left" /* States.walkLeft */,
-                possibleNextStates: ["sit-idle" /* States.sitIdle */],
-            },
-            {
-                state: "run-left" /* States.runLeft */,
-                possibleNextStates: ["sit-idle" /* States.sitIdle */],
-            },
-            {
-                state: "chase" /* States.chase */,
-                possibleNextStates: ["idle-with-ball" /* States.idleWithBall */],
-            },
-            {
-                state: "idle-with-ball" /* States.idleWithBall */,
-                possibleNextStates: [
-                    "walk-right" /* States.walkRight */,
-                    "walk-left" /* States.walkLeft */,
-                    "run-left" /* States.runLeft */,
-                    "run-right" /* States.runRight */,
-                ],
-            },
-        ],
-    };
-    emoji() {
-        return '🦜';
-    }
-    hello() {
-        // TODO: #191 Add a custom message for cockatiel
-        return ` Hello, I'm a good bird 👋!`;
-    }
-}
-exports.Cockatiel = Cockatiel;
-class Crab extends BasePetType {
-    label = 'crab';
-    sequence = {
-        startingState: "sit-idle" /* States.sitIdle */,
-        sequenceStates: [
-            {
-                state: "sit-idle" /* States.sitIdle */,
-                possibleNextStates: ["walk-right" /* States.walkRight */, "run-right" /* States.runRight */],
-            },
-            {
-                state: "walk-right" /* States.walkRight */,
-                possibleNextStates: ["walk-left" /* States.walkLeft */, "run-left" /* States.runLeft */],
-            },
-            {
-                state: "run-right" /* States.runRight */,
-                possibleNextStates: ["walk-left" /* States.walkLeft */, "run-left" /* States.runLeft */],
-            },
-            {
-                state: "walk-left" /* States.walkLeft */,
-                possibleNextStates: ["sit-idle" /* States.sitIdle */],
-            },
-            {
-                state: "run-left" /* States.runLeft */,
-                possibleNextStates: ["sit-idle" /* States.sitIdle */],
-            },
-            {
-                state: "chase" /* States.chase */,
-                possibleNextStates: ["idle-with-ball" /* States.idleWithBall */],
-            },
-            {
-                state: "idle-with-ball" /* States.idleWithBall */,
-                possibleNextStates: [
-                    "walk-right" /* States.walkRight */,
-                    "walk-left" /* States.walkLeft */,
-                    "run-left" /* States.runLeft */,
-                    "run-right" /* States.runRight */,
-                ],
-            },
-        ],
-    };
-    emoji() {
-        return '🦀';
-    }
-    hello() {
-        return ` Hi, I'm Crabsolutely Clawsome Crab 👋!`;
-    }
-}
-exports.Crab = Crab;
-class Zappy extends BasePetType {
+exports.TOTORO_NAMES = [
+    'Totoro',
+    'トトロ',
+    'Max',
+    'Molly',
+    'Coco',
+    'Buddy',
+    'Ruby',
+    'Oscar',
+    'Lucy',
+    'Bailey',
+    'Big fella',
+];
+
+
+/***/ }),
+
+/***/ "./src/panel/pets/zappy.ts":
+/*!*********************************!*\
+  !*** ./src/panel/pets/zappy.ts ***!
+  \*********************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.ZAPPY_NAMES = exports.Zappy = void 0;
+const basepettype_1 = __webpack_require__(/*! ../basepettype */ "./src/panel/basepettype.ts");
+class Zappy extends basepettype_1.BasePetType {
     label = 'zappy';
+    static possibleColors = ["yellow" /* PetColor.yellow */];
     sequence = {
         startingState: "sit-idle" /* States.sitIdle */,
         sequenceStates: [
@@ -1627,89 +2236,34 @@ class Zappy extends BasePetType {
             },
         ],
     };
-    emoji() {
+    get emoji() {
         return '⚡';
     }
-    hello() {
+    get hello() {
         // TODO: #193 Add a custom message for zappy
         return ` Hello this is Zappy! Do I look familiar?? I am the mascot for Azure Functions😉`;
     }
 }
 exports.Zappy = Zappy;
-class Rocky extends BasePetType {
-    label = 'rocky';
-    sequence = {
-        startingState: "sit-idle" /* States.sitIdle */,
-        sequenceStates: [
-            {
-                state: "sit-idle" /* States.sitIdle */,
-                possibleNextStates: ["walk-right" /* States.walkRight */, "run-right" /* States.runRight */],
-            },
-            {
-                state: "walk-right" /* States.walkRight */,
-                possibleNextStates: ["sit-idle" /* States.sitIdle */, "run-right" /* States.runRight */],
-            },
-            {
-                state: "run-right" /* States.runRight */,
-                possibleNextStates: ["sit-idle" /* States.sitIdle */, "walk-right" /* States.walkRight */],
-            },
-        ],
-    };
-    emoji() {
-        return '💎';
-    }
-    canChase() {
-        return false;
-    }
-    hello() {
-        return ` 👋 I'm rock! I always Rock`;
-    }
-}
-exports.Rocky = Rocky;
-class InvalidPetException {
-    message;
-    constructor(message) {
-        this.message = message;
-    }
-}
-exports.InvalidPetException = InvalidPetException;
-function createPet(petType, el, collision, speech, size, left, bottom, petRoot, floor, name) {
-    if (name === undefined || name === null || name === '') {
-        throw new InvalidPetException('name is undefined');
-    }
-    if (petType === 'totoro') {
-        return new Totoro(el, collision, speech, size, left, bottom, petRoot, floor, name, 3 /* PetSpeed.normal */);
-    }
-    if (petType === 'cat') {
-        return new Cat(el, collision, speech, size, left, bottom, petRoot, floor, name, 3 /* PetSpeed.normal */);
-    }
-    else if (petType === 'dog') {
-        return new Dog(el, collision, speech, size, left, bottom, petRoot, floor, name, 3 /* PetSpeed.normal */);
-    }
-    else if (petType === 'snake') {
-        return new Snake(el, collision, speech, size, left, bottom, petRoot, floor, name, 1 /* PetSpeed.verySlow */);
-    }
-    else if (petType === 'clippy') {
-        return new Clippy(el, collision, speech, size, left, bottom, petRoot, floor, name, 2 /* PetSpeed.slow */);
-    }
-    else if (petType === 'cockatiel') {
-        return new Cockatiel(el, collision, speech, size, left, bottom, petRoot, floor, name, 3 /* PetSpeed.normal */);
-    }
-    else if (petType === 'crab') {
-        return new Crab(el, collision, speech, size, left, bottom, petRoot, floor, name, 2 /* PetSpeed.slow */);
-    }
-    else if (petType === 'rubber-duck') {
-        return new RubberDuck(el, collision, speech, size, left, bottom, petRoot, floor, name, 4 /* PetSpeed.fast */);
-    }
-    else if (petType === 'zappy') {
-        return new Zappy(el, collision, speech, size, left, bottom, petRoot, floor, name, 5 /* PetSpeed.veryFast */);
-    }
-    else if (petType === 'rocky') {
-        return new Rocky(el, collision, speech, size, left, bottom, petRoot, floor, name, 0 /* PetSpeed.still */);
-    }
-    throw new InvalidPetException("Pet type doesn't exist");
-}
-exports.createPet = createPet;
+exports.ZAPPY_NAMES = [
+    'Zappy',
+    'Zippy',
+    'Zappy Jr.',
+    'Zoppy',
+    'Zuppy',
+    'Zeppy',
+    'Big Z',
+    'Little z',
+    'The Flash',
+    'Thor',
+    'Electric Bolt',
+    'Azula',
+    'Lightning Bolt',
+    'Power',
+    'Sonic',
+    'Speedy',
+    'Rush',
+];
 
 
 /***/ }),
@@ -1886,12 +2440,12 @@ class WalkRightState {
     }
     nextFrame() {
         this.idleCounter++;
-        this.pet.positionLeft(this.pet.left() + this.pet.speed() * this.speedMultiplier);
-        if (this.pet.isMoving() &&
-            this.pet.left() >= this.leftBoundary - this.pet.width()) {
+        this.pet.positionLeft(this.pet.left + this.pet.speed * this.speedMultiplier);
+        if (this.pet.isMoving &&
+            this.pet.left >= this.leftBoundary - this.pet.width) {
             return FrameResult.stateComplete;
         }
-        else if (!this.pet.isMoving() && this.idleCounter > this.holdTime) {
+        else if (!this.pet.isMoving && this.idleCounter > this.holdTime) {
             return FrameResult.stateComplete;
         }
         return FrameResult.stateContinue;
@@ -1911,11 +2465,11 @@ class WalkLeftState {
         this.idleCounter = 0;
     }
     nextFrame() {
-        this.pet.positionLeft(this.pet.left() - this.pet.speed() * this.speedMultiplier);
-        if (this.pet.isMoving() && this.pet.left() <= 0) {
+        this.pet.positionLeft(this.pet.left - this.pet.speed * this.speedMultiplier);
+        if (this.pet.isMoving && this.pet.left <= 0) {
             return FrameResult.stateComplete;
         }
-        else if (!this.pet.isMoving() && this.idleCounter > this.holdTime) {
+        else if (!this.pet.isMoving && this.idleCounter > this.holdTime) {
             return FrameResult.stateComplete;
         }
         return FrameResult.stateContinue;
@@ -1952,18 +2506,18 @@ class ChaseState {
         if (this.ballState.paused) {
             return FrameResult.stateCancel; // Ball is already caught
         }
-        if (this.pet.left() > this.ballState.cx) {
+        if (this.pet.left > this.ballState.cx) {
             this.horizontalDirection = HorizontalDirection.left;
-            this.pet.positionLeft(this.pet.left() - this.pet.speed());
+            this.pet.positionLeft(this.pet.left - this.pet.speed);
         }
         else {
             this.horizontalDirection = HorizontalDirection.right;
-            this.pet.positionLeft(this.pet.left() + this.pet.speed());
+            this.pet.positionLeft(this.pet.left + this.pet.speed);
         }
         if (this.canvas.height - this.ballState.cy <
-            this.pet.width() + this.pet.floor() &&
-            this.ballState.cx < this.pet.left() &&
-            this.pet.left() < this.ballState.cx + 15) {
+            this.pet.width + this.pet.floor &&
+            this.ballState.cx < this.pet.left &&
+            this.pet.left < this.ballState.cx + 15) {
             // hide ball
             this.canvas.style.display = 'none';
             this.ballState.paused = true;
@@ -1982,17 +2536,17 @@ class ChaseFriendState {
         this.pet = pet;
     }
     nextFrame() {
-        if (!this.pet.hasFriend() || !this.pet.friend()?.isPlaying()) {
+        if (!this.pet.hasFriend || !this.pet.friend?.isPlaying) {
             return FrameResult.stateCancel; // Friend is no longer playing.
         }
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        if (this.pet.left() > this.pet.friend().left()) {
+        if (this.pet.left > this.pet.friend.left) {
             this.horizontalDirection = HorizontalDirection.left;
-            this.pet.positionLeft(this.pet.left() - this.pet.speed());
+            this.pet.positionLeft(this.pet.left - this.pet.speed);
         }
         else {
             this.horizontalDirection = HorizontalDirection.right;
-            this.pet.positionLeft(this.pet.left() + this.pet.speed());
+            this.pet.positionLeft(this.pet.left + this.pet.speed);
         }
         return FrameResult.stateContinue;
     }
@@ -2007,8 +2561,8 @@ class ClimbWallLeftState {
         this.pet = pet;
     }
     nextFrame() {
-        this.pet.positionBottom(this.pet.bottom() + 1);
-        if (this.pet.bottom() >= 100) {
+        this.pet.positionBottom(this.pet.bottom + 1);
+        if (this.pet.bottom >= 100) {
             return FrameResult.stateComplete;
         }
         return FrameResult.stateContinue;
@@ -2024,9 +2578,9 @@ class JumpDownLeftState {
         this.pet = pet;
     }
     nextFrame() {
-        this.pet.positionBottom(this.pet.bottom() - 5);
-        if (this.pet.bottom() <= this.pet.floor()) {
-            this.pet.positionBottom(this.pet.floor());
+        this.pet.positionBottom(this.pet.bottom - 5);
+        if (this.pet.bottom <= this.pet.floor) {
+            this.pet.positionBottom(this.pet.floor);
             return FrameResult.stateComplete;
         }
         return FrameResult.stateContinue;
