@@ -4,9 +4,11 @@ out/test/**
 src/**
 .gitignore
 .yarnrc
-vsc-extension-quickstart.md
 **/tsconfig.json
 **/.eslintrc.json
 **/*.map
 **/*.ts
 .build-out/
+coverage/
+docs/
+node_modules

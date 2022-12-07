@@ -1,31 +1,3 @@
 {
-    "vscodePets.spawnPet": "Spawn Pet",
-    "vscodePets.petPanel": "Pet Panel",
-    "vscodePets.selectPet": "Select a pet",
-    "vscodePets.selectColor": "Select a color",
-    "vscodePets.selectPetToRemove": "Select the pet to remove.",
-    "vscodePets.leaveBlank": "Leave blank for a random name",
-    "vscodePets.nameYourPet": "Name your pet", 
-    "vscodePets.cancelledSpawningPet":"Cancelled Spawning Pet",
-    "vscodePets.spawnPetWithClosedPlayground": "A Pet Playground has been created. You can now use the \"Spawn Additional Pet\" Command to add more pets.",
-    "vscodePets.removePetsWithClosedPlayground":  "A Pet Playground has been created. You can now use the \"Remove All Pets\" Command to remove all pets.",
-
-    "vscodePets.black": "Black",
-    "vscodePets.brown": "Brown",
-    "vscodePets.green": "Green",
-    "vscodePets.yellow": "Yellow",
-    "vscodePets.gray": "Gray",
-    "vscodePets.red": "Red",
-    "vscodePets.white": "White",
-
-    "vscodePets.cat": "Cat",
-    "vscodePets.clippy": "Clippy",
-    "vscodePets.cockatiel": "Cockatiel",
-    "vscodePets.crab": "Crab",
-    "vscodePets.dog": "Dog",
-    "vscodePets.rocky": "Rocky",
-    "vscodePets.rubber-duck": "Rubber Duck",
-    "vscodePets.snake": "Snake",
-    "vscodePets.totoro": "Totoro",
-    "vscodePets.zappy": "Zappy"
+    
 }

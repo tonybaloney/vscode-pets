@@ -1,5 +1,40 @@
 import { PetColor, PetType } from '../common/types';
-import { IPetType } from './pets';
+
+export interface IPetType {
+    nextFrame(): void;
+
+    // Special methods for actions
+    canSwipe: boolean;
+    canChase: boolean;
+    swipe(): void;
+    chase(ballState: BallState, canvas: HTMLCanvasElement): void;
+    speed: number;
+    isMoving: boolean;
+    hello: string;
+
+    // State API
+    getState(): PetInstanceState;
+    recoverState(state: PetInstanceState): void;
+    recoverFriend(friend: IPetType): void;
+
+    // Positioning
+    bottom: number;
+    left: number;
+    positionBottom(bottom: number): void;
+    positionLeft(left: number): void;
+    width: number;
+    floor: number;
+
+    // Friends API
+    name: string;
+    emoji: string;
+    hasFriend: boolean;
+    friend: IPetType | undefined;
+    makeFriendsWith(friend: IPetType): boolean;
+    isPlaying: boolean;
+
+    showSpeechBubble(message: string, duration: number): void;
+}
 
 export class PetInstanceState {
     currentStateEnum: States | undefined;
