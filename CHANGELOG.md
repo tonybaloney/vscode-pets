@@ -2,6 +2,14 @@
 
 All notable changes to the "vscode-pets" extension will be documented in this file.
 
+## [1.20.0]
+
+* Officially support vscode.dev
+
+* Exclusively use extension URIs and not paths. by @tonybaloney in https://github.com/tonybaloney/vscode-pets/pull/336
+* Ignore node_modules from bundled VSIX by @tonybaloney in https://github.com/tonybaloney/vscode-pets/pull/337
+
+
 ## [1.19.1]
 
 * Add Turkish language by Alper Karaca in https://github.com/tonybaloney/vscode-pets/pull/331
