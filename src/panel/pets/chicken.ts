@@ -12,7 +12,7 @@ export class Chicken extends BasePetType {
         sequenceStates: [
             {
                 state: States.sitIdle,
-                possibleNextStates: [States.walkRight, States.runRight],
+                possibleNextStates: [States.walkRight, States.runRight, States.swipe,],
             },
             {
                 state: States.walkRight,
@@ -35,12 +35,17 @@ export class Chicken extends BasePetType {
                 possibleNextStates: [States.idleWithBall],
             },
             {
+                state: States.swipe,
+                possibleNextStates: [States.sitIdle],
+            },
+            {
                 state: States.idleWithBall,
                 possibleNextStates: [
                     States.walkRight,
                     States.walkLeft,
                     States.runLeft,
                     States.runRight,
+                    States.swipe,
                 ],
             },
         ],
@@ -63,7 +68,7 @@ export const CHICKEN_NAMES: ReadonlyArray<string> = [
     'Sir Clucks-A-Lot',
     'Frank-hen-stein',
     'Richard',
-    'Dixie',
+    'Dixi',
     'Nugget',
     'Bella',
     'Cotton',
