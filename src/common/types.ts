@@ -71,6 +71,7 @@ export class WebviewMessage {
 
 export const ALL_PETS = [
     PetType.cat,
+    PetType.chicken,
     PetType.clippy,
     PetType.cockatiel,
     PetType.crab,
