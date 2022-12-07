@@ -1,4 +1,5 @@
 import { CAT_NAMES } from '../panel/pets/cat';
+import { CHICKEN_NAMES } from '../panel/pets/chicken';
 import { CLIPPY_NAMES } from '../panel/pets/clippy';
 import { COCKATIEL_NAMES } from '../panel/pets/cockatiel';
 import { CRAB_NAMES } from '../panel/pets/crab';
@@ -16,6 +17,7 @@ export function randomName(type: PetType): string {
         (
             {
                 [PetType.cat]: CAT_NAMES,
+                [PetType.chicken]: CHICKEN_NAMES,
                 [PetType.dog]: DOG_NAMES,
                 [PetType.crab]: CRAB_NAMES,
                 [PetType.clippy]: CLIPPY_NAMES,
