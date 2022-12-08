@@ -4,15 +4,17 @@ import { States } from '../states';
 
 export class Chicken extends BasePetType {
     label = 'chicken';
-    static possibleColors = [
-        PetColor.white,
-    ];
+    static possibleColors = [PetColor.white];
     sequence = {
         startingState: States.sitIdle,
         sequenceStates: [
             {
                 state: States.sitIdle,
-                possibleNextStates: [States.walkRight, States.runRight, States.swipe,],
+                possibleNextStates: [
+                    States.walkRight,
+                    States.runRight,
+                    States.swipe,
+                ],
             },
             {
                 state: States.walkRight,
