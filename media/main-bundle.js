@@ -12,6 +12,7 @@
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.randomName = void 0;
 const cat_1 = __webpack_require__(/*! ../panel/pets/cat */ "./src/panel/pets/cat.ts");
+const chicken_1 = __webpack_require__(/*! ../panel/pets/chicken */ "./src/panel/pets/chicken.ts");
 const clippy_1 = __webpack_require__(/*! ../panel/pets/clippy */ "./src/panel/pets/clippy.ts");
 const cockatiel_1 = __webpack_require__(/*! ../panel/pets/cockatiel */ "./src/panel/pets/cockatiel.ts");
 const crab_1 = __webpack_require__(/*! ../panel/pets/crab */ "./src/panel/pets/crab.ts");
@@ -25,6 +26,7 @@ const zappy_1 = __webpack_require__(/*! ../panel/pets/zappy */ "./src/panel/pets
 function randomName(type) {
     const collection = {
         ["cat" /* PetType.cat */]: cat_1.CAT_NAMES,
+        ["chicken" /* PetType.chicken */]: chicken_1.CHICKEN_NAMES,
         ["dog" /* PetType.dog */]: dog_1.DOG_NAMES,
         ["crab" /* PetType.crab */]: crab_1.CRAB_NAMES,
         ["clippy" /* PetType.clippy */]: clippy_1.CLIPPY_NAMES,
@@ -785,6 +787,7 @@ window.addEventListener('resize', function () {
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.normalizeColor = exports.availableColors = exports.createPet = exports.InvalidPetException = exports.PetCollection = exports.PetElement = void 0;
 const cat_1 = __webpack_require__(/*! ./pets/cat */ "./src/panel/pets/cat.ts");
+const chicken_1 = __webpack_require__(/*! ./pets/chicken */ "./src/panel/pets/chicken.ts");
 const clippy_1 = __webpack_require__(/*! ./pets/clippy */ "./src/panel/pets/clippy.ts");
 const cockatiel_1 = __webpack_require__(/*! ./pets/cockatiel */ "./src/panel/pets/cockatiel.ts");
 const crab_1 = __webpack_require__(/*! ./pets/crab */ "./src/panel/pets/crab.ts");
@@ -898,6 +901,8 @@ function createPet(petType, el, collision, speech, size, left, bottom, petRoot, 
     switch (petType) {
         case "cat" /* PetType.cat */:
             return new cat_1.Cat(...standardPetArguments, 3 /* PetSpeed.normal */);
+        case "chicken" /* PetType.chicken */:
+            return new chicken_1.Chicken(...standardPetArguments, 3 /* PetSpeed.normal */);
         case "dog" /* PetType.dog */:
             return new dog_1.Dog(...standardPetArguments, 3 /* PetSpeed.normal */);
         case "crab" /* PetType.crab */:
@@ -927,6 +932,8 @@ function availableColors(petType) {
     switch (petType) {
         case "cat" /* PetType.cat */:
             return cat_1.Cat.possibleColors;
+        case "chicken" /* PetType.chicken */:
+            return chicken_1.Chicken.possibleColors;
         case "dog" /* PetType.dog */:
             return dog_1.Dog.possibleColors;
         case "crab" /* PetType.crab */:
@@ -1181,6 +1188,102 @@ exports.CAT_NAMES = [
     'Carlotta',
     'Felix',
     'Duchess',
+];
+
+
+/***/ }),
+
+/***/ "./src/panel/pets/chicken.ts":
+/*!***********************************!*\
+  !*** ./src/panel/pets/chicken.ts ***!
+  \***********************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.CHICKEN_NAMES = exports.Chicken = void 0;
+const basepettype_1 = __webpack_require__(/*! ../basepettype */ "./src/panel/basepettype.ts");
+class Chicken extends basepettype_1.BasePetType {
+    label = 'chicken';
+    static possibleColors = [
+        "white" /* PetColor.white */,
+    ];
+    sequence = {
+        startingState: "sit-idle" /* States.sitIdle */,
+        sequenceStates: [
+            {
+                state: "sit-idle" /* States.sitIdle */,
+                possibleNextStates: ["walk-right" /* States.walkRight */, "run-right" /* States.runRight */, "swipe" /* States.swipe */,],
+            },
+            {
+                state: "walk-right" /* States.walkRight */,
+                possibleNextStates: ["walk-left" /* States.walkLeft */, "run-left" /* States.runLeft */],
+            },
+            {
+                state: "run-right" /* States.runRight */,
+                possibleNextStates: ["walk-left" /* States.walkLeft */, "run-left" /* States.runLeft */],
+            },
+            {
+                state: "walk-left" /* States.walkLeft */,
+                possibleNextStates: ["sit-idle" /* States.sitIdle */],
+            },
+            {
+                state: "run-left" /* States.runLeft */,
+                possibleNextStates: ["sit-idle" /* States.sitIdle */],
+            },
+            {
+                state: "chase" /* States.chase */,
+                possibleNextStates: ["idle-with-ball" /* States.idleWithBall */],
+            },
+            {
+                state: "swipe" /* States.swipe */,
+                possibleNextStates: ["sit-idle" /* States.sitIdle */],
+            },
+            {
+                state: "idle-with-ball" /* States.idleWithBall */,
+                possibleNextStates: [
+                    "walk-right" /* States.walkRight */,
+                    "walk-left" /* States.walkLeft */,
+                    "run-left" /* States.runLeft */,
+                    "run-right" /* States.runRight */,
+                    "swipe" /* States.swipe */,
+                ],
+            },
+        ],
+    };
+    get emoji() {
+        return '🐔';
+    }
+    get hello() {
+        return ` Puk Puk Pukaaak - just let me lay my leg. 🥚`;
+    }
+}
+exports.Chicken = Chicken;
+exports.CHICKEN_NAMES = [
+    'Hen Solo',
+    'Cluck Vader',
+    'Obi Wan Henobi',
+    'Albert Eggstein',
+    'Abrahen Lincoln',
+    'Cluck Norris',
+    'Sir Clucks-A-Lot',
+    'Frank-hen-stein',
+    'Richard',
+    'Dixi',
+    'Nugget',
+    'Bella',
+    'Cotton',
+    'Pip',
+    'Lucky',
+    'Polly',
+    'Mirabel',
+    'Elsa',
+    'Bon-Bon',
+    'Ruby',
+    'Rosie',
+    'Teriyaki',
+    'Penguin',
+    'Sybil',
 ];
 
 
