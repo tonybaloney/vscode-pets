@@ -157,7 +157,8 @@
                             "gray",
                             "purple",
                             "red",
-                            "white"
+                            "white",
+                            "orange"
                         ],
                         "default": "brown",
                         "description": "Pet color",
@@ -177,7 +178,8 @@
                             "rubber-duck",
                             "snake",
                             "totoro",
-                            "zappy"
+                            "zappy",
+                            "fox"
                         ],
                         "default": "cat",
                         "description": "Pet type",

@@ -7,6 +7,7 @@ export const enum PetColor {
     purple = 'purple',
     red = 'red',
     white = 'white',
+    orange = 'orange',
     null = 'null',
 }
 
@@ -23,6 +24,7 @@ export const enum PetType {
     snake = 'snake',
     totoro = 'totoro',
     zappy = 'zappy',
+    fox = 'fox',
     null = 'null',
 }
 
@@ -82,6 +84,7 @@ export const ALL_PETS = [
     PetType.snake,
     PetType.totoro,
     PetType.zappy,
+    PetType.fox,
 ];
 export const ALL_COLORS = [
     PetColor.black,
@@ -92,6 +95,7 @@ export const ALL_COLORS = [
     PetColor.purple,
     PetColor.red,
     PetColor.white,
+    PetColor.orange,
     PetColor.null,
 ];
 export const ALL_SCALES = [PetSize.nano, PetSize.medium, PetSize.large];
