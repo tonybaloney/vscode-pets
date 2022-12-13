@@ -909,7 +909,7 @@ function createPet(petType, el, collision, speech, size, left, bottom, petRoot, 
         case "dog" /* PetType.dog */:
             return new dog_1.Dog(...standardPetArguments, 3 /* PetSpeed.normal */);
         case "fox" /* PetType.fox */:
-            return new fox_1.Fox(...standardPetArguments, 5 /* PetSpeed.veryFast */);
+            return new fox_1.Fox(...standardPetArguments, 4 /* PetSpeed.fast */);
         case "crab" /* PetType.crab */:
             return new crab_1.Crab(...standardPetArguments, 2 /* PetSpeed.slow */);
         case "clippy" /* PetType.clippy */:
