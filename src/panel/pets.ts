@@ -179,7 +179,7 @@ export function createPet(
         case PetType.dog:
             return new Dog(...standardPetArguments, PetSpeed.normal);
         case PetType.fox:
-            return new Fox(...standardPetArguments, PetSpeed.veryFast);
+            return new Fox(...standardPetArguments, PetSpeed.fast);
         case PetType.crab:
             return new Crab(...standardPetArguments, PetSpeed.slow);
         case PetType.clippy:
