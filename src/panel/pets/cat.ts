@@ -9,6 +9,7 @@ export class Cat extends BasePetType {
         PetColor.brown,
         PetColor.white,
         PetColor.gray,
+        PetColor.lightbrown,
     ];
     sequence = {
         startingState: States.sitIdle,
