@@ -1003,6 +1003,7 @@ class Cat extends basepettype_1.BasePetType {
         "brown" /* PetColor.brown */,
         "white" /* PetColor.white */,
         "gray" /* PetColor.gray */,
+        "lightbrown" /* PetColor.lightbrown */,
     ];
     sequence = {
         startingState: "sit-idle" /* States.sitIdle */,
