@@ -29,6 +29,7 @@ function randomName(type) {
         ["cat" /* PetType.cat */]: cat_1.CAT_NAMES,
         ["chicken" /* PetType.chicken */]: chicken_1.CHICKEN_NAMES,
         ["dog" /* PetType.dog */]: dog_1.DOG_NAMES,
+        ["fox" /* PetType.fox */]: fox_1.FOX_NAMES,
         ["crab" /* PetType.crab */]: crab_1.CRAB_NAMES,
         ["clippy" /* PetType.clippy */]: clippy_1.CLIPPY_NAMES,
         ["mod" /* PetType.mod */]: mod_1.MOD_NAMES,
@@ -38,7 +39,6 @@ function randomName(type) {
         ["zappy" /* PetType.zappy */]: zappy_1.ZAPPY_NAMES,
         ["rocky" /* PetType.rocky */]: rocky_1.ROCKY_NAMES,
         ["cockatiel" /* PetType.cockatiel */]: cockatiel_1.COCKATIEL_NAMES,
-        ["fox" /* PetType.fox */]: fox_1.FOX_NAMES,
     }[type] ?? cat_1.CAT_NAMES;
     return (collection[Math.floor(Math.random() * collection.length)] ?? 'Unknown');
 }
@@ -794,13 +794,13 @@ const clippy_1 = __webpack_require__(/*! ./pets/clippy */ "./src/panel/pets/clip
 const cockatiel_1 = __webpack_require__(/*! ./pets/cockatiel */ "./src/panel/pets/cockatiel.ts");
 const crab_1 = __webpack_require__(/*! ./pets/crab */ "./src/panel/pets/crab.ts");
 const dog_1 = __webpack_require__(/*! ./pets/dog */ "./src/panel/pets/dog.ts");
+const fox_1 = __webpack_require__(/*! ./pets/fox */ "./src/panel/pets/fox.ts");
 const mod_1 = __webpack_require__(/*! ./pets/mod */ "./src/panel/pets/mod.ts");
 const rocky_1 = __webpack_require__(/*! ./pets/rocky */ "./src/panel/pets/rocky.ts");
 const rubberduck_1 = __webpack_require__(/*! ./pets/rubberduck */ "./src/panel/pets/rubberduck.ts");
 const snake_1 = __webpack_require__(/*! ./pets/snake */ "./src/panel/pets/snake.ts");
 const totoro_1 = __webpack_require__(/*! ./pets/totoro */ "./src/panel/pets/totoro.ts");
 const zappy_1 = __webpack_require__(/*! ./pets/zappy */ "./src/panel/pets/zappy.ts");
-const fox_1 = __webpack_require__(/*! ./pets/fox */ "./src/panel/pets/fox.ts");
 class PetElement {
     el;
     collision;
@@ -908,6 +908,8 @@ function createPet(petType, el, collision, speech, size, left, bottom, petRoot, 
             return new chicken_1.Chicken(...standardPetArguments, 3 /* PetSpeed.normal */);
         case "dog" /* PetType.dog */:
             return new dog_1.Dog(...standardPetArguments, 3 /* PetSpeed.normal */);
+        case "fox" /* PetType.fox */:
+            return new fox_1.Fox(...standardPetArguments, 5 /* PetSpeed.veryFast */);
         case "crab" /* PetType.crab */:
             return new crab_1.Crab(...standardPetArguments, 2 /* PetSpeed.slow */);
         case "clippy" /* PetType.clippy */:
@@ -926,8 +928,6 @@ function createPet(petType, el, collision, speech, size, left, bottom, petRoot, 
             return new rocky_1.Rocky(...standardPetArguments, 0 /* PetSpeed.still */);
         case "cockatiel" /* PetType.cockatiel */:
             return new cockatiel_1.Cockatiel(...standardPetArguments, 3 /* PetSpeed.normal */);
-        case "fox" /* PetType.fox */:
-            return new fox_1.Fox(...standardPetArguments, 5 /* PetSpeed.veryFast */);
         default:
             throw new InvalidPetException("Pet type doesn't exist");
     }
@@ -941,6 +941,8 @@ function availableColors(petType) {
             return chicken_1.Chicken.possibleColors;
         case "dog" /* PetType.dog */:
             return dog_1.Dog.possibleColors;
+        case "fox" /* PetType.fox */:
+            return fox_1.Fox.possibleColors;
         case "crab" /* PetType.crab */:
             return crab_1.Crab.possibleColors;
         case "clippy" /* PetType.clippy */:
@@ -959,8 +961,6 @@ function availableColors(petType) {
             return rocky_1.Rocky.possibleColors;
         case "cockatiel" /* PetType.cockatiel */:
             return cockatiel_1.Cockatiel.possibleColors;
-        case "fox" /* PetType.fox */:
-            return fox_1.Fox.possibleColors;
         default:
             throw new InvalidPetException("Pet type doesn't exist");
     }
@@ -1829,7 +1829,7 @@ exports.FOX_NAMES = exports.Fox = void 0;
 const basepettype_1 = __webpack_require__(/*! ../basepettype */ "./src/panel/basepettype.ts");
 class Fox extends basepettype_1.BasePetType {
     label = 'fox';
-    static possibleColors = ["orange" /* PetColor.orange */, "white" /* PetColor.white */];
+    static possibleColors = ["red" /* PetColor.red */, "white" /* PetColor.white */];
     sequence = {
         startingState: "sit-idle" /* States.sitIdle */,
         sequenceStates: [
