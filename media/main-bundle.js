@@ -998,7 +998,12 @@ exports.CAT_NAMES = exports.Cat = void 0;
 const basepettype_1 = __webpack_require__(/*! ../basepettype */ "./src/panel/basepettype.ts");
 class Cat extends basepettype_1.BasePetType {
     label = 'cat';
-    static possibleColors = ["black" /* PetColor.black */, "brown" /* PetColor.brown */, "white" /* PetColor.white */];
+    static possibleColors = [
+        "black" /* PetColor.black */,
+        "brown" /* PetColor.brown */,
+        "white" /* PetColor.white */,
+        "gray" /* PetColor.gray */,
+    ];
     sequence = {
         startingState: "sit-idle" /* States.sitIdle */,
         sequenceStates: [
