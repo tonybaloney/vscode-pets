@@ -172,13 +172,13 @@
                             "clippy",
                             "cockatiel",
                             "dog",
+                            "fox",
                             "mod",
                             "rocky",
                             "rubber-duck",
                             "snake",
                             "totoro",
-                            "zappy",
-                            "fox"
+                            "zappy"
                         ],
                         "default": "cat",
                         "description": "Pet type",

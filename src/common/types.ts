@@ -17,13 +17,13 @@ export const enum PetType {
     cockatiel = 'cockatiel',
     crab = 'crab',
     dog = 'dog',
+    fox = 'fox',
     mod = 'mod',
     rocky = 'rocky',
     rubberduck = 'rubber-duck',
     snake = 'snake',
     totoro = 'totoro',
     zappy = 'zappy',
-    fox = 'fox',
     null = 'null',
 }
 
@@ -77,13 +77,13 @@ export const ALL_PETS = [
     PetType.cockatiel,
     PetType.crab,
     PetType.dog,
+    PetType.fox,
     PetType.mod,
     PetType.rocky,
     PetType.rubberduck,
     PetType.snake,
     PetType.totoro,
     PetType.zappy,
-    PetType.fox,
 ];
 export const ALL_COLORS = [
     PetColor.black,
