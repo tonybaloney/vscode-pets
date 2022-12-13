@@ -4,6 +4,7 @@ import { CLIPPY_NAMES } from '../panel/pets/clippy';
 import { COCKATIEL_NAMES } from '../panel/pets/cockatiel';
 import { CRAB_NAMES } from '../panel/pets/crab';
 import { DOG_NAMES } from '../panel/pets/dog';
+import { FOX_NAMES } from '../panel/pets/fox';
 import { MOD_NAMES } from '../panel/pets/mod';
 import { ROCKY_NAMES } from '../panel/pets/rocky';
 import { DUCK_NAMES } from '../panel/pets/rubberduck';
@@ -19,6 +20,7 @@ export function randomName(type: PetType): string {
                 [PetType.cat]: CAT_NAMES,
                 [PetType.chicken]: CHICKEN_NAMES,
                 [PetType.dog]: DOG_NAMES,
+                [PetType.fox]: FOX_NAMES,
                 [PetType.crab]: CRAB_NAMES,
                 [PetType.clippy]: CLIPPY_NAMES,
                 [PetType.mod]: MOD_NAMES,

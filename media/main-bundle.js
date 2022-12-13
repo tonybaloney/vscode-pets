@@ -17,6 +17,7 @@ const clippy_1 = __webpack_require__(/*! ../panel/pets/clippy */ "./src/panel/pe
 const cockatiel_1 = __webpack_require__(/*! ../panel/pets/cockatiel */ "./src/panel/pets/cockatiel.ts");
 const crab_1 = __webpack_require__(/*! ../panel/pets/crab */ "./src/panel/pets/crab.ts");
 const dog_1 = __webpack_require__(/*! ../panel/pets/dog */ "./src/panel/pets/dog.ts");
+const fox_1 = __webpack_require__(/*! ../panel/pets/fox */ "./src/panel/pets/fox.ts");
 const mod_1 = __webpack_require__(/*! ../panel/pets/mod */ "./src/panel/pets/mod.ts");
 const rocky_1 = __webpack_require__(/*! ../panel/pets/rocky */ "./src/panel/pets/rocky.ts");
 const rubberduck_1 = __webpack_require__(/*! ../panel/pets/rubberduck */ "./src/panel/pets/rubberduck.ts");
@@ -28,6 +29,7 @@ function randomName(type) {
         ["cat" /* PetType.cat */]: cat_1.CAT_NAMES,
         ["chicken" /* PetType.chicken */]: chicken_1.CHICKEN_NAMES,
         ["dog" /* PetType.dog */]: dog_1.DOG_NAMES,
+        ["fox" /* PetType.fox */]: fox_1.FOX_NAMES,
         ["crab" /* PetType.crab */]: crab_1.CRAB_NAMES,
         ["clippy" /* PetType.clippy */]: clippy_1.CLIPPY_NAMES,
         ["mod" /* PetType.mod */]: mod_1.MOD_NAMES,
@@ -792,6 +794,7 @@ const clippy_1 = __webpack_require__(/*! ./pets/clippy */ "./src/panel/pets/clip
 const cockatiel_1 = __webpack_require__(/*! ./pets/cockatiel */ "./src/panel/pets/cockatiel.ts");
 const crab_1 = __webpack_require__(/*! ./pets/crab */ "./src/panel/pets/crab.ts");
 const dog_1 = __webpack_require__(/*! ./pets/dog */ "./src/panel/pets/dog.ts");
+const fox_1 = __webpack_require__(/*! ./pets/fox */ "./src/panel/pets/fox.ts");
 const mod_1 = __webpack_require__(/*! ./pets/mod */ "./src/panel/pets/mod.ts");
 const rocky_1 = __webpack_require__(/*! ./pets/rocky */ "./src/panel/pets/rocky.ts");
 const rubberduck_1 = __webpack_require__(/*! ./pets/rubberduck */ "./src/panel/pets/rubberduck.ts");
@@ -905,6 +908,8 @@ function createPet(petType, el, collision, speech, size, left, bottom, petRoot, 
             return new chicken_1.Chicken(...standardPetArguments, 3 /* PetSpeed.normal */);
         case "dog" /* PetType.dog */:
             return new dog_1.Dog(...standardPetArguments, 3 /* PetSpeed.normal */);
+        case "fox" /* PetType.fox */:
+            return new fox_1.Fox(...standardPetArguments, 4 /* PetSpeed.fast */);
         case "crab" /* PetType.crab */:
             return new crab_1.Crab(...standardPetArguments, 2 /* PetSpeed.slow */);
         case "clippy" /* PetType.clippy */:
@@ -936,6 +941,8 @@ function availableColors(petType) {
             return chicken_1.Chicken.possibleColors;
         case "dog" /* PetType.dog */:
             return dog_1.Dog.possibleColors;
+        case "fox" /* PetType.fox */:
+            return fox_1.Fox.possibleColors;
         case "crab" /* PetType.crab */:
             return crab_1.Crab.possibleColors;
         case "clippy" /* PetType.clippy */:
@@ -1205,15 +1212,17 @@ exports.CHICKEN_NAMES = exports.Chicken = void 0;
 const basepettype_1 = __webpack_require__(/*! ../basepettype */ "./src/panel/basepettype.ts");
 class Chicken extends basepettype_1.BasePetType {
     label = 'chicken';
-    static possibleColors = [
-        "white" /* PetColor.white */,
-    ];
+    static possibleColors = ["white" /* PetColor.white */];
     sequence = {
         startingState: "sit-idle" /* States.sitIdle */,
         sequenceStates: [
             {
                 state: "sit-idle" /* States.sitIdle */,
-                possibleNextStates: ["walk-right" /* States.walkRight */, "run-right" /* States.runRight */, "swipe" /* States.swipe */,],
+                possibleNextStates: [
+                    "walk-right" /* States.walkRight */,
+                    "run-right" /* States.runRight */,
+                    "swipe" /* States.swipe */,
+                ],
             },
             {
                 state: "walk-right" /* States.walkRight */,
@@ -1803,6 +1812,207 @@ exports.DOG_NAMES = [
     'Tramp',
     'Lady',
     'Puddles',
+];
+
+
+/***/ }),
+
+/***/ "./src/panel/pets/fox.ts":
+/*!*******************************!*\
+  !*** ./src/panel/pets/fox.ts ***!
+  \*******************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.FOX_NAMES = exports.Fox = void 0;
+const basepettype_1 = __webpack_require__(/*! ../basepettype */ "./src/panel/basepettype.ts");
+class Fox extends basepettype_1.BasePetType {
+    label = 'fox';
+    static possibleColors = ["red" /* PetColor.red */, "white" /* PetColor.white */];
+    sequence = {
+        startingState: "sit-idle" /* States.sitIdle */,
+        sequenceStates: [
+            {
+                state: "sit-idle" /* States.sitIdle */,
+                possibleNextStates: [
+                    "lie" /* States.lie */,
+                    "walk-right" /* States.walkRight */,
+                    "walk-left" /* States.walkLeft */,
+                    "run-right" /* States.runRight */,
+                    "run-left" /* States.runLeft */,
+                ],
+            },
+            {
+                state: "lie" /* States.lie */,
+                possibleNextStates: [
+                    "walk-right" /* States.walkRight */,
+                    "walk-left" /* States.walkLeft */,
+                    "run-right" /* States.runRight */,
+                    "run-left" /* States.runLeft */,
+                ],
+            },
+            {
+                state: "walk-right" /* States.walkRight */,
+                possibleNextStates: [
+                    "sit-idle" /* States.sitIdle */,
+                    "walk-left" /* States.walkLeft */,
+                    "run-left" /* States.runLeft */,
+                ],
+            },
+            {
+                state: "walk-left" /* States.walkLeft */,
+                possibleNextStates: [
+                    "sit-idle" /* States.sitIdle */,
+                    "walk-right" /* States.walkRight */,
+                    "run-right" /* States.runRight */,
+                ],
+            },
+            {
+                state: "run-right" /* States.runRight */,
+                possibleNextStates: [
+                    "lie" /* States.lie */,
+                    "sit-idle" /* States.sitIdle */,
+                    "walk-left" /* States.walkLeft */,
+                    "run-left" /* States.runLeft */,
+                ],
+            },
+            {
+                state: "run-left" /* States.runLeft */,
+                possibleNextStates: [
+                    "lie" /* States.lie */,
+                    "sit-idle" /* States.sitIdle */,
+                    "walk-right" /* States.walkRight */,
+                    "run-right" /* States.runRight */,
+                ],
+            },
+            {
+                state: "chase" /* States.chase */,
+                possibleNextStates: ["idle-with-ball" /* States.idleWithBall */],
+            },
+            {
+                state: "idle-with-ball" /* States.idleWithBall */,
+                possibleNextStates: [
+                    "lie" /* States.lie */,
+                    "walk-right" /* States.walkRight */,
+                    "walk-left" /* States.walkLeft */,
+                    "run-right" /* States.runRight */,
+                    "run-left" /* States.runLeft */,
+                ],
+            },
+        ],
+    };
+    get emoji() {
+        return '🦊';
+    }
+    get hello() {
+        return `fox says hello`;
+    }
+}
+exports.Fox = Fox;
+exports.FOX_NAMES = [
+    'Arizona',
+    'Frankie',
+    'Rosy',
+    'Cinnamon',
+    'Ginger',
+    'Todd',
+    'Rocky',
+    'Felix',
+    'Sandy',
+    'Archie',
+    'Flynn',
+    'Foxy',
+    'Elmo',
+    'Ember',
+    'Hunter',
+    'Otto',
+    'Sonic',
+    'Amber',
+    'Maroon',
+    'Spark',
+    'Sparky',
+    'Sly',
+    'Scout',
+    'Penny',
+    'Ash',
+    'Rose',
+    'Apollo',
+    'Chili',
+    'Blaze',
+    'Radish',
+    'Scarlett',
+    'Juliet',
+    'Goldie',
+    'Rooney',
+    'Paprika',
+    'Alpine',
+    'Rusty',
+    'Maple',
+    'Vixen',
+    'David',
+    'Apricot',
+    'Claire',
+    'Wilma',
+    'Copper',
+    'Pepper',
+    'Crimson',
+    'Ariel',
+    'Arvi',
+    'George',
+    'Eva',
+    'Fuzzy',
+    'Russell',
+    'Rufus',
+    'Mystic',
+    'Leopold',
+    'Scully',
+    'Ferris',
+    'Robin',
+    'Zorro',
+    'Scarlet',
+    'Comet',
+    'Rowan',
+    'Jake',
+    'Hope',
+    'Molly',
+    'Mars',
+    'Apple',
+    'Geneva',
+    'Redford',
+    'Chestnut',
+    'Evelyn',
+    'Red',
+    'Aurora',
+    'Agniya',
+    'Fitz',
+    'Crispin',
+    'Sunny',
+    'Autumn',
+    'Bridget',
+    'Ruby',
+    'Iris',
+    'Pumpkin',
+    'Rose',
+    'Rosie',
+    'Vesta',
+    'Adolf',
+    'Lava',
+    'Conan',
+    'Flame',
+    'Oswald',
+    'Tails',
+    'Chester',
+    'Jasper',
+    'Finch',
+    'Scarlet',
+    'Chewy',
+    'Finnick',
+    'Biscuit',
+    'Prince Harry',
+    'Loki',
+    'Pip',
+    'Pippin',
 ];
 
 
