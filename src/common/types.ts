@@ -7,7 +7,6 @@ export const enum PetColor {
     purple = 'purple',
     red = 'red',
     white = 'white',
-    orange = 'orange',
     null = 'null',
 }
 
@@ -95,7 +94,6 @@ export const ALL_COLORS = [
     PetColor.purple,
     PetColor.red,
     PetColor.white,
-    PetColor.orange,
     PetColor.null,
 ];
 export const ALL_SCALES = [PetSize.nano, PetSize.medium, PetSize.large];

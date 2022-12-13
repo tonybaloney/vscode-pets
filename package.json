@@ -157,8 +157,7 @@
                             "gray",
                             "purple",
                             "red",
-                            "white",
-                            "orange"
+                            "white"
                         ],
                         "default": "brown",
                         "description": "Pet color",
