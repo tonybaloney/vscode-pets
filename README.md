@@ -58,6 +58,8 @@ The forest theme was designed by [edermunizz](https://edermunizz.itch.io/free-pi
 
 [Marc Duiker](https://twitter.com/marcduiker) created the Clippy, Rocky, Zappy, rubber duck, snake, cockatiel, Ferris the crab, and Mod the dotnet bot media assets.
 
+[Elthen](https://twitter.com/pixelthen) created the fox media assets.
+
 [Karen Rustad Tölva](https://www.aldeka.net) designed the original concept of Ferris the crab.
 
 ## Thank you
