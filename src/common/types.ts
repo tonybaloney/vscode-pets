@@ -1,5 +1,6 @@
 export const enum PetColor {
     brown = 'brown',
+    lightbrown = 'lightbrown',
     black = 'black',
     green = 'green',
     yellow = 'yellow',
@@ -88,6 +89,7 @@ export const ALL_PETS = [
 export const ALL_COLORS = [
     PetColor.black,
     PetColor.brown,
+    PetColor.lightbrown,
     PetColor.green,
     PetColor.yellow,
     PetColor.gray,

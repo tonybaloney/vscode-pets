@@ -151,6 +151,7 @@
                         "type": "string",
                         "enum": [
                             "black",
+                            "lightbrown",
                             "brown",
                             "green",
                             "yellow",
