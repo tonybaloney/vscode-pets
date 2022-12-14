@@ -93,10 +93,10 @@ export class BallState {
     paused: boolean;
 
     constructor(cx: number, cy: number, vx: number, vy: number) {
-        this.cx = cx;
-        this.cy = cy;
-        this.vx = vx;
-        this.vy = vy;
+        this.cx = Math.random() * 100;
+        this.cy = Math.random() * 100;
+        this.vx = Math.random() * 10;
+        this.vy = Math.random() * 10;
         this.paused = false;
     }
 }
