@@ -2634,6 +2634,7 @@ class BallState {
     vx;
     vy;
     paused;
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     constructor(cx, cy, vx, vy) {
         this.cx = Math.random() * 100;
         this.cy = Math.random() * 100;
