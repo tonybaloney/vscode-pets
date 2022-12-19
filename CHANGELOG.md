@@ -2,6 +2,16 @@
 
 All notable changes to the "vscode-pets" extension will be documented in this file.
 
+## [1.21.0]
+
+* Add new pet chicken animations by @gulyapulya in https://github.com/tonybaloney/vscode-pets/pull/338 and by @MhouneyLH in https://github.com/tonybaloney/vscode-pets/pull/339
+* Improve French translations by @tonybaloney in https://github.com/tonybaloney/vscode-pets/pull/341
+* docs(translate): adding new l10n indonesian language by @darkterminal in https://github.com/tonybaloney/vscode-pets/pull/345
+* Add Fox Pet by @NicholasJohansan in https://github.com/tonybaloney/vscode-pets/pull/343
+* Add gray and light brown cat by @NicholasJohansan in https://github.com/tonybaloney/vscode-pets/pull/347
+* Fix running graphics in red dog by @Harry-Hopkinson in https://github.com/tonybaloney/vscode-pets/pull/352
+* Improve German translations by Peter Lohse in https://github.com/tonybaloney/vscode-pets/pull/354
+
 ## [1.20.0]
 
 * Officially support vscode.dev
