@@ -11,3 +11,4 @@ src/**
 .build-out/
 coverage/
 docs/
+node_modules

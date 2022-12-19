@@ -2,6 +2,46 @@
 
 All notable changes to the "vscode-pets" extension will be documented in this file.
 
+## [1.21.0]
+
+* Add new pet chicken animations by @gulyapulya in https://github.com/tonybaloney/vscode-pets/pull/338 and by @MhouneyLH in https://github.com/tonybaloney/vscode-pets/pull/339
+* Improve French translations by @tonybaloney in https://github.com/tonybaloney/vscode-pets/pull/341
+* docs(translate): adding new l10n indonesian language by @darkterminal in https://github.com/tonybaloney/vscode-pets/pull/345
+* Add Fox Pet by @NicholasJohansan in https://github.com/tonybaloney/vscode-pets/pull/343
+* Add gray and light brown cat by @NicholasJohansan in https://github.com/tonybaloney/vscode-pets/pull/347
+* Fix running graphics in red dog by @Harry-Hopkinson in https://github.com/tonybaloney/vscode-pets/pull/352
+* Improve German translations by Peter Lohse in https://github.com/tonybaloney/vscode-pets/pull/354
+
+## [1.20.0]
+
+* Officially support vscode.dev
+
+* Exclusively use extension URIs and not paths. by @tonybaloney in https://github.com/tonybaloney/vscode-pets/pull/336
+* Ignore node_modules from bundled VSIX by @tonybaloney in https://github.com/tonybaloney/vscode-pets/pull/337
+
+
+## [1.19.1]
+
+* Add Turkish language by Alper Karaca in https://github.com/tonybaloney/vscode-pets/pull/331
+* Fix black and white cat glitching on jump and landing by @tonybaloney in https://github.com/tonybaloney/vscode-pets/pull/316
+* Import/Export pets by @Harry-Hopkinson in https://github.com/tonybaloney/vscode-pets/pull/308
+* Add Ukrainian language by @andrii-bodnar  in https://github.com/tonybaloney/vscode-pets/pull/321
+* Added Red Dog w/Fire by @EricEnergy in https://github.com/tonybaloney/vscode-pets/pull/283
+
+### Minor changes
+
+* Setup Crowdin by @andrii-bodnar in https://github.com/tonybaloney/vscode-pets/pull/312
+* Improve Crowdin integration by @andrii-bodnar in https://github.com/tonybaloney/vscode-pets/pull/320
+* fix chinese translation by @qiyang13 in https://github.com/tonybaloney/vscode-pets/pull/322
+* Enable translations upload from Repo to Crowdin by @andrii-bodnar in https://github.com/tonybaloney/vscode-pets/pull/327
+* New Crowdin translations by @tonybaloney in https://github.com/tonybaloney/vscode-pets/pull/326
+* Add the translation contribution guideline by @andrii-bodnar in https://github.com/tonybaloney/vscode-pets/pull/328
+* Add step to run lint before raising a PR by @deepesh-verma in https://github.com/tonybaloney/vscode-pets/pull/334
+
+## [1.19.0]
+
+* Vscode.dev support
+
 ## [1.18.0]
 
 * Fixed cats sizes when ball caught by @gulyapulya in https://github.com/tonybaloney/vscode-pets/pull/313
