@@ -24,6 +24,7 @@ const rubberduck_1 = __webpack_require__(/*! ../panel/pets/rubberduck */ "./src/
 const snake_1 = __webpack_require__(/*! ../panel/pets/snake */ "./src/panel/pets/snake.ts");
 const totoro_1 = __webpack_require__(/*! ../panel/pets/totoro */ "./src/panel/pets/totoro.ts");
 const zappy_1 = __webpack_require__(/*! ../panel/pets/zappy */ "./src/panel/pets/zappy.ts");
+const rat_1 = __webpack_require__(/*! ../panel/pets/rat */ "./src/panel/pets/rat.ts");
 function randomName(type) {
     const collection = {
         ["cat" /* PetType.cat */]: cat_1.CAT_NAMES,
@@ -39,6 +40,7 @@ function randomName(type) {
         ["zappy" /* PetType.zappy */]: zappy_1.ZAPPY_NAMES,
         ["rocky" /* PetType.rocky */]: rocky_1.ROCKY_NAMES,
         ["cockatiel" /* PetType.cockatiel */]: cockatiel_1.COCKATIEL_NAMES,
+        ["rat" /* PetType.rat */]: rat_1.RAT_NAMES,
     }[type] ?? cat_1.CAT_NAMES;
     return (collection[Math.floor(Math.random() * collection.length)] ?? 'Unknown');
 }
@@ -801,6 +803,7 @@ const rubberduck_1 = __webpack_require__(/*! ./pets/rubberduck */ "./src/panel/p
 const snake_1 = __webpack_require__(/*! ./pets/snake */ "./src/panel/pets/snake.ts");
 const totoro_1 = __webpack_require__(/*! ./pets/totoro */ "./src/panel/pets/totoro.ts");
 const zappy_1 = __webpack_require__(/*! ./pets/zappy */ "./src/panel/pets/zappy.ts");
+const rat_1 = __webpack_require__(/*! ./pets/rat */ "./src/panel/pets/rat.ts");
 class PetElement {
     el;
     collision;
@@ -928,6 +931,8 @@ function createPet(petType, el, collision, speech, size, left, bottom, petRoot, 
             return new rocky_1.Rocky(...standardPetArguments, 0 /* PetSpeed.still */);
         case "cockatiel" /* PetType.cockatiel */:
             return new cockatiel_1.Cockatiel(...standardPetArguments, 3 /* PetSpeed.normal */);
+        case "rat" /* PetType.rat */:
+            return new rat_1.Rat(...standardPetArguments, 3 /* PetSpeed.normal */);
         default:
             throw new InvalidPetException("Pet type doesn't exist");
     }
@@ -961,6 +966,8 @@ function availableColors(petType) {
             return rocky_1.Rocky.possibleColors;
         case "cockatiel" /* PetType.cockatiel */:
             return cockatiel_1.Cockatiel.possibleColors;
+        case "rat" /* PetType.rat */:
+            return rat_1.Rat.possibleColors;
         default:
             throw new InvalidPetException("Pet type doesn't exist");
     }
@@ -2103,7 +2110,7 @@ exports.MOD_NAMES = [
 
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.CAT_NAMES = exports.Rat = void 0;
+exports.RAT_NAMES = exports.Rat = void 0;
 const basepettype_1 = __webpack_require__(/*! ../basepettype */ "./src/panel/basepettype.ts");
 class Rat extends basepettype_1.BasePetType {
     label = 'rat';
@@ -2127,7 +2134,6 @@ class Rat extends basepettype_1.BasePetType {
                 state: "walk-left" /* States.walkLeft */,
                 possibleNextStates: [
                     "sit-idle" /* States.sitIdle */,
-                    "climb-wall-left" /* States.climbWallLeft */,
                     "walk-right" /* States.walkRight */,
                     "run-right" /* States.runRight */,
                 ],
@@ -2136,19 +2142,18 @@ class Rat extends basepettype_1.BasePetType {
                 state: "run-left" /* States.runLeft */,
                 possibleNextStates: [
                     "sit-idle" /* States.sitIdle */,
-                    "climb-wall-left" /* States.climbWallLeft */,
                     "walk-right" /* States.walkRight */,
                     "run-right" /* States.runRight */,
                 ],
             },
-            {
-                state: "climb-wall-left" /* States.climbWallLeft */,
-                possibleNextStates: ["wall-hang-left" /* States.wallHangLeft */],
+            /* {
+                state: States.climbWallLeft,
+                possibleNextStates: [States.wallHangLeft],
             },
             {
-                state: "wall-hang-left" /* States.wallHangLeft */,
-                possibleNextStates: ["jump-down-left" /* States.jumpDownLeft */],
-            },
+                state: States.wallHangLeft,
+                possibleNextStates: [States.jumpDownLeft],
+            }, */
             {
                 state: "jump-down-left" /* States.jumpDownLeft */,
                 possibleNextStates: ["land" /* States.land */],
@@ -2184,7 +2189,7 @@ class Rat extends basepettype_1.BasePetType {
     }
 }
 exports.Rat = Rat;
-exports.CAT_NAMES = [
+exports.RAT_NAMES = [
     'Bella',
     'Charlie',
     'Molly',
