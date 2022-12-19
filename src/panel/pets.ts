@@ -1,9 +1,11 @@
 import { PetColor, PetSize, PetSpeed, PetType } from '../common/types';
 import { Cat } from './pets/cat';
+import { Chicken } from './pets/chicken';
 import { Clippy } from './pets/clippy';
 import { Cockatiel } from './pets/cockatiel';
 import { Crab } from './pets/crab';
 import { Dog } from './pets/dog';
+import { Fox } from './pets/fox';
 import { Mod } from './pets/mod';
 import { Rocky } from './pets/rocky';
 import { RubberDuck } from './pets/rubberduck';
@@ -173,8 +175,12 @@ export function createPet(
     switch (petType) {
         case PetType.cat:
             return new Cat(...standardPetArguments, PetSpeed.normal);
+        case PetType.chicken:
+            return new Chicken(...standardPetArguments, PetSpeed.normal);
         case PetType.dog:
             return new Dog(...standardPetArguments, PetSpeed.normal);
+        case PetType.fox:
+            return new Fox(...standardPetArguments, PetSpeed.fast);
         case PetType.crab:
             return new Crab(...standardPetArguments, PetSpeed.slow);
         case PetType.clippy:
@@ -204,8 +210,12 @@ export function availableColors(petType: PetType): PetColor[] {
     switch (petType) {
         case PetType.cat:
             return Cat.possibleColors;
+        case PetType.chicken:
+            return Chicken.possibleColors;
         case PetType.dog:
             return Dog.possibleColors;
+        case PetType.fox:
+            return Fox.possibleColors;
         case PetType.crab:
             return Crab.possibleColors;
         case PetType.clippy:
