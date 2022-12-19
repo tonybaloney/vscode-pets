@@ -10,7 +10,10 @@ export class Rat extends BasePetType {
         sequenceStates: [
             {
                 state: States.sitIdle,
-                possibleNextStates: [States.walkRight, States.runRight],
+                possibleNextStates: [
+                    States.walkRight,
+                    States.runRight
+                ],
             },
             {
                 state: States.walkRight,
@@ -24,34 +27,12 @@ export class Rat extends BasePetType {
                 state: States.walkLeft,
                 possibleNextStates: [
                     States.sitIdle,
-                    // States.climbWallLeft,
                     States.walkRight,
                     States.runRight,
                 ],
             },
             {
                 state: States.runLeft,
-                possibleNextStates: [
-                    States.sitIdle,
-                    // States.climbWallLeft,
-                    States.walkRight,
-                    States.runRight,
-                ],
-            },
-            /* {
-                state: States.climbWallLeft,
-                possibleNextStates: [States.wallHangLeft],
-            },
-            {
-                state: States.wallHangLeft,
-                possibleNextStates: [States.jumpDownLeft],
-            }, */
-            {
-                state: States.jumpDownLeft,
-                possibleNextStates: [States.land],
-            },
-            {
-                state: States.land,
                 possibleNextStates: [
                     States.sitIdle,
                     States.walkRight,
@@ -82,6 +63,7 @@ export class Rat extends BasePetType {
 }
 
 export const RAT_NAMES: ReadonlyArray<string> = [
+    // from cat names
     'Bella',
     'Charlie',
     'Molly',
@@ -174,7 +156,6 @@ export const RAT_NAMES: ReadonlyArray<string> = [
     'Louis',
     'Scout',
     'Cleo',
-    'Purfect',
     'Spot',
     'Bolt',
     'Julia',
@@ -201,4 +182,25 @@ export const RAT_NAMES: ReadonlyArray<string> = [
     'Carlotta',
     'Felix',
     'Duchess',
+    // Breaking Bad characters
+    'Walter',
+    'Jesse',
+    'Hank',
+    'Gus',
+    'Mike',
+    'Saul',
+    'Hector',
+    'Tuco',
+    // cosmos related names
+    'Jupiter',
+    'Venus',
+    'Apollo',
+    // gemstones
+    'Alexandrite',
+    'Amazonite',
+    'Flint',
+    'Jett',
+    'Kyanite',
+    'Mica',
+    'Micah',
 ];

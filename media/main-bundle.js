@@ -2120,7 +2120,10 @@ class Rat extends basepettype_1.BasePetType {
         sequenceStates: [
             {
                 state: "sit-idle" /* States.sitIdle */,
-                possibleNextStates: ["walk-right" /* States.walkRight */, "run-right" /* States.runRight */],
+                possibleNextStates: [
+                    "walk-right" /* States.walkRight */,
+                    "run-right" /* States.runRight */
+                ],
             },
             {
                 state: "walk-right" /* States.walkRight */,
@@ -2140,26 +2143,6 @@ class Rat extends basepettype_1.BasePetType {
             },
             {
                 state: "run-left" /* States.runLeft */,
-                possibleNextStates: [
-                    "sit-idle" /* States.sitIdle */,
-                    "walk-right" /* States.walkRight */,
-                    "run-right" /* States.runRight */,
-                ],
-            },
-            /* {
-                state: States.climbWallLeft,
-                possibleNextStates: [States.wallHangLeft],
-            },
-            {
-                state: States.wallHangLeft,
-                possibleNextStates: [States.jumpDownLeft],
-            }, */
-            {
-                state: "jump-down-left" /* States.jumpDownLeft */,
-                possibleNextStates: ["land" /* States.land */],
-            },
-            {
-                state: "land" /* States.land */,
                 possibleNextStates: [
                     "sit-idle" /* States.sitIdle */,
                     "walk-right" /* States.walkRight */,
@@ -2190,6 +2173,7 @@ class Rat extends basepettype_1.BasePetType {
 }
 exports.Rat = Rat;
 exports.RAT_NAMES = [
+    // from cat names
     'Bella',
     'Charlie',
     'Molly',
@@ -2282,7 +2266,6 @@ exports.RAT_NAMES = [
     'Louis',
     'Scout',
     'Cleo',
-    'Purfect',
     'Spot',
     'Bolt',
     'Julia',
@@ -2309,6 +2292,27 @@ exports.RAT_NAMES = [
     'Carlotta',
     'Felix',
     'Duchess',
+    // Breaking Bad characters
+    'Walter',
+    'Jesse',
+    'Hank',
+    'Gus',
+    'Mike',
+    'Saul',
+    'Hector',
+    'Tuco',
+    // cosmos related names
+    'Jupiter',
+    'Venus',
+    'Apollo',
+    // gemstones
+    'Alexandrite',
+    'Amazonite',
+    'Flint',
+    'Jett',
+    'Kyanite',
+    'Mica',
+    'Micah',
 ];
 
 
