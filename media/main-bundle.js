@@ -2114,7 +2114,7 @@ exports.RAT_NAMES = exports.Rat = void 0;
 const basepettype_1 = __webpack_require__(/*! ../basepettype */ "./src/panel/basepettype.ts");
 class Rat extends basepettype_1.BasePetType {
     label = 'rat';
-    static possibleColors = ["black" /* PetColor.black */];
+    static possibleColors = ["gray" /* PetColor.gray */, "white" /* PetColor.white */, "brown" /* PetColor.brown */];
     sequence = {
         startingState: "sit-idle" /* States.sitIdle */,
         sequenceStates: [
