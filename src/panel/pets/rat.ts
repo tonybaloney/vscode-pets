@@ -10,10 +10,7 @@ export class Rat extends BasePetType {
         sequenceStates: [
             {
                 state: States.sitIdle,
-                possibleNextStates: [
-                    States.walkRight,
-                    States.runRight
-                ],
+                possibleNextStates: [States.walkRight, States.runRight],
             },
             {
                 state: States.walkRight,
