@@ -238,7 +238,8 @@
         "lint:fix": "eslint src --ext ts --fix && prettier --write src",
         "test": "node ./out/test/runTest.js",
         "test:coverage": "COVERAGE=1 node ./out/test/runTest.js",
-        "test:web": "vscode-test-web --browserType=chromium --extensionDevelopmentPath=. --extensionTestsPath=dist/web/test/suite/index.js"
+        "test:web": "vscode-test-web --browserType=chromium --extensionDevelopmentPath=. --extensionTestsPath=dist/web/test/suite/index.js",
+        "test:gifs": "node ./out/test/gifs.js"
     },
     "devDependencies": {
         "@rbarilani/remove-source-map-url-webpack-plugin": "^1.1.0",
