@@ -56,7 +56,7 @@ export class Chicken extends BasePetType {
         return '🐔';
     }
     get hello(): string {
-        return ` Puk Puk Pukaaak - just let me lay my leg. 🥚`;
+        return ` Puk Puk Pukaaak - just let me lay my egg. 🥚`;
     }
 }
 
