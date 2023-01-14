@@ -100,6 +100,7 @@ function checkGifFilenames(folder: string) {
                 const filePath = `${folder}/${pet}/${filename}`;
                 if (!fs.existsSync(filePath)) {
                     console.error(`File "${filePath}" does not exist.`);
+                    return false;
                 } else {
                     console.log(`File "${filePath}" exists.`);
                 }
