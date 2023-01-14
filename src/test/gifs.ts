@@ -1,71 +1,111 @@
 import * as fs from 'fs';
 
-const pets = [
-    'cat',
-    'chicken',
-    'clippy',
-    'cockatiel',
-    'crab',
-    'dog',
-    'fox',
-    'mod',
-    'rocky',
-    'rubber-duck',
-    'snake',
-    'totoro',
-    'zappy',
-];
-
-const colors = [
-    'red',
-    'white',
-    'purple',
-    'gray',
-    'yellow',
-    'green',
-    'black',
-    'brown',
-    'lightbrown',
-];
-const states = [
-    'idle',
-    'run',
-    'swipe',
-    'land',
-    'walk',
-    'walk_fast',
-    'wallclimb',
-    'wallgrab',
-    'with_ball',
-    'fall_from_grab',
-    'jump',
-    'lie',
-];
-
-const fps = ['8fps'];
-
-const gifFilenamePattern = new RegExp(
-    `^(${colors.join('|')})_(${states.join('|')})_(${fps.join('|')}).gif$`,
-);
+const pets: { [key: string]: { colors: string[]; states: string[] } } = {
+    cat: {
+        colors: ['black', 'brown', 'gray', 'lightbrown', 'white'],
+        states: [
+            'fall_from_grab',
+            'idle',
+            'land',
+            'run',
+            'swipe',
+            'walk',
+            'walk_fast',
+            'wallclimb',
+            'wallgrab',
+            'with_ball',
+        ],
+    },
+    chicken: {
+        colors: ['white'],
+        states: ['idle', 'run', 'swipe', 'walk', 'walk_fast', 'with_ball'],
+    },
+    clippy: {
+        colors: ['black', 'brown', 'green', 'yellow'],
+        states: ['idle', 'run', 'swipe', 'walk', 'walk_fast', 'with_ball'],
+    },
+    cockatiel: {
+        colors: ['gray'],
+        states: ['idle', 'run', 'swipe', 'walk', 'walk_fast', 'with_ball'],
+    },
+    crab: {
+        colors: ['red'],
+        states: ['idle', 'run', 'swipe', 'walk', 'walk_fast', 'with_ball'],
+    },
+    dog: {
+        colors: ['black', 'brown', 'red', 'white'],
+        states: [
+            'idle',
+            'lie',
+            'run',
+            'swipe',
+            'walk',
+            'walk_fast',
+            'with_ball',
+        ],
+    },
+    fox: {
+        colors: ['red', 'white'],
+        states: ['idle', 'run', 'swipe', 'walk', 'walk_fast', 'with_ball'],
+    },
+    mod: {
+        colors: ['purple'],
+        states: ['idle', 'run', 'swipe', 'walk', 'walk_fast', 'with_ball'],
+    },
+    rocky: {
+        colors: ['gray'],
+        states: ['idle', 'run', 'swipe', 'walk', 'walk_fast'],
+    },
+    'rubber-duck': {
+        colors: ['yellow'],
+        states: ['idle', 'run', 'swipe', 'walk', 'walk_fast', 'with_ball'],
+    },
+    snake: {
+        colors: ['green'],
+        states: ['idle', 'run', 'swipe', 'walk', 'walk_fast', 'with_ball'],
+    },
+    totoro: {
+        colors: ['gray'],
+        states: [
+            'fall_from_grab',
+            'idle',
+            'jump',
+            'land',
+            'lie',
+            'run',
+            'swipe',
+            'walk',
+            'wallclimb',
+            'wallgrab',
+            'with_ball',
+        ],
+    },
+    zappy: {
+        colors: ['yellow'],
+        states: ['idle', 'run', 'swipe', 'walk', 'walk_fast', 'with_ball'],
+    },
+};
 
 function checkGifFilenames(folder: string) {
-    const filenames = fs.readdirSync(folder);
-    filenames.forEach((filename) => {
-        if (pets.includes(filename)) {
-            const petFolder = `${folder}/${filename}`;
-            const petFilenames = fs.readdirSync(petFolder);
-            petFilenames.forEach((petFilename) => {
-                if (
-                    petFilename.endsWith('.gif') &&
-                    !gifFilenamePattern.test(petFilename)
-                ) {
-                    console.error(
-                        `Filename "${petFilename}" does not match pattern in folder ${petFolder}. The pattern should be petColor_petState_8fps.gif.`,
-                    );
+    for (const pet in pets) {
+        const allowedColors = pets[pet].colors;
+        const allowedStates = pets[pet].states;
+        if (!allowedColors) {
+            console.error(`No colors found for pet "${pet}"`);
+            return;
+        }
+        allowedColors.forEach((color) => {
+            allowedStates.forEach((state) => {
+                const filename = `${color}_${state}_8fps.gif`;
+                const filePath = `${folder}/${pet}/${filename}`;
+                if (!fs.existsSync(filePath)) {
+                    console.error(`File "${filePath}" does not exist.`);
+                } else {
+                    console.log(`File "${filePath}" exists.`);
                 }
             });
-        }
-    });
+        });
+    }
 }
 
 const mediaFolder = './media';
