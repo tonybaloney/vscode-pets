@@ -1270,7 +1270,7 @@ class Chicken extends basepettype_1.BasePetType {
         return '🐔';
     }
     get hello() {
-        return ` Puk Puk Pukaaak - just let me lay my leg. 🥚`;
+        return ` Puk Puk Pukaaak - just let me lay my egg. 🥚`;
     }
 }
 exports.Chicken = Chicken;
