@@ -189,6 +189,7 @@
                         "type": "string",
                         "enum": [
                             "nano",
+                            "small",
                             "medium",
                             "large"
                         ],
