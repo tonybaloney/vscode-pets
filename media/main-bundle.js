@@ -24,6 +24,7 @@ const rubberduck_1 = __webpack_require__(/*! ../panel/pets/rubberduck */ "./src/
 const snake_1 = __webpack_require__(/*! ../panel/pets/snake */ "./src/panel/pets/snake.ts");
 const totoro_1 = __webpack_require__(/*! ../panel/pets/totoro */ "./src/panel/pets/totoro.ts");
 const zappy_1 = __webpack_require__(/*! ../panel/pets/zappy */ "./src/panel/pets/zappy.ts");
+const rat_1 = __webpack_require__(/*! ../panel/pets/rat */ "./src/panel/pets/rat.ts");
 function randomName(type) {
     const collection = {
         ["cat" /* PetType.cat */]: cat_1.CAT_NAMES,
@@ -39,6 +40,7 @@ function randomName(type) {
         ["zappy" /* PetType.zappy */]: zappy_1.ZAPPY_NAMES,
         ["rocky" /* PetType.rocky */]: rocky_1.ROCKY_NAMES,
         ["cockatiel" /* PetType.cockatiel */]: cockatiel_1.COCKATIEL_NAMES,
+        ["rat" /* PetType.rat */]: rat_1.RAT_NAMES,
     }[type] ?? cat_1.CAT_NAMES;
     return (collection[Math.floor(Math.random() * collection.length)] ?? 'Unknown');
 }
@@ -813,6 +815,7 @@ const rubberduck_1 = __webpack_require__(/*! ./pets/rubberduck */ "./src/panel/p
 const snake_1 = __webpack_require__(/*! ./pets/snake */ "./src/panel/pets/snake.ts");
 const totoro_1 = __webpack_require__(/*! ./pets/totoro */ "./src/panel/pets/totoro.ts");
 const zappy_1 = __webpack_require__(/*! ./pets/zappy */ "./src/panel/pets/zappy.ts");
+const rat_1 = __webpack_require__(/*! ./pets/rat */ "./src/panel/pets/rat.ts");
 class PetElement {
     el;
     collision;
@@ -940,6 +943,8 @@ function createPet(petType, el, collision, speech, size, left, bottom, petRoot, 
             return new rocky_1.Rocky(...standardPetArguments, 0 /* PetSpeed.still */);
         case "cockatiel" /* PetType.cockatiel */:
             return new cockatiel_1.Cockatiel(...standardPetArguments, 3 /* PetSpeed.normal */);
+        case "rat" /* PetType.rat */:
+            return new rat_1.Rat(...standardPetArguments, 3 /* PetSpeed.normal */);
         default:
             throw new InvalidPetException("Pet type doesn't exist");
     }
@@ -973,6 +978,8 @@ function availableColors(petType) {
             return rocky_1.Rocky.possibleColors;
         case "cockatiel" /* PetType.cockatiel */:
             return cockatiel_1.Cockatiel.possibleColors;
+        case "rat" /* PetType.rat */:
+            return rat_1.Rat.possibleColors;
         default:
             throw new InvalidPetException("Pet type doesn't exist");
     }
@@ -2102,6 +2109,178 @@ exports.MOD_NAMES = [
     'Bot',
     'Purple Pal',
     'Ro Bot',
+];
+
+
+/***/ }),
+
+/***/ "./src/panel/pets/rat.ts":
+/*!*******************************!*\
+  !*** ./src/panel/pets/rat.ts ***!
+  \*******************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.RAT_NAMES = exports.Rat = void 0;
+const basepettype_1 = __webpack_require__(/*! ../basepettype */ "./src/panel/basepettype.ts");
+class Rat extends basepettype_1.BasePetType {
+    label = 'rat';
+    static possibleColors = ["gray" /* PetColor.gray */, "white" /* PetColor.white */, "brown" /* PetColor.brown */];
+    sequence = {
+        startingState: "sit-idle" /* States.sitIdle */,
+        sequenceStates: [
+            {
+                state: "sit-idle" /* States.sitIdle */,
+                possibleNextStates: ["walk-right" /* States.walkRight */, "run-right" /* States.runRight */],
+            },
+            {
+                state: "walk-right" /* States.walkRight */,
+                possibleNextStates: ["walk-left" /* States.walkLeft */, "run-left" /* States.runLeft */],
+            },
+            {
+                state: "run-right" /* States.runRight */,
+                possibleNextStates: ["walk-left" /* States.walkLeft */, "run-left" /* States.runLeft */],
+            },
+            {
+                state: "walk-left" /* States.walkLeft */,
+                possibleNextStates: [
+                    "sit-idle" /* States.sitIdle */,
+                    "walk-right" /* States.walkRight */,
+                    "run-right" /* States.runRight */,
+                ],
+            },
+            {
+                state: "run-left" /* States.runLeft */,
+                possibleNextStates: [
+                    "sit-idle" /* States.sitIdle */,
+                    "walk-right" /* States.walkRight */,
+                    "run-right" /* States.runRight */,
+                ],
+            },
+            {
+                state: "chase" /* States.chase */,
+                possibleNextStates: ["idle-with-ball" /* States.idleWithBall */],
+            },
+            {
+                state: "idle-with-ball" /* States.idleWithBall */,
+                possibleNextStates: [
+                    "walk-right" /* States.walkRight */,
+                    "walk-left" /* States.walkLeft */,
+                    "run-left" /* States.runLeft */,
+                    "run-right" /* States.runRight */,
+                ],
+            },
+        ],
+    };
+    get emoji() {
+        return '🐀';
+    }
+    get hello() {
+        return `Rat noises...`;
+    }
+}
+exports.Rat = Rat;
+exports.RAT_NAMES = [
+    'Molly',
+    'Coco',
+    'Ruby',
+    'Lucy',
+    'Milo',
+    'Daisy',
+    'Archie',
+    'Ollie',
+    'Rosie',
+    'Lola',
+    'Frankie',
+    'Roxy',
+    'Poppy',
+    'Luna',
+    'Millie',
+    'Rocky',
+    'Alfie',
+    'Hugo',
+    'Pepper',
+    'Lily',
+    'Tilly',
+    'Leo',
+    'Maggie',
+    'Mia',
+    'Chloe',
+    'Lulu',
+    'Missy',
+    'Jasper',
+    'Billy',
+    'Nala',
+    'Ziggy',
+    'Zoe',
+    'Penny',
+    'Milly',
+    'Holly',
+    'Henry',
+    'Lilly',
+    'Pippa',
+    'Shadow',
+    'Lucky',
+    'Duke',
+    'Jessie',
+    'Cookie',
+    'Bruce',
+    'Jax',
+    'Rex',
+    'Louie',
+    'Jet',
+    'Banjo',
+    'Beau',
+    'Ella',
+    'Ralph',
+    'Loki',
+    'Lexi',
+    'Chilli',
+    'Billie',
+    'Louis',
+    'Scout',
+    'Cleo',
+    'Spot',
+    'Bolt',
+    'Ginger',
+    'Daisy',
+    'Amelia',
+    'Oliver',
+    'Ghost',
+    'Midnight',
+    'Pumpkin',
+    'Shadow',
+    'Binx',
+    'Riley',
+    'Lenny',
+    'Mango',
+    'Boo',
+    'Botas',
+    'Romeo',
+    'Simon',
+    'Mimmo',
+    'Carlotta',
+    'Felix',
+    'Duchess',
+    'Walter',
+    'Jesse',
+    'Hank',
+    'Gus',
+    'Mike',
+    'Saul',
+    'Hector',
+    'Tuco',
+    'Jupiter',
+    'Venus',
+    'Apollo',
+    'Alexandrite',
+    'Amazonite',
+    'Flint',
+    'Jett',
+    'Kyanite',
+    'Mica',
+    'Micah',
 ];
 
 
