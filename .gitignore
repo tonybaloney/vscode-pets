@@ -7,3 +7,6 @@ node_modules
 coverage/
 .nyc_output/
 .idea/
+media/main-bundle.js
+.DS_Store
+
