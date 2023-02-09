@@ -35,6 +35,8 @@ var petCounter: number;
 function calculateBallRadius(size: PetSize): number {
     if (size === PetSize.nano) {
         return 2;
+    } else if (size === PetSize.small) {
+        return 3;
     } else if (size === PetSize.medium) {
         return 4;
     } else if (size === PetSize.large) {
@@ -48,6 +50,8 @@ function calculateFloor(size: PetSize, theme: Theme): number {
     switch (theme) {
         case Theme.forest:
             switch (size) {
+                case PetSize.small:
+                    return 30;
                 case PetSize.medium:
                     return 40;
                 case PetSize.large:
@@ -58,6 +62,8 @@ function calculateFloor(size: PetSize, theme: Theme): number {
             }
         case Theme.castle:
             switch (size) {
+                case PetSize.small:
+                    return 60;
                 case PetSize.medium:
                     return 80;
                 case PetSize.large:
@@ -68,6 +74,8 @@ function calculateFloor(size: PetSize, theme: Theme): number {
             }
         case Theme.beach:
             switch (size) {
+                case PetSize.small:
+                    return 60;
                 case PetSize.medium:
                     return 80;
                 case PetSize.large:
