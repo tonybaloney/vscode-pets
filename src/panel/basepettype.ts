@@ -108,6 +108,8 @@ export abstract class BasePetType implements IPetType {
     calculateSpriteWidth(size: PetSize): number {
         if (size === PetSize.nano) {
             return 30;
+        } else if (size === PetSize.small) {
+            return 40;
         } else if (size === PetSize.medium) {
             return 55;
         } else if (size === PetSize.large) {

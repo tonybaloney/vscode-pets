@@ -40,6 +40,7 @@ export const enum PetSpeed {
 
 export const enum PetSize {
     nano = 'nano',
+    small = 'small',
     medium = 'medium',
     large = 'large',
 }
@@ -100,5 +101,10 @@ export const ALL_COLORS = [
     PetColor.white,
     PetColor.null,
 ];
-export const ALL_SCALES = [PetSize.nano, PetSize.medium, PetSize.large];
+export const ALL_SCALES = [
+    PetSize.nano,
+    PetSize.small,
+    PetSize.medium,
+    PetSize.large,
+];
 export const ALL_THEMES = [Theme.none, Theme.forest, Theme.castle, Theme.beach];
