@@ -2,6 +2,21 @@
 
 All notable changes to the "vscode-pets" extension will be documented in this file.
 
+## [1.22.0]
+
+* Improve Japanese translation by @tonybaloney in https://github.com/tonybaloney/vscode-pets/pull/356
+* Improve Russian translations by @tonybaloney in https://github.com/tonybaloney/vscode-pets/pull/359
+* Improve Italian translations by @tonybaloney in https://github.com/tonybaloney/vscode-pets/pull/361
+* Improve German translations by @tonybaloney in https://github.com/tonybaloney/vscode-pets/pull/362
+* Verify Gifs Filename Linter by @Harry-Hopkinson in https://github.com/tonybaloney/vscode-pets/pull/366
+* Improve Spanish and Ukrainian translations by @tonybaloney in https://github.com/tonybaloney/vscode-pets/pull/369
+* Fix typo in chicken message by @ming-00 in https://github.com/tonybaloney/vscode-pets/pull/370
+* Add Swedish translation by @ming-00 in https://github.com/tonybaloney/vscode-pets/pull/371
+* New Crowdin translations by @tonybaloney in https://github.com/tonybaloney/vscode-pets/pull/372
+* New Crowdin translations by @tonybaloney in https://github.com/tonybaloney/vscode-pets/pull/380
+* Add pet size small by @AndreasWintherMoen in https://github.com/tonybaloney/vscode-pets/pull/382
+* Rat pet by @piotrszleg in https://github.com/tonybaloney/vscode-pets/pull/332
+
 ## [1.21.0]
 
 * Add new pet chicken animations by @gulyapulya in https://github.com/tonybaloney/vscode-pets/pull/338 and by @MhouneyLH in https://github.com/tonybaloney/vscode-pets/pull/339
