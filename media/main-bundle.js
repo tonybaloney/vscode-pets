@@ -133,6 +133,9 @@ class BasePetType {
         if (size === "nano" /* PetSize.nano */) {
             return 30;
         }
+        else if (size === "small" /* PetSize.small */) {
+            return 40;
+        }
         else if (size === "medium" /* PetSize.medium */) {
             return 55;
         }
@@ -344,6 +347,9 @@ function calculateBallRadius(size) {
     if (size === "nano" /* PetSize.nano */) {
         return 2;
     }
+    else if (size === "small" /* PetSize.small */) {
+        return 3;
+    }
     else if (size === "medium" /* PetSize.medium */) {
         return 4;
     }
@@ -358,6 +364,8 @@ function calculateFloor(size, theme) {
     switch (theme) {
         case "forest" /* Theme.forest */:
             switch (size) {
+                case "small" /* PetSize.small */:
+                    return 30;
                 case "medium" /* PetSize.medium */:
                     return 40;
                 case "large" /* PetSize.large */:
@@ -368,6 +376,8 @@ function calculateFloor(size, theme) {
             }
         case "castle" /* Theme.castle */:
             switch (size) {
+                case "small" /* PetSize.small */:
+                    return 60;
                 case "medium" /* PetSize.medium */:
                     return 80;
                 case "large" /* PetSize.large */:
@@ -378,6 +388,8 @@ function calculateFloor(size, theme) {
             }
         case "beach" /* Theme.beach */:
             switch (size) {
+                case "small" /* PetSize.small */:
+                    return 60;
                 case "medium" /* PetSize.medium */:
                     return 80;
                 case "large" /* PetSize.large */:

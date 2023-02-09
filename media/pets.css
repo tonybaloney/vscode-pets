@@ -152,6 +152,10 @@ img.pet {
 	font-size: 9px;
 }
 
+.bubble-small {
+	font-size: 10px;
+}
+
 .bubble-medium {
 	font-size: 12px;
 }
@@ -169,6 +173,7 @@ img.pet {
 }
 
 .bubble-nano:before,
+.bubble-small:before,
 .bubble-medium:before,
 .bubble-large:before {
 	left: 10px;
@@ -178,6 +183,7 @@ img.pet {
 }
 
 .bubble-nano:after,
+.bubble-small:after,
 .bubble-medium:after,
 .bubble-large:after {
 	left: 12px;

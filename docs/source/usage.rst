@@ -30,7 +30,7 @@ Open the setting panel with `Ctrl+,` on Windows/Linux or `Cmd(⌘)+,` on MacOS. 
 Set a default color, size, pet type, position, and theme when you open a Pet Panel.
 
 * Pet Color: black, brown, green, yellow, gray, purple, red, white
-* Pet Size: nano, medium, large
+* Pet Size: nano, small, medium, large
 * Pet Type: cat, chicken, crab, clippy, cockatiel, dog, mod, rocky, rubber duck, snake, totoro, zappy
 
 .. image:: _static/screenshot-2.gif
