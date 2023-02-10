@@ -366,24 +366,50 @@ export function activate(context: vscode.ExtensionContext) {
     );
 
     context.subscriptions.push(
-        vscode.commands.registerCommand(
-            'vscode-pets.throwBallWithMouse',
-            () => {
-                const config = vscode.workspace.getConfiguration('vscode-pets');
-                config.update(
-                    'throwBallWithMouse',
-                    !getThrowWithMouseConfiguration(),
-                    vscode.ConfigurationTarget.Global,
-                );
+        vscode.commands.registerCommand('vscode-pets.throw-with-mouse', () => {
+            const config = vscode.workspace.getConfiguration('vscode-pets');
+            // config.update(
+            //     'throwBallWithMouse',
+            //     !getThrowWithMouseConfiguration(),
+            //     vscode.ConfigurationTarget.Global,
+            // );
 
-                vscode.window.showInformationMessage(
-                    vscode.l10n.t(
-                        'Throw ball with mouse is now {0}.',
-                        getThrowWithMouseConfiguration() ? 'off' : 'on',
-                    ),
-                );
-            },
-        ),
+            // vscode.window.showInformationMessage(
+            //     vscode.l10n.t(
+            //         'Throw ball with mouse is now {0}.',
+            //         getThrowWithMouseConfiguration() ? 'off' : 'on',
+            //     ),
+            // );
+            // open a quick pick with the options
+            vscode.window
+                .showQuickPick(
+                    [
+                        {
+                            label: 'On',
+                            description: 'Turn throw ball with mouse on.',
+                        },
+                        {
+                            label: 'Off',
+                            description: 'Turn throw ball with mouse off.',
+                        },
+                    ],
+                    {
+                        placeHolder: vscode.l10n.t(
+                            'Throw ball with mouse is {0}.',
+                            getThrowWithMouseConfiguration() ? 'on' : 'off',
+                        ),
+                    },
+                )
+                .then((selection) => {
+                    if (selection) {
+                        config.update(
+                            'throwBallWithMouse',
+                            selection.label === 'On',
+                            vscode.ConfigurationTarget.Global,
+                        );
+                    }
+                });
+        }),
     );
 
     context.subscriptions.push(
