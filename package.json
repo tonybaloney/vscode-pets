@@ -2,7 +2,7 @@
     "name": "vscode-pets",
     "displayName": "vscode-pets",
     "description": "Pets for your VS Code",
-    "version": "1.21.0",
+    "version": "1.22.0",
     "engines": {
         "vscode": "^1.73.0"
     },
@@ -179,7 +179,8 @@
                             "rubber-duck",
                             "snake",
                             "totoro",
-                            "zappy"
+                            "zappy",
+                            "rat"
                         ],
                         "default": "cat",
                         "description": "Pet type",
@@ -189,6 +190,7 @@
                         "type": "string",
                         "enum": [
                             "nano",
+                            "small",
                             "medium",
                             "large"
                         ],

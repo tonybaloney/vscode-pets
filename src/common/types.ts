@@ -20,6 +20,7 @@ export const enum PetType {
     dog = 'dog',
     fox = 'fox',
     mod = 'mod',
+    rat = 'rat',
     rocky = 'rocky',
     rubberduck = 'rubber-duck',
     snake = 'snake',
@@ -39,6 +40,7 @@ export const enum PetSpeed {
 
 export const enum PetSize {
     nano = 'nano',
+    small = 'small',
     medium = 'medium',
     large = 'large',
 }
@@ -80,6 +82,7 @@ export const ALL_PETS = [
     PetType.dog,
     PetType.fox,
     PetType.mod,
+    PetType.rat,
     PetType.rocky,
     PetType.rubberduck,
     PetType.snake,
@@ -98,5 +101,10 @@ export const ALL_COLORS = [
     PetColor.white,
     PetColor.null,
 ];
-export const ALL_SCALES = [PetSize.nano, PetSize.medium, PetSize.large];
+export const ALL_SCALES = [
+    PetSize.nano,
+    PetSize.small,
+    PetSize.medium,
+    PetSize.large,
+];
 export const ALL_THEMES = [Theme.none, Theme.forest, Theme.castle, Theme.beach];
