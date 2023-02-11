@@ -368,19 +368,6 @@ export function activate(context: vscode.ExtensionContext) {
     context.subscriptions.push(
         vscode.commands.registerCommand('vscode-pets.throw-with-mouse', () => {
             const config = vscode.workspace.getConfiguration('vscode-pets');
-            // config.update(
-            //     'throwBallWithMouse',
-            //     !getThrowWithMouseConfiguration(),
-            //     vscode.ConfigurationTarget.Global,
-            // );
-
-            // vscode.window.showInformationMessage(
-            //     vscode.l10n.t(
-            //         'Throw ball with mouse is now {0}.',
-            //         getThrowWithMouseConfiguration() ? 'off' : 'on',
-            //     ),
-            // );
-            // open a quick pick with the options
             vscode.window
                 .showQuickPick(
                     [
