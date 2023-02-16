@@ -108,13 +108,22 @@ suite('Pets Test Suite', () => {
         assert.strictEqual(testPetElement.color, PetColor.brown);
         assert.strictEqual(testPetElement.type, PetType.cat);
 
-        assert.strictEqual(collection.locate('Jerry'), undefined);
+        assert.strictEqual(
+            collection.locate('Jerry', 'cat', 'black'),
+            undefined,
+        );
 
         collection.push(testPetElement);
-        assert.strictEqual(collection.locate('Jerry'), testPetElement);
+        assert.strictEqual(
+            collection.locate('Jerry', 'cat', 'black'),
+            testPetElement,
+        );
 
         collection.remove('Jerry', 'cat', 'black');
-        assert.strictEqual(collection.locate('Jerry'), undefined);
+        assert.strictEqual(
+            collection.locate('Jerry', 'cat', 'black'),
+            undefined,
+        );
     });
 
     ALL_PETS.forEach((petType) => {

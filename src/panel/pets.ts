@@ -52,7 +52,7 @@ export interface IPetCollection {
     push(pet: PetElement): void;
     reset(): void;
     seekNewFriends(): string[];
-    locate(name: string): PetElement | undefined;
+    locate(name: string, type: string, color: string): PetElement | undefined;
     remove(name: string, type: string, color: string): void;
 }
 
@@ -78,7 +78,7 @@ export class PetCollection implements IPetCollection {
         this._pets = [];
     }
 
-    locate(name: string): PetElement | undefined {
+    locate(name: string, type: string, color: string): PetElement | undefined {
         return this._pets.find((collection) => {
             return collection.pet.name === name;
         });
