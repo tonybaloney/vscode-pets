@@ -50,7 +50,7 @@ Place the pet's window
 ----------------------
 
 To switch the pet's window between *explorer (default)* and *panel*, you can use the command `vscode-pets.position`.
-Or in the setting pannel the option `Position`
+Or in the setting panel the option `Position`.
 
 .. image:: _static/position-setting.png
 
