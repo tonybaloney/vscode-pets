@@ -113,7 +113,7 @@ suite('Pets Test Suite', () => {
         collection.push(testPetElement);
         assert.strictEqual(collection.locate('Jerry'), testPetElement);
 
-        collection.remove('Jerry');
+        collection.remove('Jerry', PetType.cat, PetColor.black);
         assert.strictEqual(collection.locate('Jerry'), undefined);
     });
 

@@ -578,7 +578,7 @@ export function petPanelApp(
             case 'delete-pet':
                 var pet = allPets.locate(message.name);
                 if (pet) {
-                    allPets.remove(message.name);
+                    allPets.remove(message.name, pet.type, pet.color);
                     saveState(stateApi);
                     stateApi?.postMessage({
                         command: 'info',
