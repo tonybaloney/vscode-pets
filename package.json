@@ -30,18 +30,8 @@
     "license": "MIT",
     "icon": "icon.png",
     "activationEvents": [
-        "onCommand:vscode-pets.start",
-        "onCommand:vscode-pets.throw-with-mouse",
-        "onCommand:vscode-pets.throw-ball",
-        "onCommand:vscode-pets.spawn-pet",
-        "onCommand:vscode-pets.delete-pet",
-        "onCommand:vscode-pets.remove-all-pets",
-        "onCommand:vscode-pets.roll-call",
-        "onCommand:vscode-pets.export-pet-list",
-        "onCommand:vscode-pets.import-pet-list",
         "onWebviewPanel:petCoding",
         "onView:explorer",
-        "onView:petsView",
         "onStartupFinished"
     ],
     "main": "./out/extension/extension.js",
@@ -85,7 +75,7 @@
                 "icon": "media/dog.svg"
             },
             {
-                "command": "vscode-pets.throw-with-mouse",
+                "command": "vscode-pets.throwBallWithMouse",
                 "title": "Throw ball with mouse",
                 "category": "Pet Coding",
                 "icon": {
