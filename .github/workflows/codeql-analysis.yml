@@ -37,5 +37,5 @@ jobs:
             - name: Perform CodeQL Analysis
               uses: github/codeql-action/analyze@v2
             - name: Inclusiveness Analyzer
-              uses: microsoft/InclusivenessAnalyzer@v1.0.1
+              uses: tonybaloney/InclusivenessAnalyzer@skip_svg
 
