@@ -37,5 +37,7 @@ jobs:
             - name: Perform CodeQL Analysis
               uses: github/codeql-action/analyze@v2
             - name: Inclusiveness Analyzer
-              uses: tonybaloney/InclusivenessAnalyzer@skip_svg
+              uses: microsoft/InclusivenessAnalyzer@main
+              with:
+                excludeFiles: package-lock.json
 
