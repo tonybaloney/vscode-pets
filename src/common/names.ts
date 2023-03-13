@@ -33,7 +33,7 @@ export function randomName(type: PetType): string {
                 [PetType.rocky]: ROCKY_NAMES,
                 [PetType.cockatiel]: COCKATIEL_NAMES,
                 [PetType.rat]: RAT_NAMES,
-                [PetType.turtle]: TURTLE_NAMES
+                [PetType.turtle]: TURTLE_NAMES,
             } as Record<PetType, ReadonlyArray<string>>
         )[type] ?? CAT_NAMES;
 
