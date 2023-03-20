@@ -187,7 +187,6 @@ export function storeCollectionAsMemento(
     ]);
 }
 
-let petPlaygroundStatusBar: vscode.StatusBarItem;
 let spawnPetStatusBar: vscode.StatusBarItem;
 
 interface IPetInfo {
@@ -308,14 +307,6 @@ export function activate(context: vscode.ExtensionContext) {
             }
         }),
     );
-
-    // status bar item
-    petPlaygroundStatusBar = vscode.window.createStatusBarItem(
-        vscode.StatusBarAlignment.Right,
-        100,
-    );
-    petPlaygroundStatusBar.command = 'vscode-pets.start';
-    context.subscriptions.push(petPlaygroundStatusBar);
 
     spawnPetStatusBar = vscode.window.createStatusBarItem(
         vscode.StatusBarAlignment.Right,
@@ -491,6 +482,12 @@ export function activate(context: vscode.ExtensionContext) {
     context.subscriptions.push(
         vscode.commands.registerCommand('vscode-pets.spawn-pet', async () => {
             const panel = getPetPanel();
+            if (
+                getConfigurationPosition() === ExtPosition.explorer &&
+                webviewViewProvider
+            ) {
+                vscode.commands.executeCommand('petsView.focus');
+            }
             if (panel) {
                 const selectedPetType = await vscode.window.showQuickPick(
                     localize.stringListAsQuickPickItemList<PetType>(ALL_PETS),
@@ -641,10 +638,6 @@ function updateStatusBar(): void {
     spawnPetStatusBar.text = `$(squirrel)`;
     spawnPetStatusBar.tooltip = vscode.l10n.t('Spawn Pet');
     spawnPetStatusBar.show();
-}
-
-export function petPlaygroundDeactivate() {
-    petPlaygroundStatusBar.dispose();
 }
 
 export function spawnPetDeactivate() {
