@@ -92,12 +92,41 @@ export class BallState {
     vy: number;
     paused: boolean;
 
-    constructor(cx: number, cy: number, vx: number, vy: number) {
-        this.cx = cx;
-        this.cy = cy;
-        this.vx = vx;
-        this.vy = vy;
+    constructor(cx: number, cy: number, vx: number, vy: number, randomize: boolean) {
+        if (randomize === true) {
+            const rVals = this.randomizeBallState();
+            this.cx = rVals[0];
+            this.cy = rVals[1];
+            this.vx = rVals[2];
+            this.vy = rVals[3];
+        }
+        else {
+            this.cx = cx;
+            this.cy = cy;
+            this.vx = vx;
+            this.vy = vy;
+        }
         this.paused = false;
+    }
+
+    private randomizeBallState(): Array<number> {
+        let randY, randVx, randVy: number;
+
+        const randX = Math.floor(Math.random() * (window.innerWidth * 0.80) + 10);
+        randY = Math.random();
+        // flip a coin
+        const coin: number = Math.floor(Math.random() * 2);
+        if (coin === 0) { // we toss up
+            randY = Math.floor(randY * (window.innerHeight * 0.60)) + 60;
+            randVx = Math.floor(Math.random() * 18) - 9;
+            randVy = Math.floor(Math.random() * 10) - 10;
+        }
+        else { // we throw
+            randY = Math.floor(randY * (window.innerHeight * 0.60) + 20);
+            randVx = Math.floor(Math.random() * 24) - 12;
+            randVy = Math.floor(Math.random() * 5) + 1; // avoid 0, which throws straight down
+        }
+        return [randX, randY, randVx, randVy];
     }
 }
 
