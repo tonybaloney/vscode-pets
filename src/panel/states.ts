@@ -92,8 +92,8 @@ export class BallState {
     vy: number;
     paused: boolean;
 
-    constructor(cx: number, cy: number, vx: number, vy: number, randomize: boolean) {
-        if (randomize === true) {
+    constructor(cx: number, cy: number, vx: number, vy: number, randomize?: boolean) {
+        if (randomize !== undefined && randomize === true) {
             const rVals = this.randomizeBallState();
             this.cx = rVals[0];
             this.cy = rVals[1];

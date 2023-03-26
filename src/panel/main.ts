@@ -351,14 +351,15 @@ export function petPanelApp(
     var ballState: BallState;
 
 
-    function resetBall(randomize: boolean) {
+    function resetBall() {
         if (ballState) {
             ballState.paused = true;
         }
         if (canvas) {
             canvas.style.display = 'block';
         }
-        ballState = new BallState(0, 0, 0, 0, randomize);
+        /* spawn with randomize */
+        ballState = new BallState(0, 0, 0, 0, true);
     }
 
     function dynamicThrowOn() {
@@ -378,7 +379,7 @@ export function petPanelApp(
             endMouseY = e.clientY;
             startMouseX = e.clientX;
             startMouseY = e.clientY;
-            ballState = new BallState(e.clientX, e.clientY, 0, 0,false);
+            ballState = new BallState(e.clientX, e.clientY, 0, 0);
 
             allPets.pets.forEach((petEl) => {
                 if (petEl.pet.canChase) {
@@ -398,7 +399,7 @@ export function petPanelApp(
                 startMouseY = endMouseY;
                 endMouseX = ev.clientX;
                 endMouseY = ev.clientY;
-                ballState = new BallState(ev.clientX, ev.clientY, 0, 0, false);
+                ballState = new BallState(ev.clientX, ev.clientY, 0, 0);
                 drawBall();
             };
             window.onmouseup = (ev) => {
@@ -410,8 +411,7 @@ export function petPanelApp(
                     endMouseX,
                     endMouseY,
                     endMouseX - startMouseX,
-                    endMouseY - startMouseY,
-                    false
+                    endMouseY - startMouseY
                 );
                 allPets.pets.forEach((petEl) => {
                     if (petEl.pet.canChase) {
@@ -531,7 +531,7 @@ export function petPanelApp(
                 }
                 break;
             case 'throw-ball':
-                resetBall(true);
+                resetBall();
                 throwBall();
                 allPets.pets.forEach((petEl) => {
                     if (petEl.pet.canChase) {
