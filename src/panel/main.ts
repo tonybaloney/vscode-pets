@@ -344,7 +344,7 @@ export function petPanelApp(
 
     /// Bouncing ball components, credit https://stackoverflow.com/a/29982343
     const gravity: number = 0.6,
-        damping: number = 0.88,
+        damping: number = 0.90,
         traction: number = 0.8,
         interval: number = 1000 / 24; // msec for single frame
     let then: number = 0; // last draw

@@ -311,7 +311,7 @@ export class RunLeftState extends WalkLeftState {
     label = States.runLeft;
     spriteLabel = 'walk_fast';
     speedMultiplier = 1.6;
-    holdTime = 130;
+    holdTime = 30;
 }
 
 export class ChaseState implements IState {
@@ -351,7 +351,6 @@ export class ChaseState implements IState {
             this.pet.left < this.ballState.cx + 15
         ) {
             // hide ball
-            //TODO let pets hold ball for a bit?
             this.canvas.style.display = 'none';
             this.ballState.paused = true;
             return FrameResult.stateComplete;
