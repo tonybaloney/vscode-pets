@@ -237,7 +237,7 @@ export class IdleWithBallState extends AbstractStaticState {
     label = States.idleWithBall;
     spriteLabel = 'with_ball';
     horizontalDirection = HorizontalDirection.left;
-    holdTime = 80;
+    holdTime = 30;
 }
 
 export class WalkRightState implements IState {
@@ -311,7 +311,7 @@ export class RunLeftState extends WalkLeftState {
     label = States.runLeft;
     spriteLabel = 'walk_fast';
     speedMultiplier = 1.6;
-    holdTime = 30;
+    holdTime = 130;
 }
 
 export class ChaseState implements IState {
