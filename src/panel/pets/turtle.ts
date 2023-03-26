@@ -4,10 +4,7 @@ import { States } from '../states';
 
 export class Turtle extends BasePetType {
     label = 'turtle';
-    static possibleColors = [
-        PetColor.green,
-        PetColor.orange
-    ];
+    static possibleColors = [PetColor.green, PetColor.orange];
     sequence = {
         startingState: States.sitIdle,
         sequenceStates: [
@@ -65,7 +62,7 @@ export class Turtle extends BasePetType {
         ],
     };
     get emoji(): string {
-        return '🐢' ; 
+        return '🐢';
     }
     get hello(): string {
         return ` Slow and steady wins the race!`;
@@ -74,43 +71,43 @@ export class Turtle extends BasePetType {
 
 export const TURTLE_NAMES: ReadonlyArray<string> = [
     'Shelldon',
-    "Shelly",
-    "Shelley",
-    "Sheldon",
-    "Tortuga",
-    "Tortellini",
-    "Charlie",
-    "Ross",
-    "Squirt",
-    "Crush",
-    "Squirtle",
-    "Koopa",
-    "Bowser",
-    "Bowsette",
-    "Franklin",
-    "Koopa Troopa",
-    "Blastoise",
-    "Cecil",
-    "Wartortle",
-    "Donatello",
-    "Michaelangelo",
-    "Leonardo",
-    "Leo",
-    "Donny",
-    "Mikey",
-    "Raphael",
-    "Chelone",
-    "Emily",
-    "Joseph",
-    "Anne",
-    "Zagreus",
-    "Kratos",
-    "Atreus",
-    "Loki",
-    "Freya",
-    "Brevity",
-    "Arthur",
-    "Doyle",
-    "Sherlock",
-    "Charli"
+    'Shelly',
+    'Shelley',
+    'Sheldon',
+    'Tortuga',
+    'Tortellini',
+    'Charlie',
+    'Ross',
+    'Squirt',
+    'Crush',
+    'Squirtle',
+    'Koopa',
+    'Bowser',
+    'Bowsette',
+    'Franklin',
+    'Koopa Troopa',
+    'Blastoise',
+    'Cecil',
+    'Wartortle',
+    'Donatello',
+    'Michaelangelo',
+    'Leonardo',
+    'Leo',
+    'Donny',
+    'Mikey',
+    'Raphael',
+    'Chelone',
+    'Emily',
+    'Joseph',
+    'Anne',
+    'Zagreus',
+    'Kratos',
+    'Atreus',
+    'Loki',
+    'Freya',
+    'Brevity',
+    'Arthur',
+    'Doyle',
+    'Sherlock',
+    'Charli',
 ];
