@@ -350,14 +350,37 @@ export function petPanelApp(
     let then: number = 0; // last draw
     var ballState: BallState;
 
-    function resetBall() {
+    
+    function randomizeBallState(): Array<number> {
+        let randY, randVx, randVy: number;
+
+        const randX = Math.floor(Math.random() * (window.innerWidth * 0.80) + 10);
+        randY = Math.random();
+        // flip a coin
+        const coin: number = Math.floor(Math.random() * 2);
+        if (coin === 0) { // we toss up
+            randY = Math.floor(randY * (window.innerHeight * 0.60)) + 30;
+            randVx = Math.floor(Math.random() * 12) - 6;
+            randVy = Math.floor(Math.random() * 6) - 6;
+        }
+        else { // we throw
+            randY = Math.floor(randY * (window.innerHeight * 0.60));
+            randVx = Math.floor(Math.random() * 20) - 10;
+            randVy = Math.floor(Math.random() * 5) + 1; // avoid 0, which throws straight down
+        }
+        return [randX, randY, randVx, randVy];
+    }
+
+    function resetBall(
+        rx: number, ry:number, rVx:number, rVy:number
+        ) {
         if (ballState) {
             ballState.paused = true;
         }
         if (canvas) {
             canvas.style.display = 'block';
         }
-        ballState = new BallState(100, 100, 4, 5);
+        ballState = new BallState(rx, ry, rVx, rVy);
     }
 
     function dynamicThrowOn() {
@@ -528,7 +551,8 @@ export function petPanelApp(
                 }
                 break;
             case 'throw-ball':
-                resetBall();
+                const ballVals: Array<number> = randomizeBallState();
+                resetBall(ballVals[0],ballVals[1],ballVals[2],ballVals[3]);
                 throwBall();
                 allPets.pets.forEach((petEl) => {
                     if (petEl.pet.canChase) {
