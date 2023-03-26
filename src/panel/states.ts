@@ -110,23 +110,19 @@ export class BallState {
     }
 
     private randomizeBallState(): Array<number> {
-        let randY, randVx, randVy: number;
+        /* velocity */
+        const randVx: Array<number> = [ //avoids values close to 0
+            -1 * (Math.floor(Math.random() * 20) + 4), //left
+            Math.floor(Math.random() * 20) + 4 // right
+        ]; 
+        const randVy: number = Math.floor((Math.random() * 20) - 10);
+        /* position */
+        const randX: number = Math.floor(Math.random() * (window.innerWidth * 0.80) + 10);
+        const randY: number = Math.floor(Math.random() * (window.innerHeight * 0.60)) + 40;
 
-        const randX = Math.floor(Math.random() * (window.innerWidth * 0.80) + 10);
-        randY = Math.random();
-        // flip a coin
+        /* flip a coin to throw left or right */
         const coin: number = Math.floor(Math.random() * 2);
-        if (coin === 0) { // we toss up
-            randY = Math.floor(randY * (window.innerHeight * 0.60)) + 60;
-            randVx = Math.floor(Math.random() * 18) - 9;
-            randVy = Math.floor(Math.random() * 10) - 10;
-        }
-        else { // we throw
-            randY = Math.floor(randY * (window.innerHeight * 0.60) + 20);
-            randVx = Math.floor(Math.random() * 24) - 12;
-            randVy = Math.floor(Math.random() * 5) + 1; // avoid 0, which throws straight down
-        }
-        return [randX, randY, randVx, randVy];
+        return [randX, randY, randVx[coin], randVy];
     }
 }
 
@@ -241,7 +237,7 @@ export class IdleWithBallState extends AbstractStaticState {
     label = States.idleWithBall;
     spriteLabel = 'with_ball';
     horizontalDirection = HorizontalDirection.left;
-    holdTime = 30;
+    holdTime = 80;
 }
 
 export class WalkRightState implements IState {
@@ -355,6 +351,7 @@ export class ChaseState implements IState {
             this.pet.left < this.ballState.cx + 15
         ) {
             // hide ball
+            //TODO let pets hold ball for a bit?
             this.canvas.style.display = 'none';
             this.ballState.paused = true;
             return FrameResult.stateComplete;
