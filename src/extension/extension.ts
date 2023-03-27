@@ -339,7 +339,6 @@ export function activate(context: vscode.ExtensionContext) {
     context.subscriptions.push(
         vscode.commands.registerCommand('vscode-pets.throw-with-mouse',
             () => {
-                console.log("THROW IT");
                 const panel = getPetPanel();
                     if (panel !== undefined) {
                         panel.setThrowWithMouse(true);
