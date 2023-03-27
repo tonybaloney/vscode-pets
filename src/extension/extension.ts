@@ -336,17 +336,6 @@ export function activate(context: vscode.ExtensionContext) {
         ),
     );
 
-    context.subscriptions.push(
-        vscode.commands.registerCommand('vscode-pets.throw-with-mouse',
-            () => {
-                const panel = getPetPanel();
-                    if (panel !== undefined) {
-                        panel.setThrowWithMouse(true);
-                    }
-            }
-        ),
-    );
-
     updateStatusBar();
 
     const spec = PetSpecification.fromConfiguration();
@@ -375,6 +364,17 @@ export function activate(context: vscode.ExtensionContext) {
                 panel.throwBall();
             }
         }),
+    );
+
+    context.subscriptions.push(
+        vscode.commands.registerCommand('vscode-pets.throw-with-mouse',
+            () => {
+                const panel = getPetPanel();
+                    if (panel !== undefined) {
+                        panel.setThrowWithMouse(true);
+                    }
+            }
+        ),
     );
 
     context.subscriptions.push(
