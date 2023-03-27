@@ -203,7 +203,7 @@ export function createPet(
         case PetType.rat:
             return new Rat(...standardPetArguments, PetSpeed.normal);
         case PetType.turtle:
-            return new Turtle(...standardPetArguments, PetSpeed.slow);
+            return new Turtle(...standardPetArguments, PetSpeed.verySlow);
         default:
             throw new InvalidPetException("Pet type doesn't exist");
     }
