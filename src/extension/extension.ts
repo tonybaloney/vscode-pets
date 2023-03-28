@@ -49,12 +49,12 @@ class PetQuickPickItem implements vscode.QuickPickItem {
 
 let webviewViewProvider: PetWebviewViewProvider;
 
-function getConfiguredSize(): PetSize {
+function getConfiguredSize(petSize: PetSize): PetSize {
     var size = vscode.workspace
         .getConfiguration('vscode-pets')
-        .get<PetSize>('petSize', DEFAULT_PET_SCALE);
+        .get<PetSize>('petSize', petSize);
     if (ALL_SCALES.lastIndexOf(size) === -1) {
-        size = DEFAULT_PET_SCALE;
+        size = petSize;
     }
     return size;
 }
@@ -131,7 +131,11 @@ export class PetSpecification {
             type = DEFAULT_PET_TYPE;
         }
 
-        return new PetSpecification(color, type, getConfiguredSize());
+        return new PetSpecification(
+            color,
+            type,
+            getConfiguredSize(DEFAULT_PET_SCALE),
+        );
     }
 
     static collectionFromMemento(
@@ -193,6 +197,7 @@ let spawnPetStatusBar: vscode.StatusBarItem;
 interface IPetInfo {
     type: PetType;
     name: string;
+    size: PetSize;
     color: PetColor;
 }
 
@@ -208,6 +213,7 @@ async function handleRemovePetMessage(
                 petList.push({
                     type: parts[0] as PetType,
                     name: parts[1],
+                    size: parts[3] as PetSize,
                     color: parts[2] as PetColor,
                 });
             });
@@ -297,7 +303,7 @@ export function activate(context: vscode.ExtensionContext) {
                 if (PetPanel.currentPanel) {
                     var collection = PetSpecification.collectionFromMemento(
                         context,
-                        getConfiguredSize(),
+                        getConfiguredSize(DEFAULT_PET_SCALE),
                     );
                     collection.forEach((item) => {
                         PetPanel.currentPanel?.spawnPet(item);
@@ -397,7 +403,7 @@ export function activate(context: vscode.ExtensionContext) {
             async () => {
                 const pets = PetSpecification.collectionFromMemento(
                     context,
-                    getConfiguredSize(),
+                    getConfiguredSize(DEFAULT_PET_SCALE),
                 );
                 const petJson = JSON.stringify(pets, null, 2);
                 const fileName = `pets-${Date.now()}.json`;
@@ -457,7 +463,7 @@ export function activate(context: vscode.ExtensionContext) {
                         // load the pets into the collection
                         var collection = PetSpecification.collectionFromMemento(
                             context,
-                            getConfiguredSize(),
+                            getConfiguredSize(DEFAULT_PET_SCALE),
                         );
                         // fetch just the pet types
                         const panel = getPetPanel();
@@ -525,6 +531,19 @@ export function activate(context: vscode.ExtensionContext) {
                     return;
                 }
 
+                const selectedSize = await vscode.window.showQuickPick(
+                    Object.values(PetSize).map((value) => ({
+                        label: value,
+                        value: value,
+                    })),
+                    {
+                        placeHolder: 'Select a size',
+                    },
+                );
+                if (selectedSize === undefined) {
+                    return;
+                }
+
                 const name = await vscode.window.showInputBox({
                     placeHolder: vscode.l10n.t('Leave blank for a random name'),
                     prompt: vscode.l10n.t('Name your pet'),
@@ -533,7 +552,7 @@ export function activate(context: vscode.ExtensionContext) {
                 const spec = new PetSpecification(
                     petColor,
                     selectedPetType.value,
-                    getConfiguredSize(),
+                    getConfiguredSize(selectedSize.value),
                     name,
                 );
                 if (!spec.type || !spec.color || !spec.size) {
@@ -545,7 +564,7 @@ export function activate(context: vscode.ExtensionContext) {
                 }
                 var collection = PetSpecification.collectionFromMemento(
                     context,
-                    getConfiguredSize(),
+                    getConfiguredSize(selectedSize.value),
                 );
                 collection.push(spec);
                 storeCollectionAsMemento(context, collection);
@@ -584,7 +603,6 @@ export function activate(context: vscode.ExtensionContext) {
                 if (
                     e.affectsConfiguration('vscode-pets.petColor') ||
                     e.affectsConfiguration('vscode-pets.petType') ||
-                    e.affectsConfiguration('vscode-pets.petSize') ||
                     e.affectsConfiguration('vscode-pets.theme') ||
                     e.affectsConfiguration('workbench.colorTheme')
                 ) {
@@ -1120,7 +1138,7 @@ function createPetPlayground(context: vscode.ExtensionContext) {
     if (PetPanel.currentPanel) {
         var collection = PetSpecification.collectionFromMemento(
             context,
-            getConfiguredSize(),
+            getConfiguredSize(DEFAULT_PET_SCALE),
         );
         collection.forEach((item) => {
             PetPanel.currentPanel?.spawnPet(item);
@@ -1129,7 +1147,7 @@ function createPetPlayground(context: vscode.ExtensionContext) {
     } else {
         var collection = PetSpecification.collectionFromMemento(
             context,
-            getConfiguredSize(),
+            getConfiguredSize(DEFAULT_PET_SCALE),
         );
         collection.push(spec);
         storeCollectionAsMemento(context, collection);
