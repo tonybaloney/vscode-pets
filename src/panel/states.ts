@@ -42,8 +42,8 @@ export class PetInstanceState {
 
 export class PetElementState {
     petState: PetInstanceState | undefined;
-    petType: PetType | undefined;
-    petColor: PetColor | undefined;
+    petType: PetType | undefined | any;
+    petColor: PetColor | undefined | any;
     elLeft: string | undefined;
     elBottom: string | undefined;
     petName: string | undefined;

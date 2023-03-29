@@ -269,7 +269,11 @@ function recoverState(
         // Resolve friend relationships
         var friend = undefined;
         if (state.petFriend) {
-            friend = allPets.locate(state.petFriend);
+            friend = allPets.locate(
+                state.petFriend,
+                state.petType,
+                state.petColor,
+            );
             if (friend) {
                 pet.recoverFriend(friend.pet);
             }
@@ -576,8 +580,16 @@ export function petPanelApp(
                     });
                 });
             case 'delete-pet':
-                var pet = allPets.locate(message.name);
+                var pet = allPets.locate(
+                    message.name,
+                    message.type,
+                    message.color,
+                );
                 if (pet) {
+                    stateApi?.postMessage({
+                        command: 'info',
+                        text: '👋 Removed pet ' + message.name,
+                    });
                     allPets.remove(message.name, pet.type, pet.color);
                     saveState(stateApi);
                     stateApi?.postMessage({

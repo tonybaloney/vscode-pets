@@ -53,7 +53,11 @@ export interface IPetCollection {
     push(pet: PetElement): void;
     reset(): void;
     seekNewFriends(): string[];
-    locate(name: string): PetElement | undefined;
+    locate(
+        name: string,
+        type: PetType,
+        color: PetColor,
+    ): PetElement | undefined;
     remove(name: string, type: PetType, color: PetColor): void;
 }
 
