@@ -94,8 +94,7 @@ export class BallState {
     vy: number;
     paused: boolean;
 
-    // eslint-disable-next-line no-unused-vars
-    constructor(cx: number, cy: number, vx: number, _vy: number) {
+    constructor() {
         this.cx = Math.random() * 100;
         this.cy = Math.random() * 100;
         this.vx = Math.random() * 10;
