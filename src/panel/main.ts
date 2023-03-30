@@ -586,10 +586,6 @@ export function petPanelApp(
                     message.color,
                 );
                 if (pet) {
-                    stateApi?.postMessage({
-                        command: 'info',
-                        text: '👋 Removed pet ' + message.name,
-                    });
                     allPets.remove(message.name, pet.type, pet.color);
                     saveState(stateApi);
                     stateApi?.postMessage({
