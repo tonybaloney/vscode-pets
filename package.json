@@ -121,6 +121,24 @@
                 }
             },
             {
+                "command": "vscode-pets.show-stats",
+                "title": "Statistics for all your pets",
+                "category": "Pet Coding",
+                "icon": {
+                    "dark": "media/icon/dark-add.svg",
+                    "light": "media/icon/light-add.svg"
+                }
+            },
+            {
+                "command": "vscode-pets.reset-stats",
+                "title": "Reset Statistics for all your pets",
+                "category": "Pet Coding",
+                "icon": {
+                    "dark": "media/icon/dark-add.svg",
+                    "light": "media/icon/light-add.svg"
+                }
+            },
+            {
                 "command": "vscode-pets.delete-pet",
                 "title": "Remove pet",
                 "category": "Pet Coding",

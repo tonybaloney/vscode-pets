@@ -1,4 +1,7 @@
 import { PetColor, PetType } from '../common/types';
+import * as fs from 'fs';
+import * as path from 'path';
+import * as vscode from 'vscode';
 
 export interface IPetType {
     nextFrame(): void;
@@ -110,6 +113,45 @@ export function isStateAboveGround(state: States): boolean {
     );
 }
 
+export function ballCaught(pet: IPetType) {
+    vscode.window.showInformationMessage('Ball Caught');
+    const filePath = path.join(
+        path.dirname(__dirname),
+        'vscode-pets.stats.txt',
+    );
+    let ballCaughtCount = 0;
+
+    if (!fs.existsSync(filePath)) {
+        try {
+            const stats = { ballCaught: 0 };
+            const statsFileContent = JSON.stringify(stats, null, 2);
+            fs.writeFileSync(filePath, statsFileContent, { encoding: 'utf-8' });
+        } catch (e) {
+            console.error(`Failed to create ${filePath}: ${e}`);
+        }
+    }
+
+    try {
+        const statsFileContent = fs.readFileSync(filePath, {
+            encoding: 'utf-8',
+        });
+        const stats = JSON.parse(statsFileContent);
+        ballCaughtCount = stats.ballCaught || 0;
+    } catch (e) {
+        console.error(`Failed to read ${filePath}: ${e}`);
+    }
+
+    ballCaughtCount++;
+
+    try {
+        const stats = { ballCaught: ballCaughtCount };
+        const statsFileContent = JSON.stringify(stats, null, 2);
+        fs.writeFileSync(filePath, statsFileContent, { encoding: 'utf-8' });
+    } catch (e) {
+        console.error(`Failed to write ${filePath}: ${e}`);
+    }
+}
+
 export function resolveState(state: string, pet: IPetType): IState {
     switch (state) {
         case States.sitIdle:
@@ -135,6 +177,7 @@ export function resolveState(state: string, pet: IPetType): IState {
         case States.swipe:
             return new SwipeState(pet);
         case States.idleWithBall:
+            ballCaught(pet);
             return new IdleWithBallState(pet);
         case States.chaseFriend:
             return new ChaseFriendState(pet);

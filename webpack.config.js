@@ -25,6 +25,12 @@ const desktopConfig = {
   ],
   resolve: {
     extensions: [".ts", ".tsx", ".js"],
+		fallback: {
+			fs: false,
+			vscode: false,
+			path: false,
+			path: require.resolve('path-browserify')
+		}
   },
   module: {
     rules: [{

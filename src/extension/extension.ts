@@ -309,6 +309,18 @@ export function activate(context: vscode.ExtensionContext) {
         }),
     );
 
+    context.subscriptions.push(
+        vscode.commands.registerCommand('vscode-pets.show-stats', () => {
+            return vscode.window.showInformationMessage('Test');
+        }),
+    );
+
+    context.subscriptions.push(
+        vscode.commands.registerCommand('vscode-pets.reset-stats', () => {
+            return vscode.window.showInformationMessage('Test');
+        }),
+    );
+
     // status bar item
     petPlaygroundStatusBar = vscode.window.createStatusBarItem(
         vscode.StatusBarAlignment.Right,
