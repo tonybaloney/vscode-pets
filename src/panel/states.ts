@@ -125,9 +125,13 @@ export function ballCaught(pet: IPetType) {
         try {
             const stats = { ballCaught: 0 };
             const statsFileContent = JSON.stringify(stats, null, 2);
-            fs.writeFileSync(filePath, statsFileContent, { encoding: 'utf-8' });
+            fs.writeFileSync(filePath, statsFileContent, {
+                encoding: 'utf-8',
+            });
         } catch (e) {
-            console.error(`Failed to create ${filePath}: ${e}`);
+            vscode.window.showErrorMessage(
+                `Failed to create ${filePath}: ${e}`,
+            );
         }
     }
 
@@ -138,17 +142,19 @@ export function ballCaught(pet: IPetType) {
         const stats = JSON.parse(statsFileContent);
         ballCaughtCount = stats.ballCaught || 0;
     } catch (e) {
-        console.error(`Failed to read ${filePath}: ${e}`);
+        vscode.window.showErrorMessage(`Failed to read ${filePath}: ${e}`);
     }
 
     ballCaughtCount++;
 
     try {
         const stats = { ballCaught: ballCaughtCount };
-        const statsFileContent = JSON.stringify(stats, null, 2);
-        fs.writeFileSync(filePath, statsFileContent, { encoding: 'utf-8' });
+        const statsFileContent = `Pet has caught ${stats.ballCaught} balls`;
+        fs.writeFileSync(filePath, statsFileContent, {
+            encoding: 'utf-8',
+        });
     } catch (e) {
-        console.error(`Failed to write ${filePath}: ${e}`);
+        vscode.window.showErrorMessage(`Failed to update ${filePath}: ${e}`);
     }
 }
 
@@ -177,7 +183,6 @@ export function resolveState(state: string, pet: IPetType): IState {
         case States.swipe:
             return new SwipeState(pet);
         case States.idleWithBall:
-            ballCaught(pet);
             return new IdleWithBallState(pet);
         case States.chaseFriend:
             return new ChaseFriendState(pet);
