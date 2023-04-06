@@ -7,6 +7,6 @@
 "files": [
   {
     "source": "l10n/bundle.l10n.json",
-    "translation": "l10n/bundle.l10n.%two_letters_code%.json"
+    "translation": "l10n/bundle.l10n.%locale%.json"
   }
 ]
