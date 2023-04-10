@@ -22,6 +22,8 @@ jobs:
               uses: actions/setup-node@v1
               with:
                   node-version: ${{ matrix.node-version }}
+            - name: Extract cats
+              run: cd media && unzip -P ${{ secrets.CAT_ASSETS_PASSWORD }} cat.zip
             - run: npm ci
             - run: npm run compile
             - run: npm run lint

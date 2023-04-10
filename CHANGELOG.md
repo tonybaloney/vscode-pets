@@ -2,6 +2,11 @@
 
 All notable changes to the "vscode-pets" extension will be documented in this file.
 
+## [1.23.0]
+
+* Add the pet's window setting in the documentation by @NicolasRenault in https://github.com/tonybaloney/vscode-pets/pull/402
+* Adding a Turtle Pet by @enkeefe in https://github.com/tonybaloney/vscode-pets/pull/401
+
 ## [1.22.0]
 
 * Improve Japanese translation by @tonybaloney in https://github.com/tonybaloney/vscode-pets/pull/356

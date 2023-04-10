@@ -15,6 +15,7 @@ Run the "Start pet coding session" command (`vscode-pets.start`)
 Once you have the pet panel open, you can:
 
 * :ref:`Changing your pet`
+* :ref:`Place the pet's window`
 * :ref:`Playing with pets`
 * :ref:`Adding additional pets`
 * :ref:`Throwing a ball`
@@ -29,9 +30,9 @@ Open the setting panel with `Ctrl+,` on Windows/Linux or `Cmd(⌘)+,` on MacOS. 
 
 Set a default color, size, pet type, position, and theme when you open a Pet Panel.
 
-* Pet Color: black, brown, green, yellow, gray, purple, red, white
+* Pet Color: black, brown, green, yellow, gray, purple, red, white, orange
 * Pet Size: nano, small, medium, large
-* Pet Type: cat, chicken, crab, clippy, cockatiel, dog, mod, rocky, rubber duck, snake, totoro, zappy
+* Pet Type: cat, chicken, crab, clippy, cockatiel, dog, mod, rocky, rubber duck, snake, totoro, turtle, zappy
 
 .. image:: _static/screenshot-2.gif
    :alt: Usage screenshot
@@ -44,6 +45,22 @@ Restrictions
 * Ferris the crab can only be red
 * Rocky can only be gray
 * Mod can only be purple
+
+Place the pet's window
+----------------------
+
+To switch the pet's window between *explorer (default)* and *panel*, you can use the command `vscode-pets.position`.
+Or in the setting panel the option `Position`.
+
+.. image:: _static/position-setting.png
+
+**Explorer**:
+
+.. image:: _static/position-explorer.png
+
+**Panel**:
+
+.. image:: _static/position-panel.png
 
 Playing with pets
 -----------------
