@@ -67,6 +67,7 @@ const webExtensionConfig = {
 			"assert": require.resolve('assert'),
       "path": require.resolve("path-browserify"),
       "fs": false,
+			"os": false,
 		},
 	},
 	module: {

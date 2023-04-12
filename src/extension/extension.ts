@@ -1,6 +1,7 @@
 import * as vscode from 'vscode';
 import * as path from 'path';
 import * as fs from 'fs';
+import * as os from 'os';
 import { ColorThemeKind } from 'vscode';
 import {
     PetSize,
@@ -1152,10 +1153,7 @@ function createPetPlayground(context: vscode.ExtensionContext) {
 }
 
 function storeBallThrown() {
-    const filePath = path.join(
-        vscode.workspace.workspaceFolders?.[0].uri.fsPath?.toString() || '',
-        'vscode-pets.stats.txt',
-    );
+    const filePath = path.join(os.homedir(), 'vscode-pets.stats.txt');
 
     let ballCaughtCount = 0;
 
@@ -1190,10 +1188,7 @@ function storeBallThrown() {
 }
 
 function fetchBallThrown() {
-    const filePath = path.join(
-        vscode.workspace.workspaceFolders?.[0].uri.fsPath?.toString() || '',
-        'vscode-pets.stats.txt',
-    );
+    const filePath = path.join(os.homedir(), 'vscode-pets.stats.txt');
 
     if (!fs.existsSync(filePath)) {
         return vscode.window.showErrorMessage('No balls thrown yet');
@@ -1212,10 +1207,7 @@ function fetchBallThrown() {
 }
 
 function resetBallStats() {
-    const filePath = path.join(
-        vscode.workspace.workspaceFolders?.[0].uri.fsPath?.toString() || '',
-        'vscode-pets.stats.json',
-    );
+    const filePath = path.join(os.homedir(), 'vscode-pets.stats.txt');
 
     try {
         const stats = { ballCaught: 0 };
