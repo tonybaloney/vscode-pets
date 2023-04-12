@@ -8,6 +8,7 @@ export const enum PetColor {
     purple = 'purple',
     red = 'red',
     white = 'white',
+    orange = 'orange',
     null = 'null',
 }
 
@@ -25,6 +26,7 @@ export const enum PetType {
     rubberduck = 'rubber-duck',
     snake = 'snake',
     totoro = 'totoro',
+    turtle = 'turtle',
     zappy = 'zappy',
     null = 'null',
 }
@@ -87,6 +89,7 @@ export const ALL_PETS = [
     PetType.rubberduck,
     PetType.snake,
     PetType.totoro,
+    PetType.turtle,
     PetType.zappy,
 ];
 export const ALL_COLORS = [
@@ -99,6 +102,7 @@ export const ALL_COLORS = [
     PetColor.purple,
     PetColor.red,
     PetColor.white,
+    PetColor.orange,
     PetColor.null,
 ];
 export const ALL_SCALES = [
