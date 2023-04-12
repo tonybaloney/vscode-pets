@@ -1,7 +1,4 @@
 import { PetColor, PetType } from '../common/types';
-import * as fs from 'fs';
-import * as path from 'path';
-import * as vscode from 'vscode';
 
 export interface IPetType {
     nextFrame(): void;
