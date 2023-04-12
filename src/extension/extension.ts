@@ -1,4 +1,6 @@
 import * as vscode from 'vscode';
+import * as path from 'path';
+import * as fs from 'fs';
 import { ColorThemeKind } from 'vscode';
 import {
     PetSize,
@@ -311,13 +313,13 @@ export function activate(context: vscode.ExtensionContext) {
 
     context.subscriptions.push(
         vscode.commands.registerCommand('vscode-pets.show-stats', () => {
-            return vscode.window.showInformationMessage('Test');
+            return fetchBallThrown();
         }),
     );
 
     context.subscriptions.push(
         vscode.commands.registerCommand('vscode-pets.reset-stats', () => {
-            return vscode.window.showInformationMessage('Test');
+            return resetBallStats();
         }),
     );
 
@@ -372,6 +374,7 @@ export function activate(context: vscode.ExtensionContext) {
         vscode.commands.registerCommand('vscode-pets.throw-ball', () => {
             const panel = getPetPanel();
             if (panel !== undefined) {
+                storeBallThrown();
                 panel.throwBall();
             }
         }),
@@ -1145,5 +1148,87 @@ function createPetPlayground(context: vscode.ExtensionContext) {
         );
         collection.push(spec);
         storeCollectionAsMemento(context, collection);
+    }
+}
+
+function storeBallThrown() {
+    const filePath = path.join(
+        vscode.workspace.workspaceFolders?.[0].uri.fsPath?.toString() || '',
+        'vscode-pets.stats.txt',
+    );
+
+    let ballCaughtCount = 0;
+
+    try {
+        if (fs.existsSync(filePath)) {
+            const statsFileContent = fs.readFileSync(filePath, {
+                encoding: 'utf-8',
+            });
+            const stats = JSON.parse(statsFileContent);
+            ballCaughtCount = stats.ballCaught || 0;
+        }
+    } catch (e) {
+        return vscode.window.showErrorMessage(
+            `Failed to read ${filePath}: ${e}`,
+        );
+    }
+
+    ballCaughtCount++;
+
+    try {
+        const stats = { ballCaught: ballCaughtCount };
+        const statsFileContent = JSON.stringify(stats, null, 2);
+        fs.writeFileSync(filePath, statsFileContent, {
+            encoding: 'utf-8',
+        });
+        return;
+    } catch (e) {
+        return vscode.window.showErrorMessage(
+            `Failed to update ${filePath}: ${e}`,
+        );
+    }
+}
+
+function fetchBallThrown() {
+    const filePath = path.join(
+        vscode.workspace.workspaceFolders?.[0].uri.fsPath?.toString() || '',
+        'vscode-pets.stats.txt',
+    );
+
+    if (!fs.existsSync(filePath)) {
+        return vscode.window.showErrorMessage('No balls thrown yet');
+    }
+
+    let ballCaughtCount: any = fs.readFileSync(filePath, {
+        encoding: 'utf-8',
+    });
+
+    ballCaughtCount = parseInt(ballCaughtCount.match(/\d+/)?.[0] ?? '0', 10);
+    const ballString = ballCaughtCount === 1 ? 'ball' : 'balls';
+
+    return vscode.window.showInformationMessage(
+        `Your pets have caught ${ballCaughtCount} ${ballString}`,
+    );
+}
+
+function resetBallStats() {
+    const filePath = path.join(
+        vscode.workspace.workspaceFolders?.[0].uri.fsPath?.toString() || '',
+        'vscode-pets.stats.json',
+    );
+
+    try {
+        const stats = { ballCaught: 0 };
+        const statsFileContent = JSON.stringify(stats, null, 2);
+        fs.writeFileSync(filePath, statsFileContent, {
+            encoding: 'utf-8',
+        });
+        return vscode.window.showInformationMessage(
+            'Ball Stats have been reset',
+        );
+    } catch (e) {
+        return vscode.window.showErrorMessage(
+            `Failed to reset ball stats: ${e}`,
+        );
     }
 }

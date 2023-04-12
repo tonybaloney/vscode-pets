@@ -122,7 +122,7 @@
             },
             {
                 "command": "vscode-pets.show-stats",
-                "title": "Statistics for all your pets",
+                "title": "Display statistics for all your pets",
                 "category": "Pet Coding",
                 "icon": {
                     "dark": "media/icon/dark-add.svg",
