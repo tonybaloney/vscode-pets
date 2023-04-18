@@ -559,7 +559,7 @@ export function petPanelApp(
                     command: 'list-pets',
                     text: pets
                         .map(
-                            (pet) => `${pet.type},${pet.pet.name},${pet.color}`,
+                            (pet) => `${pet.type},${pet.pet.name},${pet.color},${pet.pet.petId}`,
                         )
                         .join('\n'),
                 });
@@ -578,7 +578,7 @@ export function petPanelApp(
             case 'delete-pet':
                 var pet = allPets.locate(message.name);
                 if (pet) {
-                    allPets.remove(message.name);
+                    allPets.remove(message.petId);
                     saveState(stateApi);
                     stateApi?.postMessage({
                         command: 'info',

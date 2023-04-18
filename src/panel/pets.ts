@@ -22,6 +22,7 @@ export class PetElement {
     pet: IPetType;
     color: PetColor;
     type: PetType;
+    petId: number;
     remove() {
         this.el.remove();
         this.collision.remove();
@@ -37,6 +38,7 @@ export class PetElement {
         pet: IPetType,
         color: PetColor,
         type: PetType,
+
     ) {
         this.el = el;
         this.collision = collision;
@@ -44,6 +46,7 @@ export class PetElement {
         this.pet = pet;
         this.color = color;
         this.type = type;
+        this.petId = pet.petId;
     }
 }
 
@@ -53,7 +56,7 @@ export interface IPetCollection {
     reset(): void;
     seekNewFriends(): string[];
     locate(name: string): PetElement | undefined;
-    remove(name: string): void;
+    remove(id: number): void;
 }
 
 export class PetCollection implements IPetCollection {
@@ -84,14 +87,15 @@ export class PetCollection implements IPetCollection {
         });
     }
 
-    remove(name: string): any {
+    remove(id: number): any {
         this._pets.forEach((pet) => {
-            if (pet.pet.name === name) {
+            
+            if (pet.pet.petId === id) {
                 pet.remove();
             }
         });
         this._pets = this._pets.filter((pet) => {
-            return pet.pet.name !== name;
+            return pet.pet.petId !== id;
         });
     }
 

@@ -18,6 +18,7 @@ export class InvalidStateException {}
 export abstract class BasePetType implements IPetType {
     label: string = 'base';
     static count: number = 0;
+    static idMaker: number = 0;
     sequence: ISequenceTree = {
         startingState: States.sitIdle,
         sequenceStates: [],
@@ -27,6 +28,7 @@ export abstract class BasePetType implements IPetType {
     currentStateEnum: States;
     holdState: IState | undefined;
     holdStateEnum: States | undefined;
+    petId: number;
     private el: HTMLImageElement;
     private collision: HTMLDivElement;
     private speech: HTMLDivElement;
@@ -66,6 +68,9 @@ export abstract class BasePetType implements IPetType {
         this._size = size;
         this._speed = this.randomizeSpeed(speed);
 
+        //increment petId: unique identifier for all pets 
+        this.petId = ++BasePetType.idMaker;
+        
         // Increment the static count of the Pet class that the constructor belongs to
         (this.constructor as any).count += 1;
     }
