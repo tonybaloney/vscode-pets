@@ -357,7 +357,8 @@ export function petPanelApp(
         if (canvas) {
             canvas.style.display = 'block';
         }
-        ballState = new BallState(100, 100, 4, 5);
+        /* spawn with randomize */
+        ballState = new BallState(0, 0, 0, 0, true);
     }
 
     function dynamicThrowOn() {
@@ -430,6 +431,7 @@ export function petPanelApp(
             canvas.style.display = 'none';
         }
     }
+
     function throwBall() {
         if (!ballState.paused) {
             requestAnimationFrame(throwBall);
@@ -461,7 +463,6 @@ export function petPanelApp(
         }
 
         ballState.vy += gravity;
-
         ballState.cx += ballState.vx;
         ballState.cy += ballState.vy;
         drawBall();

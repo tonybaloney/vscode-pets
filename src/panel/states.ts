@@ -92,12 +92,46 @@ export class BallState {
     vy: number;
     paused: boolean;
 
-    constructor(cx: number, cy: number, vx: number, vy: number) {
-        this.cx = cx;
-        this.cy = cy;
-        this.vx = vx;
-        this.vy = vy;
+    constructor(
+        cx: number,
+        cy: number,
+        vx: number,
+        vy: number,
+        randomize?: boolean,
+    ) {
+        if (randomize !== undefined && randomize === true) {
+            const rVals = this.randomizeBallState();
+            this.cx = rVals[0];
+            this.cy = rVals[1];
+            this.vx = rVals[2];
+            this.vy = rVals[3];
+        } else {
+            this.cx = cx;
+            this.cy = cy;
+            this.vx = vx;
+            this.vy = vy;
+        }
         this.paused = false;
+    }
+
+    private randomizeBallState(): Array<number> {
+        /* velocity */
+        const randVx: Array<number> = [
+            //avoids values close to 0
+            -1 * (Math.floor(Math.random() * 12) + 3), //left
+            Math.floor(Math.random() * 12) + 3, // right
+        ];
+        const randVy: number = Math.floor(Math.random() * 20 - 10);
+        /* position */
+        const randX: number = Math.floor(
+            Math.random() * (window.innerWidth * 0.8) + 10,
+        );
+        const randY: number =
+            Math.floor(Math.random() * (window.innerHeight * 0.6)) + 30;
+
+        /* flip a coin to throw left or right */
+        const coin: number = Math.floor(Math.random() * 2);
+        return [randX, randY, randVx[coin], randVy];
     }
 }
 
