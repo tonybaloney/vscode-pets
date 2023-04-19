@@ -68,9 +68,9 @@ export abstract class BasePetType implements IPetType {
         this._size = size;
         this._speed = this.randomizeSpeed(speed);
 
-        //increment petId: unique identifier for all pets 
+        //increment petId: unique identifier for all pets
         this.petId = ++BasePetType.idMaker;
-        
+
         // Increment the static count of the Pet class that the constructor belongs to
         (this.constructor as any).count += 1;
     }

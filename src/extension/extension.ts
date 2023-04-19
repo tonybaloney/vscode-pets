@@ -16,7 +16,6 @@ import { randomName } from '../common/names';
 import * as localize from '../common/localize';
 import { availableColors, normalizeColor } from '../panel/pets';
 
-
 const EXTRA_PETS_KEY = 'vscode-pets.extra-pets';
 const EXTRA_PETS_KEY_TYPES = EXTRA_PETS_KEY + '.types';
 const EXTRA_PETS_KEY_COLORS = EXTRA_PETS_KEY + '.colors';
@@ -38,7 +37,6 @@ class PetQuickPickItem implements vscode.QuickPickItem {
         this.label = name_;
         this.description = `${color} ${type}`;
         this.petId = petId;
-
     }
 
     name: string;
@@ -114,7 +112,7 @@ export class PetSpecification {
         this.color = color;
         this.type = type;
         this.size = size;
-        
+
         if (!name) {
             this.name = randomName(type);
         } else {
@@ -209,14 +207,13 @@ async function handleRemovePetMessage(
     var petList: IPetInfo[] = Array();
     switch (message.command) {
         case 'list-pets':
-
             message.text.split('\n').forEach((pet) => {
                 var parts = pet.split(',');
                 petList.push({
                     type: parts[0] as PetType,
                     name: parts[1],
                     color: parts[2] as PetColor,
-                    petId: Number(parts[3])
+                    petId: Number(parts[3]),
                 });
             });
             break;
@@ -229,7 +226,12 @@ async function handleRemovePetMessage(
     await vscode.window
         .showQuickPick<PetQuickPickItem>(
             petList.map((val) => {
-                return new PetQuickPickItem(val.name, val.type, val.color, val.petId);
+                return new PetQuickPickItem(
+                    val.name,
+                    val.type,
+                    val.color,
+                    val.petId,
+                );
             }),
             {
                 placeHolder: vscode.l10n.t('Select the pet to remove.'),
@@ -799,7 +801,7 @@ class PetWebviewContainer implements IPetPanel {
         this.getWebview().postMessage({
             command: 'delete-pet',
             name: petName,
-            petId: petId
+            petId: petId,
         });
     }
 
@@ -978,8 +980,11 @@ class PetPanel extends PetWebviewContainer implements IPetPanel {
     }
 
     public deletePet(petName: string, petId: number): void {
-        this.getWebview().postMessage({ command: 'delete-pet', name: petName, petId: petId});
-
+        this.getWebview().postMessage({
+            command: 'delete-pet',
+            name: petName,
+            petId: petId,
+        });
     }
 
     public static revive(

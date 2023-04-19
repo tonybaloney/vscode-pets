@@ -559,7 +559,8 @@ export function petPanelApp(
                     command: 'list-pets',
                     text: pets
                         .map(
-                            (pet) => `${pet.type},${pet.pet.name},${pet.color},${pet.pet.petId}`,
+                            (pet) =>
+                                `${pet.type},${pet.pet.name},${pet.color},${pet.pet.petId}`,
                         )
                         .join('\n'),
                 });

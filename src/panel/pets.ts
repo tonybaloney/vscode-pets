@@ -38,7 +38,6 @@ export class PetElement {
         pet: IPetType,
         color: PetColor,
         type: PetType,
-
     ) {
         this.el = el;
         this.collision = collision;
@@ -89,7 +88,6 @@ export class PetCollection implements IPetCollection {
 
     remove(id: number): any {
         this._pets.forEach((pet) => {
-            
             if (pet.pet.petId === id) {
                 pet.remove();
             }
