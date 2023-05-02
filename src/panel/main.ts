@@ -238,6 +238,8 @@ function recoverState(
         // Fixes a bug related to duck animations
         if ((p.petType as string) === 'rubber duck') {
             (p.petType as string) = 'rubber-duck';
+        } else if ((p.petType as string) === 'stick bug') {
+            (p.petType as string) = 'stick-bug';
         }
 
         try {
