@@ -20,6 +20,10 @@ export class StickBug extends BasePetType {
                 state: States.walkLeft,
                 possibleNextStates: [States.sitIdle, States.walkRight],
             },
+            {
+                state: States.swipe,
+                possibleNextStates: [States.sitIdle],
+            },
         ],
     };
     get emoji(): string {
