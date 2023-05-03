@@ -98,6 +98,10 @@ const pets: { [key: string]: { colors: string[]; states: string[] } } = {
         colors: ['green'],
         states: ['idle', 'run', 'swipe', 'walk', 'walk_fast'],
     },
+    cbat: {
+        colors: ['white'],
+        states: ['idle', 'run', 'walk'],
+    },
 };
 
 function checkGifFilenames(folder: string) {
