@@ -10,14 +10,14 @@ export class StickBug extends BasePetType {
         sequenceStates: [
             {
                 state: States.sitIdle,
-                possibleNextStates: [States.walkRight, States.runRight],
+                possibleNextStates: [States.walkRight, States.walkLeft],
             },
             {
                 state: States.walkRight,
-                possibleNextStates: [States.sitIdle, States.runRight],
+                possibleNextStates: [States.sitIdle, States.walkLeft],
             },
             {
-                state: States.runRight,
+                state: States.walkLeft,
                 possibleNextStates: [States.sitIdle, States.walkRight],
             },
         ],
