@@ -14,6 +14,7 @@ export const enum PetColor {
 
 export const enum PetType {
     cat = 'cat',
+    cbat = 'cbat',
     chicken = 'chicken',
     clippy = 'clippy',
     cockatiel = 'cockatiel',
@@ -25,11 +26,10 @@ export const enum PetType {
     rocky = 'rocky',
     rubberduck = 'rubber-duck',
     snake = 'snake',
+    stickbug = 'stick-bug',
     totoro = 'totoro',
     turtle = 'turtle',
     zappy = 'zappy',
-    stickbug = 'stick-bug',
-    cbat = 'cbat',
     null = 'null',
 }
 
@@ -79,6 +79,7 @@ export class WebviewMessage {
 
 export const ALL_PETS = [
     PetType.cat,
+    PetType.cbat,
     PetType.chicken,
     PetType.clippy,
     PetType.cockatiel,
@@ -90,11 +91,10 @@ export const ALL_PETS = [
     PetType.rocky,
     PetType.rubberduck,
     PetType.snake,
+    PetType.stickbug,
     PetType.totoro,
     PetType.turtle,
     PetType.zappy,
-    PetType.stickbug,
-    PetType.cbat,
 ];
 export const ALL_COLORS = [
     PetColor.black,
