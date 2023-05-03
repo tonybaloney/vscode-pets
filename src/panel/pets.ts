@@ -17,6 +17,7 @@ import { Turtle } from './pets/turtle';
 import { IPetType } from './states';
 import { StickBug } from './pets/stickbug';
 import { Cbat } from './pets/cbat';
+import { Chud } from './pets/chud';
 
 export class PetElement {
     el: HTMLImageElement;
@@ -210,6 +211,8 @@ export function createPet(
             return new StickBug(...standardPetArguments, PetSpeed.normal);
         case PetType.cbat:
             return new Cbat(...standardPetArguments, PetSpeed.normal);
+        case PetType.chud:
+            return new Chud(...standardPetArguments, PetSpeed.normal);
         default:
             throw new InvalidPetException("Pet type doesn't exist");
     }
@@ -221,6 +224,8 @@ export function availableColors(petType: PetType): PetColor[] {
             return Cat.possibleColors;
         case PetType.chicken:
             return Chicken.possibleColors;
+        case PetType.chud:
+            return Chud.possibleColors;
         case PetType.dog:
             return Dog.possibleColors;
         case PetType.fox:

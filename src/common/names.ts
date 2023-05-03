@@ -15,6 +15,7 @@ import { RAT_NAMES } from '../panel/pets/rat';
 import { TURTLE_NAMES } from '../panel/pets/turtle';
 import { STICKBUG_NAMES } from '../panel/pets/stickbug';
 import { CBAT_NAMES } from '../panel/pets/cbat';
+import { CHUD_NAMES } from '../panel/pets/chud';
 import { PetType } from './types';
 
 export function randomName(type: PetType): string {
@@ -23,6 +24,7 @@ export function randomName(type: PetType): string {
             {
                 [PetType.cat]: CAT_NAMES,
                 [PetType.chicken]: CHICKEN_NAMES,
+                [PetType.chud]: CHUD_NAMES,
                 [PetType.dog]: DOG_NAMES,
                 [PetType.fox]: FOX_NAMES,
                 [PetType.crab]: CRAB_NAMES,
