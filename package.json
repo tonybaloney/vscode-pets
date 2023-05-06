@@ -2,7 +2,7 @@
     "name": "vscode-pets",
     "displayName": "vscode-pets",
     "description": "Pets for your VS Code",
-    "version": "1.22.0",
+    "version": "1.23.0",
     "engines": {
         "vscode": "^1.73.0"
     },
@@ -158,7 +158,8 @@
                             "gray",
                             "purple",
                             "red",
-                            "white"
+                            "white",
+                            "orange"
                         ],
                         "default": "brown",
                         "description": "Pet color",
@@ -175,12 +176,13 @@
                             "dog",
                             "fox",
                             "mod",
+                            "rat",
                             "rocky",
                             "rubber-duck",
                             "snake",
                             "totoro",
-                            "zappy",
-                            "rat"
+                            "turtle",
+                            "zappy"
                         ],
                         "default": "cat",
                         "description": "Pet type",
