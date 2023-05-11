@@ -1,7 +1,7 @@
 import * as vscode from 'vscode';
-import * as path from 'path';
-import * as fs from 'fs';
-import * as os from 'os';
+import { join } from 'path';
+import { existsSync, readFileSync, writeFileSync } from 'fs';
+import { homedir } from 'os';
 import { ColorThemeKind } from 'vscode';
 import {
     PetSize,
@@ -1153,13 +1153,13 @@ function createPetPlayground(context: vscode.ExtensionContext) {
 }
 
 function storeBallThrown() {
-    const filePath = path.join(os.homedir(), 'vscode-pets.stats.txt');
+    const filePath = join(homedir(), 'vscode-pets.stats.txt');
 
     let ballCaughtCount = 0;
 
     try {
-        if (fs.existsSync(filePath)) {
-            const statsFileContent = fs.readFileSync(filePath, {
+        if (existsSync(filePath)) {
+            const statsFileContent = readFileSync(filePath, {
                 encoding: 'utf-8',
             });
             const stats = JSON.parse(statsFileContent);
@@ -1176,7 +1176,7 @@ function storeBallThrown() {
     try {
         const stats = { ballCaught: ballCaughtCount };
         const statsFileContent = JSON.stringify(stats, null, 2);
-        fs.writeFileSync(filePath, statsFileContent, {
+        writeFileSync(filePath, statsFileContent, {
             encoding: 'utf-8',
         });
         return;
@@ -1188,13 +1188,13 @@ function storeBallThrown() {
 }
 
 function fetchBallThrown() {
-    const filePath = path.join(os.homedir(), 'vscode-pets.stats.txt');
+    const filePath = join(homedir(), 'vscode-pets.stats.txt');
 
-    if (!fs.existsSync(filePath)) {
+    if (existsSync(filePath)) {
         return vscode.window.showErrorMessage('No balls thrown yet');
     }
 
-    let ballCaughtCount: any = fs.readFileSync(filePath, {
+    let ballCaughtCount: any = readFileSync(filePath, {
         encoding: 'utf-8',
     });
 
@@ -1207,12 +1207,12 @@ function fetchBallThrown() {
 }
 
 function resetBallStats() {
-    const filePath = path.join(os.homedir(), 'vscode-pets.stats.txt');
+    const filePath = join(homedir(), 'vscode-pets.stats.txt');
 
     try {
         const stats = { ballCaught: 0 };
         const statsFileContent = JSON.stringify(stats, null, 2);
-        fs.writeFileSync(filePath, statsFileContent, {
+        writeFileSync(filePath, statsFileContent, {
             encoding: 'utf-8',
         });
         return vscode.window.showInformationMessage(
