@@ -1,6 +1,5 @@
 import * as vscode from 'vscode';
 import { join } from 'path';
-import { existsSync, readFileSync, writeFileSync } from 'fs';
 import { homedir } from 'os';
 import { ColorThemeKind } from 'vscode';
 import {
@@ -1152,23 +1151,26 @@ function createPetPlayground(context: vscode.ExtensionContext) {
     }
 }
 
-function storeBallThrown() {
+async function storeBallThrown() {
     const filePath = join(homedir(), 'vscode-pets.stats.txt');
 
     let ballCaughtCount = 0;
 
     try {
-        if (existsSync(filePath)) {
-            const statsFileContent = readFileSync(filePath, {
-                encoding: 'utf-8',
-            });
-            const stats = JSON.parse(statsFileContent);
-            ballCaughtCount = stats.ballCaught || 0;
-        }
-    } catch (e) {
-        return vscode.window.showErrorMessage(
-            `Failed to read ${filePath}: ${e}`,
+        await vscode.workspace.fs.stat(vscode.Uri.file(filePath));
+        const statsFileContent = await vscode.workspace.fs.readFile(
+            vscode.Uri.file(filePath),
         );
+        const stats = JSON.parse(statsFileContent.toString());
+        ballCaughtCount = stats.ballCaught || 0;
+    } catch (e) {
+        // if the file does not exist create it
+        const stats = { ballCaught: 1 };
+        vscode.workspace.fs.writeFile(
+            vscode.Uri.file(filePath),
+            new TextEncoder().encode(JSON.stringify(stats, null, 2)),
+        );
+        return;
     }
 
     ballCaughtCount++;
@@ -1176,9 +1178,10 @@ function storeBallThrown() {
     try {
         const stats = { ballCaught: ballCaughtCount };
         const statsFileContent = JSON.stringify(stats, null, 2);
-        writeFileSync(filePath, statsFileContent, {
-            encoding: 'utf-8',
-        });
+        await vscode.workspace.fs.writeFile(
+            vscode.Uri.file(filePath),
+            new TextEncoder().encode(statsFileContent),
+        );
         return;
     } catch (e) {
         return vscode.window.showErrorMessage(
@@ -1187,18 +1190,23 @@ function storeBallThrown() {
     }
 }
 
-function fetchBallThrown() {
+async function fetchBallThrown() {
     const filePath = join(homedir(), 'vscode-pets.stats.txt');
 
-    if (existsSync(filePath)) {
+    try {
+        await vscode.workspace.fs.stat(vscode.Uri.file(filePath));
+    } catch (e) {
         return vscode.window.showErrorMessage('No balls thrown yet');
     }
 
-    let ballCaughtCount: any = readFileSync(filePath, {
-        encoding: 'utf-8',
-    });
+    let ballCaughtCount: any = await vscode.workspace.fs.readFile(
+        vscode.Uri.file(filePath),
+    );
 
-    ballCaughtCount = parseInt(ballCaughtCount.match(/\d+/)?.[0] ?? '0', 10);
+    ballCaughtCount = parseInt(
+        ballCaughtCount.toString().match(/\d+/)?.[0] ?? '0',
+        10,
+    );
     const ballString = ballCaughtCount === 1 ? 'ball' : 'balls';
 
     return vscode.window.showInformationMessage(
@@ -1206,15 +1214,16 @@ function fetchBallThrown() {
     );
 }
 
-function resetBallStats() {
+async function resetBallStats() {
     const filePath = join(homedir(), 'vscode-pets.stats.txt');
 
     try {
         const stats = { ballCaught: 0 };
         const statsFileContent = JSON.stringify(stats, null, 2);
-        writeFileSync(filePath, statsFileContent, {
-            encoding: 'utf-8',
-        });
+        await vscode.workspace.fs.writeFile(
+            vscode.Uri.file(filePath),
+            new TextEncoder().encode(statsFileContent),
+        );
         return vscode.window.showInformationMessage(
             'Ball Stats have been reset',
         );
