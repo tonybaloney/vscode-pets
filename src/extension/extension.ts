@@ -1,6 +1,7 @@
 import * as vscode from 'vscode';
 import { join } from 'path';
 import { homedir } from 'os';
+import { appendFileSync } from 'fs';
 import { ColorThemeKind } from 'vscode';
 import {
     PetSize,
@@ -313,7 +314,15 @@ export function activate(context: vscode.ExtensionContext) {
 
     context.subscriptions.push(
         vscode.commands.registerCommand('vscode-pets.show-stats', () => {
-            return fetchBallThrown();
+            vscode.window
+                .showQuickPick(['Balls Thrown', 'Show Pet Date of Birth'])
+                .then((value) => {
+                    if (value === 'Balls Thrown') {
+                        fetchBallThrown();
+                    } else if (value === 'Show Pet Date of Birth') {
+                        fetchCreationDays();
+                    }
+                });
         }),
     );
 
@@ -556,6 +565,7 @@ export function activate(context: vscode.ExtensionContext) {
                         vscode.l10n.t('Cancelled Spawning Pet'),
                     );
                 } else if (spec) {
+                    storePetDateOfBirth(name, selectedPetType.value);
                     panel.spawnPet(spec);
                 }
                 var collection = PetSpecification.collectionFromMemento(
@@ -1152,7 +1162,7 @@ function createPetPlayground(context: vscode.ExtensionContext) {
 }
 
 async function storeBallThrown() {
-    const filePath = join(homedir(), 'vscode-pets.stats.txt');
+    const filePath = join(homedir(), 'vscode-pets.ballsThrown.txt');
 
     let ballCaughtCount = 0;
 
@@ -1191,7 +1201,7 @@ async function storeBallThrown() {
 }
 
 async function fetchBallThrown() {
-    const filePath = join(homedir(), 'vscode-pets.stats.txt');
+    const filePath = join(homedir(), 'vscode-pets.ballsThrown.txt');
 
     try {
         await vscode.workspace.fs.stat(vscode.Uri.file(filePath));
@@ -1215,7 +1225,7 @@ async function fetchBallThrown() {
 }
 
 async function resetBallStats() {
-    const filePath = join(homedir(), 'vscode-pets.stats.txt');
+    const filePath = join(homedir(), 'vscode-pets.ballsThrown.txt');
 
     try {
         const stats = { ballCaught: 0 };
@@ -1230,6 +1240,55 @@ async function resetBallStats() {
     } catch (e) {
         return vscode.window.showErrorMessage(
             `Failed to reset ball stats: ${e}`,
+        );
+    }
+}
+
+function storePetDateOfBirth(name: string | undefined, type: string) {
+    const filePath = join(homedir(), 'vscode-pets.DOB.txt');
+
+    try {
+        const stats = {
+            name,
+            type,
+            birthdate: new Date().toISOString().split('T')[0],
+        };
+        const statsFileContent = JSON.stringify(stats, null, 2);
+        appendFileSync(filePath, statsFileContent + '\n');
+
+        return;
+    } catch (e) {
+        return vscode.window.showErrorMessage(
+            `Failed to update ${filePath}: ${e}`,
+        );
+    }
+}
+
+function fetchCreationDays() {
+    const filePath = join(homedir(), 'vscode-pets.DOB.txt');
+
+    try {
+        const statsFileContent = vscode.workspace.fs.readFile(
+            vscode.Uri.file(filePath),
+        );
+        // loop for each pet and then display the date of birth
+        return statsFileContent.then((content) => {
+            const stats = content.toString().split('\n');
+            const pets: any = {};
+            for (let i = 0; i < stats.length; i++) {
+                const pet = JSON.parse(stats[i]);
+                if (pet.name) {
+                    pets[pet.name] = pet.birthdate;
+                }
+            }
+
+            return vscode.window.showInformationMessage(
+                `Your pets were created on: ${JSON.stringify(pets, null, 2)}`,
+            );
+        });
+    } catch (e) {
+        return vscode.window.showErrorMessage(
+            `Failed to fetch creation days: ${e}`,
         );
     }
 }
