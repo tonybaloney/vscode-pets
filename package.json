@@ -147,47 +147,6 @@
         "configuration": [
             {
                 "properties": {
-                    "vscode-pets.petColor": {
-                        "type": "string",
-                        "enum": [
-                            "black",
-                            "lightbrown",
-                            "brown",
-                            "green",
-                            "yellow",
-                            "gray",
-                            "purple",
-                            "red",
-                            "white",
-                            "orange"
-                        ],
-                        "default": "brown",
-                        "description": "Pet color",
-                        "scope": "window"
-                    },
-                    "vscode-pets.petType": {
-                        "type": "string",
-                        "enum": [
-                            "cat",
-                            "chicken",
-                            "crab",
-                            "clippy",
-                            "cockatiel",
-                            "dog",
-                            "fox",
-                            "mod",
-                            "rat",
-                            "rocky",
-                            "rubber-duck",
-                            "snake",
-                            "totoro",
-                            "turtle",
-                            "zappy"
-                        ],
-                        "default": "cat",
-                        "description": "Pet type",
-                        "scope": "window"
-                    },
                     "vscode-pets.petSize": {
                         "type": "string",
                         "enum": [
