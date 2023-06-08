@@ -21,6 +21,7 @@ Once you have the pet panel open, you can:
 * :ref:`Throwing a ball`
 * :ref:`Roll-call with your pets`
 * :ref:`Removing a single pet or multiple pets`
+* :ref `Importing or Exporting your Pet List`
 * :ref:`Themes`
 
 Changing your pet
@@ -115,6 +116,15 @@ You can remove all pets (except the 1 configured) by running the "Remove all pet
 You can remove specific pets by clicking the trashcan icon or by running the "Remove pet" command (`vscode-pets.delete-pet`) from the command palette.
 
 .. image:: _static/pet-remove.png
+
+Importing or Exporting your Pet List
+------------------------------------
+
+Have a certain pet setup you would like to share with your friends?
+You can export your pet list by running the "Export pet list" command (`vscode-pets.export-pets`) from the command palette.
+The pet list can be imported by running the "Import pet list" command (`vscode-pets.import-pets`) from the command palette.
+
+.. image:: _static/pet-import-export.gif
 
 Themes
 ------
