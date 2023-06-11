@@ -235,7 +235,7 @@
         "compile:test": "tsc -p ./tsconfig.test.json",
         "compile:web": "webpack",
         "compile": "npm run compile:panel && npm run compile:extension && npm run compile:test && npm run compile:web",
-        "watch": "tsc -watch -p ./tsconfig.extension.json",
+        "watch": "webpack && tsc -watch -p ./tsconfig.extension.json",
         "watch:web": "webpack --watch",
         "pretest": "npm run compile && npm run lint",
         "lint": "eslint src --ext ts && prettier --check src",
