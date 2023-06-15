@@ -1,4 +1,7 @@
 import * as vscode from 'vscode';
+import { join } from 'path';
+import { homedir } from 'os';
+import { appendFileSync } from 'fs';
 import { ColorThemeKind } from 'vscode';
 import {
     PetSize,
@@ -309,6 +312,26 @@ export function activate(context: vscode.ExtensionContext) {
         }),
     );
 
+    context.subscriptions.push(
+        vscode.commands.registerCommand('vscode-pets.show-stats', () => {
+            vscode.window
+                .showQuickPick(['Balls Thrown', 'Show Pet Date of Birth'])
+                .then((value) => {
+                    if (value === 'Balls Thrown') {
+                        fetchBallThrown();
+                    } else if (value === 'Show Pet Date of Birth') {
+                        fetchCreationDays();
+                    }
+                });
+        }),
+    );
+
+    context.subscriptions.push(
+        vscode.commands.registerCommand('vscode-pets.reset-stats', () => {
+            return resetBallStats();
+        }),
+    );
+
     // status bar item
     petPlaygroundStatusBar = vscode.window.createStatusBarItem(
         vscode.StatusBarAlignment.Right,
@@ -360,6 +383,7 @@ export function activate(context: vscode.ExtensionContext) {
         vscode.commands.registerCommand('vscode-pets.throw-ball', () => {
             const panel = getPetPanel();
             if (panel !== undefined) {
+                storeBallThrown();
                 panel.throwBall();
             }
         }),
@@ -541,6 +565,7 @@ export function activate(context: vscode.ExtensionContext) {
                         vscode.l10n.t('Cancelled Spawning Pet'),
                     );
                 } else if (spec) {
+                    storePetDateOfBirth(name, selectedPetType.value);
                     panel.spawnPet(spec);
                 }
                 var collection = PetSpecification.collectionFromMemento(
@@ -1133,5 +1158,137 @@ function createPetPlayground(context: vscode.ExtensionContext) {
         );
         collection.push(spec);
         storeCollectionAsMemento(context, collection);
+    }
+}
+
+async function storeBallThrown() {
+    const filePath = join(homedir(), 'vscode-pets.ballsThrown.txt');
+
+    let ballCaughtCount = 0;
+
+    try {
+        await vscode.workspace.fs.stat(vscode.Uri.file(filePath));
+        const statsFileContent = await vscode.workspace.fs.readFile(
+            vscode.Uri.file(filePath),
+        );
+        const stats = JSON.parse(statsFileContent.toString());
+        ballCaughtCount = stats.ballCaught || 0;
+    } catch (e) {
+        // if the file does not exist create it
+        const stats = { ballCaught: 1 };
+        vscode.workspace.fs.writeFile(
+            vscode.Uri.file(filePath),
+            new TextEncoder().encode(JSON.stringify(stats, null, 2)),
+        );
+        return;
+    }
+
+    ballCaughtCount++;
+
+    try {
+        const stats = { ballCaught: ballCaughtCount };
+        const statsFileContent = JSON.stringify(stats, null, 2);
+        await vscode.workspace.fs.writeFile(
+            vscode.Uri.file(filePath),
+            new TextEncoder().encode(statsFileContent),
+        );
+        return;
+    } catch (e) {
+        return vscode.window.showErrorMessage(
+            `Failed to update ${filePath}: ${e}`,
+        );
+    }
+}
+
+async function fetchBallThrown() {
+    const filePath = join(homedir(), 'vscode-pets.ballsThrown.txt');
+
+    try {
+        await vscode.workspace.fs.stat(vscode.Uri.file(filePath));
+    } catch (e) {
+        return vscode.window.showErrorMessage('No balls thrown yet');
+    }
+
+    let ballCaughtCount: any = await vscode.workspace.fs.readFile(
+        vscode.Uri.file(filePath),
+    );
+
+    ballCaughtCount = parseInt(
+        ballCaughtCount.toString().match(/\d+/)?.[0] ?? '0',
+        10,
+    );
+    const ballString = ballCaughtCount === 1 ? 'ball' : 'balls';
+
+    return vscode.window.showInformationMessage(
+        `Your pets have caught ${ballCaughtCount} ${ballString}`,
+    );
+}
+
+async function resetBallStats() {
+    const filePath = join(homedir(), 'vscode-pets.ballsThrown.txt');
+
+    try {
+        const stats = { ballCaught: 0 };
+        const statsFileContent = JSON.stringify(stats, null, 2);
+        await vscode.workspace.fs.writeFile(
+            vscode.Uri.file(filePath),
+            new TextEncoder().encode(statsFileContent),
+        );
+        return vscode.window.showInformationMessage(
+            'Ball Stats have been reset',
+        );
+    } catch (e) {
+        return vscode.window.showErrorMessage(
+            `Failed to reset ball stats: ${e}`,
+        );
+    }
+}
+
+function storePetDateOfBirth(name: string | undefined, type: string) {
+    const filePath = join(homedir(), 'vscode-pets.DOB.txt');
+
+    try {
+        const stats = {
+            name,
+            type,
+            birthdate: new Date().toISOString().split('T')[0],
+        };
+        const statsFileContent = JSON.stringify(stats, null, 2);
+        appendFileSync(filePath, statsFileContent + '\n');
+
+        return;
+    } catch (e) {
+        return vscode.window.showErrorMessage(
+            `Failed to update ${filePath}: ${e}`,
+        );
+    }
+}
+
+function fetchCreationDays() {
+    const filePath = join(homedir(), 'vscode-pets.DOB.txt');
+
+    try {
+        const statsFileContent = vscode.workspace.fs.readFile(
+            vscode.Uri.file(filePath),
+        );
+        // loop for each pet and then display the date of birth
+        return statsFileContent.then((content) => {
+            const stats = content.toString().split('\n');
+            const pets: any = {};
+            for (let i = 0; i < stats.length; i++) {
+                const pet = JSON.parse(stats[i]);
+                if (pet.name) {
+                    pets[pet.name] = pet.birthdate;
+                }
+            }
+
+            return vscode.window.showInformationMessage(
+                `Your pets were created on: ${JSON.stringify(pets, null, 2)}`,
+            );
+        });
+    } catch (e) {
+        return vscode.window.showErrorMessage(
+            `Failed to fetch creation days: ${e}`,
+        );
     }
 }
