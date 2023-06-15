@@ -214,7 +214,8 @@
                             "none",
                             "forest",
                             "castle",
-                            "beach"
+                            "beach",
+                            "leaftrade"
                         ],
                         "default": "none",
                         "description": "Background theme assets for your pets"
