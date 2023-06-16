@@ -214,8 +214,8 @@
                             "none",
                             "forest",
                             "castle",
-                            "beach",
-                            "island"
+                            "island",
+                            "beach"
                         ],
                         "default": "none",
                         "description": "Background theme assets for your pets"
