@@ -87,14 +87,14 @@ function calculateFloor(size: PetSize, theme: Theme): number {
         case Theme.island:
             switch (size) {
                 case PetSize.small:
-                    return 30;
+                    return 60;
                 case PetSize.medium:
-                    return 40;
+                    return 80;
                 case PetSize.large:
-                    return 65;
+                    return 120;
                 case PetSize.nano:
                 default:
-                    return 23;
+                    return 45;
             }
     }
     return 0;
