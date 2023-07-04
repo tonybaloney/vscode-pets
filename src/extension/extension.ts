@@ -579,8 +579,6 @@ export function activate(context: vscode.ExtensionContext) {
         vscode.workspace.onDidChangeConfiguration(
             (e: vscode.ConfigurationChangeEvent): void => {
                 if (
-                    e.affectsConfiguration('vscode-pets.petColor') ||
-                    e.affectsConfiguration('vscode-pets.petType') ||
                     e.affectsConfiguration('vscode-pets.petSize') ||
                     e.affectsConfiguration('vscode-pets.theme') ||
                     e.affectsConfiguration('workbench.colorTheme')
@@ -588,9 +586,7 @@ export function activate(context: vscode.ExtensionContext) {
                     const spec = PetSpecification.fromConfiguration();
                     const panel = getPetPanel();
                     if (panel) {
-                        panel.updatePetColor(spec.color);
                         panel.updatePetSize(spec.size);
-                        panel.updatePetType(spec.type);
                         panel.updateTheme(
                             getConfiguredTheme(),
                             getConfiguredThemeKind(),
@@ -664,8 +660,6 @@ interface IPetPanel {
     rollCall(): void;
     themeKind(): vscode.ColorThemeKind;
     throwBallWithMouse(): boolean;
-    updatePetColor(newColor: PetColor): void;
-    updatePetType(newType: PetType): void;
     updatePetSize(newSize: PetSize): void;
     updateTheme(newTheme: Theme, themeKind: vscode.ColorThemeKind): void;
     update(): void;
