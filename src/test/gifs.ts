@@ -33,7 +33,7 @@ const pets: { [key: string]: { colors: string[]; states: string[] } } = {
         states: ['idle', 'run', 'swipe', 'walk', 'walk_fast', 'with_ball'],
     },
     dog: {
-        colors: ['black', 'brown', 'red', 'white'],
+        colors: ['black', 'brown', 'red', 'white', 'akita'],
         states: [
             'idle',
             'lie',
