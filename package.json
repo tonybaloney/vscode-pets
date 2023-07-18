@@ -159,7 +159,8 @@
                             "purple",
                             "red",
                             "white",
-                            "orange"
+                            "orange",
+                            "akita"
                         ],
                         "default": "brown",
                         "description": "Pet color",

@@ -9,6 +9,7 @@ export class Dog extends BasePetType {
         PetColor.brown,
         PetColor.white,
         PetColor.red,
+        PetColor.akita,
     ];
     sequence = {
         startingState: States.sitIdle,

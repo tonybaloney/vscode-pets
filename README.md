@@ -62,6 +62,8 @@ The forest theme was designed by [edermunizz](https://edermunizz.itch.io/free-pi
 
 [Karen Rustad Tölva](https://www.aldeka.net) designed the original concept of Ferris the crab.
 
+[Kevin Huang](https://github.com/kevin2huang) created the Akita inu media assets.
+
 The turtle animations were designed by enkeefe using [Pixelart](https://www.pixilart.com/draw).
 
 ## Thank you
