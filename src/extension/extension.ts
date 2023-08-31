@@ -203,6 +203,9 @@ async function handleRemovePetMessage(
     switch (message.command) {
         case 'list-pets':
             message.text.split('\n').forEach((pet) => {
+                if (!pet) {
+                    return;
+                }
                 var parts = pet.split(',');
                 petList.push({
                     type: parts[0] as PetType,
@@ -215,6 +218,12 @@ async function handleRemovePetMessage(
             return;
     }
     if (!petList) {
+        return;
+    }
+    if (!petList.length) {
+        vscode.window.showErrorMessage(
+            vscode.l10n.t('There are no pets to remove.'),
+        );
         return;
     }
     await vscode.window
