@@ -203,7 +203,9 @@ async function handleRemovePetMessage(
     switch (message.command) {
         case 'list-pets':
             message.text.split('\n').forEach((pet) => {
-                if (!pet) { return; }
+                if (!pet) {
+                    return;
+                }
                 var parts = pet.split(',');
                 petList.push({
                     type: parts[0] as PetType,
@@ -220,7 +222,7 @@ async function handleRemovePetMessage(
     }
     if (!petList.length) {
         vscode.window.showErrorMessage(
-            vscode.l10n.t('There are no pets to remove.',),
+            vscode.l10n.t('There are no pets to remove.'),
         );
         return;
     }
@@ -855,7 +857,7 @@ class PetWebviewContainer implements IPetPanel {
                     webview.cspSource
                 } 'nonce-${nonce}'; img-src ${
             webview.cspSource
-            } https:; script-src 'nonce-${nonce}';
+        } https:; script-src 'nonce-${nonce}';
                 font-src ${webview.cspSource};">
 				<meta name="viewport" content="width=device-width, initial-scale=1.0">
 				<link href="${stylesResetUri}" rel="stylesheet" nonce="${nonce}">
