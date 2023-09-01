@@ -2,6 +2,26 @@
 
 All notable changes to the "vscode-pets" extension will be documented in this file.
 
+## [1.25.0]
+
+* Add Akita inu pet by @kevin2huang in https://github.com/tonybaloney/vscode-pets/pull/458
+* #469 Solved turtle image bug by @WindowGenerator in https://github.com/tonybaloney/vscode-pets/pull/472
+* #470 solved undefined showing when no pets are present to remove by @PraneshBalasubramaniam in https://github.com/tonybaloney/vscode-pets/pull/471
+* Improve Thai and Korean translations by @tonybaloney in https://github.com/tonybaloney/vscode-pets/pull/479
+
+## [1.24.0]
+
+* Improve translations by Github Action by @tonybaloney in https://github.com/tonybaloney/vscode-pets/pull/413
+* Updated Chinese (Simplified) translations by @tonybaloney in https://github.com/tonybaloney/vscode-pets/pull/426
+* Add Hungarian translation by @byvide in https://github.com/tonybaloney/vscode-pets/pull/428
+* Add English (UK), English (AU) and Polish by @tonybaloney in https://github.com/tonybaloney/vscode-pets/pull/429
+* Add Portuguese (Brazilian) translations by @tonybaloney in https://github.com/tonybaloney/vscode-pets/pull/430
+* Bugfix for Turtle Type (Issue #414) by @enkeefe in https://github.com/tonybaloney/vscode-pets/pull/417
+* Add import and export pets command into the documentation by @Harry-Hopkinson in https://github.com/tonybaloney/vscode-pets/pull/427
+* Fix main-bundle not being created when running debugger. by @Harry-Hopkinson in https://github.com/tonybaloney/vscode-pets/pull/446
+* Fix panel not active message. by @Harry-Hopkinson in https://github.com/tonybaloney/vscode-pets/pull/411
+* New Crowdin translations by Github Action by @tonybaloney in https://github.com/tonybaloney/vscode-pets/pull/452
+
 ## [1.23.0]
 
 * Add the pet's window setting in the documentation by @NicolasRenault in https://github.com/tonybaloney/vscode-pets/pull/402
