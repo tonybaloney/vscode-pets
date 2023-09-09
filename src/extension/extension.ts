@@ -85,6 +85,16 @@ function getThrowWithMouseConfiguration(): boolean {
         .get<boolean>('throwBallWithMouse', true);
 }
 
+function updateThrowWithMouseConfiguration() {
+    const config = vscode.workspace.getConfiguration('vscode-pets');
+    const newValue = !config.get<boolean>('throwBallWithMouse', true);
+    config.update(
+        'throwBallWithMouse',
+        newValue,
+        vscode.ConfigurationTarget.Global,
+    );
+}
+
 function updatePanelThrowWithMouse(): void {
     const panel = getPetPanel();
     if (panel !== undefined) {
@@ -363,6 +373,13 @@ export function activate(context: vscode.ExtensionContext) {
                 panel.throwBall();
             }
         }),
+    );
+
+    context.subscriptions.push(
+        vscode.commands.registerCommand(
+            'vscode-pets.throw-with-mouse',
+            updateThrowWithMouseConfiguration,
+        ),
     );
 
     context.subscriptions.push(
