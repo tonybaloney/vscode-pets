@@ -31,10 +31,12 @@ class PetQuickPickItem implements vscode.QuickPickItem {
         public readonly name_: string,
         public readonly type: string,
         public readonly color: string,
+        public readonly petId: number,
     ) {
         this.name = name_;
         this.label = name_;
         this.description = `${color} ${type}`;
+        this.petId = petId;
     }
 
     name: string;
@@ -110,6 +112,7 @@ export class PetSpecification {
         this.color = color;
         this.type = type;
         this.size = size;
+
         if (!name) {
             this.name = randomName(type);
         } else {
@@ -193,6 +196,7 @@ interface IPetInfo {
     type: PetType;
     name: string;
     color: PetColor;
+    petId: number;
 }
 
 async function handleRemovePetMessage(
@@ -211,6 +215,7 @@ async function handleRemovePetMessage(
                     type: parts[0] as PetType,
                     name: parts[1],
                     color: parts[2] as PetColor,
+                    petId: Number(parts[3]),
                 });
             });
             break;
@@ -229,7 +234,12 @@ async function handleRemovePetMessage(
     await vscode.window
         .showQuickPick<PetQuickPickItem>(
             petList.map((val) => {
-                return new PetQuickPickItem(val.name, val.type, val.color);
+                return new PetQuickPickItem(
+                    val.name,
+                    val.type,
+                    val.color,
+                    val.petId,
+                );
             }),
             {
                 placeHolder: vscode.l10n.t('Select the pet to remove.'),
@@ -239,10 +249,10 @@ async function handleRemovePetMessage(
             if (pet) {
                 const panel = getPetPanel();
                 if (panel !== undefined) {
-                    panel.deletePet(pet.name);
+                    panel.deletePet(pet.name, pet.petId);
                     const collection = petList
                         .filter((item) => {
-                            return item.name !== pet.name;
+                            return item.petId !== pet.petId;
                         })
                         .map<PetSpecification>((item) => {
                             return new PetSpecification(
@@ -370,6 +380,7 @@ export function activate(context: vscode.ExtensionContext) {
             const panel = getPetPanel();
             if (panel !== undefined) {
                 panel.listPets();
+
                 getWebview()?.onDidReceiveMessage(
                     handleRemovePetMessage,
                     context,
@@ -668,7 +679,7 @@ interface IPetPanel {
     throwBall(): void;
     resetPets(): void;
     spawnPet(spec: PetSpecification): void;
-    deletePet(petName: string): void;
+    deletePet(petName: string, petId: number): void;
     listPets(): void;
     rollCall(): void;
     themeKind(): vscode.ColorThemeKind;
@@ -788,8 +799,12 @@ class PetWebviewContainer implements IPetPanel {
         this.getWebview().postMessage({ command: 'roll-call' });
     }
 
-    public deletePet(petName: string) {
-        this.getWebview().postMessage({ command: 'delete-pet', name: petName });
+    public deletePet(petName: string, petId: number) {
+        this.getWebview().postMessage({
+            command: 'delete-pet',
+            name: petName,
+            petId: petId,
+        });
     }
 
     protected getWebview(): vscode.Webview {
@@ -966,8 +981,12 @@ class PetPanel extends PetWebviewContainer implements IPetPanel {
         this.getWebview().postMessage({ command: 'roll-call' });
     }
 
-    public deletePet(petName: string): void {
-        this.getWebview().postMessage({ command: 'delete-pet', name: petName });
+    public deletePet(petName: string, petId: number): void {
+        this.getWebview().postMessage({
+            command: 'delete-pet',
+            name: petName,
+            petId: petId,
+        });
     }
 
     public static revive(

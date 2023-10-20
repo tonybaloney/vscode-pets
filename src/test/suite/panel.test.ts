@@ -96,6 +96,7 @@ suite('Pets Test Suite', () => {
         assert.ok(testPet instanceof Cat);
         assert.equal(testPet.emoji, '🐱');
         assert.equal(testPet.name, 'Jerry');
+        assert.equal(testPet.petId, 1);
 
         const testPetElement = new pets.PetElement(
             petImageEl,
@@ -113,7 +114,7 @@ suite('Pets Test Suite', () => {
         collection.push(testPetElement);
         assert.strictEqual(collection.locate('Jerry'), testPetElement);
 
-        collection.remove('Jerry');
+        collection.remove(1);
         assert.strictEqual(collection.locate('Jerry'), undefined);
     });
 

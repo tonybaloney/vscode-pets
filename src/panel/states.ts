@@ -3,6 +3,7 @@ import { PetColor, PetType } from '../common/types';
 export interface IPetType {
     nextFrame(): void;
 
+    petId: number;
     // Special methods for actions
     canSwipe: boolean;
     canChase: boolean;
