@@ -70,7 +70,7 @@ import * as panel from '../../panel/main';
 import { Cat } from '../../panel/pets/cat';
 
 suite('Pets Test Suite', () => {
-    vscode.window.showInformationMessage('Start all tests.');
+    void vscode.window.showInformationMessage('Start all tests.');
 
     test('Test pet collection', () => {
         var collection = new pets.PetCollection();
