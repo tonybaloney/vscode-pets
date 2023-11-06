@@ -495,7 +495,7 @@ export function activate(context: vscode.ExtensionContext) {
                 getConfigurationPosition() === ExtPosition.explorer &&
                 webviewViewProvider
             ) {
-                vscode.commands.executeCommand('petsView.focus');
+                await vscode.commands.executeCommand('petsView.focus');
             }
             if (panel) {
                 const selectedPetType = await vscode.window.showQuickPick(
@@ -505,6 +505,7 @@ export function activate(context: vscode.ExtensionContext) {
                     },
                 );
                 if (selectedPetType === undefined) {
+                    console.log('Cancelled Spawning Pet - No Pet Type Selected');
                     return;
                 }
                 var petColor: PetColor = DEFAULT_COLOR;
