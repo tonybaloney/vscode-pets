@@ -21,7 +21,7 @@ Once you have the pet panel open, you can:
 * :ref:`Throwing a ball`
 * :ref:`Roll-call with your pets`
 * :ref:`Removing a single pet or multiple pets`
-* :ref `Importing or Exporting your Pet List`
+* :ref:`Importing or Exporting your Pet List`
 * :ref:`Themes`
 
 Changing your pet
