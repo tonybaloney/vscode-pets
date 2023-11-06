@@ -235,30 +235,27 @@ async function handleRemovePetMessage(
                 placeHolder: vscode.l10n.t('Select the pet to remove.'),
             },
         )
-        .then(
-            (pet: PetQuickPickItem | undefined) =>
-                async function () {
-                    if (pet) {
-                        const panel = getPetPanel();
-                        if (panel !== undefined) {
-                            panel.deletePet(pet.name);
-                            const collection = petList
-                                .filter((item) => {
-                                    return item.name !== pet.name;
-                                })
-                                .map<PetSpecification>((item) => {
-                                    return new PetSpecification(
-                                        item.color,
-                                        item.type,
-                                        PetSize.medium,
-                                        item.name,
-                                    );
-                                });
-                            await storeCollectionAsMemento(this, collection);
-                        }
-                    }
-                },
-        );
+        .then(async (pet: PetQuickPickItem | undefined) => {
+            if (pet) {
+                const panel = getPetPanel();
+                if (panel !== undefined) {
+                    panel.deletePet(pet.name);
+                    const collection = petList
+                        .filter((item) => {
+                            return item.name !== pet.name;
+                        })
+                        .map<PetSpecification>((item) => {
+                            return new PetSpecification(
+                                item.color,
+                                item.type,
+                                PetSize.medium,
+                                item.name,
+                            );
+                        });
+                    await storeCollectionAsMemento(this, collection);
+                }
+            }
+        });
 }
 
 function getPetPanel(): IPetPanel | undefined {
@@ -287,42 +284,37 @@ function getWebview(): vscode.Webview | undefined {
 
 export function activate(context: vscode.ExtensionContext) {
     context.subscriptions.push(
-        vscode.commands.registerCommand(
-            'vscode-pets.start',
-            () =>
-                async function () {
-                    if (
-                        getConfigurationPosition() === ExtPosition.explorer &&
-                        webviewViewProvider
-                    ) {
-                        await vscode.commands.executeCommand('petsView.focus');
-                    } else {
-                        const spec = PetSpecification.fromConfiguration();
-                        PetPanel.createOrShow(
-                            context.extensionUri,
-                            spec.color,
-                            spec.type,
-                            spec.size,
-                            getConfiguredTheme(),
-                            getConfiguredThemeKind(),
-                            getThrowWithMouseConfiguration(),
-                        );
+        vscode.commands.registerCommand('vscode-pets.start', async () => {
+            if (
+                getConfigurationPosition() === ExtPosition.explorer &&
+                webviewViewProvider
+            ) {
+                await vscode.commands.executeCommand('petsView.focus');
+            } else {
+                const spec = PetSpecification.fromConfiguration();
+                PetPanel.createOrShow(
+                    context.extensionUri,
+                    spec.color,
+                    spec.type,
+                    spec.size,
+                    getConfiguredTheme(),
+                    getConfiguredThemeKind(),
+                    getThrowWithMouseConfiguration(),
+                );
 
-                        if (PetPanel.currentPanel) {
-                            var collection =
-                                PetSpecification.collectionFromMemento(
-                                    context,
-                                    getConfiguredSize(),
-                                );
-                            collection.forEach((item) => {
-                                PetPanel.currentPanel?.spawnPet(item);
-                            });
-                            // Store the collection in the memento, incase any of the null values (e.g. name) have been set
-                            await storeCollectionAsMemento(context, collection);
-                        }
-                    }
-                },
-        ),
+                if (PetPanel.currentPanel) {
+                    var collection = PetSpecification.collectionFromMemento(
+                        context,
+                        getConfiguredSize(),
+                    );
+                    collection.forEach((item) => {
+                        PetPanel.currentPanel?.spawnPet(item);
+                    });
+                    // Store the collection in the memento, incase any of the null values (e.g. name) have been set
+                    await storeCollectionAsMemento(context, collection);
+                }
+            }
+        }),
     );
 
     spawnPetStatusBar = vscode.window.createStatusBarItem(
@@ -427,22 +419,20 @@ export function activate(context: vscode.ExtensionContext) {
                     scheme: 'untitled',
                     path: filePath.fsPath,
                 });
-                await vscode.workspace.openTextDocument(newUri).then(
-                    (doc) =>
-                        async function () {
-                            await vscode.window.showTextDocument(doc).then(
-                                (editor) =>
-                                    async function () {
-                                        await editor.edit((edit) => {
-                                            edit.insert(
-                                                new vscode.Position(0, 0),
-                                                petJson,
-                                            );
-                                        });
-                                    },
-                            );
-                        },
-                );
+                await vscode.workspace
+                    .openTextDocument(newUri)
+                    .then(async (doc) => {
+                        await vscode.window
+                            .showTextDocument(doc)
+                            .then(async (editor) => {
+                                await editor.edit((edit) => {
+                                    edit.insert(
+                                        new vscode.Position(0, 0),
+                                        petJson,
+                                    );
+                                });
+                            });
+                    });
             },
         ),
     );
@@ -591,21 +581,20 @@ export function activate(context: vscode.ExtensionContext) {
     context.subscriptions.push(
         vscode.commands.registerCommand(
             'vscode-pets.remove-all-pets',
-            () =>
-                async function () {
-                    const panel = getPetPanel();
-                    if (panel !== undefined) {
-                        panel.resetPets();
-                        await storeCollectionAsMemento(context, []);
-                    } else {
-                        await createPetPlayground(context);
-                        await vscode.window.showInformationMessage(
-                            vscode.l10n.t(
-                                "A Pet Playground has been created. You can now use the 'Remove All Pets' Command to remove all pets.",
-                            ),
-                        );
-                    }
-                },
+            async () => {
+                const panel = getPetPanel();
+                if (panel !== undefined) {
+                    panel.resetPets();
+                    await storeCollectionAsMemento(context, []);
+                } else {
+                    await createPetPlayground(context);
+                    await vscode.window.showInformationMessage(
+                        vscode.l10n.t(
+                            "A Pet Playground has been created. You can now use the 'Remove All Pets' Command to remove all pets.",
+                        ),
+                    );
+                }
+            },
         ),
     );
 
