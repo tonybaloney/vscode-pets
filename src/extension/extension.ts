@@ -318,7 +318,7 @@ export function activate(context: vscode.ExtensionContext) {
     );
 
     // create a pet coding session on vscode start
-    let autoStart = vscode.workspace
+    const autoStart = vscode.workspace
         .getConfiguration('vscode-pets')
         .get<Boolean>('autoStartPetCodingSession');
     if (autoStart) {
@@ -326,6 +326,7 @@ export function activate(context: vscode.ExtensionContext) {
             getConfigurationPosition() === ExtPosition.explorer &&
             webviewViewProvider
         ) {
+            // eslint-disable-next-line
             vscode.commands.executeCommand('petsView.focus');
         } else {
             const spec = PetSpecification.fromConfiguration();
@@ -347,7 +348,7 @@ export function activate(context: vscode.ExtensionContext) {
                 collection.forEach((item) => {
                     PetPanel.currentPanel?.spawnPet(item);
                 });
-                // Store the collection in the memento, incase any of the null values (e.g. name) have been set
+                // eslint-disable-next-line
                 storeCollectionAsMemento(context, collection);
             }
         }
