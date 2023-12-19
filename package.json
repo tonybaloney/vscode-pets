@@ -256,7 +256,7 @@
         "@typescript-eslint/eslint-plugin": "^5.29.0",
         "@typescript-eslint/parser": "^5.29.0",
         "@vscode/l10n-dev": "^0.0.29",
-        "@vscode/test-web": "^0.0.31",
+        "@vscode/test-web": "^0.0.50",
         "eslint": "^8.18.0",
         "eslint-plugin-unused-imports": "^2.0.0",
         "glob": "^8.0.3",
