@@ -322,36 +322,7 @@ export function activate(context: vscode.ExtensionContext) {
         .getConfiguration('vscode-pets')
         .get<Boolean>('autoStartPetCodingSession');
     if (autoStart) {
-        if (
-            getConfigurationPosition() === ExtPosition.explorer &&
-            webviewViewProvider
-        ) {
-            // eslint-disable-next-line
-            vscode.commands.executeCommand('petsView.focus');
-        } else {
-            const spec = PetSpecification.fromConfiguration();
-            PetPanel.createOrShow(
-                context.extensionUri,
-                spec.color,
-                spec.type,
-                spec.size,
-                getConfiguredTheme(),
-                getConfiguredThemeKind(),
-                getThrowWithMouseConfiguration(),
-            );
-
-            if (PetPanel.currentPanel) {
-                var collection = PetSpecification.collectionFromMemento(
-                    context,
-                    getConfiguredSize(),
-                );
-                collection.forEach((item) => {
-                    PetPanel.currentPanel?.spawnPet(item);
-                });
-                // eslint-disable-next-line
-                storeCollectionAsMemento(context, collection);
-            }
-        }
+        vscode.commands.executeCommand('vscode-pets.start');
     }
 
     spawnPetStatusBar = vscode.window.createStatusBarItem(
