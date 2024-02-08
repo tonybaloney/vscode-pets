@@ -159,4 +159,6 @@ export const RAT_NAMES: ReadonlyArray<string> = [
     'Kyanite',
     'Mica',
     'Micah',
+    'Splinter',
+    'Remy',
 ];
