@@ -224,6 +224,11 @@
                         "type": "boolean",
                         "default": false,
                         "description": "Throw ball with mouse"
+                    },
+                    "vscode-pets.autoStartPetCodingSession": {
+                        "type": "boolean",
+                        "default": false,
+                        "description": "Automatically start a pet coding session when VS Code starts."
                     }
                 }
             }
