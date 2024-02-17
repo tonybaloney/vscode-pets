@@ -209,7 +209,7 @@ export abstract class BasePetType implements IPetType {
         this.holdStateEnum = this.currentStateEnum;
         this.currentStateEnum = States.swipe;
         this.currentState = resolveState(this.currentStateEnum, this);
-        this.showSpeechBubble('👋');
+        this.showSpeechBubble(this.name);
     }
 
     chase(ballState: BallState, canvas: HTMLCanvasElement) {
