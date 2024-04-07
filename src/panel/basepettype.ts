@@ -1,4 +1,4 @@
-import { PetColor, PetSize, PetSpeed, PetType } from '../common/types';
+import { PetColor, PetSize, PetSpeed } from '../common/types';
 import { IPetType } from './states';
 import { ISequenceTree } from './sequences';
 import {
