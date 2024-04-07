@@ -1,4 +1,4 @@
-import { PetColor, PetSize, PetSpeed } from '../common/types';
+import { PetColor, PetSize, PetSpeed, PetType } from '../common/types';
 import { IPetType } from './states';
 import { ISequenceTree } from './sequences';
 import {
@@ -13,7 +13,15 @@ import {
     FrameResult,
 } from './states';
 
-export class InvalidStateException {}
+export class InvalidStateException {
+    fromState: States;
+    petType: string;
+
+    constructor(fromState: States, petType: string) {
+        this.fromState = fromState;
+        this.petType = petType;
+    }
+}
 
 export abstract class BasePetType implements IPetType {
     label: string = 'base';
@@ -242,7 +250,7 @@ export abstract class BasePetType implements IPetType {
             }
         }
         if (!possibleNextStates) {
-            throw new InvalidStateException();
+            throw new InvalidStateException(fromState, this.label);
         }
         // randomly choose the next state
         const idx = Math.floor(Math.random() * possibleNextStates.length);
