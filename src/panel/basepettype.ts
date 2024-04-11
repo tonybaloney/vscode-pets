@@ -13,7 +13,16 @@ import {
     FrameResult,
 } from './states';
 
-export class InvalidStateException {}
+export class InvalidStateError extends Error {
+    fromState: States;
+    petType: string;
+
+    constructor(fromState: States, petType: string) {
+        super(`Invalid state ${fromState} for pet type ${petType}`);
+        this.fromState = fromState;
+        this.petType = petType;
+    }
+}
 
 export abstract class BasePetType implements IPetType {
     label: string = 'base';
@@ -242,7 +251,7 @@ export abstract class BasePetType implements IPetType {
             }
         }
         if (!possibleNextStates) {
-            throw new InvalidStateException();
+            throw new InvalidStateError(fromState, this.label);
         }
         // randomly choose the next state
         const idx = Math.floor(Math.random() * possibleNextStates.length);
