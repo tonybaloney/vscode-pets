@@ -4,7 +4,7 @@
     "description": "Pets for your VS Code",
     "version": "1.25.1",
     "engines": {
-        "vscode": "^1.73.0"
+        "vscode": "^1.89.1"
     },
     "l10n": "./l10n",
     "repository": {
