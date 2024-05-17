@@ -4,6 +4,7 @@ import { Chicken } from './pets/chicken';
 import { Clippy } from './pets/clippy';
 import { Cockatiel } from './pets/cockatiel';
 import { Crab } from './pets/crab';
+import { Deno } from './pets/deno';
 import { Dog } from './pets/dog';
 import { Fox } from './pets/fox';
 import { Mod } from './pets/mod';
@@ -220,7 +221,7 @@ export function availableColors(petType: PetType): PetColor[] {
         case PetType.dog:
             return Dog.possibleColors;
         case PetType.deno:
-            return deno.possibleColors;
+            return Deno.possibleColors;
         case PetType.fox:
             return Fox.possibleColors;
         case PetType.crab:
