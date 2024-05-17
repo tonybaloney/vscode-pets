@@ -115,7 +115,7 @@ export class PetCollection implements IPetCollection {
                 if (
                     potentialFriend.pet.left > petInCollection.pet.left &&
                     potentialFriend.pet.left <
-                        petInCollection.pet.left + petInCollection.pet.width
+                    petInCollection.pet.left + petInCollection.pet.width
                 ) {
                     // We found a possible new friend..
                     console.log(
@@ -178,6 +178,8 @@ export function createPet(
             return new Cat(...standardPetArguments, PetSpeed.normal);
         case PetType.chicken:
             return new Chicken(...standardPetArguments, PetSpeed.normal);
+        case PetType.deno:
+            return new Deno(...standardPetArguments, PetSpeed.normal);      
         case PetType.dog:
             return new Dog(...standardPetArguments, PetSpeed.normal);
         case PetType.fox:
@@ -217,6 +219,8 @@ export function availableColors(petType: PetType): PetColor[] {
             return Chicken.possibleColors;
         case PetType.dog:
             return Dog.possibleColors;
+        case PetType.deno:
+            return deno.possibleColors;
         case PetType.fox:
             return Fox.possibleColors;
         case PetType.crab:
