@@ -23,6 +23,10 @@ export class PetElement {
     pet: IPetType;
     color: PetColor;
     type: PetType;
+    experience: number;
+    health: number;
+    level: number;
+    nextTarget: number;
     remove() {
         this.el.remove();
         this.collision.remove();
@@ -45,6 +49,39 @@ export class PetElement {
         this.pet = pet;
         this.color = color;
         this.type = type;
+        this.experience = 0;
+        this.health = 100;
+        this.level = 1;
+        this.nextTarget = 100 * this.level;
+    }
+
+    getHealth() {
+        return this.health;
+    }
+
+    getExperience() {
+        return this.experience;
+    }
+
+    getLevel() {
+        return this.level;
+    }
+
+    getNextTarget() {
+        return this.nextTarget;
+    }
+
+    setHealth(value: number) {
+        this.health = value;
+    }
+
+    setExperience(value: number) {
+        this.experience = value;
+        // perform level change
+        if (this.health > 10 && value > this.nextTarget) {
+            this.level += 1;
+            this.nextTarget = 100 * this.level;
+        }
     }
 }
 

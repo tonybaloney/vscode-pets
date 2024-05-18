@@ -18,6 +18,7 @@ import {
     InvalidPetException,
 } from './pets';
 import { BallState, PetElementState, PetPanelState } from './states';
+import { hideBar, showBar } from './bar';
 
 /* This is how the VS Code API can be invoked from the panel */
 declare global {
@@ -96,9 +97,16 @@ function handleMouseOver(e: MouseEvent) {
                 return;
             }
             element.pet.swipe();
+            showBar(element.pet.name, element.getLevel(), element.getExperience(), element.getNextTarget(), element.getHealth());
         }
     });
 }
+
+function handleMouseLeave() {
+    hideBar();
+}
+
+// TO DO: Add click
 
 function startAnimations(
     collision: HTMLDivElement,
@@ -110,6 +118,7 @@ function startAnimations(
     }
 
     collision.addEventListener('mouseover', handleMouseOver);
+    collision.addEventListener('mouseleave', handleMouseLeave);
     setInterval(() => {
         var updates = allPets.seekNewFriends();
         updates.forEach((message) => {
@@ -181,7 +190,7 @@ function addPetToPanel(
         throw e;
     }
 
-    return new PetElement(
+    const petEm =  new PetElement(
         petSpriteElement,
         collisionElement,
         speechBubbleElement,
@@ -189,6 +198,8 @@ function addPetToPanel(
         petColor,
         petType,
     );
+
+    return petEm;
 }
 
 export function saveState(stateApi?: VscodeStateApi) {

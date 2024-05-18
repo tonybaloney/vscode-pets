@@ -1,3 +1,7 @@
+#status-container {
+    display: none;
+}
+
 .bar-box {
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
@@ -14,7 +18,7 @@
     vertical-align: top;
 }
 .bar-container {
-    display: block;
+    display: inline-block;
     margin-left: auto;
     margin-right: auto;
     width: 30%;
@@ -24,14 +28,12 @@
     vertical-align: top;
 }
 .bar-box, .status-text {
-    display: inline-block; 
+    display: block; 
 }
 .bar {
-    width: 100%;
+    width: 10%;
     height: 100%;
     position: relative;
-    
-    transition: width .5s linear;
 }
 
 #experience-bar {

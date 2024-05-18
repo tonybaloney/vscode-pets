@@ -899,8 +899,11 @@ class PetWebviewContainer implements IPetPanel {
 				<title>VS Code Pets</title>
 			</head>
 			<body>
-            <div id="statusContainer">
-                <div id="name" class="bar-container">no name</div>
+            <div id="status-container">
+                <div id="name-level" class="bar-container">
+                    <div id="name" class="status-text">Pet</div>
+                    <div id="level" class="status-text">Level 0</div>
+                </div>
                 <div id="health-container" class="bar-container">
                     <div id="health-title" class="status-text">Health</div>
                     <div id="health" class="bar-box">
