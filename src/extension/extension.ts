@@ -846,6 +846,11 @@ class PetWebviewContainer implements IPetPanel {
             'media',
             'pets.css',
         );
+        const styleBarPath = vscode.Uri.joinPath(
+            this._extensionUri,
+            'media',
+            'bar.css',
+        );
         const silkScreenFontPath = webview.asWebviewUri(
             vscode.Uri.joinPath(
                 this._extensionUri,
@@ -857,6 +862,7 @@ class PetWebviewContainer implements IPetPanel {
         // Uri to load styles into webview
         const stylesResetUri = webview.asWebviewUri(styleResetPath);
         const stylesMainUri = webview.asWebviewUri(stylesPathMainPath);
+        const stylesBarUri = webview.asWebviewUri(styleBarPath);
 
         // Get path to resource on disk
         const basePetUri = webview.asWebviewUri(
@@ -883,6 +889,7 @@ class PetWebviewContainer implements IPetPanel {
 				<meta name="viewport" content="width=device-width, initial-scale=1.0">
 				<link href="${stylesResetUri}" rel="stylesheet" nonce="${nonce}">
 				<link href="${stylesMainUri}" rel="stylesheet" nonce="${nonce}">
+                <link href="${stylesBarUri}" rel="stylesheet" nonce="${nonce}">
                 <style nonce="${nonce}">
                 @font-face {
                     font-family: 'silkscreen';
@@ -892,6 +899,23 @@ class PetWebviewContainer implements IPetPanel {
 				<title>VS Code Pets</title>
 			</head>
 			<body>
+            <div id="statusContainer">
+                <div id="name" class="bar-container">no name</div>
+                <div id="health-container" class="bar-container">
+                    <div id="health-title" class="status-text">Health</div>
+                    <div id="health" class="bar-box">
+                        <div id="health-bar" class="bar"></div>
+                    </div>
+                    <div id="health-value" class="status-text">100/100</div>
+                </div>
+                <div id="health-container" class="bar-container">
+                    <div id="experience-title" class="status-text">Experience</div>
+                    <div id="experience" class="bar-box">
+                        <div id="experience-bar" class="bar"></div>
+                    </div>
+                    <div id="experience-value" class="status-text">100/100</div>
+                </div>
+            </div>
 				<canvas id="petCanvas"></canvas>
 				<div id="petsContainer"></div>
 				<div id="foreground"></div>	

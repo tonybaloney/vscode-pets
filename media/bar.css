@@ -1,0 +1,43 @@
+.bar-box {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    width: 100%;
+    height: 15px;
+    padding: 5px;
+    background: #ddd;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    position: relative;
+    zoom: 1; 
+    vertical-align: top;
+}
+.bar-container {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 30%;
+    display: inline-block; 
+    height: 35px;
+    font-size: 15px;
+    vertical-align: top;
+}
+.bar-box, .status-text {
+    display: inline-block; 
+}
+.bar {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    
+    transition: width .5s linear;
+}
+
+#experience-bar {
+    background: #c54;
+}
+
+#health-bar {
+    background: rgb(68, 204, 97);
+}
