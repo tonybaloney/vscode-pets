@@ -16,6 +16,7 @@ import { Rat } from './pets/rat';
 import { Turtle } from './pets/turtle';
 import { IPetType } from './states';
 
+
 export class PetElement {
     el: HTMLImageElement;
     collision: HTMLDivElement;
@@ -52,7 +53,7 @@ export class PetElement {
         this.experience = 0;
         this.health = 100;
         this.level = 1;
-        this.nextTarget = 100 * this.level;
+        this.nextTarget = 100;
     }
 
     getHealth() {
@@ -77,12 +78,16 @@ export class PetElement {
 
     setExperience(value: number) {
         this.experience = value;
-        // perform level change
-        if (this.health > 10 && value > this.nextTarget) {
-            this.level += 1;
-            this.nextTarget = 100 * this.level;
+        if (this.experience >= this.nextTarget) {
+            this.setLevel(this.level + 1);
         }
     }
+
+    setLevel(value: number) {
+        this.level = value;
+        this.nextTarget += 100 * this.level;
+    }
+
 }
 
 export interface IPetCollection {

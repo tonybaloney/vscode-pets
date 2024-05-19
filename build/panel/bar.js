@@ -1,10 +1,15 @@
-export function showBar(name: string, level: number, experience: number, target: number, health: number) {
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.hideBar = exports.showBar = void 0;
+function showBar(name, level, experience, target, health) {
     // Do data sanity check
     if (level < 1) {
         console.log("Illegal level value.");
-    } else if (experience > target || experience < 0) {
+    }
+    else if (experience > target || experience < 0) {
         console.log("Illegal experience value.");
-    } else if (health > 100 || health < 0) {
+    }
+    else if (health > 100 || health < 0) {
         console.log("Illegal health value.");
     }
     const sc = document.getElementById("status-container");
@@ -14,7 +19,8 @@ export function showBar(name: string, level: number, experience: number, target:
     const experienceText = document.getElementById("experience-value");
     if (sc === null || nameText === null || levelText === null || healthText === null || experienceText === null) {
         console.log("Incorrect HTML structure.");
-    } else {
+    }
+    else {
         nameText.innerHTML = name;
         levelText.innerHTML = "Level " + level;
         healthText.innerHTML = health + "/100";
@@ -24,32 +30,37 @@ export function showBar(name: string, level: number, experience: number, target:
         sc.style.display = "block";
     }
 }
-
-export function hideBar() {
+exports.showBar = showBar;
+function hideBar() {
     const sc = document.getElementById("status-container");
     if (sc === null) {
         console.log("No status container found");
-    } else {
+    }
+    else {
         sc.style.display = "none";
     }
 }
-
-function adjustHealthBar(value: number) {
+exports.hideBar = hideBar;
+function adjustHealthBar(value) {
     const bar = document.getElementById("health-bar");
     if (bar === null) {
         console.log("Incorrect HTML structure");
-    } else {
+    }
+    else {
         const barWidth = value;
         bar.style.width = barWidth + "%";
+        console.log(barWidth);
     }
 }
-
-function adjustExperienceBar(value: number, target: number) {
+function adjustExperienceBar(value, target) {
     const bar = document.getElementById("experience-bar");
     if (bar === null) {
         console.log("Incorrect HTML structure");
-    } else {
+    }
+    else {
         const barWidth = value / target * 100;
         bar.style.width = barWidth + "%";
+        console.log(barWidth);
     }
 }
+//# sourceMappingURL=bar.js.map
