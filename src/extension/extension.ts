@@ -670,9 +670,8 @@ export function activate(context: vscode.ExtensionContext) {
     }
 
     setInterval(async () => {
-        console.log("update command will be executed");
         await vscode.commands.executeCommand('vscode-pets.update-experience');
-    }, 10000);
+    }, 500);
 }
 
 function updateStatusBar(): void {

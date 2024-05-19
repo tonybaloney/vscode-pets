@@ -34,6 +34,7 @@
     width: 10%;
     height: 100%;
     position: relative;
+    transition: width .5s linear;
 }
 
 #experience-bar {

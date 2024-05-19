@@ -120,6 +120,7 @@ function startAnimations(
 
     collision.addEventListener('mouseover', handleMouseOver);
     collision.addEventListener('mouseleave', handleMouseLeave);
+    collision.addEventListener("click", handleMouseOver);
 
     setInterval(() => {
         var updates = allPets.seekNewFriends();
@@ -618,7 +619,6 @@ export function petPanelApp(
                 var diff = message.diff;
                 pets.forEach((pet) => {
                     pet.setExperience(pet.getExperience() + diff);
-                    console.log(diff);
                     updateBar(pet.pet.name, pet.getLevel(), pet.getExperience(), pet.getNextTarget(), pet.getHealth())
                 });
                 break;
