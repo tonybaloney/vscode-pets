@@ -18,7 +18,7 @@ import {
     InvalidPetException,
 } from './pets';
 import { BallState, PetElementState, PetPanelState } from './states';
-import { hideBar, showBar } from './bar';
+import { hideBar, showBar, updateBar } from './bar';
 
 /* This is how the VS Code API can be invoked from the panel */
 declare global {
@@ -619,6 +619,7 @@ export function petPanelApp(
                 pets.forEach((pet) => {
                     pet.setExperience(pet.getExperience() + diff);
                     console.log(diff);
+                    updateBar(pet.pet.name, pet.getLevel(), pet.getExperience(), pet.getNextTarget(), pet.getHealth())
                 });
                 break;
         }

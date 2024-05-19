@@ -3,8 +3,6 @@ import * as fs from 'fs';
 import * as path from 'path';
 
 
-let currentLineCount = 0;
-
 const lineCounts: { [file: string]: number } = {};
 
 function getCppFiles(dir: string): string[] {
@@ -39,6 +37,10 @@ function countLinesInFiles(files: string[]) {
 
 }
 
+function sumLineCounts(lineCounts: { [key: string]: number }): number {
+    return Object.values(lineCounts).reduce((sum, count) => sum + count, 0);
+}
+
 function countCodeLine() {
     const workspaceFolders = vscode.workspace.workspaceFolders;
         if (workspaceFolders) {
@@ -52,16 +54,16 @@ function countCodeLine() {
         }
 }
 
-function sumLineCounts(lineCounts: { [key: string]: number }): number {
-    return Object.values(lineCounts).reduce((sum, count) => sum + count, 0);
-}
+
+let currentLineCount = countCodeLine();
 
 export function updateCount() {
     const lineCount = countCodeLine();
     const diff = lineCount - currentLineCount;
-    if (lineCount > currentLineCount) {
+    if (diff > 0) {
         currentLineCount = lineCount;
+        return diff;
+    } else {
+        return 0;
     }
-    console.log("updaing the line count as ", currentLineCount);
-    return diff;
 }
