@@ -97,17 +97,35 @@ function handleMouseOver(e: MouseEvent) {
                 return;
             }
             element.pet.swipe();
-            showBar(element.pet.name, element.getLevel(), element.getExperience(), element.getNextTarget(), element.getHealth());
+            //showBar(element.pet.name, element.getLevel(), element.getExperience(), element.getNextTarget(), element.getHealth());
         }
     });
 }
 
 function handleMouseLeave() {
-    hideBar();
+    //hideBar();
 }
 
+function handleClick(e: MouseEvent) {
+    var el = e.currentTarget as HTMLDivElement;
+    let isPetClicked = false;
+    allPets.pets.forEach((element) => {
+        if (element.collision === el) {
+            isPetClicked = true;
+            showBar(
+                element.pet.name, 
+                element.getLevel(), 
+                element.getExperience(), 
+                element.getNextTarget(), 
+                element.getHealth()
+            );
+        }
+    });
 
-// TO DO: Add click
+    if (!isPetClicked) {
+        hideBar(); 
+    }
+}
 
 function startAnimations(
     collision: HTMLDivElement,
@@ -120,7 +138,21 @@ function startAnimations(
 
     collision.addEventListener('mouseover', handleMouseOver);
     collision.addEventListener('mouseleave', handleMouseLeave);
-    collision.addEventListener("click", handleMouseOver);
+    collision.addEventListener("click", handleClick);
+    document.addEventListener('click', function(e) {
+        // Check if the click is outside the pets' elements
+        let clickedOutside = true;
+    
+        allPets.pets.forEach((element) => {
+            if (element.collision === e.target) {
+                clickedOutside = false;
+            }
+        });
+    
+        if (clickedOutside) {
+            hideBar();
+        }
+    });
 
     setInterval(() => {
         var updates = allPets.seekNewFriends();
