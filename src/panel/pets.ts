@@ -43,6 +43,10 @@ export class PetElement {
         pet: IPetType,
         color: PetColor,
         type: PetType,
+        experience: number,
+        health: number,
+        nextTarget: number,
+        level: number
     ) {
         this.el = el;
         this.collision = collision;
@@ -50,10 +54,10 @@ export class PetElement {
         this.pet = pet;
         this.color = color;
         this.type = type;
-        this.experience = 0;
-        this.health = 100;
-        this.level = 1;
-        this.nextTarget = 100;
+        this.experience = experience;
+        this.health = health;
+        this.level = level;
+        this.nextTarget = nextTarget;
     }
 
     getHealth() {

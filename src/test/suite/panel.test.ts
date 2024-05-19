@@ -104,6 +104,7 @@ suite('Pets Test Suite', () => {
             testPet,
             PetColor.brown,
             PetType.cat,
+            0, 100, 100, 1
         );
         assert.strictEqual(testPetElement.color, PetColor.brown);
         assert.strictEqual(testPetElement.type, PetType.cat);
@@ -132,6 +133,7 @@ suite('Pets Test Suite', () => {
                     color,
                     PetSize.large,
                     petType,
+                    0, 100, 100, 1,
                     false,
                     mockState,
                 );
@@ -178,6 +180,7 @@ suite('Pets Test Suite', () => {
             PetColor.black,
             PetSize.large,
             PetType.cat,
+            0, 100, 100, 1,
             false,
             mockState,
         );
@@ -200,6 +203,7 @@ suite('Pets Test Suite', () => {
             PetColor.black,
             PetSize.large,
             PetType.cat,
+            0, 100, 100, 1,
             false,
             mockState,
         );

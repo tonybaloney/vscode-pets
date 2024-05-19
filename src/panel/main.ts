@@ -144,6 +144,10 @@ function addPetToPanel(
     bottom: number,
     floor: number,
     name: string,
+    experience: number,
+    health: number,
+    nextTarget: number,
+    level: number,
     stateApi?: VscodeStateApi,
 ): PetElement {
     var petSpriteElement: HTMLImageElement = document.createElement('img');
@@ -200,6 +204,10 @@ function addPetToPanel(
         newPet,
         petColor,
         petType,
+        experience,
+        health,
+        nextTarget,
+        level
     );
 
     return petEm;
@@ -221,6 +229,10 @@ export function saveState(stateApi?: VscodeStateApi) {
             petFriend: petItem.pet.friend?.name ?? undefined,
             elLeft: petItem.el.style.left,
             elBottom: petItem.el.style.bottom,
+            petExperience: petItem.getExperience(),
+            petHealth: petItem.getHealth(),
+            petNextTarget: petItem.getNextTarget(),
+            petLevel: petItem.getLevel(),
         });
     });
     state.petCounter = petCounter;
@@ -264,6 +276,10 @@ function recoverState(
                 parseInt(p.elBottom ?? '0'),
                 floor,
                 p.petName ?? randomName(p.petType ?? PetType.cat),
+                p.petExperience,
+                p.petHealth,
+                p.petNextTarget,
+                p.petLevel,
                 stateApi,
             );
             allPets.push(newPet);
@@ -320,6 +336,10 @@ export function petPanelApp(
     petColor: PetColor,
     petSize: PetSize,
     petType: PetType,
+    petExperience: number,
+    petHealth: number,
+    petNextTarget: number,
+    petLevel: number,
     throwBallWithMouse: boolean,
     stateApi?: VscodeStateApi,
 ) {
@@ -513,6 +533,10 @@ export function petPanelApp(
                 floor,
                 floor,
                 randomName(petType),
+                petExperience,
+                petHealth,
+                petNextTarget,
+                petLevel,
                 stateApi,
             ),
         );
@@ -561,6 +585,7 @@ export function petPanelApp(
                         floor,
                         floor,
                         message.name ?? randomName(message.type),
+                        0, 100, 100, 1,
                         stateApi,
                     ),
                 );
@@ -573,7 +598,7 @@ export function petPanelApp(
                     command: 'list-pets',
                     text: pets
                         .map(
-                            (pet) => `${pet.type},${pet.pet.name},${pet.color}`,
+                            (pet) => `${pet.type},${pet.pet.name},${pet.color},${pet.getExperience()},${pet.getHealth()},${pet.getNextTarget()},${pet.getLevel()}`,
                         )
                         .join('\n'),
                 });
@@ -619,7 +644,7 @@ export function petPanelApp(
                 var diff = message.diff;
                 pets.forEach((pet) => {
                     pet.setExperience(pet.getExperience() + diff);
-                    updateBar(pet.pet.name, pet.getLevel(), pet.getExperience(), pet.getNextTarget(), pet.getHealth())
+                    updateBar(pet.pet.name, pet.getLevel(), pet.getExperience(), pet.getNextTarget(), pet.getHealth());
                 });
                 break;
         }

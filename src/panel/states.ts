@@ -48,6 +48,17 @@ export class PetElementState {
     elBottom: string | undefined;
     petName: string | undefined;
     petFriend: string | undefined;
+    petExperience: number;
+    petHealth: number;
+    petNextTarget: number;
+    petLevel: number;
+
+    constructor() {
+        this.petExperience = 0;
+        this.petHealth = 100;
+        this.petNextTarget = 100;
+        this.petLevel = 1;
+    }
 }
 
 export class PetPanelState {

@@ -21,6 +21,10 @@ const EXTRA_PETS_KEY = 'vscode-pets.extra-pets';
 const EXTRA_PETS_KEY_TYPES = EXTRA_PETS_KEY + '.types';
 const EXTRA_PETS_KEY_COLORS = EXTRA_PETS_KEY + '.colors';
 const EXTRA_PETS_KEY_NAMES = EXTRA_PETS_KEY + '.names';
+const EXTRA_PETS_KEY_XPS = EXTRA_PETS_KEY + '.experiences';
+const EXTRA_PETS_KEY_HPS = EXTRA_PETS_KEY + '.healths';
+const EXTRA_PETS_KEY_TARS = EXTRA_PETS_KEY + '.next-targets';
+const EXTRA_PETS_KEY_LEVELS = EXTRA_PETS_KEY + '.levels';
 const DEFAULT_PET_SCALE = PetSize.nano;
 const DEFAULT_COLOR = PetColor.brown;
 const DEFAULT_PET_TYPE = PetType.cat;
@@ -106,11 +110,19 @@ export class PetSpecification {
     type: PetType;
     size: PetSize;
     name: string;
+    experience: number;
+    health: number;
+    nextTarget: number;
+    level: number;
 
-    constructor(color: PetColor, type: PetType, size: PetSize, name?: string) {
+    constructor(color: PetColor, type: PetType, size: PetSize, experience: number, health: number, nextTarget: number, level: number, name?: string) {
         this.color = color;
         this.type = type;
         this.size = size;
+        this.level = level;
+        this.experience = experience;
+        this.nextTarget = nextTarget;
+        this.health = health;
         if (!name) {
             this.name = randomName(type);
         } else {
@@ -132,7 +144,7 @@ export class PetSpecification {
             type = DEFAULT_PET_TYPE;
         }
 
-        return new PetSpecification(color, type, getConfiguredSize());
+        return new PetSpecification(color, type, getConfiguredSize(), 0, 100, 100, 1);
     }
 
     static collectionFromMemento(
@@ -151,6 +163,22 @@ export class PetSpecification {
             EXTRA_PETS_KEY_NAMES,
             [],
         );
+        var contextExperiences = context.globalState.get<number[]>(
+            EXTRA_PETS_KEY_XPS,
+            [],
+        );
+        var contextHealths = context.globalState.get<number[]>(
+            EXTRA_PETS_KEY_HPS,
+            [],
+        );
+        var contextNextTargets = context.globalState.get<number[]>(
+            EXTRA_PETS_KEY_TARS,
+            [],
+        );        
+        var contextLevels = context.globalState.get<number[]>(
+            EXTRA_PETS_KEY_LEVELS,
+            [],
+        );
         var result: PetSpecification[] = new Array();
         for (let index = 0; index < contextTypes.length; index++) {
             result.push(
@@ -158,6 +186,10 @@ export class PetSpecification {
                     contextColors?.[index] ?? DEFAULT_COLOR,
                     contextTypes[index],
                     size,
+                    contextExperiences[index],
+                    contextHealths[index],
+                    contextNextTargets[index],
+                    contextLevels[index],
                     contextNames[index],
                 ),
             );
@@ -173,18 +205,34 @@ export async function storeCollectionAsMemento(
     var contextTypes = new Array(collection.length);
     var contextColors = new Array(collection.length);
     var contextNames = new Array(collection.length);
+    var contextExperiences = new Array(collection.length);
+    var contextHealths = new Array(collection.length);
+    var contextNextTargets = new Array(collection.length);
+    var contextLevels = new Array(collection.length);
     for (let index = 0; index < collection.length; index++) {
         contextTypes[index] = collection[index].type;
         contextColors[index] = collection[index].color;
         contextNames[index] = collection[index].name;
+        contextExperiences[index] = collection[index].experience;
+        contextHealths[index] = collection[index].health;
+        contextNextTargets[index] = collection[index].nextTarget;
+        contextLevels[index] = collection[index].level;
     }
     await context.globalState.update(EXTRA_PETS_KEY_TYPES, contextTypes);
     await context.globalState.update(EXTRA_PETS_KEY_COLORS, contextColors);
     await context.globalState.update(EXTRA_PETS_KEY_NAMES, contextNames);
+    await context.globalState.update(EXTRA_PETS_KEY_XPS, contextExperiences);
+    await context.globalState.update(EXTRA_PETS_KEY_HPS, contextHealths);
+    await context.globalState.update(EXTRA_PETS_KEY_TARS, contextNextTargets);
+    await context.globalState.update(EXTRA_PETS_KEY_LEVELS, contextLevels);
     context.globalState.setKeysForSync([
         EXTRA_PETS_KEY_TYPES,
         EXTRA_PETS_KEY_COLORS,
         EXTRA_PETS_KEY_NAMES,
+        EXTRA_PETS_KEY_XPS,
+        EXTRA_PETS_KEY_XPS,
+        EXTRA_PETS_KEY_TARS,
+        EXTRA_PETS_KEY_LEVELS
     ]);
 }
 
@@ -194,6 +242,10 @@ interface IPetInfo {
     type: PetType;
     name: string;
     color: PetColor;
+    experience: number;
+    health: number;
+    nextTarget: number;
+    level: number
 }
 
 async function handleRemovePetMessage(
@@ -212,6 +264,10 @@ async function handleRemovePetMessage(
                     type: parts[0] as PetType,
                     name: parts[1],
                     color: parts[2] as PetColor,
+                    experience: Number.parseInt(parts[3]),
+                    health: Number.parseInt(parts[4]),
+                    nextTarget: Number.parseInt(parts[5]),
+                    level: Number.parseInt(parts[6])
                 });
             });
             break;
@@ -250,7 +306,11 @@ async function handleRemovePetMessage(
                                 item.color,
                                 item.type,
                                 PetSize.medium,
-                                item.name,
+                                item.experience,
+                                item.health,
+                                item.nextTarget,
+                                item.level,
+                                item.name
                             );
                         });
                     await storeCollectionAsMemento(this, collection);
@@ -488,7 +548,11 @@ export function activate(context: vscode.ExtensionContext) {
                                 normalizeColor(pet.color, pet.type),
                                 pet.type,
                                 pet.size,
-                                pet.name,
+                                pet.experience,
+                                pet.health,
+                                pet.nextTarget,
+                                pet.level,
+                                pet.name
                             );
                             collection.push(petSpec);
                             if (panel !== undefined) {
@@ -564,7 +628,7 @@ export function activate(context: vscode.ExtensionContext) {
                     petColor,
                     selectedPetType.value,
                     getConfiguredSize(),
-                    name,
+                    0, 100, 100, 1, name
                 );
                 if (!spec.type || !spec.color || !spec.size) {
                     return vscode.window.showWarningMessage(
