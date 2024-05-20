@@ -679,6 +679,14 @@ export function petPanelApp(
                     updateBar(pet.pet.name, pet.getLevel(), pet.getExperience(), pet.getNextTarget(), pet.getHealth());
                 });
                 break;
+            case 'update-health':
+                var pets = allPets.pets;
+                var diff = message.diff;
+                pets.forEach((pet) => {
+                    pet.setHealth(pet.getHealth() + diff);
+                    updateBar(pet.pet.name, pet.getLevel(), pet.getExperience(), pet.getNextTarget(), pet.getHealth());
+                });
+                break;
         }
     });
 }

@@ -16,6 +16,7 @@ import { randomName } from '../common/names';
 import * as localize from '../common/localize';
 import { availableColors, normalizeColor } from '../panel/pets';
 import { updateCount } from '../common/codeLine';
+import { updateTimer, computeTimeDifference, createTimer } from '../common/healthTimer';
 
 const EXTRA_PETS_KEY = 'vscode-pets.extra-pets';
 const EXTRA_PETS_KEY_TYPES = EXTRA_PETS_KEY + '.types';
@@ -30,6 +31,8 @@ const DEFAULT_COLOR = PetColor.brown;
 const DEFAULT_PET_TYPE = PetType.cat;
 const DEFAULT_POSITION = ExtPosition.panel;
 const DEFAULT_THEME = Theme.none;
+
+const UPDATE_HEALTH_THRES = 1;
 
 class PetQuickPickItem implements vscode.QuickPickItem {
     constructor(
@@ -455,6 +458,28 @@ export function activate(context: vscode.ExtensionContext) {
     );
 
     context.subscriptions.push(
+        vscode.commands.registerCommand('vscode-pets.update-health-timer', async () => {
+            updateTimer();
+            const panel = getPetPanel();
+                if (panel !== undefined) {
+                    panel.updateHealth(2);
+                }
+        }),
+    );
+
+    context.subscriptions.push(
+        vscode.commands.registerCommand('vscode-pets.update-health', async () => {
+            const diff = computeTimeDifference();
+            if (diff !== null && diff > UPDATE_HEALTH_THRES) {
+                const panel = getPetPanel();
+                if (panel !== undefined) {
+                    panel.updateHealth(-1);
+                }
+            }
+        }),
+    );
+
+    context.subscriptions.push(
         vscode.commands.registerCommand('vscode-pets.roll-call', async () => {
             const panel = getPetPanel();
             if (panel !== undefined) {
@@ -733,9 +758,44 @@ export function activate(context: vscode.ExtensionContext) {
         });
     }
 
+    // update health initially
+    createTimer();
+    setTimeout(() => {
+        const diff = computeTimeDifference();
+        if (diff !== null && diff > UPDATE_HEALTH_THRES) {
+            const panel = getPetPanel();
+            if (panel !== undefined) {
+                panel.updateHealth(-1);
+            }
+        }
+    }, 1);
+
+
+
     setInterval(async () => {
         await vscode.commands.executeCommand('vscode-pets.update-experience');
     }, 500);
+    
+    setInterval(async () => {
+        await vscode.commands.executeCommand('vscode-pets.update-health');
+    }, UPDATE_HEALTH_THRES * 60000);
+
+    let canExecute = true;
+    const TIME_INTERVAL = 10 * 1000; // 15 minutes in milliseconds
+    
+    vscode.workspace.onDidChangeTextDocument(async event => {
+        if (canExecute && event.contentChanges.length > 0) {
+            canExecute = false; // Prevent further execution for the next 15 minutes
+            await vscode.commands.executeCommand('vscode-pets.update-health-timer');
+            
+            // Set a timer to reset the canExecute flag after 15 minutes
+            setTimeout(() => {
+                canExecute = true;
+            }, TIME_INTERVAL);
+        }
+    });
+
+
 }
 
 function updateStatusBar(): void {
@@ -774,7 +834,8 @@ interface IPetPanel {
     updateTheme(newTheme: Theme, themeKind: vscode.ColorThemeKind): void;
     update(): void;
     setThrowWithMouse(newThrowWithMouse: boolean): void;
-    updateExperience(difference: Number): void;
+    updateExperience(difference: number): void;
+    updateHealth(difference: number): void
 }
 
 class PetWebviewContainer implements IPetPanel {
@@ -895,8 +956,11 @@ class PetWebviewContainer implements IPetPanel {
     }
 
     public updateExperience(difference: number) {
-        console.log(difference);
         void this.getWebview().postMessage({ command: 'update-experience', diff: difference });
+    }
+
+    public updateHealth(difference: number): void {
+        void this.getWebview().postMessage({ command: 'update-health', diff: difference });
     }
 
     protected getWebview(): vscode.Webview {

@@ -78,12 +78,21 @@ export class PetElement {
 
     setHealth(value: number) {
         this.health = value;
+        if (this.health < 0) {
+            this.health = 0;
+        } else if (this.health > 100) {
+            this.health = 100;
+        }
     }
 
     setExperience(value: number) {
         this.experience = value;
         if (this.experience >= this.nextTarget) {
-            this.setLevel(this.level + 1);
+            if (this.health >= 10) {
+                this.setLevel(this.level + 1);
+            } else {
+                this.experience = this.nextTarget;
+            }
         }
     }
 
