@@ -552,40 +552,7 @@ export function petPanelApp(
 
     // New session
     var state = stateApi?.getState();
-    if (!state) {
-        console.log('No state, starting a new session.');
-        petCounter = 1;
-        allPets.push(
-            addPetToPanel(
-                petType,
-                basePetUri,
-                petColor,
-                petSize,
-                randomStartPosition(),
-                floor,
-                floor,
-                randomName(petType),
-                petExperience,
-                petHealth,
-                petNextTarget,
-                petLevel,
-                stateApi,
-            ),
-        );
-        saveState(stateApi);
-    } else {
-        console.log('Recovering state - ', state);
-        recoverState(basePetUri, petSize, floor, stateApi);
-    }
-
-    initCanvas();
-
-    if (throwBallWithMouse) {
-        dynamicThrowOn();
-    } else {
-        dynamicThrowOff();
-    }
-
+    
     // Handle messages sent from the extension to the webview
     window.addEventListener('message', (event): void => {
         const message = event.data; // The json data that the extension sent
@@ -689,6 +656,41 @@ export function petPanelApp(
                 break;
         }
     });
+
+    if (!state) {
+        console.log('No state, starting a new session.');
+        petCounter = 1;
+        allPets.push(
+            addPetToPanel(
+                petType,
+                basePetUri,
+                petColor,
+                petSize,
+                randomStartPosition(),
+                floor,
+                floor,
+                randomName(petType),
+                petExperience,
+                petHealth,
+                petNextTarget,
+                petLevel,
+                stateApi,
+            ),
+        );
+        saveState(stateApi);
+    } else {
+        console.log('Recovering state - ', state);
+        recoverState(basePetUri, petSize, floor, stateApi);
+    }
+
+    initCanvas();
+
+    if (throwBallWithMouse) {
+        dynamicThrowOn();
+    } else {
+        dynamicThrowOff();
+    }
+
 }
 window.addEventListener('resize', function () {
     initCanvas();

@@ -473,7 +473,7 @@ export function activate(context: vscode.ExtensionContext) {
             if (diff !== null && diff > UPDATE_HEALTH_THRES) {
                 const panel = getPetPanel();
                 if (panel !== undefined) {
-                    panel.updateHealth(-1);
+                    panel.updateHealth(-1 * diff / UPDATE_HEALTH_THRES);
                 }
             }
         }),
@@ -760,15 +760,7 @@ export function activate(context: vscode.ExtensionContext) {
 
     // update health initially
     createTimer();
-    setTimeout(() => {
-        const diff = computeTimeDifference();
-        if (diff !== null && diff > UPDATE_HEALTH_THRES) {
-            const panel = getPetPanel();
-            if (panel !== undefined) {
-                panel.updateHealth(-1);
-            }
-        }
-    }, 1);
+
 
 
 
@@ -785,10 +777,9 @@ export function activate(context: vscode.ExtensionContext) {
     
     vscode.workspace.onDidChangeTextDocument(async event => {
         if (canExecute && event.contentChanges.length > 0) {
-            canExecute = false; // Prevent further execution for the next 15 minutes
+            canExecute = false;
             await vscode.commands.executeCommand('vscode-pets.update-health-timer');
             
-            // Set a timer to reset the canExecute flag after 15 minutes
             setTimeout(() => {
                 canExecute = true;
             }, TIME_INTERVAL);
