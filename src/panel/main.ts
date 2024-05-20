@@ -18,7 +18,7 @@ import {
     InvalidPetException,
 } from './pets';
 import { BallState, PetElementState, PetPanelState } from './states';
-import { hideBar, showBar, updateBar } from './bar';
+import { checkVisiblityAndName, hideBar, showBar, updateBar } from './bar';
 
 /* This is how the VS Code API can be invoked from the panel */
 declare global {
@@ -622,6 +622,11 @@ export function petPanelApp(
                         command: 'info',
                         text: '👋 Removed pet ' + message.name,
                     });
+
+                    // Hide the bar if it is being shown for the removed pet
+                    if (checkVisiblityAndName(message.name)) {
+                        hideBar();
+                    }
                 } else {
                     stateApi?.postMessage({
                         command: 'error',
