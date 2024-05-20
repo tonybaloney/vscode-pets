@@ -658,7 +658,7 @@ export function petPanelApp(
                     pet.setHealth(pet.getHealth() + diff);
                     updateBar(pet.pet.name, pet.getLevel(), pet.getExperience(), pet.getNextTarget(), pet.getHealth());
                 });
-                console.log("Updating health");
+                //console.log("Updating health");
                 break;
         }
     });

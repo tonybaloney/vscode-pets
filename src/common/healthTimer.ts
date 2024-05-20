@@ -12,7 +12,7 @@ export function updateTimer() {
     };
     const jsonString = JSON.stringify(dateTimeObject, null, 2);
 
-    console.log(jsonString);
+    //console.log(jsonString);
     fs.writeFileSync(filePath, jsonString);
 }
 
@@ -23,7 +23,7 @@ export function computeTimeDifference() {
     const now = new Date();
     const differenceInMilliseconds = now.getTime() - savedDateTime.getTime();
     const differenceInMinutes = Math.floor(differenceInMilliseconds / (1000 * 60));
-    console.log(data);
+    //console.log(data);
     return differenceInMinutes;
 }
 
@@ -38,7 +38,7 @@ export function createTimer() {
             currentDateTime: dateTimeString
         };
         const jsonString = JSON.stringify(dateTimeObject, null, 2);
-        console.log(jsonString);
+        //console.log(jsonString);
         fs.writeFileSync(filePath, jsonString);
     }
 

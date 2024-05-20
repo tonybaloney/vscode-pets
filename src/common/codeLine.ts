@@ -36,6 +36,22 @@ function countLinesInFiles(files: string[]) {
     });
 }
 
+function countLinesInEditor() {
+    const editor = vscode.window.activeTextEditor;
+        
+    if (editor) {
+        const document = editor.document;
+        const fileName = document.fileName;
+        if (lineCounts[fileName]) {
+            const lineCount = document.lineCount;
+            //console.log(lineCount);
+            if (lineCount > lineCounts[fileName]) {
+                lineCounts[fileName] = lineCount;
+            }
+        }
+    }
+}
+
 function sumLineCounts(lineCounts: { [key: string]: number }): number {
     return Object.values(lineCounts).reduce((sum, count) => sum + count, 0);
 }
@@ -46,6 +62,7 @@ function countCodeLine() {
             const dirPath = workspaceFolders[0].uri.fsPath;
             const cppFiles = getCppFiles(dirPath);
             countLinesInFiles(cppFiles);
+            countLinesInEditor();
             const totalLines = sumLineCounts(lineCounts);
             return totalLines;
         } else {
@@ -59,8 +76,8 @@ let currentLineCount = countCodeLine();
 export function updateCount() {
     const lineCount = countCodeLine();
     const diff = lineCount - currentLineCount;
+    currentLineCount = lineCount;
     if (diff > 0) {
-        currentLineCount = lineCount;
         return diff;
     } else {
         return 0;
