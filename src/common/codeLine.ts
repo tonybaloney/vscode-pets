@@ -45,9 +45,9 @@ function countLinesInEditor() {
         if (lineCounts[fileName]) {
             const lineCount = document.lineCount;
             //console.log(lineCount);
-            if (lineCount > lineCounts[fileName]) {
-                lineCounts[fileName] = lineCount;
-            }
+            //if (lineCount > lineCounts[fileName]) {
+            lineCounts[fileName] = lineCount;
+            //}
         }
     }
 }
