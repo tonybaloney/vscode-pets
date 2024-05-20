@@ -552,7 +552,7 @@ export function petPanelApp(
 
     // New session
     var state = stateApi?.getState();
-    
+
     // Handle messages sent from the extension to the webview
     window.addEventListener('message', (event): void => {
         const message = event.data; // The json data that the extension sent
@@ -653,6 +653,7 @@ export function petPanelApp(
                     pet.setHealth(pet.getHealth() + diff);
                     updateBar(pet.pet.name, pet.getLevel(), pet.getExperience(), pet.getNextTarget(), pet.getHealth());
                 });
+                console.log("Updating health");
                 break;
         }
     });

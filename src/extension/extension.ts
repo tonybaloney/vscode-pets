@@ -16,7 +16,7 @@ import { randomName } from '../common/names';
 import * as localize from '../common/localize';
 import { availableColors, normalizeColor } from '../panel/pets';
 import { updateCount } from '../common/codeLine';
-import { updateTimer, computeTimeDifference, createTimer } from '../common/healthTimer';
+import { updateTimer, computeTimeDifference } from '../common/healthTimer';
 
 const EXTRA_PETS_KEY = 'vscode-pets.extra-pets';
 const EXTRA_PETS_KEY_TYPES = EXTRA_PETS_KEY + '.types';
@@ -473,7 +473,7 @@ export function activate(context: vscode.ExtensionContext) {
             if (diff !== null && diff > UPDATE_HEALTH_THRES) {
                 const panel = getPetPanel();
                 if (panel !== undefined) {
-                    panel.updateHealth(-1 * diff / UPDATE_HEALTH_THRES);
+                    panel.updateHealth(-1);
                 }
             }
         }),
@@ -533,6 +533,8 @@ export function activate(context: vscode.ExtensionContext) {
             },
         ),
     );
+
+    
 
     context.subscriptions.push(
         vscode.commands.registerCommand(
@@ -757,11 +759,12 @@ export function activate(context: vscode.ExtensionContext) {
             },
         });
     }
-
-    // update health initially
-    createTimer();
-
-
+    // Try to send the message here.
+    const diff = computeTimeDifference();
+    console.log("Making initial update now");
+    setTimeout(() => {
+        getPetPanel()?.updateHealth(-diff / UPDATE_HEALTH_THRES);
+    }, 500);
 
 
     setInterval(async () => {
@@ -1228,6 +1231,10 @@ class PetPanel extends PetWebviewContainer implements IPetPanel {
             null,
             this._disposables,
         );
+        // // Try to send the message here.
+        // const diff = computeTimeDifference();
+        // console.log("Making initial update now");
+        // this.updateHealth(diff / UPDATE_HEALTH_THRES);
     }
 
     public dispose() {

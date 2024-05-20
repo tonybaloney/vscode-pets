@@ -15,6 +15,7 @@ import { Zappy } from './pets/zappy';
 import { Rat } from './pets/rat';
 import { Turtle } from './pets/turtle';
 import { IPetType } from './states';
+import { getRandomCommentWhenLevelUp, getRandomCommentWhenLowHealth } from '../common/comments';
 
 
 export class PetElement {
@@ -86,12 +87,16 @@ export class PetElement {
     }
 
     setExperience(value: number) {
+        const prev = this.experience;
         this.experience = value;
         if (this.experience >= this.nextTarget) {
             if (this.health >= 10) {
                 this.setLevel(this.level + 1);
             } else {
                 this.experience = this.nextTarget;
+                if (prev < this.nextTarget) {
+                    this.pet.showSpeechBubble(getRandomCommentWhenLowHealth(), 2000);
+                }
             }
         }
     }
@@ -99,6 +104,7 @@ export class PetElement {
     setLevel(value: number) {
         this.level = value;
         this.nextTarget += 100 * this.level;
+        this.pet.showSpeechBubble(getRandomCommentWhenLevelUp(this.level), 2000);
     }
 
 }

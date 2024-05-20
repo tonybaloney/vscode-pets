@@ -34,7 +34,6 @@ function countLinesInFiles(files: string[]) {
         const lines = fileContent.split('\n').length;
         lineCounts[file] = lines;
     });
-
 }
 
 function sumLineCounts(lineCounts: { [key: string]: number }): number {
