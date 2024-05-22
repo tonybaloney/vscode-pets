@@ -483,7 +483,7 @@ export function activate(context: vscode.ExtensionContext) {
     context.subscriptions.push(
         vscode.commands.registerCommand('vscode-pets.compile', async () => {
             doCompile()?.then(compileResult => {
-                console.log("Compile result is ", compileResult);
+                //console.log("Compile result is ", compileResult);
                 const panel = getPetPanel();
                 if (panel !== undefined) {
                     panel.handleCompileResult(compileResult);
@@ -776,7 +776,7 @@ export function activate(context: vscode.ExtensionContext) {
     }
     // Try to send the message here.
     const diff = computeTimeDifference();
-    console.log("Making initial update now");
+    // console.log("Making initial update now ", diff, -diff / UPDATE_HEALTH_THRES);
     setTimeout(() => {
         getPetPanel()?.updateHealth(-diff / UPDATE_HEALTH_THRES);
     }, 500);
@@ -1072,6 +1072,7 @@ class PetWebviewContainer implements IPetPanel {
                 <div id="foreground">                
                     <div id="control-container">
                         <button id="compile-button">Compile!</button>
+                        <button id="chat-button" disabled>Chat!</button>
                     </div>
                     <div id="status-container">
                         <div id="name-level" class="bar-container">

@@ -28,3 +28,32 @@ img {
 	max-width: 100%;
 	height: auto;
 }
+
+#control-container {
+	display: flex;
+    gap: 10px;
+    width: 100%;
+}
+
+button {
+    display: inline-block;
+    border: 1px solid #0066cc;
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    transition: background-color 0.3s, border-color 0.3s;
+}
+
+button:hover:not(:disabled) {
+    border: 1px solid #0056b3;
+    background-color: #0056b3;
+}
+
+button[disabled] {
+    border: 1px solid #999999;
+    background-color: #cccccc;
+    color: #666666;
+    cursor: not-allowed;
+    pointer-events: none;
+}

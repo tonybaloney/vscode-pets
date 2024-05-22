@@ -663,7 +663,7 @@ export function petPanelApp(
                 var pets = allPets.pets;
                 var diff = message.diff;
                 pets.forEach((pet) => {
-                    pet.setExperience(pet.getExperience() + diff);
+                    pet.setExperience(pet.getExperience() + diff, true);
                     updateBar(pet.pet.name, pet.getLevel(), pet.getExperience(), pet.getNextTarget(), pet.getHealth());
                 });
                 break;
@@ -679,11 +679,13 @@ export function petPanelApp(
             case 'handle-compile-result':
                 var pets = allPets.pets;
                 var result = message.result;
-                
                 var randomPet = pets[Math.floor(Math.random() * pets.length)];
                 
                 if (result === 0) {
                     randomPet.onCompilationSuccess();
+                    allPets.pets.forEach(pet => {
+                        pet.setExperience(pet.getExperience() + 5, false);
+                    })
                 } else {
                     randomPet.onCompilationError();
                 }

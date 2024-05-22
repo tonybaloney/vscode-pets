@@ -87,16 +87,21 @@ export class PetElement {
         }
     }
 
-    setExperience(value: number) {
+    setExperience(value: number, showMessage: boolean) {
         const prev = this.experience;
         this.experience = value;
         if (this.experience >= this.nextTarget) {
             if (this.health >= 10) {
                 this.setLevel(this.level + 1);
+                if (showMessage) {
+                    this.pet.showSpeechBubble(getRandomCommentWhenLevelUp(this.level), 2000);
+                }
             } else {
                 this.experience = this.nextTarget;
                 if (prev < this.nextTarget) {
-                    this.pet.showSpeechBubble(getRandomCommentWhenLowHealth(), 2000);
+                    if (showMessage) {
+                        this.pet.showSpeechBubble(getRandomCommentWhenLowHealth(), 2000);
+                    }
                 }
             }
         }
@@ -105,7 +110,6 @@ export class PetElement {
     setLevel(value: number) {
         this.level = value;
         this.nextTarget += 100 * this.level;
-        this.pet.showSpeechBubble(getRandomCommentWhenLevelUp(this.level), 2000);
     }
 
     onCompilationError() {
