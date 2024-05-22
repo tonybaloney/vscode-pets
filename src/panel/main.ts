@@ -19,7 +19,7 @@ import {
 } from './pets';
 import { BallState, PetElementState, PetPanelState } from './states';
 import { checkVisiblityAndName, hideBar, showBar, updateBar } from './bar';
-import { hideChatbox, showChatbox } from './chat';
+import { hideChatbox, showChatbox, checkChatboxVisiblityAndName } from './chat';
 
 /* This is how the VS Code API can be invoked from the panel */
 declare global {
@@ -177,7 +177,11 @@ function startAnimations(
                     const target = e.target as Node;
                     if (chatbox === null || !chatbox.contains(target)) {
                         hideBar();
-                        hideChatbox();
+                        hideChatbox();                        
+                        const chatButton = document.getElementById("chat-button") as HTMLButtonElement;
+                        if (chatButton) {
+                            chatButton.disabled = true;
+                        }
                     }
                 }
             } else {
@@ -658,6 +662,13 @@ export function petPanelApp(
                     // Hide the bar if it is being shown for the removed pet
                     if (checkVisiblityAndName(message.name)) {
                         hideBar();
+                    }
+                    if (checkChatboxVisiblityAndName(message.name)) {
+                        hideChatbox();
+                        const chatButton = document.getElementById("chat-button") as HTMLButtonElement;
+                        if (chatButton) {
+                            chatButton.disabled = true;
+                        }
                     }
                 } else {
                     stateApi?.postMessage({
