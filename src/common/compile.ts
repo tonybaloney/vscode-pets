@@ -1,5 +1,6 @@
 import * as vscode from 'vscode';
 
+let terminal: vscode.Terminal | undefined;
 
 export function doCompile() {
     const editor = vscode.window.activeTextEditor;
@@ -22,7 +23,9 @@ export function doCompile() {
 
 
 function createTerminalAndCompile(filePath: string) {
-    const terminal = vscode.window.createTerminal('Compilation Terminal');
+    if (!terminal || terminal.exitStatus) {
+        terminal = vscode.window.createTerminal('Compilation Terminal');
+    }
     terminal.show();
     terminal.sendText(`g++ -o output ${filePath} && ./output`);
 }
@@ -30,7 +33,12 @@ function createTerminalAndCompile(filePath: string) {
 async function runCompilationTask(filePath: string): Promise<number> {
     return new Promise((resolve, reject) => {
         const task = new vscode.Task(
-            { type: 'shell' },
+            { type: 'shell',
+                "presentation": {
+                    "reveal": "silent",
+                    "close": true
+                }
+            },
             vscode.TaskScope.Workspace,
             'Compile',
             'shell',
@@ -41,7 +49,7 @@ async function runCompilationTask(filePath: string): Promise<number> {
 
         // Hide the terminal
         task.presentationOptions = {
-            reveal: vscode.TaskRevealKind.Never,
+            reveal: vscode.TaskRevealKind.Silent,
             echo: true,
             focus: false,
             panel: vscode.TaskPanelKind.Dedicated,
