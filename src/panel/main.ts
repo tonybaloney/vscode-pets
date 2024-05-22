@@ -19,6 +19,7 @@ import {
 } from './pets';
 import { BallState, PetElementState, PetPanelState } from './states';
 import { checkVisiblityAndName, hideBar, showBar, updateBar } from './bar';
+import { hideChatbox, showChatbox } from './chat';
 
 /* This is how the VS Code API can be invoked from the panel */
 declare global {
@@ -109,6 +110,7 @@ function handleMouseLeave() {
 function handleClick(e: MouseEvent) {
     var el = e.currentTarget as HTMLDivElement;
     let isPetClicked = false;
+    const chatButton = document.getElementById("chat-button") as HTMLButtonElement;
     allPets.pets.forEach((element) => {
         if (element.collision === el) {
             isPetClicked = true;
@@ -119,6 +121,9 @@ function handleClick(e: MouseEvent) {
                 element.getNextTarget(), 
                 element.getHealth()
             );
+            if (chatButton) {
+                chatButton.disabled = false;
+            }
         }
     });
 
@@ -154,15 +159,26 @@ function startAnimations(
     
         if (clickedOutside) {
             const compileButton = document.getElementById("compile-button");
-            if (compileButton) {
+            const chatButton = document.getElementById("chat-button");
+            const chatbox = document.getElementById("chatbox");
+            if (compileButton && chatButton) {
                 // console.log(e.target);
                 if (e.target === compileButton) {
                     stateApi?.postMessage({
                         text: "",
                         command: 'run-compile',
                     });
+                } else if (e.target === chatButton) {
+                    const nameEm = document.getElementById("name");
+                    if (nameEm) {
+                        showChatbox(nameEm.innerHTML);
+                    }
                 } else {
-                    hideBar();
+                    const target = e.target as Node;
+                    if (chatbox === null || !chatbox.contains(target)) {
+                        hideBar();
+                        hideChatbox();
+                    }
                 }
             } else {
                 console.log("cannot find button");

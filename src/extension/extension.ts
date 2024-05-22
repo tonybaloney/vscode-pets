@@ -1094,7 +1094,17 @@ class PetWebviewContainer implements IPetPanel {
                             <div id="experience-value" class="status-text">100/100</div>
                         </div>
                     </div>
-                </div>	
+                    <div id="chatbox">
+                        <div id="chatbox-title">Chat with none!</div>
+                        <div id="chatbox-messages">
+                            <!-- Messages will be displayed here -->
+                        </div>
+                        <div id="chatbox-input">
+                            <input type="text" id="message-input" placeholder="Type a message...">
+                            <button id="send-button">✉️</button>
+                        </div>
+                    </div>	
+                </div>
                 <script nonce="${nonce}" src="${scriptUri}"></script>
                 <script nonce="${nonce}">petApp.petPanelApp("${basePetUri}", "${this.theme()}", ${this.themeKind()}, "${this.petColor()}", "${this.petSize()}", "${this.petType()}", ${this.throwBallWithMouse()});</script>
             </body>
