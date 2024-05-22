@@ -31,3 +31,37 @@ export function getRandomCommentWhenLowHealth() {
     const randomMessage = lowHealthMessages[Math.floor(Math.random() * lowHealthMessages.length)];
     return randomMessage;
 }
+
+export function getRandomCommentWhenCompilationError() {
+    const encouragementMessages = [
+        `Don't worry, we can fix this! 🛠️`,
+        `Errors are steps to success! 🚀`,
+        `You’ve got this! 💪`,
+        `Stay positive! 😊`,
+        `Every error is a lesson! 🌟`,
+        `Keep calm and debug on! 🐞`,
+        `Mistakes mean you’re trying! 💻`,
+        `You can do this! 🙌`,
+        `Every fix is a victory! ⚡`,
+        `You’re doing great! 🌱`,
+    ];
+    const randomMessage = encouragementMessages[Math.floor(Math.random() * encouragementMessages.length)];
+    return randomMessage;
+}
+
+export function getRandomCommentWhenCompilationSuccess() {
+    const encouragementMessages = [
+        `Great job! 🎉`,
+        `You did it! 🚀`,
+        `Success! 🌟`,
+        `Well done! 💪`,
+        `Awesome work! 😊`,
+        `Compilation complete! 🛠️`,
+        `Fantastic! 🙌`,
+        `You nailed it! ⚡`,
+        `Excellent job! 🌱`,
+        `Way to go! 🎯`
+    ];
+    const randomMessage = encouragementMessages[Math.floor(Math.random() * encouragementMessages.length)];
+    return randomMessage;
+}

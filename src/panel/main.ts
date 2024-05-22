@@ -127,6 +127,7 @@ function handleClick(e: MouseEvent) {
     }
 }
 
+
 function startAnimations(
     collision: HTMLDivElement,
     pet: IPetType,
@@ -139,6 +140,8 @@ function startAnimations(
     collision.addEventListener('mouseover', handleMouseOver);
     collision.addEventListener('mouseleave', handleMouseLeave);
     collision.addEventListener("click", handleClick);
+
+
     document.addEventListener('click', function(e) {
         // Check if the click is outside the pets' elements
         let clickedOutside = true;
@@ -150,7 +153,20 @@ function startAnimations(
         });
     
         if (clickedOutside) {
-            hideBar();
+            const compileButton = document.getElementById("compile-button");
+            if (compileButton) {
+                // console.log(e.target);
+                if (e.target === compileButton) {
+                    stateApi?.postMessage({
+                        text: "",
+                        command: 'run-compile',
+                    });
+                } else {
+                    hideBar();
+                }
+            } else {
+                console.log("cannot find button");
+            }
         }
     });
 
@@ -660,6 +676,18 @@ export function petPanelApp(
                 });
                 //console.log("Updating health");
                 break;
+            case 'handle-compile-result':
+                var pets = allPets.pets;
+                var result = message.result;
+                
+                var randomPet = pets[Math.floor(Math.random() * pets.length)];
+                
+                if (result === 0) {
+                    randomPet.onCompilationSuccess();
+                } else {
+                    randomPet.onCompilationError();
+                }
+                break;
         }
     });
 
@@ -701,3 +729,4 @@ export function petPanelApp(
 window.addEventListener('resize', function () {
     initCanvas();
 });
+

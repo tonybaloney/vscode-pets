@@ -17,6 +17,7 @@ import * as localize from '../common/localize';
 import { availableColors, normalizeColor } from '../panel/pets';
 import { updateCount } from '../common/codeLine';
 import { updateTimer, computeTimeDifference } from '../common/healthTimer';
+import { doCompile } from '../common/compile';
 
 const EXTRA_PETS_KEY = 'vscode-pets.extra-pets';
 const EXTRA_PETS_KEY_TYPES = EXTRA_PETS_KEY + '.types';
@@ -480,6 +481,20 @@ export function activate(context: vscode.ExtensionContext) {
     );
 
     context.subscriptions.push(
+        vscode.commands.registerCommand('vscode-pets.compile', async () => {
+            doCompile()?.then(compileResult => {
+                console.log("Compile result is ", compileResult);
+                const panel = getPetPanel();
+                if (panel !== undefined) {
+                    panel.handleCompileResult(compileResult);
+                }
+            }).catch(err => {
+                console.log(err);
+            });
+        }),
+    );
+
+    context.subscriptions.push(
         vscode.commands.registerCommand('vscode-pets.roll-call', async () => {
             const panel = getPetPanel();
             if (panel !== undefined) {
@@ -790,6 +805,10 @@ export function activate(context: vscode.ExtensionContext) {
     });
 
 
+
+    
+
+
 }
 
 function updateStatusBar(): void {
@@ -829,7 +848,8 @@ interface IPetPanel {
     update(): void;
     setThrowWithMouse(newThrowWithMouse: boolean): void;
     updateExperience(difference: number): void;
-    updateHealth(difference: number): void
+    updateHealth(difference: number): void;
+    handleCompileResult(result: number): void;
 }
 
 class PetWebviewContainer implements IPetPanel {
@@ -957,6 +977,10 @@ class PetWebviewContainer implements IPetPanel {
         void this.getWebview().postMessage({ command: 'update-health', diff: difference });
     }
 
+    public handleCompileResult(result: number): void {
+        void this.getWebview().postMessage({ command: 'handle-compile-result', result: result });
+    }
+
     protected getWebview(): vscode.Webview {
         throw new Error('Not implemented');
     }
@@ -1043,32 +1067,36 @@ class PetWebviewContainer implements IPetPanel {
 				<title>VS Code Pets</title>
 			</head>
 			<body>
-            <div id="status-container">
-                <div id="name-level" class="bar-container">
-                    <div id="name" class="status-text">Pet</div>
-                    <div id="level" class="status-text">Level 0</div>
-                </div>
-                <div id="health-container" class="bar-container">
-                    <div id="health-title" class="status-text">Health</div>
-                    <div id="health" class="bar-box">
-                        <div id="health-bar" class="bar"></div>
+                <canvas id="petCanvas"></canvas>
+                <div id="petsContainer"></div>
+                <div id="foreground">                
+                    <div id="control-container">
+                        <button id="compile-button">Compile!</button>
                     </div>
-                    <div id="health-value" class="status-text">100/100</div>
-                </div>
-                <div id="health-container" class="bar-container">
-                    <div id="experience-title" class="status-text">Experience</div>
-                    <div id="experience" class="bar-box">
-                        <div id="experience-bar" class="bar"></div>
+                    <div id="status-container">
+                        <div id="name-level" class="bar-container">
+                            <div id="name" class="status-text">Pet</div>
+                            <div id="level" class="status-text">Level 0</div>
+                        </div>
+                        <div id="health-container" class="bar-container">
+                            <div id="health-title" class="status-text">Health</div>
+                            <div id="health" class="bar-box">
+                                <div id="health-bar" class="bar"></div>
+                            </div>
+                            <div id="health-value" class="status-text">100/100</div>
+                        </div>
+                        <div id="health-container" class="bar-container">
+                            <div id="experience-title" class="status-text">Experience</div>
+                            <div id="experience" class="bar-box">
+                                <div id="experience-bar" class="bar"></div>
+                            </div>
+                            <div id="experience-value" class="status-text">100/100</div>
+                        </div>
                     </div>
-                    <div id="experience-value" class="status-text">100/100</div>
-                </div>
-            </div>
-				<canvas id="petCanvas"></canvas>
-				<div id="petsContainer"></div>
-				<div id="foreground"></div>	
-				<script nonce="${nonce}" src="${scriptUri}"></script>
-				<script nonce="${nonce}">petApp.petPanelApp("${basePetUri}", "${this.theme()}", ${this.themeKind()}, "${this.petColor()}", "${this.petSize()}", "${this.petType()}", ${this.throwBallWithMouse()});</script>
-			</body>
+                </div>	
+                <script nonce="${nonce}" src="${scriptUri}"></script>
+                <script nonce="${nonce}">petApp.petPanelApp("${basePetUri}", "${this.theme()}", ${this.themeKind()}, "${this.petColor()}", "${this.petSize()}", "${this.petType()}", ${this.throwBallWithMouse()});</script>
+            </body>
 			</html>`;
     }
 }
@@ -1080,6 +1108,9 @@ function handleWebviewMessage(message: WebviewMessage) {
             return;
         case 'info':
             void vscode.window.showInformationMessage(message.text);
+            return;
+        case 'run-compile':
+            void vscode.commands.executeCommand('vscode-pets.compile');
             return;
     }
 }

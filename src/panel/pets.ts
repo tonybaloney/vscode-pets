@@ -15,7 +15,8 @@ import { Zappy } from './pets/zappy';
 import { Rat } from './pets/rat';
 import { Turtle } from './pets/turtle';
 import { IPetType } from './states';
-import { getRandomCommentWhenLevelUp, getRandomCommentWhenLowHealth } from '../common/comments';
+import { getRandomCommentWhenLevelUp, getRandomCommentWhenLowHealth, 
+    getRandomCommentWhenCompilationError, getRandomCommentWhenCompilationSuccess } from '../common/comments';
 
 
 export class PetElement {
@@ -105,6 +106,14 @@ export class PetElement {
         this.level = value;
         this.nextTarget += 100 * this.level;
         this.pet.showSpeechBubble(getRandomCommentWhenLevelUp(this.level), 2000);
+    }
+
+    onCompilationError() {
+        this.pet.showSpeechBubble(getRandomCommentWhenCompilationError(), 2000);
+    }
+
+    onCompilationSuccess() {
+        this.pet.showSpeechBubble(getRandomCommentWhenCompilationSuccess(), 2000);
     }
 
 }
