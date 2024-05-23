@@ -52,27 +52,27 @@ document.getElementById('send-button')?.addEventListener('click', async () => {
     displayMessage('You', inputValue);
     const inputField = document.getElementById('message-input') as HTMLInputElement;
     inputField.value = '';
-    console.log(currentName);
     // try {
-    //     const response = await fetch('https://api.openai.com/v1/engines/davinci-codex/completions', {
+    //     const response = await fetch('https://api.openai.com/v1/chat/completions', {
     //     method: 'POST',
     //     headers: {
     //         'Content-Type': 'application/json',
     //         'Authorization': `Bearer 123`
     //     },
     //     body: JSON.stringify({
-    //         prompt: userInput,
+    //         prompt: inputValue,
     //         max_tokens: 150
     //     })
     //     });
         
     //     const data = await response.json();
     //     const botMessage = data.choices[0].text.trim();
+    //     console.log(botMessage);
     //     if (currentName) {
     //         displayMessage(currentName, botMessage);
     //     }
     // } catch (error) {
-    //     console.error('Error:', error);
+    //     console.log('Error:', error);
     // }
 });
 

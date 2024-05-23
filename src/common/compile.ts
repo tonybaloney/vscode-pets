@@ -27,7 +27,7 @@ function createTerminalAndCompile(filePath: string) {
         terminal = vscode.window.createTerminal('Compilation Terminal');
     }
     terminal.show();
-    terminal.sendText(`g++ -o output ${filePath} && ./output`);
+    terminal.sendText(`g++ -o output ${filePath}`);
 }
 
 async function runCompilationTask(filePath: string): Promise<number> {

@@ -104,7 +104,7 @@ button[disabled] {
 #send-button {
   width: 10%;
   margin-left: 10px;
-  padding: 5px 10px;
+  padding: 5px 5px;
   border: none;
   border-radius: 5px;
   background-color: #4e4e4e;
@@ -118,4 +118,11 @@ button[disabled] {
 
 .message-sender {
   font-weight: bold;
+  padding-left: 5%;
+  padding-top: 3%;
+}
+
+.message-content {
+  padding-left: 8%;
+  padding-bottom: 3%;
 }
