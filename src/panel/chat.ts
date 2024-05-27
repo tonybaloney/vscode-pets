@@ -52,28 +52,38 @@ document.getElementById('send-button')?.addEventListener('click', async () => {
     displayMessage('You', inputValue);
     const inputField = document.getElementById('message-input') as HTMLInputElement;
     inputField.value = '';
-    // try {
-    //     const response = await fetch('https://api.openai.com/v1/chat/completions', {
-    //     method: 'POST',
-    //     headers: {
-    //         'Content-Type': 'application/json',
-    //         'Authorization': `Bearer 123`
-    //     },
-    //     body: JSON.stringify({
-    //         prompt: inputValue,
-    //         max_tokens: 150
-    //     })
-    //     });
-        
-    //     const data = await response.json();
-    //     const botMessage = data.choices[0].text.trim();
-    //     console.log(botMessage);
-    //     if (currentName) {
-    //         displayMessage(currentName, botMessage);
-    //     }
-    // } catch (error) {
-    //     console.log('Error:', error);
-    // }
+     const data = {
+        model: "gpt-3.5-turbo", 
+        messages: [{
+            role: "system",
+            content: "You are a virtual pet for students to learn programming. You should talk in a cute way and give the student emotional support and encouragement."
+        }, {
+            role: "user",
+            content: inputValue
+        }],
+        temperature: 0.7,
+        max_tokens: 50
+    };
+
+    try {
+        const response = await fetch('https://api.openai.com/v1/chat/completions', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer 123'
+            },
+            body: JSON.stringify(data)
+        });
+        if (!response.ok) {
+            throw new Error('Failed to fetch AI response');
+        }
+        const responseData = await response.json();
+        const aiText = responseData.choices[0].message.content;
+        displayMessage(currentName, aiText);
+    } catch (error) {
+        console.error('Error fetching response from OpenAI:', error);
+        displayMessage(currentName, 'Sorry, there was an error processing your request.');
+    }
 });
 
 
