@@ -1,8 +1,14 @@
+// import * as dotenv from '../node_modules/dotenv/lib/main';
+
+// dotenv.config();
+
 // Handle the UI
 let currentName: string;
+let chatHistory: Array<string> = [];
 
 export function showChatbox(name: string) {
     currentName = name;
+    chatHistory = [];
     const chatbox = document.getElementById("chatbox");
     if (chatbox) {
         chatbox.style.display = "block";
@@ -17,9 +23,11 @@ export function showChatbox(name: string) {
             }
         }
     }
+
 }
 
 export function hideChatbox() {
+    chatHistory = [];
     const chatbox = document.getElementById("chatbox");
     if (chatbox) {
         chatbox.style.display = "none";
@@ -49,14 +57,18 @@ document.getElementById('send-button')?.addEventListener('click', async () => {
     if (inputValue.trim() === '') {
         return;
     }
+    const memory = getMemory();
+    // console.log(memory);
+    const context = `You are a virtual pet named ${currentName} for students to learn programming. You should talk in a cute way and give the student emotional support and encouragement. You have been talking about these: ${memory}`;
     displayMessage('You', inputValue);
+    storeMessage('You', inputValue);
     const inputField = document.getElementById('message-input') as HTMLInputElement;
     inputField.value = '';
      const data = {
         model: "gpt-3.5-turbo", 
         messages: [{
             role: "system",
-            content: "You are a virtual pet for students to learn programming. You should talk in a cute way and give the student emotional support and encouragement."
+            content: context
         }, {
             role: "user",
             content: inputValue
@@ -70,7 +82,7 @@ document.getElementById('send-button')?.addEventListener('click', async () => {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': 'Bearer 123'
+                'Authorization': `Bearer 123`
             },
             body: JSON.stringify(data)
         });
@@ -80,9 +92,12 @@ document.getElementById('send-button')?.addEventListener('click', async () => {
         const responseData = await response.json();
         const aiText = responseData.choices[0].message.content;
         displayMessage(currentName, aiText);
+        storeMessage(currentName, aiText);
     } catch (error) {
         console.error('Error fetching response from OpenAI:', error);
-        displayMessage(currentName, 'Sorry, there was an error processing your request.');
+        const errText = 'Sorry, there was an error processing your request.'
+        displayMessage(currentName, errText);
+        storeMessage(currentName, errText);
     }
 });
 
@@ -104,4 +119,16 @@ function displayMessage(sender: string, message: string) {
     
     document.getElementById('chatbox-messages')?.appendChild(messageContainer);
     messageContainer.scrollIntoView({ behavior: 'smooth' });
-  }
+}
+
+function storeMessage(sender: string, message: string) {
+    if (sender === "You") {
+        chatHistory.push("Student: " + message);
+    } else {
+        chatHistory.push("You: " + message);
+    }
+}
+
+function getMemory() {
+    return chatHistory.join('\n');
+}

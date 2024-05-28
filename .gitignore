@@ -9,4 +9,4 @@ coverage/
 .idea/
 media/main-bundle.js
 .DS_Store
-
+openai.env
