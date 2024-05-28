@@ -59,23 +59,58 @@ document.getElementById('send-button')?.addEventListener('click', async () => {
     }
     const memory = getMemory();
     // console.log(memory);
-    const context = `You are a virtual pet named ${currentName} for students to learn programming. You should talk in a cute way and give the student emotional support and encouragement. You have been talking about these: ${memory}`;
+    let context = `You are a virtual pet named ${currentName} for students to learn programming. You should talk in a cute way and give the student emotional support and encouragement. Please keep your response short. `;
+    if (memory.length !== 0) {
+        context +=  `You have been talking about these: ${memory}`;
+    }
     displayMessage('You', inputValue);
     storeMessage('You', inputValue);
     const inputField = document.getElementById('message-input') as HTMLInputElement;
     inputField.value = '';
-     const data = {
-        model: "gpt-3.5-turbo", 
-        messages: [{
-            role: "system",
-            content: context
-        }, {
-            role: "user",
-            content: inputValue
-        }],
-        temperature: 0.7,
-        max_tokens: 50
+    context += "Now please reply to this message: " + inputValue;
+    const data = {
+        contents: [{
+                role: "user",
+                parts: [
+                    {
+                        text: context
+                    }
+                ]
+            }
+        ],
+        generationConfig: {
+            temperature: 0.7,
+            maxOutputTokens: 150
+        }
+
+
     };
+    console.log("Prompt: " + context);
+
+
+    try {
+        const response = await fetch('https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=123', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        });
+        const responseData = await response.json();
+        const resText = JSON.stringify(responseData);
+        if (!response.ok) {
+            throw new Error('Failed to fetch AI response' + resText);
+        }
+        const aiText = responseData.candidates[0].content.parts[0].text;
+        displayMessage(currentName, aiText);
+        storeMessage(currentName, aiText);
+    } catch (error) {
+        console.error('Error fetching response from Gemini: ', error);
+        const errText = 'Sorry, there was an error processing your request.';
+        displayMessage(currentName, errText);
+        storeMessage(currentName, errText);
+    }
+
     
 });
 
@@ -108,5 +143,5 @@ function storeMessage(sender: string, message: string) {
 }
 
 function getMemory() {
-    return chatHistory.join('\n');
+    return chatHistory.join('  ');
 }

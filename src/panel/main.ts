@@ -712,7 +712,7 @@ export function petPanelApp(
                     randomPet.onCompilationSuccess();
                     allPets.pets.forEach(pet => {
                         pet.setExperience(pet.getExperience() + 5, false);
-                    })
+                    });
                 } else {
                     randomPet.onCompilationError();
                 }

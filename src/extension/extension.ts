@@ -1054,7 +1054,7 @@ class PetWebviewContainer implements IPetPanel {
             webview.cspSource
         } https:; script-src 'nonce-${nonce}';
                 font-src ${webview.cspSource};
-                connect-src 'self' https://api.openai.com;">
+                connect-src 'self' https://api.openai.com https://generativelanguage.googleapis.com">
 				<meta name="viewport" content="width=device-width, initial-scale=1.0">
 				<link href="${stylesResetUri}" rel="stylesheet" nonce="${nonce}">
 				<link href="${stylesMainUri}" rel="stylesheet" nonce="${nonce}">
