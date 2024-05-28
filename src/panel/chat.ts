@@ -76,29 +76,7 @@ document.getElementById('send-button')?.addEventListener('click', async () => {
         temperature: 0.7,
         max_tokens: 50
     };
-
-    try {
-        const response = await fetch('https://api.openai.com/v1/chat/completions', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer 123`
-            },
-            body: JSON.stringify(data)
-        });
-        if (!response.ok) {
-            throw new Error('Failed to fetch AI response');
-        }
-        const responseData = await response.json();
-        const aiText = responseData.choices[0].message.content;
-        displayMessage(currentName, aiText);
-        storeMessage(currentName, aiText);
-    } catch (error) {
-        console.error('Error fetching response from OpenAI:', error);
-        const errText = 'Sorry, there was an error processing your request.'
-        displayMessage(currentName, errText);
-        storeMessage(currentName, errText);
-    }
+    
 });
 
 
