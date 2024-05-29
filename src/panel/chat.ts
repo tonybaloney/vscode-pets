@@ -4,10 +4,12 @@
 
 // Handle the UI
 let currentName: string;
+let currentPetType: string;
 let chatHistory: Array<string> = [];
 
-export function showChatbox(name: string) {
+export function showChatbox(name: string, petType: string) {
     currentName = name;
+    currentPetType = petType;
     chatHistory = [];
     const chatbox = document.getElementById("chatbox");
     if (chatbox) {
@@ -59,7 +61,7 @@ document.getElementById('send-button')?.addEventListener('click', async () => {
     }
     const memory = getMemory();
     // console.log(memory);
-    let context = `You are a virtual pet named ${currentName} for students to learn programming. You should talk in a cute way and give the student emotional support and encouragement. Please keep your response short. `;
+    let context = `You are a virtual pet ${currentPetType} named ${currentName} for students to learn programming. You should talk in a cute way and give the student emotional support and encouragement. Please keep your response short. `;
     if (memory.length !== 0) {
         context +=  `You have been talking about these: ${memory}`;
     }

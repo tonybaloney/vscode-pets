@@ -33,7 +33,7 @@ const DEFAULT_PET_TYPE = PetType.cat;
 const DEFAULT_POSITION = ExtPosition.panel;
 const DEFAULT_THEME = Theme.none;
 
-const UPDATE_HEALTH_THRES = 1;
+const UPDATE_HEALTH_THRES = 45;
 
 class PetQuickPickItem implements vscode.QuickPickItem {
     constructor(
@@ -778,7 +778,7 @@ export function activate(context: vscode.ExtensionContext) {
     const diff = computeTimeDifference();
     // console.log("Making initial update now ", diff, -diff / UPDATE_HEALTH_THRES);
     setTimeout(() => {
-        getPetPanel()?.updateHealth(-diff / UPDATE_HEALTH_THRES);
+        getPetPanel()?.updateHealth(-Math.floor(diff / UPDATE_HEALTH_THRES));
     }, 500);
 
 
@@ -791,7 +791,7 @@ export function activate(context: vscode.ExtensionContext) {
     }, UPDATE_HEALTH_THRES * 60000);
 
     let canExecute = true;
-    const TIME_INTERVAL = 10 * 1000; // 15 minutes in milliseconds
+    const TIME_INTERVAL = 3 * 10 * 1000; // 3 minutes in milliseconds
     
     vscode.workspace.onDidChangeTextDocument(async event => {
         if (canExecute && event.contentChanges.length > 0) {
