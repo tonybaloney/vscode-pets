@@ -1,22 +1,6 @@
 import { PetColor, PetSize, PetSpeed, PetType } from '../common/types';
-import { Cat } from './pets/cat';
-import { Chicken } from './pets/chicken';
-import { Clippy } from './pets/clippy';
-import { Cockatiel } from './pets/cockatiel';
-import { Crab } from './pets/crab';
 import { Dog } from './pets/dog';
-import { Fox } from './pets/fox';
-import { Mod } from './pets/mod';
-import { Rocky } from './pets/rocky';
-import { RubberDuck } from './pets/rubberduck';
-import { Snake } from './pets/snake';
-import { Totoro } from './pets/totoro';
-import { Zappy } from './pets/zappy';
-import { Rat } from './pets/rat';
-import { Turtle } from './pets/turtle';
 import { IPetType } from './states';
-import { getRandomCommentWhenLevelUp, getRandomCommentWhenLowHealth, 
-    getRandomCommentWhenCompilationError, getRandomCommentWhenCompilationSuccess } from '../common/comments';
 
 
 export class PetElement {
@@ -26,10 +10,7 @@ export class PetElement {
     pet: IPetType;
     color: PetColor;
     type: PetType;
-    experience: number;
-    health: number;
-    level: number;
-    nextTarget: number;
+
     remove() {
         this.el.remove();
         this.collision.remove();
@@ -45,10 +26,7 @@ export class PetElement {
         pet: IPetType,
         color: PetColor,
         type: PetType,
-        experience: number,
-        health: number,
-        nextTarget: number,
-        level: number
+
     ) {
         this.el = el;
         this.collision = collision;
@@ -56,68 +34,6 @@ export class PetElement {
         this.pet = pet;
         this.color = color;
         this.type = type;
-        this.experience = experience;
-        this.health = health;
-        this.level = level;
-        this.nextTarget = nextTarget;
-    }
-
-    getHealth() {
-        return this.health;
-    }
-
-    getExperience() {
-        return this.experience;
-    }
-
-    getLevel() {
-        return this.level;
-    }
-
-    getNextTarget() {
-        return this.nextTarget;
-    }
-
-    setHealth(value: number) {
-        this.health = value;
-        if (this.health < 0) {
-            this.health = 0;
-        } else if (this.health > 100) {
-            this.health = 100;
-        }
-    }
-
-    setExperience(value: number, showMessage: boolean) {
-        const prev = this.experience;
-        this.experience = value;
-        if (this.experience >= this.nextTarget) {
-            if (this.health >= 10) {
-                this.setLevel(this.level + 1);
-                if (showMessage) {
-                    this.pet.showSpeechBubble(getRandomCommentWhenLevelUp(this.level), 2000);
-                }
-            } else {
-                this.experience = this.nextTarget;
-                if (prev < this.nextTarget) {
-                    if (showMessage) {
-                        this.pet.showSpeechBubble(getRandomCommentWhenLowHealth(), 2000);
-                    }
-                }
-            }
-        }
-    }
-
-    setLevel(value: number) {
-        this.level = value;
-        this.nextTarget += 100 * this.level;
-    }
-
-    onCompilationError() {
-        this.pet.showSpeechBubble(getRandomCommentWhenCompilationError(), 2000);
-    }
-
-    onCompilationSuccess() {
-        this.pet.showSpeechBubble(getRandomCommentWhenCompilationSuccess(), 2000);
     }
 
 }
@@ -248,36 +164,8 @@ export function createPet(
     ] = [el, collision, speech, size, left, bottom, petRoot, floor, name];
 
     switch (petType) {
-        case PetType.cat:
-            return new Cat(...standardPetArguments, PetSpeed.normal);
-        case PetType.chicken:
-            return new Chicken(...standardPetArguments, PetSpeed.normal);
         case PetType.dog:
             return new Dog(...standardPetArguments, PetSpeed.normal);
-        case PetType.fox:
-            return new Fox(...standardPetArguments, PetSpeed.fast);
-        case PetType.crab:
-            return new Crab(...standardPetArguments, PetSpeed.slow);
-        case PetType.clippy:
-            return new Clippy(...standardPetArguments, PetSpeed.slow);
-        case PetType.mod:
-            return new Mod(...standardPetArguments, PetSpeed.normal);
-        case PetType.totoro:
-            return new Totoro(...standardPetArguments, PetSpeed.normal);
-        case PetType.snake:
-            return new Snake(...standardPetArguments, PetSpeed.verySlow);
-        case PetType.rubberduck:
-            return new RubberDuck(...standardPetArguments, PetSpeed.fast);
-        case PetType.zappy:
-            return new Zappy(...standardPetArguments, PetSpeed.veryFast);
-        case PetType.rocky:
-            return new Rocky(...standardPetArguments, PetSpeed.still);
-        case PetType.cockatiel:
-            return new Cockatiel(...standardPetArguments, PetSpeed.normal);
-        case PetType.rat:
-            return new Rat(...standardPetArguments, PetSpeed.normal);
-        case PetType.turtle:
-            return new Turtle(...standardPetArguments, PetSpeed.verySlow);
         default:
             throw new InvalidPetException("Pet type doesn't exist");
     }
@@ -285,36 +173,8 @@ export function createPet(
 
 export function availableColors(petType: PetType): PetColor[] {
     switch (petType) {
-        case PetType.cat:
-            return Cat.possibleColors;
-        case PetType.chicken:
-            return Chicken.possibleColors;
         case PetType.dog:
             return Dog.possibleColors;
-        case PetType.fox:
-            return Fox.possibleColors;
-        case PetType.crab:
-            return Crab.possibleColors;
-        case PetType.clippy:
-            return Clippy.possibleColors;
-        case PetType.mod:
-            return Mod.possibleColors;
-        case PetType.totoro:
-            return Totoro.possibleColors;
-        case PetType.snake:
-            return Snake.possibleColors;
-        case PetType.rubberduck:
-            return RubberDuck.possibleColors;
-        case PetType.zappy:
-            return Zappy.possibleColors;
-        case PetType.rocky:
-            return Rocky.possibleColors;
-        case PetType.cockatiel:
-            return Cockatiel.possibleColors;
-        case PetType.rat:
-            return Rat.possibleColors;
-        case PetType.turtle:
-            return Turtle.possibleColors;
         default:
             throw new InvalidPetException("Pet type doesn't exist");
     }

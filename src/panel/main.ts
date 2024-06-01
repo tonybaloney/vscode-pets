@@ -117,10 +117,10 @@ function handleClick(e: MouseEvent) {
             isPetClicked = true;
             showBar(
                 element.pet.name, 
-                element.getLevel(), 
-                element.getExperience(), 
-                element.getNextTarget(), 
-                element.getHealth()
+                element.pet.getLevel(), 
+                element.pet.getExperience(), 
+                element.pet.getNextTarget(), 
+                element.pet.getHealth()
             );
             if (chatButton) {
                 chatButton.disabled = false;
@@ -282,11 +282,7 @@ function addPetToPanel(
         speechBubbleElement,
         newPet,
         petColor,
-        petType,
-        experience,
-        health,
-        nextTarget,
-        level
+        petType
     );
 
     return petEm;
@@ -308,10 +304,10 @@ export function saveState(stateApi?: VscodeStateApi) {
             petFriend: petItem.pet.friend?.name ?? undefined,
             elLeft: petItem.el.style.left,
             elBottom: petItem.el.style.bottom,
-            petExperience: petItem.getExperience(),
-            petHealth: petItem.getHealth(),
-            petNextTarget: petItem.getNextTarget(),
-            petLevel: petItem.getLevel(),
+            petExperience: petItem.pet.getExperience(),
+            petHealth: petItem.pet.getHealth(),
+            petNextTarget: petItem.pet.getNextTarget(),
+            petLevel: petItem.pet.getLevel(),
         });
     });
     state.petCounter = petCounter;
@@ -347,14 +343,14 @@ function recoverState(
 
         try {
             var newPet = addPetToPanel(
-                p.petType ?? PetType.cat,
+                p.petType ?? PetType.dog,
                 basePetUri,
-                p.petColor ?? PetColor.brown,
+                p.petColor ?? PetColor.akita,
                 petSize,
                 parseInt(p.elLeft ?? '0'),
                 parseInt(p.elBottom ?? '0'),
                 floor,
-                p.petName ?? randomName(p.petType ?? PetType.cat),
+                p.petName ?? randomName(p.petType ?? PetType.dog),
                 p.petExperience,
                 p.petHealth,
                 p.petNextTarget,
@@ -492,11 +488,6 @@ export function petPanelApp(
             startMouseY = e.clientY;
             ballState = new BallState(e.clientX, e.clientY, 0, 0);
 
-            allPets.pets.forEach((petEl) => {
-                if (petEl.pet.canChase) {
-                    petEl.pet.chase(ballState, canvas);
-                }
-            });
             ballState.paused = true;
 
             drawBall();
@@ -524,11 +515,6 @@ export function petPanelApp(
                     endMouseX - startMouseX,
                     endMouseY - startMouseY,
                 );
-                allPets.pets.forEach((petEl) => {
-                    if (petEl.pet.canChase) {
-                        petEl.pet.chase(ballState, canvas);
-                    }
-                });
                 throwBall();
             };
         };
@@ -614,11 +600,6 @@ export function petPanelApp(
             case 'throw-ball':
                 resetBall();
                 throwBall();
-                allPets.pets.forEach((petEl) => {
-                    if (petEl.pet.canChase) {
-                        petEl.pet.chase(ballState, canvas);
-                    }
-                });
                 break;
             case 'spawn-pet':
                 allPets.push(
@@ -644,7 +625,7 @@ export function petPanelApp(
                     command: 'list-pets',
                     text: pets
                         .map(
-                            (pet) => `${pet.type},${pet.pet.name},${pet.color},${pet.getExperience()},${pet.getHealth()},${pet.getNextTarget()},${pet.getLevel()}`,
+                            (pet) => `${pet.type},${pet.pet.name},${pet.color},${pet.pet.getExperience()},${pet.pet.getHealth()},${pet.pet.getNextTarget()},${pet.pet.getLevel()}`,
                         )
                         .join('\n'),
                 });
@@ -701,16 +682,16 @@ export function petPanelApp(
                 var pets = allPets.pets;
                 var diff = message.diff;
                 pets.forEach((pet) => {
-                    pet.setExperience(pet.getExperience() + diff, true);
-                    updateBar(pet.pet.name, pet.getLevel(), pet.getExperience(), pet.getNextTarget(), pet.getHealth());
+                    pet.pet.setExperience(pet.pet.getExperience() + diff, true);
+                    updateBar(pet.pet.name, pet.pet.getLevel(), pet.pet.getExperience(), pet.pet.getNextTarget(), pet.pet.getHealth());
                 });
                 break;
             case 'update-health':
                 var pets = allPets.pets;
                 var diff = message.diff;
                 pets.forEach((pet) => {
-                    pet.setHealth(pet.getHealth() + diff);
-                    updateBar(pet.pet.name, pet.getLevel(), pet.getExperience(), pet.getNextTarget(), pet.getHealth());
+                    pet.pet.setHealth(pet.pet.getHealth() + diff);
+                    updateBar(pet.pet.name, pet.pet.getLevel(), pet.pet.getExperience(), pet.pet.getNextTarget(), pet.pet.getHealth());
                 });
                 //console.log("Updating health");
                 break;
@@ -720,12 +701,12 @@ export function petPanelApp(
                 var randomPet = pets[Math.floor(Math.random() * pets.length)];
                 
                 if (result === 0) {
-                    randomPet.onCompilationSuccess();
+                    randomPet.pet.onCompilationSuccess();
                     allPets.pets.forEach(pet => {
-                        pet.setExperience(pet.getExperience() + 5, false);
+                        pet.pet.setExperience(pet.pet.getExperience() + 5, false);
                     });
                 } else {
-                    randomPet.onCompilationError();
+                    randomPet.pet.onCompilationError();
                 }
                 break;
         }

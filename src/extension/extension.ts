@@ -28,8 +28,8 @@ const EXTRA_PETS_KEY_HPS = EXTRA_PETS_KEY + '.healths';
 const EXTRA_PETS_KEY_TARS = EXTRA_PETS_KEY + '.next-targets';
 const EXTRA_PETS_KEY_LEVELS = EXTRA_PETS_KEY + '.levels';
 const DEFAULT_PET_SCALE = PetSize.nano;
-const DEFAULT_COLOR = PetColor.brown;
-const DEFAULT_PET_TYPE = PetType.cat;
+const DEFAULT_COLOR = PetColor.akita;
+const DEFAULT_PET_TYPE = PetType.dog;
 const DEFAULT_POSITION = ExtPosition.panel;
 const DEFAULT_THEME = Theme.none;
 

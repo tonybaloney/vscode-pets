@@ -1,34 +1,10 @@
 export const enum PetColor {
-    brown = 'brown',
-    lightbrown = 'lightbrown',
-    black = 'black',
-    green = 'green',
-    yellow = 'yellow',
-    gray = 'gray',
-    purple = 'purple',
-    red = 'red',
-    white = 'white',
-    orange = 'orange',
     akita = 'akita',
     null = 'null',
 }
 
 export const enum PetType {
-    cat = 'cat',
-    chicken = 'chicken',
-    clippy = 'clippy',
-    cockatiel = 'cockatiel',
-    crab = 'crab',
     dog = 'dog',
-    fox = 'fox',
-    mod = 'mod',
-    rat = 'rat',
-    rocky = 'rocky',
-    rubberduck = 'rubber-duck',
-    snake = 'snake',
-    totoro = 'totoro',
-    turtle = 'turtle',
-    zappy = 'zappy',
     null = 'null',
 }
 
@@ -77,35 +53,10 @@ export class WebviewMessage {
 }
 
 export const ALL_PETS = [
-    PetType.cat,
-    PetType.chicken,
-    PetType.clippy,
-    PetType.cockatiel,
-    PetType.crab,
     PetType.dog,
-    PetType.fox,
-    PetType.mod,
-    PetType.rat,
-    PetType.rocky,
-    PetType.rubberduck,
-    PetType.snake,
-    PetType.totoro,
-    PetType.turtle,
-    PetType.zappy,
 ];
 export const ALL_COLORS = [
-    PetColor.black,
-    PetColor.brown,
-    PetColor.lightbrown,
-    PetColor.green,
-    PetColor.yellow,
-    PetColor.gray,
-    PetColor.purple,
-    PetColor.red,
-    PetColor.white,
-    PetColor.orange,
     PetColor.akita,
-    PetColor.null,
 ];
 export const ALL_SCALES = [
     PetSize.nano,
