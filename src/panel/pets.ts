@@ -6,14 +6,15 @@ import { Cockatiel } from './pets/cockatiel';
 import { Crab } from './pets/crab';
 import { Dog } from './pets/dog';
 import { Fox } from './pets/fox';
+import { TinyHorse } from './pets/tinyhorse';
 import { Mod } from './pets/mod';
+import { Rat } from './pets/rat';
 import { Rocky } from './pets/rocky';
 import { RubberDuck } from './pets/rubberduck';
 import { Snake } from './pets/snake';
 import { Totoro } from './pets/totoro';
-import { Zappy } from './pets/zappy';
-import { Rat } from './pets/rat';
 import { Turtle } from './pets/turtle';
+import { Zappy } from './pets/zappy';
 import { IPetType } from './states';
 
 export class PetElement {
@@ -204,6 +205,8 @@ export function createPet(
             return new Rat(...standardPetArguments, PetSpeed.normal);
         case PetType.turtle:
             return new Turtle(...standardPetArguments, PetSpeed.verySlow);
+        case PetType.tinyhorse:
+            return new TinyHorse(...standardPetArguments, PetSpeed.normal);
         default:
             throw new InvalidPetException("Pet type doesn't exist");
     }
@@ -241,6 +244,8 @@ export function availableColors(petType: PetType): PetColor[] {
             return Rat.possibleColors;
         case PetType.turtle:
             return Turtle.possibleColors;
+        case PetType.tinyhorse:
+            return TinyHorse.possibleColors;
         default:
             throw new InvalidPetException("Pet type doesn't exist");
     }

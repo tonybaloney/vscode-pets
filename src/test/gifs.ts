@@ -93,6 +93,34 @@ const pets: { [key: string]: { colors: string[]; states: string[] } } = {
         colors: ['green', 'orange'],
         states: ['idle', 'run', 'walk', 'lie', 'with_ball'],
     },
+    // eslint-disable-next-line @typescript-eslint/naming-convention
+    'tiny-horse': {
+        colors: [
+            'browne',
+            'white',
+            'black',
+            'socksbeige',
+            'socksblack',
+            'socksbrown',
+            'paintbeige',
+            'paintblack',
+            'paintbrown',
+            'magical',
+            'warrior',
+        ],
+        states: [
+            'fall_from_grab',
+            'idle',
+            'land',
+            'run',
+            'swipe',
+            'walk',
+            'walk_fast',
+            'wallclimb',
+            'wallgrab',
+            'with_ball',
+        ],
+    },
 };
 
 function checkGifFilenames(folder: string) {

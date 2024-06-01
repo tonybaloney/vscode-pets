@@ -24,7 +24,8 @@
         "dog",
         "pets",
         "clippy",
-        "rubber duck"
+        "rubber duck",
+        "tiny horse"
     ],
     "license": "MIT",
     "icon": "icon.png",
@@ -160,7 +161,15 @@
                             "red",
                             "white",
                             "orange",
-                            "akita"
+                            "akita",
+                            "socks black",
+                            "socks beige",
+                            "socks brown",
+                            "paint beige",
+                            "paint black",
+                            "paint brown",
+                            "magical",
+                            "warrior"
                         ],
                         "default": "brown",
                         "description": "Pet color",
@@ -181,6 +190,7 @@
                             "rocky",
                             "rubber-duck",
                             "snake",
+                            "tiny-horse",
                             "totoro",
                             "turtle",
                             "zappy"
