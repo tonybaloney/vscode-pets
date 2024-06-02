@@ -96,15 +96,15 @@ const pets: { [key: string]: { colors: string[]; states: string[] } } = {
     // eslint-disable-next-line @typescript-eslint/naming-convention
     'tiny-horse': {
         colors: [
-            'browne',
+            'brown',
             'white',
             'black',
-            'socksbeige',
-            'socksblack',
-            'socksbrown',
-            'paintbeige',
-            'paintblack',
-            'paintbrown',
+            'socks_beige',
+            'socks_black',
+            'socks_brown',
+            'paint_beige',
+            'paint_black',
+            'paint_brown',
             'magical',
             'warrior',
         ],
@@ -136,7 +136,8 @@ function checkGifFilenames(folder: string) {
                 const filename = `${color}_${state}_8fps.gif`;
                 const filePath = `${folder}/${pet}/${filename}`;
                 if (!fs.existsSync(filePath)) {
-                    console.error(`File "${filePath}" does not exist.`);
+                    // \x1b[31m is the ANSI escape code for red, and \x1b[0m resets the color back to the terminal's default.
+                    console.error(`\x1b[31mFile "${filePath}" does not exist.\x1b[0m`);
                     return false;
                 } else {
                     console.log(`File "${filePath}" exists.`);
