@@ -137,7 +137,9 @@ function checkGifFilenames(folder: string) {
                 const filePath = `${folder}/${pet}/${filename}`;
                 if (!fs.existsSync(filePath)) {
                     // \x1b[31m is the ANSI escape code for red, and \x1b[0m resets the color back to the terminal's default.
-                    console.error(`\x1b[31mFile "${filePath}" does not exist.\x1b[0m`);
+                    console.error(
+                        `\x1b[31mFile "${filePath}" does not exist.\x1b[0m`,
+                    );
                     return false;
                 } else {
                     console.log(`File "${filePath}" exists.`);
