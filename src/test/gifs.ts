@@ -93,8 +93,7 @@ const pets: { [key: string]: { colors: string[]; states: string[] } } = {
         colors: ['green', 'orange'],
         states: ['idle', 'run', 'walk', 'lie', 'with_ball'],
     },
-    // eslint-disable-next-line @typescript-eslint/naming-convention
-    'tiny-horse': {
+    horse: {
         colors: [
             'brown',
             'white',

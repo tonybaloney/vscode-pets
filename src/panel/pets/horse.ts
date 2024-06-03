@@ -7,7 +7,7 @@ const getRandomElement = <T>(array: T[]): T => {
     return array[randomIndex];
 };
 
-export class TinyHorse extends BasePetType {
+export class Horse extends BasePetType {
     constructor(
         spriteElement: HTMLImageElement,
         collisionElement: HTMLDivElement,
@@ -36,7 +36,7 @@ export class TinyHorse extends BasePetType {
             speed,
         );
     }
-    label = 'tiny-horse';
+    label = 'horse';
     static possibleColors = [
         PetColor.brown,
         PetColor.white,
@@ -119,13 +119,13 @@ export class TinyHorse extends BasePetType {
         ],
     };
     get emoji(): string {
-        if (this.petRoot.includes('magical')) {
+        if (this.petRoot.endsWith('magical')) {
             return '🦄';
         }
         if (this.name.toLowerCase() === 'beau') {
             return '🤡';
         }
-        if (this.petRoot.includes('warrior')) {
+        if (this.petRoot.endsWith('warrior')) {
             return getRandomElement(['🗡️', '🪓', '🔪', '💣', '🧨']);
         }
         return '🐴';
@@ -168,10 +168,10 @@ export class TinyHorse extends BasePetType {
                 response = 'Hi ho, Silver!';
                 break;
         }
-        if (this.petRoot.includes('warrior')) {
+        if (this.petRoot.endsWith('warrior')) {
             response = response.toUpperCase();
         }
-        if (this.petRoot.includes('magical')) {
+        if (this.petRoot.endsWith('magical')) {
             return `🌈 ${response} ✨`;
         }
         if (this.name.toLowerCase() === 'warner') {
