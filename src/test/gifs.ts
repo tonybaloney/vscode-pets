@@ -107,7 +107,15 @@ const pets: { [key: string]: { colors: string[]; states: string[] } } = {
             'magical',
             'warrior',
         ],
-        states: ['idle', 'run', 'swipe', 'walk', 'walk_fast', 'with_ball'],
+        states: [
+            'idle',
+            'run',
+            'swipe',
+            'walk',
+            'walk_fast',
+            'with_ball',
+            'stand',
+        ],
     },
 };
 

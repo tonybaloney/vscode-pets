@@ -51,47 +51,84 @@ export class Horse extends BasePetType {
         PetColor.warrior,
     ];
     sequence = {
-        startingState: States.sitIdle,
+        startingState: States.standRight,
         sequenceStates: [
             {
                 state: States.sitIdle,
-                possibleNextStates: [States.walkRight, States.runRight],
+                // Only on first adding the horse
+                possibleNextStates: [States.walkRight],
+            },
+            {
+                state: States.standRight,
+                // Can start walking either direction (twice as likely to keep going right), or just keep on eating
+                possibleNextStates: [
+                    States.walkRight,
+                    States.walkRight,
+                    States.walkLeft,
+                    States.standRight,
+                ],
+            },
+            {
+                state: States.standLeft,
+                // Can start walking either direction (twice as likely to keep going left), or just keep on eating
+                possibleNextStates: [
+                    States.walkRight,
+                    States.walkLeft,
+                    States.walkLeft,
+                    States.standLeft,
+                ],
             },
             {
                 state: States.walkRight,
-                possibleNextStates: [States.walkLeft, States.runLeft],
+                // Can switch directions, start running the same direction, or start eating (twice as likely)
+                possibleNextStates: [
+                    States.walkLeft,
+                    States.runRight,
+                    States.standRight,
+                    States.standRight,
+                ],
             },
             {
                 state: States.runRight,
-                possibleNextStates: [States.walkLeft, States.runLeft],
+                // Can switch directions or slow down to a walk (twice as likely)
+                possibleNextStates: [
+                    States.walkRight,
+                    States.walkRight,
+                    States.runLeft,
+                ],
             },
             {
                 state: States.walkLeft,
+                // Can switch directions, start running the same direciton, or start eating (twice as likely)
                 possibleNextStates: [
-                    States.sitIdle,
                     States.walkRight,
-                    States.runRight,
+                    States.runLeft,
+                    States.standLeft,
+                    States.standLeft,
                 ],
             },
             {
                 state: States.runLeft,
+                // Can switch directions or slow down to a walk (twice as likely)
                 possibleNextStates: [
-                    States.sitIdle,
-                    States.walkRight,
+                    States.walkLeft,
+                    States.walkLeft,
                     States.runRight,
                 ],
             },
             {
                 state: States.chase,
+                // After the chase, the horse has the ball!
                 possibleNextStates: [States.idleWithBall],
             },
             {
                 state: States.idleWithBall,
+                // Can go back to running or have a bite to eat
                 possibleNextStates: [
-                    States.walkRight,
-                    States.walkLeft,
-                    States.runLeft,
                     States.runRight,
+                    States.runLeft,
+                    States.standRight,
+                    States.standLeft,
                 ],
             },
         ],

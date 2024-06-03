@@ -66,7 +66,7 @@ The forest theme was designed by [edermunizz](https://edermunizz.itch.io/free-pi
 
 The turtle animations were designed by enkeefe using [Pixelart](https://www.pixilart.com/draw).
 
-The tiny-horse animations were adapted by [Chris Kent](https://github.com/thechriskent) from assets by [Onfe](https://onfe.itch.io/horse-sprite-with-rider-asset-pack). 
+The horse animations were adapted by [Chris Kent](https://github.com/thechriskent) from assets by [Onfe](https://onfe.itch.io/horse-sprite-with-rider-asset-pack). 
 
 ## Thank you
 
