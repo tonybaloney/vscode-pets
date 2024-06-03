@@ -69,34 +69,12 @@ export class Horse extends BasePetType {
                 state: States.walkLeft,
                 possibleNextStates: [
                     States.sitIdle,
-                    States.climbWallLeft,
                     States.walkRight,
                     States.runRight,
                 ],
             },
             {
                 state: States.runLeft,
-                possibleNextStates: [
-                    States.sitIdle,
-                    States.climbWallLeft,
-                    States.walkRight,
-                    States.runRight,
-                ],
-            },
-            {
-                state: States.climbWallLeft,
-                possibleNextStates: [States.wallHangLeft],
-            },
-            {
-                state: States.wallHangLeft,
-                possibleNextStates: [States.jumpDownLeft],
-            },
-            {
-                state: States.jumpDownLeft,
-                possibleNextStates: [States.land],
-            },
-            {
-                state: States.land,
                 possibleNextStates: [
                     States.sitIdle,
                     States.walkRight,
