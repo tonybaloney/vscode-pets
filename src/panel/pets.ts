@@ -116,7 +116,7 @@ export class PetCollection implements IPetCollection {
                 if (
                     potentialFriend.pet.left > petInCollection.pet.left &&
                     potentialFriend.pet.left <
-                    petInCollection.pet.left + petInCollection.pet.width
+                        petInCollection.pet.left + petInCollection.pet.width
                 ) {
                     // We found a possible new friend..
                     console.log(

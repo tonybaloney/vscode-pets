@@ -63,7 +63,7 @@ export const DENO_NAMES: ReadonlyArray<string> = [
     'Dee',
     'Dee Dee',
     'Deno',
-    'Deno Jr.', 
+    'Deno Jr.',
     'Deno the Dino',
     'Deploydocus',
     'Dino',
