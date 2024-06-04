@@ -211,7 +211,7 @@ export class Horse extends BasePetType {
     }
 }
 
-export const TINYHORSE_NAMES: ReadonlyArray<string> = [
+export const HORSE_NAMES: ReadonlyArray<string> = [
     'Tiny Horse jr.',
     'Mister Ed',
     'Tony the Pony',
