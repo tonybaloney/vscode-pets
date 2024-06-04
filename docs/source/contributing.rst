@@ -50,7 +50,7 @@ The minimum set of behaviors is:
 * running/chasing
 * holding green ball
 
-Testing the changes  
+Testing the changes
 +++++++++++++++++++
 
 -   Run `npm install`.
