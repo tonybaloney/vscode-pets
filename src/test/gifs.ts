@@ -93,6 +93,30 @@ const pets: { [key: string]: { colors: string[]; states: string[] } } = {
         colors: ['green', 'orange'],
         states: ['idle', 'run', 'walk', 'lie', 'with_ball'],
     },
+    horse: {
+        colors: [
+            'brown',
+            'white',
+            'black',
+            'socks_beige',
+            'socks_black',
+            'socks_brown',
+            'paint_beige',
+            'paint_black',
+            'paint_brown',
+            'magical',
+            'warrior',
+        ],
+        states: [
+            'idle',
+            'run',
+            'swipe',
+            'walk',
+            'walk_fast',
+            'with_ball',
+            'stand',
+        ],
+    },
 };
 
 function checkGifFilenames(folder: string) {
@@ -108,7 +132,10 @@ function checkGifFilenames(folder: string) {
                 const filename = `${color}_${state}_8fps.gif`;
                 const filePath = `${folder}/${pet}/${filename}`;
                 if (!fs.existsSync(filePath)) {
-                    console.error(`File "${filePath}" does not exist.`);
+                    // \x1b[31m is the ANSI escape code for red, and \x1b[0m resets the color back to the terminal's default.
+                    console.error(
+                        `\x1b[31mFile "${filePath}" does not exist.\x1b[0m`,
+                    );
                     return false;
                 } else {
                     console.log(`File "${filePath}" exists.`);
