@@ -52,7 +52,7 @@
                 {
                     "type": "webview",
                     "id": "petsView",
-                    "name": "VS Code Pets",
+                    "name": "VS Code Petssss",
                     "when": "vscode-pets.position == 'explorer'",
                     "icon": "media/dog.svg"
                 }
@@ -234,6 +234,11 @@
                         "type": "boolean",
                         "default": false,
                         "description": "Throw ball with mouse"
+                    },
+                    "vscode-pets.showBubble": {
+                        "type": "boolean",
+                        "default": "false",
+                        "description": "Show speech bubble on pet interactions"
                     }
                 }
             }

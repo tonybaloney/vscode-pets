@@ -85,6 +85,12 @@ function getThrowWithMouseConfiguration(): boolean {
         .get<boolean>('throwBallWithMouse', true);
 }
 
+function getShowBubble(): boolean {
+    return vscode.workspace
+        .getConfiguration('vscode-pets')
+        .get<boolean>('showBubble', false);
+}
+
 function updatePanelThrowWithMouse(): void {
     const panel = getPetPanel();
     if (panel !== undefined) {
