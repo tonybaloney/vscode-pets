@@ -317,6 +317,14 @@ export function activate(context: vscode.ExtensionContext) {
         }),
     );
 
+    // create a pet coding session on vscode start
+    const autoStart = vscode.workspace
+        .getConfiguration('vscode-pets')
+        .get<Boolean>('autoStartPetCodingSession');
+    if (autoStart) {
+        vscode.commands.executeCommand('vscode-pets.start');
+    }
+
     spawnPetStatusBar = vscode.window.createStatusBarItem(
         vscode.StatusBarAlignment.Right,
         100,
