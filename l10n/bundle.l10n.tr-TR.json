@@ -18,6 +18,17 @@
 	"purple": "Mor",
 	"red": "Kırmızı",
 	"white": "Beyaz",
+	"orange": "Orange",
+	"blue": "Blue",
+	"akita": "Akita",
+	"socks black": "Black (Socks)",
+	"socks brown": "Brown (Socks)",
+	"socks beige": "Beige (Socks)",
+	"paint black": "Black (Paint)",
+	"paint brown": "Brown (Paint)",
+	"paint beige": "Beige (Paint)",
+	"magical": "Magical",
+	"warrior": "Warrior",
 	"cat": "Kedi",
 	"clippy": "Clippy",
 	"cockatiel": "Sultan Papağanı",
@@ -29,5 +40,6 @@
 	"rubber-duck": "Plastik Ördek",
 	"snake": "Yılan",
 	"totoro": "Totoro",
-	"zappy": "Zappy"
+	"zappy": "Zappy",
+	"horse": "Horse"
 }
