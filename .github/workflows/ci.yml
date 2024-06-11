@@ -34,7 +34,7 @@ jobs:
             - name: Run coverage
               continue-on-error: true
               if: runner.os == 'Linux'
-              run: xvfb-run npm test:coverage
+              run: xvfb-run npm run test:coverage
             - uses: codecov/codecov-action@v4
               with:
                 directory: ./coverage
