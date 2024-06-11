@@ -29,14 +29,12 @@ jobs:
             - run: npm run compile
             - run: npm run lint
             - name: Run unit and integration tests
-              uses: coactions/setup-xvfb@v1
-              with:
-                run: npm run test
+              if: runner.os == 'Linux'
+              run: xvfb-run npm test
             - name: Run coverage
-              uses: coactions/setup-xvfb@v1
               continue-on-error: true
-              with:
-                run: npm run test:coverage
+              if: runner.os == 'Linux'
+              run: xvfb-run npm test:coverage
             - uses: codecov/codecov-action@v4
               with:
                 directory: ./coverage
