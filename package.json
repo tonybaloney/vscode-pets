@@ -2,7 +2,7 @@
     "name": "vscode-pets",
     "displayName": "vscode-pets",
     "description": "Pets for your VS Code",
-    "version": "1.26.0",
+    "version": "1.27.0",
     "engines": {
         "vscode": "^1.73.0"
     },
@@ -25,7 +25,8 @@
         "pets",
         "clippy",
         "rubber duck",
-        "horse"
+        "horse",
+        "deno"
     ],
     "license": "MIT",
     "icon": "icon.png",
