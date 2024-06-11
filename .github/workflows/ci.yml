@@ -29,11 +29,11 @@ jobs:
             - run: npm run compile
             - run: npm run lint
             - name: Run unit and integration tests
-              uses: GabrielBB/xvfb-action@v1.6
+              uses: coactions/setup-xvfb@v1
               with:
                 run: npm run test
             - name: Run coverage
-              uses: GabrielBB/xvfb-action@v1.6
+              uses: coactions/setup-xvfb@v1
               continue-on-error: true
               with:
                 run: npm run test:coverage
