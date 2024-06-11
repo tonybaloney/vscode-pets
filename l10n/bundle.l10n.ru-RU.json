@@ -18,6 +18,17 @@
 	"purple": "Фиолетовый",
 	"red": "Красный",
 	"white": "Белый",
+	"orange": "Orange",
+	"blue": "Blue",
+	"akita": "Akita",
+	"socks black": "Black (Socks)",
+	"socks brown": "Brown (Socks)",
+	"socks beige": "Beige (Socks)",
+	"paint black": "Black (Paint)",
+	"paint brown": "Brown (Paint)",
+	"paint beige": "Beige (Paint)",
+	"magical": "Magical",
+	"warrior": "Warrior",
 	"cat": "Кот",
 	"clippy": "Скрепка",
 	"cockatiel": "Корелла",
@@ -29,5 +40,6 @@
 	"rubber-duck": "Резиновая уточка",
 	"snake": "Змея",
 	"totoro": "Тоторо",
-	"zappy": "Молния"
+	"zappy": "Молния",
+	"horse": "Horse"
 }
