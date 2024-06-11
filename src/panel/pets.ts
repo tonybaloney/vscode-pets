@@ -180,7 +180,7 @@ export function createPet(
         case PetType.chicken:
             return new Chicken(...standardPetArguments, PetSpeed.normal);
         case PetType.deno:
-            return new Deno(...standardPetArguments, PetSpeed.normal);
+            return new Deno(...standardPetArguments, PetSpeed.slow);
         case PetType.dog:
             return new Dog(...standardPetArguments, PetSpeed.normal);
         case PetType.fox:
