@@ -270,7 +270,7 @@
         "eslint": "^8.18.0",
         "eslint-plugin-unused-imports": "^2.0.0",
         "glob": "^8.0.3",
-        "gulp": "^4.0.2",
+        "gulp": "^5.0.0",
         "jsdom": "^20.0.0",
         "jsdom-global": "^3.0.2",
         "mocha": "^10.0.0",
