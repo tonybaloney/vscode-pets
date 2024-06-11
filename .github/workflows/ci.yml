@@ -5,9 +5,9 @@ name: CI
 
 on:
     push:
-        branches: [master]
+        branches: [main]
     pull_request:
-        branches: [master]
+        branches: [main]
 
 jobs:
     build:
@@ -24,7 +24,7 @@ jobs:
                   node-version: ${{ matrix.node-version }}
             - name: Extract cats
               run: cd media && unzip -P ${{ secrets.CAT_ASSETS_PASSWORD }} cat.zip
-              if: github.ref == 'refs/heads/master'
+              if: github.ref == 'refs/heads/main'
             - run: npm ci
             - run: npm run compile
             - run: npm run lint
