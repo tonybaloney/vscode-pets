@@ -532,6 +532,7 @@ export function activate(context: vscode.ExtensionContext) {
                         },
                     );
                     if (selectedColor === undefined) {
+                        console.log('Cancelled Spawning Pet - No Pet Color Selected');
                         return;
                     }
                     petColor = selectedColor.value;
@@ -540,6 +541,7 @@ export function activate(context: vscode.ExtensionContext) {
                 }
 
                 if (petColor === undefined) {
+                    console.log('Cancelled Spawning Pet - No Pet Color Selected');
                     return;
                 }
 
