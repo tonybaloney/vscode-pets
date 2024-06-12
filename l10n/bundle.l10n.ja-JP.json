@@ -18,8 +18,8 @@
 	"purple": "紫",
 	"red": "赤",
 	"white": "白",
-	"orange": "Orange",
-	"blue": "Blue",
+	"orange": "オレンジ",
+	"blue": "青",
 	"akita": "Akita",
 	"socks black": "Black (Socks)",
 	"socks brown": "Brown (Socks)",
@@ -33,6 +33,7 @@
 	"clippy": "クリッピー",
 	"cockatiel": "オカメインコ",
 	"crab": "カニ",
+	"deno": "Deno",
 	"dog": "犬",
 	"mod": "Mod (.NET ボット)",
 	"rat": "ネズミ",
@@ -41,5 +42,5 @@
 	"snake": "蛇",
 	"totoro": "トトロ",
 	"zappy": "ザッピー",
-	"horse": "Horse"
+	"horse": "馬"
 }
