@@ -1,7 +1,6 @@
-import { PetColor } from "../../common/types";
-import { BasePetType } from "../basepettype";
-import { ISequenceTree } from "../sequences";
-import { RunRightState, States } from "../states";
+import { PetColor } from '../../common/types';
+import { BasePetType } from '../basepettype';
+import { States } from '../states';
 
 export class Snail extends BasePetType {
     label = 'snail';
@@ -11,8 +10,8 @@ export class Snail extends BasePetType {
         startingState: States.sitIdle,
         sequenceStates: [
             {
-            state: States.sitIdle,
-            possibleNextStates: [States.walkRight, States.runRight],
+                state: States.sitIdle,
+                possibleNextStates: [States.walkRight, States.runRight],
             },
             {
                 state: States.walkRight,
@@ -57,7 +56,7 @@ export class Snail extends BasePetType {
     get emoji(): string {
         return '🐌';
     }
-    
+
     get hello(): string {
         return 'hello! 👋';
     }
