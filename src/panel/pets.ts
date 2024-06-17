@@ -12,6 +12,7 @@ import { Mod } from './pets/mod';
 import { Rat } from './pets/rat';
 import { Rocky } from './pets/rocky';
 import { RubberDuck } from './pets/rubberduck';
+import { Snail } from './pets/snail';
 import { Snake } from './pets/snake';
 import { Totoro } from './pets/totoro';
 import { Turtle } from './pets/turtle';
@@ -194,6 +195,8 @@ export function createPet(
             return new Mod(...standardPetArguments, PetSpeed.normal);
         case PetType.totoro:
             return new Totoro(...standardPetArguments, PetSpeed.normal);
+        case PetType.snail:
+            return new Snail(...standardPetArguments, PetSpeed.verySlow);
         case PetType.snake:
             return new Snake(...standardPetArguments, PetSpeed.verySlow);
         case PetType.rubberduck:
@@ -235,6 +238,8 @@ export function availableColors(petType: PetType): PetColor[] {
             return Mod.possibleColors;
         case PetType.totoro:
             return Totoro.possibleColors;
+        case PetType.snail:
+            return Snail.possibleColors;
         case PetType.snake:
             return Snake.possibleColors;
         case PetType.rubberduck:

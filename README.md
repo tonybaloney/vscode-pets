@@ -68,6 +68,8 @@ The turtle animations were designed by enkeefe using [Pixelart](https://www.pixi
 
 The horse animations were adapted by [Chris Kent](https://github.com/thechriskent) from assets by [Onfe](https://onfe.itch.io/horse-sprite-with-rider-asset-pack). 
 
+[Kennet Shin](https://github.com/WoofWoof0) created the snail media assets.
+
 ## Thank you
 
 Thanks to all the [contributors](https://github.com/tonybaloney/vscode-pets/graphs/contributors) to this project.
