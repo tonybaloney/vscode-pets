@@ -200,17 +200,6 @@
                         "description": "Pet type",
                         "scope": "window"
                     },
-                    "vscode-pets.petSize": {
-                        "type": "string",
-                        "enum": [
-                            "nano",
-                            "small",
-                            "medium",
-                            "large"
-                        ],
-                        "default": "nano",
-                        "description": "Pet size"
-                    },
                     "vscode-pets.position": {
                         "type": "string",
                         "enum": [

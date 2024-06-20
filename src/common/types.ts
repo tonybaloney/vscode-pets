@@ -52,7 +52,7 @@ export const enum PetSpeed {
     veryFast = 5,
 }
 
-export const enum PetSize {
+export enum PetSize {
     nano = 'nano',
     small = 'small',
     medium = 'medium',
