@@ -335,6 +335,7 @@ export function activate(context: vscode.ExtensionContext) {
             updateExtensionPositionContext,
         ),
     );
+
     updateStatusBar();
 
     const spec = PetSpecification.fromConfiguration();
@@ -363,6 +364,15 @@ export function activate(context: vscode.ExtensionContext) {
             const panel = getPetPanel();
             if (panel !== undefined) {
                 panel.throwBall();
+            }
+        }),
+    );
+
+    context.subscriptions.push(
+        vscode.commands.registerCommand('vscode-pets.throw-with-mouse', () => {
+            const panel = getPetPanel();
+            if (panel !== undefined) {
+                panel.setThrowWithMouse(true);
             }
         }),
     );
