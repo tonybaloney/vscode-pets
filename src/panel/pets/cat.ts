@@ -7,9 +7,10 @@ export class Cat extends BasePetType {
     static possibleColors = [
         PetColor.black,
         PetColor.brown,
-        PetColor.white,
         PetColor.gray,
         PetColor.lightbrown,
+        PetColor.orange,
+        PetColor.white,
     ];
     sequence = {
         startingState: States.sitIdle,
@@ -207,4 +208,5 @@ export const CAT_NAMES: ReadonlyArray<string> = [
     'Carlotta',
     'Felix',
     'Duchess',
+    'Byrt',
 ];
