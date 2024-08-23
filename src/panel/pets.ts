@@ -116,7 +116,7 @@ export class PetCollection implements IPetCollection {
                 if (!potentialFriend.pet.canChase) {
                     return;
                 } // Pet is busy doing something else.
-                const speed_difference = Math.abs(petInCollection.pet.speed - potentialFriend.pet.speed);
+                const speedDifference = Math.abs(petInCollection.pet.speed - potentialFriend.pet.speed);
                 if (speed_difference > speedThreshold){
                     return;
                 }//Pet speeds are very different we cant be friends
