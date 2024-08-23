@@ -119,7 +119,7 @@ export class PetCollection implements IPetCollection {
                 const speedDifference = Math.abs(petInCollection.pet.speed - potentialFriend.pet.speed);
                 if (speedDifference > speedThreshold){
                     return;
-                }//Pet speeds are very different we cant be friends
+                } //Pet speeds are very different; we cant be friends
                 if (
                     potentialFriend.pet.left > petInCollection.pet.left &&
                     potentialFriend.pet.left <
