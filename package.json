@@ -144,6 +144,11 @@
                 "command": "vscode-pets.roll-call",
                 "title": "Roll-call",
                 "category": "Pet Coding"
+            },
+            {
+                "command": "vscode-pets.change-pet-size",
+                "title": "Change pet size",
+                "category": "Pet Coding"
             }
         ],
         "configuration": [

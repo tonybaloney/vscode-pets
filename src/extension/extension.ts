@@ -628,6 +628,57 @@ export function activate(context: vscode.ExtensionContext) {
         ),
     );
 
+    context.subscriptions.push(
+        vscode.commands.registerCommand(
+            'vscode-pets.change-pet-size',
+            async () => {
+                const panel = getPetPanel();
+                if (panel !== undefined) {
+                    // show quick pick of all the pets
+                    const petList = PetSpecification.collectionFromMemento(
+                        context,
+                        getConfiguredSize(DEFAULT_PET_SCALE),
+                    );
+                    const selectedPet = await vscode.window.showQuickPick(
+                        petList.map((pet) => ({
+                            label: pet.name,
+                            description: `${pet.color} ${pet.type}`,
+                            value: pet,
+                        })),
+                        {
+                            placeHolder: vscode.l10n.t('Select a pet'),
+                        },
+                    );
+                    if (selectedPet === undefined) {
+                        return;
+                    }
+                    const selectedSize = await vscode.window.showQuickPick(
+                        Object.values(PetSize).map((value) => ({
+                            label: value,
+                            value: value,
+                        })),
+                        {
+                            placeHolder: 'Select a size',
+                        },
+                    );
+                    if (selectedSize === undefined) {
+                        return;
+                    }
+                    selectedPet.value.size = selectedSize.value;
+                    panel.spawnPet(selectedPet.value);
+                    await storeCollectionAsMemento(context, petList);
+                } else {
+                    await createPetPlayground(context);
+                    await vscode.window.showInformationMessage(
+                        vscode.l10n.t(
+                            "A Pet Playground has been created. You can now use the 'Change Pet Size' Command to change the size of the pets.",
+                        ),
+                    );
+                }
+            },
+        ),
+    );
+
     // Listening to configuration changes
     context.subscriptions.push(
         vscode.workspace.onDidChangeConfiguration(
