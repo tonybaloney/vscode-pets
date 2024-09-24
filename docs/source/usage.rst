@@ -8,9 +8,9 @@ Not convinced? Watch our extension spotlight on `Visual Studio Code <https://www
 Start pet coding session to show your pet
 -----------------------------------------
 
-Open the command palette with `Ctrl+Shift+P` on Windows/Linux or `Cmd(⌘)+Shift+P` on MacOS.  
+Open the command palette with ``Ctrl+Shift+P`` on Windows/Linux or ``Cmd(⌘)+Shift+P`` on MacOS.  
 
-Run the "Start pet coding session" command (`vscode-pets.start`)
+Run the "Start pet coding session" command (``vscode-pets.start``)
 
 Once you have the pet panel open, you can:
 
@@ -27,7 +27,7 @@ Once you have the pet panel open, you can:
 Changing your pet
 -----------------
 
-Open the setting panel with `Ctrl+,` on Windows/Linux or `Cmd(⌘)+,` on MacOS. In the search bar, enter “vscode-pets” to see all available options.
+Open the setting panel with ``Ctrl+,`` on Windows/Linux or ``Cmd(⌘)+,`` on MacOS. In the search bar, enter “vscode-pets” to see all available options.
 
 Set a default color, size, pet type, position, and theme when you open a Pet Panel.
 
@@ -50,8 +50,8 @@ Restrictions
 Place the pet's window
 ----------------------
 
-To switch the pet's window between *explorer (default)* and *panel*, you can use the command `vscode-pets.position`.
-Or in the setting panel the option `Position`.
+To switch the pet's window between *explorer (default)* and *panel*, you can use the command ``vscode-pets.position``.
+Or in the setting panel the option ``Position``.
 
 .. image:: _static/position-setting.png
 
@@ -73,7 +73,7 @@ Pets will interact with your mouse pointer within the open Pet Panel. Additional
 Adding additional pets
 ----------------------
 
-To add additional pets, run the "Spawn additional pet" command (`vscode-pets.spawn-pet`) or click the `+` icon.
+To add additional pets, run the "Spawn additional pet" command (``vscode-pets.spawn-pet``) or click the ``+`` icon.
 
 .. image:: _static/add-pet.png
 
@@ -92,11 +92,11 @@ Play catch with your pet! Click the ball icon in the VS Code Pets panel to throw
 
 .. image:: _static/throw-ball.gif
 
-You can also use the "Throw ball" command (`vscode-pets.throw-ball`).
+You can also use the "Throw ball" command (``vscode-pets.throw-bal`l`).
 
 * Rocky will not run & catch a ball. Have you ever seen a rock run after a ball? Neither have we.
 
-Want to challenge your pets to a harder game of fetch? Enable the "Throw ball with mouse" (`vscode-pets.throwBallWithMouse`) option in the settings. 
+Want to challenge your pets to a harder game of fetch? Enable the "Throw ball with mouse" (``vscode-pets.throwBallWithMouse``) option in the settings. 
 Then use the mouse to click and throw the ball:
 
 .. image:: _static/throw-ball-with-mouse.gif
@@ -104,16 +104,16 @@ Then use the mouse to click and throw the ball:
 Roll-call with your pets
 ------------------------
 
-Get a description of your current pets within VS Code. Run the "Roll-call" command (`vscode-pets.roll-call`) from the command palette.
+Get a description of your current pets within VS Code. Run the "Roll-call" command (``vscode-pets.roll-call``) from the command palette.
 
 .. image:: _static/pet-roll-call.png
 
 Removing a single pet or multiple pets
 --------------------------------------
 
-You can remove all pets (except the 1 configured) by running the "Remove all pets" command (`vscode-pets.delete-pets`) from the command palette.
+You can remove all pets (except the 1 configured) by running the "Remove all pets" command (``vscode-pets.delete-pets``) from the command palette.
 
-You can remove specific pets by clicking the trashcan icon or by running the "Remove pet" command (`vscode-pets.delete-pet`) from the command palette.
+You can remove specific pets by clicking the trashcan icon or by running the "Remove pet" command (``vscode-pets.delete-pet``) from the command palette.
 
 .. image:: _static/pet-remove.png
 
@@ -121,8 +121,8 @@ Importing or Exporting your Pet List
 ------------------------------------
 
 Have a certain pet setup you would like to share with your friends?
-You can export your pet list by running the "Export pet list" command (`vscode-pets.export-pets`) from the command palette.
-The pet list can be imported by running the "Import pet list" command (`vscode-pets.import-pets`) from the command palette.
+You can export your pet list by running the "Export pet list" command (``vscode-pets.export-pets``) from the command palette.
+The pet list can be imported by running the "Import pet list" command (``vscode-pets.import-pets``) from the command palette.
 
 .. image:: _static/pet-import-export.gif
 
@@ -131,14 +131,14 @@ Themes
 
 VS Code Pets comes with themes. Themes are set from the VS Code Preferences Window. Search for "vscode-pets" to find the VS Code Pets specific settings.
 
-Configure `vscode-pets.theme` to `"forest"` and let your pets play in a spooky forest.
+Configure ``vscode-pets.theme`` to ``"forest"`` and let your pets play in a spooky forest.
 
 .. image:: _static/forest.gif
 
-Set `vscode-pets.theme` to `"castle"` for them to roam the ramparts!
+Set ``vscode-pets.theme`` to ``"castle"`` for them to roam the ramparts!
 
 .. image:: _static/castle.gif
 
-Set `vscode-pets.theme` to `"beach"` for your friends to play by the ocean.
+Set ``vscode-pets.theme`` to ``"beach"`` for your friends to play by the ocean.
 
 .. image:: _static/beach-pose.png
