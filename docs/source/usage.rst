@@ -92,7 +92,7 @@ Play catch with your pet! Click the ball icon in the VS Code Pets panel to throw
 
 .. image:: _static/throw-ball.gif
 
-You can also use the "Throw ball" command (``vscode-pets.throw-bal`l`).
+You can also use the "Throw ball" command (``vscode-pets.throw-ball``).
 
 * Rocky will not run & catch a ball. Have you ever seen a rock run after a ball? Neither have we.
 
