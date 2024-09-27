@@ -356,7 +356,10 @@ export class ChaseFriendState implements IState {
         }
         // Pet uses speed of friend during chase if friend is slower
         /* eslint-disable @typescript-eslint/no-non-null-assertion */
-        const speed = this.pet.speed > this.pet.friend!.speed ? this.pet.friend!.speed : this.pet.speed;
+        const speed =
+            this.pet.speed > this.pet.friend!.speed
+                ? this.pet.friend!.speed
+                : this.pet.speed;
         if (this.pet.left > this.pet.friend!.left) {
             this.horizontalDirection = HorizontalDirection.left;
             this.pet.positionLeft(this.pet.left - speed);
