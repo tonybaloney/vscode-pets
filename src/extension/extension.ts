@@ -395,6 +395,34 @@ export function activate(context: vscode.ExtensionContext) {
 
     context.subscriptions.push(
         vscode.commands.registerCommand(
+            'vscode-pets.delete-rand-pet',
+            async () => {
+                const panel = getPetPanel();
+                if (panel !== undefined) {
+                    panel.deleteRandomPet();
+                } else {
+                    await createPetPlayground(context);
+                }
+            },
+        ),
+    );
+
+    context.subscriptions.push(
+        vscode.commands.registerCommand(
+            'vscode-pets.spawn-rand-pet',
+            async () => {
+                const panel = getPetPanel();
+                if (panel !== undefined) {
+                    panel.spawnRandomPet();
+                } else {
+                    await createPetPlayground(context);
+                }
+            },
+        ),
+    );
+
+    context.subscriptions.push(
+        vscode.commands.registerCommand(
             'vscode-pets.export-pet-list',
             async () => {
                 const pets = PetSpecification.collectionFromMemento(
@@ -689,7 +717,9 @@ interface IPetPanel {
     throwBall(): void;
     resetPets(): void;
     spawnPet(spec: PetSpecification): void;
+    spawnRandomPet(): void;
     deletePet(petName: string): void;
+    deleteRandomPet(): void;
     listPets(): void;
     rollCall(): void;
     themeKind(): vscode.ColorThemeKind;
@@ -791,6 +821,12 @@ class PetWebviewContainer implements IPetPanel {
         });
     }
 
+    public deleteRandomPet(): void {
+        void this.getWebview().postMessage({
+            command: 'delete-rand-pet',
+        });
+    }
+
     public spawnPet(spec: PetSpecification) {
         void this.getWebview().postMessage({
             command: 'spawn-pet',
@@ -801,6 +837,12 @@ class PetWebviewContainer implements IPetPanel {
         void this.getWebview().postMessage({
             command: 'set-size',
             size: spec.size,
+        });
+    }
+
+    public spawnRandomPet(): void {
+        void this.getWebview().postMessage({
+            command: 'spawn-rand-pet',
         });
     }
 

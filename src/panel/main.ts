@@ -591,6 +591,29 @@ export function petPanelApp(
                     });
                 }
                 break;
+            case 'delete-rand-pet':
+                var pet = allPets.locate(
+                    allPets.pets[
+                        Math.floor(Math.random() * allPets.pets.length)
+                    ].pet.name,
+                );
+                if (pet) {
+                    allPets.remove(pet.pet.name);
+                    saveState(stateApi);
+                    stateApi?.postMessage({
+                        command: 'info',
+                        text:
+                            '👋 Randomly selected ' +
+                            pet.pet.name +
+                            ' to be removed',
+                    });
+                } else {
+                    stateApi?.postMessage({
+                        command: 'error',
+                        text: `Could not find pet to delete`,
+                    });
+                }
+                break;
             case 'reset-pet':
                 allPets.reset();
                 petCounter = 0;
