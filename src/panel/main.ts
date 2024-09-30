@@ -7,6 +7,7 @@ import {
     Theme,
     ColorThemeKind,
     WebviewMessage,
+    ALL_PETS,
 } from '../common/types';
 import { IPetType } from './states';
 import {
@@ -552,7 +553,25 @@ export function petPanelApp(
                 );
                 saveState(stateApi);
                 break;
-
+            case 'spawn-rand-pet':
+                const randPetType =
+                    ALL_PETS[Math.floor(Math.random() * ALL_PETS.length)];
+                const randPetColors = availableColors(randPetType);
+                allPets.push(
+                    addPetToPanel(
+                        randPetType,
+                        basePetUri,
+                        randPetColors[
+                            Math.floor(Math.random() * randPetColors.length)
+                        ],
+                        petSize,
+                        randomStartPosition(),
+                        floor,
+                        floor,
+                        randomName(randPetType),
+                        stateApi,
+                    ),
+                );
             case 'list-pets':
                 var pets = allPets.pets;
                 stateApi?.postMessage({
@@ -588,6 +607,29 @@ export function petPanelApp(
                     stateApi?.postMessage({
                         command: 'error',
                         text: `Could not find pet ${message.name}`,
+                    });
+                }
+                break;
+            case 'delete-rand-pet':
+                var pet = allPets.locate(
+                    allPets.pets[
+                        Math.floor(Math.random() * allPets.pets.length)
+                    ].pet.name,
+                );
+                if (pet) {
+                    allPets.remove(pet.pet.name);
+                    saveState(stateApi);
+                    stateApi?.postMessage({
+                        command: 'info',
+                        text:
+                            '👋 Randomly selected ' +
+                            pet.pet.name +
+                            ' to be removed',
+                    });
+                } else {
+                    stateApi?.postMessage({
+                        command: 'error',
+                        text: `Could not find pet to delete`,
                     });
                 }
                 break;
