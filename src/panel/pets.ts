@@ -56,8 +56,12 @@ export interface IPetCollection {
     push(pet: PetElement): void;
     reset(): void;
     seekNewFriends(): string[];
-    locate(name: string): PetElement | undefined;
-    remove(name: string): void;
+    locate(
+        name: string,
+        type: PetType,
+        color: PetColor,
+    ): PetElement | undefined;
+    remove(name: string, type: PetType, color: PetColor): void;
 }
 
 export class PetCollection implements IPetCollection {
@@ -88,15 +92,19 @@ export class PetCollection implements IPetCollection {
         });
     }
 
-    remove(name: string): any {
-        this._pets.forEach((pet) => {
-            if (pet.pet.name === name) {
+    remove(name: string, type: PetType, color: PetColor): any {
+        for (let i = 0; i < this._pets.length; i++) {
+            const pet = this._pets[i];
+            if (
+                pet.pet.name === name &&
+                pet.type === type &&
+                pet.color === color
+            ) {
+                this._pets.splice(i, 1);
                 pet.remove();
+                return;
             }
-        });
-        this._pets = this._pets.filter((pet) => {
-            return pet.pet.name !== name;
-        });
+        }
     }
 
     seekNewFriends(): string[] {
