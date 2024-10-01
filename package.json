@@ -144,6 +144,11 @@
                 "command": "vscode-pets.roll-call",
                 "title": "Roll-call",
                 "category": "Pet Coding"
+            },
+            {
+                "command": "vscode-pets.change-pet-size",
+                "title": "Change pet size",
+                "category": "Pet Coding"
             }
         ],
         "configuration": [
@@ -199,17 +204,6 @@
                         "default": "cat",
                         "description": "Pet type",
                         "scope": "window"
-                    },
-                    "vscode-pets.petSize": {
-                        "type": "string",
-                        "enum": [
-                            "nano",
-                            "small",
-                            "medium",
-                            "large"
-                        ],
-                        "default": "nano",
-                        "description": "Pet size"
                     },
                     "vscode-pets.position": {
                         "type": "string",
