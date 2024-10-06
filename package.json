@@ -227,7 +227,8 @@
                             "forest",
                             "castle",
                             "beach",
-                            "halloween"
+                            "halloween",
+                            "farm"
                         ],
                         "default": "none",
                         "description": "Background theme assets for your pets"

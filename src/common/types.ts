@@ -70,6 +70,7 @@ export const enum Theme {
     castle = 'castle',
     beach = 'beach',
     halloween = 'halloween',
+    farm = 'farm',
 }
 
 export const enum ColorThemeKind {
@@ -136,4 +137,4 @@ export const ALL_SCALES = [
     PetSize.medium,
     PetSize.large,
 ];
-export const ALL_THEMES = [Theme.none, Theme.forest, Theme.castle, Theme.beach, Theme.halloween];
+export const ALL_THEMES = [Theme.none, Theme.forest, Theme.castle, Theme.beach, Theme.halloween, Theme.farm];
