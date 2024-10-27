@@ -32,6 +32,10 @@ const pets: { [key: string]: { colors: string[]; states: string[] } } = {
         colors: ['red'],
         states: ['idle', 'run', 'swipe', 'walk', 'walk_fast', 'with_ball'],
     },
+    deno: {
+        colors: ['green'],
+        states: ['idle', 'run', 'swipe', 'walk', 'with_ball'],
+    },
     dog: {
         colors: ['black', 'brown', 'red', 'white', 'akita'],
         states: [
@@ -59,6 +63,10 @@ const pets: { [key: string]: { colors: string[]; states: string[] } } = {
     // eslint-disable-next-line @typescript-eslint/naming-convention
     'rubber-duck': {
         colors: ['yellow'],
+        states: ['idle', 'run', 'swipe', 'walk', 'walk_fast', 'with_ball'],
+    },
+    snail: {
+        colors: ['brown'],
         states: ['idle', 'run', 'swipe', 'walk', 'walk_fast', 'with_ball'],
     },
     snake: {

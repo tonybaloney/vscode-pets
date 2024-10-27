@@ -4,6 +4,7 @@ import { Chicken } from './pets/chicken';
 import { Clippy } from './pets/clippy';
 import { Cockatiel } from './pets/cockatiel';
 import { Crab } from './pets/crab';
+import { Deno } from './pets/deno';
 import { Dog } from './pets/dog';
 import { Fox } from './pets/fox';
 import { Horse } from './pets/horse';
@@ -11,6 +12,7 @@ import { Mod } from './pets/mod';
 import { Rat } from './pets/rat';
 import { Rocky } from './pets/rocky';
 import { RubberDuck } from './pets/rubberduck';
+import { Snail } from './pets/snail';
 import { Snake } from './pets/snake';
 import { Totoro } from './pets/totoro';
 import { Turtle } from './pets/turtle';
@@ -179,6 +181,8 @@ export function createPet(
             return new Cat(...standardPetArguments, PetSpeed.normal);
         case PetType.chicken:
             return new Chicken(...standardPetArguments, PetSpeed.normal);
+        case PetType.deno:
+            return new Deno(...standardPetArguments, PetSpeed.slow);
         case PetType.dog:
             return new Dog(...standardPetArguments, PetSpeed.normal);
         case PetType.fox:
@@ -191,6 +195,8 @@ export function createPet(
             return new Mod(...standardPetArguments, PetSpeed.normal);
         case PetType.totoro:
             return new Totoro(...standardPetArguments, PetSpeed.normal);
+        case PetType.snail:
+            return new Snail(...standardPetArguments, PetSpeed.verySlow);
         case PetType.snake:
             return new Snake(...standardPetArguments, PetSpeed.verySlow);
         case PetType.rubberduck:
@@ -220,6 +226,8 @@ export function availableColors(petType: PetType): PetColor[] {
             return Chicken.possibleColors;
         case PetType.dog:
             return Dog.possibleColors;
+        case PetType.deno:
+            return Deno.possibleColors;
         case PetType.fox:
             return Fox.possibleColors;
         case PetType.crab:
@@ -230,6 +238,8 @@ export function availableColors(petType: PetType): PetColor[] {
             return Mod.possibleColors;
         case PetType.totoro:
             return Totoro.possibleColors;
+        case PetType.snail:
+            return Snail.possibleColors;
         case PetType.snake:
             return Snake.possibleColors;
         case PetType.rubberduck:

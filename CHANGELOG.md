@@ -2,6 +2,10 @@
 
 All notable changes to the "vscode-pets" extension will be documented in this file.
 
+## [1.27.0]
+
+* Add a deno pet by @thisisjofrank in https://github.com/tonybaloney/vscode-pets/pull/567
+
 ## [1.26.0]
 
 * Horses! 🐎🐎🐎 by @thechriskent in https://github.com/tonybaloney/vscode-pets/pull/572

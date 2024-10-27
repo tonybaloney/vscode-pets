@@ -2,7 +2,7 @@
 
 # VS Code Pets
 
-![icon](https://github.com/tonybaloney/vscode-pets/raw/master/icon.png)
+![icon](https://github.com/tonybaloney/vscode-pets/raw/main/icon.png)
 </div>    
 
 <p align="center">
@@ -18,7 +18,7 @@
 [![Visual Studio Marketplace Installs](https://img.shields.io/visual-studio-marketplace/i/tonybaloney.vscode-pets?logo=visualstudio)](https://marketplace.visualstudio.com/items?itemName=tonybaloney.vscode-pets&WT.mc_id=python-17801-anthonyshaw)
 [![Visual Studio Marketplace Downloads](https://img.shields.io/visual-studio-marketplace/d/tonybaloney.vscode-pets?logo=visualstudio)](https://marketplace.visualstudio.com/items?itemName=tonybaloney.vscode-pets&WT.mc_id=python-17801-anthonyshaw)
 
-![screenshot](https://github.com/tonybaloney/vscode-pets/raw/master/docs/source/_static/screenshot.gif)
+![screenshot](https://github.com/tonybaloney/vscode-pets/raw/main/docs/source/_static/screenshot.gif)
 
 ## Installation
 
@@ -42,7 +42,7 @@ After installing, open the command palette with `Ctrl+Shift+P` on Windows/Linux 
 
 Run the "Start pet coding session" command (`vscode-pets.start`) to see a cat in VS Code:
 
-![Default view](https://github.com/tonybaloney/vscode-pets/raw/master/docs/source/_static/pet-in-default-explorer.png)
+![Default view](https://github.com/tonybaloney/vscode-pets/raw/main/docs/source/_static/pet-in-default-explorer.png)
 
 [Now checkout the documentation to see what else is possible!](https://tonybaloney.github.io/vscode-pets)
 
@@ -67,6 +67,8 @@ The forest theme was designed by [edermunizz](https://edermunizz.itch.io/free-pi
 The turtle animations were designed by enkeefe using [Pixelart](https://www.pixilart.com/draw).
 
 The horse animations were adapted by [Chris Kent](https://github.com/thechriskent) from assets by [Onfe](https://onfe.itch.io/horse-sprite-with-rider-asset-pack). 
+
+[Kennet Shin](https://github.com/WoofWoof0) created the snail media assets.
 
 ## Thank you
 

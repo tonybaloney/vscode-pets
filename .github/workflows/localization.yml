@@ -9,7 +9,7 @@ on:
   push:
     paths:
       - 'l10n'
-    branches: [ master ]
+    branches: [ main ]
 
 jobs:
   synchronize-with-crowdin:
@@ -20,7 +20,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: crowdin action
-        uses: crowdin/github-action@v2.0.0
+        uses: crowdin/github-action@v2.2.0
         with:
           # Upload sources to Crowdin
           upload_sources: true
@@ -36,7 +36,7 @@ jobs:
           create_pull_request: true
           pull_request_title: 'New Crowdin translations'
           pull_request_body: 'New Crowdin pull request with translations'
-          pull_request_base_branch_name: 'master'
+          pull_request_base_branch_name: 'main'
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
           CROWDIN_PROJECT_ID: ${{ secrets.CROWDIN_PROJECT_ID }}

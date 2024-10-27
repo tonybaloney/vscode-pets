@@ -3,11 +3,13 @@ import { CHICKEN_NAMES } from '../panel/pets/chicken';
 import { CLIPPY_NAMES } from '../panel/pets/clippy';
 import { COCKATIEL_NAMES } from '../panel/pets/cockatiel';
 import { CRAB_NAMES } from '../panel/pets/crab';
+import { DENO_NAMES } from '../panel/pets/deno';
 import { DOG_NAMES } from '../panel/pets/dog';
 import { FOX_NAMES } from '../panel/pets/fox';
 import { MOD_NAMES } from '../panel/pets/mod';
 import { ROCKY_NAMES } from '../panel/pets/rocky';
 import { DUCK_NAMES } from '../panel/pets/rubberduck';
+import { SNAIL_NAMES } from '../panel/pets/snail';
 import { SNAKE_NAMES } from '../panel/pets/snake';
 import { TOTORO_NAMES } from '../panel/pets/totoro';
 import { ZAPPY_NAMES } from '../panel/pets/zappy';
@@ -26,8 +28,10 @@ export function randomName(type: PetType): string {
                 [PetType.fox]: FOX_NAMES,
                 [PetType.crab]: CRAB_NAMES,
                 [PetType.clippy]: CLIPPY_NAMES,
+                [PetType.deno]: DENO_NAMES,
                 [PetType.mod]: MOD_NAMES,
                 [PetType.totoro]: TOTORO_NAMES,
+                [PetType.snail]: SNAIL_NAMES,
                 [PetType.snake]: SNAKE_NAMES,
                 [PetType.rubberduck]: DUCK_NAMES,
                 [PetType.zappy]: ZAPPY_NAMES,

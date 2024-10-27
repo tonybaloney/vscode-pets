@@ -5,9 +5,9 @@ name: CI
 
 on:
     push:
-        branches: [master]
+        branches: [main]
     pull_request:
-        branches: [master]
+        branches: [main]
 
 jobs:
     build:
@@ -24,19 +24,17 @@ jobs:
                   node-version: ${{ matrix.node-version }}
             - name: Extract cats
               run: cd media && unzip -P ${{ secrets.CAT_ASSETS_PASSWORD }} cat.zip
-              if: github.ref == 'refs/heads/master'
+              if: github.ref == 'refs/heads/main'
             - run: npm ci
             - run: npm run compile
             - run: npm run lint
             - name: Run unit and integration tests
-              uses: GabrielBB/xvfb-action@v1.6
-              with:
-                run: npm run test
+              if: runner.os == 'Linux'
+              run: xvfb-run npm test
             - name: Run coverage
-              uses: GabrielBB/xvfb-action@v1.6
               continue-on-error: true
-              with:
-                run: npm run test:coverage
+              if: runner.os == 'Linux'
+              run: xvfb-run npm run test:coverage
             - uses: codecov/codecov-action@v4
               with:
                 directory: ./coverage
