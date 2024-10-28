@@ -159,6 +159,7 @@ export function createPet(
     petRoot: string,
     floor: number,
     name: string,
+    showBubble: boolean,
 ): IPetType {
     if (name === undefined || name === null || name === '') {
         throw new InvalidPetException('name is undefined');
@@ -174,7 +175,19 @@ export function createPet(
         string,
         number,
         string,
-    ] = [el, collision, speech, size, left, bottom, petRoot, floor, name];
+        boolean,
+    ] = [
+        el,
+        collision,
+        speech,
+        size,
+        left,
+        bottom,
+        petRoot,
+        floor,
+        name,
+        showBubble,
+    ];
 
     switch (petType) {
         case PetType.cat:

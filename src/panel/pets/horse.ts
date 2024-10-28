@@ -18,6 +18,7 @@ export class Horse extends BasePetType {
         petRoot: string,
         floor: number,
         name: string,
+        showBubble: boolean,
         speed: number,
     ) {
         // Replace spaces with underscores
@@ -33,6 +34,7 @@ export class Horse extends BasePetType {
             petRootClean,
             floor,
             name,
+            showBubble,
             speed,
         );
     }

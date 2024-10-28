@@ -53,7 +53,7 @@
                 {
                     "type": "webview",
                     "id": "petsView",
-                    "name": "VS Code Petssss",
+                    "name": "VS Code Pets",
                     "when": "vscode-pets.position == 'explorer'",
                     "icon": "media/dog.svg"
                 }
