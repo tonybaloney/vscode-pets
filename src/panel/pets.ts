@@ -9,6 +9,7 @@ import { Dog } from './pets/dog';
 import { Fox } from './pets/fox';
 import { Horse } from './pets/horse';
 import { Mod } from './pets/mod';
+import { Panda } from './pets/panda';
 import { Rat } from './pets/rat';
 import { Rocky } from './pets/rocky';
 import { RubberDuck } from './pets/rubberduck';
@@ -213,6 +214,8 @@ export function createPet(
             return new Turtle(...standardPetArguments, PetSpeed.verySlow);
         case PetType.horse:
             return new Horse(...standardPetArguments, PetSpeed.normal);
+        case PetType.panda:
+            return new Panda(...standardPetArguments, PetSpeed.slow);
         default:
             throw new InvalidPetException("Pet type doesn't exist");
     }
@@ -256,6 +259,8 @@ export function availableColors(petType: PetType): PetColor[] {
             return Turtle.possibleColors;
         case PetType.horse:
             return Horse.possibleColors;
+        case PetType.panda:
+                return Panda.possibleColors;
         default:
             throw new InvalidPetException("Pet type doesn't exist");
     }
