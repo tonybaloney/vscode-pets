@@ -37,7 +37,7 @@ Want to contribute to vscode-pets? Feel free to `fork the repository <https://gi
 Drawing and Animations
 ++++++++++++++++++++++
 
-If you want to contribute improvements to the animations, additional pet colors or even new pets, clone the repository and work in the `media/` folder.  
+If you want to contribute improvements to the animations, additional pet colors or even new pets, clone the repository and work in the ``media/`` folder.  
 
 Most drawings are done in `aseprite <https://www.aseprite.org/>`_ because you can edit GIFs directly. However, you are free to use any tool to make the animations. Animations should be 8 frames per second. The style of the extension is to have pixelated creatures (although not limited to an 8-bit color canvas).  
 
@@ -53,13 +53,13 @@ The minimum set of behaviors is:
 Testing the changes
 +++++++++++++++++++
 
--   Run `npm install`.
--   Run `npm run compile`.
+-   Run ``npm install``.
+-   Run ``npm run compile``.
 -   Go to the debug panel on the sidebar and launch the development version with the extension loaded (first option in the debug profiles).
 -   Refer to `VS Code Extension Documentation <https://code.visualstudio.com/api>`_ for additional resources.
 
 Submitting a PR
 +++++++++++++++
 
-- Please make sure to run `npm run lint` and verify there are no errors/warnings. 
-- You can run `npm run lint:fix` to fix the lint issues. 
+- Please make sure to run ``npm run lint`` and verify there are no errors/warnings. 
+- You can run ``npm run lint:fix`` to fix the lint issues. 
