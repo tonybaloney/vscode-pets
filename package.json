@@ -35,7 +35,9 @@
         "onCommand:vscode-pets.throw-with-mouse",
         "onCommand:vscode-pets.throw-ball",
         "onCommand:vscode-pets.spawn-pet",
+        "onCommand:vscode-pets.spawn-rand-pet",
         "onCommand:vscode-pets.delete-pet",
+        "onCommand:vscode-pets.delete-rand-pet",
         "onCommand:vscode-pets.remove-all-pets",
         "onCommand:vscode-pets.roll-call",
         "onCommand:vscode-pets.export-pet-list",
@@ -123,8 +125,26 @@
                 }
             },
             {
+                "command": "vscode-pets.spawn-rand-pet",
+                "title": "Spawn additional random pet",
+                "category": "Pet Coding",
+                "icon": {
+                    "dark": "media/icon/dark-add.svg",
+                    "light": "media/icon/light-add.svg"
+                }
+            },
+            {
                 "command": "vscode-pets.delete-pet",
                 "title": "Remove pet",
+                "category": "Pet Coding",
+                "icon": {
+                    "dark": "media/icon/dark-trash.svg",
+                    "light": "media/icon/light-trash.svg"
+                }
+            },
+            {
+                "command": "vscode-pets.delete-rand-pet",
+                "title": "Remove a random pet",
                 "category": "Pet Coding",
                 "icon": {
                     "dark": "media/icon/dark-trash.svg",
