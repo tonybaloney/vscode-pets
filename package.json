@@ -235,6 +235,11 @@
                         "type": "boolean",
                         "default": false,
                         "description": "Throw ball with mouse"
+                    },
+                    "vscode-pets.showBubble": {
+                        "type": "boolean",
+                        "default": "false",
+                        "description": "Show speech bubble on pet interactions"
                     }
                 }
             }
