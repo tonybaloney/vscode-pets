@@ -194,7 +194,8 @@
                             "snake",
                             "totoro",
                             "turtle",
-                            "zappy"
+                            "zappy",
+                            "snail"
                         ],
                         "default": "cat",
                         "description": "Pet type",

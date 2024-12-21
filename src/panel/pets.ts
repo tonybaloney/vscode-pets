@@ -57,7 +57,11 @@ export interface IPetCollection {
     reset(): void;
     seekNewFriends(): string[];
     locate(name: string): PetElement | undefined;
-    locatePet(name: string, type: string, color: string): PetElement | undefined;
+    locatePet(
+        name: string,
+        type: string,
+        color: string,
+    ): PetElement | undefined;
     remove(pet: PetElement): void;
 }
 
@@ -89,9 +93,17 @@ export class PetCollection implements IPetCollection {
         });
     }
 
-    locatePet(name: string, type: string, color: string): PetElement | undefined {
+    locatePet(
+        name: string,
+        type: string,
+        color: string,
+    ): PetElement | undefined {
         return this._pets.find((collection) => {
-            return collection.pet.name  === name && collection.type  === type && collection.color === color;
+            return (
+                collection.pet.name === name &&
+                collection.type === type &&
+                collection.color === color
+            );
         });
     }
 

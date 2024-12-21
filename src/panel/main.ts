@@ -573,7 +573,11 @@ export function petPanelApp(
                     });
                 });
             case 'delete-pet':
-                var pet = allPets.locatePet(message.name, message.type, message.color);
+                var pet = allPets.locatePet(
+                    message.name,
+                    message.type,
+                    message.color,
+                );
                 if (pet) {
                     allPets.remove(pet);
                     saveState(stateApi);

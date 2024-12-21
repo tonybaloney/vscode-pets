@@ -817,7 +817,7 @@ class PetWebviewContainer implements IPetPanel {
             command: 'delete-pet',
             name: petName,
             type: petType,
-            color: petColor
+            color: petColor,
         });
     }
 
@@ -1000,7 +1000,7 @@ class PetPanel extends PetWebviewContainer implements IPetPanel {
             command: 'delete-pet',
             name: petName,
             type: petType,
-            color: petColor
+            color: petColor,
         });
     }
 
