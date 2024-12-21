@@ -239,7 +239,7 @@ async function handleRemovePetMessage(
             if (pet) {
                 const panel = getPetPanel();
                 if (panel !== undefined) {
-                    panel.deletePet(pet.name);
+                    panel.deletePet(pet.name, pet.type, pet.color);
                     const collection = petList
                         .filter((item) => {
                             return item.name !== pet.name;
@@ -689,7 +689,7 @@ interface IPetPanel {
     throwBall(): void;
     resetPets(): void;
     spawnPet(spec: PetSpecification): void;
-    deletePet(petName: string): void;
+    deletePet(petName: string, petType: string, petColor: string): void;
     listPets(): void;
     rollCall(): void;
     themeKind(): vscode.ColorThemeKind;
@@ -812,10 +812,12 @@ class PetWebviewContainer implements IPetPanel {
         void this.getWebview().postMessage({ command: 'roll-call' });
     }
 
-    public deletePet(petName: string) {
+    public deletePet(petName: string, petType: string, petColor: string) {
         void this.getWebview().postMessage({
             command: 'delete-pet',
             name: petName,
+            type: petType,
+            color: petColor
         });
     }
 
@@ -993,10 +995,12 @@ class PetPanel extends PetWebviewContainer implements IPetPanel {
         void this.getWebview().postMessage({ command: 'roll-call' });
     }
 
-    public deletePet(petName: string): void {
+    public deletePet(petName: string, petType: string, petColor: string): void {
         void this.getWebview().postMessage({
             command: 'delete-pet',
             name: petName,
+            type: petType,
+            color: petColor
         });
     }
 
