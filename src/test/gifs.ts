@@ -52,6 +52,10 @@ const pets: { [key: string]: { colors: string[]; states: string[] } } = {
         colors: ['red', 'white'],
         states: ['idle', 'run', 'swipe', 'walk', 'walk_fast', 'with_ball'],
     },
+    frog: {
+        colors: ['green'],
+        states: ['idle', 'run', 'swipe', 'walk', 'walk_fast', 'with_ball'],
+    },
     mod: {
         colors: ['purple'],
         states: ['idle', 'run', 'swipe', 'walk', 'walk_fast', 'with_ball'],
