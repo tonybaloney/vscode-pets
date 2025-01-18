@@ -129,6 +129,7 @@ function addPetToPanel(
     bottom: number,
     floor: number,
     name: string,
+    showBubble: boolean,
     stateApi?: VscodeStateApi,
 ): PetElement {
     var petSpriteElement: HTMLImageElement = document.createElement('img');
@@ -167,6 +168,7 @@ function addPetToPanel(
             root,
             floor,
             name,
+            showBubble,
         );
         petCounter++;
         startAnimations(collisionElement, newPet, stateApi);
@@ -213,6 +215,7 @@ export function saveState(stateApi?: VscodeStateApi) {
 function recoverState(
     basePetUri: string,
     petSize: PetSize,
+    showBubble: boolean,
     floor: number,
     stateApi?: VscodeStateApi,
 ) {
@@ -247,6 +250,7 @@ function recoverState(
                 parseInt(p.elBottom ?? '0'),
                 floor,
                 p.petName ?? randomName(p.petType ?? PetType.cat),
+                showBubble,
                 stateApi,
             );
             allPets.push(newPet);
@@ -304,6 +308,7 @@ export function petPanelApp(
     petSize: PetSize,
     petType: PetType,
     throwBallWithMouse: boolean,
+    showBubble: boolean,
     stateApi?: VscodeStateApi,
 ) {
     const ballRadius: number = calculateBallRadius(petSize);
@@ -496,13 +501,14 @@ export function petPanelApp(
                 floor,
                 floor,
                 randomName(petType),
+                showBubble,
                 stateApi,
             ),
         );
         saveState(stateApi);
     } else {
         console.log('Recovering state - ', state);
-        recoverState(basePetUri, petSize, floor, stateApi);
+        recoverState(basePetUri, petSize, showBubble, floor, stateApi);
     }
 
     initCanvas();
@@ -544,6 +550,7 @@ export function petPanelApp(
                         floor,
                         floor,
                         message.name ?? randomName(message.type),
+                        showBubble,
                         stateApi,
                     ),
                 );

@@ -47,6 +47,7 @@ export abstract class BasePetType implements IPetType {
     private _name: string;
     private _speed: number;
     private _size: PetSize;
+    private _showBubble: boolean;
 
     constructor(
         spriteElement: HTMLImageElement,
@@ -58,6 +59,7 @@ export abstract class BasePetType implements IPetType {
         petRoot: string,
         floor: number,
         name: string,
+        showBubble: boolean,
         speed: number,
     ) {
         this.el = spriteElement;
@@ -70,6 +72,7 @@ export abstract class BasePetType implements IPetType {
         this.initSprite(size, left, bottom);
         this.currentStateEnum = this.sequence.startingState;
         this.currentState = resolveState(this.currentStateEnum, this);
+        this._showBubble = showBubble;
 
         this._name = name;
         this._size = size;
@@ -199,6 +202,9 @@ export abstract class BasePetType implements IPetType {
     }
 
     showSpeechBubble(message: string, duration: number = 3000) {
+        if (!this._showBubble) {
+            return;
+        }
         this.speech.innerHTML = message;
         this.speech.style.display = 'block';
         setTimeout(() => {
