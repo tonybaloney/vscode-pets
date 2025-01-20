@@ -1,13 +1,10 @@
-import { PetColor } from "../../common/types";
-import { BasePetType } from "../basepettype";
+import { PetColor } from '../../common/types';
+import { BasePetType } from '../basepettype';
 import { States } from '../states';
 
 export class Panda extends BasePetType {
     label = 'panda';
-    static possibleColors = [
-        PetColor.black,
-        PetColor.brown,
-    ];
+    static possibleColors = [PetColor.black, PetColor.brown];
     sequence = {
         startingState: States.sitIdle,
         sequenceStates: [
@@ -28,8 +25,8 @@ export class Panda extends BasePetType {
                 possibleNextStates: [
                     States.sitIdle,
                     States.lie,
-                    States.walkLeft, 
-                    States.runLeft
+                    States.walkLeft,
+                    States.runLeft,
                 ],
             },
             {
@@ -37,8 +34,8 @@ export class Panda extends BasePetType {
                 possibleNextStates: [
                     States.sitIdle,
                     States.lie,
-                    States.walkLeft, 
-                    States.runLeft
+                    States.walkLeft,
+                    States.runLeft,
                 ],
             },
             {
@@ -65,10 +62,7 @@ export class Panda extends BasePetType {
             },
             {
                 state: States.idleWithBall,
-                possibleNextStates: [
-                    States.sitIdle,
-                    States.lie,
-                ],
+                possibleNextStates: [States.sitIdle, States.lie],
             },
         ],
     };

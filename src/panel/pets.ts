@@ -284,7 +284,7 @@ export function availableColors(petType: PetType): PetColor[] {
         case PetType.horse:
             return Horse.possibleColors;
         case PetType.panda:
-                return Panda.possibleColors;
+            return Panda.possibleColors;
         default:
             throw new InvalidPetException("Pet type doesn't exist");
     }
