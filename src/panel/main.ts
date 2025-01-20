@@ -91,10 +91,7 @@ function calculateFloor(size: PetSize, theme: Theme): number {
 function handleMouseOver(e: MouseEvent) {
     var el = e.currentTarget as HTMLDivElement;
     allPets.pets.forEach((element) => {
-        if (element.collision === el) {
-            if (!element.pet.canSwipe) {
-                return;
-            }
+        if (element.collision === el && element.pet.canSwipe) {
             element.pet.swipe();
         }
     });
@@ -576,9 +573,13 @@ export function petPanelApp(
                     });
                 });
             case 'delete-pet':
-                var pet = allPets.locate(message.name);
+                var pet = allPets.locatePet(
+                    message.name,
+                    message.type,
+                    message.color,
+                );
                 if (pet) {
-                    allPets.remove(message.name);
+                    allPets.remove(pet);
                     saveState(stateApi);
                     stateApi?.postMessage({
                         command: 'info',

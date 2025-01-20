@@ -10,6 +10,7 @@ import { Fox } from './pets/fox';
 import { Frog } from './pets/frog';
 import { Horse } from './pets/horse';
 import { Mod } from './pets/mod';
+import { Panda } from './pets/panda';
 import { Rat } from './pets/rat';
 import { Rocky } from './pets/rocky';
 import { RubberDuck } from './pets/rubberduck';
@@ -58,7 +59,12 @@ export interface IPetCollection {
     reset(): void;
     seekNewFriends(): string[];
     locate(name: string): PetElement | undefined;
-    remove(name: string): void;
+    locatePet(
+        name: string,
+        type: string,
+        color: string,
+    ): PetElement | undefined;
+    remove(pet: PetElement): void;
 }
 
 export class PetCollection implements IPetCollection {
@@ -89,14 +95,28 @@ export class PetCollection implements IPetCollection {
         });
     }
 
-    remove(name: string): any {
+    locatePet(
+        name: string,
+        type: string,
+        color: string,
+    ): PetElement | undefined {
+        return this._pets.find((collection) => {
+            return (
+                collection.pet.name === name &&
+                collection.type === type &&
+                collection.color === color
+            );
+        });
+    }
+
+    remove(targetPet: PetElement): any {
         this._pets.forEach((pet) => {
-            if (pet.pet.name === name) {
+            if (pet === targetPet) {
                 pet.remove();
             }
         });
         this._pets = this._pets.filter((pet) => {
-            return pet.pet.name !== name;
+            return pet !== targetPet;
         });
     }
 
@@ -216,6 +236,8 @@ export function createPet(
             return new Turtle(...standardPetArguments, PetSpeed.verySlow);
         case PetType.horse:
             return new Horse(...standardPetArguments, PetSpeed.normal);
+        case PetType.panda:
+            return new Panda(...standardPetArguments, PetSpeed.slow);
         default:
             throw new InvalidPetException("Pet type doesn't exist");
     }
@@ -261,6 +283,8 @@ export function availableColors(petType: PetType): PetColor[] {
             return Turtle.possibleColors;
         case PetType.horse:
             return Horse.possibleColors;
+        case PetType.panda:
+                return Panda.possibleColors;
         default:
             throw new InvalidPetException("Pet type doesn't exist");
     }
