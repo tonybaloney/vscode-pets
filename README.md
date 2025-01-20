@@ -70,6 +70,8 @@ The horse animations were adapted by [Chris Kent](https://github.com/thechrisken
 
 [Kennet Shin](https://github.com/WoofWoof0) created the snail media assets.
 
+The frog animations were created by [seethingswarm](https://seethingswarm.itch.io/frogpack).
+
 [Jessie Ferris](https://github.com/jeferris) created the panda media assets.
 
 ## Thank you

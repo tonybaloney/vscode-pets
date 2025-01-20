@@ -7,6 +7,7 @@ import { Crab } from './pets/crab';
 import { Deno } from './pets/deno';
 import { Dog } from './pets/dog';
 import { Fox } from './pets/fox';
+import { Frog } from './pets/frog';
 import { Horse } from './pets/horse';
 import { Mod } from './pets/mod';
 import { Panda } from './pets/panda';
@@ -207,6 +208,8 @@ export function createPet(
             return new Dog(...standardPetArguments, PetSpeed.normal);
         case PetType.fox:
             return new Fox(...standardPetArguments, PetSpeed.fast);
+        case PetType.frog:
+            return new Frog(...standardPetArguments, PetSpeed.normal);
         case PetType.crab:
             return new Crab(...standardPetArguments, PetSpeed.slow);
         case PetType.clippy:
@@ -252,6 +255,8 @@ export function availableColors(petType: PetType): PetColor[] {
             return Deno.possibleColors;
         case PetType.fox:
             return Fox.possibleColors;
+        case PetType.frog:
+            return Frog.possibleColors;
         case PetType.crab:
             return Crab.possibleColors;
         case PetType.clippy:
