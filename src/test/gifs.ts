@@ -56,6 +56,18 @@ const pets: { [key: string]: { colors: string[]; states: string[] } } = {
         colors: ['purple'],
         states: ['idle', 'run', 'swipe', 'walk', 'walk_fast', 'with_ball'],
     },
+    panda: {
+        colors: ['black', 'brown'],
+        states: [
+            'idle',
+            'lie',
+            'run',
+            'swipe',
+            'walk',
+            'walk_fast',
+            'with_ball',
+        ],
+    },
     rocky: {
         colors: ['gray'],
         states: ['idle', 'run', 'swipe', 'walk', 'walk_fast'],
