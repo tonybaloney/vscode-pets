@@ -601,6 +601,18 @@ export function activate(context: vscode.ExtensionContext) {
         ),
     );
 
+    context.subscriptions.push(
+        vscode.commands.registerCommand(
+            'vscode-pets.pet',
+            async (petName: string, petType: string, petColor: string) => {
+                const panel = getPetPanel();
+                if (panel !== undefined) {
+                    say(petName, petType, petColor, '❤️');
+                }
+            },
+        ),
+    );
+
     // Listening to configuration changes
     context.subscriptions.push(
         vscode.workspace.onDidChangeConfiguration(
@@ -663,6 +675,13 @@ export function activate(context: vscode.ExtensionContext) {
     registerChatHandler(context);
 }
 
+export function say(petName: string, petType: string, petColor: string, text: string): void {
+    const panel = getPetPanel();
+    if (panel !== undefined) {
+        panel.say(petName, petType, petColor, text);
+    }
+}
+
 function updateStatusBar(): void {
     spawnPetStatusBar.text = `$(squirrel)`;
     spawnPetStatusBar.tooltip = vscode.l10n.t('Spawn Pet');
@@ -699,6 +718,7 @@ interface IPetPanel {
     updateTheme(newTheme: Theme, themeKind: vscode.ColorThemeKind): void;
     update(): void;
     setThrowWithMouse(newThrowWithMouse: boolean): void;
+    say(petName: string, petType: string, petColor: string, text: string): void;
 }
 
 class PetWebviewContainer implements IPetPanel {
@@ -787,6 +807,16 @@ class PetWebviewContainer implements IPetPanel {
     public resetPets(): void {
         void this.getWebview().postMessage({
             command: 'reset-pet',
+        });
+    }
+
+    public say(petName: string, petType: string, petColor: string, text: string): void {
+        void this.getWebview().postMessage({
+            command: 'say',
+            name: petName,
+            type: petType,
+            color: petColor,
+            text: text,
         });
     }
 
