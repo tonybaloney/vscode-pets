@@ -601,6 +601,23 @@ export function petPanelApp(
                 petCounter = 1;
                 saveState(stateApi);
                 break;
+            case 'say':
+                console.debug('Saying message to pet', message);
+                var pet = allPets.locatePet(
+                    message.name,
+                    message.type,
+                    message.color,
+                );
+                if (pet) {
+                    console.log('Saying message to pet', message.text);
+                    pet.pet.showSpeechBubble(message.text, 3000);
+                } else {
+                    stateApi?.postMessage({
+                        command: 'error',
+                        text: `Could not find pet ${message.name}`,
+                    });
+                }
+                break;
         }
     });
 }

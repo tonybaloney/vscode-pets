@@ -4,7 +4,7 @@
     "description": "Pets for your VS Code",
     "version": "1.28.0",
     "engines": {
-        "vscode": "^1.73.0"
+        "vscode": "^1.95.0"
     },
     "l10n": "./l10n",
     "repository": {
@@ -240,7 +240,16 @@
                     }
                 }
             }
-        ]
+        ],
+        "chatParticipants": [
+                {
+                    "id": "vscode-pets.pets",
+                    "name": "pets",
+                    "fullName": "Pets",
+                    "description": "Talk with your pets in VS Code",
+                    "isSticky": true
+                }
+            ]
     },
     "scripts": {
         "vscode:prepublish": "npm run compile",
@@ -265,7 +274,7 @@
         "@types/jsdom": "^20.0.0",
         "@types/mocha": "^9.1.1",
         "@types/node": "^18.0.0",
-        "@types/vscode": "^1.73.0",
+        "@types/vscode": "^1.95.0",
         "@typescript-eslint/eslint-plugin": "^5.29.0",
         "@typescript-eslint/parser": "^5.29.0",
         "@vscode/l10n-dev": "^0.0.29",
@@ -289,6 +298,7 @@
         "webpack-cli": "^4.10.0"
     },
     "dependencies": {
+        "@vscode/chat-extension-utils": "^0.0.0-alpha.5",
         "@vscode/l10n": "^0.0.10"
     }
 }
