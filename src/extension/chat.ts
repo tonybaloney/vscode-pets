@@ -23,6 +23,7 @@ export function registerChatHandler(extensionContext: vscode.ExtensionContext) {
                     If the user does not specify the name of the pet, you can choose any pet to respond.
                     If the user asks a question that is about that pet, you should respond as that pet.
                     If the user asks a question multiple pets, give a general answer.
+                    If the user asks a question that is about the pet and not about coding, you can create a fun response.
                     `;
             const messages = [
                 vscode.LanguageModelChatMessage.User(prompt),
