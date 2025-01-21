@@ -136,7 +136,7 @@ export class PetSpecification {
     }
 
     static collectionFromMemento(
-        context: vscode.ExtensionContext
+        context: vscode.ExtensionContext,
     ): PetSpecification[] {
         var size = getConfiguredSize();
         var contextTypes = context.globalState.get<PetType[]>(
@@ -304,9 +304,8 @@ export function activate(context: vscode.ExtensionContext) {
                 );
 
                 if (PetPanel.currentPanel) {
-                    var collection = PetSpecification.collectionFromMemento(
-                        context
-                    );
+                    var collection =
+                        PetSpecification.collectionFromMemento(context);
                     collection.forEach((item) => {
                         PetPanel.currentPanel?.spawnPet(item);
                     });
@@ -397,9 +396,7 @@ export function activate(context: vscode.ExtensionContext) {
         vscode.commands.registerCommand(
             'vscode-pets.export-pet-list',
             async () => {
-                const pets = PetSpecification.collectionFromMemento(
-                    context
-                );
+                const pets = PetSpecification.collectionFromMemento(context);
                 const petJson = JSON.stringify(pets, null, 2);
                 const fileName = `pets-${Date.now()}.json`;
                 if (!vscode.workspace.workspaceFolders) {
@@ -463,9 +460,8 @@ export function activate(context: vscode.ExtensionContext) {
                         );
 
                         // load the pets into the collection
-                        var collection = PetSpecification.collectionFromMemento(
-                            context
-                        );
+                        var collection =
+                            PetSpecification.collectionFromMemento(context);
                         // fetch just the pet types
                         const panel = getPetPanel();
                         for (let i = 0; i < petsToLoad.length; i++) {
@@ -565,9 +561,8 @@ export function activate(context: vscode.ExtensionContext) {
                 } else if (spec) {
                     panel.spawnPet(spec);
                 }
-                var collection = PetSpecification.collectionFromMemento(
-                    context
-                );
+                var collection =
+                    PetSpecification.collectionFromMemento(context);
                 collection.push(spec);
                 await storeCollectionAsMemento(context, collection);
             } else {
@@ -675,7 +670,12 @@ export function activate(context: vscode.ExtensionContext) {
     registerChatHandler(context);
 }
 
-export function say(petName: string, petType: string, petColor: string, text: string): void {
+export function say(
+    petName: string,
+    petType: string,
+    petColor: string,
+    text: string,
+): void {
     const panel = getPetPanel();
     if (panel !== undefined) {
         panel.say(petName, petType, petColor, text);
@@ -810,7 +810,12 @@ class PetWebviewContainer implements IPetPanel {
         });
     }
 
-    public say(petName: string, petType: string, petColor: string, text: string): void {
+    public say(
+        petName: string,
+        petType: string,
+        petColor: string,
+        text: string,
+    ): void {
         void this.getWebview().postMessage({
             command: 'say',
             name: petName,
@@ -1183,17 +1188,13 @@ async function createPetPlayground(context: vscode.ExtensionContext) {
         getThrowWithMouseConfiguration(),
     );
     if (PetPanel.currentPanel) {
-        var collection = PetSpecification.collectionFromMemento(
-            context
-        );
+        var collection = PetSpecification.collectionFromMemento(context);
         collection.forEach((item) => {
             PetPanel.currentPanel?.spawnPet(item);
         });
         await storeCollectionAsMemento(context, collection);
     } else {
-        var collection = PetSpecification.collectionFromMemento(
-            context
-        );
+        var collection = PetSpecification.collectionFromMemento(context);
         collection.push(spec);
         await storeCollectionAsMemento(context, collection);
     }

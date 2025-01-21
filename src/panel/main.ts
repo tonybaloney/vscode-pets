@@ -617,7 +617,7 @@ export function petPanelApp(
                         text: `Could not find pet ${message.name}`,
                     });
                 }
-                break; 
+                break;
         }
     });
 }
