@@ -354,7 +354,7 @@ export function petPanelApp(
         if (canvas) {
             canvas.style.display = 'block';
         }
-        ballState = new BallState(100, 100, 4, 5);
+        ballState = new BallState();
     }
 
     function dynamicThrowOn() {
@@ -374,7 +374,7 @@ export function petPanelApp(
             endMouseY = e.clientY;
             startMouseX = e.clientX;
             startMouseY = e.clientY;
-            ballState = new BallState(e.clientX, e.clientY, 0, 0);
+            ballState = new BallState();
 
             allPets.pets.forEach((petEl) => {
                 if (petEl.pet.canChase) {
@@ -394,7 +394,7 @@ export function petPanelApp(
                 startMouseY = endMouseY;
                 endMouseX = ev.clientX;
                 endMouseY = ev.clientY;
-                ballState = new BallState(ev.clientX, ev.clientY, 0, 0);
+                ballState = new BallState();
                 drawBall();
             };
             window.onmouseup = (ev) => {
@@ -402,12 +402,7 @@ export function petPanelApp(
                 window.onmouseup = null;
                 window.onmousemove = null;
 
-                ballState = new BallState(
-                    endMouseX,
-                    endMouseY,
-                    endMouseX - startMouseX,
-                    endMouseY - startMouseY,
-                );
+                ballState = new BallState();
                 allPets.pets.forEach((petEl) => {
                     if (petEl.pet.canChase) {
                         petEl.pet.chase(ballState, canvas);
