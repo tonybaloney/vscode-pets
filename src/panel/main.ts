@@ -21,6 +21,9 @@ import { PetElementState, PetPanelState } from './states';
 import { THEMES } from './themes';
 import { dynamicThrowOff, dynamicThrowOn, setupBallThrowing, throwAndChase } from './ball';
 
+const EFFECT_CANVAS_ID = 'effectCanvas';
+const PET_CANVAS_ID = 'petCanvas';
+
 /* This is how the VS Code API can be invoked from the panel */
 declare global {
     interface VscodeStateApi {
@@ -268,6 +271,7 @@ export function petPanelApp(
         basePetUri,
         petType,
         throwBallWithMouse,
+        theme,
     );
 
     // New session
@@ -294,8 +298,8 @@ export function petPanelApp(
         recoverState(basePetUri, petSize, floor, stateApi);
     }
 
-    initCanvas('petCanvas');
-    setupBallThrowing('petCanvas', petSize, floor);
+    initCanvas(PET_CANVAS_ID);
+    setupBallThrowing(PET_CANVAS_ID, petSize, floor);
 
     if (throwBallWithMouse) {
         dynamicThrowOn(allPets.pets);
@@ -305,7 +309,7 @@ export function petPanelApp(
 
     // Initialize any effects
     if (themeInfo.effect) {
-        const effectCanvas = initCanvas('effectCanvas');
+        const effectCanvas = initCanvas(EFFECT_CANVAS_ID);
         if (effectCanvas) {
             themeInfo.effect.init(effectCanvas, petSize, floor, themeKind);
             themeInfo.effect.enable();
@@ -398,6 +402,6 @@ export function petPanelApp(
     });
 }
 window.addEventListener('resize', function () {
-    initCanvas('petCanvas');
-    initCanvas('effectCanvas');
+    initCanvas(PET_CANVAS_ID);
+    initCanvas(EFFECT_CANVAS_ID);
 });
