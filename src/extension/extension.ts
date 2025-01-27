@@ -900,8 +900,10 @@ class PetWebviewContainer implements IPetPanel {
 				<title>VS Code Pets</title>
 			</head>
 			<body>
-				<canvas id="petCanvas"></canvas>
-                <canvas id="effectCanvas"></canvas>
+                <div id="petCanvasContainer">
+                    <canvas id="ballCanvas"></canvas>
+                    <canvas id="effectCanvas"></canvas>
+                </div>
 				<div id="petsContainer"></div>
 				<div id="foreground"></div>	
 				<script nonce="${nonce}" src="${scriptUri}"></script>

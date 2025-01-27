@@ -142,4 +142,10 @@ export const ALL_SCALES = [
     PetSize.medium,
     PetSize.large,
 ];
-export const ALL_THEMES = [Theme.none, Theme.forest, Theme.castle, Theme.beach, Theme.winter];
+export const ALL_THEMES = [
+    Theme.none,
+    Theme.forest,
+    Theme.castle,
+    Theme.beach,
+    Theme.winter,
+];

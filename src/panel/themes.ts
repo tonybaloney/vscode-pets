@@ -2,7 +2,7 @@ import { ColorThemeKind, PetSize, Theme } from '../common/types';
 import { Effect } from './effects/effect';
 import { SnowEffect } from './effects/snow';
 
-function normalizeColorThemeKind(kind: ColorThemeKind): "dark" | "light" {
+function normalizeColorThemeKind(kind: ColorThemeKind): 'dark' | 'light' {
     switch (kind) {
         case ColorThemeKind.light:
             return 'light';

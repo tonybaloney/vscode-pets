@@ -19,10 +19,15 @@ import {
 } from './pets';
 import { PetElementState, PetPanelState } from './states';
 import { THEMES } from './themes';
-import { dynamicThrowOff, dynamicThrowOn, setupBallThrowing, throwAndChase } from './ball';
+import {
+    dynamicThrowOff,
+    dynamicThrowOn,
+    setupBallThrowing,
+    throwAndChase,
+} from './ball';
 
 const EFFECT_CANVAS_ID = 'effectCanvas';
-const PET_CANVAS_ID = 'petCanvas';
+const PET_CANVAS_ID = 'ballCanvas';
 
 /* This is how the VS Code API can be invoked from the panel */
 declare global {
@@ -260,9 +265,17 @@ export function petPanelApp(
     const themeInfo = THEMES[theme];
     // Apply Theme backgrounds
     const foregroundEl = document.getElementById('foreground');
-    document.body.style.backgroundImage = themeInfo.backgroundImageUrl(basePetUri, themeKind, petSize);
+    document.body.style.backgroundImage = themeInfo.backgroundImageUrl(
+        basePetUri,
+        themeKind,
+        petSize,
+    );
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    foregroundEl!.style.backgroundImage = themeInfo.foregroundImageUrl(basePetUri, themeKind, petSize);
+    foregroundEl!.style.backgroundImage = themeInfo.foregroundImageUrl(
+        basePetUri,
+        themeKind,
+        petSize,
+    );
     const floor = themeInfo.floor(petSize);
 
     console.log(
