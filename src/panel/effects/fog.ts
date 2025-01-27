@@ -1,6 +1,5 @@
 /*
  * Fog effect
- * Based on https://codepen.io/gilson-santos-the-typescripter/pen/yLQdeNx
  */
 
 import { ColorThemeKind, PetSize } from '../../common/types';
@@ -16,7 +15,6 @@ class Fog {
     y: number;
     width: number;
     height: number;
-    me: HTMLDivElement;
     direction: Direction;
     velocity: number;
     canvas: HTMLCanvasElement;
@@ -34,23 +32,12 @@ class Fog {
         this.y = y;
         this.width = width;
         this.height = height;
-        // Create a div with class "fogCloud"
-        this.me = document.createElement('div');
-        this.me.className = 'fogCloud';
         this.direction = direction;
         this.velocity = velocity;
         this.canvas = canvas;
     }
 
-    create() {
-        this.me.style.width = this.width + 'px';
-        this.me.style.height = this.height + 'px';
-        this.canvas.appendChild(this.me);
-    }
-
     animation() {
-        this.me.style.left = this.x + 'px';
-        this.me.style.top = this.y + 'px';
         switch (this.direction) {
             case Direction.left:
                 this.x -= this.velocity;
@@ -61,9 +48,28 @@ class Fog {
             case Direction.right:
                 this.x += this.velocity;
                 if (this.x + this.width > this.canvas.width) {
-                    this.me.style.left = -this.width + 'px';
+                    this.x = -this.width;
                 }
                 break;
+        }
+        this.draw();
+    }
+
+    draw() {
+        const ctx = this.canvas.getContext('2d');
+        if (ctx) {
+            const gradient = ctx.createRadialGradient(
+                this.width / 2,
+                this.height / 2,
+                0,
+                this.width / 2,
+                this.height / 2,
+                this.width / 2,
+            );
+            gradient.addColorStop(0, 'rgba(255, 255, 255, 0.8)');
+            gradient.addColorStop(1, 'rgba(255, 255, 255, 0)');
+            ctx.fillStyle = gradient;
+            ctx.fillRect(this.x, this.y, this.width, this.height);
         }
     }
 }
@@ -74,6 +80,8 @@ export class FogEffect implements Effect {
 
     clouds: Fog[] = [];
     running: boolean = false;
+    canvas?: HTMLCanvasElement;
+    ctx?: CanvasRenderingContext2D;
 
     /* eslint-disable no-unused-vars */
     init(
@@ -82,6 +90,10 @@ export class FogEffect implements Effect {
         floor: number,
         themeKind: ColorThemeKind,
     ): void {
+        this.canvas = canvas;
+        this.ctx = this.canvas.getContext('2d') as CanvasRenderingContext2D;
+        this.ctx.clearRect(0, 0, canvas.width, canvas.height);
+
         /* eslint-enable no-unused-vars */
         this.clouds = [
             new Fog(200, 200, 200, 200, Direction.left, 0.5, canvas),
@@ -96,9 +108,11 @@ export class FogEffect implements Effect {
     }
 
     loop() {
-        if (!this.running) {
+        if (!this.running || !this.ctx || !this.canvas) {
             return;
         }
+        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+
         this.clouds?.forEach((ele) => {
             ele.animation();
         });
@@ -108,17 +122,10 @@ export class FogEffect implements Effect {
     enable(): void {
         this.running = true;
 
-        this.clouds?.forEach((ele) => {
-            ele.create();
-            ele.animation();
-        });
         requestAnimationFrame(() => this.loop());
     }
 
     disable(): void {
         this.running = false;
-        this.clouds?.forEach((ele) => {
-            ele.me.remove();
-        });
     }
 }
