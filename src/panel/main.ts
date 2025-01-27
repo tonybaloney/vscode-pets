@@ -257,6 +257,7 @@ export function petPanelApp(
     petSize: PetSize,
     petType: PetType,
     throwBallWithMouse: boolean,
+    disableEffects: boolean,
     stateApi?: VscodeStateApi,
 ) {
     if (!stateApi) {
@@ -325,7 +326,9 @@ export function petPanelApp(
         const effectCanvas = initCanvas(EFFECT_CANVAS_ID);
         if (effectCanvas) {
             themeInfo.effect.init(effectCanvas, petSize, floor, themeKind);
-            themeInfo.effect.enable();
+            if (!disableEffects) {
+                themeInfo.effect.enable();
+            }
         }
     }
 
@@ -410,6 +413,13 @@ export function petPanelApp(
             case 'pause-pet':
                 petCounter = 1;
                 saveState(stateApi);
+                break;
+            case 'disable-effects':
+                if (themeInfo.effect && message.disabled) {
+                    themeInfo.effect.disable();
+                } else if (themeInfo.effect && !message.disabled) {
+                    themeInfo.effect.enable();
+                }
                 break;
         }
     });
