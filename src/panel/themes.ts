@@ -2,13 +2,15 @@ import { ColorThemeKind, PetSize, Theme } from '../common/types';
 import { Effect } from './effects/effect';
 import { SnowEffect } from './effects/snow';
 
-function normalizeColorThemeKind(kind: ColorThemeKind): string {
+function normalizeColorThemeKind(kind: ColorThemeKind): 'dark' | 'light' {
     switch (kind) {
         case ColorThemeKind.light:
             return 'light';
         case ColorThemeKind.dark:
             return 'dark';
         case ColorThemeKind.highContrast:
+            return 'dark';
+        case ColorThemeKind.highContrastLight:
             return 'light';
         default:
             return 'light';
@@ -125,14 +127,14 @@ class WinterThemeInfo extends ThemeInfo {
     floor(size: PetSize): number {
         switch (size) {
             case PetSize.small:
-                return 60;
+                return 20;
             case PetSize.medium:
-                return 80;
+                return 30;
             case PetSize.large:
-                return 120;
+                return 45;
             case PetSize.nano:
             default:
-                return 45;
+                return 18;
         }
     }
 }
@@ -142,20 +144,19 @@ export const THEMES: Record<Theme, ThemeInfo> = {
     none: {
         name: 'none',
         description: 'No theme',
-        // eslint-disable-next-line no-unused-vars
+        /* eslint-disable no-unused-vars */
         floor: (size: PetSize) => 0,
-        // eslint-disable-next-line no-unused-vars
         backgroundImageUrl: (
             basePetUri: string,
             themeKind: ColorThemeKind,
             petSize: PetSize,
         ) => '',
-        // eslint-disable-next-line no-unused-vars
         foregroundImageUrl: (
             basePetUri: string,
             themeKind: ColorThemeKind,
             petSize: PetSize,
         ) => '',
+        /* eslint-enable no-unused-vars */
     },
     forest: new ForestThemeInfo(),
     castle: new CastleThemeInfo(),

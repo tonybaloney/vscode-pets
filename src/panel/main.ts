@@ -19,7 +19,15 @@ import {
 } from './pets';
 import { PetElementState, PetPanelState } from './states';
 import { THEMES } from './themes';
-import { dynamicThrowOff, dynamicThrowOn, setupBallThrowing, throwAndChase } from './ball';
+import {
+    dynamicThrowOff,
+    dynamicThrowOn,
+    setupBallThrowing,
+    throwAndChase,
+} from './ball';
+
+const EFFECT_CANVAS_ID = 'effectCanvas';
+const PET_CANVAS_ID = 'ballCanvas';
 
 /* This is how the VS Code API can be invoked from the panel */
 declare global {
@@ -249,6 +257,7 @@ export function petPanelApp(
     petSize: PetSize,
     petType: PetType,
     throwBallWithMouse: boolean,
+    disableEffects: boolean,
     stateApi?: VscodeStateApi,
 ) {
     if (!stateApi) {
@@ -257,9 +266,17 @@ export function petPanelApp(
     const themeInfo = THEMES[theme];
     // Apply Theme backgrounds
     const foregroundEl = document.getElementById('foreground');
-    document.body.style.backgroundImage = themeInfo.backgroundImageUrl(basePetUri, themeKind, petSize);
+    document.body.style.backgroundImage = themeInfo.backgroundImageUrl(
+        basePetUri,
+        themeKind,
+        petSize,
+    );
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    foregroundEl!.style.backgroundImage = themeInfo.foregroundImageUrl(basePetUri, themeKind, petSize);
+    foregroundEl!.style.backgroundImage = themeInfo.foregroundImageUrl(
+        basePetUri,
+        themeKind,
+        petSize,
+    );
     const floor = themeInfo.floor(petSize);
 
     console.log(
@@ -268,6 +285,7 @@ export function petPanelApp(
         basePetUri,
         petType,
         throwBallWithMouse,
+        theme,
     );
 
     // New session
@@ -294,8 +312,8 @@ export function petPanelApp(
         recoverState(basePetUri, petSize, floor, stateApi);
     }
 
-    initCanvas('petCanvas');
-    setupBallThrowing('petCanvas', petSize, floor);
+    initCanvas(PET_CANVAS_ID);
+    setupBallThrowing(PET_CANVAS_ID, petSize, floor);
 
     if (throwBallWithMouse) {
         dynamicThrowOn(allPets.pets);
@@ -305,10 +323,12 @@ export function petPanelApp(
 
     // Initialize any effects
     if (themeInfo.effect) {
-        const effectCanvas = initCanvas('effectCanvas');
+        const effectCanvas = initCanvas(EFFECT_CANVAS_ID);
         if (effectCanvas) {
             themeInfo.effect.init(effectCanvas, petSize, floor, themeKind);
-            themeInfo.effect.enable();
+            if (!disableEffects) {
+                themeInfo.effect.enable();
+            }
         }
     }
 
@@ -394,10 +414,17 @@ export function petPanelApp(
                 petCounter = 1;
                 saveState(stateApi);
                 break;
+            case 'disable-effects':
+                if (themeInfo.effect && message.disabled) {
+                    themeInfo.effect.disable();
+                } else if (themeInfo.effect && !message.disabled) {
+                    themeInfo.effect.enable();
+                }
+                break;
         }
     });
 }
 window.addEventListener('resize', function () {
-    initCanvas('petCanvas');
-    initCanvas('effectCanvas');
+    initCanvas(PET_CANVAS_ID);
+    initCanvas(EFFECT_CANVAS_ID);
 });

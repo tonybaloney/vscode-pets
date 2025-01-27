@@ -16,7 +16,11 @@ class Vector2 {
 }
 
 function floorRandom(min: number, max: number) {
-    return Math.floor(Math.random() * (max - min + 1) + min);
+    return (min || 0) + Math.random() * ((max || 1) - (min || 0));
+}
+
+function microtime(): number {
+    return new Date().getTime() * 0.001;
 }
 
 class Particle {
@@ -64,15 +68,17 @@ export class SnowEffect implements Effect {
     startTime: number = 0;
     frameTime: number = 0;
 
-    pAmount: number = 5000; // Snowiness
+    pAmount: number = 2500; // Snowiness
     pSize: number[] = [0.5, 1.5]; // min and max size
-    pSwing: number[] = [0.1, 1]; // min and max oscilation speed for x movement
-    pSpeed: number[] = [40, 100]; // min and max y speed
-    pAmplitude: number[] = [25, 50]; // min and max distance for x movement
+    pSwing: number[] = [0.1, 1]; // min and max oscillation speed for x movement
+    pSpeed: number[] = [10, 50]; // min and max y speed
+    pAmplitude: number[] = [5, 20]; // min and max distance for x movement
+
+    floor: number = 0;
 
     enable(): void {
         this.running = true;
-        this.startTime = this.frameTime = Date.now();
+        this.startTime = this.frameTime = microtime();
         this.loop();
     }
 
@@ -84,11 +90,31 @@ export class SnowEffect implements Effect {
         canvas: HTMLCanvasElement,
         scale: PetSize,
         floor: number,
+        // eslint-disable-next-line no-unused-vars
         themeKind: ColorThemeKind,
     ): void {
         // use the container width and height
         this.canvas = canvas;
         this.ctx = this.canvas.getContext('2d') as CanvasRenderingContext2D;
+        this.floor = floor;
+        switch (scale) {
+            case PetSize.nano:
+                this.pSize = [0.1, 0.5];
+                this.pAmount = 5000;
+                break;
+            case PetSize.small:
+                this.pSize = [0.5, 1.5];
+                this.pAmount = 2500;
+                break;
+            case PetSize.medium:
+                this.pSize = [1, 2];
+                this.pAmount = 1000;
+                break;
+            case PetSize.large:
+                this.pSize = [1.5, 3];
+                this.pAmount = 500;
+                break;
+        }
         this.initParticles();
     }
 
@@ -98,11 +124,14 @@ export class SnowEffect implements Effect {
             this.update();
             this.draw();
             this.queue();
+        } else {
+            console.log('Snow effect stopped');
         }
     }
 
     private initParticles() {
         if (!this.canvas) {
+            console.log('Canvas not initialized');
             return;
         }
         // clear the particles array
@@ -128,17 +157,21 @@ export class SnowEffect implements Effect {
 
     private update() {
         if (!this.canvas) {
+            console.log('Canvas not initialized');
             return;
         }
         // calculate the time since the last frame
-        var timeNow = Date.now();
+        var timeNow = microtime();
         var timeDelta = timeNow - this.frameTime;
 
         for (var i = 0; i < this.particles.length; i++) {
             var particle = this.particles[i];
             particle.update(timeDelta);
 
-            if (particle.position.y - particle.size > this.canvas.height) {
+            if (
+                particle.position.y - particle.size >
+                this.canvas.height - this.floor
+            ) {
                 // reset the particle to the top and a random x position
                 particle.position.y = -particle.size;
                 particle.position.x = particle.origin.x =
@@ -153,8 +186,10 @@ export class SnowEffect implements Effect {
 
     private draw() {
         if (!this.ctx) {
+            console.log('Canvas context not initialized');
             return;
         }
+        // TODO: Vary the alpha based on the size of the particle
         this.ctx.fillStyle = 'rgb(255,255,255)';
 
         for (var i = 0; i < this.particles.length; i++) {
@@ -170,12 +205,13 @@ export class SnowEffect implements Effect {
 
     private clear() {
         if (!this.ctx || !this.canvas) {
+            console.log('Canvas or context not initialized');
             return;
         }
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
     }
 
     private queue() {
-        window.requestAnimationFrame(this.loop);
+        window.requestAnimationFrame(() => this.loop());
     }
 }

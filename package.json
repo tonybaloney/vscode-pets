@@ -228,7 +228,8 @@
                             "none",
                             "forest",
                             "castle",
-                            "beach"
+                            "beach",
+                            "winter"
                         ],
                         "default": "none",
                         "description": "Background theme assets for your pets"
@@ -237,6 +238,11 @@
                         "type": "boolean",
                         "default": false,
                         "description": "Throw ball with mouse"
+                    },
+                    "vscode-pets.disableEffects": {
+                        "type": "boolean",
+                        "default": false,
+                        "description": "Disable special effects like snowfall"
                     }
                 }
             }

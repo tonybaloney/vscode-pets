@@ -17,7 +17,7 @@ import * as pets from '../../panel/pets';
 
 function mockPanelWindow() {
     const html =
-        '<!doctype html><html><body><div id="petsContainer"></div><div id="foreground"></div></body></html>';
+        '<!doctype html><html><body><div id="petCanvasContainer"><canvas id="ballCanvas"></canvas><canvas id="effectCanvas"></canvas></div><div id="petsContainer"></div><div id="foreground"></div>	</body></html>';
 
     var jsdom = require('jsdom');
     var document = new jsdom.JSDOM(html);
@@ -133,6 +133,7 @@ suite('Pets Test Suite', () => {
                     PetSize.large,
                     petType,
                     false,
+                    false,
                     mockState,
                 );
 
@@ -179,6 +180,7 @@ suite('Pets Test Suite', () => {
             PetSize.large,
             PetType.cat,
             false,
+            false,
             mockState,
         );
 
@@ -200,6 +202,7 @@ suite('Pets Test Suite', () => {
             PetColor.black,
             PetSize.large,
             PetType.cat,
+            false,
             false,
             mockState,
         );

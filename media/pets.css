@@ -110,11 +110,24 @@ textarea::placeholder {
 	color: var(--vscode-input-placeholderForeground);
 }
 
-#petCanvas{
-	position:fixed; 
-	bottom:0;
-	left:0; 
+#petCanvasContainer {
+	position: relative;
+	width: 100%;
+	height: 100%;
+}
+
+#petCanvasContainer canvas {
+	position: fixed;
+	bottom: 0;
+	left: 0;
 	z-index: 3;
+}
+
+#ballCanvas {
+	z-index: 3;
+}
+#effectCanvas {
+	z-index: 4;
 }
 
 img.pet {
