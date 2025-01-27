@@ -26,19 +26,19 @@ Install this extension from the `VS Code marketplace <https://marketplace.visual
 From VS Code
 ++++++++++++
 
-With VS Code open, search for `vscode-pets` in the extension panel (`Ctrl+Shift+X` on Windows/Linux or `Cmd(⌘)+Shift+X` on MacOS) and click install.
+With VS Code open, search for ``vscode-pets`` in the extension panel (``Ctrl+Shift+X`` on Windows/Linux or ``Cmd(⌘)+Shift+X`` on MacOS) and click install.
 
 .. image:: _static/install.png
    :alt: Installation screenshot
 
-Alternatively, with VS Code open, launch VS Code Quick Open (`Ctrl+P` on Windows/Linux or `Cmd(⌘)+P` on MacOS), paste the following command, and press enter.
+Alternatively, with VS Code open, launch VS Code Quick Open (``Ctrl+P`` on Windows/Linux or ``Cmd(⌘)+P`` on MacOS), paste the following command, and press enter.
 
-`ext install tonybaloney.vscode-pets`
+``ext install tonybaloney.vscode-pets``
 
 Getting Started
 ---------------
 
-Launch VS Code Command Palette (`Ctrl+Shift+P` on Windows/Linux or `Cmd(⌘)+Shift+P` on MacOS, then type `pets` and select `Pets: Start Pet Coding Session`.
+Launch VS Code Command Palette (``Ctrl+Shift+P`` on Windows/Linux or ``Cmd(⌘)+Shift+P`` on MacOS, then type ``pets`` and select ``Pets: Start Pet Coding Session``.
 
 .. image:: _static/start_pet_coding.png
    :alt: Start screenshot
