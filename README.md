@@ -46,6 +46,12 @@ Run the "Start pet coding session" command (`vscode-pets.start`) to see a cat in
 
 [Now checkout the documentation to see what else is possible!](https://tonybaloney.github.io/vscode-pets)
 
+Some important things you can do:
+
+- [Add lots of pets](https://tonybaloney.github.io/vscode-pets/usage.html#adding-additional-pets)
+- [Change the background](https://tonybaloney.github.io/vscode-pets/usage.html#themes)
+- [Throw a ball and play with the pets](https://tonybaloney.github.io/vscode-pets/usage.html#throwing-a-ball)
+
 ## Translation
 
 Visit the [Crowdin Project](https://crowdin.com/project/vscode-pets) in case you'd like to help with the translations. It will be synced automatically to the repository. You can also request a new language in the [Discussions](https://crowdin.com/project/vscode-pets/discussions) section.
