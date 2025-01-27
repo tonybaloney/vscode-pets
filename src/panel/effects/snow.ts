@@ -71,8 +71,8 @@ export class SnowEffect implements Effect {
     pAmount: number = 2500; // Snowiness
     pSize: number[] = [0.5, 1.5]; // min and max size
     pSwing: number[] = [0.1, 1]; // min and max oscillation speed for x movement
-    pSpeed: number[] = [40, 100]; // min and max y speed
-    pAmplitude: number[] = [25, 50]; // min and max distance for x movement
+    pSpeed: number[] = [10, 50]; // min and max y speed
+    pAmplitude: number[] = [5, 20]; // min and max distance for x movement
 
     floor: number = 0;
 
@@ -169,8 +169,8 @@ export class SnowEffect implements Effect {
             particle.update(timeDelta);
 
             if (
-                particle.position.y - particle.size - this.floor >
-                this.canvas.height
+                particle.position.y - particle.size >
+                this.canvas.height - this.floor
             ) {
                 // reset the particle to the top and a random x position
                 particle.position.y = -particle.size;
@@ -189,6 +189,7 @@ export class SnowEffect implements Effect {
             console.log('Canvas context not initialized');
             return;
         }
+        // TODO: Vary the alpha based on the size of the particle
         this.ctx.fillStyle = 'rgb(255,255,255)';
 
         for (var i = 0; i < this.particles.length; i++) {

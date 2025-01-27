@@ -127,14 +127,14 @@ class WinterThemeInfo extends ThemeInfo {
     floor(size: PetSize): number {
         switch (size) {
             case PetSize.small:
-                return 60;
+                return 20;
             case PetSize.medium:
-                return 80;
+                return 30;
             case PetSize.large:
-                return 120;
+                return 45;
             case PetSize.nano:
             default:
-                return 45;
+                return 62;
         }
     }
 }
