@@ -901,6 +901,7 @@ class PetWebviewContainer implements IPetPanel {
 			</head>
 			<body>
 				<canvas id="petCanvas"></canvas>
+                <canvas id="effectCanvas"></canvas>
 				<div id="petsContainer"></div>
 				<div id="foreground"></div>	
 				<script nonce="${nonce}" src="${scriptUri}"></script>

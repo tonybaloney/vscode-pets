@@ -17,7 +17,9 @@ import {
     availableColors,
     InvalidPetException,
 } from './pets';
-import { BallState, PetElementState, PetPanelState } from './states';
+import { PetElementState, PetPanelState } from './states';
+import { THEMES } from './themes';
+import { dynamicThrowOff, dynamicThrowOn, setupBallThrowing, throwAndChase } from './ball';
 
 /* This is how the VS Code API can be invoked from the panel */
 declare global {
@@ -31,62 +33,6 @@ declare global {
 
 export var allPets: IPetCollection = new PetCollection();
 var petCounter: number;
-
-function calculateBallRadius(size: PetSize): number {
-    if (size === PetSize.nano) {
-        return 2;
-    } else if (size === PetSize.small) {
-        return 3;
-    } else if (size === PetSize.medium) {
-        return 4;
-    } else if (size === PetSize.large) {
-        return 8;
-    } else {
-        return 1; // Shrug
-    }
-}
-
-function calculateFloor(size: PetSize, theme: Theme): number {
-    switch (theme) {
-        case Theme.forest:
-            switch (size) {
-                case PetSize.small:
-                    return 30;
-                case PetSize.medium:
-                    return 40;
-                case PetSize.large:
-                    return 65;
-                case PetSize.nano:
-                default:
-                    return 23;
-            }
-        case Theme.castle:
-            switch (size) {
-                case PetSize.small:
-                    return 60;
-                case PetSize.medium:
-                    return 80;
-                case PetSize.large:
-                    return 120;
-                case PetSize.nano:
-                default:
-                    return 45;
-            }
-        case Theme.beach:
-            switch (size) {
-                case PetSize.small:
-                    return 60;
-                case PetSize.medium:
-                    return 80;
-                case PetSize.large:
-                    return 120;
-                case PetSize.nano:
-                default:
-                    return 45;
-            }
-    }
-    return 0;
-}
 
 function handleMouseOver(e: MouseEvent) {
     var el = e.currentTarget as HTMLDivElement;
@@ -278,21 +224,20 @@ function randomStartPosition(): number {
     return Math.floor(Math.random() * (window.innerWidth * 0.7));
 }
 
-let canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D;
-
-function initCanvas() {
-    canvas = document.getElementById('petCanvas') as HTMLCanvasElement;
+function initCanvas(name: string): HTMLCanvasElement | null {
+    const canvas = document.getElementById(name) as HTMLCanvasElement;
     if (!canvas) {
         console.log('Canvas not ready');
-        return;
+        return null;
     }
-    ctx = canvas.getContext('2d') as CanvasRenderingContext2D;
+    const ctx = canvas.getContext('2d') as CanvasRenderingContext2D;
     if (!ctx) {
         console.log('Canvas context not ready');
-        return;
+        return null;
     }
     ctx.canvas.width = window.innerWidth;
     ctx.canvas.height = window.innerHeight;
+    return canvas;
 }
 
 // It cannot access the main VS Code APIs directly.
@@ -306,172 +251,16 @@ export function petPanelApp(
     throwBallWithMouse: boolean,
     stateApi?: VscodeStateApi,
 ) {
-    const ballRadius: number = calculateBallRadius(petSize);
-    var floor = 0;
     if (!stateApi) {
         stateApi = acquireVsCodeApi();
     }
+    const themeInfo = THEMES[theme];
     // Apply Theme backgrounds
     const foregroundEl = document.getElementById('foreground');
-    if (theme !== Theme.none) {
-        var _themeKind = '';
-        switch (themeKind) {
-            case ColorThemeKind.dark:
-                _themeKind = 'dark';
-                break;
-            case ColorThemeKind.light:
-                _themeKind = 'light';
-                break;
-            case ColorThemeKind.highContrast:
-            default:
-                _themeKind = 'light';
-                break;
-        }
-
-        document.body.style.backgroundImage = `url('${basePetUri}/backgrounds/${theme}/background-${_themeKind}-${petSize}.png')`;
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        foregroundEl!.style.backgroundImage = `url('${basePetUri}/backgrounds/${theme}/foreground-${_themeKind}-${petSize}.png')`;
-
-        floor = calculateFloor(petSize, theme); // Themes have pets at a specified height from the ground
-    } else {
-        document.body.style.backgroundImage = '';
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        foregroundEl!.style.backgroundImage = '';
-    }
-
-    /// Bouncing ball components, credit https://stackoverflow.com/a/29982343
-    const gravity: number = 0.6,
-        damping: number = 0.9,
-        traction: number = 0.8,
-        interval: number = 1000 / 24; // msec for single frame
-    let then: number = 0; // last draw
-    var ballState: BallState;
-
-    function resetBall() {
-        if (ballState) {
-            ballState.paused = true;
-        }
-        if (canvas) {
-            canvas.style.display = 'block';
-        }
-        ballState = new BallState(100, 100, 4, 5);
-    }
-
-    function dynamicThrowOn() {
-        let startMouseX: number;
-        let startMouseY: number;
-        let endMouseX: number;
-        let endMouseY: number;
-        console.log('Enabling dynamic throw');
-        window.onmousedown = (e) => {
-            if (ballState) {
-                ballState.paused = true;
-            }
-            if (canvas) {
-                canvas.style.display = 'block';
-            }
-            endMouseX = e.clientX;
-            endMouseY = e.clientY;
-            startMouseX = e.clientX;
-            startMouseY = e.clientY;
-            ballState = new BallState(e.clientX, e.clientY, 0, 0);
-
-            allPets.pets.forEach((petEl) => {
-                if (petEl.pet.canChase) {
-                    petEl.pet.chase(ballState, canvas);
-                }
-            });
-            ballState.paused = true;
-
-            drawBall();
-
-            window.onmousemove = (ev) => {
-                ev.preventDefault();
-                if (ballState) {
-                    ballState.paused = true;
-                }
-                startMouseX = endMouseX;
-                startMouseY = endMouseY;
-                endMouseX = ev.clientX;
-                endMouseY = ev.clientY;
-                ballState = new BallState(ev.clientX, ev.clientY, 0, 0);
-                drawBall();
-            };
-            window.onmouseup = (ev) => {
-                ev.preventDefault();
-                window.onmouseup = null;
-                window.onmousemove = null;
-
-                ballState = new BallState(
-                    endMouseX,
-                    endMouseY,
-                    endMouseX - startMouseX,
-                    endMouseY - startMouseY,
-                );
-                allPets.pets.forEach((petEl) => {
-                    if (petEl.pet.canChase) {
-                        petEl.pet.chase(ballState, canvas);
-                    }
-                });
-                throwBall();
-            };
-        };
-    }
-    function dynamicThrowOff() {
-        console.log('Disabling dynamic throw');
-        window.onmousedown = null;
-        if (ballState) {
-            ballState.paused = true;
-        }
-        if (canvas) {
-            canvas.style.display = 'none';
-        }
-    }
-    function throwBall() {
-        if (!ballState.paused) {
-            requestAnimationFrame(throwBall);
-        }
-
-        // throttling the frame rate
-        const now = Date.now();
-        const elapsed = now - then;
-        if (elapsed <= interval) {
-            return;
-        }
-        then = now - (elapsed % interval);
-
-        if (ballState.cx + ballRadius >= canvas.width) {
-            ballState.vx = -ballState.vx * damping;
-            ballState.cx = canvas.width - ballRadius;
-        } else if (ballState.cx - ballRadius <= 0) {
-            ballState.vx = -ballState.vx * damping;
-            ballState.cx = ballRadius;
-        }
-        if (ballState.cy + ballRadius + floor >= canvas.height) {
-            ballState.vy = -ballState.vy * damping;
-            ballState.cy = canvas.height - ballRadius - floor;
-            // traction here
-            ballState.vx *= traction;
-        } else if (ballState.cy - ballRadius <= 0) {
-            ballState.vy = -ballState.vy * damping;
-            ballState.cy = ballRadius;
-        }
-
-        ballState.vy += gravity;
-
-        ballState.cx += ballState.vx;
-        ballState.cy += ballState.vy;
-        drawBall();
-    }
-
-    function drawBall() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-        ctx.beginPath();
-        ctx.arc(ballState.cx, ballState.cy, ballRadius, 0, 2 * Math.PI, false);
-        ctx.fillStyle = '#2ed851';
-        ctx.fill();
-    }
+    document.body.style.backgroundImage = themeInfo.backgroundImageUrl(basePetUri, themeKind, petSize);
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    foregroundEl!.style.backgroundImage = themeInfo.foregroundImageUrl(basePetUri, themeKind, petSize);
+    const floor = themeInfo.floor(petSize);
 
     console.log(
         'Starting pet session',
@@ -505,12 +294,22 @@ export function petPanelApp(
         recoverState(basePetUri, petSize, floor, stateApi);
     }
 
-    initCanvas();
+    initCanvas('petCanvas');
+    setupBallThrowing('petCanvas', petSize, floor);
 
     if (throwBallWithMouse) {
-        dynamicThrowOn();
+        dynamicThrowOn(allPets.pets);
     } else {
         dynamicThrowOff();
+    }
+
+    // Initialize any effects
+    if (themeInfo.effect) {
+        const effectCanvas = initCanvas('effectCanvas');
+        if (effectCanvas) {
+            themeInfo.effect.init(effectCanvas, petSize, floor, themeKind);
+            themeInfo.effect.enable();
+        }
     }
 
     // Handle messages sent from the extension to the webview
@@ -519,19 +318,13 @@ export function petPanelApp(
         switch (message.command) {
             case 'throw-with-mouse':
                 if (message.enabled) {
-                    dynamicThrowOn();
+                    dynamicThrowOn(allPets.pets);
                 } else {
                     dynamicThrowOff();
                 }
                 break;
             case 'throw-ball':
-                resetBall();
-                throwBall();
-                allPets.pets.forEach((petEl) => {
-                    if (petEl.pet.canChase) {
-                        petEl.pet.chase(ballState, canvas);
-                    }
-                });
+                throwAndChase(allPets.pets);
                 break;
             case 'spawn-pet':
                 allPets.push(
@@ -605,5 +398,6 @@ export function petPanelApp(
     });
 }
 window.addEventListener('resize', function () {
-    initCanvas();
+    initCanvas('petCanvas');
+    initCanvas('effectCanvas');
 });

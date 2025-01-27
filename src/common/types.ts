@@ -72,6 +72,7 @@ export const enum Theme {
     forest = 'forest',
     castle = 'castle',
     beach = 'beach',
+    winter = 'winter',
 }
 
 export const enum ColorThemeKind {
