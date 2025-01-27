@@ -204,3 +204,11 @@ img.pet {
 	border: 5px solid;
 	border-color: #fff transparent transparent #fff;
 }
+
+.fogCloud {
+	background-color: #b3b8bb;
+	position: absolute;
+	opacity: 0.7;
+	filter: blur(40px);
+	border-radius: 120%;
+}

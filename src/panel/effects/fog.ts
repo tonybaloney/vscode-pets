@@ -6,13 +6,18 @@
 import { ColorThemeKind, PetSize } from '../../common/types';
 import { Effect } from './effect';
 
+enum Direction {
+    left,
+    right,
+}
+
 class Fog {
     x: number;
     y: number;
     width: number;
     height: number;
     me: HTMLDivElement;
-    direction: number;
+    direction: Direction;
     velocity: number;
     canvas: HTMLCanvasElement;
 
@@ -21,7 +26,7 @@ class Fog {
         y: number,
         width: number,
         height: number,
-        direction: number,
+        direction: Direction,
         velocity: number,
         canvas: HTMLCanvasElement,
     ) {
@@ -29,7 +34,9 @@ class Fog {
         this.y = y;
         this.width = width;
         this.height = height;
+        // Create a div with class "fogCloud"
         this.me = document.createElement('div');
+        this.me.className = 'fogCloud';
         this.direction = direction;
         this.velocity = velocity;
         this.canvas = canvas;
@@ -38,25 +45,20 @@ class Fog {
     create() {
         this.me.style.width = this.width + 'px';
         this.me.style.height = this.height + 'px';
-        this.me.style.backgroundColor = '#b3b8bb';
-        this.me.style.position = 'absolute';
-        this.me.style.opacity = '0.7';
-        this.me.style.filter = 'blur(40px)';
         this.canvas.appendChild(this.me);
-        this.me.style.borderRadius = '120%';
     }
 
     animation() {
         this.me.style.left = this.x + 'px';
         this.me.style.top = this.y + 'px';
         switch (this.direction) {
-            case 0:
+            case Direction.left:
                 this.x -= this.velocity;
                 if (this.x + this.width < 0) {
                     this.x = this.canvas.clientWidth + this.width;
                 }
                 break;
-            case 1:
+            case Direction.right:
                 this.x += this.velocity;
                 if (this.x + this.width > this.canvas.width) {
                     this.me.style.left = -this.width + 'px';
@@ -82,14 +84,14 @@ export class FogEffect implements Effect {
     ): void {
         /* eslint-enable no-unused-vars */
         this.clouds = [
-            new Fog(200, 200, 200, 200, 0, 0.5, canvas),
-            new Fog(600, 120, 100, 150, 0, 0.6, canvas),
-            new Fog(70, 140, 230, 210, 0, 0.7, canvas),
-            new Fog(600, 20, 40, 30, 0, 0.4, canvas),
-            new Fog(300, 200, 200, 200, 0, 0.5, canvas),
-            new Fog(400, 120, 70, 90, 0, 0.6, canvas),
-            new Fog(10, 140, 230, 210, 0, 0.7, canvas),
-            new Fog(0, 20, 100, 100, 0, 0.4, canvas),
+            new Fog(200, 200, 200, 200, Direction.left, 0.5, canvas),
+            new Fog(600, 120, 100, 150, Direction.left, 0.6, canvas),
+            new Fog(70, 140, 230, 210, Direction.left, 0.7, canvas),
+            new Fog(600, 20, 40, 30, Direction.left, 0.4, canvas),
+            new Fog(300, 200, 200, 200, Direction.left, 0.5, canvas),
+            new Fog(400, 120, 70, 90, Direction.left, 0.6, canvas),
+            new Fog(10, 140, 230, 210, Direction.left, 0.7, canvas),
+            new Fog(0, 20, 100, 100, Direction.left, 0.4, canvas),
         ];
     }
 
@@ -104,11 +106,12 @@ export class FogEffect implements Effect {
     }
 
     enable(): void {
+        this.running = true;
+
         this.clouds?.forEach((ele) => {
             ele.create();
             ele.animation();
         });
-        this.running = true;
         requestAnimationFrame(() => this.loop());
     }
 
