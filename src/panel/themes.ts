@@ -1,6 +1,7 @@
 import { ColorThemeKind, PetSize, Theme } from '../common/types';
 import { Effect } from './effects/effect';
 import { SnowEffect } from './effects/snow';
+import { FogEffect } from './effects/fog';
 
 function normalizeColorThemeKind(kind: ColorThemeKind): 'dark' | 'light' {
     switch (kind) {
@@ -65,6 +66,7 @@ export class ThemeInfo implements AbstractThemeInfo {
 class ForestThemeInfo extends ThemeInfo {
     name = 'forest';
     description = 'A forest theme';
+    effect = new FogEffect();
 
     floor(size: PetSize): number {
         switch (size) {
