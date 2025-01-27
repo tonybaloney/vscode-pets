@@ -134,7 +134,7 @@ class WinterThemeInfo extends ThemeInfo {
                 return 45;
             case PetSize.nano:
             default:
-                return 62;
+                return 18;
         }
     }
 }

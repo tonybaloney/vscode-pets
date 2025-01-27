@@ -142,3 +142,9 @@ Set `vscode-pets.theme` to `"castle"` for them to roam the ramparts!
 Set `vscode-pets.theme` to `"beach"` for your friends to play by the ocean.
 
 .. image:: _static/beach-pose.png
+
+Set ``vscode-pets.theme`` to ``"winter"`` for your pets roam around the snowy mountains.
+
+.. image:: _static/winter.gif
+
+If you find the snowfall too distracting, you can disable special effects in settings.
