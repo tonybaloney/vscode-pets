@@ -44,13 +44,13 @@ Run the "Start pet coding session" command (`vscode-pets.start`) to see a cat in
 
 ![Default view](https://github.com/tonybaloney/vscode-pets/raw/main/docs/source/_static/pet-in-default-explorer.png)
 
-[Now checkout the documentation to see what else is possible!](https://tonybaloney.github.io/vscode-pets)
+[Now checkout the documentation to see what else is possible!](https://tonybaloney.github.io/vscode-pets/)
 
 Some important things you can do:
 
-- [Add lots of pets](https://tonybaloney.github.io/vscode-pets/usage.html#adding-additional-pets)
-- [Change the background](https://tonybaloney.github.io/vscode-pets/usage.html#themes)
-- [Throw a ball and play with the pets](https://tonybaloney.github.io/vscode-pets/usage.html#throwing-a-ball)
+- [Add lots of pets](https://tonybaloney.github.io/vscode-pets/pets/#adding-additional-pets)
+- [Change the background](https://tonybaloney.github.io/vscode-pets/themes/)
+- [Throw a ball and play with the pets](https://tonybaloney.github.io/vscode-pets/pets/#throwing-a-ball)
 
 ## Translation
 

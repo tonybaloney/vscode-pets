@@ -2,6 +2,18 @@
 
 All notable changes to the "vscode-pets" extension will be documented in this file.
 
+## [1.29.0]
+
+* Add winter theme @tonybaloney in https://github.com/tonybaloney/vscode-pets/pull/663
+* Add orange cat by @halawaykeller in https://github.com/tonybaloney/vscode-pets/pull/593
+* Differentiate between light and dark high-contrast themes
+
+### Other Changes
+
+* Use code instead of citations by @spenserblack in https://github.com/tonybaloney/vscode-pets/pull/617
+* Update docs. by @tonybaloney in https://github.com/tonybaloney/vscode-pets/pull/665
+* Automatically generate releases when a tag is pushed by @zalsader in https://github.com/tonybaloney/vscode-pets/pull/658
+
 ## [1.28.0]
 
 ### New Pets
