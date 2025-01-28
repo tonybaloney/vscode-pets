@@ -10,6 +10,7 @@ nav:
 
 theme:
   name: material
+  logo: source/logo.png
   features:
     - content.code.copy
 repo_url: https://github.com/tonybaloney/vscode-pets
