@@ -31,6 +31,7 @@ jobs:
       - name: Build HTML with mkdocs
         run: |
           python -m pip install -r docs/requirements.txt
+          cp CHANGELOG.md docs/
           python -m mkdocs build
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3

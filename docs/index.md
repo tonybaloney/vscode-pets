@@ -32,7 +32,7 @@ This will open a new sub-panel inside the `Explorer` panel:
 
 ![Step 1 screenshot](source/_static/pet-in-default-explorer.png)
 
-From here, you can add multiple pets, give them names, change the background. Find out how in the [usage section](usage.md).
+From here, you can add multiple pets, give them names, change the background. Find out how in the [Getting Started](getting-started.md).
 
 ## Thank you
 
