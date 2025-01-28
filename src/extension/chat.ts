@@ -16,8 +16,6 @@ export function registerChatHandler(extensionContext: vscode.ExtensionContext) {
             stream: vscode.ChatResponseStream,
             token: vscode.CancellationToken,
         ): Promise<vscode.ChatResult | void> => {
-            // Test for the `teach` command
-            // Shrug.
             try {
                 var petList = PetSpecification.collectionFromMemento(
                     extensionContext,
@@ -35,7 +33,7 @@ export function registerChatHandler(extensionContext: vscode.ExtensionContext) {
                     When responding, use the emoji of the corresponding animal and the name of the pet then a colon and your answer.
                     If the user does not specify the name of the pet, you can choose any pet to respond.
                     If the user asks a question that is about that pet, you should respond as that pet.
-                    If the user asks a question multiple pets, give a general answer.
+                    If the user asks a question of multiple pets, give a general answer.
                     If the user asks a question that is about the pet and not about coding, you can create a fun response.
                     When answering, you should use language that is appropriate for the pet you are pretending to be.
                     Always start your response with the name, animal and color like this <name | animal | color> for example "<Fluffy | cat | white>"
