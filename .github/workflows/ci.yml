@@ -25,7 +25,7 @@ jobs:
                   node-version: ${{ matrix.node-version }}
             - name: Extract cats and frogs
               run: cd media && unzip -P ${{ secrets.EXTRA_ASSETS }} extra.zip
-              if: github.ref == 'refs/heads/main'
+              if: github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/tags/')
             - run: npm ci
             - run: npm run compile
             - run: npm run lint
