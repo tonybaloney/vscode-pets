@@ -87,9 +87,8 @@ export class StarEffect implements Effect {
                 break;
         }
 
-        // Change pDensity to represent the number of stars per 10000 (100x100) pixels
         this.pDensity = Math.floor(
-            (this.pDensity * this.canvas.width * this.canvas.height) / 10000,
+            (this.pDensity * this.canvas.width * this.canvas.height) / 100_000,
         );
 
         // Generate stars
@@ -110,7 +109,7 @@ export class StarEffect implements Effect {
             return;
         }
         this.enabled = true;
-        this.queue();
+        this.loop();
         console.log('Stars enabled');
     }
 
@@ -159,6 +158,6 @@ export class StarEffect implements Effect {
     private queue() {
         setTimeout(() => {
             window.requestAnimationFrame(() => this.loop());
-        }, 100);
+        }, 1000);
     }
 }
