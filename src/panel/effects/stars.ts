@@ -20,7 +20,7 @@ class Star {
         this.x = x;
         this.y = y;
         this.size = size;
-        this.brightness = 1;
+        this.brightness = Math.random();
         this.twinkleDirection = 1;
         this.sizeMin = sizeMin;
         this.sizeMax = sizeMax;
