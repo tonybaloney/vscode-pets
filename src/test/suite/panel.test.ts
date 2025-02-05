@@ -11,6 +11,7 @@ import {
     ColorThemeKind,
     WebviewMessage,
     ALL_PETS,
+    ALL_THEMES,
 } from '../../common/types';
 import { PetElementState, PetPanelState } from '../../panel/states';
 import * as pets from '../../panel/pets';
@@ -137,59 +138,64 @@ suite('Pets Test Suite', () => {
         assert.strictEqual(collection.locate('Jerry'), undefined);
     });
 
-    ALL_PETS.forEach((petType) => {
-        test(
-            'Test panel app initialization with theme and ' + String(petType),
-            () => {
-                const mockState = new MockState();
-                const color = pets.normalizeColor(PetColor.black, petType);
-                panel.allPets.reset();
-                mockState.reset();
-                panel.petPanelApp(
-                    'https://test.com',
-                    Theme.beach,
-                    ColorThemeKind.dark,
-                    color,
-                    PetSize.large,
-                    petType,
-                    false,
-                    false,
-                    mockState,
-                );
-
-                assert.notStrictEqual(
-                    document.getElementById('background')?.style
-                        .backgroundImage,
-                    '',
-                );
-                assert.notStrictEqual(
-                    document.getElementById('foreground')?.style
-                        .backgroundImage,
-                    '',
-                );
-
-                assert.equal(mockState.getState()?.petStates?.length, 1);
-
-                const firstPet: PetElementState = (mockState.getState()
-                    ?.petStates ?? [])[0];
-                assert.equal(firstPet.petType, petType);
-                assert.equal(firstPet.petColor, color);
-
-                const createdPets = panel.allPets.pets;
-                assert.notEqual(createdPets.at(0), undefined);
-
-                assert.equal(createdPets.at(0)?.color, color);
-
-                /// Cycle 1000 frames
-                for (var i = 0; i < 1000; i++) {
-                    createdPets.at(0)?.pet.nextFrame();
-                    assert.notEqual(
-                        createdPets.at(0)?.pet.getState(),
-                        undefined,
+    ALL_THEMES.forEach((theme) => {
+        ALL_PETS.forEach((petType) => {
+            test(
+                'Test panel app initialization with theme and ' +
+                    String(petType) +
+                    ' and ' +
+                    String(theme),
+                () => {
+                    const mockState = new MockState();
+                    const color = pets.normalizeColor(PetColor.black, petType);
+                    panel.allPets.reset();
+                    mockState.reset();
+                    panel.petPanelApp(
+                        'https://test.com',
+                        theme,
+                        ColorThemeKind.dark,
+                        color,
+                        PetSize.large,
+                        petType,
+                        false,
+                        false,
+                        mockState,
                     );
-                }
-            },
-        );
+
+                    assert.notStrictEqual(
+                        document.getElementById('background')?.style
+                            .backgroundImage,
+                        '',
+                    );
+                    assert.notStrictEqual(
+                        document.getElementById('foreground')?.style
+                            .backgroundImage,
+                        '',
+                    );
+
+                    assert.equal(mockState.getState()?.petStates?.length, 1);
+
+                    const firstPet: PetElementState = (mockState.getState()
+                        ?.petStates ?? [])[0];
+                    assert.equal(firstPet.petType, petType);
+                    assert.equal(firstPet.petColor, color);
+
+                    const createdPets = panel.allPets.pets;
+                    assert.notEqual(createdPets.at(0), undefined);
+
+                    assert.equal(createdPets.at(0)?.color, color);
+
+                    /// Cycle 1000 frames
+                    for (var i = 0; i < 1000; i++) {
+                        createdPets.at(0)?.pet.nextFrame();
+                        assert.notEqual(
+                            createdPets.at(0)?.pet.getState(),
+                            undefined,
+                        );
+                    }
+                },
+            );
+        });
     });
 
     test('Test panel app initialization with no theme', () => {
