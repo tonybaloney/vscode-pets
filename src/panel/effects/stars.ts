@@ -132,6 +132,8 @@ export class StarEffect implements Effect {
     }
 
     private queue() {
-        window.requestAnimationFrame(() => this.loop());
+        setTimeout(() => {
+            window.requestAnimationFrame(() => this.loop());
+        }, 100);
     }
 }
