@@ -10,7 +10,13 @@ class Star {
     sizeMin: number;
     sizeMax: number;
 
-    constructor(x: number, y: number, size: number, sizeMin: number, sizeMax: number) {
+    constructor(
+        x: number,
+        y: number,
+        size: number,
+        sizeMin: number,
+        sizeMax: number,
+    ) {
         this.x = x;
         this.y = y;
         this.size = size;
@@ -26,8 +32,12 @@ class Star {
         this.brightness += 0.1 * this.twinkleDirection;
 
         // Clamp brightness to the range [0, 1]
-        if (this.brightness > 1) this.brightness = 1;
-        if (this.brightness < 0) this.brightness = 0;
+        if (this.brightness > 1) {
+            this.brightness = 1;
+        }
+        if (this.brightness < 0) {
+            this.brightness = 0;
+        }
 
         // Reverse direction if limits are reached
         if (this.size > this.sizeMax || this.size < this.sizeMin) {
@@ -135,7 +145,6 @@ export class StarEffect implements Effect {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         console.log('Stars disabled');
     }
-
 
     private loop(): void {
         if (this.enabled) {
