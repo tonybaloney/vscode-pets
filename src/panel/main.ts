@@ -329,7 +329,13 @@ export function petPanelApp(
         const foregroundEffectCanvas = initCanvas(FOREGROUND_EFFECT_CANVAS_ID);
         const backgroundEffectCanvas = initCanvas(BACKGROUND_EFFECT_CANVAS_ID);
         if (foregroundEffectCanvas && backgroundEffectCanvas) {
-            themeInfo.effect.init(foregroundEffectCanvas, backgroundEffectCanvas, petSize, floor, themeKind);
+            themeInfo.effect.init(
+                foregroundEffectCanvas,
+                backgroundEffectCanvas,
+                petSize,
+                floor,
+                themeKind,
+            );
             if (!disableEffects) {
                 themeInfo.effect.enable();
             }

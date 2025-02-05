@@ -11,7 +11,13 @@ describe('StarEffect', () => {
 
     it('should be disabled during the daytime', () => {
         const canvas = document.createElement('canvas');
-        starEffect.init(canvas, canvas, PetSize.medium, 0, ColorThemeKind.light);
+        starEffect.init(
+            canvas,
+            canvas,
+            PetSize.medium,
+            0,
+            ColorThemeKind.light,
+        );
         expect(starEffect.enabled).to.be.false;
     });
 
