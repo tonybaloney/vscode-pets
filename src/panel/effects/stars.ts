@@ -5,13 +5,34 @@ class Star {
     x: number;
     y: number;
     size: number;
-    brightness: number; // 0-1
+    brightness: number;
+    twinkleDirection: number;
+    sizeMin: number;
+    sizeMax: number;
 
-    constructor(x: number, y: number, size: number) {
+    constructor(x: number, y: number, size: number, sizeMin: number, sizeMax: number) {
         this.x = x;
         this.y = y;
         this.size = size;
         this.brightness = 1;
+        this.twinkleDirection = 1;
+        this.sizeMin = sizeMin;
+        this.sizeMax = sizeMax;
+    }
+
+    twinkle() {
+        // Change size and brightness
+        this.size += 0.1 * this.twinkleDirection;
+        this.brightness += 0.1 * this.twinkleDirection;
+
+        // Clamp brightness to the range [0, 1]
+        if (this.brightness > 1) this.brightness = 1;
+        if (this.brightness < 0) this.brightness = 0;
+
+        // Reverse direction if limits are reached
+        if (this.size > this.sizeMax || this.size < this.sizeMin) {
+            this.twinkleDirection *= -1;
+        }
     }
 }
 
@@ -49,22 +70,27 @@ export class StarEffect implements Effect {
 
         switch (scale) {
             case PetSize.nano:
-                this.pSize = [0.1, 0.5];
-                this.pDensity = 50;
+                this.pSize = [0.5, 1.5];
+                this.pDensity = 100;
                 break;
             case PetSize.small:
                 this.pSize = [0.5, 1.5];
-                this.pDensity = 25;
+                this.pDensity = 75;
                 break;
             case PetSize.medium:
                 this.pSize = [1, 2];
-                this.pDensity = 10;
+                this.pDensity = 50;
                 break;
             case PetSize.large:
                 this.pSize = [1.5, 3];
-                this.pDensity = 500;
+                this.pDensity = 35;
                 break;
         }
+
+        // Change pDensity to represent the number of stars per 10000 (100x100) pixels
+        this.pDensity = Math.floor(
+            (this.pDensity * this.canvas.width * this.canvas.height) / 10000,
+        );
 
         // Generate stars
         for (let i = 0; i < this.pDensity; i++) {
@@ -72,7 +98,7 @@ export class StarEffect implements Effect {
             const y = Math.random() * this.canvas.height;
             const size =
                 Math.random() * (this.pSize[1] - this.pSize[0]) + this.pSize[0];
-            this.stars.push(new Star(x, y, size));
+            this.stars.push(new Star(x, y, size, this.pSize[0], this.pSize[1]));
         }
         console.log('Stars initialized 🌟');
     }
@@ -94,9 +120,8 @@ export class StarEffect implements Effect {
                 return;
             }
 
-            // Brightness effects the alpha of the star
-            this.ctx.globalAlpha = star.brightness;
-            this.ctx.fillStyle = 'white';
+            star.twinkle();
+            this.ctx.fillStyle = `rgba(255, 255, 255, ${star.brightness})`;
             this.ctx.fillRect(star.x, star.y, star.size, star.size);
         });
     }
@@ -112,14 +137,10 @@ export class StarEffect implements Effect {
         console.log('Stars disabled');
     }
 
-    private update(): void {
-        // Update the brightness of the stars
-    }
 
     private loop(): void {
         if (this.enabled) {
             this.clear();
-            this.update();
             this.draw();
             this.queue();
         } else {
