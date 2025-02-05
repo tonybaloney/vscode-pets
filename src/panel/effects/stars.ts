@@ -57,6 +57,7 @@ export class StarEffect implements Effect {
     ctx?: CanvasRenderingContext2D;
     pSize: [number, number] = [0, 0];
     pDensity: number = 0;
+    themeKind: ColorThemeKind = ColorThemeKind.dark;
 
     init(
         foregroundCanvas: HTMLCanvasElement,
@@ -65,20 +66,11 @@ export class StarEffect implements Effect {
         floor: number,
         themeKind: ColorThemeKind,
     ): void {
-        if (
-            themeKind === ColorThemeKind.light ||
-            themeKind === ColorThemeKind.highContrastLight
-        ) {
-            // You can't see stars in the daytime
-            this.enabled = false;
-            return;
-        }
-
-        this.enabled = true;
+        this.themeKind = themeKind;
         this.canvas = backgroundCanvas;
         this.ctx = this.canvas.getContext('2d') as CanvasRenderingContext2D;
-
-        switch (scale) {
+        this.scale = scale;
+        switch (this.scale) {
             case PetSize.nano:
                 this.pSize = [0.5, 1.5];
                 this.pDensity = 100;
@@ -110,9 +102,28 @@ export class StarEffect implements Effect {
             this.stars.push(new Star(x, y, size, this.pSize[0], this.pSize[1]));
         }
         console.log('Stars initialized 🌟');
+
+        // Add event listener for canvas resize
+        window.addEventListener('resize', this.handleResize.bind(this));
+    }
+
+    private handleResize(): void {
+        if (this.canvas && this.ctx && this.scale) {
+            this.stars = [];
+            this.init(this.canvas, this.canvas, this.scale, 0, this.themeKind);
+        }
     }
 
     enable(): void {
+        if (
+            this.themeKind === ColorThemeKind.light ||
+            this.themeKind === ColorThemeKind.highContrastLight
+        ) {
+            // You can't see stars in the daytime
+            this.enabled = false;
+            return;
+        }
+
         // Draw the stars
         if (this.ctx === null || !this.canvas) {
             console.log('Canvas context not initialized');
