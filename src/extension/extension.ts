@@ -938,10 +938,12 @@ class PetWebviewContainer implements IPetPanel {
 			<body>
                 <div id="petCanvasContainer">
                     <canvas id="ballCanvas"></canvas>
-                    <canvas id="effectCanvas"></canvas>
+                    <canvas id="foregroundEffectCanvas"></canvas>
+                    <canvas id="backgroundEffectCanvas"></canvas>
                 </div>
 				<div id="petsContainer"></div>
-				<div id="foreground"></div>	
+				<div id="foreground"></div>
+                <div id="background"></div>
 				<script nonce="${nonce}" src="${scriptUri}"></script>
 				<script nonce="${nonce}">petApp.petPanelApp("${basePetUri}", "${this.theme()}", ${this.themeKind()}, "${this.petColor()}", "${this.petSize()}", "${this.petType()}", ${this.throwBallWithMouse()}, ${this.disableEffects()});</script>
 			</body>
