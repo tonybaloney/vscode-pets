@@ -433,9 +433,15 @@ export function petPanelApp(
                 break;
         }
     });
+
+    window.addEventListener('resize', function () {
+        initCanvas(PET_CANVAS_ID);
+        initCanvas(FOREGROUND_EFFECT_CANVAS_ID);
+        initCanvas(BACKGROUND_EFFECT_CANVAS_ID);
+
+        // If current theme has an effect, handle resize
+        if (themeInfo.effect) {
+            themeInfo.effect.handleResize();
+        }
+    });
 }
-window.addEventListener('resize', function () {
-    initCanvas(PET_CANVAS_ID);
-    initCanvas(FOREGROUND_EFFECT_CANVAS_ID);
-    initCanvas(BACKGROUND_EFFECT_CANVAS_ID);
-});

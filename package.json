@@ -2,7 +2,7 @@
     "name": "vscode-pets",
     "displayName": "vscode-pets",
     "description": "Pets for your VS Code",
-    "version": "1.29.2",
+    "version": "1.30.0",
     "engines": {
         "vscode": "^1.73.0"
     },
@@ -242,7 +242,7 @@
                     "vscode-pets.disableEffects": {
                         "type": "boolean",
                         "default": false,
-                        "description": "Disable special effects like snowfall"
+                        "description": "Disable special effects like snowfall and stars"
                     }
                 }
             }

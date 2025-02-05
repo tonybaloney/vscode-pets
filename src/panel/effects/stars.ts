@@ -102,12 +102,9 @@ export class StarEffect implements Effect {
             this.stars.push(new Star(x, y, size, this.pSize[0], this.pSize[1]));
         }
         console.log('Stars initialized 🌟');
-
-        // Add event listener for canvas resize
-        window.addEventListener('resize', this.handleResize.bind(this));
     }
 
-    private handleResize(): void {
+    handleResize(): void {
         if (this.canvas && this.ctx && this.scale) {
             this.stars = [];
             this.init(this.canvas, this.canvas, this.scale, 0, this.themeKind);

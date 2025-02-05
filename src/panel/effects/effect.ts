@@ -12,4 +12,5 @@ export interface Effect {
     ): void;
     enable(): void;
     disable(): void;
+    handleResize(): void;
 }

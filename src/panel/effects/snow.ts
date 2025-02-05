@@ -215,4 +215,8 @@ export class SnowEffect implements Effect {
     private queue() {
         window.requestAnimationFrame(() => this.loop());
     }
+
+    handleResize(): void {
+        return;
+    }
 }
