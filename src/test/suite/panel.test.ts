@@ -16,8 +16,28 @@ import { PetElementState, PetPanelState } from '../../panel/states';
 import * as pets from '../../panel/pets';
 
 function mockPanelWindow() {
-    const html =
-        '<!doctype html><html><body><div id="petCanvasContainer"><canvas id="ballCanvas"></canvas><canvas id="effectCanvas"></canvas></div><div id="petsContainer"></div><div id="foreground"></div>	</body></html>';
+    const html = `<!DOCTYPE html>
+			<html lang="en">
+			<head>
+				<meta charset="UTF-8">
+				<!--
+					Use a content security policy to only allow loading images from https or from our extension directory,
+					and only allow scripts that have a specific nonce.
+				-->
+				<meta name="viewport" content="width=device-width, initial-scale=1.0">
+				<title>VS Code Pets</title>
+			</head>
+			<body>
+                <div id="petCanvasContainer">
+                    <canvas id="ballCanvas"></canvas>
+                    <canvas id="foregroundEffectCanvas"></canvas>
+                    <canvas id="backgroundEffectCanvas"></canvas>
+                </div>
+				<div id="petsContainer"></div>
+				<div id="foreground"></div>
+                <div id="background"></div>
+			</body>
+			</html>`;
 
     var jsdom = require('jsdom');
     var document = new jsdom.JSDOM(html);
@@ -137,7 +157,11 @@ suite('Pets Test Suite', () => {
                     mockState,
                 );
 
-                assert.notStrictEqual(document.body.style.backgroundImage, '');
+                assert.notStrictEqual(
+                    document.getElementById('background')?.style
+                        .backgroundImage,
+                    '',
+                );
                 assert.notStrictEqual(
                     document.getElementById('foreground')?.style
                         .backgroundImage,
@@ -184,7 +208,10 @@ suite('Pets Test Suite', () => {
             mockState,
         );
 
-        assert.strictEqual(document.body.style.backgroundImage, '');
+        assert.strictEqual(
+            document.getElementById('background')?.style.backgroundImage,
+            '',
+        );
         assert.strictEqual(
             document.getElementById('foreground')?.style.backgroundImage,
             '',
@@ -207,7 +234,10 @@ suite('Pets Test Suite', () => {
             mockState,
         );
 
-        assert.strictEqual(document.body.style.backgroundImage, '');
+        assert.strictEqual(
+            document.getElementById('background')?.style.backgroundImage,
+            '',
+        );
         assert.strictEqual(
             document.getElementById('foreground')?.style.backgroundImage,
             '',
