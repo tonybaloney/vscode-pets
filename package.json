@@ -2,7 +2,7 @@
     "name": "vscode-pets",
     "displayName": "vscode-pets",
     "description": "Pets for your VS Code",
-    "version": "1.29.2",
+    "version": "1.30.0",
     "engines": {
         "vscode": "^1.73.0"
     },
@@ -242,7 +242,7 @@
                     "vscode-pets.disableEffects": {
                         "type": "boolean",
                         "default": false,
-                        "description": "Disable special effects like snowfall"
+                        "description": "Disable special effects like snowfall and stars"
                     }
                 }
             }
@@ -267,6 +267,7 @@
     },
     "devDependencies": {
         "@rbarilani/remove-source-map-url-webpack-plugin": "^1.1.0",
+        "@types/chai": "^5.0.1",
         "@types/glob": "^7.1.3",
         "@types/jsdom": "^20.0.0",
         "@types/mocha": "^9.1.1",
@@ -276,6 +277,7 @@
         "@typescript-eslint/parser": "^5.29.0",
         "@vscode/l10n-dev": "^0.0.29",
         "@vscode/test-web": "^0.0.50",
+        "chai": "^5.1.2",
         "eslint": "^8.18.0",
         "eslint-plugin-unused-imports": "^2.0.0",
         "glob": "^8.0.3",

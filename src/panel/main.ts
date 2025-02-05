@@ -26,7 +26,8 @@ import {
     throwAndChase,
 } from './ball';
 
-const EFFECT_CANVAS_ID = 'effectCanvas';
+const FOREGROUND_EFFECT_CANVAS_ID = 'foregroundEffectCanvas';
+const BACKGROUND_EFFECT_CANVAS_ID = 'backgroundEffectCanvas';
 const PET_CANVAS_ID = 'ballCanvas';
 
 /* This is how the VS Code API can be invoked from the panel */
@@ -266,7 +267,9 @@ export function petPanelApp(
     const themeInfo = THEMES[theme];
     // Apply Theme backgrounds
     const foregroundEl = document.getElementById('foreground');
-    document.body.style.backgroundImage = themeInfo.backgroundImageUrl(
+    const backgroundEl = document.getElementById('background');
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    backgroundEl!.style.backgroundImage = themeInfo.backgroundImageUrl(
         basePetUri,
         themeKind,
         petSize,
@@ -323,9 +326,16 @@ export function petPanelApp(
 
     // Initialize any effects
     if (themeInfo.effect) {
-        const effectCanvas = initCanvas(EFFECT_CANVAS_ID);
-        if (effectCanvas) {
-            themeInfo.effect.init(effectCanvas, petSize, floor, themeKind);
+        const foregroundEffectCanvas = initCanvas(FOREGROUND_EFFECT_CANVAS_ID);
+        const backgroundEffectCanvas = initCanvas(BACKGROUND_EFFECT_CANVAS_ID);
+        if (foregroundEffectCanvas && backgroundEffectCanvas) {
+            themeInfo.effect.init(
+                foregroundEffectCanvas,
+                backgroundEffectCanvas,
+                petSize,
+                floor,
+                themeKind,
+            );
             if (!disableEffects) {
                 themeInfo.effect.enable();
             }
@@ -423,8 +433,15 @@ export function petPanelApp(
                 break;
         }
     });
+
+    window.addEventListener('resize', function () {
+        initCanvas(PET_CANVAS_ID);
+        initCanvas(FOREGROUND_EFFECT_CANVAS_ID);
+        initCanvas(BACKGROUND_EFFECT_CANVAS_ID);
+
+        // If current theme has an effect, handle resize
+        if (themeInfo.effect) {
+            themeInfo.effect.handleResize();
+        }
+    });
 }
-window.addEventListener('resize', function () {
-    initCanvas(PET_CANVAS_ID);
-    initCanvas(EFFECT_CANVAS_ID);
-});

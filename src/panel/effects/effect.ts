@@ -4,11 +4,13 @@ export interface Effect {
     name: string;
     description: string;
     init(
-        canvas: HTMLCanvasElement,
+        foregroundCanvas: HTMLCanvasElement,
+        backgroundCanvas: HTMLCanvasElement,
         scale: PetSize,
         floor: number,
         themeKind: ColorThemeKind,
     ): void;
     enable(): void;
     disable(): void;
+    handleResize(): void;
 }

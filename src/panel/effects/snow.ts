@@ -87,14 +87,15 @@ export class SnowEffect implements Effect {
     }
 
     init(
-        canvas: HTMLCanvasElement,
+        foregroundCanvas: HTMLCanvasElement,
+        backgroundCanvas: HTMLCanvasElement,
         scale: PetSize,
         floor: number,
         // eslint-disable-next-line no-unused-vars
         themeKind: ColorThemeKind,
     ): void {
         // use the container width and height
-        this.canvas = canvas;
+        this.canvas = foregroundCanvas;
         this.ctx = this.canvas.getContext('2d') as CanvasRenderingContext2D;
         this.floor = floor;
         switch (scale) {
@@ -213,5 +214,9 @@ export class SnowEffect implements Effect {
 
     private queue() {
         window.requestAnimationFrame(() => this.loop());
+    }
+
+    handleResize(): void {
+        return;
     }
 }
