@@ -162,16 +162,29 @@ suite('Pets Test Suite', () => {
                         mockState,
                     );
 
-                    assert.notStrictEqual(
-                        document.getElementById('background')?.style
-                            .backgroundImage,
-                        '',
-                    );
-                    assert.notStrictEqual(
-                        document.getElementById('foreground')?.style
-                            .backgroundImage,
-                        '',
-                    );
+                    if (theme !== Theme.none) {
+                        assert.notStrictEqual(
+                            document.getElementById('background')?.style
+                                .backgroundImage,
+                            '',
+                        );
+                        assert.notStrictEqual(
+                            document.getElementById('foreground')?.style
+                                .backgroundImage,
+                            '',
+                        );
+                    } else {
+                        assert.strictEqual(
+                            document.getElementById('background')?.style
+                                .backgroundImage,
+                            '',
+                        );
+                        assert.strictEqual(
+                            document.getElementById('foreground')?.style
+                                .backgroundImage,
+                            '',
+                        );
+                    }
 
                     assert.equal(mockState.getState()?.petStates?.length, 1);
 
