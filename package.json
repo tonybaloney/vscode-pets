@@ -53,7 +53,7 @@
                 {
                     "type": "webview",
                     "id": "petsView",
-                    "name": "VS Code Pets",
+                    "name": "%vscode-pets.panel.title%",
                     "when": "vscode-pets.position == 'explorer'",
                     "icon": "media/dog.svg"
                 }
@@ -81,13 +81,13 @@
         "commands": [
             {
                 "command": "vscode-pets.start",
-                "title": "Start pet coding session",
+                "title": "%vscode-pets.start.title%",
                 "category": "Pet Coding",
                 "icon": "media/dog.svg"
             },
             {
                 "command": "vscode-pets.throw-with-mouse",
-                "title": "Throw ball with mouse",
+                "title": "%vscode-pets.throw-with-mouse.title%",
                 "category": "Pet Coding",
                 "icon": {
                     "dark": "media/icon/dark-throw-outline.svg",
@@ -96,7 +96,7 @@
             },
             {
                 "command": "vscode-pets.throw-ball",
-                "title": "Throw ball",
+                "title": "%vscode-pets.throw-ball.title%",
                 "category": "Pet Coding",
                 "icon": {
                     "dark": "media/icon/dark-circle-outline.svg",
@@ -105,17 +105,17 @@
             },
             {
                 "command": "vscode-pets.export-pet-list",
-                "title": "Export pet list",
+                "title": "%vscode-pets.export-pet-list.title%",
                 "category": "Pet Coding"
             },
             {
                 "command": "vscode-pets.import-pet-list",
-                "title": "Import pet list",
+                "title": "%vscode-pets.import-pet-list.title%",
                 "category": "Pet Coding"
             },
             {
                 "command": "vscode-pets.spawn-pet",
-                "title": "Spawn additional pet",
+                "title": "%vscode-pets.spawn-pet.title%",
                 "category": "Pet Coding",
                 "icon": {
                     "dark": "media/icon/dark-add.svg",
@@ -124,7 +124,7 @@
             },
             {
                 "command": "vscode-pets.delete-pet",
-                "title": "Remove pet",
+                "title": "%vscode-pets.delete-pet.title%",
                 "category": "Pet Coding",
                 "icon": {
                     "dark": "media/icon/dark-trash.svg",
@@ -133,7 +133,7 @@
             },
             {
                 "command": "vscode-pets.remove-all-pets",
-                "title": "Remove all pets",
+                "title": "%vscode-pets.remove-all-pets.title%",
                 "category": "Pet Coding",
                 "icon": {
                     "dark": "media/icon/dark-trash.svg",
@@ -142,7 +142,7 @@
             },
             {
                 "command": "vscode-pets.roll-call",
-                "title": "Roll-call",
+                "title": "%vscode-pets.roll-call.title%",
                 "category": "Pet Coding"
             }
         ],
@@ -173,7 +173,7 @@
                             "warrior"
                         ],
                         "default": "brown",
-                        "description": "Pet color",
+                        "description": "%vscode-pets.petColor.description%",
                         "scope": "window"
                     },
                     "vscode-pets.petType": {
@@ -199,7 +199,7 @@
                             "snail"
                         ],
                         "default": "cat",
-                        "description": "Pet type",
+                        "description": "%vscode-pets.petType.description%",
                         "scope": "window"
                     },
                     "vscode-pets.petSize": {
@@ -211,7 +211,7 @@
                             "large"
                         ],
                         "default": "nano",
-                        "description": "Pet size"
+                        "description": "%vscode-pets.petSize.description%"
                     },
                     "vscode-pets.position": {
                         "type": "string",
@@ -220,7 +220,7 @@
                             "explorer"
                         ],
                         "default": "explorer",
-                        "description": "VSCode pets webview position"
+                        "description": "%vscode-pets.position.description%"
                     },
                     "vscode-pets.theme": {
                         "type": "string",
@@ -232,17 +232,17 @@
                             "winter"
                         ],
                         "default": "none",
-                        "description": "Background theme assets for your pets"
+                        "description": "%vscode-pets.theme.description%"
                     },
                     "vscode-pets.throwBallWithMouse": {
                         "type": "boolean",
                         "default": false,
-                        "description": "Throw ball with mouse"
+                        "description": "%vscode-pets.throwBallWithMouse.description%"
                     },
                     "vscode-pets.disableEffects": {
                         "type": "boolean",
                         "default": false,
-                        "description": "Disable special effects like snowfall and stars"
+                        "description": "%vscode-pets.disableEffects.description%"
                     }
                 }
             }
