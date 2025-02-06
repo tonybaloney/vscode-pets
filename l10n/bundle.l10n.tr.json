@@ -35,13 +35,17 @@
 	"crab": "Yengeç",
 	"deno": "Dinozor",
 	"dog": "Köpek",
+	"fox": "Fox",
+	"frog": "Frog",
+	"horse": "At",
 	"mod": "Mod (.NET botu)",
+	"panda": "Panda",
 	"rat": "Fare",
 	"rocky": "Kaya",
 	"rubber-duck": "Plastik Ördek",
+	"snail": "Salyangoz",
 	"snake": "Yılan",
 	"totoro": "Totoro Anime Karakteri",
-	"zappy": "Enerjik",
-	"horse": "At",
-	"snail": "Salyangoz"
+	"turtle": "Turtle",
+	"zappy": "Enerjik"
 }
