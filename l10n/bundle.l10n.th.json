@@ -35,13 +35,17 @@
 	"crab": "ปู",
 	"deno": "Deno",
 	"dog": "หมา",
+	"fox": "Fox",
+	"frog": "Frog",
+	"horse": "Horse",
 	"mod": "การดัดแปลง(.NET บอท)",
+	"panda": "Panda",
 	"rat": "หนู",
 	"rocky": "ก้อนหิน",
 	"rubber-duck": "เป็ดยาง",
+	"snail": "Snail",
 	"snake": "งู",
 	"totoro": "โตโตโร่",
-	"zappy": "แซปปี้",
-	"horse": "Horse",
-	"snail": "Snail"
+	"turtle": "Turtle",
+	"zappy": "แซปปี้"
 }
