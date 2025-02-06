@@ -35,13 +35,17 @@
 	"crab": "Crab",
 	"deno": "Deno",
 	"dog": "Caine",
+	"fox": "Fox",
+	"frog": "Frog",
+	"horse": "Horse",
 	"mod": "Mod (botul .NET)",
+	"panda": "Panda",
 	"rat": "Şobolan",
 	"rocky": "Piatra",
 	"rubber-duck": "Rata de cauciuc",
+	"snail": "Snail",
 	"snake": "Sarpe",
 	"totoro": "Totoro",
-	"zappy": "Zappy",
-	"horse": "Horse",
-	"snail": "Snail"
+	"turtle": "Turtle",
+	"zappy": "Zappy"
 }

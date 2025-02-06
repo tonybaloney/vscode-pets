@@ -35,13 +35,17 @@
 	"crab": "Краб",
 	"deno": "Deno",
 	"dog": "Собака",
+	"fox": "Fox",
+	"frog": "Frog",
+	"horse": "Кінь",
 	"mod": "Мод (.NET бот)",
+	"panda": "Panda",
 	"rat": "Щур",
 	"rocky": "Роккі",
 	"rubber-duck": "Гумова качечка",
+	"snail": "Равлик",
 	"snake": "Змія",
 	"totoro": "Тоторо",
-	"zappy": "Заппі",
-	"horse": "Кінь",
-	"snail": "Равлик"
+	"turtle": "Turtle",
+	"zappy": "Заппі"
 }

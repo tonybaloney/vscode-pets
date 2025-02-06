@@ -35,13 +35,17 @@
 	"crab": "سلطعون",
 	"deno": "دينو",
 	"dog": "كلب",
+	"fox": "Fox",
+	"frog": "Frog",
+	"horse": "حصان",
 	"mod": "مود (روبوت .NET)",
+	"panda": "Panda",
 	"rat": "فأر",
 	"rocky": "روكي",
 	"rubber-duck": "بطة مطاطية",
+	"snail": "حلزون",
 	"snake": "ثعبان",
 	"totoro": "توتورو",
-	"zappy": "زابي",
-	"horse": "حصان",
-	"snail": "حلزون"
+	"turtle": "Turtle",
+	"zappy": "زابي"
 }

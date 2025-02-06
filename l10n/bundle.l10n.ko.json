@@ -35,13 +35,17 @@
 	"crab": "게",
 	"deno": "공룡",
 	"dog": "강아지",
+	"fox": "Fox",
+	"frog": "Frog",
+	"horse": "말",
 	"mod": "Mod(.NET 봇)",
+	"panda": "Panda",
 	"rat": "쥐",
 	"rocky": "돌덩이",
 	"rubber-duck": "고무 오리",
+	"snail": "핑핑이",
 	"snake": "뱀",
 	"totoro": "토토로",
-	"zappy": "번쩍이",
-	"horse": "말",
-	"snail": "핑핑이"
+	"turtle": "Turtle",
+	"zappy": "번쩍이"
 }

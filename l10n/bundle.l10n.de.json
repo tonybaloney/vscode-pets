@@ -35,13 +35,17 @@
 	"crab": "Krebs",
 	"deno": "Deno",
 	"dog": "Hund",
+	"fox": "Fox",
+	"frog": "Frog",
+	"horse": "Pferd",
 	"mod": "Mod (der .NET-Bot)",
+	"panda": "Panda",
 	"rat": "Ratte",
 	"rocky": "Rocky",
 	"rubber-duck": "Quietscheentchen",
+	"snail": "Schnecke",
 	"snake": "Schlange",
 	"totoro": "Totoro",
-	"zappy": "Zappy",
-	"horse": "Pferd",
-	"snail": "Schnecke"
+	"turtle": "Turtle",
+	"zappy": "Zappy"
 }

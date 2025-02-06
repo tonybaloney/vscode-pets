@@ -35,13 +35,17 @@
 	"crab": "Cangrejo",
 	"deno": "Deno",
 	"dog": "Perro",
+	"fox": "Fox",
+	"frog": "Frog",
+	"horse": "Caballo",
 	"mod": "Mod (el bot de .NET)",
+	"panda": "Panda",
 	"rat": "Rata",
 	"rocky": "Rocky",
 	"rubber-duck": "Pato de Goma",
+	"snail": "Caracol",
 	"snake": "Serpiente",
 	"totoro": "Totoro",
-	"zappy": "Zappy",
-	"horse": "Caballo",
-	"snail": "Caracol"
+	"turtle": "Turtle",
+	"zappy": "Zappy"
 }

@@ -35,13 +35,17 @@
 	"crab": "Kepiting",
 	"deno": "Deno",
 	"dog": "Anjing",
+	"fox": "Fox",
+	"frog": "Frog",
+	"horse": "Horse",
 	"mod": "Mod (bot .Net)",
+	"panda": "Panda",
 	"rat": "Tikus",
 	"rocky": "Batu",
 	"rubber-duck": "Bebek Karet",
+	"snail": "Snail",
 	"snake": "Ular",
 	"totoro": "Chincilla",
-	"zappy": "Energik",
-	"horse": "Horse",
-	"snail": "Snail"
+	"turtle": "Turtle",
+	"zappy": "Energik"
 }

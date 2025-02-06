@@ -35,13 +35,17 @@
 	"crab": "Tarisznyarák",
 	"deno": "Deno",
 	"dog": "Kutya",
+	"fox": "Fox",
+	"frog": "Frog",
+	"horse": "Horse",
 	"mod": "'Mod' (a .NET bot)",
+	"panda": "Panda",
 	"rat": "Patkány",
 	"rocky": "Szikla",
 	"rubber-duck": "Gumikacsa",
+	"snail": "Snail",
 	"snake": "Kígyó",
 	"totoro": "'Totoro'",
-	"zappy": "'Zappy' (Azure Functions kabala)",
-	"horse": "Horse",
-	"snail": "Snail"
+	"turtle": "Turtle",
+	"zappy": "'Zappy' (Azure Functions kabala)"
 }
