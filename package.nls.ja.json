@@ -9,7 +9,6 @@
     "vscode-pets.delete-pet.title": "ペットを削除",
     "vscode-pets.remove-all-pets.title": "すべてのペットを削除",
     "vscode-pets.roll-call.title": "点呼",
-
     "vscode-pets.petColor.description": "ペットの色",
     "vscode-pets.petType.description": "ペットの種類",
     "vscode-pets.petSize.description": "ペットのサイズ",
