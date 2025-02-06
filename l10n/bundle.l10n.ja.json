@@ -35,13 +35,17 @@
 	"crab": "カニ",
 	"deno": "恐竜",
 	"dog": "犬",
+	"fox": "Fox",
+	"frog": "Frog",
+	"horse": "馬",
 	"mod": "Mod (.NET ボット)",
+	"panda": "Panda",
 	"rat": "ネズミ",
 	"rocky": "石",
 	"rubber-duck": "アヒルおもちゃ",
+	"snail": "カタツムリ",
 	"snake": "蛇",
 	"totoro": "トトロ",
-	"zappy": "ザッピー",
-	"horse": "馬",
-	"snail": "カタツムリ"
+	"turtle": "Turtle",
+	"zappy": "ザッピー"
 }
