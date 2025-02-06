@@ -1,0 +1,20 @@
+{
+    "vscode-pets.panel.title": "VS Code ペット",
+    "vscode-pets.start.title": "ペットコーディングセッションを開始",
+    "vscode-pets.throw-with-mouse.title": "マウスでボールを投げる",
+    "vscode-pets.throw-ball.title": "ボールを投げる",
+    "vscode-pets.export-pet-list.title": "ペットリストをエクスポート",
+    "vscode-pets.import-pet-list.title": "ペットリストをインポート",
+    "vscode-pets.spawn-pet.title": "ペットを生成",
+    "vscode-pets.delete-pet.title": "ペットを削除",
+    "vscode-pets.remove-all-pets.title": "すべてのペットを削除",
+    "vscode-pets.roll-call.title": "点呼",
+
+    "vscode-pets.petColor.description": "ペットの色",
+    "vscode-pets.petType.description": "ペットの種類",
+    "vscode-pets.petSize.description": "ペットのサイズ",
+    "vscode-pets.position.description": "ペットパネルの位置",
+    "vscode-pets.theme.description": "テーマ",
+    "vscode-pets.throwBallWithMouse.description": "マウスでボールを投げる",
+    "vscode-pets.disableEffects.description": "エフェクトを無効にする"
+}
