@@ -1,3 +1,13 @@
+/*
+ * z-index values:
+ * 1: backgroundEffectCanvas
+ * 2: background
+ * 3: petCanvasContainer canvas, ballCanvas, img.pet
+ * 4: foregroundEffectCanvas
+ * 5: foreground
+ * 999: collision
+ */
+
 :root {
 	--container-paddding: 20px;
 	--input-padding-vertical: 6px;
@@ -17,8 +27,6 @@ body {
 	font-weight: var(--vscode-font-weight);
 	font-family: var(--vscode-font-family);
 	background-color: var(--vscode-editor-background);
-	background-attachment: fixed;
-	background-repeat: repeat-x;
 	background-position: bottom left;
 	overflow: hidden; /* Hide scrollbars */
 }
@@ -30,6 +38,18 @@ body {
 	top: 0;
 	left: 0;
 	z-index: 5;
+	background-attachment: fixed;
+	background-repeat: repeat-x;
+	background-position: bottom left;
+}
+
+#background {
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 2;
 	background-attachment: fixed;
 	background-repeat: repeat-x;
 	background-position: bottom left;
@@ -110,11 +130,27 @@ textarea::placeholder {
 	color: var(--vscode-input-placeholderForeground);
 }
 
-#petCanvas{
-	position:fixed; 
-	bottom:0;
-	left:0; 
+#petCanvasContainer {
+	position: relative;
+	width: 100%;
+	height: 100%;
+}
+
+#petCanvasContainer canvas {
+	position: fixed;
+	bottom: 0;
+	left: 0;
 	z-index: 3;
+}
+
+#ballCanvas {
+	z-index: 3;
+}
+#foregroundEffectCanvas {
+	z-index: 4 !important;
+}
+#backgroundEffectCanvas {
+	z-index: 1 !important;
 }
 
 img.pet {
@@ -124,7 +160,7 @@ img.pet {
 	left: 0px;
 	right: 0px;
 	bottom:0px;
-	z-index: 2;
+	z-index: 3;
 }
 
 .collision {

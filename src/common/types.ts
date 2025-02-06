@@ -3,6 +3,7 @@ export const enum PetColor {
     lightbrown = 'lightbrown',
     black = 'black',
     green = 'green',
+    blue = 'blue',
     yellow = 'yellow',
     gray = 'gray',
     purple = 'purple',
@@ -30,8 +31,10 @@ export const enum PetType {
     dog = 'dog',
     deno = 'deno',
     fox = 'fox',
+    frog = 'frog',
     horse = 'horse',
     mod = 'mod',
+    panda = 'panda',
     rat = 'rat',
     rocky = 'rocky',
     rubberduck = 'rubber-duck',
@@ -69,12 +72,14 @@ export const enum Theme {
     forest = 'forest',
     castle = 'castle',
     beach = 'beach',
+    winter = 'winter',
 }
 
 export const enum ColorThemeKind {
     light = 1,
     dark = 2,
     highContrast = 3,
+    highContrastLight = 4,
 }
 
 export class WebviewMessage {
@@ -96,8 +101,10 @@ export const ALL_PETS = [
     PetType.dog,
     PetType.deno,
     PetType.fox,
+    PetType.frog,
     PetType.horse,
     PetType.mod,
+    PetType.panda,
     PetType.rat,
     PetType.rocky,
     PetType.rubberduck,
@@ -135,4 +142,10 @@ export const ALL_SCALES = [
     PetSize.medium,
     PetSize.large,
 ];
-export const ALL_THEMES = [Theme.none, Theme.forest, Theme.castle, Theme.beach];
+export const ALL_THEMES = [
+    Theme.none,
+    Theme.forest,
+    Theme.castle,
+    Theme.beach,
+    Theme.winter,
+];

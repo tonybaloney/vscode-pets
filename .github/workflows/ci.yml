@@ -6,6 +6,7 @@ name: CI
 on:
     push:
         branches: [main]
+        tags: ["*.*.*"]
     pull_request:
         branches: [main]
 
@@ -22,9 +23,9 @@ jobs:
               uses: actions/setup-node@v4
               with:
                   node-version: ${{ matrix.node-version }}
-            - name: Extract cats
-              run: cd media && unzip -P ${{ secrets.CAT_ASSETS_PASSWORD }} cat.zip
-              if: github.ref == 'refs/heads/main'
+            - name: Extract cats and frogs
+              run: cd media && unzip -P ${{ secrets.EXTRA_ASSETS }} extra.zip
+              if: github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/tags/')
             - run: npm ci
             - run: npm run compile
             - run: npm run lint
@@ -35,7 +36,7 @@ jobs:
               continue-on-error: true
               if: runner.os == 'Linux'
               run: xvfb-run npm run test:coverage
-            - uses: codecov/codecov-action@v4
+            - uses: codecov/codecov-action@v5
               with:
                 directory: ./coverage
                 token: ${{ secrets.CODECOV_TOKEN }}
@@ -45,3 +46,10 @@ jobs:
             - uses: actions/upload-artifact@v4
               with:
                 path: "*.vsix"
+            - name: Release
+              uses: softprops/action-gh-release@v2
+              if: startsWith(github.ref, 'refs/tags/')
+              with:
+                generate_release_notes: true
+                draft: true
+                files: "*.vsix"

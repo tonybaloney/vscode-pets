@@ -2,7 +2,7 @@ import * as fs from 'fs';
 
 const pets: { [key: string]: { colors: string[]; states: string[] } } = {
     cat: {
-        colors: ['black', 'brown', 'gray', 'lightbrown', 'white'],
+        colors: ['black', 'brown', 'gray', 'lightbrown', 'orange', 'white'],
         states: [
             'fall_from_grab',
             'idle',
@@ -52,9 +52,25 @@ const pets: { [key: string]: { colors: string[]; states: string[] } } = {
         colors: ['red', 'white'],
         states: ['idle', 'run', 'swipe', 'walk', 'walk_fast', 'with_ball'],
     },
+    frog: {
+        colors: ['green'],
+        states: ['idle', 'run', 'swipe', 'walk', 'walk_fast', 'with_ball'],
+    },
     mod: {
         colors: ['purple'],
         states: ['idle', 'run', 'swipe', 'walk', 'walk_fast', 'with_ball'],
+    },
+    panda: {
+        colors: ['black', 'brown'],
+        states: [
+            'idle',
+            'lie',
+            'run',
+            'swipe',
+            'walk',
+            'walk_fast',
+            'with_ball',
+        ],
     },
     rocky: {
         colors: ['gray'],

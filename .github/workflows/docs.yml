@@ -1,4 +1,4 @@
-name: Deploy Sphinx with GitHub Pages dependencies preinstalled
+name: Deploy Mkdocs site
 
 on:
   # Runs on pushes targeting the default branch
@@ -28,15 +28,15 @@ jobs:
         uses: actions/checkout@v4
       - name: Setup Pages
         uses: actions/configure-pages@v5
-      - name: Build HTML with sphinx
+      - name: Build HTML with mkdocs
         run: |
-          python -m pip install -r requirements.txt
-          make html
-        working-directory: docs/
+          python -m pip install -r docs/requirements.txt
+          cp CHANGELOG.md docs/
+          python -m mkdocs build
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: docs/build/html
+          path: site
 
   # Deployment job
   deploy:

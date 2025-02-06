@@ -6,7 +6,9 @@ import { CRAB_NAMES } from '../panel/pets/crab';
 import { DENO_NAMES } from '../panel/pets/deno';
 import { DOG_NAMES } from '../panel/pets/dog';
 import { FOX_NAMES } from '../panel/pets/fox';
+import { FROG_NAMES } from '../panel/pets/frog';
 import { MOD_NAMES } from '../panel/pets/mod';
+import { PANDA_NAMES } from '../panel/pets/panda';
 import { ROCKY_NAMES } from '../panel/pets/rocky';
 import { DUCK_NAMES } from '../panel/pets/rubberduck';
 import { SNAIL_NAMES } from '../panel/pets/snail';
@@ -26,6 +28,7 @@ export function randomName(type: PetType): string {
                 [PetType.chicken]: CHICKEN_NAMES,
                 [PetType.dog]: DOG_NAMES,
                 [PetType.fox]: FOX_NAMES,
+                [PetType.frog]: FROG_NAMES,
                 [PetType.crab]: CRAB_NAMES,
                 [PetType.clippy]: CLIPPY_NAMES,
                 [PetType.deno]: DENO_NAMES,
@@ -40,6 +43,7 @@ export function randomName(type: PetType): string {
                 [PetType.rat]: RAT_NAMES,
                 [PetType.turtle]: TURTLE_NAMES,
                 [PetType.horse]: HORSE_NAMES,
+                [PetType.panda]: PANDA_NAMES,
             } as Record<PetType, ReadonlyArray<string>>
         )[type] ?? CAT_NAMES;
 
