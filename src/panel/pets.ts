@@ -180,7 +180,7 @@ export function createPet(
     petRoot: string,
     floor: number,
     name: string,
-    showBubble: boolean,
+    disableBubble: boolean,
 ): IPetType {
     if (name === undefined || name === null || name === '') {
         throw new InvalidPetException('name is undefined');
@@ -207,7 +207,7 @@ export function createPet(
         petRoot,
         floor,
         name,
-        showBubble,
+        disableBubble,
     ];
 
     switch (petType) {

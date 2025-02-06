@@ -84,7 +84,7 @@ function addPetToPanel(
     bottom: number,
     floor: number,
     name: string,
-    showBubble: boolean,
+    disableBubble: boolean,
     stateApi?: VscodeStateApi,
 ): PetElement {
     var petSpriteElement: HTMLImageElement = document.createElement('img');
@@ -123,7 +123,7 @@ function addPetToPanel(
             root,
             floor,
             name,
-            showBubble,
+            disableBubble,
         );
         petCounter++;
         startAnimations(collisionElement, newPet, stateApi);
@@ -170,7 +170,7 @@ export function saveState(stateApi?: VscodeStateApi) {
 function recoverState(
     basePetUri: string,
     petSize: PetSize,
-    showBubble: boolean,
+    disableBubble: boolean,
     floor: number,
     stateApi?: VscodeStateApi,
 ) {
@@ -205,7 +205,7 @@ function recoverState(
                 parseInt(p.elBottom ?? '0'),
                 floor,
                 p.petName ?? randomName(p.petType ?? PetType.cat),
-                showBubble,
+                disableBubble,
                 stateApi,
             );
             allPets.push(newPet);
@@ -263,7 +263,7 @@ export function petPanelApp(
     petType: PetType,
     throwBallWithMouse: boolean,
     disableEffects: boolean,
-    showBubble: boolean,
+    disableBubble: boolean,
     stateApi?: VscodeStateApi,
 ) {
     if (!stateApi) {
@@ -311,14 +311,14 @@ export function petPanelApp(
                 floor,
                 floor,
                 randomName(petType),
-                showBubble,
+                disableBubble,
                 stateApi,
             ),
         );
         saveState(stateApi);
     } else {
         console.log('Recovering state - ', state);
-        recoverState(basePetUri, petSize, showBubble, floor, stateApi);
+        recoverState(basePetUri, petSize, disableBubble, floor, stateApi);
     }
 
     initCanvas(PET_CANVAS_ID);
@@ -373,7 +373,7 @@ export function petPanelApp(
                         floor,
                         floor,
                         message.name ?? randomName(message.type),
-                        showBubble,
+                        disableBubble,
                         stateApi,
                     ),
                 );

@@ -113,7 +113,7 @@ suite('Pets Test Suite', () => {
             'testPet',
             0,
             'Jerry',
-            true,
+            false,
         );
         assert.ok(testPet instanceof Cat);
         assert.equal(testPet.emoji, '🐱');
@@ -160,7 +160,7 @@ suite('Pets Test Suite', () => {
                         petType,
                         false,
                         false,
-                        true,
+                        false,
                         mockState,
                     );
 
@@ -226,7 +226,7 @@ suite('Pets Test Suite', () => {
             PetType.cat,
             false,
             false,
-            true,
+            false,
             mockState,
         );
 
@@ -253,7 +253,7 @@ suite('Pets Test Suite', () => {
             PetType.cat,
             false,
             false,
-            true,
+            false,
             mockState,
         );
 

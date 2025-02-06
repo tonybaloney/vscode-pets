@@ -302,10 +302,10 @@
                         "default": false,
                         "description": "%vscode-pets.disableEffects.description%"
                     },
-                    "vscode-pets.showBubble": {
+                    "vscode-pets.disableBubble": {
                         "type": "boolean",
                         "default": false,
-                        "description": "%vscode-pets.showBubble.description%"
+                        "description": "%vscode-pets.disableBubble.description%"
                     }
                 }
             }
