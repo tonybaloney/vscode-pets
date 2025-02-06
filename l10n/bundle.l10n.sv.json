@@ -35,13 +35,17 @@
 	"crab": "Krabba",
 	"deno": "Deno",
 	"dog": "Hund",
+	"fox": "Fox",
+	"frog": "Frog",
+	"horse": "Horse",
 	"mod": "Mod (den .NET boten)",
+	"panda": "Panda",
 	"rat": "Råtta",
 	"rocky": "Sten",
 	"rubber-duck": "Gummianka",
+	"snail": "Snail",
 	"snake": "Orm",
 	"totoro": "Totoro",
-	"zappy": "Zappy",
-	"horse": "Horse",
-	"snail": "Snail"
+	"turtle": "Turtle",
+	"zappy": "Zappy"
 }
