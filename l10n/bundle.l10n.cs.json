@@ -35,13 +35,17 @@
 	"crab": "Krab",
 	"deno": "Deno",
 	"dog": "Pes",
+	"fox": "Fox",
+	"frog": "Frog",
+	"horse": "Kůň",
 	"mod": "Mod (bot .NETu)",
+	"panda": "Panda",
 	"rat": "Krysa",
 	"rocky": "Kameňák",
 	"rubber-duck": "Gumová kachnička",
+	"snail": "Šnek",
 	"snake": "Had",
 	"totoro": "Totoro",
-	"zappy": "Zappy",
-	"horse": "Kůň",
-	"snail": "Šnek"
+	"turtle": "Turtle",
+	"zappy": "Zappy"
 }
