@@ -35,13 +35,17 @@
 	"crab": "螃蟹",
 	"deno": "恐龙",
 	"dog": "狗",
+	"fox": "Fox",
+	"frog": "Frog",
+	"horse": "马",
 	"mod": "Mod(.NET 机器人)",
+	"panda": "Panda",
 	"rat": "老鼠",
 	"rocky": "岩石",
 	"rubber-duck": "橡皮鸭",
+	"snail": "蜗牛",
 	"snake": "蛇",
 	"totoro": "龙猫",
-	"zappy": "活力小子",
-	"horse": "马",
-	"snail": "蜗牛"
+	"turtle": "Turtle",
+	"zappy": "活力小子"
 }
