@@ -174,7 +174,28 @@
                         ],
                         "default": "brown",
                         "description": "%vscode-pets.petColor.description%",
-                        "scope": "window"
+                        "scope": "window",
+                        "enumItemLabels": [
+                            "%vscode-pets.petColor.black%",
+                            "%vscode-pets.petColor.lightbrown%",
+                            "%vscode-pets.petColor.brown%",
+                            "%vscode-pets.petColor.green%",
+                            "%vscode-pets.petColor.yellow%",
+                            "%vscode-pets.petColor.gray%",
+                            "%vscode-pets.petColor.purple%",
+                            "%vscode-pets.petColor.red%",
+                            "%vscode-pets.petColor.white%",
+                            "%vscode-pets.petColor.orange%",
+                            "%vscode-pets.petColor.akita%",
+                            "%vscode-pets.petColor.socks black%",
+                            "%vscode-pets.petColor.socks beige%",
+                            "%vscode-pets.petColor.socks brown%",
+                            "%vscode-pets.petColor.paint beige%",
+                            "%vscode-pets.petColor.paint black%",
+                            "%vscode-pets.petColor.paint brown%",
+                            "%vscode-pets.petColor.magical%",
+                            "%vscode-pets.petColor.warrior%"
+                        ]
                     },
                     "vscode-pets.petType": {
                         "type": "string",
@@ -200,7 +221,27 @@
                         ],
                         "default": "cat",
                         "description": "%vscode-pets.petType.description%",
-                        "scope": "window"
+                        "scope": "window",
+                        "enumItemLabels": [
+                            "%vscode-pets.petType.cat%",
+                            "%vscode-pets.petType.chicken%",
+                            "%vscode-pets.petType.crab%",
+                            "%vscode-pets.petType.clippy%",
+                            "%vscode-pets.petType.cockatiel%",
+                            "%vscode-pets.petType.dog%",
+                            "%vscode-pets.petType.fox%",
+                            "%vscode-pets.petType.frog%",
+                            "%vscode-pets.petType.horse%",
+                            "%vscode-pets.petType.mod%",
+                            "%vscode-pets.petType.rat%",
+                            "%vscode-pets.petType.rocky%",
+                            "%vscode-pets.petType.rubber-duck%",
+                            "%vscode-pets.petType.snake%",
+                            "%vscode-pets.petType.totoro%",
+                            "%vscode-pets.petType.turtle%",
+                            "%vscode-pets.petType.zappy%",
+                            "%vscode-pets.petType.snail%"
+                        ]
                     },
                     "vscode-pets.petSize": {
                         "type": "string",
@@ -211,7 +252,13 @@
                             "large"
                         ],
                         "default": "nano",
-                        "description": "%vscode-pets.petSize.description%"
+                        "description": "%vscode-pets.petSize.description%",
+                        "enumItemLabels": [
+                            "%vscode-pets.petSize.nano%",
+                            "%vscode-pets.petSize.small%",
+                            "%vscode-pets.petSize.medium%",
+                            "%vscode-pets.petSize.large%"
+                        ]
                     },
                     "vscode-pets.position": {
                         "type": "string",
@@ -220,7 +267,11 @@
                             "explorer"
                         ],
                         "default": "explorer",
-                        "description": "%vscode-pets.position.description%"
+                        "description": "%vscode-pets.position.description%",
+                        "enumItemLabels": [
+                            "%vscode-pets.position.panel%",
+                            "%vscode-pets.position.explorer%"
+                        ]
                     },
                     "vscode-pets.theme": {
                         "type": "string",
@@ -232,7 +283,14 @@
                             "winter"
                         ],
                         "default": "none",
-                        "description": "%vscode-pets.theme.description%"
+                        "description": "%vscode-pets.theme.description%",
+                        "enumItemLabels": [
+                            "%vscode-pets.theme.none%",
+                            "%vscode-pets.theme.forest%",
+                            "%vscode-pets.theme.castle%",
+                            "%vscode-pets.theme.beach%",
+                            "%vscode-pets.theme.winter%"
+                        ]
                     },
                     "vscode-pets.throwBallWithMouse": {
                         "type": "boolean",
