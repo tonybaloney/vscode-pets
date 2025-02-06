@@ -35,13 +35,17 @@
 	"crab": "केकड़ा",
 	"deno": "Deno",
 	"dog": "कुत्ता",
+	"fox": "Fox",
+	"frog": "Frog",
+	"horse": "Horse",
 	"mod": "मोड (.NET बॉट)",
+	"panda": "Panda",
 	"rat": "चूहा",
 	"rocky": "चट्टान",
 	"rubber-duck": "बतख",
+	"snail": "Snail",
 	"snake": "साँप",
 	"totoro": "टोटोरो",
-	"zappy": "जैपी",
-	"horse": "Horse",
-	"snail": "Snail"
+	"turtle": "Turtle",
+	"zappy": "जैपी"
 }
