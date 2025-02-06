@@ -2,8 +2,6 @@
 "api_token_env": "CROWDIN_PERSONAL_TOKEN"
 "base_path": "."
 
-"preserve_hierarchy": true
-
 "files": [
   {
     "source": "l10n/bundle.l10n.json",
@@ -11,6 +9,6 @@
   },
   {
     "source": "package.nls.json",
-    "translation": "package.nls.%locale%.json"
+    "translation": "package.nls.%two_letters_code%.json"
   }
 ]
