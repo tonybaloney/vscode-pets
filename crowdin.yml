@@ -9,6 +9,6 @@
   },
   {
     "source": "/package.nls.json",
-    "translation": "/package.nls.%language%.json"
+    "translation": "/package.nls.%two_letters_code%.json"
   }
 ]
