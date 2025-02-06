@@ -8,5 +8,9 @@
   {
     "source": "l10n/bundle.l10n.json",
     "translation": "l10n/bundle.l10n.%locale%.json"
+  },
+  {
+    "source": "package.nls.json",
+    "translation": "package.nls.%locale%.json"
   }
 ]
