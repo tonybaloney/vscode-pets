@@ -8,7 +8,7 @@
     "vscode-pets.spawn-pet.title": "펫 생성하기",
     "vscode-pets.delete-pet.title": "펫 삭제하기",
     "vscode-pets.remove-all-pets.title": "모든 펫 삭제하기",
-    "vscode-pets.roll-call.title": "Roll call",
+    "vscode-pets.roll-call.title": "돌아가면서 부르기",
     "vscode-pets.petColor.description": "펫의 색깔",
     "vscode-pets.petType.description": "펫의 유형",
     "vscode-pets.petSize.description": "펫의 크기",
