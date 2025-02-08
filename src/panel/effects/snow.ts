@@ -67,6 +67,7 @@ export class SnowEffect implements Effect {
 
     startTime: number = 0;
     frameTime: number = 0;
+    maxTimeDelta: number = 0.1;
 
     pAmount: number = 2500; // Snowiness
     pSize: number[] = [0.5, 1.5]; // min and max size
@@ -162,8 +163,9 @@ export class SnowEffect implements Effect {
             return;
         }
         // calculate the time since the last frame
+        // this can be large when window is minimized so also impose a limit
         var timeNow = microtime();
-        var timeDelta = timeNow - this.frameTime;
+        var timeDelta = Math.min(timeNow - this.frameTime, this.maxTimeDelta);
 
         for (var i = 0; i < this.particles.length; i++) {
             var particle = this.particles[i];
