@@ -125,6 +125,7 @@ export class PetCollection implements IPetCollection {
             return [];
         } // You can't be friends with yourself.
         var messages = new Array<string>(0);
+        const speedThreshold = 0.5;
         this._pets.forEach((petInCollection) => {
             if (petInCollection.pet.hasFriend) {
                 return;
@@ -136,11 +137,16 @@ export class PetCollection implements IPetCollection {
                 if (!potentialFriend.pet.canChase) {
                     return;
                 } // Pet is busy doing something else.
+                const speedDifference = Math.abs(petInCollection.pet.speed - potentialFriend.pet.speed);
+                if (speedDifference > speedThreshold){
+                    return;
+                } //Pet speeds are very different; we cant be friends
                 if (
                     potentialFriend.pet.left > petInCollection.pet.left &&
                     potentialFriend.pet.left <
                         petInCollection.pet.left + petInCollection.pet.width
-                ) {
+                )
+                {
                     // We found a possible new friend..
                     console.log(
                         petInCollection.pet.name,
