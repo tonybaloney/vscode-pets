@@ -4,16 +4,21 @@ import { Chicken } from './pets/chicken';
 import { Clippy } from './pets/clippy';
 import { Cockatiel } from './pets/cockatiel';
 import { Crab } from './pets/crab';
+import { Deno } from './pets/deno';
 import { Dog } from './pets/dog';
 import { Fox } from './pets/fox';
+import { Frog } from './pets/frog';
+import { Horse } from './pets/horse';
 import { Mod } from './pets/mod';
+import { Panda } from './pets/panda';
+import { Rat } from './pets/rat';
 import { Rocky } from './pets/rocky';
 import { RubberDuck } from './pets/rubberduck';
+import { Snail } from './pets/snail';
 import { Snake } from './pets/snake';
 import { Totoro } from './pets/totoro';
-import { Zappy } from './pets/zappy';
-import { Rat } from './pets/rat';
 import { Turtle } from './pets/turtle';
+import { Zappy } from './pets/zappy';
 import { IPetType } from './states';
 
 export class PetElement {
@@ -54,7 +59,12 @@ export interface IPetCollection {
     reset(): void;
     seekNewFriends(): string[];
     locate(name: string): PetElement | undefined;
-    remove(name: string): void;
+    locatePet(
+        name: string,
+        type: string,
+        color: string,
+    ): PetElement | undefined;
+    remove(pet: PetElement): void;
 }
 
 export class PetCollection implements IPetCollection {
@@ -85,14 +95,28 @@ export class PetCollection implements IPetCollection {
         });
     }
 
-    remove(name: string): any {
+    locatePet(
+        name: string,
+        type: string,
+        color: string,
+    ): PetElement | undefined {
+        return this._pets.find((collection) => {
+            return (
+                collection.pet.name === name &&
+                collection.type === type &&
+                collection.color === color
+            );
+        });
+    }
+
+    remove(targetPet: PetElement): any {
         this._pets.forEach((pet) => {
-            if (pet.pet.name === name) {
+            if (pet === targetPet) {
                 pet.remove();
             }
         });
         this._pets = this._pets.filter((pet) => {
-            return pet.pet.name !== name;
+            return pet !== targetPet;
         });
     }
 
@@ -178,10 +202,14 @@ export function createPet(
             return new Cat(...standardPetArguments, PetSpeed.normal);
         case PetType.chicken:
             return new Chicken(...standardPetArguments, PetSpeed.normal);
+        case PetType.deno:
+            return new Deno(...standardPetArguments, PetSpeed.slow);
         case PetType.dog:
             return new Dog(...standardPetArguments, PetSpeed.normal);
         case PetType.fox:
             return new Fox(...standardPetArguments, PetSpeed.fast);
+        case PetType.frog:
+            return new Frog(...standardPetArguments, PetSpeed.normal);
         case PetType.crab:
             return new Crab(...standardPetArguments, PetSpeed.slow);
         case PetType.clippy:
@@ -190,6 +218,8 @@ export function createPet(
             return new Mod(...standardPetArguments, PetSpeed.normal);
         case PetType.totoro:
             return new Totoro(...standardPetArguments, PetSpeed.normal);
+        case PetType.snail:
+            return new Snail(...standardPetArguments, PetSpeed.verySlow);
         case PetType.snake:
             return new Snake(...standardPetArguments, PetSpeed.verySlow);
         case PetType.rubberduck:
@@ -204,6 +234,10 @@ export function createPet(
             return new Rat(...standardPetArguments, PetSpeed.normal);
         case PetType.turtle:
             return new Turtle(...standardPetArguments, PetSpeed.verySlow);
+        case PetType.horse:
+            return new Horse(...standardPetArguments, PetSpeed.normal);
+        case PetType.panda:
+            return new Panda(...standardPetArguments, PetSpeed.slow);
         default:
             throw new InvalidPetException("Pet type doesn't exist");
     }
@@ -217,8 +251,12 @@ export function availableColors(petType: PetType): PetColor[] {
             return Chicken.possibleColors;
         case PetType.dog:
             return Dog.possibleColors;
+        case PetType.deno:
+            return Deno.possibleColors;
         case PetType.fox:
             return Fox.possibleColors;
+        case PetType.frog:
+            return Frog.possibleColors;
         case PetType.crab:
             return Crab.possibleColors;
         case PetType.clippy:
@@ -227,6 +265,8 @@ export function availableColors(petType: PetType): PetColor[] {
             return Mod.possibleColors;
         case PetType.totoro:
             return Totoro.possibleColors;
+        case PetType.snail:
+            return Snail.possibleColors;
         case PetType.snake:
             return Snake.possibleColors;
         case PetType.rubberduck:
@@ -241,6 +281,10 @@ export function availableColors(petType: PetType): PetColor[] {
             return Rat.possibleColors;
         case PetType.turtle:
             return Turtle.possibleColors;
+        case PetType.horse:
+            return Horse.possibleColors;
+        case PetType.panda:
+            return Panda.possibleColors;
         default:
             throw new InvalidPetException("Pet type doesn't exist");
     }

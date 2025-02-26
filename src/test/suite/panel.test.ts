@@ -11,13 +11,34 @@ import {
     ColorThemeKind,
     WebviewMessage,
     ALL_PETS,
+    ALL_THEMES,
 } from '../../common/types';
 import { PetElementState, PetPanelState } from '../../panel/states';
 import * as pets from '../../panel/pets';
 
 function mockPanelWindow() {
-    const html =
-        '<!doctype html><html><body><div id="petsContainer"></div><div id="foreground"></div></body></html>';
+    const html = `<!DOCTYPE html>
+			<html lang="en">
+			<head>
+				<meta charset="UTF-8">
+				<!--
+					Use a content security policy to only allow loading images from https or from our extension directory,
+					and only allow scripts that have a specific nonce.
+				-->
+				<meta name="viewport" content="width=device-width, initial-scale=1.0">
+				<title>VS Code Pets</title>
+			</head>
+			<body>
+                <div id="petCanvasContainer">
+                    <canvas id="ballCanvas"></canvas>
+                    <canvas id="foregroundEffectCanvas"></canvas>
+                    <canvas id="backgroundEffectCanvas"></canvas>
+                </div>
+				<div id="petsContainer"></div>
+				<div id="foreground"></div>
+                <div id="background"></div>
+			</body>
+			</html>`;
 
     var jsdom = require('jsdom');
     var document = new jsdom.JSDOM(html);
@@ -70,7 +91,7 @@ import * as panel from '../../panel/main';
 import { Cat } from '../../panel/pets/cat';
 
 suite('Pets Test Suite', () => {
-    vscode.window.showInformationMessage('Start all tests.');
+    void vscode.window.showInformationMessage('Start all tests.');
 
     test('Test pet collection', () => {
         var collection = new pets.PetCollection();
@@ -113,58 +134,81 @@ suite('Pets Test Suite', () => {
         collection.push(testPetElement);
         assert.strictEqual(collection.locate('Jerry'), testPetElement);
 
-        collection.remove('Jerry');
+        collection.remove(testPetElement);
         assert.strictEqual(collection.locate('Jerry'), undefined);
     });
 
-    ALL_PETS.forEach((petType) => {
-        test(
-            'Test panel app initialization with theme and ' + String(petType),
-            () => {
-                const mockState = new MockState();
-                const color = pets.normalizeColor(PetColor.black, petType);
-                panel.allPets.reset();
-                mockState.reset();
-                panel.petPanelApp(
-                    'https://test.com',
-                    Theme.beach,
-                    ColorThemeKind.dark,
-                    color,
-                    PetSize.large,
-                    petType,
-                    false,
-                    mockState,
-                );
-
-                assert.notStrictEqual(document.body.style.backgroundImage, '');
-                assert.notStrictEqual(
-                    document.getElementById('foreground')?.style
-                        .backgroundImage,
-                    '',
-                );
-
-                assert.equal(mockState.getState()?.petStates?.length, 1);
-
-                const firstPet: PetElementState = (mockState.getState()
-                    ?.petStates ?? [])[0];
-                assert.equal(firstPet.petType, petType);
-                assert.equal(firstPet.petColor, color);
-
-                const createdPets = panel.allPets.pets;
-                assert.notEqual(createdPets.at(0), undefined);
-
-                assert.equal(createdPets.at(0)?.color, color);
-
-                /// Cycle 1000 frames
-                for (var i = 0; i < 1000; i++) {
-                    createdPets.at(0)?.pet.nextFrame();
-                    assert.notEqual(
-                        createdPets.at(0)?.pet.getState(),
-                        undefined,
+    ALL_THEMES.forEach((theme) => {
+        ALL_PETS.forEach((petType) => {
+            test(
+                'Test panel app initialization with theme and ' +
+                    String(petType) +
+                    ' and ' +
+                    String(theme),
+                () => {
+                    const mockState = new MockState();
+                    const color = pets.normalizeColor(PetColor.black, petType);
+                    panel.allPets.reset();
+                    mockState.reset();
+                    panel.petPanelApp(
+                        'https://test.com',
+                        theme,
+                        ColorThemeKind.dark,
+                        color,
+                        PetSize.large,
+                        petType,
+                        false,
+                        false,
+                        mockState,
                     );
-                }
-            },
-        );
+
+                    if (theme !== Theme.none) {
+                        assert.notStrictEqual(
+                            document.getElementById('background')?.style
+                                .backgroundImage,
+                            '',
+                        );
+                        assert.notStrictEqual(
+                            document.getElementById('foreground')?.style
+                                .backgroundImage,
+                            '',
+                        );
+                    } else {
+                        assert.strictEqual(
+                            document.getElementById('background')?.style
+                                .backgroundImage,
+                            '',
+                        );
+                        assert.strictEqual(
+                            document.getElementById('foreground')?.style
+                                .backgroundImage,
+                            '',
+                        );
+                    }
+
+                    assert.equal(mockState.getState()?.petStates?.length, 1);
+
+                    const firstPet: PetElementState = (mockState.getState()
+                        ?.petStates ?? [])[0];
+                    assert.equal(firstPet.petType, petType);
+                    assert.equal(firstPet.petColor, color);
+
+                    const createdPets = panel.allPets.pets;
+                    assert.notEqual(createdPets.at(0), undefined);
+
+                    assert.equal(createdPets.at(0)?.color, color);
+
+                    /// Cycle 1000 frames
+                    for (var i = 0; i < 1000; i++) {
+                        createdPets.at(0)?.pet.nextFrame();
+                        assert.notEqual(
+                            createdPets.at(0)?.pet.getState(),
+                            undefined,
+                        );
+                    }
+                },
+            );
+        });
     });
 
     test('Test panel app initialization with no theme', () => {
@@ -179,10 +223,14 @@ suite('Pets Test Suite', () => {
             PetSize.large,
             PetType.cat,
             false,
+            false,
             mockState,
         );
 
-        assert.strictEqual(document.body.style.backgroundImage, '');
+        assert.strictEqual(
+            document.getElementById('background')?.style.backgroundImage,
+            '',
+        );
         assert.strictEqual(
             document.getElementById('foreground')?.style.backgroundImage,
             '',
@@ -201,10 +249,14 @@ suite('Pets Test Suite', () => {
             PetSize.large,
             PetType.cat,
             false,
+            false,
             mockState,
         );
 
-        assert.strictEqual(document.body.style.backgroundImage, '');
+        assert.strictEqual(
+            document.getElementById('background')?.style.backgroundImage,
+            '',
+        );
         assert.strictEqual(
             document.getElementById('foreground')?.style.backgroundImage,
             '',

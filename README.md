@@ -2,7 +2,7 @@
 
 # VS Code Pets
 
-![icon](https://github.com/tonybaloney/vscode-pets/raw/master/icon.png)
+![icon](https://github.com/tonybaloney/vscode-pets/raw/main/icon.png)
 </div>    
 
 <p align="center">
@@ -18,7 +18,7 @@
 [![Visual Studio Marketplace Installs](https://img.shields.io/visual-studio-marketplace/i/tonybaloney.vscode-pets?logo=visualstudio)](https://marketplace.visualstudio.com/items?itemName=tonybaloney.vscode-pets&WT.mc_id=python-17801-anthonyshaw)
 [![Visual Studio Marketplace Downloads](https://img.shields.io/visual-studio-marketplace/d/tonybaloney.vscode-pets?logo=visualstudio)](https://marketplace.visualstudio.com/items?itemName=tonybaloney.vscode-pets&WT.mc_id=python-17801-anthonyshaw)
 
-![screenshot](https://github.com/tonybaloney/vscode-pets/raw/master/docs/source/_static/screenshot.gif)
+![screenshot](https://github.com/tonybaloney/vscode-pets/raw/main/docs/source/_static/winter.gif)
 
 ## Installation
 
@@ -42,9 +42,15 @@ After installing, open the command palette with `Ctrl+Shift+P` on Windows/Linux 
 
 Run the "Start pet coding session" command (`vscode-pets.start`) to see a cat in VS Code:
 
-![Default view](https://github.com/tonybaloney/vscode-pets/raw/master/docs/source/_static/pet-in-default-explorer.png)
+![Default view](https://github.com/tonybaloney/vscode-pets/raw/main/docs/source/_static/pet-in-default-explorer.png)
 
-[Now checkout the documentation to see what else is possible!](https://tonybaloney.github.io/vscode-pets)
+[Now checkout the documentation to see what else is possible!](https://tonybaloney.github.io/vscode-pets/)
+
+Some important things you can do:
+
+- [Add lots of pets](https://tonybaloney.github.io/vscode-pets/pets/#adding-additional-pets)
+- [Change the background](https://tonybaloney.github.io/vscode-pets/themes/)
+- [Throw a ball and play with the pets](https://tonybaloney.github.io/vscode-pets/pets/#throwing-a-ball)
 
 ## Translation
 
@@ -53,6 +59,8 @@ Visit the [Crowdin Project](https://crowdin.com/project/vscode-pets) in case you
 ## Credits
 
 The cat animations were designed by [seethingswarm](https://seethingswarm.itch.io/catset). The dog media assets for this extension were designed by [NVPH Studio](https://nvph-studio.itch.io/dog-animation-4-different-dogs). 
+
+The winter theme is original artwork by [Kiana Mosser](https://www.instagram.com/kianamosser/) created for VS Code Pets.
 
 The forest theme was designed by [edermunizz](https://edermunizz.itch.io/free-pixel-art-forest). The castle assets were created using artwork by [GuttyKreum](https://guttykreum.itch.io/gothic-castle-game-assets).
 
@@ -65,6 +73,14 @@ The forest theme was designed by [edermunizz](https://edermunizz.itch.io/free-pi
 [Kevin Huang](https://github.com/kevin2huang) created the Akita inu media assets.
 
 The turtle animations were designed by enkeefe using [Pixelart](https://www.pixilart.com/draw).
+
+The horse animations were adapted by [Chris Kent](https://github.com/thechriskent) from assets by [Onfe](https://onfe.itch.io/horse-sprite-with-rider-asset-pack). 
+
+[Kennet Shin](https://github.com/WoofWoof0) created the snail media assets.
+
+The frog animations were created by [seethingswarm](https://seethingswarm.itch.io/frogpack).
+
+[Jessie Ferris](https://github.com/jeferris) created the panda media assets.
 
 ## Thank you
 

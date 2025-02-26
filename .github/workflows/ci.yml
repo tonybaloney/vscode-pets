@@ -5,9 +5,10 @@ name: CI
 
 on:
     push:
-        branches: [master]
+        branches: [main]
+        tags: ["*.*.*"]
     pull_request:
-        branches: [master]
+        branches: [main]
 
 jobs:
     build:
@@ -15,35 +16,40 @@ jobs:
 
         strategy:
             matrix:
-                node-version: [14.x]
+                node-version: [18.x]
         steps:
-            - uses: actions/checkout@v2
+            - uses: actions/checkout@v4
             - name: Use Node.js ${{ matrix.node-version }}
-              uses: actions/setup-node@v1
+              uses: actions/setup-node@v4
               with:
                   node-version: ${{ matrix.node-version }}
-            - name: Extract cats
-              run: cd media && unzip -P ${{ secrets.CAT_ASSETS_PASSWORD }} cat.zip
-              if: github.ref == 'refs/heads/master'
+            - name: Extract cats and frogs
+              run: cd media && unzip -P ${{ secrets.EXTRA_ASSETS }} extra.zip
+              if: github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/tags/')
             - run: npm ci
             - run: npm run compile
             - run: npm run lint
             - name: Run unit and integration tests
-              uses: GabrielBB/xvfb-action@v1.6
-              with:
-                run: npm run test
+              if: runner.os == 'Linux'
+              run: xvfb-run npm test
             - name: Run coverage
-              uses: GabrielBB/xvfb-action@v1.6
               continue-on-error: true
-              with:
-                run: npm run test:coverage
-            - uses: codecov/codecov-action@v3
+              if: runner.os == 'Linux'
+              run: xvfb-run npm run test:coverage
+            - uses: codecov/codecov-action@v5
               with:
                 directory: ./coverage
                 token: ${{ secrets.CODECOV_TOKEN }}
             
             - name: Package VSIX
               run: npm install -g vsce && vsce package
-            - uses: actions/upload-artifact@v2
+            - uses: actions/upload-artifact@v4
               with:
                 path: "*.vsix"
+            - name: Release
+              uses: softprops/action-gh-release@v2
+              if: startsWith(github.ref, 'refs/tags/')
+              with:
+                generate_release_notes: true
+                draft: true
+                files: "*.vsix"

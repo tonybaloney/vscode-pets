@@ -1,1 +1,2 @@
-furo
+mkdocs
+mkdocs-material

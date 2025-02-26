@@ -2,6 +2,63 @@
 
 All notable changes to the "vscode-pets" extension will be documented in this file.
 
+## [1.29.0]
+
+* Add winter theme @tonybaloney in https://github.com/tonybaloney/vscode-pets/pull/663
+* Add orange cat by @halawaykeller in https://github.com/tonybaloney/vscode-pets/pull/593
+* Differentiate between light and dark high-contrast themes
+
+### Other Changes
+
+* Use code instead of citations by @spenserblack in https://github.com/tonybaloney/vscode-pets/pull/617
+* Update docs. by @tonybaloney in https://github.com/tonybaloney/vscode-pets/pull/665
+* Automatically generate releases when a tag is pushed by @zalsader in https://github.com/tonybaloney/vscode-pets/pull/658
+
+## [1.28.0]
+
+### New Pets
+
+* Add a panda by @jeferris in https://github.com/tonybaloney/vscode-pets/pull/615
+* added frog pet by @JustOnesAndZeros in https://github.com/tonybaloney/vscode-pets/pull/641
+* Add snail pet by @WoofWoof0 in https://github.com/tonybaloney/vscode-pets/pull/577
+* Fix/issue 647 + add snail by @thuynguyenbm in https://github.com/tonybaloney/vscode-pets/pull/648
+
+### Fixes
+
+* Modified all chicken gifs to have the same canvas size by @sharktrexer in https://github.com/tonybaloney/vscode-pets/pull/622
+
+### Various Changes
+
+* Add new pets to translations. Improve some languages by @tonybaloney in https://github.com/tonybaloney/vscode-pets/pull/575
+* Bump braces and gulp by @dependabot in https://github.com/tonybaloney/vscode-pets/pull/574
+* Switch to coactions/setup-xvfb by @tonybaloney in https://github.com/tonybaloney/vscode-pets/pull/576
+* Add Czech translations and improve Japanese translations by @tonybaloney in https://github.com/tonybaloney/vscode-pets/pull/578
+* Improve Japanese translations with new colors and pet types by @tonybaloney in https://github.com/tonybaloney/vscode-pets/pull/581
+* Bump ws from 8.11.0 to 8.17.1 by @dependabot in https://github.com/tonybaloney/vscode-pets/pull/583
+* Improve German and Spanish translations by @tonybaloney in https://github.com/tonybaloney/vscode-pets/pull/584
+* Improve translations by @tonybaloney in https://github.com/tonybaloney/vscode-pets/pull/589
+* Bump crowdin/github-action from 2.0.0 to 2.1.1 by @dependabot in https://github.com/tonybaloney/vscode-pets/pull/594
+* Improve language packs by @tonybaloney in https://github.com/tonybaloney/vscode-pets/pull/605
+* Bump crowdin/github-action from 2.1.1 to 2.2.0 by @dependabot in https://github.com/tonybaloney/vscode-pets/pull/620
+* Bump webpack from 5.76.0 to 5.95.0 by @dependabot in https://github.com/tonybaloney/vscode-pets/pull/621
+* Bump codecov/codecov-action from 4 to 5 by @dependabot in https://github.com/tonybaloney/vscode-pets/pull/639
+* Bump crowdin/github-action from 2.2.0 to 2.5.0 by @dependabot in https://github.com/tonybaloney/vscode-pets/pull/649
+
+## [1.27.0]
+
+* Add a deno pet by @thisisjofrank in https://github.com/tonybaloney/vscode-pets/pull/567
+
+## [1.26.0]
+
+* Horses! 🐎🐎🐎 by @thechriskent in https://github.com/tonybaloney/vscode-pets/pull/572
+* Removed grey outline from clippy. by @m-a-x-s-e-e-l-i-g in https://github.com/tonybaloney/vscode-pets/pull/516
+* Add remy and splinter to rat names by @Harry-Hopkinson in https://github.com/tonybaloney/vscode-pets/pull/534
+* Fix broken link to subsection by @OkayKenji in https://github.com/tonybaloney/vscode-pets/pull/496
+
+## [1.25.1]
+
+* Fixes a bug occuring mostly in VS Code inside WSL where the add pets action doesn't work because the window would immediately disappear. [#489](https://github.com/tonybaloney/vscode-pets/issues/489)
+
 ## [1.25.0]
 
 * Add Akita inu pet by @kevin2huang in https://github.com/tonybaloney/vscode-pets/pull/458

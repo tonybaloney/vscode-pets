@@ -3,7 +3,8 @@
     "parser": "@typescript-eslint/parser",
     "parserOptions": {
         "ecmaVersion": 6,
-        "sourceType": "module"
+        "sourceType": "module",
+        "project": "./tsconfig.json"
     },
     "plugins": [
         "@typescript-eslint",
@@ -19,6 +20,7 @@
         "no-unused-vars": "error",
         "unused-imports/no-unused-imports": "error",
         "prefer-const": "error",
-        "@typescript-eslint/no-non-null-assertion": "warn"
+        "@typescript-eslint/no-non-null-assertion": "warn",
+        "@typescript-eslint/no-floating-promises": "warn"
     }
 }

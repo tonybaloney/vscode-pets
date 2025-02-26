@@ -2,7 +2,7 @@
     "name": "vscode-pets",
     "displayName": "vscode-pets",
     "description": "Pets for your VS Code",
-    "version": "1.25.0",
+    "version": "1.30.0",
     "engines": {
         "vscode": "^1.73.0"
     },
@@ -24,7 +24,9 @@
         "dog",
         "pets",
         "clippy",
-        "rubber duck"
+        "rubber duck",
+        "horse",
+        "deno"
     ],
     "license": "MIT",
     "icon": "icon.png",
@@ -41,7 +43,7 @@
                 {
                     "type": "webview",
                     "id": "petsView",
-                    "name": "VS Code Pets",
+                    "name": "%vscode-pets.panel.title%",
                     "when": "vscode-pets.position == 'explorer'",
                     "icon": "media/dog.svg"
                 }
@@ -69,52 +71,52 @@
         "commands": [
             {
                 "command": "vscode-pets.start",
-                "title": "Start pet coding session",
+                "title": "%vscode-pets.start.title%",
                 "category": "Pet Coding",
                 "icon": "media/dog.svg"
             },
             {
                 "command": "vscode-pets.throw-with-mouse",
-                "title": "Throw ball with mouse",
+                "title": "%vscode-pets.throw-with-mouse.title%",
                 "category": "Pet Coding"
             },
             {
                 "command": "vscode-pets.throw-ball",
-                "title": "Throw ball",
+                "title": "%vscode-pets.throw-ball.title%",
                 "category": "Pet Coding",
                 "icon": "$(circle)"
             },
             {
                 "command": "vscode-pets.export-pet-list",
-                "title": "Export pet list",
+                "title": "%vscode-pets.export-pet-list.title%",
                 "category": "Pet Coding"
             },
             {
                 "command": "vscode-pets.import-pet-list",
-                "title": "Import pet list",
+                "title": "%vscode-pets.import-pet-list.title%",
                 "category": "Pet Coding"
             },
             {
                 "command": "vscode-pets.spawn-pet",
-                "title": "Spawn additional pet",
+                "title": "%vscode-pets.spawn-pet.title%",
                 "category": "Pet Coding",
                 "icon": "$(add)"
             },
             {
                 "command": "vscode-pets.delete-pet",
-                "title": "Remove pet",
+                "title": "%vscode-pets.delete-pet.title%",
                 "category": "Pet Coding",
                 "icon": "$(trash)"
             },
             {
                 "command": "vscode-pets.remove-all-pets",
-                "title": "Remove all pets",
+                "title": "%vscode-pets.remove-all-pets.title%",
                 "category": "Pet Coding",
                 "icon": "$(trash)"
             },
             {
                 "command": "vscode-pets.roll-call",
-                "title": "Roll-call",
+                "title": "%vscode-pets.roll-call.title%",
                 "category": "Pet Coding"
             }
         ],
@@ -134,11 +136,40 @@
                             "red",
                             "white",
                             "orange",
-                            "akita"
+                            "akita",
+                            "socks black",
+                            "socks beige",
+                            "socks brown",
+                            "paint beige",
+                            "paint black",
+                            "paint brown",
+                            "magical",
+                            "warrior"
                         ],
                         "default": "brown",
-                        "description": "Pet color",
-                        "scope": "window"
+                        "description": "%vscode-pets.petColor.description%",
+                        "scope": "window",
+                        "enumItemLabels": [
+                            "%vscode-pets.petColor.black%",
+                            "%vscode-pets.petColor.lightbrown%",
+                            "%vscode-pets.petColor.brown%",
+                            "%vscode-pets.petColor.green%",
+                            "%vscode-pets.petColor.yellow%",
+                            "%vscode-pets.petColor.gray%",
+                            "%vscode-pets.petColor.purple%",
+                            "%vscode-pets.petColor.red%",
+                            "%vscode-pets.petColor.white%",
+                            "%vscode-pets.petColor.orange%",
+                            "%vscode-pets.petColor.akita%",
+                            "%vscode-pets.petColor.socks black%",
+                            "%vscode-pets.petColor.socks beige%",
+                            "%vscode-pets.petColor.socks brown%",
+                            "%vscode-pets.petColor.paint beige%",
+                            "%vscode-pets.petColor.paint black%",
+                            "%vscode-pets.petColor.paint brown%",
+                            "%vscode-pets.petColor.magical%",
+                            "%vscode-pets.petColor.warrior%"
+                        ]
                     },
                     "vscode-pets.petType": {
                         "type": "string",
@@ -150,6 +181,8 @@
                             "cockatiel",
                             "dog",
                             "fox",
+                            "frog",
+                            "horse",
                             "mod",
                             "rat",
                             "rocky",
@@ -157,11 +190,32 @@
                             "snake",
                             "totoro",
                             "turtle",
-                            "zappy"
+                            "zappy",
+                            "snail"
                         ],
                         "default": "cat",
-                        "description": "Pet type",
-                        "scope": "window"
+                        "description": "%vscode-pets.petType.description%",
+                        "scope": "window",
+                        "enumItemLabels": [
+                            "%vscode-pets.petType.cat%",
+                            "%vscode-pets.petType.chicken%",
+                            "%vscode-pets.petType.crab%",
+                            "%vscode-pets.petType.clippy%",
+                            "%vscode-pets.petType.cockatiel%",
+                            "%vscode-pets.petType.dog%",
+                            "%vscode-pets.petType.fox%",
+                            "%vscode-pets.petType.frog%",
+                            "%vscode-pets.petType.horse%",
+                            "%vscode-pets.petType.mod%",
+                            "%vscode-pets.petType.rat%",
+                            "%vscode-pets.petType.rocky%",
+                            "%vscode-pets.petType.rubber-duck%",
+                            "%vscode-pets.petType.snake%",
+                            "%vscode-pets.petType.totoro%",
+                            "%vscode-pets.petType.turtle%",
+                            "%vscode-pets.petType.zappy%",
+                            "%vscode-pets.petType.snail%"
+                        ]
                     },
                     "vscode-pets.petSize": {
                         "type": "string",
@@ -172,7 +226,13 @@
                             "large"
                         ],
                         "default": "nano",
-                        "description": "Pet size"
+                        "description": "%vscode-pets.petSize.description%",
+                        "enumItemLabels": [
+                            "%vscode-pets.petSize.nano%",
+                            "%vscode-pets.petSize.small%",
+                            "%vscode-pets.petSize.medium%",
+                            "%vscode-pets.petSize.large%"
+                        ]
                     },
                     "vscode-pets.position": {
                         "type": "string",
@@ -181,7 +241,11 @@
                             "explorer"
                         ],
                         "default": "explorer",
-                        "description": "VSCode pets webview position"
+                        "description": "%vscode-pets.position.description%",
+                        "enumItemLabels": [
+                            "%vscode-pets.position.panel%",
+                            "%vscode-pets.position.explorer%"
+                        ]
                     },
                     "vscode-pets.theme": {
                         "type": "string",
@@ -189,15 +253,28 @@
                             "none",
                             "forest",
                             "castle",
-                            "beach"
+                            "beach",
+                            "winter"
                         ],
                         "default": "none",
-                        "description": "Background theme assets for your pets"
+                        "description": "%vscode-pets.theme.description%",
+                        "enumItemLabels": [
+                            "%vscode-pets.theme.none%",
+                            "%vscode-pets.theme.forest%",
+                            "%vscode-pets.theme.castle%",
+                            "%vscode-pets.theme.beach%",
+                            "%vscode-pets.theme.winter%"
+                        ]
                     },
                     "vscode-pets.throwBallWithMouse": {
                         "type": "boolean",
                         "default": false,
-                        "description": "Throw ball with mouse"
+                        "description": "%vscode-pets.throwBallWithMouse.description%"
+                    },
+                    "vscode-pets.disableEffects": {
+                        "type": "boolean",
+                        "default": false,
+                        "description": "%vscode-pets.disableEffects.description%"
                     }
                 }
             }
@@ -222,6 +299,7 @@
     },
     "devDependencies": {
         "@rbarilani/remove-source-map-url-webpack-plugin": "^1.1.0",
+        "@types/chai": "^5.0.1",
         "@types/glob": "^7.1.3",
         "@types/jsdom": "^20.0.0",
         "@types/mocha": "^9.1.1",
@@ -230,23 +308,24 @@
         "@typescript-eslint/eslint-plugin": "^5.29.0",
         "@typescript-eslint/parser": "^5.29.0",
         "@vscode/l10n-dev": "^0.0.29",
-        "@vscode/test-web": "^0.0.31",
+        "@vscode/test-web": "^0.0.50",
+        "chai": "^5.1.2",
         "eslint": "^8.18.0",
         "eslint-plugin-unused-imports": "^2.0.0",
         "glob": "^8.0.3",
-        "gulp": "^4.0.2",
+        "gulp": "^5.0.0",
         "jsdom": "^20.0.0",
         "jsdom-global": "^3.0.2",
-        "mocha": "^10.0.0",
+        "mocha": "^10.8.2",
         "nyc": "^15.1.0",
         "path-browserify": "^1.0.1",
-        "prettier": "^2.7.1",
+        "prettier": "^2.8.8",
         "process": "^0.11.10",
         "ts-loader": "^9.3.0",
         "typescript": "^4.7.4",
         "typescript-eslint": "^0.0.1-alpha.0",
         "vscode-test": "^1.4.0",
-        "webpack": "5.76.0",
+        "webpack": "5.95.0",
         "webpack-cli": "^4.10.0"
     },
     "dependencies": {
