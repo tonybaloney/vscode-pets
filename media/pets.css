@@ -180,7 +180,7 @@ img.pet {
 	border: 2px solid #333;
 	border-radius: 10px;
 	padding: 10px 0;
-    z-index: var(--bubble-z-index);
+	z-index: var(--bubble-z-index);
 }
 
 .bubble-nano {
