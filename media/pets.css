@@ -1,11 +1,11 @@
 :root {
-    --background-effect-canvas-z-index: 1;
-    --background-z-index: 2;
-    --pet-canvas-container-z-index: 3; /* petCanvasContainer canvas, ballCanvas, img.pet */
-    --bubble-z-index: 4;
-    --foreground-effect-canvas-z-index: 5;
-    --foreground-z-index: 6;
-    --collision-z-index: 999;
+	--background-effect-canvas-z-index: 1;
+	--background-z-index: 2;
+	--pet-canvas-container-z-index: 3; /* petCanvasContainer canvas, ballCanvas, img.pet */
+	--bubble-z-index: 4;
+	--foreground-effect-canvas-z-index: 5;
+	--foreground-z-index: 6;
+	--collision-z-index: 999;
 
 	--container-paddding: 20px;
 	--input-padding-vertical: 6px;
