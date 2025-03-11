@@ -15,6 +15,7 @@
     "vscode-pets.position.description": "Evcil hayvanlar panelinin konumu",
     "vscode-pets.theme.description": "Tema",
     "vscode-pets.throwBallWithMouse.description": "Fare'yi kullanarak bir top fırlatabilirsin.",
+    "vscode-pets.disableBubble.description": "Konuşma balonunu devre dışı bırak",
     "vscode-pets.disableEffects.description": "Görsel efektleri devre dışı bırak",
     "vscode-pets.petColor.black": "Siyah",
     "vscode-pets.petColor.lightbrown": "Açık Kahverengi",

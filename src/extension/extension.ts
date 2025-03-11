@@ -98,6 +98,12 @@ function updatePanelDisableEffects(): void {
     }
 }
 
+function getConfiguredDisableBubble(): boolean {
+    return vscode.workspace
+        .getConfiguration('vscode-pets')
+        .get<boolean>('disableBubble', false);
+}
+
 function updatePanelThrowWithMouse(): void {
     const panel = getPetPanel();
     if (panel !== undefined) {
@@ -117,12 +123,20 @@ export class PetSpecification {
     color: PetColor;
     type: PetType;
     size: PetSize;
+    disableBubble: boolean;
     name: string;
 
-    constructor(color: PetColor, type: PetType, size: PetSize, name?: string) {
+    constructor(
+        color: PetColor,
+        type: PetType,
+        size: PetSize,
+        disableBubble: boolean,
+        name?: string,
+    ) {
         this.color = color;
         this.type = type;
         this.size = size;
+        this.disableBubble = disableBubble;
         if (!name) {
             this.name = randomName(type);
         } else {
@@ -144,12 +158,18 @@ export class PetSpecification {
             type = DEFAULT_PET_TYPE;
         }
 
-        return new PetSpecification(color, type, getConfiguredSize());
+        return new PetSpecification(
+            color,
+            type,
+            getConfiguredSize(),
+            getConfiguredDisableBubble(),
+        );
     }
 
     static collectionFromMemento(
         context: vscode.ExtensionContext,
         size: PetSize,
+        disableBubble: boolean,
     ): PetSpecification[] {
         var contextTypes = context.globalState.get<PetType[]>(
             EXTRA_PETS_KEY_TYPES,
@@ -170,6 +190,7 @@ export class PetSpecification {
                     contextColors?.[index] ?? DEFAULT_COLOR,
                     contextTypes[index],
                     size,
+                    disableBubble,
                     contextNames[index],
                 ),
             );
@@ -262,6 +283,7 @@ async function handleRemovePetMessage(
                                 item.color,
                                 item.type,
                                 PetSize.medium,
+                                getConfiguredDisableBubble(),
                                 item.name,
                             );
                         });
@@ -314,12 +336,14 @@ export function activate(context: vscode.ExtensionContext) {
                     getConfiguredThemeKind(),
                     getThrowWithMouseConfiguration(),
                     getEffectsDisabledConfiguration(),
+                    getConfiguredDisableBubble(),
                 );
 
                 if (PetPanel.currentPanel) {
                     var collection = PetSpecification.collectionFromMemento(
                         context,
                         getConfiguredSize(),
+                        getConfiguredDisableBubble(),
                     );
                     collection.forEach((item) => {
                         PetPanel.currentPanel?.spawnPet(item);
@@ -361,6 +385,7 @@ export function activate(context: vscode.ExtensionContext) {
         getConfiguredThemeKind(),
         getThrowWithMouseConfiguration(),
         getEffectsDisabledConfiguration(),
+        getConfiguredDisableBubble(),
     );
     updateExtensionPositionContext().catch((e) => {
         console.error(e);
@@ -415,6 +440,7 @@ export function activate(context: vscode.ExtensionContext) {
                 const pets = PetSpecification.collectionFromMemento(
                     context,
                     getConfiguredSize(),
+                    getConfiguredDisableBubble(),
                 );
                 const petJson = JSON.stringify(pets, null, 2);
                 const fileName = `pets-${Date.now()}.json`;
@@ -482,6 +508,7 @@ export function activate(context: vscode.ExtensionContext) {
                         var collection = PetSpecification.collectionFromMemento(
                             context,
                             getConfiguredSize(),
+                            getConfiguredDisableBubble(),
                         );
                         // fetch just the pet types
                         const panel = getPetPanel();
@@ -573,6 +600,7 @@ export function activate(context: vscode.ExtensionContext) {
                     petColor,
                     selectedPetType.value,
                     getConfiguredSize(),
+                    getConfiguredDisableBubble(),
                     name,
                 );
                 if (!spec.type || !spec.color || !spec.size) {
@@ -585,6 +613,7 @@ export function activate(context: vscode.ExtensionContext) {
                 var collection = PetSpecification.collectionFromMemento(
                     context,
                     getConfiguredSize(),
+                    getConfiguredDisableBubble(),
                 );
                 collection.push(spec);
                 await storeCollectionAsMemento(context, collection);
@@ -628,6 +657,7 @@ export function activate(context: vscode.ExtensionContext) {
                     e.affectsConfiguration('vscode-pets.petType') ||
                     e.affectsConfiguration('vscode-pets.petSize') ||
                     e.affectsConfiguration('vscode-pets.theme') ||
+                    e.affectsConfiguration('vscode-pets.disableBubble') ||
                     e.affectsConfiguration('workbench.colorTheme')
                 ) {
                     const spec = PetSpecification.fromConfiguration();
@@ -640,6 +670,7 @@ export function activate(context: vscode.ExtensionContext) {
                             getConfiguredTheme(),
                             getConfiguredThemeKind(),
                         );
+                        panel.updateDisableBubble(spec.disableBubble);
                         panel.update();
                     }
                 }
@@ -678,6 +709,7 @@ export function activate(context: vscode.ExtensionContext) {
                     getConfiguredThemeKind(),
                     getThrowWithMouseConfiguration(),
                     getEffectsDisabledConfiguration(),
+                    getConfiguredDisableBubble(),
                 );
             },
         });
@@ -721,6 +753,7 @@ interface IPetPanel {
     update(): void;
     setThrowWithMouse(newThrowWithMouse: boolean): void;
     updateDisableEffects(disableEffects: boolean): void;
+    updateDisableBubble(disableBubble: boolean): void;
 }
 
 class PetWebviewContainer implements IPetPanel {
@@ -733,6 +766,7 @@ class PetWebviewContainer implements IPetPanel {
     protected _themeKind: vscode.ColorThemeKind;
     protected _throwBallWithMouse: boolean;
     protected _disableEffects: boolean;
+    protected _disableBubble: boolean;
 
     constructor(
         extensionUri: vscode.Uri,
@@ -743,6 +777,7 @@ class PetWebviewContainer implements IPetPanel {
         themeKind: ColorThemeKind,
         throwBallWithMouse: boolean,
         disableEffects: boolean,
+        disableBubble: boolean,
     ) {
         this._extensionUri = extensionUri;
         this._petColor = color;
@@ -752,6 +787,7 @@ class PetWebviewContainer implements IPetPanel {
         this._themeKind = themeKind;
         this._throwBallWithMouse = throwBallWithMouse;
         this._disableEffects = disableEffects;
+        this._disableBubble = disableBubble;
     }
 
     public petColor(): PetColor {
@@ -782,6 +818,10 @@ class PetWebviewContainer implements IPetPanel {
         return this._disableEffects;
     }
 
+    public disableBubble(): boolean {
+        return this._disableBubble;
+    }
+
     public updatePetColor(newColor: PetColor) {
         this._petColor = newColor;
     }
@@ -792,6 +832,10 @@ class PetWebviewContainer implements IPetPanel {
 
     public updatePetSize(newSize: PetSize) {
         this._petSize = newSize;
+    }
+
+    public updateDisableBubble(disableBubble: boolean) {
+        this._disableBubble = disableBubble;
     }
 
     public updateTheme(newTheme: Theme, themeKind: vscode.ColorThemeKind) {
@@ -945,7 +989,7 @@ class PetWebviewContainer implements IPetPanel {
 				<div id="foreground"></div>
                 <div id="background"></div>
 				<script nonce="${nonce}" src="${scriptUri}"></script>
-				<script nonce="${nonce}">petApp.petPanelApp("${basePetUri}", "${this.theme()}", ${this.themeKind()}, "${this.petColor()}", "${this.petSize()}", "${this.petType()}", ${this.throwBallWithMouse()}, ${this.disableEffects()});</script>
+				<script nonce="${nonce}">petApp.petPanelApp("${basePetUri}", "${this.theme()}", ${this.themeKind()}, "${this.petColor()}", "${this.petSize()}", "${this.petType()}", ${this.throwBallWithMouse()}, ${this.disableEffects()}, ${this.disableBubble()});</script>
 			</body>
 			</html>`;
     }
@@ -984,6 +1028,7 @@ class PetPanel extends PetWebviewContainer implements IPetPanel {
         themeKind: ColorThemeKind,
         throwBallWithMouse: boolean,
         disableEffects: boolean,
+        disableBubble: boolean,
     ) {
         const column = vscode.window.activeTextEditor
             ? vscode.window.activeTextEditor.viewColumn
@@ -993,7 +1038,8 @@ class PetPanel extends PetWebviewContainer implements IPetPanel {
             if (
                 petColor === PetPanel.currentPanel.petColor() &&
                 petType === PetPanel.currentPanel.petType() &&
-                petSize === PetPanel.currentPanel.petSize()
+                petSize === PetPanel.currentPanel.petSize() &&
+                disableBubble === PetPanel.currentPanel.disableBubble()
             ) {
                 PetPanel.currentPanel._panel.reveal(column);
                 return;
@@ -1001,6 +1047,7 @@ class PetPanel extends PetWebviewContainer implements IPetPanel {
                 PetPanel.currentPanel.updatePetColor(petColor);
                 PetPanel.currentPanel.updatePetType(petType);
                 PetPanel.currentPanel.updatePetSize(petSize);
+                PetPanel.currentPanel.updateDisableBubble(disableBubble);
                 PetPanel.currentPanel.update();
             }
         }
@@ -1023,6 +1070,7 @@ class PetPanel extends PetWebviewContainer implements IPetPanel {
             themeKind,
             throwBallWithMouse,
             disableEffects,
+            disableBubble,
         );
     }
 
@@ -1057,6 +1105,7 @@ class PetPanel extends PetWebviewContainer implements IPetPanel {
         themeKind: ColorThemeKind,
         throwBallWithMouse: boolean,
         disableEffects: boolean,
+        disableBubble: boolean,
     ) {
         PetPanel.currentPanel = new PetPanel(
             panel,
@@ -1068,6 +1117,7 @@ class PetPanel extends PetWebviewContainer implements IPetPanel {
             themeKind,
             throwBallWithMouse,
             disableEffects,
+            disableBubble,
         );
     }
 
@@ -1081,6 +1131,7 @@ class PetPanel extends PetWebviewContainer implements IPetPanel {
         themeKind: ColorThemeKind,
         throwBallWithMouse: boolean,
         disableEffects: boolean,
+        disableBubble: boolean,
     ) {
         super(
             extensionUri,
@@ -1091,6 +1142,7 @@ class PetPanel extends PetWebviewContainer implements IPetPanel {
             themeKind,
             throwBallWithMouse,
             disableEffects,
+            disableBubble,
         );
 
         this._panel = panel;
@@ -1200,11 +1252,13 @@ async function createPetPlayground(context: vscode.ExtensionContext) {
         getConfiguredThemeKind(),
         getThrowWithMouseConfiguration(),
         getEffectsDisabledConfiguration(),
+        getConfiguredDisableBubble(),
     );
     if (PetPanel.currentPanel) {
         var collection = PetSpecification.collectionFromMemento(
             context,
             getConfiguredSize(),
+            getConfiguredDisableBubble(),
         );
         collection.forEach((item) => {
             PetPanel.currentPanel?.spawnPet(item);
@@ -1214,6 +1268,7 @@ async function createPetPlayground(context: vscode.ExtensionContext) {
         var collection = PetSpecification.collectionFromMemento(
             context,
             getConfiguredSize(),
+            getConfiguredDisableBubble(),
         );
         collection.push(spec);
         await storeCollectionAsMemento(context, collection);
