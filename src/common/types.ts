@@ -7,6 +7,7 @@ export const enum PetColor {
     yellow = 'yellow',
     gray = 'gray',
     purple = 'purple',
+    pink = 'pink',
     red = 'red',
     white = 'white',
     orange = 'orange',
@@ -23,6 +24,7 @@ export const enum PetColor {
 }
 
 export const enum PetType {
+    bunny = 'bunny',
     cat = 'cat',
     chicken = 'chicken',
     clippy = 'clippy',
@@ -93,6 +95,7 @@ export class WebviewMessage {
 }
 
 export const ALL_PETS = [
+    PetType.bunny,
     PetType.cat,
     PetType.chicken,
     PetType.clippy,
@@ -122,6 +125,7 @@ export const ALL_COLORS = [
     PetColor.yellow,
     PetColor.gray,
     PetColor.purple,
+    PetColor.pink,
     PetColor.red,
     PetColor.white,
     PetColor.orange,
