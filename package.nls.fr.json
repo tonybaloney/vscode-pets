@@ -15,6 +15,7 @@
     "vscode-pets.position.description": "Position du panneau pour animaux",
     "vscode-pets.theme.description": "Theme",
     "vscode-pets.throwBallWithMouse.description": "Throw ball with mouse",
+    "vscode-pets.disableBubble.description": "Désactiver la bulle de chat",
     "vscode-pets.disableEffects.description": "Désactiver les effets",
     "vscode-pets.petColor.black": "Noir",
     "vscode-pets.petColor.lightbrown": "Brun clair",
