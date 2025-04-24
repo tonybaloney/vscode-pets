@@ -170,8 +170,7 @@
                             "paint black",
                             "paint brown",
                             "magical",
-                            "warrior",
-                            "pink"
+                            "warrior"
                         ],
                         "default": "brown",
                         "description": "%vscode-pets.petColor.description%",
