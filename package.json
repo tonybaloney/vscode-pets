@@ -170,7 +170,8 @@
                             "paint black",
                             "paint brown",
                             "magical",
-                            "warrior"
+                            "warrior",
+                            "pink"
                         ],
                         "default": "brown",
                         "description": "%vscode-pets.petColor.description%",
@@ -194,7 +195,8 @@
                             "%vscode-pets.petColor.paint black%",
                             "%vscode-pets.petColor.paint brown%",
                             "%vscode-pets.petColor.magical%",
-                            "%vscode-pets.petColor.warrior%"
+                            "%vscode-pets.petColor.warrior%",
+                            "%vscode-pets.petColor.pink%"
                         ]
                     },
                     "vscode-pets.petType": {
@@ -217,7 +219,8 @@
                             "totoro",
                             "turtle",
                             "zappy",
-                            "snail"
+                            "snail",
+                            "bunny"
                         ],
                         "default": "cat",
                         "description": "%vscode-pets.petType.description%",
@@ -240,7 +243,8 @@
                             "%vscode-pets.petType.totoro%",
                             "%vscode-pets.petType.turtle%",
                             "%vscode-pets.petType.zappy%",
-                            "%vscode-pets.petType.snail%"
+                            "%vscode-pets.petType.snail%",
+                            "%vscode-pets.petType.bunny%"
                         ]
                     },
                     "vscode-pets.petSize": {

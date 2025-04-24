@@ -37,6 +37,7 @@
     "vscode-pets.petColor.paint brown" : "Brown Paint",
     "vscode-pets.petColor.magical" : "Magical",
     "vscode-pets.petColor.warrior" : "Warrior",
+    "vscode-pets.petColor.pink" : "Pink",
 
     "vscode-pets.petType.cat": "Cat",
     "vscode-pets.petType.chicken": "Chicken",
@@ -56,6 +57,7 @@
     "vscode-pets.petType.turtle": "Turtle",
     "vscode-pets.petType.zappy": "Zappy",
     "vscode-pets.petType.snail": "Snail",
+    "vscode-pets.petType.bunny": "Bunny",
 
     "vscode-pets.petSize.nano" : "Nano",
     "vscode-pets.petSize.small" : "Small",
