@@ -2,7 +2,7 @@ import * as fs from 'fs';
 
 const pets: { [key: string]: { colors: string[]; states: string[] } } = {
     bunny: {
-        colors: ['white', 'purple', 'pink'],
+        colors: ['white', 'purple', 'gray'],
         states: [
             'lie',
             'idle',

@@ -195,8 +195,7 @@
                             "%vscode-pets.petColor.paint black%",
                             "%vscode-pets.petColor.paint brown%",
                             "%vscode-pets.petColor.magical%",
-                            "%vscode-pets.petColor.warrior%",
-                            "%vscode-pets.petColor.pink%"
+                            "%vscode-pets.petColor.warrior%"
                         ]
                     },
                     "vscode-pets.petType": {
