@@ -1,6 +1,19 @@
 import * as fs from 'fs';
 
 const pets: { [key: string]: { colors: string[]; states: string[] } } = {
+    bunny: {
+        colors: ['white', 'purple', 'gray'],
+        states: [
+            'lie',
+            'idle',
+            'run',
+            'swipe',
+            'walk',
+            'walk_fast',
+            'with_ball',
+            'stand',
+        ],
+    },
     cat: {
         colors: ['black', 'brown', 'gray', 'lightbrown', 'orange', 'white'],
         states: [
