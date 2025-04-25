@@ -16,6 +16,7 @@
     "vscode-pets.theme.description": "Theme",
     "vscode-pets.throwBallWithMouse.description": "Throw ball with mouse",
     "vscode-pets.disableEffects.description": "Disable effects",
+    "vscode-pets.disableBubble.description": "Disable speech bubble",
     "vscode-pets.petColor.black": "Černá",
     "vscode-pets.petColor.lightbrown": "Světle hnědá",
     "vscode-pets.petColor.brown": "Hnědá",

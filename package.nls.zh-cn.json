@@ -16,6 +16,7 @@
     "vscode-pets.theme.description": "主题",
     "vscode-pets.throwBallWithMouse.description": "使用鼠标投掷球",
     "vscode-pets.disableEffects.description": "禁用效果",
+    "vscode-pets.disableBubble.description": "禁用对话气泡",
     "vscode-pets.petColor.black": "黑色",
     "vscode-pets.petColor.lightbrown": "浅棕色",
     "vscode-pets.petColor.brown": "棕色",

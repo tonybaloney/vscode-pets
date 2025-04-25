@@ -16,6 +16,7 @@
     "vscode-pets.theme.description": "테마",
     "vscode-pets.throwBallWithMouse.description": "마우스로 공 던지기",
     "vscode-pets.disableEffects.description": "효과 끄기",
+    "vscode-pets.disableBubble.description": "채팅 풍선 비활성화",
     "vscode-pets.petColor.black": "검정",
     "vscode-pets.petColor.lightbrown": "밝은 갈색",
     "vscode-pets.petColor.brown": "갈색",
