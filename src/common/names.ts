@@ -1,6 +1,7 @@
 import { BUNNY_NAMES } from '../panel/pets/bunny';
 import { CAT_NAMES } from '../panel/pets/cat';
 import { CHICKEN_NAMES } from '../panel/pets/chicken';
+import { MORPH_NAMES } from '../panel/pets/morph';
 import { CLIPPY_NAMES } from '../panel/pets/clippy';
 import { COCKATIEL_NAMES } from '../panel/pets/cockatiel';
 import { CRAB_NAMES } from '../panel/pets/crab';
@@ -46,6 +47,7 @@ export function randomName(type: PetType): string {
                 [PetType.turtle]: TURTLE_NAMES,
                 [PetType.horse]: HORSE_NAMES,
                 [PetType.panda]: PANDA_NAMES,
+                [PetType.morph]: MORPH_NAMES,
             } as Record<PetType, ReadonlyArray<string>>
         )[type] ?? CAT_NAMES;
 
