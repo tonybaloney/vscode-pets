@@ -51,6 +51,4 @@ export class Morph extends BasePetType {
     }
 }
 
-export const MORPH_NAMES: ReadonlyArray<string> = [
-    'Morph',
-];
+export const MORPH_NAMES: ReadonlyArray<string> = ['Morph'];
