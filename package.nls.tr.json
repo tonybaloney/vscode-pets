@@ -53,6 +53,7 @@
     "vscode-pets.petType.turtle": "Kaplumbağa",
     "vscode-pets.petType.zappy": "Enerjik",
     "vscode-pets.petType.snail": "Salyangoz",
+    "vscode-pets.petType.bunny": "Bunny",
     "vscode-pets.petSize.nano": "Minik",
     "vscode-pets.petSize.small": "Küçük",
     "vscode-pets.petSize.medium": "Orta",

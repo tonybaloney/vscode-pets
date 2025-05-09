@@ -53,6 +53,7 @@
     "vscode-pets.petType.turtle": "Tortue",
     "vscode-pets.petType.zappy": "Zappy",
     "vscode-pets.petType.snail": "Escargot",
+    "vscode-pets.petType.bunny": "Bunny",
     "vscode-pets.petSize.nano": "Nano",
     "vscode-pets.petSize.small": "Small",
     "vscode-pets.petSize.medium": "Medium",
