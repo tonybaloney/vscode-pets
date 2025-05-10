@@ -82,6 +82,24 @@ class ForestThemeInfo extends ThemeInfo {
         }
     }
 }
+class AquariumThemeInfo extends ThemeInfo {
+    name = 'aquarium';
+    description = 'An aquarium theme';
+
+    floor(size: PetSize): number {
+        switch (size) {
+            case PetSize.small:
+                return 30;
+            case PetSize.medium:
+                return 40;
+            case PetSize.large:
+                return 65;
+            case PetSize.nano:
+            default:
+                return 23;
+        }
+    }
+}
 
 class CastleThemeInfo extends ThemeInfo {
     name = 'castle';
@@ -165,4 +183,5 @@ export const THEMES: Record<Theme, ThemeInfo> = {
     castle: new CastleThemeInfo(),
     beach: new BeachThemeInfo(),
     winter: new WinterThemeInfo(),
+    aquarium: new AquariumThemeInfo(),
 };
