@@ -2,6 +2,7 @@ import { ColorThemeKind, PetSize, Theme } from '../common/types';
 import { Effect } from './effects/effect';
 import { SnowEffect } from './effects/snow';
 import { StarEffect } from './effects/stars';
+import { BubbleEffect } from './effects/bubbles';
 
 function normalizeColorThemeKind(kind: ColorThemeKind): 'dark' | 'light' {
     switch (kind) {
@@ -85,6 +86,7 @@ class ForestThemeInfo extends ThemeInfo {
 class AquariumThemeInfo extends ThemeInfo {
     name = 'aquarium';
     description = 'An aquarium theme';
+    effect = new BubbleEffect();
 
     floor(size: PetSize): number {
         switch (size) {
