@@ -45,6 +45,7 @@ export const enum PetType {
     turtle = 'turtle',
     zappy = 'zappy',
     octopus = 'octopus',
+    fish = 'fish',
     null = 'null',
 }
 
@@ -118,6 +119,7 @@ export const ALL_PETS = [
     PetType.turtle,
     PetType.zappy,
     PetType.octopus,
+    PetType.fish,
 ];
 export const ALL_COLORS = [
     PetColor.black,

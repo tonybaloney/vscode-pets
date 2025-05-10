@@ -9,6 +9,7 @@ import { DOG_NAMES } from '../panel/pets/dog';
 import { FOX_NAMES } from '../panel/pets/fox';
 import { FROG_NAMES } from '../panel/pets/frog';
 import { MOD_NAMES } from '../panel/pets/mod';
+import { FISH_NAMES } from '../panel/pets/fish';
 import { PANDA_NAMES } from '../panel/pets/panda';
 import { ROCKY_NAMES } from '../panel/pets/rocky';
 import { DUCK_NAMES } from '../panel/pets/rubberduck';
@@ -48,6 +49,7 @@ export function randomName(type: PetType): string {
                 [PetType.horse]: HORSE_NAMES,
                 [PetType.panda]: PANDA_NAMES,
                 [PetType.octopus]: OCTOPUS_NAMES,
+                [PetType.fish]: FISH_NAMES,
             } as Record<PetType, ReadonlyArray<string>>
         )[type] ?? CAT_NAMES;
 

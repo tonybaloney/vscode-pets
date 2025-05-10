@@ -36,7 +36,7 @@ export abstract class BasePetType implements IPetType {
     currentStateEnum: States;
     holdState: IState | undefined;
     holdStateEnum: States | undefined;
-    private el: HTMLImageElement;
+    protected el: HTMLImageElement;
     private collision: HTMLDivElement;
     private speech: HTMLDivElement;
     private _left: number;
@@ -91,9 +91,8 @@ export abstract class BasePetType implements IPetType {
         this.collision.style.width = `${this.calculateSpriteWidth(petSize)}px`;
         this.collision.style.height = `${this.calculateSpriteWidth(petSize)}px`;
         this.speech.style.left = `${left}px`;
-        this.speech.style.bottom = `${
-            bottom + this.calculateSpriteWidth(petSize)
-        }px`;
+        this.speech.style.bottom = `${bottom + this.calculateSpriteWidth(petSize)
+            }px`;
         this.hideSpeechBubble();
     }
 
@@ -109,9 +108,8 @@ export abstract class BasePetType implements IPetType {
         this.collision.style.left = `${this._left}px`;
         this.collision.style.bottom = `${this._bottom}px`;
         this.speech.style.left = `${this._left}px`;
-        this.speech.style.bottom = `${
-            this._bottom + this.calculateSpriteWidth(this._size)
-        }px`;
+        this.speech.style.bottom = `${this._bottom + this.calculateSpriteWidth(this._size)
+            }px`;
     }
 
     calculateSpriteWidth(size: PetSize): number {
