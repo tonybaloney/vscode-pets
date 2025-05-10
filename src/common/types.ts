@@ -44,6 +44,8 @@ export const enum PetType {
     totoro = 'totoro',
     turtle = 'turtle',
     zappy = 'zappy',
+    octopus = 'octopus',
+    fish = 'fish',
     null = 'null',
 }
 
@@ -74,6 +76,7 @@ export const enum Theme {
     castle = 'castle',
     beach = 'beach',
     winter = 'winter',
+    aquarium = 'aquarium',
 }
 
 export const enum ColorThemeKind {
@@ -115,6 +118,8 @@ export const ALL_PETS = [
     PetType.totoro,
     PetType.turtle,
     PetType.zappy,
+    PetType.octopus,
+    PetType.fish,
 ];
 export const ALL_COLORS = [
     PetColor.black,
@@ -150,4 +155,5 @@ export const ALL_THEMES = [
     Theme.castle,
     Theme.beach,
     Theme.winter,
+    Theme.aquarium,
 ];
