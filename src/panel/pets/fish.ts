@@ -48,7 +48,6 @@ export class Fish extends BasePetType {
                 ],
             },
         ],
-
     };
     get emoji(): string {
         return '🐠';
@@ -81,5 +80,5 @@ export const FISH_NAMES: ReadonlyArray<string> = [
     'Nemo',
     'NemoBro',
     'GreenBeast',
-    'Tippi'
+    'Tippi',
 ];

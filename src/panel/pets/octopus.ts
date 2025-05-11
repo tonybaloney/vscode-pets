@@ -15,11 +15,19 @@ export class Octopus extends BasePetType {
             },
             {
                 state: States.walkRight,
-                possibleNextStates: [States.walkLeft, States.sitIdle, States.runLeft],
+                possibleNextStates: [
+                    States.walkLeft,
+                    States.sitIdle,
+                    States.runLeft,
+                ],
             },
             {
                 state: States.runRight,
-                possibleNextStates: [States.walkLeft, States.sitIdle, States.runLeft],
+                possibleNextStates: [
+                    States.walkLeft,
+                    States.sitIdle,
+                    States.runLeft,
+                ],
             },
             {
                 state: States.walkLeft,

@@ -1,5 +1,4 @@
-import { ColorThemeKind, PetSize } from '../../common/types';
-import { Effect } from './effect'
+import { Effect } from './effect';
 
 class Bubble {
     x: number;
@@ -16,7 +15,7 @@ class Bubble {
         this.opacity = Math.random() * 0.5 + 0.3;
     }
 
-    move() {
+    move(): void {
         this.y -= this.speed;
     }
 
@@ -35,69 +34,93 @@ export class BubbleEffect implements Effect {
     pDensity = 40;
 
     init(
-        _: HTMLCanvasElement,
+        _foregroundCanvas: HTMLCanvasElement,
         backgroundCanvas: HTMLCanvasElement,
-        __: PetSize,
-        ___: number,
-        ____: ColorThemeKind
     ): void {
         this.canvas = backgroundCanvas;
-        this.ctx = this.canvas.getContext('2d')!;
+        const context = this.canvas.getContext('2d');
+        if (!context) {
+            console.warn('2D context not available for bubble canvas');
+            return;
+        }
+
+        this.ctx = context;
         this.bubbles = [];
 
+        const width = this.canvas.width;
+        const height = this.canvas.height;
+
         for (let i = 0; i < this.pDensity; i++) {
-            this.bubbles.push(new Bubble(this.canvas.width, this.canvas.height));
+            this.bubbles.push(new Bubble(width, height));
         }
 
         console.log('Bubbles initialized 🫧');
     }
 
     enable(): void {
-        if (!this.ctx || !this.canvas) return;
+        if (!this.ctx || !this.canvas) {
+            return;
+        }
         this.enabled = true;
         this.loop();
         console.log('Bubbles enabled');
     }
 
     disable(): void {
+        if (!this.ctx || !this.canvas) {
+            return;
+        }
+
         this.enabled = false;
-        this.ctx?.clearRect(0, 0, this.canvas!.width, this.canvas!.height);
+        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         console.log('Bubbles disabled');
     }
 
     handleResize(): void {
+        if (!this.canvas) {
+            return;
+        }
+
         this.bubbles = [];
-        if (this.canvas) {
-            for (let i = 0; i < this.pDensity; i++) {
-                this.bubbles.push(new Bubble(this.canvas.width, this.canvas.height));
-            }
+        const width = this.canvas.width;
+        const height = this.canvas.height;
+
+        for (let i = 0; i < this.pDensity; i++) {
+            this.bubbles.push(new Bubble(width, height));
         }
     }
 
     private draw(): void {
-        if (!this.canvas) return;
+        if (!this.canvas || !this.ctx) {
+            return;
+        }
+
+        const ctx = this.ctx;
 
         this.bubbles.forEach((bubble) => {
-            if (!this.ctx) {
-                return;
-            }
             bubble.move();
-            this.ctx.beginPath();
-            this.ctx.arc(bubble.x, bubble.y, bubble.radius, 0, 2 * Math.PI);
-            this.ctx.fillStyle = `rgba(255, 255, 255, ${bubble.opacity})`;
-            this.ctx.fill();
+            ctx.beginPath();
+            ctx.arc(bubble.x, bubble.y, bubble.radius, 0, 2 * Math.PI);
+            ctx.fillStyle = `rgba(255, 255, 255, ${bubble.opacity})`;
+            ctx.fill();
         });
 
-        // Remove bubbles off screen, add new ones
         this.bubbles = this.bubbles.filter((b) => !b.isOffScreen());
+
+        const width = this.canvas.width;
+        const height = this.canvas.height;
+
         while (this.bubbles.length < this.pDensity) {
-            this.bubbles.push(new Bubble(this.canvas.width, this.canvas.height));
+            this.bubbles.push(new Bubble(width, height));
         }
     }
 
     private loop(): void {
-        if (!this.enabled) return;
-        this.ctx?.clearRect(0, 0, this.canvas!.width, this.canvas!.height);
+        if (!this.enabled || !this.canvas || !this.ctx) {
+            return;
+        }
+
+        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         this.draw();
         window.requestAnimationFrame(() => this.loop());
     }
