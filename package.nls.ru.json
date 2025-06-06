@@ -53,6 +53,7 @@
     "vscode-pets.petType.turtle": "Turtle",
     "vscode-pets.petType.zappy": "Молния",
     "vscode-pets.petType.snail": "Улитка",
+    "vscode-pets.petType.bunny": "Bunny",
     "vscode-pets.petSize.nano": "Nano",
     "vscode-pets.petSize.small": "Small",
     "vscode-pets.petSize.medium": "Medium",
@@ -63,5 +64,5 @@
     "vscode-pets.theme.forest": "Forest",
     "vscode-pets.theme.castle": "Castle",
     "vscode-pets.theme.beach": "Beach",
-    "vscode-pets.theme.winter": "Winter"
+    "vscode-pets.theme.winter": "Зимний Лес"
 }
