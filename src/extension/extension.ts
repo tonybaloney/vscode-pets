@@ -512,6 +512,32 @@ export function activate(context: vscode.ExtensionContext) {
         ),
     );
 
+    const pathExists = async (uri: vscode.Uri): Promise<boolean> => {
+        try {
+            await vscode.workspace.fs.stat(uri);
+            return true; // File exists
+        } catch {
+            return false; // File doesn't exist
+        }
+    };
+
+    const getPetIconPath = async (petType: PetType, color?: PetColor): Promise<vscode.ThemeIcon | vscode.Uri> => {
+        if (color) {
+            const colorClean = color.replace(' ', '_');
+            const iconColorUri = vscode.Uri.joinPath(context.extensionUri, 'media', petType, `icon_${colorClean}.png`);
+            if (await pathExists(iconColorUri)) {
+                return iconColorUri;
+            }
+        }
+        const iconUri = vscode.Uri.joinPath(context.extensionUri, 'media', petType, 'icon.png');
+        if (await pathExists(iconUri)) {
+            return iconUri;
+        }
+        
+        // No custom icon found, use fallback
+        return vscode.Uri.joinPath(context.extensionUri, 'media', 'cat.svg');
+    };
+
     context.subscriptions.push(
         vscode.commands.registerCommand('vscode-pets.spawn-pet', async () => {
             const panel = getPetPanel();
@@ -522,8 +548,16 @@ export function activate(context: vscode.ExtensionContext) {
                 await vscode.commands.executeCommand('petsView.focus');
             }
             if (panel) {
+                // Create QuickPick items with proper icon paths
+                const quickPickItems = await Promise.all(
+                    localize.stringListAsQuickPickItemList<PetType>(ALL_PETS).map(async qpi => ({
+                        ...qpi,
+                        iconPath: await getPetIconPath(qpi.value),
+                    }))
+                );
+
                 const selectedPetType = await vscode.window.showQuickPick(
-                    localize.stringListAsQuickPickItemList<PetType>(ALL_PETS),
+                    quickPickItems,
                     {
                         placeHolder: vscode.l10n.t('Select a pet'),
                     },
@@ -538,10 +572,17 @@ export function activate(context: vscode.ExtensionContext) {
                 const possibleColors = availableColors(selectedPetType.value);
 
                 if (possibleColors.length > 1) {
-                    var selectedColor = await vscode.window.showQuickPick(
+                    const colorQuickPickItems = await Promise.all(
                         localize.stringListAsQuickPickItemList<PetColor>(
                             possibleColors,
-                        ),
+                        ).map(async qpi => ({
+                            ...qpi,
+                            iconPath: await getPetIconPath(selectedPetType.value, qpi.value),
+                        }))
+                    );
+                    
+                    var selectedColor = await vscode.window.showQuickPick(
+                        colorQuickPickItems,
                         {
                             placeHolder: vscode.l10n.t('Select a color'),
                         },
