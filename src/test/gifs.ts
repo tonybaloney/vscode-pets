@@ -185,14 +185,12 @@ function checkGifFilenames(folder: string) {
             if (!fs.existsSync(iconFilePath)) {
                 if (fs.existsSync(`${folder}/${pet}/icon.png`)) {
                     console.warn(
-                        `\x1b[33mNo icon found for "${pet}" with color "${
-                            color
-                        }". Using default icon.\x1b[0m`,
+                        `\x1b[33mNo icon found for "${pet}" with color "${color}". Using default icon.\x1b[0m`,
                     );
                 } else {
                     console.error(
                         `\x1b[31mFile "${iconFilePath}" and "${folder}/${pet}/icon.png" does not exist.\x1b[0m`,
-                        );
+                    );
                 }
                 return false;
             } else {
