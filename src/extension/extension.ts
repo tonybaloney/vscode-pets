@@ -721,6 +721,8 @@ interface IPetPanel {
     update(): void;
     setThrowWithMouse(newThrowWithMouse: boolean): void;
     updateDisableEffects(disableEffects: boolean): void;
+    tick(): void;
+    dispose(): void;
 }
 
 class PetWebviewContainer implements IPetPanel {
@@ -733,6 +735,7 @@ class PetWebviewContainer implements IPetPanel {
     protected _themeKind: vscode.ColorThemeKind;
     protected _throwBallWithMouse: boolean;
     protected _disableEffects: boolean;
+    protected _tickIntervalId: NodeJS.Timeout | number | undefined;
 
     constructor(
         extensionUri: vscode.Uri,
@@ -752,6 +755,9 @@ class PetWebviewContainer implements IPetPanel {
         this._themeKind = themeKind;
         this._throwBallWithMouse = throwBallWithMouse;
         this._disableEffects = disableEffects;
+        this._tickIntervalId = setInterval(() => {
+            this.tick();
+        }, 100);
     }
 
     public petColor(): PetColor {
@@ -949,6 +955,25 @@ class PetWebviewContainer implements IPetPanel {
 			</body>
 			</html>`;
     }
+
+    public tick() {
+        throw new Error('Not implemented');
+    }
+
+    public dispose() {
+        // Dispose of all disposables
+        while (this._disposables.length) {
+            const x = this._disposables.pop();
+            if (x) {
+                x.dispose();
+            }
+        }
+
+        if (this._tickIntervalId) {
+            clearInterval(this._tickIntervalId);
+            this._tickIntervalId = undefined;
+        }
+    }
 }
 
 function handleWebviewMessage(message: WebviewMessage) {
@@ -1026,27 +1051,6 @@ class PetPanel extends PetWebviewContainer implements IPetPanel {
         );
     }
 
-    public resetPets() {
-        void this.getWebview().postMessage({ command: 'reset-pet' });
-    }
-
-    public listPets() {
-        void this.getWebview().postMessage({ command: 'list-pets' });
-    }
-
-    public rollCall(): void {
-        void this.getWebview().postMessage({ command: 'roll-call' });
-    }
-
-    public deletePet(petName: string, petType: string, petColor: string): void {
-        void this.getWebview().postMessage({
-            command: 'delete-pet',
-            name: petName,
-            type: petType,
-            color: petColor,
-        });
-    }
-
     public static revive(
         panel: vscode.WebviewPanel,
         extensionUri: vscode.Uri,
@@ -1119,18 +1123,19 @@ class PetPanel extends PetWebviewContainer implements IPetPanel {
         );
     }
 
+    public tick() {
+        if (this._panel.visible) {
+            void this.getWebview().postMessage({ command: 'tick' });
+        }
+    }
+
     public dispose() {
         PetPanel.currentPanel = undefined;
 
         // Clean up our resources
         this._panel.dispose();
 
-        while (this._disposables.length) {
-            const x = this._disposables.pop();
-            if (x) {
-                x.dispose();
-            }
-        }
+        super.dispose();
     }
 
     public update() {
@@ -1144,6 +1149,9 @@ class PetPanel extends PetWebviewContainer implements IPetPanel {
     }
 }
 
+/**
+ * Managers pet coding webview views (Explorer)
+ */
 class PetWebviewViewProvider extends PetWebviewContainer {
     public static readonly viewType = 'petsView';
 
@@ -1162,8 +1170,10 @@ class PetWebviewViewProvider extends PetWebviewContainer {
         );
     }
 
-    update() {
-        this._update();
+    public tick() {
+        if (this._webviewView) {
+            void this.getWebview().postMessage({ command: 'tick' });
+        }
     }
 
     getWebview(): vscode.Webview {
@@ -1176,6 +1186,11 @@ class PetWebviewViewProvider extends PetWebviewContainer {
         } else {
             return this._webviewView.webview;
         }
+    }
+
+    public dispose() {
+        this._webviewView = undefined;
+        super.dispose();
     }
 }
 

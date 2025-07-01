@@ -62,17 +62,6 @@ function startAnimations(
     }
 
     collision.addEventListener('mouseover', handleMouseOver);
-    setInterval(() => {
-        var updates = allPets.seekNewFriends();
-        updates.forEach((message) => {
-            stateApi?.postMessage({
-                text: message,
-                command: 'info',
-            });
-        });
-        pet.nextFrame();
-        saveState(stateApi);
-    }, 100);
 }
 
 function addPetToPanel(
@@ -342,6 +331,21 @@ export function petPanelApp(
         }
     }
 
+    let windowLoaded = false;
+    const onTick = () => {
+        if (windowLoaded) {
+            allPets.seekNewFriends();
+            allPets.pets.forEach((petItem) => {
+                petItem.pet.nextFrame();
+            });
+            saveState(stateApi);
+        }
+    };
+
+    window.addEventListener('load', () => {
+        windowLoaded = true;
+    });
+
     // Handle messages sent from the extension to the webview
     window.addEventListener('message', (event): void => {
         const message = event.data; // The json data that the extension sent
@@ -430,6 +434,9 @@ export function petPanelApp(
                 } else if (themeInfo.effect && !message.disabled) {
                     themeInfo.effect.enable();
                 }
+                break;
+            case 'tick':
+                onTick();
                 break;
         }
     });
