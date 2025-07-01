@@ -178,6 +178,18 @@ function checkGifFilenames(folder: string) {
                     console.log(`File "${filePath}" exists.`);
                 }
             });
+
+            // Check icon as well
+            const iconFilename = `icon_${color}.png`;
+            const iconFilePath = `${folder}/${pet}/${iconFilename}`;
+            if (!fs.existsSync(iconFilePath)) {
+                console.error(
+                    `\x1b[31mFile "${iconFilePath}" does not exist.\x1b[0m`,
+                );
+                return false;
+            } else {
+                console.log(`File "${iconFilePath}" exists.`);
+            }
         });
     }
 }

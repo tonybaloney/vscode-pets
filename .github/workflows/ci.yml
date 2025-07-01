@@ -23,8 +23,11 @@ jobs:
               uses: actions/setup-node@v4
               with:
                   node-version: ${{ matrix.node-version }}
-            - name: Extract cats and frogs
+            - name: Extract cats frogs and bunnies
               run: cd media && unzip -P ${{ secrets.EXTRA_ASSETS }} extra.zip && rm -f extra.zip
+              if: github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/tags/')
+            - name: Extract extra icons
+              run: cd media && unzip extraIcons.zip && rm -f extraIcons.zip
               if: github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/tags/')
             - run: npm ci
             - run: npm run compile
