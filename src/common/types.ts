@@ -35,6 +35,7 @@ export const enum PetType {
     frog = 'frog',
     horse = 'horse',
     mod = 'mod',
+    morph = 'morph',
     panda = 'panda',
     rat = 'rat',
     rocky = 'rocky',
@@ -44,7 +45,6 @@ export const enum PetType {
     totoro = 'totoro',
     turtle = 'turtle',
     zappy = 'zappy',
-    morph = 'morph',
     null = 'null',
 }
 
@@ -107,6 +107,7 @@ export const ALL_PETS = [
     PetType.frog,
     PetType.horse,
     PetType.mod,
+    PetType.morph,
     PetType.panda,
     PetType.rat,
     PetType.rocky,
@@ -116,7 +117,6 @@ export const ALL_PETS = [
     PetType.totoro,
     PetType.turtle,
     PetType.zappy,
-    PetType.morph,
 ];
 export const ALL_COLORS = [
     PetColor.black,
