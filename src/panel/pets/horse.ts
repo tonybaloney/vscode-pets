@@ -126,6 +126,10 @@ export class Horse extends BasePetType {
                 possibleNextStates: [States.idleWithBall],
             },
             {
+                state: States.swipe,
+                possibleNextStates: [States.sitIdle],
+            },
+            {
                 state: States.idleWithBall,
                 // Can go back to running or have a bite to eat
                 possibleNextStates: [

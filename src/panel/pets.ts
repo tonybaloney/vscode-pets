@@ -59,7 +59,7 @@ export interface IPetCollection {
     pets: Array<PetElement>;
     push(pet: PetElement): void;
     reset(): void;
-    seekNewFriends(): string[];
+    seekNewFriends(): void;
     locate(name: string): PetElement | undefined;
     locatePet(
         name: string,
@@ -122,44 +122,41 @@ export class PetCollection implements IPetCollection {
         });
     }
 
-    seekNewFriends(): string[] {
+    seekNewFriends(): void {
         if (this._pets.length <= 1) {
-            return [];
+            return;
         } // You can't be friends with yourself.
-        var messages = new Array<string>(0);
-        this._pets.forEach((petInCollection) => {
-            if (petInCollection.pet.hasFriend) {
-                return;
-            } // I already have a friend!
-            this._pets.forEach((potentialFriend) => {
-                if (potentialFriend.pet.hasFriend) {
-                    return;
-                } // Already has a friend. sorry.
+        const theFriendless = this._pets.filter((pet) => !pet.pet.hasFriend);
+        if (theFriendless.length <= 1) {
+            return;
+        } // Nobody to be friends with.
+        theFriendless.forEach((lonelyPet) => {
+            const potentialFriends = theFriendless.filter(
+                (pet) => pet !== lonelyPet,
+            ); // Exclude the lonely pet itself.
+            potentialFriends.forEach((potentialFriend) => {
                 if (!potentialFriend.pet.canChase) {
                     return;
                 } // Pet is busy doing something else.
                 if (
-                    potentialFriend.pet.left > petInCollection.pet.left &&
+                    potentialFriend.pet.left > lonelyPet.pet.left &&
                     potentialFriend.pet.left <
-                        petInCollection.pet.left + petInCollection.pet.width
+                        lonelyPet.pet.left + lonelyPet.pet.width
                 ) {
                     // We found a possible new friend..
                     console.log(
-                        petInCollection.pet.name,
+                        lonelyPet.pet.name,
                         ' wants to be friends with ',
                         potentialFriend.pet.name,
                         '.',
                     );
-                    if (
-                        petInCollection.pet.makeFriendsWith(potentialFriend.pet)
-                    ) {
+                    if (lonelyPet.pet.makeFriendsWith(potentialFriend.pet)) {
                         potentialFriend.pet.showSpeechBubble('❤️', 2000);
-                        petInCollection.pet.showSpeechBubble('❤️', 2000);
+                        lonelyPet.pet.showSpeechBubble('❤️', 2000);
                     }
                 }
             });
         });
-        return messages;
     }
 }
 

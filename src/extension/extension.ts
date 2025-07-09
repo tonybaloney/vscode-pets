@@ -512,6 +512,45 @@ export function activate(context: vscode.ExtensionContext) {
         ),
     );
 
+    const pathExists = async (uri: vscode.Uri): Promise<boolean> => {
+        try {
+            await vscode.workspace.fs.stat(uri);
+            return true; // File exists
+        } catch {
+            return false; // File doesn't exist
+        }
+    };
+
+    const getPetIconPath = async (
+        petType: PetType,
+        color?: PetColor,
+    ): Promise<vscode.ThemeIcon | vscode.Uri> => {
+        if (color) {
+            const colorClean = color.replace(' ', '_');
+            const iconColorUri = vscode.Uri.joinPath(
+                context.extensionUri,
+                'media',
+                petType,
+                `icon_${colorClean}.png`,
+            );
+            if (await pathExists(iconColorUri)) {
+                return iconColorUri;
+            }
+        }
+        const iconUri = vscode.Uri.joinPath(
+            context.extensionUri,
+            'media',
+            petType,
+            'icon.png',
+        );
+        if (await pathExists(iconUri)) {
+            return iconUri;
+        }
+
+        // No custom icon found, use fallback
+        return vscode.Uri.joinPath(context.extensionUri, 'media', 'cat.svg');
+    };
+
     context.subscriptions.push(
         vscode.commands.registerCommand('vscode-pets.spawn-pet', async () => {
             const panel = getPetPanel();
@@ -522,8 +561,18 @@ export function activate(context: vscode.ExtensionContext) {
                 await vscode.commands.executeCommand('petsView.focus');
             }
             if (panel) {
+                // Create QuickPick items with proper icon paths
+                const quickPickItems = await Promise.all(
+                    localize
+                        .stringListAsQuickPickItemList<PetType>(ALL_PETS)
+                        .map(async (qpi) => ({
+                            ...qpi,
+                            iconPath: await getPetIconPath(qpi.value),
+                        })),
+                );
+
                 const selectedPetType = await vscode.window.showQuickPick(
-                    localize.stringListAsQuickPickItemList<PetType>(ALL_PETS),
+                    quickPickItems,
                     {
                         placeHolder: vscode.l10n.t('Select a pet'),
                     },
@@ -538,10 +587,22 @@ export function activate(context: vscode.ExtensionContext) {
                 const possibleColors = availableColors(selectedPetType.value);
 
                 if (possibleColors.length > 1) {
+                    const colorQuickPickItems = await Promise.all(
+                        localize
+                            .stringListAsQuickPickItemList<PetColor>(
+                                possibleColors,
+                            )
+                            .map(async (qpi) => ({
+                                ...qpi,
+                                iconPath: await getPetIconPath(
+                                    selectedPetType.value,
+                                    qpi.value,
+                                ),
+                            })),
+                    );
+
                     var selectedColor = await vscode.window.showQuickPick(
-                        localize.stringListAsQuickPickItemList<PetColor>(
-                            possibleColors,
-                        ),
+                        colorQuickPickItems,
                         {
                             placeHolder: vscode.l10n.t('Select a color'),
                         },
@@ -721,6 +782,8 @@ interface IPetPanel {
     update(): void;
     setThrowWithMouse(newThrowWithMouse: boolean): void;
     updateDisableEffects(disableEffects: boolean): void;
+    tick(): void;
+    dispose(): void;
 }
 
 class PetWebviewContainer implements IPetPanel {
@@ -733,6 +796,7 @@ class PetWebviewContainer implements IPetPanel {
     protected _themeKind: vscode.ColorThemeKind;
     protected _throwBallWithMouse: boolean;
     protected _disableEffects: boolean;
+    protected _tickIntervalId: NodeJS.Timeout | number | undefined;
 
     constructor(
         extensionUri: vscode.Uri,
@@ -752,6 +816,9 @@ class PetWebviewContainer implements IPetPanel {
         this._themeKind = themeKind;
         this._throwBallWithMouse = throwBallWithMouse;
         this._disableEffects = disableEffects;
+        this._tickIntervalId = setInterval(() => {
+            this.tick();
+        }, 100);
     }
 
     public petColor(): PetColor {
@@ -949,6 +1016,25 @@ class PetWebviewContainer implements IPetPanel {
 			</body>
 			</html>`;
     }
+
+    public tick() {
+        throw new Error('Not implemented');
+    }
+
+    public dispose() {
+        // Dispose of all disposables
+        while (this._disposables.length) {
+            const x = this._disposables.pop();
+            if (x) {
+                x.dispose();
+            }
+        }
+
+        if (this._tickIntervalId) {
+            clearInterval(this._tickIntervalId);
+            this._tickIntervalId = undefined;
+        }
+    }
 }
 
 function handleWebviewMessage(message: WebviewMessage) {
@@ -1026,27 +1112,6 @@ class PetPanel extends PetWebviewContainer implements IPetPanel {
         );
     }
 
-    public resetPets() {
-        void this.getWebview().postMessage({ command: 'reset-pet' });
-    }
-
-    public listPets() {
-        void this.getWebview().postMessage({ command: 'list-pets' });
-    }
-
-    public rollCall(): void {
-        void this.getWebview().postMessage({ command: 'roll-call' });
-    }
-
-    public deletePet(petName: string, petType: string, petColor: string): void {
-        void this.getWebview().postMessage({
-            command: 'delete-pet',
-            name: petName,
-            type: petType,
-            color: petColor,
-        });
-    }
-
     public static revive(
         panel: vscode.WebviewPanel,
         extensionUri: vscode.Uri,
@@ -1119,18 +1184,19 @@ class PetPanel extends PetWebviewContainer implements IPetPanel {
         );
     }
 
+    public tick() {
+        if (this._panel.visible) {
+            void this.getWebview().postMessage({ command: 'tick' });
+        }
+    }
+
     public dispose() {
         PetPanel.currentPanel = undefined;
 
         // Clean up our resources
         this._panel.dispose();
 
-        while (this._disposables.length) {
-            const x = this._disposables.pop();
-            if (x) {
-                x.dispose();
-            }
-        }
+        super.dispose();
     }
 
     public update() {
@@ -1144,6 +1210,9 @@ class PetPanel extends PetWebviewContainer implements IPetPanel {
     }
 }
 
+/**
+ * Managers pet coding webview views (Explorer)
+ */
 class PetWebviewViewProvider extends PetWebviewContainer {
     public static readonly viewType = 'petsView';
 
@@ -1162,8 +1231,10 @@ class PetWebviewViewProvider extends PetWebviewContainer {
         );
     }
 
-    update() {
-        this._update();
+    public tick() {
+        if (this._webviewView) {
+            void this.getWebview().postMessage({ command: 'tick' });
+        }
     }
 
     getWebview(): vscode.Webview {
@@ -1176,6 +1247,11 @@ class PetWebviewViewProvider extends PetWebviewContainer {
         } else {
             return this._webviewView.webview;
         }
+    }
+
+    public dispose() {
+        this._webviewView = undefined;
+        super.dispose();
     }
 }
 

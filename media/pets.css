@@ -173,13 +173,14 @@ img.pet {
 	position: absolute;
 	text-align: center;
 	background-color: #fff;
+	color: #333;
 	font-family: silkscreen, sans-serif;
-	width: 60px;
+	min-width: 60px;
 	line-height: 1.4em;
 	margin: 0px auto;
 	border: 2px solid #333;
 	border-radius: 10px;
-	padding: 10px 0;
+	padding: 10px 4px;
 	z-index: var(--bubble-z-index);
 }
 
