@@ -49,5 +49,12 @@
 	"snake": "蛇",
 	"totoro": "龙猫",
 	"turtle": "海龟",
-	"zappy": "活力小子"
+	"zappy": "活力小子",
+	"Normal": "正常",
+	"Tinier (25%)": "更小 （25%）",
+	"Smaller (50%)": "规模较小 （50%）",
+	"Larger (150%)": "更大 （150%）",
+	"Much Larger (200%)": "大得多 （200%）",
+	"Relative sizes": "相对大小",
+	"Select a relative size": "选择相对大小"
 }

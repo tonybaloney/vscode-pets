@@ -49,5 +49,12 @@
 	"snake": "งู",
 	"totoro": "โตโตโร่",
 	"turtle": "Turtle",
-	"zappy": "แซปปี้"
+	"zappy": "แซปปี้",
+	"Normal": "ปกติ",
+	"Tinier (25%)": "เล็ก (25%)",
+	"Smaller (50%)": "เล็กกว่า (50%)",
+	"Larger (150%)": "ใหญ่ขึ้น (150%)",
+	"Much Larger (200%)": "ใหญ่ขึ้นมาก (200%)",
+	"Relative sizes": "ขนาดสัมพัทธ์",
+	"Select a relative size": "เลือกขนาดสัมพัทธ์"
 }

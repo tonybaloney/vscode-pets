@@ -49,5 +49,12 @@
 	"snake": "Slang",
 	"totoro": "Totoro",
 	"turtle": "Turtle",
-	"zappy": "Zappy"
+	"zappy": "Zappy",
+	"Normal": "Normaal",
+	"Tinier (25%)": "Kleiner (25%)",
+	"Smaller (50%)": "Kleiner (50%)",
+	"Larger (150%)": "Groter (150%)",
+	"Much Larger (200%)": "Veel groter (200%)",
+	"Relative sizes": "Relatieve afmetingen",
+	"Select a relative size": "Selecteer een relatieve grootte"
 }
