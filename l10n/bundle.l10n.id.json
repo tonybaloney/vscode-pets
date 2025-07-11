@@ -49,5 +49,12 @@
 	"snake": "Ular",
 	"totoro": "Chincilla",
 	"turtle": "Turtle",
-	"zappy": "Energik"
+	"zappy": "Energik",
+	"Normal": "Biasa",
+	"Tinier (25%)": "Lebih kecil (25%)",
+	"Smaller (50%)": "Lebih kecil (50%)",
+	"Larger (150%)": "Lebih besar (150%)",
+	"Much Larger (200%)": "Jauh lebih besar (200%)",
+	"Relative sizes": "Ukuran relatif",
+	"Select a relative size": "Pilih ukuran relatif"
 }

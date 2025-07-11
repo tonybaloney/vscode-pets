@@ -63,6 +63,14 @@ export const enum PetSize {
     large = 'large',
 }
 
+export enum PetRelativeSize {
+    quarter = 0.25,
+    half = 0.5,
+    normal = 1,
+    oneAndHalf = 1.5,
+    double = 2,
+}
+
 export const enum ExtPosition {
     panel = 'panel',
     explorer = 'explorer',
@@ -143,6 +151,13 @@ export const ALL_SCALES = [
     PetSize.small,
     PetSize.medium,
     PetSize.large,
+];
+export const ALL_RELATIVE_SIZES = [
+    PetRelativeSize.quarter,
+    PetRelativeSize.half,
+    PetRelativeSize.normal,
+    PetRelativeSize.oneAndHalf,
+    PetRelativeSize.double,
 ];
 export const ALL_THEMES = [
     Theme.none,

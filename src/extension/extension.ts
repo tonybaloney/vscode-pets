@@ -11,6 +11,7 @@ import {
     ALL_PETS,
     ALL_SCALES,
     ALL_THEMES,
+    PetRelativeSize,
 } from '../common/types';
 import { randomName } from '../common/names';
 import * as localize from '../common/localize';
@@ -20,6 +21,7 @@ const EXTRA_PETS_KEY = 'vscode-pets.extra-pets';
 const EXTRA_PETS_KEY_TYPES = EXTRA_PETS_KEY + '.types';
 const EXTRA_PETS_KEY_COLORS = EXTRA_PETS_KEY + '.colors';
 const EXTRA_PETS_KEY_NAMES = EXTRA_PETS_KEY + '.names';
+const EXTRA_PETS_KEY_RELATIVE_SIZES = EXTRA_PETS_KEY + '.relativeSizes';
 const DEFAULT_PET_SCALE = PetSize.nano;
 const DEFAULT_COLOR = PetColor.brown;
 const DEFAULT_PET_TYPE = PetType.cat;
@@ -117,12 +119,20 @@ export class PetSpecification {
     color: PetColor;
     type: PetType;
     size: PetSize;
+    relativeSize: PetRelativeSize;
     name: string;
 
-    constructor(color: PetColor, type: PetType, size: PetSize, name?: string) {
+    constructor(
+        color: PetColor,
+        type: PetType,
+        size: PetSize,
+        relativeSize: PetRelativeSize,
+        name?: string,
+    ) {
         this.color = color;
         this.type = type;
         this.size = size;
+        this.relativeSize = relativeSize;
         if (!name) {
             this.name = randomName(type);
         } else {
@@ -144,7 +154,12 @@ export class PetSpecification {
             type = DEFAULT_PET_TYPE;
         }
 
-        return new PetSpecification(color, type, getConfiguredSize());
+        return new PetSpecification(
+            color,
+            type,
+            getConfiguredSize(),
+            PetRelativeSize.normal,
+        );
     }
 
     static collectionFromMemento(
@@ -163,6 +178,10 @@ export class PetSpecification {
             EXTRA_PETS_KEY_NAMES,
             [],
         );
+        var contextRelativeSizes = context.globalState.get<PetRelativeSize[]>(
+            EXTRA_PETS_KEY_RELATIVE_SIZES,
+            [],
+        );
         var result: PetSpecification[] = new Array();
         for (let index = 0; index < contextTypes.length; index++) {
             result.push(
@@ -170,6 +189,7 @@ export class PetSpecification {
                     contextColors?.[index] ?? DEFAULT_COLOR,
                     contextTypes[index],
                     size,
+                    contextRelativeSizes?.[index] ?? PetRelativeSize.normal,
                     contextNames[index],
                 ),
             );
@@ -185,18 +205,25 @@ export async function storeCollectionAsMemento(
     var contextTypes = new Array(collection.length);
     var contextColors = new Array(collection.length);
     var contextNames = new Array(collection.length);
+    var contextRelativeSizes = new Array(collection.length);
     for (let index = 0; index < collection.length; index++) {
         contextTypes[index] = collection[index].type;
         contextColors[index] = collection[index].color;
         contextNames[index] = collection[index].name;
+        contextRelativeSizes[index] = collection[index].relativeSize;
     }
     await context.globalState.update(EXTRA_PETS_KEY_TYPES, contextTypes);
     await context.globalState.update(EXTRA_PETS_KEY_COLORS, contextColors);
     await context.globalState.update(EXTRA_PETS_KEY_NAMES, contextNames);
+    await context.globalState.update(
+        EXTRA_PETS_KEY_RELATIVE_SIZES,
+        contextRelativeSizes,
+    );
     context.globalState.setKeysForSync([
         EXTRA_PETS_KEY_TYPES,
         EXTRA_PETS_KEY_COLORS,
         EXTRA_PETS_KEY_NAMES,
+        EXTRA_PETS_KEY_RELATIVE_SIZES,
     ]);
 }
 
@@ -206,6 +233,7 @@ interface IPetInfo {
     type: PetType;
     name: string;
     color: PetColor;
+    relativeSize: PetRelativeSize;
 }
 
 async function handleRemovePetMessage(
@@ -220,10 +248,26 @@ async function handleRemovePetMessage(
                     return;
                 }
                 var parts = pet.split(',');
+
+                let relativeSize = PetRelativeSize.normal;
+                if (parts[3]) {
+                    const parsedSize = parseFloat(parts[3]);
+                    // Check if the parsed value is a valid enum value
+                    if (
+                        !isNaN(parsedSize) &&
+                        Object.values(PetRelativeSize).includes(
+                            parsedSize as PetRelativeSize,
+                        )
+                    ) {
+                        relativeSize = parsedSize as PetRelativeSize;
+                    }
+                }
+
                 petList.push({
                     type: parts[0] as PetType,
                     name: parts[1],
                     color: parts[2] as PetColor,
+                    relativeSize: relativeSize,
                 });
             });
             break;
@@ -262,6 +306,7 @@ async function handleRemovePetMessage(
                                 item.color,
                                 item.type,
                                 PetSize.medium,
+                                item.relativeSize,
                                 item.name,
                             );
                         });
@@ -491,6 +536,7 @@ export function activate(context: vscode.ExtensionContext) {
                                 normalizeColor(pet.color, pet.type),
                                 pet.type,
                                 pet.size,
+                                pet.relativeSize,
                                 pet.name,
                             );
                             collection.push(petSpec);
@@ -625,6 +671,40 @@ export function activate(context: vscode.ExtensionContext) {
                     return;
                 }
 
+                const relativeSizeChoice = await vscode.window.showQuickPick(
+                    [
+                        {
+                            value: PetRelativeSize.normal,
+                            label: vscode.l10n.t('Normal'),
+                        },
+                        {
+                            kind: vscode.QuickPickItemKind.Separator,
+                            label: 'Relative sizes',
+                        },
+                        {
+                            value: PetRelativeSize.quarter,
+                            label: vscode.l10n.t('Tinier (25%)'),
+                        },
+                        {
+                            value: PetRelativeSize.half,
+                            label: vscode.l10n.t('Smaller (50%)'),
+                        },
+                        {
+                            value: PetRelativeSize.oneAndHalf,
+                            label: vscode.l10n.t('Larger (150%)'),
+                        },
+                        {
+                            value: PetRelativeSize.double,
+                            label: vscode.l10n.t('Much larger (200%)'),
+                        },
+                    ],
+                    {
+                        placeHolder: vscode.l10n.t('Select a relative size'),
+                    },
+                );
+                const relativeSize =
+                    relativeSizeChoice?.value ?? PetRelativeSize.normal;
+
                 const name = await vscode.window.showInputBox({
                     placeHolder: vscode.l10n.t('Leave blank for a random name'),
                     prompt: vscode.l10n.t('Name your pet'),
@@ -634,6 +714,7 @@ export function activate(context: vscode.ExtensionContext) {
                     petColor,
                     selectedPetType.value,
                     getConfiguredSize(),
+                    relativeSize,
                     name,
                 );
                 if (!spec.type || !spec.color || !spec.size) {
@@ -900,6 +981,7 @@ class PetWebviewContainer implements IPetPanel {
             type: spec.type,
             color: spec.color,
             name: spec.name,
+            relativeSize: spec.relativeSize,
         });
         void this.getWebview().postMessage({
             command: 'set-size',

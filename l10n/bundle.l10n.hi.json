@@ -49,5 +49,12 @@
 	"snake": "साँप",
 	"totoro": "टोटोरो",
 	"turtle": "Turtle",
-	"zappy": "जैपी"
+	"zappy": "जैपी",
+	"Normal": "सामान्य",
+	"Tinier (25%)": "टिनियर (25%)",
+	"Smaller (50%)": "छोटा (50%)",
+	"Larger (150%)": "बड़ा (150%)",
+	"Much Larger (200%)": "बहुत बड़ा (200%)",
+	"Relative sizes": "सापेक्ष आकार",
+	"Select a relative size": "किसी सापेक्ष आकार का चयन करें"
 }
