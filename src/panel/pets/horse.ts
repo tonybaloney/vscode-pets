@@ -1,4 +1,4 @@
-import { PetColor, PetSize } from '../../common/types';
+import { PetColor, PetRelativeSize, PetSize } from '../../common/types';
 import { BasePetType } from '../basepettype';
 import { States, resolveState } from '../states';
 
@@ -13,6 +13,7 @@ export class Horse extends BasePetType {
         collisionElement: HTMLDivElement,
         speechElement: HTMLDivElement,
         size: PetSize,
+        relativeSize: PetRelativeSize,
         left: number,
         bottom: number,
         petRoot: string,
@@ -28,6 +29,7 @@ export class Horse extends BasePetType {
             collisionElement,
             speechElement,
             size,
+            relativeSize,
             left,
             bottom,
             petRootClean,

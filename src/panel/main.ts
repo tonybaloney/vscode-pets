@@ -7,6 +7,7 @@ import {
     Theme,
     ColorThemeKind,
     WebviewMessage,
+    PetRelativeSize,
 } from '../common/types';
 import { IPetType } from './states';
 import {
@@ -69,6 +70,7 @@ function addPetToPanel(
     basePetUri: string,
     petColor: PetColor,
     petSize: PetSize,
+    relativeSize: PetRelativeSize,
     left: number,
     bottom: number,
     floor: number,
@@ -95,7 +97,15 @@ function addPetToPanel(
     );
 
     const root = basePetUri + '/' + petType + '/' + petColor;
-    console.log('Creating new pet : ', petType, root, petColor, petSize, name);
+    console.log(
+        'Creating new pet : ',
+        petType,
+        root,
+        petColor,
+        petSize,
+        `${relativeSize}x`,
+        name,
+    );
     try {
         if (!availableColors(petType).includes(petColor)) {
             throw new InvalidPetException('Invalid color for pet type');
@@ -106,6 +116,7 @@ function addPetToPanel(
             collisionElement,
             speechBubbleElement,
             petSize,
+            relativeSize,
             left,
             bottom,
             root,
@@ -129,6 +140,7 @@ function addPetToPanel(
         newPet,
         petColor,
         petType,
+        relativeSize,
     );
 }
 
@@ -148,6 +160,7 @@ export function saveState(stateApi?: VscodeStateApi) {
             petFriend: petItem.pet.friend?.name ?? undefined,
             elLeft: petItem.el.style.left,
             elBottom: petItem.el.style.bottom,
+            relativeSize: petItem.relativeSize ?? PetRelativeSize.normal,
         });
     });
     state.petCounter = petCounter;
@@ -187,6 +200,7 @@ function recoverState(
                 basePetUri,
                 p.petColor ?? PetColor.brown,
                 petSize,
+                p.relativeSize ?? PetRelativeSize.normal,
                 parseInt(p.elLeft ?? '0'),
                 parseInt(p.elBottom ?? '0'),
                 floor,
@@ -291,6 +305,7 @@ export function petPanelApp(
                 basePetUri,
                 petColor,
                 petSize,
+                PetRelativeSize.normal,
                 randomStartPosition(),
                 floor,
                 floor,
@@ -367,6 +382,7 @@ export function petPanelApp(
                         basePetUri,
                         message.color,
                         petSize,
+                        message.relativeSize ?? PetRelativeSize.normal,
                         randomStartPosition(),
                         floor,
                         floor,
@@ -383,7 +399,8 @@ export function petPanelApp(
                     command: 'list-pets',
                     text: pets
                         .map(
-                            (pet) => `${pet.type},${pet.pet.name},${pet.color}`,
+                            (pet) =>
+                                `${pet.type},${pet.pet.name},${pet.color},${pet.relativeSize}`,
                         )
                         .join('\n'),
                 });
