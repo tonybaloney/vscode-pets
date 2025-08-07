@@ -45,7 +45,7 @@ jobs:
                 token: ${{ secrets.CODECOV_TOKEN }}
             
             - name: Package VSIX
-              run: npm install -g vsce && vsce package
+              run: npm install -g @vscode/vsce && vsce package
             - uses: actions/upload-artifact@v4
               with:
                 path: "*.vsix"
