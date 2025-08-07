@@ -2,6 +2,12 @@
 
 All notable changes to the "vscode-pets" extension will be documented in this file.
 
+## [1.33.0]
+
+* Improve French translations by @tonybaloney in https://github.com/tonybaloney/vscode-pets/pull/746
+* Improve French translations by @tonybaloney in https://github.com/tonybaloney/vscode-pets/pull/757
+* Adds Morph (from Disney's Treasure Planet) to vscode-pets by @luismgsantos in https://github.com/tonybaloney/vscode-pets/pull/726
+
 ## [1.32.0]
 
 * Improved performance by reducing callbacks by @thechriskent in https://github.com/tonybaloney/vscode-pets/pull/743
