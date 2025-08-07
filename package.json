@@ -336,7 +336,7 @@
         "@typescript-eslint/eslint-plugin": "^5.29.0",
         "@typescript-eslint/parser": "^5.29.0",
         "@vscode/l10n-dev": "^0.0.29",
-        "@vscode/test-web": "^0.0.50",
+        "@vscode/test-web": "^0.0.71",
         "chai": "^5.1.2",
         "eslint": "^8.18.0",
         "eslint-plugin-unused-imports": "^2.0.0",
