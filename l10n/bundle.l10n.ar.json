@@ -49,5 +49,12 @@
 	"snake": "ثعبان",
 	"totoro": "توتورو",
 	"turtle": "Turtle",
-	"zappy": "زابي"
+	"zappy": "زابي",
+	"Normal": "عادي",
+	"Tinier (25%)": "أصغر (25٪)",
+	"Smaller (50%)": "أصغر (50٪)",
+	"Larger (150%)": "أكبر (150٪)",
+	"Much Larger (200%)": "أكبر بكثير (200٪)",
+	"Relative sizes": "الأحجام النسبية",
+	"Select a relative size": "حدد حجما نسبيا"
 }
