@@ -24,6 +24,7 @@ import {
     dynamicThrowOn,
     setupBallThrowing,
     throwAndChase,
+    setMaxBalls,
 } from './ball';
 
 const FOREGROUND_EFFECT_CANVAS_ID = 'foregroundEffectCanvas';
@@ -248,6 +249,7 @@ export function petPanelApp(
     petType: PetType,
     throwBallWithMouse: boolean,
     disableEffects: boolean,
+    maxBalls: number,
     stateApi?: VscodeStateApi,
 ) {
     if (!stateApi) {
@@ -305,7 +307,7 @@ export function petPanelApp(
     }
 
     initCanvas(PET_CANVAS_ID);
-    setupBallThrowing(PET_CANVAS_ID, petSize, floor);
+    setupBallThrowing(PET_CANVAS_ID, petSize, floor, maxBalls);
 
     if (throwBallWithMouse) {
         dynamicThrowOn(allPets.pets);
@@ -359,6 +361,11 @@ export function petPanelApp(
                 break;
             case 'throw-ball':
                 throwAndChase(allPets.pets);
+                break;
+            case 'set-max-balls':
+                if (typeof message.max === 'number') {
+                    setMaxBalls(message.max);
+                }
                 break;
             case 'spawn-pet':
                 allPets.push(

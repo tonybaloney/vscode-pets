@@ -85,6 +85,12 @@ function getThrowWithMouseConfiguration(): boolean {
         .get<boolean>('throwBallWithMouse', true);
 }
 
+function getMaxBallsConfiguration(): number {
+    return vscode.workspace
+        .getConfiguration('vscode-pets')
+        .get<number>('maxBalls', 10);
+}
+
 function getEffectsDisabledConfiguration(): boolean {
     return vscode.workspace
         .getConfiguration('vscode-pets')
@@ -361,6 +367,7 @@ export function activate(context: vscode.ExtensionContext) {
         getConfiguredThemeKind(),
         getThrowWithMouseConfiguration(),
         getEffectsDisabledConfiguration(),
+        getMaxBallsConfiguration(),
     );
     updateExtensionPositionContext().catch((e) => {
         console.error(e);
@@ -716,6 +723,13 @@ export function activate(context: vscode.ExtensionContext) {
                 if (e.affectsConfiguration('vscode-pets.disableEffects')) {
                     updatePanelDisableEffects();
                 }
+
+                if (e.affectsConfiguration('vscode-pets.maxBalls')) {
+                    const panel = getPetPanel();
+                    if (panel) {
+                        panel.updateMaxBalls(getMaxBallsConfiguration());
+                    }
+                }
             },
         ),
     );
@@ -782,6 +796,7 @@ interface IPetPanel {
     update(): void;
     setThrowWithMouse(newThrowWithMouse: boolean): void;
     updateDisableEffects(disableEffects: boolean): void;
+    updateMaxBalls(newMax: number): void;
     tick(): void;
     dispose(): void;
 }
@@ -797,6 +812,7 @@ class PetWebviewContainer implements IPetPanel {
     protected _throwBallWithMouse: boolean;
     protected _disableEffects: boolean;
     protected _tickIntervalId: NodeJS.Timeout | number | undefined;
+    protected _maxBalls: number;
 
     constructor(
         extensionUri: vscode.Uri,
@@ -807,6 +823,7 @@ class PetWebviewContainer implements IPetPanel {
         themeKind: ColorThemeKind,
         throwBallWithMouse: boolean,
         disableEffects: boolean,
+    maxBalls: number,
     ) {
         this._extensionUri = extensionUri;
         this._petColor = color;
@@ -816,6 +833,7 @@ class PetWebviewContainer implements IPetPanel {
         this._themeKind = themeKind;
         this._throwBallWithMouse = throwBallWithMouse;
         this._disableEffects = disableEffects;
+    this._maxBalls = maxBalls;
         this._tickIntervalId = setInterval(() => {
             this.tick();
         }, 100);
@@ -847,6 +865,21 @@ class PetWebviewContainer implements IPetPanel {
 
     public disableEffects(): boolean {
         return this._disableEffects;
+    }
+
+    public maxBalls(): number {
+        return this._maxBalls;
+    }
+
+    public updateMaxBalls(newMax: number): void {
+        if (newMax <= 0) {
+            return;
+        }
+        this._maxBalls = newMax;
+        void this.getWebview().postMessage({
+            command: 'set-max-balls',
+            max: newMax,
+        });
     }
 
     public updatePetColor(newColor: PetColor) {
@@ -1012,7 +1045,7 @@ class PetWebviewContainer implements IPetPanel {
 				<div id="foreground"></div>
                 <div id="background"></div>
 				<script nonce="${nonce}" src="${scriptUri}"></script>
-				<script nonce="${nonce}">petApp.petPanelApp("${basePetUri}", "${this.theme()}", ${this.themeKind()}, "${this.petColor()}", "${this.petSize()}", "${this.petType()}", ${this.throwBallWithMouse()}, ${this.disableEffects()});</script>
+                <script nonce="${nonce}">petApp.petPanelApp("${basePetUri}", "${this.theme()}", ${this.themeKind()}, "${this.petColor()}", "${this.petSize()}", "${this.petType()}", ${this.throwBallWithMouse()}, ${this.disableEffects()}, ${this.maxBalls()});</script>
 			</body>
 			</html>`;
     }
@@ -1109,6 +1142,7 @@ class PetPanel extends PetWebviewContainer implements IPetPanel {
             themeKind,
             throwBallWithMouse,
             disableEffects,
+            getMaxBallsConfiguration(),
         );
     }
 
@@ -1133,6 +1167,7 @@ class PetPanel extends PetWebviewContainer implements IPetPanel {
             themeKind,
             throwBallWithMouse,
             disableEffects,
+            getMaxBallsConfiguration(),
         );
     }
 
@@ -1146,6 +1181,7 @@ class PetPanel extends PetWebviewContainer implements IPetPanel {
         themeKind: ColorThemeKind,
         throwBallWithMouse: boolean,
         disableEffects: boolean,
+        maxBalls: number,
     ) {
         super(
             extensionUri,
@@ -1156,6 +1192,7 @@ class PetPanel extends PetWebviewContainer implements IPetPanel {
             themeKind,
             throwBallWithMouse,
             disableEffects,
+            maxBalls,
         );
 
         this._panel = panel;
@@ -1217,6 +1254,30 @@ class PetWebviewViewProvider extends PetWebviewContainer {
     public static readonly viewType = 'petsView';
 
     private _webviewView?: vscode.WebviewView;
+
+    constructor(
+        extensionUri: vscode.Uri,
+        color: PetColor,
+        type: PetType,
+        size: PetSize,
+        theme: Theme,
+        themeKind: ColorThemeKind,
+        throwBallWithMouse: boolean,
+        disableEffects: boolean,
+        maxBalls: number,
+    ) {
+        super(
+            extensionUri,
+            color,
+            type,
+            size,
+            theme,
+            themeKind,
+            throwBallWithMouse,
+            disableEffects,
+            maxBalls,
+        );
+    }
 
     resolveWebviewView(webviewView: vscode.WebviewView): void | Thenable<void> {
         this._webviewView = webviewView;

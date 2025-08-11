@@ -11,7 +11,7 @@ let then: number = 0; // last draw timestamp
 
 // Multi-ball state
 const balls: BallState[] = [];
-const MAX_BALLS = 10;
+let MAX_BALLS = 10; // default, can be overridden via configuration
 const GROUND_TIMEOUT_MS = 5000; // clarified requirement A
 let animationActive = false;
 
@@ -37,10 +37,20 @@ export function setupBallThrowing(
     canvasName: string,
     petSize: PetSize,
     floor_: number,
+    maxBalls?: number,
 ): void {
     canvas = document.getElementById(canvasName) as HTMLCanvasElement;
     ballRadius = calculateBallRadius(petSize);
     floor = floor_;
+    if (typeof maxBalls === 'number' && !isNaN(maxBalls) && maxBalls > 0) {
+        MAX_BALLS = maxBalls;
+    }
+}
+
+export function setMaxBalls(newMax: number) {
+    if (newMax > 0) {
+        MAX_BALLS = newMax;
+    }
 }
 
 function spawnBall(cx: number, cy: number, vx: number, vy: number): BallState | undefined {

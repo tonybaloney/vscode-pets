@@ -303,6 +303,13 @@
                         "type": "boolean",
                         "default": false,
                         "description": "%vscode-pets.disableEffects.description%"
+                    },
+                    "vscode-pets.maxBalls": {
+                        "type": "number",
+                        "default": 10,
+                        "minimum": 1,
+                        "maximum": 50,
+                        "description": "%vscode-pets.maxBalls.description%"
                     }
                 }
             }

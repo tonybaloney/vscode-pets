@@ -16,6 +16,7 @@
     "vscode-pets.theme.description": "Theme",
     "vscode-pets.throwBallWithMouse.description": "Throw ball with mouse",
     "vscode-pets.disableEffects.description": "Disable effects",
+    "vscode-pets.maxBalls.description": "Maximum number of balls allowed in play at once",
     "vscode-pets.petColor.black": "Black",
     "vscode-pets.petColor.lightbrown": "Light Brown",
     "vscode-pets.petColor.brown": "Brown",

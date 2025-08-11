@@ -159,6 +159,7 @@ suite('Pets Test Suite', () => {
                         petType,
                         false,
                         false,
+                        10,
                         mockState,
                     );
 
@@ -224,6 +225,7 @@ suite('Pets Test Suite', () => {
             PetType.cat,
             false,
             false,
+            10,
             mockState,
         );
 
@@ -250,6 +252,7 @@ suite('Pets Test Suite', () => {
             PetType.cat,
             false,
             false,
+            10,
             mockState,
         );
 
