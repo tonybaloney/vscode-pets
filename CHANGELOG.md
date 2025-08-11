@@ -82,7 +82,7 @@ All notable changes to the "vscode-pets" extension will be documented in this fi
 
 ## [1.25.1]
 
-* Fixes a bug occuring mostly in VS Code inside WSL where the add pets action doesn't work because the window would immediately disappear. [#489](https://github.com/tonybaloney/vscode-pets/issues/489)
+* Fixes a bug occurring mostly in VS Code inside WSL where the add pets action doesn't work because the window would immediately disappear. [#489](https://github.com/tonybaloney/vscode-pets/issues/489)
 
 ## [1.25.0]
 

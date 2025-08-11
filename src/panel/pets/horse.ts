@@ -101,7 +101,7 @@ export class Horse extends BasePetType {
             },
             {
                 state: States.walkLeft,
-                // Can switch directions, start running the same direciton, or start eating (more likely)
+                // Can switch directions, start running the same direction, or start eating (more likely)
                 possibleNextStates: [
                     States.walkRight,
                     States.runLeft,
