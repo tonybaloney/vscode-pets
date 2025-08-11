@@ -34,6 +34,8 @@ export interface IPetType {
     isPlaying: boolean;
 
     showSpeechBubble(message: string, duration: number): void;
+    // Multi-ball targeting helper (optional for backward compatibility)
+    retargetIfNeeded?(ballStates: BallState[], canvas: HTMLCanvasElement): void;
 }
 
 export class PetInstanceState {
@@ -93,13 +95,19 @@ export class BallState {
     vx: number;
     vy: number;
     paused: boolean;
+    id: number; // unique identifier
+    caughtBy?: IPetType; // pet that caught the ball
+    createdAt: number; // timestamp ms
+    groundedSince?: number; // timestamp when became grounded
 
-    constructor(cx: number, cy: number, vx: number, vy: number) {
+    constructor(cx: number, cy: number, vx: number, vy: number, id?: number) {
         this.cx = cx;
         this.cy = cy;
         this.vx = vx;
         this.vy = vy;
         this.paused = false;
+        this.id = id ?? Math.floor(Math.random() * 1e9);
+        this.createdAt = Date.now();
     }
 }
 
@@ -218,7 +226,7 @@ export class IdleWithBallState extends AbstractStaticState {
     label = States.idleWithBall;
     spriteLabel = 'with_ball';
     horizontalDirection = HorizontalDirection.left;
-    holdTime = 30;
+    holdTime = 72; // ~3 seconds at 24 FPS
 }
 
 export class WalkRightState implements IState {
@@ -331,9 +339,9 @@ export class ChaseState implements IState {
             this.ballState.cx < this.pet.left &&
             this.pet.left < this.ballState.cx + 15
         ) {
-            // hide ball
-            this.canvas.style.display = 'none';
+            // mark ball caught (do not hide entire canvas in multi-ball mode)
             this.ballState.paused = true;
+            this.ballState.caughtBy = this.pet;
             return FrameResult.stateComplete;
         }
         return FrameResult.stateContinue;

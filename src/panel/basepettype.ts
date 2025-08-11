@@ -47,6 +47,8 @@ export abstract class BasePetType implements IPetType {
     private _name: string;
     private _speed: number;
     private _size: PetSize;
+    // Track which ball this pet is currently chasing (by id) to avoid retargeting every frame unless needed
+    private _targetBallId: number | undefined;
 
     constructor(
         spriteElement: HTMLImageElement,
@@ -195,7 +197,11 @@ export abstract class BasePetType implements IPetType {
     }
 
     get canChase() {
-        return !isStateAboveGround(this.currentStateEnum) && this.isMoving;
+        return (
+            !isStateAboveGround(this.currentStateEnum) &&
+            this.isMoving &&
+            this.currentStateEnum !== States.idleWithBall
+        );
     }
 
     showSpeechBubble(message: string, duration: number = 3000) {
@@ -224,6 +230,34 @@ export abstract class BasePetType implements IPetType {
     chase(ballState: BallState, canvas: HTMLCanvasElement) {
         this.currentStateEnum = States.chase;
         this.currentState = new ChaseState(this, ballState, canvas);
+        this._targetBallId = ballState.id;
+    }
+
+    /** Retarget to nearest ball from provided list if: no target, target caught/removed, or nearer ball significantly closer */
+    retargetIfNeeded(ballStates: BallState[], canvas: HTMLCanvasElement) {
+        if (!ballStates.length) {
+            return;
+        }
+        const active = ballStates.filter((b) => !b.paused && !b.caughtBy);
+        if (!active.length) {
+            return;
+        }
+        // If current target still valid, optionally check if another ball is much closer ( > 20px difference )
+        let current: BallState | undefined = undefined;
+        if (this._targetBallId !== undefined) {
+            current = active.find((b) => b.id === this._targetBallId);
+        }
+        const myCenterX = this.left + this.width / 2;
+        const dist = (b: BallState) => Math.abs(b.cx - myCenterX);
+        const nearest = active.sort((a, b) => dist(a) - dist(b))[0];
+        if (!current || current.caughtBy || current.paused) {
+            this.chase(nearest, canvas);
+            return;
+        }
+        // If nearest substantially closer (>20 px) switch
+        if (nearest.id !== current.id && dist(nearest) + 20 < dist(current)) {
+            this.chase(nearest, canvas);
+        }
     }
 
     faceLeft() {
@@ -305,6 +339,13 @@ export abstract class BasePetType implements IPetType {
                 var nextState = this.chooseNextState(States.idleWithBall);
                 this.currentState = resolveState(nextState, this);
                 this.currentStateEnum = nextState;
+                // Retarget if other balls remain
+                const canvas = document.getElementById('ballCanvas') as HTMLCanvasElement;
+                if (canvas) {
+                    const globalAny = window as any;
+                    const balls = (globalAny.petBalls ?? []) as BallState[];
+                    this.retargetIfNeeded?.(balls, canvas);
+                }
             } else if (this.currentStateEnum === States.chaseFriend) {
                 var nextState = this.chooseNextState(States.idleWithBall);
                 this.currentState = resolveState(nextState, this);
