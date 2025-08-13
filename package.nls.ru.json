@@ -16,6 +16,7 @@
     "vscode-pets.theme.description": "Тема",
     "vscode-pets.throwBallWithMouse.description": "Бросить мяч мышью",
     "vscode-pets.disableEffects.description": "Отключить эффекты",
+    "vscode-pets.petName.description": "Имя питомца",
     "vscode-pets.petColor.black": "Чёрный",
     "vscode-pets.petColor.lightbrown": "Светло-коричневый",
     "vscode-pets.petColor.brown": "Коричневый",
