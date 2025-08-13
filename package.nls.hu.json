@@ -16,6 +16,7 @@
     "vscode-pets.theme.description": "Theme",
     "vscode-pets.throwBallWithMouse.description": "Throw ball with mouse",
     "vscode-pets.disableEffects.description": "Disable effects",
+    "vscode-pets.petName.description": "Háziállat neve",
     "vscode-pets.petColor.black": "Fekete",
     "vscode-pets.petColor.lightbrown": "Világosbarna",
     "vscode-pets.petColor.brown": "Barna",

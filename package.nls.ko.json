@@ -16,6 +16,7 @@
     "vscode-pets.theme.description": "테마",
     "vscode-pets.throwBallWithMouse.description": "마우스로 공 던지기",
     "vscode-pets.disableEffects.description": "효과 끄기",
+    "vscode-pets.petName.description": "펫의 이름",
     "vscode-pets.petColor.black": "검정",
     "vscode-pets.petColor.lightbrown": "밝은 갈색",
     "vscode-pets.petColor.brown": "갈색",

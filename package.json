@@ -200,7 +200,7 @@
                     "vscode-pets.petName": {
                         "type": "string",
                         "default": "",
-                        "description": "Name of the pet",
+                        "description": "%vscode-pets.petName.description%",
                         "scope": "window"
                     },
                     "vscode-pets.petType": {
