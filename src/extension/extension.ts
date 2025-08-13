@@ -144,7 +144,17 @@ export class PetSpecification {
             type = DEFAULT_PET_TYPE;
         }
 
-        return new PetSpecification(color, type, getConfiguredSize());
+        const configuredName = vscode.workspace
+            .getConfiguration('vscode-pets')
+            .get<string>('petName', '')
+            ?.trim();
+
+        return new PetSpecification(
+            color,
+            type,
+            getConfiguredSize(),
+            configuredName ? configuredName : undefined,
+        );
     }
 
     static collectionFromMemento(
@@ -688,6 +698,7 @@ export function activate(context: vscode.ExtensionContext) {
                     e.affectsConfiguration('vscode-pets.petColor') ||
                     e.affectsConfiguration('vscode-pets.petType') ||
                     e.affectsConfiguration('vscode-pets.petSize') ||
+                    e.affectsConfiguration('vscode-pets.petName') ||
                     e.affectsConfiguration('vscode-pets.theme') ||
                     e.affectsConfiguration('workbench.colorTheme')
                 ) {

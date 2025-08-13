@@ -197,6 +197,12 @@
                             "%vscode-pets.petColor.warrior%"
                         ]
                     },
+                    "vscode-pets.petName": {
+                        "type": "string",
+                        "default": "",
+                        "description": "Name of the pet",
+                        "scope": "window"
+                    },
                     "vscode-pets.petType": {
                         "type": "string",
                         "enum": [
