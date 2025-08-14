@@ -33,7 +33,7 @@ jobs:
         run: python -m pip install llm-github-models
       - name: Review l10n changes
         run: | 
-          git --no-pager diff -p --no-color origin/main...${{ github.sha }} l10n | llm prompt -m github/gpt-5-mini \
+          git --no-pager diff -p --no-color origin/main...${{ github.sha }} l10n | llm prompt -m github/gpt-4.1-mini \
           "For each of the changed lines in this output from git diff (those starting +), comment on whether the translation for that
           language is blatantly inaccurate or offensive. \
           Use the formatting for GitHub Actions, e.g. \
