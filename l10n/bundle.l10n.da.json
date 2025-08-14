@@ -49,5 +49,12 @@
 	"snake": "Slange",
 	"totoro": "Totoro",
 	"turtle": "Turtle",
-	"zappy": "Zappy"
+	"zappy": "Zappy",
+	"Normal": "Normal",
+	"Tinier (25%)": "Tinier (25%)",
+	"Smaller (50%)": "Mindre (50%)",
+	"Larger (150%)": "Større (150%)",
+	"Much Larger (200%)": "Meget Større (200%)",
+	"Relative sizes": "Relative størrelser",
+	"Select a relative size": "Vælg en relativ størrelse"
 }

@@ -49,5 +49,12 @@
 	"snake": "Serpiente",
 	"totoro": "Totoro",
 	"turtle": "Tortuga",
-	"zappy": "Zappy"
+	"zappy": "Zappy",
+	"Normal": "Normal",
+	"Tinier (25%)": "Más pequeño (25%)",
+	"Smaller (50%)": "Más pequeño (50%)",
+	"Larger (150%)": "Más grande (150%)",
+	"Much Larger (200%)": "Mucho más grande (200%)",
+	"Relative sizes": "Tamaños relativos",
+	"Select a relative size": "Seleccionar un tamaño relativo"
 }

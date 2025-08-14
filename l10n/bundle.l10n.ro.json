@@ -49,5 +49,12 @@
 	"snake": "Sarpe",
 	"totoro": "Totoro",
 	"turtle": "Turtle",
-	"zappy": "Zappy"
+	"zappy": "Zappy",
+	"Normal": "Normal",
+	"Tinier (25%)": "Mai mic (25%)",
+	"Smaller (50%)": "Mai mic (50%)",
+	"Larger (150%)": "Mai mare (150%)",
+	"Much Larger (200%)": "Mult mai mare (200%)",
+	"Relative sizes": "Dimensiuni relative",
+	"Select a relative size": "Selectați o dimensiune relativă"
 }

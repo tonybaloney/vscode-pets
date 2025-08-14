@@ -49,5 +49,12 @@
 	"snake": "Kígyó",
 	"totoro": "'Totoro'",
 	"turtle": "Turtle",
-	"zappy": "'Zappy' (Azure Functions kabala)"
+	"zappy": "'Zappy' (Azure Functions kabala)",
+	"Normal": "Normális",
+	"Tinier (25%)": "Apró (25%)",
+	"Smaller (50%)": "Kisebb (50%)",
+	"Larger (150%)": "Nagyobb (150%)",
+	"Much Larger (200%)": "Sokkal nagyobb (200%)",
+	"Relative sizes": "Relatív méretek",
+	"Select a relative size": "Relatív méret kiválasztása"
 }

@@ -49,5 +49,12 @@
 	"snake": "Yılan",
 	"totoro": "Totoro Anime Karakteri",
 	"turtle": "Kaplumbağa",
-	"zappy": "Enerjik"
+	"zappy": "Enerjik",
+	"Normal": "Normal",
+	"Tinier (25%)": "Daha küçük (%25)",
+	"Smaller (50%)": "Daha küçük (%50)",
+	"Larger (150%)": "Daha Büyük (%150)",
+	"Much Larger (200%)": "Çok Daha Büyük (%200)",
+	"Relative sizes": "Göreceli boyutlar",
+	"Select a relative size": "Göreli bir boyut seçin"
 }
