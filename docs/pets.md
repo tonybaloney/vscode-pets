@@ -59,6 +59,4 @@ The pet list can be imported by running the "Import pet list" command (`vscode-p
 
 ## Pet Gallery
 
-Here's a preview of the available pets
-
 ![Pet gallery](/media/pet-grid.png)
