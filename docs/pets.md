@@ -56,3 +56,9 @@ You can export your pet list by running the "Export pet list" command (`vscode-p
 The pet list can be imported by running the "Import pet list" command (`vscode-pets.import-pets`) from the command palette.
 
 ![Pet import-export](source/_static/pet-import-export.gif)
+
+## Pet Gallery
+
+Here's a preview of the available pets
+
+![Pet gallery](/media/pet-grid.png)
