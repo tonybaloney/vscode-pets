@@ -53,6 +53,7 @@
     "vscode-pets.petType.turtle": "Schildkröte",
     "vscode-pets.petType.zappy": "Zappy",
     "vscode-pets.petType.snail": "Schnecke",
+    "vscode-pets.petType.bunny": "Bunny",
     "vscode-pets.petSize.nano": "Nano",
     "vscode-pets.petSize.small": "Klein",
     "vscode-pets.petSize.medium": "Mittel",

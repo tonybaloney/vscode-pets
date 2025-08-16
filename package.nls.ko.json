@@ -53,6 +53,7 @@
     "vscode-pets.petType.turtle": "거북이",
     "vscode-pets.petType.zappy": "번쩍이",
     "vscode-pets.petType.snail": "핑핑이",
+    "vscode-pets.petType.bunny": "Bunny",
     "vscode-pets.petSize.nano": "매우 작음",
     "vscode-pets.petSize.small": "작음",
     "vscode-pets.petSize.medium": "중간",

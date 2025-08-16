@@ -2,6 +2,31 @@
 
 All notable changes to the "vscode-pets" extension will be documented in this file.
 
+## [1.33.0]
+
+* Improve French translations by @tonybaloney in https://github.com/tonybaloney/vscode-pets/pull/746
+* Improve French translations by @tonybaloney in https://github.com/tonybaloney/vscode-pets/pull/757
+* Adds Morph (from Disney's Treasure Planet) to vscode-pets by @luismgsantos in https://github.com/tonybaloney/vscode-pets/pull/726
+
+## [1.32.0]
+
+* Improved performance by reducing callbacks by @thechriskent in https://github.com/tonybaloney/vscode-pets/pull/743
+* Improved speech Bubble Readability in dark modesby @thechriskent in https://github.com/tonybaloney/vscode-pets/pull/744
+* "Add Pet" now has icons by @thechriskent in https://github.com/tonybaloney/vscode-pets/pull/745
+
+## [1.31.0]
+
+### New Pets
+ - There is now a bunny pet, by @VyomRaturi in #704
+
+### Bug fixes
+ - Add Korean Pet Names by @tonybaloney in #687
+ - Fix snow particles not pausing by @LiteralGenie in #690
+ - Improve German, Spanish, Korean, and Chinese in #688
+ - Fix/ speech bubble no longer hidden behind background by @DynamiteBob17 in #700
+ - Improve French, Pt-BR and Turkish translations in #691
+ - Improve Czech, Italian and Chinese by @tonybaloney in #702
+
 ## [1.29.0]
 
 * Add winter theme @tonybaloney in https://github.com/tonybaloney/vscode-pets/pull/663
@@ -57,7 +82,7 @@ All notable changes to the "vscode-pets" extension will be documented in this fi
 
 ## [1.25.1]
 
-* Fixes a bug occuring mostly in VS Code inside WSL where the add pets action doesn't work because the window would immediately disappear. [#489](https://github.com/tonybaloney/vscode-pets/issues/489)
+* Fixes a bug occurring mostly in VS Code inside WSL where the add pets action doesn't work because the window would immediately disappear. [#489](https://github.com/tonybaloney/vscode-pets/issues/489)
 
 ## [1.25.0]
 

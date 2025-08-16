@@ -11,6 +11,7 @@ import { Fox } from './pets/fox';
 import { Frog } from './pets/frog';
 import { Horse } from './pets/horse';
 import { Mod } from './pets/mod';
+import { Morph } from './pets/morph';
 import { Panda } from './pets/panda';
 import { Rat } from './pets/rat';
 import { Rocky } from './pets/rocky';
@@ -60,7 +61,7 @@ export interface IPetCollection {
     pets: Array<PetElement>;
     push(pet: PetElement): void;
     reset(): void;
-    seekNewFriends(): string[];
+    seekNewFriends(): void;
     locate(name: string): PetElement | undefined;
     locatePet(
         name: string,
@@ -123,44 +124,41 @@ export class PetCollection implements IPetCollection {
         });
     }
 
-    seekNewFriends(): string[] {
+    seekNewFriends(): void {
         if (this._pets.length <= 1) {
-            return [];
+            return;
         } // You can't be friends with yourself.
-        var messages = new Array<string>(0);
-        this._pets.forEach((petInCollection) => {
-            if (petInCollection.pet.hasFriend) {
-                return;
-            } // I already have a friend!
-            this._pets.forEach((potentialFriend) => {
-                if (potentialFriend.pet.hasFriend) {
-                    return;
-                } // Already has a friend. sorry.
+        const theFriendless = this._pets.filter((pet) => !pet.pet.hasFriend);
+        if (theFriendless.length <= 1) {
+            return;
+        } // Nobody to be friends with.
+        theFriendless.forEach((lonelyPet) => {
+            const potentialFriends = theFriendless.filter(
+                (pet) => pet !== lonelyPet,
+            ); // Exclude the lonely pet itself.
+            potentialFriends.forEach((potentialFriend) => {
                 if (!potentialFriend.pet.canChase) {
                     return;
                 } // Pet is busy doing something else.
                 if (
-                    potentialFriend.pet.left > petInCollection.pet.left &&
+                    potentialFriend.pet.left > lonelyPet.pet.left &&
                     potentialFriend.pet.left <
-                        petInCollection.pet.left + petInCollection.pet.width
+                        lonelyPet.pet.left + lonelyPet.pet.width
                 ) {
                     // We found a possible new friend..
                     console.log(
-                        petInCollection.pet.name,
+                        lonelyPet.pet.name,
                         ' wants to be friends with ',
                         potentialFriend.pet.name,
                         '.',
                     );
-                    if (
-                        petInCollection.pet.makeFriendsWith(potentialFriend.pet)
-                    ) {
+                    if (lonelyPet.pet.makeFriendsWith(potentialFriend.pet)) {
                         potentialFriend.pet.showSpeechBubble('❤️', 2000);
-                        petInCollection.pet.showSpeechBubble('❤️', 2000);
+                        lonelyPet.pet.showSpeechBubble('❤️', 2000);
                     }
                 }
             });
         });
-        return messages;
     }
 }
 
@@ -247,6 +245,8 @@ export function createPet(
             return new Horse(...standardPetArguments, PetSpeed.normal);
         case PetType.panda:
             return new Panda(...standardPetArguments, PetSpeed.slow);
+        case PetType.morph:
+            return new Morph(...standardPetArguments, PetSpeed.normal);
         default:
             throw new InvalidPetException("Pet type doesn't exist");
     }
@@ -260,6 +260,8 @@ export function availableColors(petType: PetType): PetColor[] {
             return Cat.possibleColors;
         case PetType.chicken:
             return Chicken.possibleColors;
+        case PetType.morph:
+            return Morph.possibleColors;
         case PetType.dog:
             return Dog.possibleColors;
         case PetType.fish:
