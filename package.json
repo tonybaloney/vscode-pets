@@ -262,6 +262,10 @@
                             "%vscode-pets.petSize.large%"
                         ]
                     },
+                    "vscode-pets.petName": {
+                        "type": "string",
+                        "description": "%vscode-pets.petName.description%"
+                    },
                     "vscode-pets.position": {
                         "type": "string",
                         "enum": [

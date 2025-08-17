@@ -9,6 +9,7 @@
     "vscode-pets.delete-pet.title": "Rimuovi pet",
     "vscode-pets.remove-all-pets.title": "Rimuovi tutti i pet",
     "vscode-pets.roll-call.title": "Roll call",
+    "vscode-pets.petName.description": "Name of the pet",
     "vscode-pets.petColor.description": "Colore pet",
     "vscode-pets.petType.description": "Type of the pet",
     "vscode-pets.petSize.description": "Size of the pet",
