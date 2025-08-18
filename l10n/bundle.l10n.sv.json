@@ -49,5 +49,12 @@
 	"snake": "Orm",
 	"totoro": "Totoro",
 	"turtle": "Turtle",
-	"zappy": "Zappy"
+	"zappy": "Zappy",
+	"Normal": "Normal",
+	"Tinier (25%)": "Smalare (25 %)",
+	"Smaller (50%)": "Mindre (50 %)",
+	"Larger (150%)": "Större (150 %)",
+	"Much Larger (200%)": "Mycket större (200 %)",
+	"Relative sizes": "Relativa storlekar",
+	"Select a relative size": "Välj en relativ storlek"
 }

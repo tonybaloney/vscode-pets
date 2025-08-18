@@ -49,5 +49,12 @@
 	"snake": "뱀",
 	"totoro": "토토로",
 	"turtle": "거북이",
-	"zappy": "번쩍이"
+	"zappy": "번쩍이",
+	"Normal": "보통",
+	"Tinier (25%)": "더 작음(25%)",
+	"Smaller (50%)": "더 작음(50%)",
+	"Larger (150%)": "더 큼(150%)",
+	"Much Larger (200%)": "훨씬 더 큼(200%)",
+	"Relative sizes": "상대 크기",
+	"Select a relative size": "상대 크기 선택"
 }

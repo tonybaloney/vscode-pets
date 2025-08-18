@@ -12,6 +12,7 @@ import {
     WebviewMessage,
     ALL_PETS,
     ALL_THEMES,
+    PetRelativeSize,
 } from '../../common/types';
 import { PetElementState, PetPanelState } from '../../panel/states';
 import * as pets from '../../panel/pets';
@@ -108,6 +109,7 @@ suite('Pets Test Suite', () => {
             petDivEl,
             petSpeechEl,
             PetSize.medium,
+            PetRelativeSize.normal,
             0,
             0,
             'testPet',
