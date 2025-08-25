@@ -34,7 +34,7 @@ jobs:
           cp CHANGELOG.md docs/
           python -m mkdocs build
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@v4
         with:
           path: site
 
