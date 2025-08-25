@@ -2,6 +2,7 @@ import { ColorThemeKind, PetSize, Theme } from '../common/types';
 import { Effect } from './effects/effect';
 import { SnowEffect } from './effects/snow';
 import { StarEffect } from './effects/stars';
+import { BubbleEffect } from './effects/bubbles';
 
 function normalizeColorThemeKind(kind: ColorThemeKind): 'dark' | 'light' {
     switch (kind) {
@@ -67,6 +68,25 @@ class ForestThemeInfo extends ThemeInfo {
     name = 'forest';
     description = 'A forest theme';
     effect = new StarEffect();
+
+    floor(size: PetSize): number {
+        switch (size) {
+            case PetSize.small:
+                return 30;
+            case PetSize.medium:
+                return 40;
+            case PetSize.large:
+                return 65;
+            case PetSize.nano:
+            default:
+                return 23;
+        }
+    }
+}
+class AquariumThemeInfo extends ThemeInfo {
+    name = 'aquarium';
+    description = 'An aquarium theme';
+    effect = new BubbleEffect();
 
     floor(size: PetSize): number {
         switch (size) {
@@ -165,4 +185,5 @@ export const THEMES: Record<Theme, ThemeInfo> = {
     castle: new CastleThemeInfo(),
     beach: new BeachThemeInfo(),
     winter: new WinterThemeInfo(),
+    aquarium: new AquariumThemeInfo(),
 };

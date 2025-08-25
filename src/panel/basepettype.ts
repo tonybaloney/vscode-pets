@@ -36,7 +36,7 @@ export abstract class BasePetType implements IPetType {
     currentStateEnum: States;
     holdState: IState | undefined;
     holdStateEnum: States | undefined;
-    private el: HTMLImageElement;
+    protected el: HTMLImageElement;
     private collision: HTMLDivElement;
     private speech: HTMLDivElement;
     private _left: number;
