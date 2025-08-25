@@ -246,6 +246,7 @@ export function petPanelApp(
     petColor: PetColor,
     petSize: PetSize,
     petType: PetType,
+    petName: string,
     throwBallWithMouse: boolean,
     disableEffects: boolean,
     stateApi?: VscodeStateApi,
@@ -294,7 +295,7 @@ export function petPanelApp(
                 randomStartPosition(),
                 floor,
                 floor,
-                randomName(petType),
+                petName,
                 stateApi,
             ),
         );

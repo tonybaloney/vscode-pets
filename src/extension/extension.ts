@@ -143,8 +143,11 @@ export class PetSpecification {
         if (ALL_PETS.lastIndexOf(type) === -1) {
             type = DEFAULT_PET_TYPE;
         }
+        var name = vscode.workspace
+            .getConfiguration('vscode-pets')
+            .get<string>('petName', randomName(type));
 
-        return new PetSpecification(color, type, getConfiguredSize());
+        return new PetSpecification(color, type, getConfiguredSize(), name);
     }
 
     static collectionFromMemento(
@@ -310,6 +313,7 @@ export function activate(context: vscode.ExtensionContext) {
                     spec.color,
                     spec.type,
                     spec.size,
+                    spec.name,
                     getConfiguredTheme(),
                     getConfiguredThemeKind(),
                     getThrowWithMouseConfiguration(),
@@ -357,6 +361,7 @@ export function activate(context: vscode.ExtensionContext) {
         spec.color,
         spec.type,
         spec.size,
+        spec.name,
         getConfiguredTheme(),
         getConfiguredThemeKind(),
         getThrowWithMouseConfiguration(),
@@ -735,6 +740,7 @@ export function activate(context: vscode.ExtensionContext) {
                     spec.color,
                     spec.type,
                     spec.size,
+                    spec.name,
                     getConfiguredTheme(),
                     getConfiguredThemeKind(),
                     getThrowWithMouseConfiguration(),
@@ -792,6 +798,7 @@ class PetWebviewContainer implements IPetPanel {
     protected _petColor: PetColor;
     protected _petType: PetType;
     protected _petSize: PetSize;
+    protected _petName: string;
     protected _theme: Theme;
     protected _themeKind: vscode.ColorThemeKind;
     protected _throwBallWithMouse: boolean;
@@ -803,6 +810,7 @@ class PetWebviewContainer implements IPetPanel {
         color: PetColor,
         type: PetType,
         size: PetSize,
+        name: string,
         theme: Theme,
         themeKind: ColorThemeKind,
         throwBallWithMouse: boolean,
@@ -812,6 +820,7 @@ class PetWebviewContainer implements IPetPanel {
         this._petColor = color;
         this._petType = type;
         this._petSize = size;
+        this._petName = name;
         this._theme = theme;
         this._themeKind = themeKind;
         this._throwBallWithMouse = throwBallWithMouse;
@@ -827,6 +836,10 @@ class PetWebviewContainer implements IPetPanel {
 
     public petType(): PetType {
         return this._petType;
+    }
+
+    public petName(): string {
+        return this._petName;
     }
 
     public petSize(): PetSize {
@@ -1012,7 +1025,7 @@ class PetWebviewContainer implements IPetPanel {
 				<div id="foreground"></div>
                 <div id="background"></div>
 				<script nonce="${nonce}" src="${scriptUri}"></script>
-				<script nonce="${nonce}">petApp.petPanelApp("${basePetUri}", "${this.theme()}", ${this.themeKind()}, "${this.petColor()}", "${this.petSize()}", "${this.petType()}", ${this.throwBallWithMouse()}, ${this.disableEffects()});</script>
+				<script nonce="${nonce}">petApp.petPanelApp("${basePetUri}", "${this.theme()}", ${this.themeKind()}, "${this.petColor()}", "${this.petSize()}", "${this.petType()}", "${this.petName()}", ${this.throwBallWithMouse()}, ${this.disableEffects()});</script>
 			</body>
 			</html>`;
     }
@@ -1066,6 +1079,7 @@ class PetPanel extends PetWebviewContainer implements IPetPanel {
         petColor: PetColor,
         petType: PetType,
         petSize: PetSize,
+        petName: string,
         theme: Theme,
         themeKind: ColorThemeKind,
         throwBallWithMouse: boolean,
@@ -1105,6 +1119,7 @@ class PetPanel extends PetWebviewContainer implements IPetPanel {
             petColor,
             petType,
             petSize,
+            petName,
             theme,
             themeKind,
             throwBallWithMouse,
@@ -1118,6 +1133,7 @@ class PetPanel extends PetWebviewContainer implements IPetPanel {
         petColor: PetColor,
         petType: PetType,
         petSize: PetSize,
+        petName: string,
         theme: Theme,
         themeKind: ColorThemeKind,
         throwBallWithMouse: boolean,
@@ -1129,6 +1145,7 @@ class PetPanel extends PetWebviewContainer implements IPetPanel {
             petColor,
             petType,
             petSize,
+            petName,
             theme,
             themeKind,
             throwBallWithMouse,
@@ -1142,6 +1159,7 @@ class PetPanel extends PetWebviewContainer implements IPetPanel {
         color: PetColor,
         type: PetType,
         size: PetSize,
+        name: string,
         theme: Theme,
         themeKind: ColorThemeKind,
         throwBallWithMouse: boolean,
@@ -1152,6 +1170,7 @@ class PetPanel extends PetWebviewContainer implements IPetPanel {
             color,
             type,
             size,
+            name,
             theme,
             themeKind,
             throwBallWithMouse,
@@ -1272,6 +1291,7 @@ async function createPetPlayground(context: vscode.ExtensionContext) {
         spec.color,
         spec.type,
         spec.size,
+        spec.name,
         getConfiguredTheme(),
         getConfiguredThemeKind(),
         getThrowWithMouseConfiguration(),

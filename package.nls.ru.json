@@ -9,6 +9,7 @@
     "vscode-pets.delete-pet.title": "Удалить питомца",
     "vscode-pets.remove-all-pets.title": "Удалить всех питомцев",
     "vscode-pets.roll-call.title": "Вызов",
+    "vscode-pets.petName.description": "Name of the pet",
     "vscode-pets.petColor.description": "Цвет питомца",
     "vscode-pets.petType.description": "Тип питомца",
     "vscode-pets.petSize.description": "Размер питомца",

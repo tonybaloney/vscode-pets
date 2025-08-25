@@ -9,6 +9,7 @@
     "vscode-pets.delete-pet.title": "Evcil hayvanı sil",
     "vscode-pets.remove-all-pets.title": "Tüm evcil hayvanları sil",
     "vscode-pets.roll-call.title": "Yoklama",
+    "vscode-pets.petName.description": "Name of the pet",
     "vscode-pets.petColor.description": "Evcil hayvanın rengi",
     "vscode-pets.petType.description": "Evcil hayvan tipi",
     "vscode-pets.petSize.description": "Evcil hayvan boyutu",
