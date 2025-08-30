@@ -1,4 +1,10 @@
-import { PetColor, PetSize, PetSpeed, PetType } from '../common/types';
+import {
+    PetColor,
+    PetRelativeSize,
+    PetSize,
+    PetSpeed,
+    PetType,
+} from '../common/types';
 import { Bunny } from './pets/bunny';
 import { Cat } from './pets/cat';
 import { Chicken } from './pets/chicken';
@@ -30,12 +36,14 @@ export class PetElement {
     pet: IPetType;
     color: PetColor;
     type: PetType;
+    relativeSize: PetRelativeSize | null;
     remove() {
         this.el.remove();
         this.collision.remove();
         this.speech.remove();
         this.color = PetColor.null;
         this.type = PetType.null;
+        this.relativeSize = null;
     }
 
     constructor(
@@ -45,6 +53,7 @@ export class PetElement {
         pet: IPetType,
         color: PetColor,
         type: PetType,
+        relativeSize: PetRelativeSize = PetRelativeSize.normal,
     ) {
         this.el = el;
         this.collision = collision;
@@ -52,6 +61,7 @@ export class PetElement {
         this.pet = pet;
         this.color = color;
         this.type = type;
+        this.relativeSize = relativeSize;
     }
 }
 
@@ -174,6 +184,7 @@ export function createPet(
     collision: HTMLDivElement,
     speech: HTMLDivElement,
     size: PetSize,
+    relativeSize: PetRelativeSize,
     left: number,
     bottom: number,
     petRoot: string,
@@ -189,12 +200,24 @@ export function createPet(
         HTMLDivElement,
         HTMLDivElement,
         PetSize,
+        PetRelativeSize,
         number,
         number,
         string,
         number,
         string,
-    ] = [el, collision, speech, size, left, bottom, petRoot, floor, name];
+    ] = [
+        el,
+        collision,
+        speech,
+        size,
+        relativeSize,
+        left,
+        bottom,
+        petRoot,
+        floor,
+        name,
+    ];
 
     switch (petType) {
         case PetType.bunny:

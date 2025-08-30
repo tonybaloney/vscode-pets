@@ -49,5 +49,12 @@
 	"snake": "蛇",
 	"totoro": "トトロ",
 	"turtle": "カメ",
-	"zappy": "ザッピー"
+	"zappy": "ザッピー",
+	"Normal": "正常",
+	"Tinier (25%)": "小さい(25%)",
+	"Smaller (50%)": "小さい(50%)",
+	"Larger (150%)": "拡大(150%)",
+	"Much Larger (200%)": "かなり大きい(200%)",
+	"Relative sizes": "相対サイズ",
+	"Select a relative size": "相対的なサイズを選択する"
 }

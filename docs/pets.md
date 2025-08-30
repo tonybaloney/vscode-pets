@@ -12,7 +12,7 @@ To add additional pets, run the "Spawn additional pet" command (`vscode-pets.spa
 
 ![Add pet](source/_static/add-pet.png)
 
-Once you've done this, select the pet type, color, and then choose a name or use the randomly assigned one.
+Once you've done this, select the pet type, color, relative size, and then choose a name or use the randomly assigned one.
 
 ![Pet select](source/_static/pet-select.png)
 
