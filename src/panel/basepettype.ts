@@ -47,6 +47,9 @@ export abstract class BasePetType implements IPetType {
     private _name: string;
     private _speed: number;
     private _size: PetSize;
+    protected _climbSpeed: number = 1;
+    protected _climbHeight: number = 100;
+    protected _fallSpeed: number = 5;
 
     constructor(
         spriteElement: HTMLImageElement,
@@ -74,6 +77,11 @@ export abstract class BasePetType implements IPetType {
         this._name = name;
         this._size = size;
         this._speed = this.randomizeSpeed(speed);
+        if (this._name.toLowerCase() === 'debug') {
+            console.log(
+                `Creating pet ${this._name} of size ${this._size} at position (${this._left}, ${this._bottom}) with speed ${this._speed}`,
+            );
+        }
 
         // Increment the static count of the Pet class that the constructor belongs to
         (this.constructor as any).count += 1;
@@ -168,6 +176,30 @@ export abstract class BasePetType implements IPetType {
         return newSpeed;
     }
 
+    /**
+     * The speed at which the pet can climb.
+     * Default is 1.
+     */
+    get climbSpeed(): number {
+        return this._climbSpeed;
+    }
+
+    /**
+     * The height to which a pet can climb.
+     * Default is 100.
+     */
+    get climbHeight(): number {
+        return this._climbHeight;
+    }
+
+    /**
+     * The speed at which the pet falls when it is in the air.
+     * Default is 5.
+     */
+    get fallSpeed(): number {
+        return this._fallSpeed;
+    }
+
     get isMoving(): boolean {
         return this._speed !== PetSpeed.still;
     }
@@ -248,6 +280,7 @@ export abstract class BasePetType implements IPetType {
             if (this.sequence.sequenceStates[i].state === fromState) {
                 possibleNextStates =
                     this.sequence.sequenceStates[i].possibleNextStates;
+                break;
             }
         }
         if (!possibleNextStates) {
@@ -342,4 +375,10 @@ export abstract class BasePetType implements IPetType {
     get emoji(): string {
         return '🐶';
     }
+
+    get size(): PetSize {
+        return this._size;
+    }
+
+    remove(): void {}
 }

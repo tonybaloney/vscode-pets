@@ -9,6 +9,9 @@ export interface IPetType {
     swipe(): void;
     chase(ballState: BallState, canvas: HTMLCanvasElement): void;
     speed: number;
+    climbSpeed: number;
+    climbHeight: number;
+    fallSpeed: number;
     isMoving: boolean;
     hello: string;
 
@@ -34,6 +37,7 @@ export interface IPetType {
     isPlaying: boolean;
 
     showSpeechBubble(message: string, duration: number): void;
+    remove(): void;
 }
 
 export class PetInstanceState {
@@ -69,6 +73,8 @@ export const enum States {
     runLeft = 'run-left',
     lie = 'lie',
     wallHangLeft = 'wall-hang-left',
+    wallDigLeft = 'wall-dig-left',
+    wallNap = 'wall-nap',
     climbWallLeft = 'climb-wall-left',
     jumpDownLeft = 'jump-down-left',
     land = 'land',
@@ -106,6 +112,8 @@ export class BallState {
 export function isStateAboveGround(state: States): boolean {
     return (
         state === States.climbWallLeft ||
+        state === States.wallDigLeft ||
+        state === States.wallNap ||
         state === States.jumpDownLeft ||
         state === States.land ||
         state === States.wallHangLeft
@@ -128,6 +136,10 @@ export function resolveState(state: string, pet: IPetType): IState {
             return new LieState(pet);
         case States.wallHangLeft:
             return new WallHangLeftState(pet);
+        case States.wallDigLeft:
+            return new WallDigLeftState(pet);
+        case States.wallNap:
+            return new WallNapState(pet);
         case States.climbWallLeft:
             return new ClimbWallLeftState(pet);
         case States.jumpDownLeft:
@@ -200,6 +212,20 @@ export class WallHangLeftState extends AbstractStaticState {
     holdTime = 50;
 }
 
+export class WallDigLeftState extends AbstractStaticState {
+    label = States.wallDigLeft;
+    spriteLabel = 'walldig';
+    horizontalDirection = HorizontalDirection.left;
+    holdTime = 60;
+}
+
+export class WallNapState extends AbstractStaticState {
+    label = States.wallNap;
+    spriteLabel = 'wallnap';
+    horizontalDirection = HorizontalDirection.right;
+    holdTime = 50;
+}
+
 export class LandState extends AbstractStaticState {
     label = States.land;
     spriteLabel = 'land';
@@ -239,13 +265,10 @@ export class WalkRightState implements IState {
 
     nextFrame(): FrameResult {
         this.idleCounter++;
-        this.pet.positionLeft(
-            this.pet.left + this.pet.speed * this.speedMultiplier,
-        );
-        if (
-            this.pet.isMoving &&
-            this.pet.left >= this.leftBoundary - this.pet.width
-        ) {
+        const newLeft = this.pet.left + this.pet.speed * this.speedMultiplier;
+        const maxRight = this.leftBoundary - this.pet.width;
+        this.pet.positionLeft(newLeft > maxRight ? maxRight : newLeft);
+        if (this.pet.isMoving && this.pet.left >= maxRight) {
             return FrameResult.stateComplete;
         } else if (!this.pet.isMoving && this.idleCounter > this.holdTime) {
             return FrameResult.stateComplete;
@@ -269,9 +292,9 @@ export class WalkLeftState implements IState {
     }
 
     nextFrame(): FrameResult {
-        this.pet.positionLeft(
-            this.pet.left - this.pet.speed * this.speedMultiplier,
-        );
+        this.idleCounter++;
+        const newLeft = this.pet.left - this.pet.speed * this.speedMultiplier;
+        this.pet.positionLeft(newLeft < 0 ? 0 : newLeft);
         if (this.pet.isMoving && this.pet.left <= 0) {
             return FrameResult.stateComplete;
         } else if (!this.pet.isMoving && this.idleCounter > this.holdTime) {
@@ -378,8 +401,8 @@ export class ClimbWallLeftState implements IState {
     }
 
     nextFrame(): FrameResult {
-        this.pet.positionBottom(this.pet.bottom + 1);
-        if (this.pet.bottom >= 100) {
+        this.pet.positionBottom(this.pet.bottom + this.pet.climbSpeed);
+        if (this.pet.bottom >= this.pet.climbHeight) {
             return FrameResult.stateComplete;
         }
         return FrameResult.stateContinue;
@@ -397,7 +420,7 @@ export class JumpDownLeftState implements IState {
     }
 
     nextFrame(): FrameResult {
-        this.pet.positionBottom(this.pet.bottom - 5);
+        this.pet.positionBottom(this.pet.bottom - this.pet.fallSpeed);
         if (this.pet.bottom <= this.pet.floor) {
             this.pet.positionBottom(this.pet.floor);
             return FrameResult.stateComplete;
@@ -414,7 +437,7 @@ export class StandRightState extends AbstractStaticState {
 }
 
 export class StandLeftState extends AbstractStaticState {
-    label = States.standRight;
+    label = States.standLeft;
     spriteLabel = 'stand';
     horizontalDirection = HorizontalDirection.left;
     holdTime = 60;
