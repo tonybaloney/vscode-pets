@@ -54,6 +54,7 @@
     "vscode-pets.petType.zappy": "Zappy",
     "vscode-pets.petType.snail": "Caracol",
     "vscode-pets.petType.bunny": "Conejito",
+    "vscode-pets.petType.squirrel": "Ardilla",
     "vscode-pets.petSize.nano": "Nano",
     "vscode-pets.petSize.small": "Pequeña",
     "vscode-pets.petSize.medium": "Mediana",
