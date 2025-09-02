@@ -16,9 +16,9 @@ jobs:
 
         strategy:
             matrix:
-                node-version: [18.x]
+                node-version: [20.x]
         steps:
-            - uses: actions/checkout@v4
+            - uses: actions/checkout@v5
             - name: Use Node.js ${{ matrix.node-version }}
               uses: actions/setup-node@v4
               with:
@@ -45,7 +45,7 @@ jobs:
                 token: ${{ secrets.CODECOV_TOKEN }}
             
             - name: Package VSIX
-              run: npm install -g vsce && vsce package
+              run: npm install -g @vscode/vsce && vsce package
             - uses: actions/upload-artifact@v4
               with:
                 path: "*.vsix"
