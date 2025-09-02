@@ -1,4 +1,4 @@
-import { PetColor, PetSize } from '../../common/types';
+import { PetColor, PetRelativeSize, PetSize } from '../../common/types';
 import { BasePetType } from '../basepettype';
 import { States, resolveState } from '../states';
 
@@ -24,6 +24,7 @@ export class Squirrel extends BasePetType {
         collisionElement: HTMLDivElement,
         speechElement: HTMLDivElement,
         size: PetSize,
+        relativeSize: PetRelativeSize,
         left: number,
         bottom: number,
         petRoot: string,
@@ -39,6 +40,7 @@ export class Squirrel extends BasePetType {
             collisionElement,
             speechElement,
             size,
+            relativeSize,
             left,
             bottom,
             petRootClean,
@@ -252,7 +254,7 @@ export class Squirrel extends BasePetType {
 
     private adjustClimbHeight(): void {
         const viewportHeight = window.innerHeight;
-        const elementHeight = this.calculateSpriteWidth(this.size);
+        const elementHeight = this.calculateSpriteWidth(this.size, this.relativeSize);
 
         // Scale the climb height based on viewport height
         const minHeight = Math.floor(viewportHeight * 0.3);

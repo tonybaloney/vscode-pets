@@ -398,5 +398,9 @@ export abstract class BasePetType implements IPetType {
         return this._size;
     }
 
+    get relativeSize(): PetRelativeSize {
+        return this._relativeSize;
+    }
+
     remove(): void {}
 }
