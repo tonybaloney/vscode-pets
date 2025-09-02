@@ -177,7 +177,7 @@ export class Squirrel extends BasePetType {
         return '🐿️';
     }
     get hello(): string {
-        let response = Math.random() > 0.5 ? `Neigh!` : `Neigh?`;
+        let response = 'Got any nuts?!';
         switch (this.name.toLowerCase()) {
             case 'bruce':
                 response = "Wanna get nuts? Let's get nuts!";
