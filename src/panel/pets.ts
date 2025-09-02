@@ -18,6 +18,7 @@ import { Rocky } from './pets/rocky';
 import { RubberDuck } from './pets/rubberduck';
 import { Snail } from './pets/snail';
 import { Snake } from './pets/snake';
+import { Squirrel } from './pets/squirrel';
 import { Totoro } from './pets/totoro';
 import { Turtle } from './pets/turtle';
 import { Zappy } from './pets/zappy';
@@ -36,6 +37,7 @@ export class PetElement {
         this.speech.remove();
         this.color = PetColor.null;
         this.type = PetType.null;
+        this.pet.remove();
     }
 
     constructor(
@@ -223,6 +225,8 @@ export function createPet(
             return new Snail(...standardPetArguments, PetSpeed.verySlow);
         case PetType.snake:
             return new Snake(...standardPetArguments, PetSpeed.verySlow);
+        case PetType.squirrel:
+            return new Squirrel(...standardPetArguments, PetSpeed.veryFast);
         case PetType.rubberduck:
             return new RubberDuck(...standardPetArguments, PetSpeed.fast);
         case PetType.zappy:
@@ -276,6 +280,8 @@ export function availableColors(petType: PetType): PetColor[] {
             return Snail.possibleColors;
         case PetType.snake:
             return Snake.possibleColors;
+        case PetType.squirrel:
+            return Squirrel.possibleColors;
         case PetType.rubberduck:
             return RubberDuck.possibleColors;
         case PetType.zappy:

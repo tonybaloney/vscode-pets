@@ -26,6 +26,7 @@
         "clippy",
         "rubber duck",
         "horse",
+        "squirrel",
         "deno"
     ],
     "license": "MIT",
@@ -214,6 +215,7 @@
                             "rocky",
                             "rubber-duck",
                             "snake",
+                            "squirrel",
                             "totoro",
                             "turtle",
                             "zappy",
@@ -238,6 +240,7 @@
                             "%vscode-pets.petType.rocky%",
                             "%vscode-pets.petType.rubber-duck%",
                             "%vscode-pets.petType.snake%",
+                            "%vscode-pets.petType.squirrel%",
                             "%vscode-pets.petType.totoro%",
                             "%vscode-pets.petType.turtle%",
                             "%vscode-pets.petType.zappy%",

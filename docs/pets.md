@@ -59,4 +59,10 @@ The pet list can be imported by running the "Import pet list" command (`vscode-p
 
 ## Pet Gallery
 
-![Pet gallery](/media/pet-grid.png)
+
+|  ![Bunny](/media/bunny/icon.png) <br />Bunny   |             ![Cat](/media/cat/icon.png) <br />Cat             | ![Chicken](/media/chicken/icon.png) <br />Chicken | ![Clippy](/media/clippy/icon.png) <br />Clippy | ![Cockatiel](/media/cockatiel/icon.png) <br />Cockatiel |
+| :--------------------------------------------: | :-----------------------------------------------------------: | :-----------------------------------------------: | :--------------------------------------------: | :-----------------------------------------------------: |
+|    ![Crab](/media/crab/icon.png) <br />Crab    |           ![Deno](/media/deno/icon.png) <br />Deno            |       ![Dog](/media/dog/icon.png) <br />Dog       |     ![Fox](/media/fox/icon.png) <br />Fox      |        ![Frog](/media/frog/icon.png) <br />Frog         |
+|  ![Horse](/media/horse/icon.png) <br />Horse   |             ![Mod](/media/mod/icon.png) <br />Mod             |    ![Morph](/media/morph/icon.png) <br />Morph    |  ![Panda](/media/panda/icon.png) <br />Panda   |          ![Rat](/media/rat/icon.png) <br />Rat          |
+|  ![Rocky](/media/rocky/icon.png) <br />Rocky   | ![Rubber Duck](/media/rubber-duck/icon.png) <br />Rubber Duck |    ![Snail](/media/snail/icon.png) <br />Snail    |  ![Snake](/media/Snake/icon.png) <br />Snake   |  ![Squirrel](/media/squirrel/icon.png) <br />Squirrel   |
+| ![Totoro](/media/totoro/icon.png) <br />Totoro |        ![Turtle](/media/turtle/icon.png) <br />Turtle         |    ![Zappy](/media/zappy/icon.png) <br />Zappy    |                                                |                                                         |
