@@ -54,6 +54,7 @@
     "vscode-pets.petType.zappy": "Молния",
     "vscode-pets.petType.snail": "Улитка",
     "vscode-pets.petType.bunny": "Кролик",
+    "vscode-pets.petType.squirrel": "Белка",
     "vscode-pets.petSize.nano": "Микро",
     "vscode-pets.petSize.small": "Маленький",
     "vscode-pets.petSize.medium": "Средний",
