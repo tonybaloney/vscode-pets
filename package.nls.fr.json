@@ -54,6 +54,7 @@
     "vscode-pets.petType.zappy": "Zappy",
     "vscode-pets.petType.snail": "Escargot",
     "vscode-pets.petType.bunny": "Lapin",
+    "vscode-pets.petType.squirrel": "Écureuil",
     "vscode-pets.petSize.nano": "Nano",
     "vscode-pets.petSize.small": "Petit",
     "vscode-pets.petSize.medium": "Moyen",
