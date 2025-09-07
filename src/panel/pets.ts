@@ -23,6 +23,7 @@ import { Totoro } from './pets/totoro';
 import { Turtle } from './pets/turtle';
 import { Zappy } from './pets/zappy';
 import { IPetType } from './states';
+import { Fish } from './pets/fish';
 
 export class PetElement {
     el: HTMLImageElement;
@@ -245,6 +246,8 @@ export function createPet(
             return new Panda(...standardPetArguments, PetSpeed.slow);
         case PetType.morph:
             return new Morph(...standardPetArguments, PetSpeed.normal);
+        case PetType.fish:
+             return new Fish(...standardPetArguments, PetSpeed.normal);
         default:
             throw new InvalidPetException("Pet type doesn't exist");
     }
@@ -298,6 +301,8 @@ export function availableColors(petType: PetType): PetColor[] {
             return Horse.possibleColors;
         case PetType.panda:
             return Panda.possibleColors;
+        case PetType.fish:
+            return Fish.possibleColors;
         default:
             throw new InvalidPetException("Pet type doesn't exist");
     }
