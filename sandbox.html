@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<!--
+		Use a content security policy to only allow loading images from https or from our extension directory,
+		and only allow scripts that have a specific nonce.
+	-->
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link href="media/reset.css" rel="stylesheet" >
+	<link href="media/pets.css" rel="stylesheet" >
+	<title>VS Code Pets</title>
+</head>
+<body>
+	<div id="petCanvasContainer">
+		<canvas id="ballCanvas"></canvas>
+		<canvas id="foregroundEffectCanvas"></canvas>
+		<canvas id="backgroundEffectCanvas"></canvas>
+	</div>
+	<div id="petsContainer"></div>
+	<div id="foreground"></div>
+	<div id="background"></div>
+	<script src="media/main-bundle.js"></script>
+	<script>
+		function acquireVsCodeApi() {
+			return {
+				getState: () => { return null; },
+				setState: (state) => { console.log(state); },
+				postMessage: (msg) => { console.log(msg); }
+			};
+		}
+
+		petApp.petPanelApp(
+			"/media", 
+			"none", 
+			'1', // light
+			"black", 
+			"medium", 
+			"dog", 
+			true, 
+			false,
+			);
+		setInterval(() => {
+			window.postMessage({ command: 'tick' }, '*');
+		}, 100);
+	</script>
+</body>
+</html>
