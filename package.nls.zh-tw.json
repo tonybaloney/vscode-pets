@@ -9,6 +9,7 @@
     "vscode-pets.delete-pet.title": "刪除寵物",
     "vscode-pets.remove-all-pets.title": "移除全部寵物",
     "vscode-pets.roll-call.title": "點名",
+    "vscode-pets.petName.description": "Name of the pet",
     "vscode-pets.petColor.description": "寵物顏色",
     "vscode-pets.petType.description": "寵物類型",
     "vscode-pets.petSize.description": "寵物大小",
