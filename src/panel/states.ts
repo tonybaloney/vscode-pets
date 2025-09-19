@@ -1,4 +1,4 @@
-import { PetColor, PetType } from '../common/types';
+import { PetColor, PetRelativeSize, PetType } from '../common/types';
 
 export interface IPetType {
     nextFrame(): void;
@@ -52,6 +52,7 @@ export class PetElementState {
     elBottom: string | undefined;
     petName: string | undefined;
     petFriend: string | undefined;
+    relativeSize: PetRelativeSize | undefined;
 }
 
 export class PetPanelState {

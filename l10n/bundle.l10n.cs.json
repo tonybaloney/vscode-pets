@@ -49,5 +49,12 @@
 	"snake": "Had",
 	"totoro": "Totoro",
 	"turtle": "Želva",
-	"zappy": "Zappy"
+	"zappy": "Zappy",
+	"Normal": "Normální",
+	"Tinier (25%)": "Drobnější (25 %)",
+	"Smaller (50%)": "Menší (50 %)",
+	"Larger (150%)": "Větší (150 %)",
+	"Much Larger (200%)": "Mnohem větší (200 %)",
+	"Relative sizes": "Relativní velikosti",
+	"Select a relative size": "Vyberte relativní velikost"
 }

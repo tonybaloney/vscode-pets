@@ -1,4 +1,4 @@
-import { PetColor, PetSize, PetSpeed } from '../common/types';
+import { PetColor, PetRelativeSize, PetSize, PetSpeed } from '../common/types';
 import { IPetType } from './states';
 import { ISequenceTree } from './sequences';
 import {
@@ -47,6 +47,7 @@ export abstract class BasePetType implements IPetType {
     private _name: string;
     private _speed: number;
     private _size: PetSize;
+    private _relativeSize: PetRelativeSize;
     protected _climbSpeed: number = 1;
     protected _climbHeight: number = 100;
     protected _fallSpeed: number = 5;
@@ -56,6 +57,7 @@ export abstract class BasePetType implements IPetType {
         collisionElement: HTMLDivElement,
         speechElement: HTMLDivElement,
         size: PetSize,
+        relativeSize: PetRelativeSize,
         left: number,
         bottom: number,
         petRoot: string,
@@ -70,13 +72,23 @@ export abstract class BasePetType implements IPetType {
         this._floor = floor;
         this._left = left;
         this._bottom = bottom;
-        this.initSprite(size, left, bottom);
+        this.initSprite(size, relativeSize, left, bottom);
         this.currentStateEnum = this.sequence.startingState;
         this.currentState = resolveState(this.currentStateEnum, this);
 
         this._name = name;
         this._size = size;
-        this._speed = this.randomizeSpeed(speed);
+        this._relativeSize = relativeSize;
+
+        const baseSpeed = this.randomizeSpeed(speed);
+        const relativeAdjustment =
+            relativeSize === 1
+                ? 1
+                : relativeSize > 1
+                ? 1 + relativeSize * 0.3
+                : 1 - relativeSize * 0.3;
+        this._speed = baseSpeed * relativeAdjustment;
+
         if (this._name.toLowerCase() === 'debug') {
             console.log(
                 `Creating pet ${this._name} of size ${this._size} at position (${this._left}, ${this._bottom}) with speed ${this._speed}`,
@@ -87,21 +99,26 @@ export abstract class BasePetType implements IPetType {
         (this.constructor as any).count += 1;
     }
 
-    initSprite(petSize: PetSize, left: number, bottom: number) {
+    initSprite(
+        petSize: PetSize,
+        relativeSize: PetRelativeSize,
+        left: number,
+        bottom: number,
+    ) {
+        const sizeValue = this.calculateSpriteWidth(petSize, relativeSize);
+        const size = `${sizeValue}px`;
         this.el.style.left = `${left}px`;
         this.el.style.bottom = `${bottom}px`;
-        this.el.style.width = 'auto';
-        this.el.style.height = 'auto';
-        this.el.style.maxWidth = `${this.calculateSpriteWidth(petSize)}px`;
-        this.el.style.maxHeight = `${this.calculateSpriteWidth(petSize)}px`;
+        this.el.style.width = size;
+        this.el.style.height = size;
+        this.el.style.maxWidth = size;
+        this.el.style.maxHeight = size;
         this.collision.style.left = `${left}px`;
         this.collision.style.bottom = `${bottom}px`;
-        this.collision.style.width = `${this.calculateSpriteWidth(petSize)}px`;
-        this.collision.style.height = `${this.calculateSpriteWidth(petSize)}px`;
+        this.collision.style.width = size;
+        this.collision.style.height = size;
         this.speech.style.left = `${left}px`;
-        this.speech.style.bottom = `${
-            bottom + this.calculateSpriteWidth(petSize)
-        }px`;
+        this.speech.style.bottom = `${bottom + sizeValue}px`;
         this.hideSpeechBubble();
     }
 
@@ -118,21 +135,22 @@ export abstract class BasePetType implements IPetType {
         this.collision.style.bottom = `${this._bottom}px`;
         this.speech.style.left = `${this._left}px`;
         this.speech.style.bottom = `${
-            this._bottom + this.calculateSpriteWidth(this._size)
+            this._bottom +
+            this.calculateSpriteWidth(this._size, this._relativeSize)
         }px`;
     }
 
-    calculateSpriteWidth(size: PetSize): number {
+    calculateSpriteWidth(size: PetSize, relativeSize: PetRelativeSize): number {
         if (size === PetSize.nano) {
-            return 30;
+            return 30 * relativeSize;
         } else if (size === PetSize.small) {
-            return 40;
+            return 40 * relativeSize;
         } else if (size === PetSize.medium) {
-            return 55;
+            return 55 * relativeSize;
         } else if (size === PetSize.large) {
-            return 110;
+            return 110 * relativeSize;
         } else {
-            return 30; // Shrug
+            return 30 * relativeSize; // Shrug
         }
     }
 
@@ -378,6 +396,10 @@ export abstract class BasePetType implements IPetType {
 
     get size(): PetSize {
         return this._size;
+    }
+
+    get relativeSize(): PetRelativeSize {
+        return this._relativeSize;
     }
 
     remove(): void {}
