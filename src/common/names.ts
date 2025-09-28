@@ -13,6 +13,7 @@ import { MOD_NAMES } from '../panel/pets/mod';
 import { PANDA_NAMES } from '../panel/pets/panda';
 import { ROCKY_NAMES } from '../panel/pets/rocky';
 import { DUCK_NAMES } from '../panel/pets/rubberduck';
+import { SKELETON_NAMES } from '../panel/pets/skeleton';
 import { SNAIL_NAMES } from '../panel/pets/snail';
 import { SNAKE_NAMES } from '../panel/pets/snake';
 import { SQUIRREL_NAMES } from '../panel/pets/squirrel';
@@ -50,6 +51,7 @@ export function randomName(type: PetType): string {
                 [PetType.horse]: HORSE_NAMES,
                 [PetType.panda]: PANDA_NAMES,
                 [PetType.morph]: MORPH_NAMES,
+                [PetType.skeleton]: SKELETON_NAMES,
             } as Record<PetType, ReadonlyArray<string>>
         )[type] ?? CAT_NAMES;
 
