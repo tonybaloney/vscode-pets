@@ -40,6 +40,7 @@ export class Skeleton extends BasePetType {
     static possibleColors = [
         PetColor.white,
         PetColor.brown,
+        PetColor.purple,
         PetColor.blue,
         PetColor.pink,
         PetColor.yellow,
