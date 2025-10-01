@@ -32,11 +32,7 @@ class Leaf {
     dx: number;
     color: string;
 
-    constructor(
-        origin: Vector2,
-        velocity: Vector2,
-        amplitude: number,
-    ) {
+    constructor(origin: Vector2, velocity: Vector2, amplitude: number) {
         this.origin = origin;
         this.position = new Vector2(origin.x, origin.y);
         this.velocity = velocity || new Vector2(0, 0);
@@ -151,7 +147,10 @@ export class LeafEffect implements Effect {
         for (var i = 0; i < this.pAmount; i++) {
             var origin = new Vector2(
                 floorRandom(0, this.canvas.width),
-                floorRandom(this.canvas.height - this.treeLine, this.canvas.height - this.floor),
+                floorRandom(
+                    this.canvas.height - this.treeLine,
+                    this.canvas.height - this.floor,
+                ),
             );
             var velocity = new Vector2(
                 floorRandom(this.pSwing[0], this.pSwing[1]),
@@ -177,10 +176,7 @@ export class LeafEffect implements Effect {
             var particle = this.particles[i];
             particle.update(timeDelta);
 
-            if (
-                particle.position.y >
-                this.canvas.height - this.floor
-            ) {
+            if (particle.position.y > this.canvas.height - this.floor) {
                 // reset the particle to the top and a random x position
                 particle.position.y = this.canvas.height - this.treeLine;
                 particle.position.x = particle.origin.x =

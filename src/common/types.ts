@@ -155,5 +155,5 @@ export const ALL_THEMES = [
     Theme.castle,
     Theme.beach,
     Theme.winter,
-    Theme.autumn
+    Theme.autumn,
 ];
