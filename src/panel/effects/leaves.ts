@@ -31,16 +31,25 @@ class Leaf {
     amplitude: number;
     dx: number;
     color: string;
+    rotation: number;
+    rotationSpeed: number;
 
-    constructor(origin: Vector2, velocity: Vector2, amplitude: number) {
+    constructor(
+        origin: Vector2,
+        velocity: Vector2,
+        amplitude: number,
+        rotationSpeed: number,
+    ) {
         this.origin = origin;
         this.position = new Vector2(origin.x, origin.y);
         this.velocity = velocity || new Vector2(0, 0);
         this.amplitude = amplitude;
         this.color = colors[Math.floor(Math.random() * colors.length)];
+        this.rotationSpeed = rotationSpeed;
 
         // randomize start values a bit
         this.dx = Math.random() * 100;
+        this.rotation = Math.random() * Math.PI * 2; // Random initial rotation
     }
 
     update(timeDelta: number) {
@@ -49,6 +58,9 @@ class Leaf {
         // oscillate the x value between -amplitude and +amplitude
         this.dx += this.velocity.x * timeDelta;
         this.position.x = this.origin.x + this.amplitude * Math.sin(this.dx);
+
+        // update rotation for flutter effect
+        this.rotation += this.rotationSpeed * timeDelta;
     }
 }
 
@@ -71,6 +83,7 @@ export class LeafEffect implements Effect {
     pSwing: number[] = [0.1, 1]; // min and max oscillation speed for x movement
     pSpeed: number[] = [10, 50]; // min and max y speed
     pAmplitude: number[] = [5, 100]; // min and max distance for x movement
+    pRotationSpeed: number[] = [0.5, 3]; // min and max rotation speed for flutter effect
 
     floor: number = 0;
 
@@ -157,8 +170,14 @@ export class LeafEffect implements Effect {
                 floorRandom(this.pSpeed[0], this.pSpeed[1]),
             );
             var amplitude = floorRandom(this.pAmplitude[0], this.pAmplitude[1]);
+            var rotationSpeed = floorRandom(
+                this.pRotationSpeed[0],
+                this.pRotationSpeed[1],
+            );
 
-            this.particles.push(new Leaf(origin, velocity, amplitude));
+            this.particles.push(
+                new Leaf(origin, velocity, amplitude, rotationSpeed),
+            );
         }
     }
 
@@ -182,6 +201,8 @@ export class LeafEffect implements Effect {
                 particle.position.x = particle.origin.x =
                     Math.random() * this.canvas.width;
                 particle.dx = Math.random() * 100;
+                // Reset rotation to a random value for variety
+                particle.rotation = Math.random() * Math.PI * 2;
             }
         }
 
@@ -200,6 +221,20 @@ export class LeafEffect implements Effect {
             var x = particle.position.x;
             var y = particle.position.y;
 
+            // Save the current transformation matrix
+            this.ctx.save();
+
+            // Move to the center of the leaf for rotation
+            var centerX = x + (100 * this.scale) / 2;
+            var centerY = y + (85 * this.scale + 169 * this.scale) / 2;
+            this.ctx.translate(centerX, centerY);
+
+            // Apply rotation for flutter effect
+            this.ctx.rotate(particle.rotation);
+
+            // Move back to original position (relative to rotation center)
+            this.ctx.translate(-centerX, -centerY);
+
             this.ctx.fillStyle = particle.color;
             this.ctx.beginPath();
             this.ctx.moveTo(100 * this.scale + x, 85 * this.scale + y);
@@ -215,6 +250,9 @@ export class LeafEffect implements Effect {
             this.ctx.lineTo(100 * this.scale + x, 85 * this.scale + y);
             this.ctx.lineTo(100 * this.scale + x, 70 * this.scale + y);
             this.ctx.fill();
+
+            // Restore the transformation matrix
+            this.ctx.restore();
         }
     }
 
