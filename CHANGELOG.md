@@ -2,6 +2,23 @@
 
 All notable changes to the "vscode-pets" extension will be documented in this file.
 
+## [1.34.0]
+
+### New Theme 
+
+* Add autumn theme with falling leaf animations by @tonybaloney in https://github.com/tonybaloney/vscode-pets/pull/788
+
+### New Pets
+
+* Squirrels! by @thechriskent in https://github.com/tonybaloney/vscode-pets/pull/775
+* Skeletons! by @thechriskent in https://github.com/tonybaloney/vscode-pets/pull/787
+
+### Other Updates
+
+* Fix typos in comments and CHANGELOG by @noritaka1166 in https://github.com/tonybaloney/vscode-pets/pull/764
+* chore: update @types/node from v18 to v20 by @noritaka1166 in https://github.com/tonybaloney/vscode-pets/pull/765
+* Add pet gallery image by @nzukie-b in https://github.com/tonybaloney/vscode-pets/pull/769
+
 ## [1.33.0]
 
 * Improve French translations by @tonybaloney in https://github.com/tonybaloney/vscode-pets/pull/746
