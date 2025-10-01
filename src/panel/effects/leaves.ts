@@ -108,25 +108,25 @@ export class LeafEffect implements Effect {
             case PetSize.nano:
                 this.pSize = [0.1, 0.5];
                 this.pAmount = 100;
-                this.treeLine = this.canvas.height - (187 / 2);
+                this.treeLine = this.canvas.height - 187 / 2;
                 this.scale = 1 / 20;
                 break;
             case PetSize.small:
                 this.pSize = [0.5, 1.5];
                 this.pAmount = 50;
-                this.treeLine = this.canvas.height - (250 / 2);
+                this.treeLine = this.canvas.height - 250 / 2;
                 this.scale = 1 / 15;
                 break;
             case PetSize.medium:
                 this.pSize = [1, 2];
                 this.pAmount = 20;
-                this.treeLine = this.canvas.height - (375 / 2);
+                this.treeLine = this.canvas.height - 375 / 2;
                 this.scale = 1 / 10;
                 break;
             case PetSize.large:
                 this.pSize = [1.5, 3];
                 this.pAmount = 15;
-                this.treeLine = this.canvas.height - (500 / 2);
+                this.treeLine = this.canvas.height - 500 / 2;
                 this.scale = 1 / 10;
                 break;
         }
@@ -208,8 +208,6 @@ export class LeafEffect implements Effect {
             var particle = this.particles[i];
             var x = particle.position.x;
             var y = particle.position.y;
-
-            
 
             this.ctx.fillStyle = particle.color;
             this.ctx.beginPath();
