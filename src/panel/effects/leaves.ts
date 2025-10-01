@@ -4,7 +4,7 @@
 import { ColorThemeKind, PetSize } from '../../common/types';
 import { Effect } from './effect';
 
-const colors = ["#D7A50F", "#704910", "#A22D16", "#BB8144"];
+const colors = ['#D7A50F', '#704910', '#A22D16', '#BB8144'];
 
 class Vector2 {
     x: number;
@@ -107,12 +107,12 @@ export class LeafEffect implements Effect {
             case PetSize.nano:
                 this.pSize = [0.1, 0.5];
                 this.pAmount = 100;
-                this.treeLine = this.canvas.height - 120;
+                this.treeLine = this.canvas.height - 187 / 2;
                 break;
             case PetSize.small:
                 this.pSize = [0.5, 1.5];
                 this.pAmount = 50;
-                this.treeLine = this.canvas.height - 240;
+                this.treeLine = this.canvas.height - 250 / 2;
                 break;
             case PetSize.medium:
                 this.pSize = [1, 2];
@@ -122,7 +122,7 @@ export class LeafEffect implements Effect {
             case PetSize.large:
                 this.pSize = [1.5, 3];
                 this.pAmount = 15;
-                this.treeLine = this.canvas.height - 600;
+                this.treeLine = this.canvas.height - 500 / 2;
                 break;
         }
         this.initParticles();
@@ -159,9 +159,7 @@ export class LeafEffect implements Effect {
             var size = floorRandom(this.pSize[0], this.pSize[1]);
             var amplitude = floorRandom(this.pAmplitude[0], this.pAmplitude[1]);
 
-            this.particles.push(
-                new Leaf(origin, velocity, size, amplitude),
-            );
+            this.particles.push(new Leaf(origin, velocity, size, amplitude));
         }
     }
 
@@ -184,7 +182,7 @@ export class LeafEffect implements Effect {
                 this.canvas.height - this.floor
             ) {
                 // reset the particle to the top and a random x position
-                particle.position.y = (this.canvas.height - this.treeLine);
+                particle.position.y = this.canvas.height - this.treeLine;
                 particle.position.x = particle.origin.x =
                     Math.random() * this.canvas.width;
                 particle.dx = Math.random() * 100;
@@ -208,23 +206,23 @@ export class LeafEffect implements Effect {
             var particle = this.particles[i];
             var x = particle.position.x;
             var y = particle.position.y;
-            
-            const scale = 1/10;
+
+            const scale = 1 / 10;
 
             this.ctx.fillStyle = particle.color;
             this.ctx.beginPath();
-            this.ctx.moveTo((100*scale)+x, (85*scale)+y);
-            this.ctx.lineTo(0+x, (107*scale)+y);
-            this.ctx.lineTo((73*scale)+x, (112*scale)+y);
-            this.ctx.lineTo((32*scale)+x, (138*scale)+y);
-            this.ctx.lineTo((92*scale)+x, (123*scale)+y);
-            this.ctx.lineTo((100*scale)+x, (169*scale)+y);
-            this.ctx.lineTo((123*scale)+x, (123*scale)+y);
-            this.ctx.lineTo((168*scale)+x, (133*scale)+y);
-            this.ctx.lineTo((133*scale)+x, (112*scale)+y);
-            this.ctx.lineTo((184*scale)+x, (110*scale)+y);
-            this.ctx.lineTo((100*scale)+x, (85*scale)+y);
-            this.ctx.lineTo((100*scale)+x, (70*scale)+y);
+            this.ctx.moveTo(100 * scale + x, 85 * scale + y);
+            this.ctx.lineTo(0 + x, 107 * scale + y);
+            this.ctx.lineTo(73 * scale + x, 112 * scale + y);
+            this.ctx.lineTo(32 * scale + x, 138 * scale + y);
+            this.ctx.lineTo(92 * scale + x, 123 * scale + y);
+            this.ctx.lineTo(100 * scale + x, 169 * scale + y);
+            this.ctx.lineTo(123 * scale + x, 123 * scale + y);
+            this.ctx.lineTo(168 * scale + x, 133 * scale + y);
+            this.ctx.lineTo(133 * scale + x, 112 * scale + y);
+            this.ctx.lineTo(184 * scale + x, 110 * scale + y);
+            this.ctx.lineTo(100 * scale + x, 85 * scale + y);
+            this.ctx.lineTo(100 * scale + x, 70 * scale + y);
             this.ctx.fill();
         }
     }

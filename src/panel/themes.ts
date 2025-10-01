@@ -146,7 +146,7 @@ class WinterThemeInfo extends ThemeInfo {
 class AutumnThemeInfo extends ThemeInfo {
     name = 'autumn';
     description = 'An autumn theme';
-     effect = new LeafEffect();
+    effect = new LeafEffect();
 
     floor(size: PetSize): number {
         switch (size) {
@@ -162,7 +162,6 @@ class AutumnThemeInfo extends ThemeInfo {
         }
     }
 }
-
 
 // Map of theme name to theme info
 export const THEMES: Record<Theme, ThemeInfo> = {
