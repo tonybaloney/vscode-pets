@@ -60,6 +60,7 @@
     "vscode-pets.petType.deno": "데노",
     "vscode-pets.petType.morph": "모프",
     "vscode-pets.petType.panda": "판다",
+    "vscode-pets.petType.pumpkin": "호박",
     "vscode-pets.petSize.nano": "매우 작음",
     "vscode-pets.petSize.small": "작음",
     "vscode-pets.petSize.medium": "중간",

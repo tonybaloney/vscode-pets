@@ -61,6 +61,7 @@
     "vscode-pets.petType.morph": "Morph",
     "vscode-pets.petType.panda": "Panda",
     "vscode-pets.petSize.nano": "Nano",
+    "vscode-pets.petSize.pumpkin": "Pumpkin",
     "vscode-pets.petSize.small": "Small",
     "vscode-pets.petSize.medium": "Medium",
     "vscode-pets.petSize.large": "Large",

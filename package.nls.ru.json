@@ -60,6 +60,7 @@
     "vscode-pets.petType.deno": "Дено",
     "vscode-pets.petType.morph": "Морф",
     "vscode-pets.petType.panda": "Панда",
+    "vscode-pets.petType.pumpkin": "Тыква",
     "vscode-pets.petSize.nano": "Микро",
     "vscode-pets.petSize.small": "Маленький",
     "vscode-pets.petSize.medium": "Средний",
