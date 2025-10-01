@@ -110,24 +110,28 @@ export class LeafEffect implements Effect {
                 this.pAmount = 100;
                 this.treeLine = this.canvas.height - 187 / 2;
                 this.scale = 1 / 20;
+                this.pSpeed = [2, 10];
                 break;
             case PetSize.small:
                 this.pSize = [0.5, 1.5];
                 this.pAmount = 50;
                 this.treeLine = this.canvas.height - 250 / 2;
                 this.scale = 1 / 15;
+                this.pSpeed = [5, 20];
                 break;
             case PetSize.medium:
                 this.pSize = [1, 2];
                 this.pAmount = 20;
                 this.treeLine = this.canvas.height - 375 / 2;
                 this.scale = 1 / 10;
+                this.pSpeed = [10, 30];
                 break;
             case PetSize.large:
                 this.pSize = [1.5, 3];
                 this.pAmount = 15;
                 this.treeLine = this.canvas.height - 500 / 2;
                 this.scale = 1 / 10;
+                this.pSpeed = [20, 50];
                 break;
         }
         this.initParticles();
@@ -155,7 +159,7 @@ export class LeafEffect implements Effect {
         for (var i = 0; i < this.pAmount; i++) {
             var origin = new Vector2(
                 floorRandom(0, this.canvas.width),
-                floorRandom(this.treeLine, this.canvas.height - this.floor),
+                floorRandom(this.canvas.height - this.treeLine, this.canvas.height - this.floor),
             );
             var velocity = new Vector2(
                 floorRandom(this.pSwing[0], this.pSwing[1]),
