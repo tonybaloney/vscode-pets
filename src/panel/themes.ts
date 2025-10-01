@@ -151,14 +151,14 @@ class AutumnThemeInfo extends ThemeInfo {
     floor(size: PetSize): number {
         switch (size) {
             case PetSize.small:
-                return 10;
+                return 9;
             case PetSize.medium:
                 return 15;
             case PetSize.large:
-                return 22;
+                return 20;
             case PetSize.nano:
             default:
-                return 9;
+                return 7;
         }
     }
 }
