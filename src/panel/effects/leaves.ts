@@ -69,7 +69,7 @@ export class LeafEffect implements Effect {
     frameTime: number = 0;
     maxTimeDelta: number = 0.1;
     treeLine: number = 600; // y position of the tree line. Exactly half the height of the graphic
-    scale: number = 1; // scale of the graphic
+    scale: number = 1; // scale of the leaf graphic. Adjusted for pet size
 
     pAmount: number = 25; // Leafiness
     pSwing: number[] = [0.1, 1]; // min and max oscillation speed for x movement
@@ -103,25 +103,25 @@ export class LeafEffect implements Effect {
         switch (scale) {
             case PetSize.nano:
                 this.pAmount = 100;
-                this.treeLine = this.canvas.height - 187 / 2;
+                this.treeLine = 187 / 2;
                 this.scale = 1 / 20;
                 this.pSpeed = [2, 10];
                 break;
             case PetSize.small:
                 this.pAmount = 50;
-                this.treeLine = this.canvas.height - 250 / 2;
+                this.treeLine = 250 / 2;
                 this.scale = 1 / 15;
                 this.pSpeed = [5, 20];
                 break;
             case PetSize.medium:
                 this.pAmount = 20;
-                this.treeLine = this.canvas.height - 375 / 2;
+                this.treeLine = 375 / 2;
                 this.scale = 1 / 10;
                 this.pSpeed = [10, 30];
                 break;
             case PetSize.large:
                 this.pAmount = 15;
-                this.treeLine = this.canvas.height - 500 / 2;
+                this.treeLine = 500 / 2;
                 this.scale = 1 / 10;
                 this.pSpeed = [20, 50];
                 break;
