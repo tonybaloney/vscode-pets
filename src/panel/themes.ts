@@ -2,6 +2,7 @@ import { ColorThemeKind, PetSize, Theme } from '../common/types';
 import { Effect } from './effects/effect';
 import { SnowEffect } from './effects/snow';
 import { StarEffect } from './effects/stars';
+import { LeafEffect } from './effects/leaves';
 
 function normalizeColorThemeKind(kind: ColorThemeKind): 'dark' | 'light' {
     switch (kind) {
@@ -142,6 +143,26 @@ class WinterThemeInfo extends ThemeInfo {
     }
 }
 
+class AutumnThemeInfo extends ThemeInfo {
+    name = 'autumn';
+    description = 'An autumn theme';
+    effect = new LeafEffect();
+
+    floor(size: PetSize): number {
+        switch (size) {
+            case PetSize.small:
+                return 9;
+            case PetSize.medium:
+                return 15;
+            case PetSize.large:
+                return 20;
+            case PetSize.nano:
+            default:
+                return 7;
+        }
+    }
+}
+
 // Map of theme name to theme info
 export const THEMES: Record<Theme, ThemeInfo> = {
     none: {
@@ -165,4 +186,5 @@ export const THEMES: Record<Theme, ThemeInfo> = {
     castle: new CastleThemeInfo(),
     beach: new BeachThemeInfo(),
     winter: new WinterThemeInfo(),
+    autumn: new AutumnThemeInfo(),
 };
