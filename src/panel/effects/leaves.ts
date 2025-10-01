@@ -206,16 +206,21 @@ export class LeafEffect implements Effect {
             var particle = this.particles[i];
             particle.update(timeDelta);
 
-            var leafBottom = particle.position.y + (85 * this.scale);
+            var leafBottom = particle.position.y + 85 * this.scale;
 
             if (leafBottom >= this.canvas.height - this.floor) {
                 if (!particle.settled) {
                     particle.settled = true;
                     particle.settleTime = timeNow;
-                    particle.position.y = this.canvas.height - this.floor - (85 * this.scale);
+                    particle.position.y =
+                        this.canvas.height - this.floor - 85 * this.scale;
                 } else {
-                    if (timeNow - particle.settleTime >= particle.settleDuration) {
-                        particle.position.y = particle.origin.y = this.canvas.height - this.treeLine;
+                    if (
+                        timeNow - particle.settleTime >=
+                        particle.settleDuration
+                    ) {
+                        particle.position.y = particle.origin.y =
+                            this.canvas.height - this.treeLine;
                         particle.position.x = particle.origin.x =
                             Math.random() * this.canvas.width;
                         particle.dx = Math.random() * 100;
