@@ -28,7 +28,6 @@ class Leaf {
     origin: Vector2;
     position: Vector2;
     velocity: Vector2;
-    size: number;
     amplitude: number;
     dx: number;
     color: string;
@@ -36,13 +35,11 @@ class Leaf {
     constructor(
         origin: Vector2,
         velocity: Vector2,
-        size: number,
         amplitude: number,
     ) {
         this.origin = origin;
         this.position = new Vector2(origin.x, origin.y);
         this.velocity = velocity || new Vector2(0, 0);
-        this.size = size;
         this.amplitude = amplitude;
         this.color = colors[Math.floor(Math.random() * colors.length)];
 
@@ -75,7 +72,6 @@ export class LeafEffect implements Effect {
     scale: number = 1; // scale of the graphic
 
     pAmount: number = 25; // Leafiness
-    pSize: number[] = [0.5, 1.5]; // min and max size
     pSwing: number[] = [0.1, 1]; // min and max oscillation speed for x movement
     pSpeed: number[] = [10, 50]; // min and max y speed
     pAmplitude: number[] = [5, 100]; // min and max distance for x movement
@@ -106,28 +102,24 @@ export class LeafEffect implements Effect {
         this.floor = floor;
         switch (scale) {
             case PetSize.nano:
-                this.pSize = [0.1, 0.5];
                 this.pAmount = 100;
                 this.treeLine = this.canvas.height - 187 / 2;
                 this.scale = 1 / 20;
                 this.pSpeed = [2, 10];
                 break;
             case PetSize.small:
-                this.pSize = [0.5, 1.5];
                 this.pAmount = 50;
                 this.treeLine = this.canvas.height - 250 / 2;
                 this.scale = 1 / 15;
                 this.pSpeed = [5, 20];
                 break;
             case PetSize.medium:
-                this.pSize = [1, 2];
                 this.pAmount = 20;
                 this.treeLine = this.canvas.height - 375 / 2;
                 this.scale = 1 / 10;
                 this.pSpeed = [10, 30];
                 break;
             case PetSize.large:
-                this.pSize = [1.5, 3];
                 this.pAmount = 15;
                 this.treeLine = this.canvas.height - 500 / 2;
                 this.scale = 1 / 10;
@@ -165,10 +157,9 @@ export class LeafEffect implements Effect {
                 floorRandom(this.pSwing[0], this.pSwing[1]),
                 floorRandom(this.pSpeed[0], this.pSpeed[1]),
             );
-            var size = floorRandom(this.pSize[0], this.pSize[1]);
             var amplitude = floorRandom(this.pAmplitude[0], this.pAmplitude[1]);
 
-            this.particles.push(new Leaf(origin, velocity, size, amplitude));
+            this.particles.push(new Leaf(origin, velocity, amplitude));
         }
     }
 
@@ -187,7 +178,7 @@ export class LeafEffect implements Effect {
             particle.update(timeDelta);
 
             if (
-                particle.position.y - particle.size >
+                particle.position.y >
                 this.canvas.height - this.floor
             ) {
                 // reset the particle to the top and a random x position
