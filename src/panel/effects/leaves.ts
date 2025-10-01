@@ -211,18 +211,18 @@ export class LeafEffect implements Effect {
 
             this.ctx.fillStyle = particle.color;
             this.ctx.beginPath();
-            this.ctx.moveTo(100 * scale + x, 85 * scale + y);
-            this.ctx.lineTo(0 + x, 107 * scale + y);
-            this.ctx.lineTo(73 * scale + x, 112 * scale + y);
-            this.ctx.lineTo(32 * scale + x, 138 * scale + y);
-            this.ctx.lineTo(92 * scale + x, 123 * scale + y);
-            this.ctx.lineTo(100 * scale + x, 169 * scale + y);
-            this.ctx.lineTo(123 * scale + x, 123 * scale + y);
-            this.ctx.lineTo(168 * scale + x, 133 * scale + y);
-            this.ctx.lineTo(133 * scale + x, 112 * scale + y);
-            this.ctx.lineTo(184 * scale + x, 110 * scale + y);
-            this.ctx.lineTo(100 * scale + x, 85 * scale + y);
-            this.ctx.lineTo(100 * scale + x, 70 * scale + y);
+            this.ctx.moveTo(100 * this.scale + x, 85 * this.scale + y);
+            this.ctx.lineTo(0 + x, 107 * this.scale + y);
+            this.ctx.lineTo(73 * this.scale + x, 112 * this.scale + y);
+            this.ctx.lineTo(32 * this.scale + x, 138 * this.scale + y);
+            this.ctx.lineTo(92 * this.scale + x, 123 * this.scale + y);
+            this.ctx.lineTo(100 * this.scale + x, 169 * this.scale + y);
+            this.ctx.lineTo(123 * this.scale + x, 123 * this.scale + y);
+            this.ctx.lineTo(168 * this.scale + x, 133 * this.scale + y);
+            this.ctx.lineTo(133 * this.scale + x, 112 * this.scale + y);
+            this.ctx.lineTo(184 * this.scale + x, 110 * this.scale + y);
+            this.ctx.lineTo(100 * this.scale + x, 85 * this.scale + y);
+            this.ctx.lineTo(100 * this.scale + x, 70 * this.scale + y);
             this.ctx.fill();
         }
     }
