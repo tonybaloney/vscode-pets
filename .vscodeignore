@@ -12,3 +12,4 @@ src/**
 coverage/
 docs/
 node_modules
+codecov.yml
