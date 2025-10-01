@@ -27,6 +27,7 @@
         "rubber duck",
         "horse",
         "squirrel",
+        "skeleton",
         "deno"
     ],
     "license": "MIT",
@@ -171,7 +172,8 @@
                             "paint black",
                             "paint brown",
                             "magical",
-                            "warrior"
+                            "warrior",
+                            "pink"
                         ],
                         "default": "brown",
                         "description": "%vscode-pets.petColor.description%",
@@ -195,7 +197,8 @@
                             "%vscode-pets.petColor.paint black%",
                             "%vscode-pets.petColor.paint brown%",
                             "%vscode-pets.petColor.magical%",
-                            "%vscode-pets.petColor.warrior%"
+                            "%vscode-pets.petColor.warrior%",
+                            "%vscode-pets.petColor.pink%"
                         ]
                     },
                     "vscode-pets.petType": {
@@ -220,7 +223,11 @@
                             "turtle",
                             "zappy",
                             "snail",
-                            "bunny"
+                            "bunny",
+                            "skeleton",
+                            "deno",
+                            "morph",
+                            "panda"
                         ],
                         "default": "cat",
                         "description": "%vscode-pets.petType.description%",
@@ -245,7 +252,11 @@
                             "%vscode-pets.petType.turtle%",
                             "%vscode-pets.petType.zappy%",
                             "%vscode-pets.petType.snail%",
-                            "%vscode-pets.petType.bunny%"
+                            "%vscode-pets.petType.bunny%",
+                            "%vscode-pets.petType.skeleton%",
+                            "%vscode-pets.petType.deno%",
+                            "%vscode-pets.petType.morph%",
+                            "%vscode-pets.petType.panda%"
                         ]
                     },
                     "vscode-pets.petSize": {
