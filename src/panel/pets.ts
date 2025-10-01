@@ -16,6 +16,7 @@ import { Panda } from './pets/panda';
 import { Rat } from './pets/rat';
 import { Rocky } from './pets/rocky';
 import { RubberDuck } from './pets/rubberduck';
+import { Skeleton } from './pets/skeleton';
 import { Snail } from './pets/snail';
 import { Snake } from './pets/snake';
 import { Squirrel } from './pets/squirrel';
@@ -245,6 +246,8 @@ export function createPet(
             return new Panda(...standardPetArguments, PetSpeed.slow);
         case PetType.morph:
             return new Morph(...standardPetArguments, PetSpeed.normal);
+        case PetType.skeleton:
+            return new Skeleton(...standardPetArguments, PetSpeed.normal);
         default:
             throw new InvalidPetException("Pet type doesn't exist");
     }
@@ -298,6 +301,8 @@ export function availableColors(petType: PetType): PetColor[] {
             return Horse.possibleColors;
         case PetType.panda:
             return Panda.possibleColors;
+        case PetType.skeleton:
+            return Skeleton.possibleColors;
         default:
             throw new InvalidPetException("Pet type doesn't exist");
     }
