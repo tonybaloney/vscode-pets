@@ -44,8 +44,8 @@ jobs:
                 directory: ./coverage
                 token: ${{ secrets.CODECOV_TOKEN }}
 
-            - name: Remove coverage files
-              run: rm -rf coverage
+            - name: Remove codecov files
+              run: rm codecov*
 
             - name: Package VSIX
               run: npm install -g @vscode/vsce && vsce package
