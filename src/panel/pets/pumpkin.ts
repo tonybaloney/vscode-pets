@@ -16,10 +16,6 @@ export class Pumpkin extends BasePetType {
                 state: States.walkRight,
                 possibleNextStates: [States.sitIdle],
             },
-            {
-                state: States.runRight,
-                possibleNextStates: [States.sitIdle, States.walkRight],
-            },
         ],
     };
     get emoji(): string {
