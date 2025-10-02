@@ -14,7 +14,7 @@ export class Pumpkin extends BasePetType {
             },
             {
                 state: States.walkRight,
-                possibleNextStates: [States.sitIdle, States.runRight],
+                possibleNextStates: [States.sitIdle],
             },
             {
                 state: States.runRight,
