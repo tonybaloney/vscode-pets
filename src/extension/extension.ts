@@ -933,7 +933,9 @@ class PetWebviewContainer implements IPetPanel {
         webview.html = this._getHtmlForWebview(webview);
     }
 
-    public update() {}
+    public update() {
+        this._update();
+    }
 
     protected _getHtmlForWebview(webview: vscode.Webview) {
         // Local path to main script run in the webview
