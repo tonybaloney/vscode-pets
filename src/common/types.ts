@@ -19,6 +19,7 @@ export const enum PetColor {
     paintbrown = 'paint brown',
     magical = 'magical',
     warrior = 'warrior',
+    pink = 'pink',
     null = 'null',
 }
 
@@ -35,12 +36,15 @@ export const enum PetType {
     frog = 'frog',
     horse = 'horse',
     mod = 'mod',
+    morph = 'morph',
     panda = 'panda',
     rat = 'rat',
     rocky = 'rocky',
     rubberduck = 'rubber-duck',
+    skeleton = 'skeleton',
     snail = 'snail',
     snake = 'snake',
+    squirrel = 'squirrel',
     totoro = 'totoro',
     turtle = 'turtle',
     zappy = 'zappy',
@@ -74,6 +78,7 @@ export const enum Theme {
     castle = 'castle',
     beach = 'beach',
     winter = 'winter',
+    autumn = 'autumn',
 }
 
 export const enum ColorThemeKind {
@@ -106,12 +111,15 @@ export const ALL_PETS = [
     PetType.frog,
     PetType.horse,
     PetType.mod,
+    PetType.morph,
     PetType.panda,
     PetType.rat,
     PetType.rocky,
     PetType.rubberduck,
+    PetType.skeleton,
     PetType.snail,
     PetType.snake,
+    PetType.squirrel,
     PetType.totoro,
     PetType.turtle,
     PetType.zappy,
@@ -150,4 +158,5 @@ export const ALL_THEMES = [
     Theme.castle,
     Theme.beach,
     Theme.winter,
+    Theme.autumn,
 ];

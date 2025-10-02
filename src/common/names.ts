@@ -1,6 +1,7 @@
 import { BUNNY_NAMES } from '../panel/pets/bunny';
 import { CAT_NAMES } from '../panel/pets/cat';
 import { CHICKEN_NAMES } from '../panel/pets/chicken';
+import { MORPH_NAMES } from '../panel/pets/morph';
 import { CLIPPY_NAMES } from '../panel/pets/clippy';
 import { COCKATIEL_NAMES } from '../panel/pets/cockatiel';
 import { CRAB_NAMES } from '../panel/pets/crab';
@@ -12,8 +13,10 @@ import { MOD_NAMES } from '../panel/pets/mod';
 import { PANDA_NAMES } from '../panel/pets/panda';
 import { ROCKY_NAMES } from '../panel/pets/rocky';
 import { DUCK_NAMES } from '../panel/pets/rubberduck';
+import { SKELETON_NAMES } from '../panel/pets/skeleton';
 import { SNAIL_NAMES } from '../panel/pets/snail';
 import { SNAKE_NAMES } from '../panel/pets/snake';
+import { SQUIRREL_NAMES } from '../panel/pets/squirrel';
 import { TOTORO_NAMES } from '../panel/pets/totoro';
 import { ZAPPY_NAMES } from '../panel/pets/zappy';
 import { RAT_NAMES } from '../panel/pets/rat';
@@ -38,6 +41,7 @@ export function randomName(type: PetType): string {
                 [PetType.totoro]: TOTORO_NAMES,
                 [PetType.snail]: SNAIL_NAMES,
                 [PetType.snake]: SNAKE_NAMES,
+                [PetType.squirrel]: SQUIRREL_NAMES,
                 [PetType.rubberduck]: DUCK_NAMES,
                 [PetType.zappy]: ZAPPY_NAMES,
                 [PetType.rocky]: ROCKY_NAMES,
@@ -46,6 +50,8 @@ export function randomName(type: PetType): string {
                 [PetType.turtle]: TURTLE_NAMES,
                 [PetType.horse]: HORSE_NAMES,
                 [PetType.panda]: PANDA_NAMES,
+                [PetType.morph]: MORPH_NAMES,
+                [PetType.skeleton]: SKELETON_NAMES,
             } as Record<PetType, ReadonlyArray<string>>
         )[type] ?? CAT_NAMES;
 

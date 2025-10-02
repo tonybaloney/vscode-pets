@@ -37,6 +37,7 @@
     "vscode-pets.petColor.paint brown" : "Brown Paint",
     "vscode-pets.petColor.magical" : "Magical",
     "vscode-pets.petColor.warrior" : "Warrior",
+    "vscode-pets.petColor.pink" : "Pink",
 
     "vscode-pets.petType.cat": "Cat",
     "vscode-pets.petType.chicken": "Chicken",
@@ -57,6 +58,11 @@
     "vscode-pets.petType.zappy": "Zappy",
     "vscode-pets.petType.snail": "Snail",
     "vscode-pets.petType.bunny": "Bunny",
+    "vscode-pets.petType.squirrel": "Squirrel",
+    "vscode-pets.petType.skeleton": "Skeleton",
+    "vscode-pets.petType.deno": "Deno",
+    "vscode-pets.petType.morph": "Morph",
+    "vscode-pets.petType.panda": "Panda",
 
     "vscode-pets.petSize.nano" : "Nano",
     "vscode-pets.petSize.small" : "Small",
@@ -70,5 +76,6 @@
     "vscode-pets.theme.forest" : "Forest",
     "vscode-pets.theme.castle" : "Castle",
     "vscode-pets.theme.beach" : "Beach",
-    "vscode-pets.theme.winter" : "Winter"
+    "vscode-pets.theme.winter" : "Winter",
+    "vscode-pets.theme.autumn" : "Autumn"
 }

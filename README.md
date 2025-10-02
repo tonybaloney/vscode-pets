@@ -82,6 +82,10 @@ The frog animations were created by [seethingswarm](https://seethingswarm.itch.i
 
 [Jessie Ferris](https://github.com/jeferris) created the panda media assets.
 
+Squirrel animations were adapted by [Chris Kent](https://github.com/thechriskent) from assets by [Azdner](https://azdner.itch.io/).
+
+Skeleton animations were adapted by [Chris Kent](https://github.com/thechriskent) from assets by [MonoPixelArt](https://monopixelart.itch.io/).
+
 ## Thank you
 
 Thanks to all the [contributors](https://github.com/tonybaloney/vscode-pets/graphs/contributors) to this project.

@@ -2,7 +2,7 @@
     "name": "vscode-pets",
     "displayName": "vscode-pets",
     "description": "Pets for your VS Code",
-    "version": "1.32.0",
+    "version": "1.34.0",
     "engines": {
         "vscode": "^1.73.0"
     },
@@ -26,6 +26,8 @@
         "clippy",
         "rubber duck",
         "horse",
+        "squirrel",
+        "skeleton",
         "deno"
     ],
     "license": "MIT",
@@ -170,7 +172,8 @@
                             "paint black",
                             "paint brown",
                             "magical",
-                            "warrior"
+                            "warrior",
+                            "pink"
                         ],
                         "default": "brown",
                         "description": "%vscode-pets.petColor.description%",
@@ -194,7 +197,8 @@
                             "%vscode-pets.petColor.paint black%",
                             "%vscode-pets.petColor.paint brown%",
                             "%vscode-pets.petColor.magical%",
-                            "%vscode-pets.petColor.warrior%"
+                            "%vscode-pets.petColor.warrior%",
+                            "%vscode-pets.petColor.pink%"
                         ]
                     },
                     "vscode-pets.petType": {
@@ -214,11 +218,16 @@
                             "rocky",
                             "rubber-duck",
                             "snake",
+                            "squirrel",
                             "totoro",
                             "turtle",
                             "zappy",
                             "snail",
-                            "bunny"
+                            "bunny",
+                            "skeleton",
+                            "deno",
+                            "morph",
+                            "panda"
                         ],
                         "default": "cat",
                         "description": "%vscode-pets.petType.description%",
@@ -238,11 +247,16 @@
                             "%vscode-pets.petType.rocky%",
                             "%vscode-pets.petType.rubber-duck%",
                             "%vscode-pets.petType.snake%",
+                            "%vscode-pets.petType.squirrel%",
                             "%vscode-pets.petType.totoro%",
                             "%vscode-pets.petType.turtle%",
                             "%vscode-pets.petType.zappy%",
                             "%vscode-pets.petType.snail%",
-                            "%vscode-pets.petType.bunny%"
+                            "%vscode-pets.petType.bunny%",
+                            "%vscode-pets.petType.skeleton%",
+                            "%vscode-pets.petType.deno%",
+                            "%vscode-pets.petType.morph%",
+                            "%vscode-pets.petType.panda%"
                         ]
                     },
                     "vscode-pets.petSize": {
@@ -282,7 +296,8 @@
                             "forest",
                             "castle",
                             "beach",
-                            "winter"
+                            "winter",
+                            "autumn"
                         ],
                         "default": "none",
                         "description": "%vscode-pets.theme.description%",
@@ -291,7 +306,8 @@
                             "%vscode-pets.theme.forest%",
                             "%vscode-pets.theme.castle%",
                             "%vscode-pets.theme.beach%",
-                            "%vscode-pets.theme.winter%"
+                            "%vscode-pets.theme.winter%",
+                            "%vscode-pets.theme.autumn%"
                         ]
                     },
                     "vscode-pets.throwBallWithMouse": {
@@ -331,12 +347,12 @@
         "@types/glob": "^7.1.3",
         "@types/jsdom": "^20.0.0",
         "@types/mocha": "^9.1.1",
-        "@types/node": "^18.0.0",
+        "@types/node": "^20.19.10",
         "@types/vscode": "^1.73.0",
         "@typescript-eslint/eslint-plugin": "^5.29.0",
         "@typescript-eslint/parser": "^5.29.0",
         "@vscode/l10n-dev": "^0.0.29",
-        "@vscode/test-web": "^0.0.50",
+        "@vscode/test-web": "^0.0.71",
         "chai": "^5.1.2",
         "eslint": "^8.18.0",
         "eslint-plugin-unused-imports": "^2.0.0",

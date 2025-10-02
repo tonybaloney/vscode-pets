@@ -11,12 +11,15 @@ import { Fox } from './pets/fox';
 import { Frog } from './pets/frog';
 import { Horse } from './pets/horse';
 import { Mod } from './pets/mod';
+import { Morph } from './pets/morph';
 import { Panda } from './pets/panda';
 import { Rat } from './pets/rat';
 import { Rocky } from './pets/rocky';
 import { RubberDuck } from './pets/rubberduck';
+import { Skeleton } from './pets/skeleton';
 import { Snail } from './pets/snail';
 import { Snake } from './pets/snake';
+import { Squirrel } from './pets/squirrel';
 import { Totoro } from './pets/totoro';
 import { Turtle } from './pets/turtle';
 import { Zappy } from './pets/zappy';
@@ -35,6 +38,7 @@ export class PetElement {
         this.speech.remove();
         this.color = PetColor.null;
         this.type = PetType.null;
+        this.pet.remove();
     }
 
     constructor(
@@ -222,6 +226,8 @@ export function createPet(
             return new Snail(...standardPetArguments, PetSpeed.verySlow);
         case PetType.snake:
             return new Snake(...standardPetArguments, PetSpeed.verySlow);
+        case PetType.squirrel:
+            return new Squirrel(...standardPetArguments, PetSpeed.veryFast);
         case PetType.rubberduck:
             return new RubberDuck(...standardPetArguments, PetSpeed.fast);
         case PetType.zappy:
@@ -238,6 +244,10 @@ export function createPet(
             return new Horse(...standardPetArguments, PetSpeed.normal);
         case PetType.panda:
             return new Panda(...standardPetArguments, PetSpeed.slow);
+        case PetType.morph:
+            return new Morph(...standardPetArguments, PetSpeed.normal);
+        case PetType.skeleton:
+            return new Skeleton(...standardPetArguments, PetSpeed.normal);
         default:
             throw new InvalidPetException("Pet type doesn't exist");
     }
@@ -251,6 +261,8 @@ export function availableColors(petType: PetType): PetColor[] {
             return Cat.possibleColors;
         case PetType.chicken:
             return Chicken.possibleColors;
+        case PetType.morph:
+            return Morph.possibleColors;
         case PetType.dog:
             return Dog.possibleColors;
         case PetType.deno:
@@ -271,6 +283,8 @@ export function availableColors(petType: PetType): PetColor[] {
             return Snail.possibleColors;
         case PetType.snake:
             return Snake.possibleColors;
+        case PetType.squirrel:
+            return Squirrel.possibleColors;
         case PetType.rubberduck:
             return RubberDuck.possibleColors;
         case PetType.zappy:
@@ -287,6 +301,8 @@ export function availableColors(petType: PetType): PetColor[] {
             return Horse.possibleColors;
         case PetType.panda:
             return Panda.possibleColors;
+        case PetType.skeleton:
+            return Skeleton.possibleColors;
         default:
             throw new InvalidPetException("Pet type doesn't exist");
     }
