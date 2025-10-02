@@ -56,7 +56,7 @@ class Leaf {
 
         this.settled = false;
         this.settleTime = 0;
-        this.settleDuration = floorRandom(2, 5);
+        this.settleDuration = floorRandom(4, 7);
     }
 
     update(timeDelta: number) {
