@@ -26,11 +26,11 @@ export class Pumpkin extends BasePetType {
         return '🎃';
     }
 
-    get canChase (): boolean {
+    get canChase(): boolean {
         return false;
     }
 
-    get hello() : string {
+    get hello(): string {
         return 'Happy Halloween! 🎃';
     }
 }
