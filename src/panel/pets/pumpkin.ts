@@ -7,10 +7,18 @@ export class Pumpkin extends BasePetType {
     static possibleColors = [PetColor.orange];
     sequence = {
         startingState: States.sitIdle,
-        sequenceStates : [
+        sequenceStates: [
             {
                 state: States.sitIdle,
-                possibleNextStates: [States.sitIdle],
+                possibleNextStates: [States.walkRight, States.runRight],
+            },
+            {
+                state: States.walkRight,
+                possibleNextStates: [States.sitIdle, States.runRight],
+            },
+            {
+                state: States.runRight,
+                possibleNextStates: [States.sitIdle, States.walkRight],
             },
         ],
     };
