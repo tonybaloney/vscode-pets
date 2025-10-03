@@ -33,6 +33,9 @@ class Leaf {
     color: string;
     rotation: number;
     rotationSpeed: number;
+    settled: boolean;
+    settleTime: number;
+    settleDuration: number;
 
     constructor(
         origin: Vector2,
@@ -50,9 +53,17 @@ class Leaf {
         // randomize start values a bit
         this.dx = Math.random() * 100;
         this.rotation = Math.random() * Math.PI * 2; // Random initial rotation
+
+        this.settled = false;
+        this.settleTime = 0;
+        this.settleDuration = floorRandom(4, 7);
     }
 
     update(timeDelta: number) {
+        if (this.settled) {
+            return;
+        }
+
         this.position.y += this.velocity.y * timeDelta;
 
         // oscillate the x value between -amplitude and +amplitude
@@ -195,14 +206,29 @@ export class LeafEffect implements Effect {
             var particle = this.particles[i];
             particle.update(timeDelta);
 
-            if (particle.position.y > this.canvas.height - this.floor) {
-                // reset the particle to the top and a random x position
-                particle.position.y = this.canvas.height - this.treeLine;
-                particle.position.x = particle.origin.x =
-                    Math.random() * this.canvas.width;
-                particle.dx = Math.random() * 100;
-                // Reset rotation to a random value for variety
-                particle.rotation = Math.random() * Math.PI * 2;
+            var leafCenterY = particle.position.y + 119.5 * this.scale;
+
+            if (leafCenterY >= this.canvas.height - this.floor) {
+                if (!particle.settled) {
+                    particle.settled = true;
+                    particle.settleTime = timeNow;
+                    particle.position.y =
+                        this.canvas.height - this.floor - 119.5 * this.scale;
+                } else {
+                    if (
+                        timeNow - particle.settleTime >=
+                        particle.settleDuration
+                    ) {
+                        particle.position.y = particle.origin.y =
+                            this.canvas.height - this.treeLine;
+                        particle.position.x = particle.origin.x =
+                            Math.random() * this.canvas.width;
+                        particle.dx = Math.random() * 100;
+                        particle.rotation = Math.random() * Math.PI * 2;
+                        particle.settled = false;
+                        particle.settleDuration = floorRandom(2, 5);
+                    }
+                }
             }
         }
 
