@@ -60,6 +60,7 @@
     "vscode-pets.petType.deno": "Deno",
     "vscode-pets.petType.morph": "Morph",
     "vscode-pets.petType.panda": "Panda",
+    "vscode-pets.petType.pumpkin": "Kürbis",
     "vscode-pets.petSize.nano": "Nano",
     "vscode-pets.petSize.small": "Klein",
     "vscode-pets.petSize.medium": "Mittel",

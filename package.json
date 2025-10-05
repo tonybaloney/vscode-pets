@@ -28,7 +28,8 @@
         "horse",
         "squirrel",
         "skeleton",
-        "deno"
+        "deno",
+        "pumpkin"
     ],
     "license": "MIT",
     "icon": "icon.png",
@@ -227,7 +228,8 @@
                             "skeleton",
                             "deno",
                             "morph",
-                            "panda"
+                            "panda",
+                            "pumpkin"
                         ],
                         "default": "cat",
                         "description": "%vscode-pets.petType.description%",
@@ -256,7 +258,8 @@
                             "%vscode-pets.petType.skeleton%",
                             "%vscode-pets.petType.deno%",
                             "%vscode-pets.petType.morph%",
-                            "%vscode-pets.petType.panda%"
+                            "%vscode-pets.petType.panda%",
+                            "%vscode-pets.petType.pumpkin%"
                         ]
                     },
                     "vscode-pets.petSize": {
