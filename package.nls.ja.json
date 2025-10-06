@@ -16,6 +16,7 @@
     "vscode-pets.theme.description": "テーマ",
     "vscode-pets.throwBallWithMouse.description": "マウスでボールを投げる",
     "vscode-pets.disableEffects.description": "エフェクトを無効にする",
+    "vscode-pets.petName.description": "ペットの名前",
     "vscode-pets.petColor.black": "黒",
     "vscode-pets.petColor.lightbrown": "狐色",
     "vscode-pets.petColor.brown": "茶色",
