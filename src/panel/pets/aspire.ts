@@ -25,13 +25,15 @@ export class Aspire extends BasePetType {
         ],
     };
     get emoji(): string {
-        return '📎';
+        return '💜';
     }
     get hello(): string {
-        return ` Hi, I'm Clippy, would you like some assistance today? 👋!`;
+        return ` Aspire to Inspire—Cloud-ready, Dev-happy! 🐧✨`;
     }
 }
 
 export const ASPIRE_NAMES: ReadonlyArray<string> = [
     'Aspire',
+    'Aspirit',
+    
 ];
