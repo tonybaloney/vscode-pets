@@ -4,9 +4,7 @@ import { States } from '../states';
 
 export class Aspire extends BasePetType {
     label = 'aspire';
-    static possibleColors = [
-        PetColor.purple,
-    ];
+    static possibleColors = [PetColor.purple];
     sequence = {
         startingState: States.walkRight,
         sequenceStates: [
@@ -32,8 +30,4 @@ export class Aspire extends BasePetType {
     }
 }
 
-export const ASPIRE_NAMES: ReadonlyArray<string> = [
-    'Aspire',
-    'Aspirit',
-    
-];
+export const ASPIRE_NAMES: ReadonlyArray<string> = ['Aspire', 'Aspirit'];
