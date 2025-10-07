@@ -24,6 +24,7 @@ export const enum PetColor {
 }
 
 export const enum PetType {
+    aspire = 'aspire',
     bunny = 'bunny',
     cat = 'cat',
     chicken = 'chicken',
@@ -99,6 +100,7 @@ export class WebviewMessage {
 }
 
 export const ALL_PETS = [
+    PetType.aspire,
     PetType.bunny,
     PetType.cat,
     PetType.chicken,
