@@ -8,7 +8,7 @@ Pets will interact with your mouse pointer within the open Pet Panel. Additional
 
 ## Adding additional pets
 
-To add additional pets, run the "Spawn additional pet" command (`vscode-pets.spawn-pet`) or click the `+` icon.
+To add additional pets, run the "Spawn pet" command (`vscode-pets.spawn-pet`) or click the `+` icon.
 
 ![Add pet](source/_static/add-pet.png)
 
