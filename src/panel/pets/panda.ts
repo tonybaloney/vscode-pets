@@ -83,4 +83,9 @@ export const PANDA_NAMES: ReadonlyArray<string> = [
     'Mochi',
     'Coco',
     'Hana',
+    'Beiei',
+    'Jinging',
+    'huanan',
+    'Yingng',
+    'Nini',
 ];
