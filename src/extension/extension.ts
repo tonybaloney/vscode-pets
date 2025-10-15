@@ -882,10 +882,25 @@ class PetWebviewContainer implements IPetPanel {
         });
     }
 
-    public throwBall() {
-        void this.getWebview().postMessage({
-            command: 'throw-ball',
+    public async throwBall() {
+        const webview = this.getWebview();
+
+        const BALL_COLOR_NAMES = [ 'Red', 'Blue', 'Yellow', 'Green', 'Orange', 'Purple', 'Pink', 'Cyan', 'White', 'Black', ];
+
+        const choice = await vscode.window.showQuickPick(BALL_COLOR_NAMES, {
+            placeHolder: 'Select ball color',
         });
+
+        if (!choice) {
+            return;
+        }
+
+        void webview.postMessage({
+            command: 'set-next-ball-color',
+            color: choice.toLowerCase(),
+        });
+
+        void webview.postMessage({ command: 'throw-ball' });
     }
 
     public resetPets(): void {

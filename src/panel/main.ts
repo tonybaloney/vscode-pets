@@ -24,6 +24,7 @@ import {
     dynamicThrowOn,
     setupBallThrowing,
     throwAndChase,
+    setNextBallColor,
 } from './ball';
 
 const FOREGROUND_EFFECT_CANVAS_ID = 'foregroundEffectCanvas';
@@ -359,6 +360,9 @@ export function petPanelApp(
                 break;
             case 'throw-ball':
                 throwAndChase(allPets.pets);
+                break;
+            case 'set-next-ball-color':
+                setNextBallColor(message.color);
                 break;
             case 'spawn-pet':
                 allPets.push(
