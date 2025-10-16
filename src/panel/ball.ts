@@ -15,7 +15,6 @@ var ballRadius: number;
 var floor: number;
 
 let ballColor: string = '#2ed851'; // default green
-let nextBallColor: string | undefined = undefined;
 
 function calculateBallRadius(size: PetSize): number {
     if (size === PetSize.nano) {
@@ -48,14 +47,6 @@ function resetBall(): void {
     if (canvas) {
         canvas.style.display = 'block';
     }
-
-    if (nextBallColor) {
-        ballColor = nextBallColor;
-        nextBallColor = undefined;
-    } else {
-        ballColor = '#2ed851';
-    }
-
     ballState = new BallState(100, 100, 4, 5);
 }
 
@@ -186,7 +177,9 @@ function drawBall() {
 }
 
 export function setNextBallColor(color: string) {
-    nextBallColor = color;
+  if (typeof color === 'string' && color.length > 0) {
+    ballColor = color;
+  }
 }
 
 export function throwAndChase(pets: PetElement[]) {
