@@ -16,6 +16,7 @@
     "vscode-pets.theme.description": "主題",
     "vscode-pets.throwBallWithMouse.description": "使用滑鼠投擲球",
     "vscode-pets.disableEffects.description": "禁用效果",
+    "vscode-pets.petName.description": "寵物名稱",
     "vscode-pets.petColor.black": "黑色",
     "vscode-pets.petColor.lightbrown": "淺棕色",
     "vscode-pets.petColor.brown": "棕色",

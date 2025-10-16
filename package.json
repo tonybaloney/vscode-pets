@@ -201,6 +201,12 @@
                             "%vscode-pets.petColor.pink%"
                         ]
                     },
+                    "vscode-pets.petName": {
+                        "type": "string",
+                        "default": "",
+                        "description": "%vscode-pets.petName.description%",
+                        "scope": "window"
+                    },
                     "vscode-pets.petType": {
                         "type": "string",
                         "enum": [

@@ -16,6 +16,7 @@
     "vscode-pets.theme.description": "Tema",
     "vscode-pets.throwBallWithMouse.description": "Fare'yi kullanarak bir top fırlatabilirsin.",
     "vscode-pets.disableEffects.description": "Görsel efektleri devre dışı bırak",
+    "vscode-pets.petName.description": "Evcil hayvanın adı",
     "vscode-pets.petColor.black": "Siyah",
     "vscode-pets.petColor.lightbrown": "Açık Kahverengi",
     "vscode-pets.petColor.brown": "Kahverengi",

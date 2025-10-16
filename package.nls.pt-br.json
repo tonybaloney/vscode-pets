@@ -16,6 +16,7 @@
     "vscode-pets.theme.description": "Tema",
     "vscode-pets.throwBallWithMouse.description": "Jogar bola com rato",
     "vscode-pets.disableEffects.description": "Desabilitar efeitos",
+    "vscode-pets.petName.description": "Nome do pet",
     "vscode-pets.petColor.black": "Preto",
     "vscode-pets.petColor.lightbrown": "Castanho/Marrom-claro",
     "vscode-pets.petColor.brown": "Marrom",
