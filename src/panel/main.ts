@@ -249,8 +249,23 @@ export function petPanelApp(
     petType: PetType,
     throwBallWithMouse: boolean,
     disableEffects: boolean,
+    ballColorOrStateApi?: string | VscodeStateApi,
     stateApi?: VscodeStateApi,
 ) {
+
+    let configuredBallColor: string | undefined;
+
+    if (typeof ballColorOrStateApi === 'string') {
+        configuredBallColor = ballColorOrStateApi;
+        // stateApi may be in the second optional param already
+    } else if (ballColorOrStateApi && typeof (ballColorOrStateApi as VscodeStateApi).postMessage === 'function') {
+        // Caller passed the stateApi in the 9th position
+        stateApi = ballColorOrStateApi as VscodeStateApi;
+        configuredBallColor = undefined;
+    } else {
+        configuredBallColor = undefined;
+    }
+
     if (!stateApi) {
         stateApi = acquireVsCodeApi();
     }
@@ -307,6 +322,10 @@ export function petPanelApp(
 
     initCanvas(PET_CANVAS_ID);
     setupBallThrowing(PET_CANVAS_ID, petSize, floor);
+
+    if (configuredBallColor) {
+        setNextBallColor(configuredBallColor);
+    }
 
     if (throwBallWithMouse) {
         dynamicThrowOn(allPets.pets);

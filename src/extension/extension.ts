@@ -25,6 +25,7 @@ const DEFAULT_COLOR = PetColor.brown;
 const DEFAULT_PET_TYPE = PetType.cat;
 const DEFAULT_POSITION = ExtPosition.panel;
 const DEFAULT_THEME = Theme.none;
+const DEFAULT_BALL_COLOR = '#2ed851';
 
 class PetQuickPickItem implements vscode.QuickPickItem {
     constructor(
@@ -48,6 +49,16 @@ class PetQuickPickItem implements vscode.QuickPickItem {
 }
 
 let webviewViewProvider: PetWebviewViewProvider;
+
+function getConfiguredBallColor(): string {
+    const val = vscode.workspace
+        .getConfiguration('vscode-pets')
+        .get<string>('ballColor', DEFAULT_BALL_COLOR);
+    if (!val || typeof val !== 'string') {
+        return DEFAULT_BALL_COLOR;
+    }
+    return val;
+}
 
 function getConfiguredSize(): PetSize {
     var size = vscode.workspace
@@ -375,9 +386,16 @@ export function activate(context: vscode.ExtensionContext) {
 
     context.subscriptions.push(
         vscode.commands.registerCommand('vscode-pets.throw-ball', () => {
-            const panel = getPetPanel();
-            if (panel !== undefined) {
-                panel.throwBall();
+           const webview = getWebview();
+            if (webview) {
+                void webview.postMessage({
+                    command: 'set-next-ball-color',
+                    color: getConfiguredBallColor(),
+                });
+                const panel = getPetPanel();
+                if (panel) {
+                    panel.throwBall();
+                }
             }
         }),
     );
@@ -716,6 +734,14 @@ export function activate(context: vscode.ExtensionContext) {
                 if (e.affectsConfiguration('vscode-pets.disableEffects')) {
                     updatePanelDisableEffects();
                 }
+
+                if (e.affectsConfiguration('vscode-pets.ballColor')) {
+                    const newColor = getConfiguredBallColor();
+                    const webview = getWebview();
+                    if (webview) {
+                        void webview.postMessage({ command: 'set-next-ball-color', color: newColor });
+                    }
+                }
             },
         ),
     );
@@ -885,19 +911,11 @@ class PetWebviewContainer implements IPetPanel {
     public async throwBall() {
         const webview = this.getWebview();
 
-        const BALL_COLOR_NAMES = [ 'Red', 'Blue', 'Yellow', 'Green', 'Orange', 'Purple', 'Pink', 'Cyan', 'White', 'Black', ];
-
-        const choice = await vscode.window.showQuickPick(BALL_COLOR_NAMES, {
-            placeHolder: 'Select ball color',
-        });
-
-        if (!choice) {
-            return;
-        }
+        const configuredColor = getConfiguredBallColor();
 
         void webview.postMessage({
             command: 'set-next-ball-color',
-            color: choice.toLowerCase(),
+            color: configuredColor,
         });
 
         void webview.postMessage({ command: 'throw-ball' });
@@ -1029,7 +1047,7 @@ class PetWebviewContainer implements IPetPanel {
 				<div id="foreground"></div>
                 <div id="background"></div>
 				<script nonce="${nonce}" src="${scriptUri}"></script>
-				<script nonce="${nonce}">petApp.petPanelApp("${basePetUri}", "${this.theme()}", ${this.themeKind()}, "${this.petColor()}", "${this.petSize()}", "${this.petType()}", ${this.throwBallWithMouse()}, ${this.disableEffects()});</script>
+				<script nonce="${nonce}">petApp.petPanelApp("${basePetUri}", "${this.theme()}", ${this.themeKind()}, "${this.petColor()}", "${this.petSize()}", "${this.petType()}", ${this.throwBallWithMouse()}, ${this.disableEffects()}, "${getConfiguredBallColor()}");</script>
 			</body>
 			</html>`;
     }
