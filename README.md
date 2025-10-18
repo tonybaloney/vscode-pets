@@ -20,6 +20,13 @@
 
 ![screenshot](https://github.com/tonybaloney/vscode-pets/raw/main/docs/source/_static/winter.gif)
 
+## Table of Contents
+ - [Installation](#installation)
+ - [Using VS Code Pets](#using-vs-code-pets)
+ - [Translations](#translation)
+ - [Credits](#credits)
+ - [Thank you](#thank-you)
+
 ## Installation
 
 Install this extension from the [VS Code marketplace](https://marketplace.visualstudio.com/items?itemName=tonybaloney.vscode-pets&WT.mc_id=python-17801-anthonyshaw).
