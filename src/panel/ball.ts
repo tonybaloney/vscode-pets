@@ -45,7 +45,15 @@ function resetBall(): void {
     if (canvas) {
         canvas.style.display = 'block';
     }
-    ballState = new BallState(100, 100, 4, 5);
+
+    const dir = Math.random() < 0.5 ? -1 : 1; // random direction between left and right
+    const speed = 3 + Math.random() * 4; // random horizontal speed between 3 and 7
+
+    // Random ball falling point
+    const randomX = Math.floor(Math.random() * 201); // range 0 - 200
+    const randomY = Math.floor(Math.random() * 101); // range 0 - 100
+
+    ballState = new BallState(randomX, randomY, dir * speed, 5);
 }
 
 export function dynamicThrowOn(pets: PetElement[]) {
