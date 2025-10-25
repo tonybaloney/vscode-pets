@@ -289,12 +289,6 @@
                             "%vscode-pets.position.explorer%"
                         ]
                     },
-                    "vscode-pets.ballColor": {
-                        "type": "string",
-                        "format": "color",
-                        "default": "#2ed851",
-                        "description": "Color of the ball used when playing fetch. Hex color (e.g. #RRGGBB or #RRGGBBAA)."
-                    },
                     "vscode-pets.theme": {
                         "type": "string",
                         "enum": [

@@ -252,13 +252,16 @@ export function petPanelApp(
     ballColorOrStateApi?: string | VscodeStateApi,
     stateApi?: VscodeStateApi,
 ) {
-
     let configuredBallColor: string | undefined;
 
     if (typeof ballColorOrStateApi === 'string') {
         configuredBallColor = ballColorOrStateApi;
         // stateApi may be in the second optional param already
-    } else if (ballColorOrStateApi && typeof (ballColorOrStateApi as VscodeStateApi).postMessage === 'function') {
+    } else if (
+        ballColorOrStateApi &&
+        typeof (ballColorOrStateApi as VscodeStateApi).postMessage ===
+            'function'
+    ) {
         // Caller passed the stateApi in the 9th position
         stateApi = ballColorOrStateApi as VscodeStateApi;
         configuredBallColor = undefined;

@@ -386,7 +386,7 @@ export function activate(context: vscode.ExtensionContext) {
 
     context.subscriptions.push(
         vscode.commands.registerCommand('vscode-pets.throw-ball', () => {
-           const webview = getWebview();
+            const webview = getWebview();
             if (webview) {
                 void webview.postMessage({
                     command: 'set-next-ball-color',
@@ -739,7 +739,10 @@ export function activate(context: vscode.ExtensionContext) {
                     const newColor = getConfiguredBallColor();
                     const webview = getWebview();
                     if (webview) {
-                        void webview.postMessage({ command: 'set-next-ball-color', color: newColor });
+                        void webview.postMessage({
+                            command: 'set-next-ball-color',
+                            color: newColor,
+                        });
                     }
                 }
             },

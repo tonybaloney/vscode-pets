@@ -177,9 +177,9 @@ function drawBall() {
 }
 
 export function setNextBallColor(color: string) {
-  if (typeof color === 'string' && color.length > 0) {
-    ballColor = color;
-  }
+    if (typeof color === 'string' && color.length > 0) {
+        ballColor = color;
+    }
 }
 
 export function throwAndChase(pets: PetElement[]) {
