@@ -60,6 +60,7 @@
     "vscode-pets.petType.deno": "Dínó",
     "vscode-pets.petType.morph": "Morph",
     "vscode-pets.petType.panda": "Panda",
+    "vscode-pets.petType.pumpkin": "Tök",
     "vscode-pets.petSize.nano": "Nano",
     "vscode-pets.petSize.small": "Kicsi",
     "vscode-pets.petSize.medium": "Közepes",
