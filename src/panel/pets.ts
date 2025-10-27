@@ -13,6 +13,7 @@ import { Horse } from './pets/horse';
 import { Mod } from './pets/mod';
 import { Morph } from './pets/morph';
 import { Panda } from './pets/panda';
+import { Pumpkin } from './pets/pumpkin';
 import { Rat } from './pets/rat';
 import { Rocky } from './pets/rocky';
 import { RubberDuck } from './pets/rubberduck';
@@ -248,6 +249,8 @@ export function createPet(
             return new Morph(...standardPetArguments, PetSpeed.normal);
         case PetType.skeleton:
             return new Skeleton(...standardPetArguments, PetSpeed.normal);
+        case PetType.pumpkin:
+            return new Pumpkin(...standardPetArguments, PetSpeed.still);
         default:
             throw new InvalidPetException("Pet type doesn't exist");
     }
@@ -303,6 +306,8 @@ export function availableColors(petType: PetType): PetColor[] {
             return Panda.possibleColors;
         case PetType.skeleton:
             return Skeleton.possibleColors;
+        case PetType.pumpkin:
+            return Pumpkin.possibleColors;
         default:
             throw new InvalidPetException("Pet type doesn't exist");
     }
