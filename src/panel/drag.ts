@@ -50,7 +50,10 @@ export function createDragController(
     /**
      * Animates the pet toward its floor position after it has been released mid-air.
      */
-    const scheduleFallToFloor = (element: PetElement, onComplete?: () => void) => {
+    const scheduleFallToFloor = (
+        element: PetElement,
+        onComplete?: () => void,
+    ) => {
         stopActiveFall(element);
 
         const step = () => {
