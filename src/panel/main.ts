@@ -18,6 +18,7 @@ import {
     InvalidPetException,
 } from './pets';
 import { PetElementState, PetPanelState } from './states';
+import { createDragController, DragController } from './drag';
 import { THEMES } from './themes';
 import {
     dynamicThrowOff,
@@ -42,6 +43,7 @@ declare global {
 
 export var allPets: IPetCollection = new PetCollection();
 var petCounter: number;
+let dragController: DragController | undefined;
 
 function handleMouseOver(e: MouseEvent) {
     var el = e.currentTarget as HTMLDivElement;
@@ -62,6 +64,10 @@ function startAnimations(
     }
 
     collision.addEventListener('mouseover', handleMouseOver);
+    if (!dragController) {
+        dragController = createDragController(allPets, () => saveState());
+    }
+    collision.addEventListener('mousedown', dragController.handleMouseDown);
 }
 
 function addPetToPanel(
