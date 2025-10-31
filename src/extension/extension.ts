@@ -25,6 +25,7 @@ const DEFAULT_COLOR = PetColor.brown;
 const DEFAULT_PET_TYPE = PetType.cat;
 const DEFAULT_POSITION = ExtPosition.panel;
 const DEFAULT_THEME = Theme.none;
+let extensionContext: vscode.ExtensionContext | undefined;
 
 class PetQuickPickItem implements vscode.QuickPickItem {
     constructor(
@@ -296,6 +297,7 @@ function getWebview(): vscode.Webview | undefined {
 }
 
 export function activate(context: vscode.ExtensionContext) {
+    extensionContext = context;
     context.subscriptions.push(
         vscode.commands.registerCommand('vscode-pets.start', async () => {
             if (
@@ -729,7 +731,7 @@ export function activate(context: vscode.ExtensionContext) {
                     context.extensionUri,
                 );
                 const spec = PetSpecification.fromConfiguration();
-                PetPanel.revive(
+                void PetPanel.revive(
                     webviewPanel,
                     context.extensionUri,
                     spec.color,
@@ -1039,13 +1041,25 @@ class PetWebviewContainer implements IPetPanel {
     }
 }
 
-function handleWebviewMessage(message: WebviewMessage) {
+function handleWebviewMessage(message: WebviewMessage | any) {
+    if (!message || typeof message !== 'object') {
+        console.warn('vscode-pets: received invalid webview message', message);
+        return;
+    }
+
     switch (message.command) {
         case 'alert':
             void vscode.window.showErrorMessage(message.text);
             return;
         case 'info':
             void vscode.window.showInformationMessage(message.text);
+            return;
+        default:
+            console.debug(
+                'vscode-pets: unhandled webview message command',
+                message.command,
+                message,
+            );
             return;
     }
 }
@@ -1114,7 +1128,7 @@ class PetPanel extends PetWebviewContainer implements IPetPanel {
         );
     }
 
-    public static revive(
+    public static async revive(
         panel: vscode.WebviewPanel,
         extensionUri: vscode.Uri,
         petColor: PetColor,
@@ -1136,6 +1150,37 @@ class PetPanel extends PetWebviewContainer implements IPetPanel {
             throwBallWithMouse,
             disableEffects,
         );
+
+        // spawn pets from memento into the revived panel
+        if (typeof extensionContext !== 'undefined' && PetPanel.currentPanel) {
+            try {
+                const collection = PetSpecification.collectionFromMemento(
+                    extensionContext,
+                    getConfiguredSize(),
+                );
+
+                storeCollectionAsMemento(extensionContext, collection).catch(
+                    (e) =>
+                        console.error(
+                            'vscode-pets: failed to update memento after revive',
+                            e,
+                        ),
+                );
+
+                console.log(
+                    `vscode-pets: revived panel and spawned ${collection.length} (only-missing) pets`,
+                );
+            } catch (e) {
+                console.error(
+                    'vscode-pets: error spawning memento pets into revived panel',
+                    e,
+                );
+            }
+        } else {
+            console.warn(
+                'vscode-pets: revive: no extensionContext or panel to spawn memento pets',
+            );
+        }
     }
 
     private constructor(
@@ -1180,7 +1225,19 @@ class PetPanel extends PetWebviewContainer implements IPetPanel {
 
         // Handle messages from the webview
         this._panel.webview.onDidReceiveMessage(
-            handleWebviewMessage,
+            (m: any) => {
+                if (m?.command === 'webview-ready') {
+                    postMementoCollectionToWebview(this._panel.webview);
+                }
+                try {
+                    handleWebviewMessage(m);
+                } catch (e) {
+                    console.error(
+                        'vscode-pets: error in handleWebviewMessage',
+                        e,
+                    );
+                }
+            },
             null,
             this._disposables,
         );
@@ -1220,17 +1277,47 @@ class PetWebviewViewProvider extends PetWebviewContainer {
 
     private _webviewView?: vscode.WebviewView;
 
-    resolveWebviewView(webviewView: vscode.WebviewView): void | Thenable<void> {
+    async resolveWebviewView(webviewView: vscode.WebviewView): Promise<void> {
         this._webviewView = webviewView;
 
         webviewView.webview.options = getWebviewOptions(this._extensionUri);
         webviewView.webview.html = this._getHtmlForWebview(webviewView.webview);
 
         webviewView.webview.onDidReceiveMessage(
-            handleWebviewMessage,
+            (m: any) => {
+                if (m?.command === 'webview-ready') {
+                    postMementoCollectionToWebview(webviewView.webview);
+                }
+                try {
+                    handleWebviewMessage(m);
+                } catch (e) {
+                    console.error(
+                        'vscode-pets: error in handleWebviewMessage',
+                        e,
+                    );
+                }
+            },
             null,
             this._disposables,
         );
+
+        if (extensionContext) {
+            try {
+                const collection = PetSpecification.collectionFromMemento(
+                    extensionContext,
+                    getConfiguredSize(),
+                );
+                await storeCollectionAsMemento(extensionContext, collection);
+                console.log(
+                    `vscode-pets: prepared ${collection.length} pets for explorer view`,
+                );
+            } catch (e) {
+                console.error(
+                    'vscode-pets: failed to prepare memento pets for explorer view',
+                    e,
+                );
+            }
+        }
     }
 
     public tick() {
@@ -1295,5 +1382,29 @@ async function createPetPlayground(context: vscode.ExtensionContext) {
         );
         collection.push(spec);
         await storeCollectionAsMemento(context, collection);
+    }
+}
+
+function postMementoCollectionToWebview(webview: vscode.Webview) {
+    if (!extensionContext) {
+        return;
+    }
+    const collection = PetSpecification.collectionFromMemento(
+        extensionContext,
+        getConfiguredSize(),
+    );
+    const payload = collection.map((c) => ({
+        name: c.name,
+        type: c.type,
+        color: c.color,
+        size: c.size,
+    }));
+    try {
+        void webview.postMessage({ command: 'restore-pets', pets: payload });
+        console.log(
+            `vscode-pets: posted ${payload.length} stored pets to webview`,
+        );
+    } catch (e) {
+        console.warn('vscode-pets: failed to post restore-pets', e);
     }
 }
