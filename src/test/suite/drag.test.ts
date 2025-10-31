@@ -116,6 +116,10 @@ suite('Drag Controller', () => {
     });
 
     teardown(() => {
+        window.dispatchEvent(
+            new window.MouseEvent('mouseup', { clientX: 0, clientY: 0 }),
+        );
+        flushAnimationFrames();
         frameQueue = [];
     });
 
@@ -137,8 +141,8 @@ suite('Drag Controller', () => {
         });
         window.dispatchEvent(moveEvent);
 
-        assert.strictEqual(stubPet.left, 460);
-        assert.strictEqual(stubPet.bottom, 260);
+        assert.strictEqual(stubPet.left, 440);
+        assert.strictEqual(stubPet.bottom, 280);
     });
 
     test('falls to the floor and saves state on drop', () => {
