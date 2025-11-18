@@ -33,18 +33,8 @@
     "license": "MIT",
     "icon": "icon.png",
     "activationEvents": [
-        "onCommand:vscode-pets.start",
-        "onCommand:vscode-pets.throw-with-mouse",
-        "onCommand:vscode-pets.throw-ball",
-        "onCommand:vscode-pets.spawn-pet",
-        "onCommand:vscode-pets.delete-pet",
-        "onCommand:vscode-pets.remove-all-pets",
-        "onCommand:vscode-pets.roll-call",
-        "onCommand:vscode-pets.export-pet-list",
-        "onCommand:vscode-pets.import-pet-list",
         "onWebviewPanel:petCoding",
         "onView:explorer",
-        "onView:petsView",
         "onStartupFinished"
     ],
     "main": "./out/extension/extension.js",
@@ -90,20 +80,13 @@
             {
                 "command": "vscode-pets.throw-with-mouse",
                 "title": "%vscode-pets.throw-with-mouse.title%",
-                "category": "Pet Coding",
-                "icon": {
-                    "dark": "media/icon/dark-throw-outline.svg",
-                    "light": "media/icon/light-throw-outline.svg"
-                }
+                "category": "Pet Coding"
             },
             {
                 "command": "vscode-pets.throw-ball",
                 "title": "%vscode-pets.throw-ball.title%",
                 "category": "Pet Coding",
-                "icon": {
-                    "dark": "media/icon/dark-circle-outline.svg",
-                    "light": "media/icon/light-circle-outline.svg"
-                }
+                "icon": "$(circle)"
             },
             {
                 "command": "vscode-pets.export-pet-list",
@@ -119,28 +102,19 @@
                 "command": "vscode-pets.spawn-pet",
                 "title": "%vscode-pets.spawn-pet.title%",
                 "category": "Pet Coding",
-                "icon": {
-                    "dark": "media/icon/dark-add.svg",
-                    "light": "media/icon/light-add.svg"
-                }
+                "icon": "$(add)"
             },
             {
                 "command": "vscode-pets.delete-pet",
                 "title": "%vscode-pets.delete-pet.title%",
                 "category": "Pet Coding",
-                "icon": {
-                    "dark": "media/icon/dark-trash.svg",
-                    "light": "media/icon/light-trash.svg"
-                }
+                "icon": "$(trash)"
             },
             {
                 "command": "vscode-pets.remove-all-pets",
                 "title": "%vscode-pets.remove-all-pets.title%",
                 "category": "Pet Coding",
-                "icon": {
-                    "dark": "media/icon/dark-trash.svg",
-                    "light": "media/icon/light-trash.svg"
-                }
+                "icon": "$(trash)"
             },
             {
                 "command": "vscode-pets.roll-call",
