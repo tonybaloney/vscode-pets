@@ -88,9 +88,16 @@ export const enum ColorThemeKind {
     highContrastLight = 4,
 }
 
+export type PetSummary = {
+    name: string;
+    type: PetType;
+    color: PetColor;
+};
+
 export class WebviewMessage {
     text: string;
     command: string;
+    pets?: PetSummary[];
 
     constructor(text: string, command: string) {
         this.text = text;
