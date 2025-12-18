@@ -49,7 +49,7 @@ jobs:
 
             - name: Package VSIX
               run: npm install -g @vscode/vsce && vsce package
-            - uses: actions/upload-artifact@v5
+            - uses: actions/upload-artifact@v6
               with:
                 path: "*.vsix"
             - name: Release
