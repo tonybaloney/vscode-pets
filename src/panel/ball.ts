@@ -14,6 +14,8 @@ var canvas: HTMLCanvasElement | null;
 var ballRadius: number;
 var floor: number;
 
+let ballColor: string = '#2ed851'; // default green
+
 function calculateBallRadius(size: PetSize): number {
     if (size === PetSize.nano) {
         return 2;
@@ -170,8 +172,14 @@ function drawBall() {
 
     ctx.beginPath();
     ctx.arc(ballState.cx, ballState.cy, ballRadius, 0, 2 * Math.PI, false);
-    ctx.fillStyle = '#2ed851';
+    ctx.fillStyle = ballColor;
     ctx.fill();
+}
+
+export function setNextBallColor(color: string) {
+    if (typeof color === 'string' && color.length > 0) {
+        ballColor = color;
+    }
 }
 
 export function throwAndChase(pets: PetElement[]) {

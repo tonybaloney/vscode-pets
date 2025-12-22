@@ -24,6 +24,7 @@ import {
     dynamicThrowOn,
     setupBallThrowing,
     throwAndChase,
+    setNextBallColor,
 } from './ball';
 
 const FOREGROUND_EFFECT_CANVAS_ID = 'foregroundEffectCanvas';
@@ -248,8 +249,26 @@ export function petPanelApp(
     petType: PetType,
     throwBallWithMouse: boolean,
     disableEffects: boolean,
+    ballColorOrStateApi?: string | VscodeStateApi,
     stateApi?: VscodeStateApi,
 ) {
+    let configuredBallColor: string | undefined;
+
+    if (typeof ballColorOrStateApi === 'string') {
+        configuredBallColor = ballColorOrStateApi;
+        // stateApi may be in the second optional param already
+    } else if (
+        ballColorOrStateApi &&
+        typeof (ballColorOrStateApi as VscodeStateApi).postMessage ===
+            'function'
+    ) {
+        // Caller passed the stateApi in the 9th position
+        stateApi = ballColorOrStateApi as VscodeStateApi;
+        configuredBallColor = undefined;
+    } else {
+        configuredBallColor = undefined;
+    }
+
     if (!stateApi) {
         stateApi = acquireVsCodeApi();
     }
@@ -307,6 +326,10 @@ export function petPanelApp(
     initCanvas(PET_CANVAS_ID);
     setupBallThrowing(PET_CANVAS_ID, petSize, floor);
 
+    if (configuredBallColor) {
+        setNextBallColor(configuredBallColor);
+    }
+
     if (throwBallWithMouse) {
         dynamicThrowOn(allPets.pets);
     } else {
@@ -359,6 +382,9 @@ export function petPanelApp(
                 break;
             case 'throw-ball':
                 throwAndChase(allPets.pets);
+                break;
+            case 'set-next-ball-color':
+                setNextBallColor(message.color);
                 break;
             case 'spawn-pet':
                 allPets.push(
