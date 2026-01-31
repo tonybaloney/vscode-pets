@@ -69,3 +69,41 @@ export function getTip(
     const bundle = loadDevBundle();
     return bundle[key] ?? key;
 }
+
+/**
+ * Tip counts for general (non-language-specific) events
+ */
+const GENERAL_TIP_COUNTS: Record<string, number> = {
+    documentSave: 5,
+    documentClose: 5,
+    fileCreate: 5,
+    fileDelete: 5,
+};
+
+/**
+ * Get a random tip for a general event (non-language-specific)
+ * @param eventName - Event name (e.g., 'documentSave', 'documentClose')
+ * @param personality - User's personality setting
+ * @returns The localized tip string, or null if no tips exist
+ */
+export function getGeneralTip(
+    eventName: string,
+    personality: Personality,
+): string | null {
+    const tipCount = GENERAL_TIP_COUNTS[eventName];
+    if (!tipCount) {
+        return null;
+    }
+
+    const index = Math.floor(Math.random() * tipCount);
+    const key = `general.${eventName}.${personality}.${index}`;
+
+    // Use VS Code's l10n if available (production/packaged mode)
+    if (vscode.l10n.bundle !== undefined) {
+        return vscode.l10n.t(key);
+    }
+
+    // Fallback to development bundle loading (development mode)
+    const bundle = loadDevBundle();
+    return bundle[key] ?? key;
+}

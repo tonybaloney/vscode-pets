@@ -5,7 +5,7 @@
 /**
  * Personality types that determine the tone of tips
  */
-export type Personality = 'helpful' | 'sarcastic' | 'encouraging';
+export type Personality = 'helpful' | 'sarcastic' | 'encouraging' | 'roast';
 
 /**
  * Frequency settings that control how often tips appear
@@ -67,11 +67,13 @@ export const RATE_LIMIT_CONFIGS: Record<Frequency, RateLimitConfig> = {
         randomChance: 1.0, // Always show
     },
     sometimes: {
-        cooldownMs: 30000, // 30 seconds cooldown
-        randomChance: 0.3, // 30% chance to show
+        // Triggers ~ every 3 tips on average
+        cooldownMs: 15000, // 15 seconds cooldown
+        randomChance: 0.5, // 50% chance to show
     },
     rarely: {
-        cooldownMs: 120000, // 2 minutes cooldown
+        // Triggers ~ every 10 tips on average
+        cooldownMs: 60000, // 1 minute cooldown
         randomChance: 0.1, // 10% chance to show
     },
 };

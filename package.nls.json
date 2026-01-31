@@ -77,6 +77,7 @@
     "vscode-pets.clippyHover.personality.helpful": "Helpful",
     "vscode-pets.clippyHover.personality.sarcastic": "Sarcastic",
     "vscode-pets.clippyHover.personality.encouraging": "Encouraging",
+    "vscode-pets.clippyHover.personality.roast": "Roast",
     "vscode-pets.clippyHover.frequency.description": "How often Clippy shows tips (rate limiting)",
     "vscode-pets.clippyHover.frequency.always": "Always",
     "vscode-pets.clippyHover.frequency.sometimes": "Sometimes",

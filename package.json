@@ -330,14 +330,16 @@
                         "enum": [
                             "helpful",
                             "sarcastic",
-                            "encouraging"
+                            "encouraging",
+                            "roast"
                         ],
                         "default": "helpful",
                         "description": "%vscode-pets.clippyHover.personality.description%",
                         "enumItemLabels": [
                             "%vscode-pets.clippyHover.personality.helpful%",
                             "%vscode-pets.clippyHover.personality.sarcastic%",
-                            "%vscode-pets.clippyHover.personality.encouraging%"
+                            "%vscode-pets.clippyHover.personality.encouraging%",
+                            "%vscode-pets.clippyHover.personality.roast%"
                         ]
                     },
                     "vscode-pets.clippyHover.frequency": {

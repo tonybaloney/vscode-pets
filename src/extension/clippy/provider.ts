@@ -17,6 +17,7 @@ import {
     getLanguage,
     getTipForPattern,
 } from './languages/index';
+import { getGeneralTip } from './tips';
 
 /**
  * Track last tip time for rate limiting
@@ -177,6 +178,124 @@ function handleDocumentOpen(
 }
 
 /**
+ * Handle document save
+ */
+function handleDocumentSave(
+    document: vscode.TextDocument,
+    sendTip: SendTipFn,
+): void {
+    const config = loadConfig();
+
+    if (!config.enabled) {
+        return;
+    }
+
+    // Skip non-file schemes (e.g., output, git, untitled)
+    if (document.uri.scheme !== 'file') {
+        return;
+    }
+
+    if (!shouldShowTip(config.frequency)) {
+        return;
+    }
+
+    const tip = getGeneralTip('documentSave', config.personality);
+    if (tip) {
+        recordTipShown();
+        sendTip(tip);
+    }
+}
+
+/**
+ * Handle document close
+ */
+function handleDocumentClose(
+    document: vscode.TextDocument,
+    sendTip: SendTipFn,
+): void {
+    const config = loadConfig();
+
+    if (!config.enabled) {
+        return;
+    }
+
+    // Skip non-file schemes (e.g., output, git, untitled)
+    if (document.uri.scheme !== 'file') {
+        return;
+    }
+
+    if (!shouldShowTip(config.frequency)) {
+        return;
+    }
+
+    const tip = getGeneralTip('documentClose', config.personality);
+    if (tip) {
+        recordTipShown();
+        sendTip(tip);
+    }
+}
+
+/**
+ * Handle file creation
+ */
+function handleFileCreate(
+    event: vscode.FileCreateEvent,
+    sendTip: SendTipFn,
+): void {
+    const config = loadConfig();
+
+    if (!config.enabled) {
+        return;
+    }
+
+    // Only trigger for actual files (not internal URIs)
+    const hasRealFiles = event.files.some((uri) => uri.scheme === 'file');
+    if (!hasRealFiles) {
+        return;
+    }
+
+    if (!shouldShowTip(config.frequency)) {
+        return;
+    }
+
+    const tip = getGeneralTip('fileCreate', config.personality);
+    if (tip) {
+        recordTipShown();
+        sendTip(tip);
+    }
+}
+
+/**
+ * Handle file deletion
+ */
+function handleFileDelete(
+    event: vscode.FileDeleteEvent,
+    sendTip: SendTipFn,
+): void {
+    const config = loadConfig();
+
+    if (!config.enabled) {
+        return;
+    }
+
+    // Only trigger for actual files (not internal URIs)
+    const hasRealFiles = event.files.some((uri) => uri.scheme === 'file');
+    if (!hasRealFiles) {
+        return;
+    }
+
+    if (!shouldShowTip(config.frequency)) {
+        return;
+    }
+
+    const tip = getGeneralTip('fileDelete', config.personality);
+    if (tip) {
+        recordTipShown();
+        sendTip(tip);
+    }
+}
+
+/**
  * Register the Clippy tips provider
  */
 export function registerClippyTipsProvider(
@@ -192,6 +311,30 @@ export function registerClippyTipsProvider(
     context.subscriptions.push(
         vscode.workspace.onDidOpenTextDocument((document) => {
             handleDocumentOpen(document, sendTip);
+        }),
+    );
+
+    context.subscriptions.push(
+        vscode.workspace.onDidSaveTextDocument((document) => {
+            handleDocumentSave(document, sendTip);
+        }),
+    );
+
+    context.subscriptions.push(
+        vscode.workspace.onDidCloseTextDocument((document) => {
+            handleDocumentClose(document, sendTip);
+        }),
+    );
+
+    context.subscriptions.push(
+        vscode.workspace.onDidCreateFiles((event) => {
+            handleFileCreate(event, sendTip);
+        }),
+    );
+
+    context.subscriptions.push(
+        vscode.workspace.onDidDeleteFiles((event) => {
+            handleFileDelete(event, sendTip);
         }),
     );
 
