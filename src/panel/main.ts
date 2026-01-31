@@ -442,9 +442,13 @@ export function petPanelApp(
                 // Show the tip in a pet's speech bubble
                 // Prefer Clippy pet if available, otherwise use a random pet
                 if (allPets.pets.length > 0) {
-                    const clippyPet = allPets.pets.find((p) => p.type === 'clippy');
+                    const clippyPet = allPets.pets.find(
+                        (p) => p.type === 'clippy',
+                    );
 
-                    const randomPetIndex = Math.floor(Math.random() * allPets.pets.length);
+                    const randomPetIndex = Math.floor(
+                        Math.random() * allPets.pets.length,
+                    );
                     const petToUse = clippyPet ?? allPets.pets[randomPetIndex];
 
                     // Add clippy class for wider bubble, then show tip
