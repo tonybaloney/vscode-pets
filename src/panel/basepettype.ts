@@ -124,8 +124,30 @@ export abstract class BasePetType implements IPetType {
         if (this._speechClamp) {
             const { bubbleWidth, padding } = this._speechClamp;
             const viewportWidth = window.innerWidth;
+            // Ensure padding on BOTH left and right sides
+            const minLeft = padding;
             const maxLeft = viewportWidth - bubbleWidth - padding;
-            speechLeft = Math.max(padding, Math.min(this._left, maxLeft));
+            speechLeft = Math.max(minLeft, Math.min(this._left, maxLeft));
+
+            // Calculate triangle position to point at pet center
+            const petCenter =
+                this._left + this.calculateSpriteWidth(this._size) / 2;
+            // Triangle position relative to bubble's left edge
+            let triangleLeft = petCenter - speechLeft;
+            // Clamp triangle to stay within bubble bounds (with some margin)
+            const triangleMargin = 10;
+            const maxTriangleLeft = bubbleWidth - triangleMargin - 14; // 14 = triangle width
+            triangleLeft = Math.max(
+                triangleMargin,
+                Math.min(triangleLeft, maxTriangleLeft),
+            );
+            this.speech.style.setProperty(
+                '--triangle-left',
+                `${triangleLeft}px`,
+            );
+        } else {
+            // Reset to default when not clamping
+            this.speech.style.removeProperty('--triangle-left');
         }
         this.speech.style.left = `${speechLeft}px`;
         this.speech.style.bottom = `${
