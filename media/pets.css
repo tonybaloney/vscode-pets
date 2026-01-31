@@ -227,3 +227,10 @@ img.pet {
 	border: 5px solid;
 	border-color: #fff transparent transparent #fff;
 }
+
+/* Clippy tip bubble - fixed width for consistent display */
+.bubble.bubble-clippy {
+	width: 200px;
+	padding: 10px 12px;
+	text-align: left;
+}

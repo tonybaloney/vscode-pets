@@ -438,6 +438,31 @@ export function petPanelApp(
             case 'tick':
                 onTick();
                 break;
+            case 'clippy-tip':
+                // Show the tip in a pet's speech bubble
+                // Prefer Clippy pet if available, otherwise use a random pet
+                if (allPets.pets.length > 0) {
+                    const clippyPet = allPets.pets.find((p) => p.type === 'clippy');
+
+                    const randomPetIndex = Math.floor(Math.random() * allPets.pets.length);
+                    const petToUse = clippyPet ?? allPets.pets[randomPetIndex];
+
+                    // Add clippy class for wider bubble, then show tip
+                    petToUse.speech.classList.add('bubble-clippy');
+
+                    // Enable clamping so bubble stays on screen as pet moves
+                    const bubbleWidth = 200; // matches CSS .bubble-clippy width
+                    const padding = 10;
+                    petToUse.pet.setSpeechClamp(bubbleWidth, padding);
+
+                    petToUse.pet.showSpeechBubble(`📎 ${message.text}`, 6000);
+                    // Remove class and clear clamp after bubble hides
+                    setTimeout(() => {
+                        petToUse.speech.classList.remove('bubble-clippy');
+                        petToUse.pet.clearSpeechClamp();
+                    }, 6100);
+                }
+                break;
         }
     });
 

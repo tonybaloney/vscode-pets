@@ -37,6 +37,8 @@ export interface IPetType {
     isPlaying: boolean;
 
     showSpeechBubble(message: string, duration: number): void;
+    setSpeechClamp(bubbleWidth: number, padding: number): void;
+    clearSpeechClamp(): void;
     remove(): void;
 }
 

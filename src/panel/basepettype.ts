@@ -47,6 +47,8 @@ export abstract class BasePetType implements IPetType {
     private _name: string;
     private _speed: number;
     private _size: PetSize;
+    private _speechClamp: { bubbleWidth: number; padding: number } | null =
+        null;
     protected _climbSpeed: number = 1;
     protected _climbHeight: number = 100;
     protected _fallSpeed: number = 5;
@@ -116,7 +118,16 @@ export abstract class BasePetType implements IPetType {
     private repositionAccompanyingElements() {
         this.collision.style.left = `${this._left}px`;
         this.collision.style.bottom = `${this._bottom}px`;
-        this.speech.style.left = `${this._left}px`;
+
+        // Apply clamping if set, otherwise use pet's left position
+        let speechLeft = this._left;
+        if (this._speechClamp) {
+            const { bubbleWidth, padding } = this._speechClamp;
+            const viewportWidth = window.innerWidth;
+            const maxLeft = viewportWidth - bubbleWidth - padding;
+            speechLeft = Math.max(padding, Math.min(this._left, maxLeft));
+        }
+        this.speech.style.left = `${speechLeft}px`;
         this.speech.style.bottom = `${
             this._bottom + this.calculateSpriteWidth(this._size)
         }px`;
@@ -240,6 +251,16 @@ export abstract class BasePetType implements IPetType {
 
     hideSpeechBubble() {
         this.speech.style.display = 'none';
+    }
+
+    setSpeechClamp(bubbleWidth: number, padding: number) {
+        this._speechClamp = { bubbleWidth, padding };
+        // Reposition immediately with clamping applied
+        this.repositionAccompanyingElements();
+    }
+
+    clearSpeechClamp() {
+        this._speechClamp = null;
     }
 
     swipe() {
