@@ -77,5 +77,16 @@
     "vscode-pets.theme.castle" : "Castle",
     "vscode-pets.theme.beach" : "Beach",
     "vscode-pets.theme.winter" : "Winter",
-    "vscode-pets.theme.autumn" : "Autumn"
+    "vscode-pets.theme.autumn" : "Autumn",
+
+    "vscode-pets.clippyHover.enabled.description": "Enable Clippy-style tips when hovering over code patterns",
+    "vscode-pets.clippyHover.personality.description": "The personality/tone of Clippy's tips",
+    "vscode-pets.clippyHover.personality.helpful": "Helpful",
+    "vscode-pets.clippyHover.personality.sarcastic": "Sarcastic",
+    "vscode-pets.clippyHover.personality.encouraging": "Encouraging",
+    "vscode-pets.clippyHover.frequency.description": "How often Clippy shows tips (rate limiting)",
+    "vscode-pets.clippyHover.frequency.always": "Always",
+    "vscode-pets.clippyHover.frequency.sometimes": "Sometimes",
+    "vscode-pets.clippyHover.frequency.rarely": "Rarely",
+    "vscode-pets.clippyHover.enabledLanguages.description": "Languages where Clippy tips are enabled. Use [\"*\"] for all languages, or specify language IDs like [\"javascript\", \"typescript\"]"
 }
