@@ -15,6 +15,7 @@ import {
 import { randomName } from '../common/names';
 import * as localize from '../common/localize';
 import { availableColors, normalizeColor } from '../panel/pets';
+import { registerClippyTipsProvider } from './clippy/provider';
 
 const EXTRA_PETS_KEY = 'vscode-pets.extra-pets';
 const EXTRA_PETS_KEY_TYPES = EXTRA_PETS_KEY + '.types';
@@ -743,6 +744,17 @@ export function activate(context: vscode.ExtensionContext) {
             },
         });
     }
+
+    // Register Clippy tips provider - sends tips to the pet panel
+    registerClippyTipsProvider(context, (tip: string) => {
+        const webview = getWebview();
+        if (webview) {
+            void webview.postMessage({
+                command: 'clippy-tip',
+                text: tip,
+            });
+        }
+    });
 }
 
 function updateStatusBar(): void {
