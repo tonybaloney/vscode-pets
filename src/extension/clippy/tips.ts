@@ -1,9 +1,47 @@
 /**
  * Tip resolver for Clippy internationalization
  */
-
-import * as l10n from '@vscode/l10n';
+import * as vscode from 'vscode';
+import * as fs from 'fs';
+import * as path from 'path';
 import { Personality } from './types';
+
+const EXTENSION_ID = 'tonybaloney.vscode-pets';
+
+// Cache for development bundle fallback
+let devBundle: Record<string, string> | null = null;
+
+/**
+ * Get the extension path via vscode.extensions API
+ * Falls back to VSCODE_PETS_EXTENSION_PATH env var for testing
+ */
+function getExtensionPath(): string | undefined {
+    return vscode.extensions.getExtension(EXTENSION_ID)?.extensionPath;
+}
+
+/**
+ * Load the l10n bundle directly for development mode
+ */
+function loadDevBundle(): Record<string, string> {
+    if (devBundle) {
+        return devBundle;
+    }
+
+    const extensionPath = getExtensionPath();
+    if (!extensionPath) {
+        devBundle = {};
+        return devBundle;
+    }
+    try {
+        const bundlePath = path.join(extensionPath, 'l10n', 'bundle.l10n.json');
+        const content = fs.readFileSync(bundlePath, 'utf-8');
+        devBundle = JSON.parse(content) as Record<string, string>;
+        return devBundle;
+    } catch {
+        devBundle = {};
+        return devBundle;
+    }
+}
 
 /**
  * Get a random tip for a pattern using i18n
@@ -21,5 +59,13 @@ export function getTip(
 ): string {
     const index = Math.floor(Math.random() * tipCount);
     const key = `${languageId}.${patternName}.${personality}.${index}`;
-    return l10n.t(key);
+
+    // Use VS Code's l10n if available (production/packaged mode)
+    if (vscode.l10n.bundle !== undefined) {
+        return vscode.l10n.t(key);
+    }
+
+    // Fallback to development bundle loading (development mode)
+    const bundle = loadDevBundle();
+    return bundle[key] ?? key;
 }
