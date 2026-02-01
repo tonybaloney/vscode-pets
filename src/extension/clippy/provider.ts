@@ -8,21 +8,46 @@
 import * as vscode from 'vscode';
 import {
     ClippyConfig,
+    FileContext,
     Frequency,
     Personality,
     RATE_LIMIT_CONFIGS,
+    SemanticDetectionConfig,
+    SymbolContext,
+    TemplateContext,
 } from './types';
 import {
     findMatchAtPosition,
     getLanguage,
     getTipForPattern,
 } from './languages/index';
-import { getGeneralTip } from './tips';
+import { extractFileContext, getGeneralTip } from './tips';
+import { debounce, DebouncedFunction } from './debounce';
+import {
+    detectSemantic,
+    getSymbolCache,
+    DEFAULT_SEMANTIC_CONFIG,
+} from './semanticDetector';
 
 /**
  * Track last tip time for rate limiting
  */
 let lastTipTime = 0;
+
+/**
+ * Type for send tip function
+ */
+type SendTipFn = (tip: string, patternName: string) => void;
+
+/**
+ * Debounced selection change handler (set during registration)
+ */
+let debouncedSelectionHandler: DebouncedFunction<
+    (
+        event: vscode.TextEditorSelectionChangeEvent,
+        sendTip: SendTipFn,
+    ) => Promise<void>
+> | null = null;
 
 /**
  * Load configuration from VS Code settings
@@ -54,20 +79,21 @@ function isLanguageEnabled(languageId: string, config: ClippyConfig): boolean {
 
 /**
  * Check if we should show a tip based on rate limiting
+ *
+ * Rate limiting works in two stages:
+ * 1. Cooldown: Must wait cooldownMs since last tip before any tip can show
+ * 2. Random chance: After cooldown, randomChance determines probability
  */
 function shouldShowTip(frequency: Frequency): boolean {
     const rateLimit = RATE_LIMIT_CONFIGS[frequency];
-
-    if (rateLimit.cooldownMs === 0) {
-        return true;
-    }
-
     const timeSinceLastTip = Date.now() - lastTipTime;
 
-    if (timeSinceLastTip >= rateLimit.cooldownMs) {
-        return true;
+    // Must wait for cooldown period to pass
+    if (timeSinceLastTip < rateLimit.cooldownMs) {
+        return false;
     }
 
+    // After cooldown, apply random chance
     return Math.random() < rateLimit.randomChance;
 }
 
@@ -78,15 +104,32 @@ function recordTipShown(): void {
     lastTipTime = Date.now();
 }
 
-type SendTipFn = (tip: string) => void;
+/**
+ * Try regex-based detection (fast path)
+ *
+ * @returns Pattern name if matched, null otherwise
+ */
+function tryRegexDetection(
+    document: vscode.TextDocument,
+    position: vscode.Position,
+): string | null {
+    const lineText = document.lineAt(position.line).text;
+    const match = findMatchAtPosition(
+        lineText,
+        position.character,
+        document.languageId,
+    );
+    return match?.name ?? null;
+}
 
 /**
- * Handle cursor/selection changes
+ * Handle cursor/selection changes with async semantic detection
  */
-function handleSelectionChange(
+async function handleSelectionChangeAsync(
     event: vscode.TextEditorSelectionChangeEvent,
     sendTip: SendTipFn,
-): void {
+    semanticConfig: SemanticDetectionConfig = DEFAULT_SEMANTIC_CONFIG,
+): Promise<void> {
     const config = loadConfig();
 
     if (!config.enabled) {
@@ -94,7 +137,8 @@ function handleSelectionChange(
     }
 
     const editor = event.textEditor;
-    const languageId = editor.document.languageId;
+    const document = editor.document;
+    const languageId = document.languageId;
 
     if (!isLanguageEnabled(languageId, config)) {
         return;
@@ -114,17 +158,54 @@ function handleSelectionChange(
         return;
     }
 
-    const lineText = editor.document.lineAt(position.line).text;
-    const match = findMatchAtPosition(lineText, position.character, languageId);
+    // Extract file context for template replacement
+    const fileContext: FileContext = extractFileContext(
+        document.uri,
+        languageId,
+    );
 
-    if (!match) {
+    // Fast path: try regex first (synchronous)
+    let patternName = tryRegexDetection(document, position);
+    let symbolContext: SymbolContext | undefined;
+
+    if (patternName) {
+        // Regex matched - still run semantic detection to get symbol context for templates
+        const semanticResult = await detectSemantic(
+            document,
+            position,
+            semanticConfig,
+        );
+        symbolContext = semanticResult?.context;
+    } else {
+        // Slow path: try semantic detection if regex didn't match
+        const semanticResult = await detectSemantic(
+            document,
+            position,
+            semanticConfig,
+        );
+        patternName = semanticResult?.patternName ?? null;
+        symbolContext = semanticResult?.context;
+    }
+
+    if (!patternName) {
         return;
     }
 
-    const tip = getTipForPattern(match.name, config.personality, languageId);
+    // Combine contexts for template replacement
+    const templateContext: TemplateContext = {
+        symbol: symbolContext,
+        file: fileContext,
+    };
+
+    const tip = getTipForPattern(
+        patternName,
+        config.personality,
+        languageId,
+        templateContext,
+    );
     if (tip) {
         recordTipShown();
-        sendTip(tip);
+        sendTip(tip, patternName);
     }
 }
 
@@ -155,6 +236,12 @@ function handleDocumentOpen(
         return;
     }
 
+    // Extract file context for template replacement
+    const fileContext: FileContext = extractFileContext(
+        document.uri,
+        languageId,
+    );
+
     // Scan first 50 lines for patterns
     const linesToScan = Math.min(document.lineCount, 50);
 
@@ -167,10 +254,13 @@ function handleDocumentOpen(
                 match.name,
                 config.personality,
                 languageId,
+                {
+                    file: fileContext,
+                },
             );
             if (tip) {
                 recordTipShown();
-                sendTip(tip);
+                sendTip(tip, match.name);
                 return; // Only show one tip per file open
             }
         }
@@ -199,10 +289,16 @@ function handleDocumentSave(
         return;
     }
 
-    const tip = getGeneralTip('documentSave', config.personality);
+    // Extract file context for template replacement
+    const fileContext: FileContext = extractFileContext(
+        document.uri,
+        document.languageId,
+    );
+
+    const tip = getGeneralTip('documentSave', config.personality, fileContext);
     if (tip) {
         recordTipShown();
-        sendTip(tip);
+        sendTip(tip, 'documentSave');
     }
 }
 
@@ -228,10 +324,16 @@ function handleDocumentClose(
         return;
     }
 
-    const tip = getGeneralTip('documentClose', config.personality);
+    // Extract file context for template replacement
+    const fileContext: FileContext = extractFileContext(
+        document.uri,
+        document.languageId,
+    );
+
+    const tip = getGeneralTip('documentClose', config.personality, fileContext);
     if (tip) {
         recordTipShown();
-        sendTip(tip);
+        sendTip(tip, 'documentClose');
     }
 }
 
@@ -249,8 +351,8 @@ function handleFileCreate(
     }
 
     // Only trigger for actual files (not internal URIs)
-    const hasRealFiles = event.files.some((uri) => uri.scheme === 'file');
-    if (!hasRealFiles) {
+    const realFile = event.files.find((uri) => uri.scheme === 'file');
+    if (!realFile) {
         return;
     }
 
@@ -258,10 +360,13 @@ function handleFileCreate(
         return;
     }
 
-    const tip = getGeneralTip('fileCreate', config.personality);
+    // Extract file context from the first created file
+    const fileContext: FileContext = extractFileContext(realFile);
+
+    const tip = getGeneralTip('fileCreate', config.personality, fileContext);
     if (tip) {
         recordTipShown();
-        sendTip(tip);
+        sendTip(tip, 'fileCreate');
     }
 }
 
@@ -279,8 +384,8 @@ function handleFileDelete(
     }
 
     // Only trigger for actual files (not internal URIs)
-    const hasRealFiles = event.files.some((uri) => uri.scheme === 'file');
-    if (!hasRealFiles) {
+    const realFile = event.files.find((uri) => uri.scheme === 'file');
+    if (!realFile) {
         return;
     }
 
@@ -288,10 +393,13 @@ function handleFileDelete(
         return;
     }
 
-    const tip = getGeneralTip('fileDelete', config.personality);
+    // Extract file context from the first deleted file
+    const fileContext: FileContext = extractFileContext(realFile);
+
+    const tip = getGeneralTip('fileDelete', config.personality, fileContext);
     if (tip) {
         recordTipShown();
-        sendTip(tip);
+        sendTip(tip, 'fileDelete');
     }
 }
 
@@ -302,9 +410,17 @@ export function registerClippyTipsProvider(
     context: vscode.ExtensionContext,
     sendTip: SendTipFn,
 ): void {
+    // Create debounced selection handler
+    debouncedSelectionHandler = debounce(
+        (event: vscode.TextEditorSelectionChangeEvent, tipFn: SendTipFn) => {
+            void handleSelectionChangeAsync(event, tipFn);
+        },
+        DEFAULT_SEMANTIC_CONFIG.debounceMs,
+    );
+
     context.subscriptions.push(
         vscode.window.onDidChangeTextEditorSelection((event) => {
-            handleSelectionChange(event, sendTip);
+            debouncedSelectionHandler?.(event, sendTip);
         }),
     );
 
@@ -338,6 +454,13 @@ export function registerClippyTipsProvider(
         }),
     );
 
+    // Invalidate symbol cache on document changes
+    context.subscriptions.push(
+        vscode.workspace.onDidChangeTextDocument((event) => {
+            getSymbolCache().invalidate(event.document.uri);
+        }),
+    );
+
     context.subscriptions.push(
         vscode.workspace.onDidChangeConfiguration((e) => {
             if (e.affectsConfiguration('vscode-pets.clippyHover')) {
@@ -345,4 +468,13 @@ export function registerClippyTipsProvider(
             }
         }),
     );
+
+    // Cleanup on dispose
+    context.subscriptions.push({
+        dispose: () => {
+            debouncedSelectionHandler?.cancel();
+            debouncedSelectionHandler = null;
+            getSymbolCache().clear();
+        },
+    });
 }

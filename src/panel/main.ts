@@ -43,6 +43,70 @@ declare global {
 export var allPets: IPetCollection = new PetCollection();
 var petCounter: number;
 
+// Tip queue system - ensures tips show for full duration without interruption
+const TIP_DURATION_MS = 6000; // 6 seconds
+interface QueuedTip {
+    text: string;
+    patternName: string;
+}
+const tipQueue: QueuedTip[] = [];
+let isTipShowing = false;
+let currentTipPatternName: string | null = null;
+
+function showNextTip() {
+    if (tipQueue.length === 0 || isTipShowing) {
+        return;
+    }
+
+    if (allPets.pets.length === 0) {
+        tipQueue.length = 0; // Clear queue if no pets
+        return;
+    }
+
+    const tip = tipQueue.shift();
+    if (!tip) {
+        return;
+    }
+    isTipShowing = true;
+    currentTipPatternName = tip.patternName;
+
+    // Prefer Clippy pet if available, otherwise use a random pet
+    const clippyPet = allPets.pets.find((p) => p.type === 'clippy');
+    const randomPetIndex = Math.floor(Math.random() * allPets.pets.length);
+    const petToUse = clippyPet ?? allPets.pets[randomPetIndex];
+
+    // Add clippy class for wider bubble, then show tip
+    petToUse.speech.classList.add('bubble-clippy');
+
+    // Enable clamping so bubble stays on screen as pet moves
+    const bubbleWidth = 200; // matches CSS .bubble-clippy width
+    const padding = 10;
+    petToUse.pet.setSpeechClamp(bubbleWidth, padding);
+
+    petToUse.pet.showSpeechBubble(`📎 ${tip.text}`, TIP_DURATION_MS);
+
+    // Remove class and clear clamp after bubble hides, then show next tip
+    setTimeout(() => {
+        petToUse.speech.classList.remove('bubble-clippy');
+        petToUse.pet.clearSpeechClamp();
+        isTipShowing = false;
+        currentTipPatternName = null;
+        showNextTip(); // Process next tip in queue
+    }, TIP_DURATION_MS + 100);
+}
+
+function queueTip(text: string, patternName: string) {
+    // Don't queue duplicate pattern types (check current + queue)
+    if (currentTipPatternName === patternName) {
+        return;
+    }
+    if (tipQueue.some((t) => t.patternName === patternName)) {
+        return;
+    }
+    tipQueue.push({ text, patternName });
+    showNextTip();
+}
+
 function handleMouseOver(e: MouseEvent) {
     var el = e.currentTarget as HTMLDivElement;
     allPets.pets.forEach((element) => {
@@ -439,32 +503,13 @@ export function petPanelApp(
                 onTick();
                 break;
             case 'clippy-tip':
-                // Show the tip in a pet's speech bubble
-                // Prefer Clippy pet if available, otherwise use a random pet
-                if (allPets.pets.length > 0) {
-                    const clippyPet = allPets.pets.find(
-                        (p) => p.type === 'clippy',
-                    );
-
-                    const randomPetIndex = Math.floor(
-                        Math.random() * allPets.pets.length,
-                    );
-                    const petToUse = clippyPet ?? allPets.pets[randomPetIndex];
-
-                    // Add clippy class for wider bubble, then show tip
-                    petToUse.speech.classList.add('bubble-clippy');
-
-                    // Enable clamping so bubble stays on screen as pet moves
-                    const bubbleWidth = 200; // matches CSS .bubble-clippy width
-                    const padding = 10;
-                    petToUse.pet.setSpeechClamp(bubbleWidth, padding);
-
-                    petToUse.pet.showSpeechBubble(`📎 ${message.text}`, 6000);
-                    // Remove class and clear clamp after bubble hides
-                    setTimeout(() => {
-                        petToUse.speech.classList.remove('bubble-clippy');
-                        petToUse.pet.clearSpeechClamp();
-                    }, 6100);
+                // Queue the tip - shows for 6s, no duplicates of same pattern type
+                if (
+                    allPets.pets.length > 0 &&
+                    message.text &&
+                    message.patternName
+                ) {
+                    queueTip(message.text, message.patternName);
                 }
                 break;
         }

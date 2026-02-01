@@ -2,10 +2,88 @@
  * Type definitions for Clippy Code Tips
  */
 
+import * as vscode from 'vscode';
+
 /**
  * Personality types that determine the tone of tips
  */
 export type Personality = 'helpful' | 'sarcastic' | 'encouraging' | 'roast';
+
+/**
+ * Source of pattern detection
+ */
+export type DetectionSource = 'regex' | 'symbol' | 'hover';
+
+/**
+ * Context about the current file for template replacement
+ */
+export interface FileContext {
+    /** The file name with extension (e.g., "UserRepository.ts") */
+    fileName: string;
+    /** The file extension including dot (e.g., ".ts") */
+    fileExtension: string;
+    /** The file name without extension (e.g., "UserRepository") */
+    fileNameWithoutExtension: string;
+    /** The VS Code language ID (e.g., "typescript") */
+    languageId: string;
+}
+
+/**
+ * Combined context for template replacement
+ */
+export interface TemplateContext {
+    /** Symbol context (for cursor position) */
+    symbol?: SymbolContext;
+    /** File context (for current document) */
+    file?: FileContext;
+}
+
+/**
+ * Context about a detected symbol for template replacement
+ */
+export interface SymbolContext {
+    /** The symbol's name (e.g., "UserRepository", "TItem") */
+    symbolName: string;
+    /** Parent symbol name if nested (e.g., class name for a method) */
+    parentName?: string;
+    /** Grandparent symbol name if deeply nested */
+    grandparentName?: string;
+    /** Total number of direct children */
+    childCount: number;
+    /** Number of method children */
+    methodCount: number;
+    /** Number of property/field children */
+    propertyCount: number;
+    /** Number of siblings (other children of parent) */
+    siblingCount: number;
+    /** Semantic token modifiers (e.g., "async", "readonly", "static") */
+    modifiers: string[];
+    /** The symbol kind as a readable string */
+    kindName: string;
+    /** Parent's kind as a readable string */
+    parentKindName?: string;
+}
+
+/**
+ * Result from semantic detection
+ */
+export interface SemanticDetectionResult {
+    patternName: string;
+    source: DetectionSource;
+    containingSymbol?: vscode.DocumentSymbol;
+    hoverInfo?: string;
+    /** Rich context for template replacement */
+    context?: SymbolContext;
+}
+
+/**
+ * Configuration for semantic detection
+ */
+export interface SemanticDetectionConfig {
+    debounceMs: number;
+    cacheTtlMs: number;
+    apiTimeoutMs: number;
+}
 
 /**
  * Frequency settings that control how often tips appear
@@ -68,12 +146,12 @@ export const RATE_LIMIT_CONFIGS: Record<Frequency, RateLimitConfig> = {
     },
     sometimes: {
         // Triggers ~ every 3 tips on average
-        cooldownMs: 15000, // 15 seconds cooldown
+        cooldownMs: 30000, // 30 seconds cooldown
         randomChance: 0.5, // 50% chance to show
     },
     rarely: {
         // Triggers ~ every 10 tips on average
-        cooldownMs: 60000, // 1 minute cooldown
+        cooldownMs: 90000, // 1.5 minutes cooldown
         randomChance: 0.1, // 10% chance to show
     },
 };
