@@ -295,7 +295,9 @@ function handleDocumentSave(
         document.languageId,
     );
 
-    const tip = getGeneralTip('documentSave', config.personality, fileContext);
+    const tip = getGeneralTip('documentSave', config.personality, [
+        fileContext.fileName,
+    ]);
     if (tip) {
         recordTipShown();
         sendTip(tip, 'documentSave');
@@ -330,7 +332,9 @@ function handleDocumentClose(
         document.languageId,
     );
 
-    const tip = getGeneralTip('documentClose', config.personality, fileContext);
+    const tip = getGeneralTip('documentClose', config.personality, [
+        fileContext.fileName,
+    ]);
     if (tip) {
         recordTipShown();
         sendTip(tip, 'documentClose');
@@ -363,7 +367,9 @@ function handleFileCreate(
     // Extract file context from the first created file
     const fileContext: FileContext = extractFileContext(realFile);
 
-    const tip = getGeneralTip('fileCreate', config.personality, fileContext);
+    const tip = getGeneralTip('fileCreate', config.personality, [
+        fileContext.fileName,
+    ]);
     if (tip) {
         recordTipShown();
         sendTip(tip, 'fileCreate');
@@ -396,7 +402,9 @@ function handleFileDelete(
     // Extract file context from the first deleted file
     const fileContext: FileContext = extractFileContext(realFile);
 
-    const tip = getGeneralTip('fileDelete', config.personality, fileContext);
+    const tip = getGeneralTip('fileDelete', config.personality, [
+        fileContext.fileName,
+    ]);
     if (tip) {
         recordTipShown();
         sendTip(tip, 'fileDelete');

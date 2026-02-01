@@ -95,8 +95,14 @@ export type Frequency = 'always' | 'sometimes' | 'rarely';
  */
 export interface Pattern {
     name: string;
+    universalName: string;
     regex: RegExp;
     tipCount: number;
+    /**
+     * Optional function to extract template values from context
+     * Returns array of values for positional placeholders {0}, {1}, {2}, etc.
+     */
+    getTemplateValues?: (context: TemplateContext) => string[];
 }
 
 /**

@@ -4,7 +4,7 @@
 import * as vscode from 'vscode';
 import * as fs from 'fs';
 import * as path from 'path';
-import { Personality } from './types';
+import { FileContext, Personality } from './types';
 
 const EXTENSION_ID = 'tonybaloney.vscode-pets';
 
@@ -44,30 +44,86 @@ function loadDevBundle(): Record<string, string> {
 }
 
 /**
+ * Extract file context from a URI and optional language ID
+ *
+ * @param uri - The file URI
+ * @param languageId - Optional language ID (defaults to extension-based guess)
+ * @returns FileContext with file information
+ */
+export function extractFileContext(
+    uri: vscode.Uri,
+    languageId?: string,
+): FileContext {
+    const fileName = path.basename(uri.fsPath);
+    const fileExtension = path.extname(uri.fsPath);
+    const fileNameWithoutExtension = path.basename(uri.fsPath, fileExtension);
+
+    return {
+        fileName,
+        fileExtension,
+        fileNameWithoutExtension,
+        languageId: languageId || fileExtension.slice(1) || 'plaintext',
+    };
+}
+
+/**
+ * Replace positional placeholders with values
+ *
+ * Supported placeholders:
+ * - {0}, {1}, {2}, etc. - Positional placeholders replaced by values array
+ *
+ * @param template - The tip template string with positional placeholders
+ * @param values - Array of values to replace placeholders
+ * @returns The tip with placeholders replaced
+ */
+export function applyTemplate(template: string, values: string[] = []): string {
+    if (!values || values.length === 0) {
+        return template;
+    }
+
+    let result = template;
+
+    // Replace positional placeholders {0}, {1}, {2}, etc.
+    values.forEach((value, index) => {
+        const placeholder = new RegExp(`\\{${index}\\}`, 'g');
+        result = result.replace(placeholder, value);
+    });
+
+    return result;
+}
+
+/**
  * Get a random tip for a pattern using i18n
- * @param languageId - Programming language (e.g., 'typescript')
- * @param patternName - Pattern name (e.g., 'console')
+ * @param universalPatternName - Universal pattern name (e.g., 'logging', 'symbol.class')
  * @param personality - User's personality setting
  * @param tipCount - Number of available tips
- * @returns The localized tip string
+ * @param values - Optional array of values for positional placeholders {0}, {1}, {2}, etc.
+ * @returns The localized tip string with templates applied
  */
 export function getTip(
-    languageId: string,
-    patternName: string,
+    universalPatternName: string,
     personality: Personality,
     tipCount: number,
+    values: string[] = [],
 ): string {
     const index = Math.floor(Math.random() * tipCount);
-    const key = `${languageId}.${patternName}.${personality}.${index}`;
+    const key = `${universalPatternName}.${personality}.${index}`;
+
+    let result: string;
 
     // Use VS Code's l10n if available (production/packaged mode)
     if (vscode.l10n.bundle !== undefined) {
-        return vscode.l10n.t(key);
+        // VS Code's l10n.t natively supports positional placeholders
+        result = vscode.l10n.t(key, ...values);
+    } else {
+        // Fallback to development bundle loading (development mode)
+        const bundle = loadDevBundle();
+        const template = bundle[key] ?? key;
+        // Apply template replacements manually in dev mode
+        result = applyTemplate(template, values);
     }
 
-    // Fallback to development bundle loading (development mode)
-    const bundle = loadDevBundle();
-    return bundle[key] ?? key;
+    return result;
 }
 
 /**
@@ -84,11 +140,13 @@ const GENERAL_TIP_COUNTS: Record<string, number> = {
  * Get a random tip for a general event (non-language-specific)
  * @param eventName - Event name (e.g., 'documentSave', 'documentClose')
  * @param personality - User's personality setting
- * @returns The localized tip string, or null if no tips exist
+ * @param values - Optional array of values for positional placeholders
+ * @returns The localized tip string with templates applied, or null if no tips exist
  */
 export function getGeneralTip(
     eventName: string,
     personality: Personality,
+    values: string[] = [],
 ): string | null {
     const tipCount = GENERAL_TIP_COUNTS[eventName];
     if (!tipCount) {
@@ -98,12 +156,17 @@ export function getGeneralTip(
     const index = Math.floor(Math.random() * tipCount);
     const key = `general.${eventName}.${personality}.${index}`;
 
+    let result: string;
+
     // Use VS Code's l10n if available (production/packaged mode)
     if (vscode.l10n.bundle !== undefined) {
-        return vscode.l10n.t(key);
+        result = vscode.l10n.t(key, ...values);
+    } else {
+        // Fallback to development bundle loading (development mode)
+        const bundle = loadDevBundle();
+        const template = bundle[key] ?? key;
+        result = applyTemplate(template, values);
     }
 
-    // Fallback to development bundle loading (development mode)
-    const bundle = loadDevBundle();
-    return bundle[key] ?? key;
+    return result;
 }
