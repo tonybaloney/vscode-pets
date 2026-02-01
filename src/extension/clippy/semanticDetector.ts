@@ -14,8 +14,8 @@ import {
 import { DocumentSymbolCache } from './cache';
 import { withTimeout } from './debounce';
 import {
-    getPatternNameForSymbolKind,
-    getPatternNameFromHoverContent,
+    getTriggerNameForSymbolKind,
+    getTriggerNameFromHoverContent,
 } from './languages/index';
 
 /**
@@ -137,7 +137,7 @@ function buildSymbolContext(result: SymbolSearchResult): SymbolContext {
 }
 
 /**
- * Detect pattern from document symbols
+ * Detect trigger from document symbols
  *
  * @param document The document to analyze
  * @param position The cursor position
@@ -181,13 +181,13 @@ export async function detectFromSymbols(
         return null;
     }
 
-    // Map symbol kind to pattern name
-    const patternName = getPatternNameForSymbolKind(
+    // Map symbol kind to trigger name
+    const triggerName = getTriggerNameForSymbolKind(
         searchResult.symbol.kind,
         languageId,
     );
 
-    if (!patternName) {
+    if (!triggerName) {
         return null;
     }
 
@@ -195,7 +195,7 @@ export async function detectFromSymbols(
     const context = buildSymbolContext(searchResult);
 
     return {
-        patternName,
+        triggerName,
         source: 'symbol',
         containingSymbol: searchResult.symbol,
         context,
@@ -225,7 +225,7 @@ function extractHoverText(hovers: vscode.Hover[]): string {
 }
 
 /**
- * Detect pattern from hover information
+ * Detect trigger from hover information
  *
  * @param document The document to analyze
  * @param position The cursor position
@@ -260,25 +260,25 @@ export async function detectFromHover(
         return null;
     }
 
-    // Map hover content to pattern name
-    const patternName = getPatternNameFromHoverContent(hoverText, languageId);
-    if (!patternName) {
+    // Map hover content to trigger name
+    const triggerName = getTriggerNameFromHoverContent(hoverText, languageId);
+    if (!triggerName) {
         return null;
     }
 
     return {
-        patternName,
+        triggerName,
         source: 'hover',
         hoverInfo: hoverText,
     };
 }
 
 /**
- * Semantic token type to pattern name mapping
+ * Semantic token type to trigger name mapping
  * These are token types that the document symbol provider doesn't handle well
- * Maps to language-specific pattern names for detection
+ * Maps to language-specific trigger names for detection
  */
-const SEMANTIC_TOKEN_TO_PATTERN: Record<string, string> = {
+const SEMANTIC_TOKEN_TO_TRIGGER: Record<string, string> = {
     typeParameter: 'symbolTypeParameter',
     enumMember: 'symbolEnumMember',
 };
@@ -300,7 +300,7 @@ function decodeModifiers(
 }
 
 /**
- * Detect pattern from semantic tokens at a specific position
+ * Detect trigger from semantic tokens at a specific position
  *
  * @param document The document to analyze
  * @param position The cursor position
@@ -370,7 +370,7 @@ export async function detectFromSemanticTokens(
             position.character < currentChar + length
         ) {
             const tokenType = legend.tokenTypes[tokenTypeIndex];
-            const patternName = SEMANTIC_TOKEN_TO_PATTERN[tokenType];
+            const triggerName = SEMANTIC_TOKEN_TO_TRIGGER[tokenType];
             const modifiers = decodeModifiers(tokenModifiersBitmask, legend);
 
             // Extract the actual token text from the document
@@ -382,7 +382,7 @@ export async function detectFromSemanticTokens(
             );
             const symbolName = document.getText(tokenRange);
 
-            if (patternName) {
+            if (triggerName) {
                 // Build partial context from semantic token info
                 const context: SymbolContext = {
                     symbolName,
@@ -395,7 +395,7 @@ export async function detectFromSemanticTokens(
                 };
 
                 return {
-                    patternName,
+                    triggerName,
                     source: 'symbol',
                     context,
                 };

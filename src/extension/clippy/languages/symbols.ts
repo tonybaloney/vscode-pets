@@ -1,11 +1,11 @@
 /**
- * Universal symbol patterns (shared across all languages)
+ * Universal symbol triggers (shared across all languages)
  *
- * These patterns are detected via VS Code's document symbol provider,
+ * These triggers are detected via VS Code's document symbol provider,
  * not regex. They work for any language that VS Code supports.
  */
 
-import { Pattern, TemplateContext } from '../types';
+import { Trigger, TemplateContext } from '../types';
 
 /**
  * Symbol types supported by VS Code
@@ -96,29 +96,28 @@ const SYMBOL_VALUE_EXTRACTORS: Record<
 };
 
 /**
- * Create a symbol pattern
- * Symbol patterns use a never-matching regex since they're detected via VS Code APIs
+ * Create a symbol trigger
+ * Symbol triggers use a never-matching regex since they're detected via VS Code APIs
  */
-function createSymbolPattern(symbolType: string): Pattern {
+function createSymbolTrigger(symbolType: string): Trigger {
     // Get the value extractor for this symbol type, or use default (symbolName only)
     const extractor: (ctx: TemplateContext) => string[] =
         SYMBOL_VALUE_EXTRACTORS[symbolType] ||
         ((ctx: TemplateContext) => [ctx.symbol?.symbolName ?? '']);
 
-
-    // Capitalize first letter for pattern name
+    // Capitalize first letter for trigger name
     const symbolTypeName = symbolType.replace(/^./, (c) => c.toUpperCase());
 
     return {
         name: `symbol${symbolTypeName}`,
         universalName: `symbol.${symbolType}`,
         regex: /(?!)/g, // Never matches - detected via symbol provider
-        tipCount: 5,
+        messageCount: 5,
         getTemplateValues: extractor,
     };
 }
 
 /**
- * All symbol patterns (generated programmatically)
+ * All symbol triggers (generated programmatically)
  */
-export const symbolPatterns: Pattern[] = SYMBOL_TYPES.map(createSymbolPattern);
+export const symbolTriggers: Trigger[] = SYMBOL_TYPES.map(createSymbolTrigger);

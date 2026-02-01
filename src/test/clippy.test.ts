@@ -1,23 +1,23 @@
 /**
- * Clippy pattern matching tests
+ * Clippy trigger matching tests
  */
 
 import * as assert from 'assert';
 import {
-    findPatternsInLine,
-    findMatchAtPosition,
+    findTriggersInLine,
+    findTriggerAtPosition,
     getLanguage,
-    getTipForPattern,
-    getPattern,
-    getPatternNames,
+    getMessageForTrigger,
+    getTrigger,
+    getTriggerNames,
 } from '../extension/clippy/languages/index.js';
 import { typescript } from '../extension/clippy/languages/typescript/index.js';
-import type { PatternMatch } from '../extension/clippy/types.js';
+import type { TriggerMatch } from '../extension/clippy/types.js';
 
 suite('Clippy Tests', () => {
-    suite('Pattern Detection', () => {
+    suite('Trigger Detection', () => {
         test('finds console.log', () => {
-            const matches = findPatternsInLine(
+            const matches = findTriggersInLine(
                 'console.log("hi")',
                 'typescript',
             );
@@ -26,13 +26,13 @@ suite('Clippy Tests', () => {
         });
 
         test('finds TODO comments', () => {
-            const matches = findPatternsInLine('// TODO: fix', 'typescript');
+            const matches = findTriggersInLine('// TODO: fix', 'typescript');
             assert.strictEqual(matches.length, 1);
             assert.strictEqual(matches[0].name, 'todo');
         });
 
         test('finds FIXME comments', () => {
-            const matches = findPatternsInLine(
+            const matches = findTriggersInLine(
                 '// FIXME: broken',
                 'typescript',
             );
@@ -41,7 +41,7 @@ suite('Clippy Tests', () => {
         });
 
         test('finds function declarations', () => {
-            const matches = findPatternsInLine(
+            const matches = findTriggersInLine(
                 'function foo() {',
                 'typescript',
             );
@@ -50,7 +50,7 @@ suite('Clippy Tests', () => {
         });
 
         test('finds arrow functions', () => {
-            const matches = findPatternsInLine(
+            const matches = findTriggersInLine(
                 'const fn = () => {}',
                 'typescript',
             );
@@ -59,45 +59,45 @@ suite('Clippy Tests', () => {
         });
 
         test('finds class declarations', () => {
-            const matches = findPatternsInLine('class Foo {', 'typescript');
+            const matches = findTriggersInLine('class Foo {', 'typescript');
             assert.strictEqual(matches.length, 1);
             assert.strictEqual(matches[0].name, 'class');
         });
 
         test('finds debugger statements', () => {
-            const matches = findPatternsInLine('debugger;', 'typescript');
+            const matches = findTriggersInLine('debugger;', 'typescript');
             assert.strictEqual(matches.length, 1);
             assert.strictEqual(matches[0].name, 'debugger');
         });
 
         test('finds await keyword', () => {
-            const matches = findPatternsInLine('await fetch()', 'typescript');
+            const matches = findTriggersInLine('await fetch()', 'typescript');
             assert.strictEqual(matches.length, 1);
             assert.strictEqual(matches[0].name, 'asyncAwait');
         });
 
         test('finds try blocks', () => {
-            const matches = findPatternsInLine('try {', 'typescript');
+            const matches = findTriggersInLine('try {', 'typescript');
             assert.strictEqual(matches.length, 1);
             assert.strictEqual(matches[0].name, 'tryCatch');
         });
 
         test('finds magic numbers', () => {
-            const matches = findPatternsInLine('const x = 3000;', 'typescript');
+            const matches = findTriggersInLine('const x = 3000;', 'typescript');
             assert.strictEqual(matches.length, 1);
             assert.strictEqual(matches[0].name, 'magicNumber');
         });
 
         test('ignores small numbers', () => {
-            const matches = findPatternsInLine('const x = 42;', 'typescript');
+            const matches = findTriggersInLine('const x = 42;', 'typescript');
             const magic = matches.filter(
-                (m: PatternMatch) => m.name === 'magicNumber',
+                (m: TriggerMatch) => m.name === 'magicNumber',
             );
             assert.strictEqual(magic.length, 0);
         });
 
-        test('finds multiple patterns', () => {
-            const matches = findPatternsInLine(
+        test('finds multiple triggers', () => {
+            const matches = findTriggersInLine(
                 'console.log("x"); // TODO',
                 'typescript',
             );
@@ -105,12 +105,12 @@ suite('Clippy Tests', () => {
         });
 
         test('returns empty for unknown language', () => {
-            const matches = findPatternsInLine('console.log("x")', 'cobol');
+            const matches = findTriggersInLine('console.log("x")', 'cobol');
             assert.strictEqual(matches.length, 0);
         });
 
         test('returns empty for empty line', () => {
-            const matches = findPatternsInLine('', 'typescript');
+            const matches = findTriggersInLine('', 'typescript');
             assert.strictEqual(matches.length, 0);
         });
     });
@@ -136,8 +136,8 @@ suite('Clippy Tests', () => {
             assert.strictEqual(lang, null);
         });
 
-        test('getPatternNames returns pattern list', () => {
-            const names = getPatternNames('typescript');
+        test('getTriggerNames returns trigger list', () => {
+            const names = getTriggerNames('typescript');
             assert.ok(names.includes('console'));
             assert.ok(names.includes('todo'));
         });
@@ -145,7 +145,7 @@ suite('Clippy Tests', () => {
 
     suite('Position Matching', () => {
         test('finds match at cursor position', () => {
-            const match = findMatchAtPosition(
+            const match = findTriggerAtPosition(
                 'console.log("x")',
                 5,
                 'typescript',
@@ -153,31 +153,39 @@ suite('Clippy Tests', () => {
             assert.strictEqual(match?.name, 'console');
         });
 
-        test('returns null when cursor not on pattern', () => {
-            const match = findMatchAtPosition('const x = 5;', 5, 'typescript');
+        test('returns null when cursor not on trigger', () => {
+            const match = findTriggerAtPosition(
+                'const x = 5;',
+                5,
+                'typescript',
+            );
             assert.strictEqual(match, null);
         });
     });
 
-    suite('Tips', () => {
-        test('all patterns have at least 3 tips', () => {
-            for (const pattern of typescript.patterns) {
+    suite('Messages', () => {
+        test('all triggers have at least 3 messages', () => {
+            for (const trigger of typescript.triggers) {
                 assert.ok(
-                    pattern.tipCount >= 3,
-                    `${pattern.name} has ${pattern.tipCount} tips, expected >= 3`,
+                    trigger.messageCount >= 3,
+                    `${trigger.name} has ${trigger.messageCount} messages, expected >= 3`,
                 );
             }
         });
 
-        test('getTipForPattern returns string', () => {
-            const tip = getTipForPattern('console', 'helpful', 'typescript');
-            assert.strictEqual(typeof tip, 'string');
+        test('getMessageForTrigger returns string', () => {
+            const message = getMessageForTrigger(
+                'console',
+                'helpful',
+                'typescript',
+            );
+            assert.strictEqual(typeof message, 'string');
         });
 
-        test('getPattern returns pattern info', () => {
-            const pattern = getPattern('console', 'typescript');
-            assert.strictEqual(pattern?.name, 'console');
-            assert.ok(pattern?.tipCount !== undefined);
+        test('getTrigger returns trigger info', () => {
+            const trigger = getTrigger('console', 'typescript');
+            assert.strictEqual(trigger?.name, 'console');
+            assert.ok(trigger?.messageCount !== undefined);
         });
     });
 });

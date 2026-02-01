@@ -1,5 +1,5 @@
 /**
- * Type definitions for Clippy Code Tips
+ * Type definitions for Clippy Code Messages
  */
 
 import * as vscode from 'vscode';
@@ -10,7 +10,7 @@ import * as vscode from 'vscode';
 export type Personality = 'helpful' | 'sarcastic' | 'encouraging' | 'roast';
 
 /**
- * Source of pattern detection
+ * Source of trigger detection
  */
 export type DetectionSource = 'regex' | 'symbol' | 'hover';
 
@@ -68,7 +68,7 @@ export interface SymbolContext {
  * Result from semantic detection
  */
 export interface SemanticDetectionResult {
-    patternName: string;
+    triggerName: string;
     source: DetectionSource;
     containingSymbol?: vscode.DocumentSymbol;
     hoverInfo?: string;
@@ -91,13 +91,13 @@ export interface SemanticDetectionConfig {
 export type Frequency = 'always' | 'sometimes' | 'rarely';
 
 /**
- * A pattern that Clippy can detect in code
+ * A trigger that Clippy can detect in code
  */
-export interface Pattern {
+export interface Trigger {
     name: string;
     universalName: string;
     regex: RegExp;
-    tipCount: number;
+    messageCount: number;
     /**
      * Optional function to extract template values from context
      * Returns array of values for positional placeholders {0}, {1}, {2}, etc.
@@ -106,18 +106,18 @@ export interface Pattern {
 }
 
 /**
- * Language definition with its patterns
+ * Language definition with its triggers
  */
 export interface Language {
     id: string;
     aliases?: string[];
-    patterns: Pattern[];
+    triggers: Trigger[];
 }
 
 /**
- * Match result from pattern detection
+ * Match result from trigger detection
  */
-export interface PatternMatch {
+export interface TriggerMatch {
     name: string;
     matchedText: string;
     startIndex: number;

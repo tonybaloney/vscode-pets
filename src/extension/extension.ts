@@ -15,7 +15,7 @@ import {
 import { randomName } from '../common/names';
 import * as localize from '../common/localize';
 import { availableColors, normalizeColor } from '../panel/pets';
-import { registerClippyTipsProvider } from './clippy/provider';
+import { registerClippyMessagesProvider } from './clippy/provider';
 import { initializeLanguages } from './clippy/languages/index';
 
 const EXTRA_PETS_KEY = 'vscode-pets.extra-pets';
@@ -749,17 +749,20 @@ export function activate(context: vscode.ExtensionContext) {
     // Initialize language registry from VSCode
     void initializeLanguages();
 
-    // Register Clippy tips provider - sends tips to the pet panel
-    registerClippyTipsProvider(context, (tip: string, patternName: string) => {
-        const webview = getWebview();
-        if (webview) {
-            void webview.postMessage({
-                command: 'clippy-tip',
-                text: tip,
-                patternName: patternName,
-            });
-        }
-    });
+    // Register Clippy messages provider - sends messages to the pet panel
+    registerClippyMessagesProvider(
+        context,
+        (message: string, triggerName: string) => {
+            const webview = getWebview();
+            if (webview) {
+                void webview.postMessage({
+                    command: 'clippy-message',
+                    text: message,
+                    triggerName: triggerName,
+                });
+            }
+        },
+    );
 }
 
 function updateStatusBar(): void {

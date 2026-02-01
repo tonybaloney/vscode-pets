@@ -1,5 +1,5 @@
 /**
- * Tip resolver for Clippy internationalization
+ * Message resolver for Clippy internationalization
  */
 import * as vscode from 'vscode';
 import * as fs from 'fs';
@@ -72,11 +72,14 @@ export function extractFileContext(
  * Supported placeholders:
  * - {0}, {1}, {2}, etc. - Positional placeholders replaced by values array
  *
- * @param template - The tip template string with positional placeholders
+ * @param template - The message template string with positional placeholders
  * @param values - Array of values to replace placeholders
- * @returns The tip with placeholders replaced
+ * @returns The message with placeholders replaced
  */
-export function applyTemplate(template: string, values: string[] = []): string {
+export function applyTemplate(
+    template: string,
+    values: (string | number | boolean)[] = [],
+): string {
     if (!values || values.length === 0) {
         return template;
     }
@@ -86,28 +89,28 @@ export function applyTemplate(template: string, values: string[] = []): string {
     // Replace positional placeholders {0}, {1}, {2}, etc.
     values.forEach((value, index) => {
         const placeholder = new RegExp(`\\{${index}\\}`, 'g');
-        result = result.replace(placeholder, value);
+        result = result.replace(placeholder, String(value));
     });
 
     return result;
 }
 
 /**
- * Get a random tip for a pattern using i18n
- * @param universalPatternName - Universal pattern name (e.g., 'logging', 'symbol.class')
+ * Get a random message for a trigger using i18n
+ * @param universalTriggerName - Universal trigger name (e.g., 'logging', 'symbol.class')
  * @param personality - User's personality setting
- * @param tipCount - Number of available tips
+ * @param messageCount - Number of available messages
  * @param values - Optional array of values for positional placeholders {0}, {1}, {2}, etc.
- * @returns The localized tip string with templates applied
+ * @returns The localized message string with templates applied
  */
-export function getTip(
-    universalPatternName: string,
+export function getMessage(
+    universalTriggerName: string,
     personality: Personality,
-    tipCount: number,
+    messageCount: number,
     values: string[] = [],
 ): string {
-    const index = Math.floor(Math.random() * tipCount);
-    const key = `${universalPatternName}.${personality}.${index}`;
+    const index = Math.floor(Math.random() * messageCount);
+    const key = `${universalTriggerName}.${personality}.${index}`;
 
     let result: string;
 
@@ -127,9 +130,9 @@ export function getTip(
 }
 
 /**
- * Tip counts for general (non-language-specific) events
+ * Message counts for general (non-language-specific) events
  */
-const GENERAL_TIP_COUNTS: Record<string, number> = {
+const GENERAL_MESSAGE_COUNTS: Record<string, number> = {
     documentSave: 5,
     documentClose: 5,
     fileCreate: 5,
@@ -137,35 +140,38 @@ const GENERAL_TIP_COUNTS: Record<string, number> = {
 };
 
 /**
- * Get a random tip for a general event (non-language-specific)
+ * Get a random message for a general event (non-language-specific)
  * @param eventName - Event name (e.g., 'documentSave', 'documentClose')
  * @param personality - User's personality setting
  * @param values - Optional array of values for positional placeholders
- * @returns The localized tip string with templates applied, or null if no tips exist
+ * @returns The localized message string with templates applied, or null if no messages exist
  */
-export function getGeneralTip(
+export function getGeneralMessage(
     eventName: string,
-    personality: Personality,
-    values: string[] = [],
+    personality: Personality = 'helpful',
+    values: (string | number | boolean)[] = [],
 ): string | null {
-    const tipCount = GENERAL_TIP_COUNTS[eventName];
-    if (!tipCount) {
+    const messageCount = GENERAL_MESSAGE_COUNTS[eventName];
+    if (!messageCount) {
         return null;
     }
 
-    const index = Math.floor(Math.random() * tipCount);
+    const index = Math.floor(Math.random() * messageCount);
     const key = `general.${eventName}.${personality}.${index}`;
 
     let result: string;
 
+    // Convert values to strings for template replacement
+    const stringValues = values.map((v) => String(v));
+
     // Use VS Code's l10n if available (production/packaged mode)
     if (vscode.l10n.bundle !== undefined) {
-        result = vscode.l10n.t(key, ...values);
+        result = vscode.l10n.t(key, ...stringValues);
     } else {
         // Fallback to development bundle loading (development mode)
         const bundle = loadDevBundle();
         const template = bundle[key] ?? key;
-        result = applyTemplate(template, values);
+        result = applyTemplate(template, stringValues);
     }
 
     return result;

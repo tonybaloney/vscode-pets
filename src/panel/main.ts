@@ -43,39 +43,39 @@ declare global {
 export var allPets: IPetCollection = new PetCollection();
 var petCounter: number;
 
-// Tip queue system - ensures tips show for full duration without interruption
-const TIP_DURATION_MS = 6000; // 6 seconds
-interface QueuedTip {
+// Message queue system - ensures messages show for full duration without interruption
+const MESSAGE_DURATION_MS = 6000; // 6 seconds
+interface QueuedMessage {
     text: string;
-    patternName: string;
+    triggerName: string;
 }
-const tipQueue: QueuedTip[] = [];
-let isTipShowing = false;
-let currentTipPatternName: string | null = null;
+const messageQueue: QueuedMessage[] = [];
+let isMessageShowing = false;
+let currentMessageTriggerName: string | null = null;
 
-function showNextTip() {
-    if (tipQueue.length === 0 || isTipShowing) {
+function showNextMessage() {
+    if (messageQueue.length === 0 || isMessageShowing) {
         return;
     }
 
     if (allPets.pets.length === 0) {
-        tipQueue.length = 0; // Clear queue if no pets
+        messageQueue.length = 0; // Clear queue if no pets
         return;
     }
 
-    const tip = tipQueue.shift();
-    if (!tip) {
+    const message = messageQueue.shift();
+    if (!message) {
         return;
     }
-    isTipShowing = true;
-    currentTipPatternName = tip.patternName;
+    isMessageShowing = true;
+    currentMessageTriggerName = message.triggerName;
 
     // Prefer Clippy pet if available, otherwise use a random pet
     const clippyPet = allPets.pets.find((p) => p.type === 'clippy');
     const randomPetIndex = Math.floor(Math.random() * allPets.pets.length);
     const petToUse = clippyPet ?? allPets.pets[randomPetIndex];
 
-    // Add clippy class for wider bubble, then show tip
+    // Add clippy class for wider bubble, then show message
     petToUse.speech.classList.add('bubble-clippy');
 
     // Enable clamping so bubble stays on screen as pet moves
@@ -83,28 +83,28 @@ function showNextTip() {
     const padding = 10;
     petToUse.pet.setSpeechClamp(bubbleWidth, padding);
 
-    petToUse.pet.showSpeechBubble(`📎 ${tip.text}`, TIP_DURATION_MS);
+    petToUse.pet.showSpeechBubble(`📎 ${message.text}`, MESSAGE_DURATION_MS);
 
-    // Remove class and clear clamp after bubble hides, then show next tip
+    // Remove class and clear clamp after bubble hides, then show next message
     setTimeout(() => {
         petToUse.speech.classList.remove('bubble-clippy');
         petToUse.pet.clearSpeechClamp();
-        isTipShowing = false;
-        currentTipPatternName = null;
-        showNextTip(); // Process next tip in queue
-    }, TIP_DURATION_MS + 100);
+        isMessageShowing = false;
+        currentMessageTriggerName = null;
+        showNextMessage(); // Process next message in queue
+    }, MESSAGE_DURATION_MS + 100);
 }
 
-function queueTip(text: string, patternName: string) {
-    // Don't queue duplicate pattern types (check current + queue)
-    if (currentTipPatternName === patternName) {
+function queueMessage(text: string, triggerName: string) {
+    // Don't queue duplicate trigger types (check current + queue)
+    if (currentMessageTriggerName === triggerName) {
         return;
     }
-    if (tipQueue.some((t) => t.patternName === patternName)) {
+    if (messageQueue.some((m) => m.triggerName === triggerName)) {
         return;
     }
-    tipQueue.push({ text, patternName });
-    showNextTip();
+    messageQueue.push({ text, triggerName });
+    showNextMessage();
 }
 
 function handleMouseOver(e: MouseEvent) {
@@ -502,14 +502,14 @@ export function petPanelApp(
             case 'tick':
                 onTick();
                 break;
-            case 'clippy-tip':
-                // Queue the tip - shows for 6s, no duplicates of same pattern type
+            case 'clippy-message':
+                // Queue the message - shows for 6s, no duplicates of same trigger type
                 if (
                     allPets.pets.length > 0 &&
                     message.text &&
-                    message.patternName
+                    message.triggerName
                 ) {
-                    queueTip(message.text, message.patternName);
+                    queueMessage(message.text, message.triggerName);
                 }
                 break;
         }

@@ -1,21 +1,21 @@
 /**
- * Language registry and pattern matching
+ * Language registry and trigger matching
  */
 
 import * as vscode from 'vscode';
 import {
     Language,
-    Pattern,
-    PatternMatch,
+    Trigger,
+    TriggerMatch,
     Personality,
     TemplateContext,
 } from '../types';
-import { getTip } from '../tips';
+import { getMessage } from '../messages';
 import { typescript } from './typescript/index';
-import { symbolPatterns } from './symbols';
+import { symbolTriggers } from './symbols';
 
-// Re-export symbol patterns for use by language modules
-export { symbolPatterns } from './symbols';
+// Re-export symbol triggers for use by language modules
+export { symbolTriggers } from './symbols';
 
 /**
  * Languages that should be excluded (non-programming languages)
@@ -51,16 +51,16 @@ const EXCLUDED_LANGUAGES = new Set([
 ]);
 
 /**
- * Languages with custom patterns (regex + symbol patterns)
- * These languages have hand-crafted regex patterns in addition to symbol detection
+ * Languages with custom triggers (regex + symbol triggers)
+ * These languages have hand-crafted regex triggers in addition to symbol detection
  */
-const LANGUAGES_WITH_CUSTOM_PATTERNS: Language[] = [typescript];
+const LANGUAGES_WITH_CUSTOM_TRIGGERS: Language[] = [typescript];
 
 /**
  * Create a language definition for symbol-only languages
  */
 function createSymbolOnlyLanguage(id: string): Language {
-    return { id, patterns: [...symbolPatterns] };
+    return { id, triggers: [...symbolTriggers] };
 }
 
 /**
@@ -89,8 +89,8 @@ export async function initializeLanguages(): Promise<void> {
         return;
     }
 
-    // Start with languages that have custom patterns
-    const languages: Language[] = [...LANGUAGES_WITH_CUSTOM_PATTERNS];
+    // Start with languages that have custom triggers
+    const languages: Language[] = [...LANGUAGES_WITH_CUSTOM_TRIGGERS];
     const languageMap = new Map<string, Language>();
 
     // Get all language IDs from VSCode
@@ -99,8 +99,8 @@ export async function initializeLanguages(): Promise<void> {
     // Track IDs we've already registered
     const registeredIds = new Set<string>();
 
-    // Register custom pattern languages
-    for (const lang of LANGUAGES_WITH_CUSTOM_PATTERNS) {
+    // Register custom trigger languages
+    for (const lang of LANGUAGES_WITH_CUSTOM_TRIGGERS) {
         registeredIds.add(lang.id);
         languageMap.set(lang.id, lang);
 
@@ -113,14 +113,14 @@ export async function initializeLanguages(): Promise<void> {
         }
     }
 
-    // Auto-register remaining programming languages with symbol patterns
+    // Auto-register remaining programming languages with symbol triggers
     for (const langId of allLanguageIds) {
         // Skip if already registered or excluded
         if (registeredIds.has(langId) || EXCLUDED_LANGUAGES.has(langId)) {
             continue;
         }
 
-        // Register with symbol patterns only
+        // Register with symbol triggers only
         const lang = createSymbolOnlyLanguage(langId);
         languages.push(lang);
         languageMap.set(langId, lang);
@@ -158,27 +158,27 @@ export function getAllLanguageIds(): string[] {
 }
 
 /**
- * Find all pattern matches in a line of text
+ * Find all trigger matches in a line of text
  */
-export function findPatternsInLine(
+export function findTriggersInLine(
     lineText: string,
     languageId: string,
-): PatternMatch[] {
+): TriggerMatch[] {
     const language = getLanguage(languageId);
     if (!language) {
         return [];
     }
 
-    const matches: PatternMatch[] = [];
+    const matches: TriggerMatch[] = [];
 
-    for (const pattern of language.patterns) {
-        const regex = new RegExp(pattern.regex.source, pattern.regex.flags);
+    for (const trigger of language.triggers) {
+        const regex = new RegExp(trigger.regex.source, trigger.regex.flags);
         regex.lastIndex = 0;
 
         let match: RegExpExecArray | null;
         while ((match = regex.exec(lineText)) !== null) {
             matches.push({
-                name: pattern.name,
+                name: trigger.name,
                 matchedText: match[0],
                 startIndex: match.index,
                 endIndex: match.index + match[0].length,
@@ -190,14 +190,14 @@ export function findPatternsInLine(
 }
 
 /**
- * Find pattern match at a specific cursor position
+ * Find trigger match at a specific cursor position
  */
-export function findMatchAtPosition(
+export function findTriggerAtPosition(
     lineText: string,
     position: number,
     languageId: string,
-): PatternMatch | null {
-    const matches = findPatternsInLine(lineText, languageId);
+): TriggerMatch | null {
+    const matches = findTriggersInLine(lineText, languageId);
 
     for (const match of matches) {
         if (position >= match.startIndex && position <= match.endIndex) {
@@ -209,63 +209,67 @@ export function findMatchAtPosition(
 }
 
 /**
- * Get a random tip for a pattern
+ * Get a random message for a trigger
  */
-export function getTipForPattern(
-    patternName: string,
+export function getMessageForTrigger(
+    triggerName: string | null,
     personality: Personality,
     languageId: string,
     context?: TemplateContext,
 ): string | null {
+    if (!triggerName) {
+        return null;
+    }
+
     const language = getLanguage(languageId);
     if (!language) {
         return null;
     }
 
-    const pattern = language.patterns.find((p) => p.name === patternName);
-    if (!pattern || pattern.tipCount === 0) {
+    const trigger = language.triggers.find((t) => t.name === triggerName);
+    if (!trigger || trigger.messageCount === 0) {
         return null;
     }
 
-    const { universalName, tipCount, getTemplateValues } = pattern;
+    const { universalName, messageCount, getTemplateValues } = trigger;
 
-    // Extract template values using pattern's extractor function
+    // Extract template values using trigger's extractor function
     const values =
         getTemplateValues && context ? getTemplateValues(context) : [];
 
-    return getTip(universalName, personality, tipCount, values);
+    return getMessage(universalName, personality, messageCount, values);
 }
 
 /**
- * Get pattern by name for a language
+ * Get trigger by name for a language
  */
-export function getPattern(
-    patternName: string,
+export function getTrigger(
+    triggerName: string,
     languageId: string,
-): Pattern | null {
+): Trigger | null {
     const language = getLanguage(languageId);
     if (!language) {
         return null;
     }
-    return language.patterns.find((p) => p.name === patternName) || null;
+    return language.triggers.find((t) => t.name === triggerName) || null;
 }
 
 /**
- * Get all pattern names for a language
+ * Get all trigger names for a language
  */
-export function getPatternNames(languageId: string): string[] {
+export function getTriggerNames(languageId: string): string[] {
     const language = getLanguage(languageId);
     if (!language) {
         return [];
     }
-    return language.patterns.map((p) => p.name);
+    return language.triggers.map((t) => t.name);
 }
 
 /**
- * Symbol kind to pattern name mapping
- * Maps VS Code SymbolKind enum values to pattern names (language-specific)
+ * Symbol kind to trigger name mapping
+ * Maps VS Code SymbolKind enum values to trigger names (language-specific)
  */
-const SYMBOL_KIND_TO_PATTERN: Partial<Record<vscode.SymbolKind, string>> = {
+const SYMBOL_KIND_TO_TRIGGER: Partial<Record<vscode.SymbolKind, string>> = {
     [vscode.SymbolKind.File]: 'symbolFile',
     [vscode.SymbolKind.Module]: 'symbolModule',
     [vscode.SymbolKind.Namespace]: 'symbolNamespace',
@@ -295,49 +299,49 @@ const SYMBOL_KIND_TO_PATTERN: Partial<Record<vscode.SymbolKind, string>> = {
 };
 
 /**
- * Get pattern name for a symbol kind
+ * Get trigger name for a symbol kind
  *
  * @param kind The VS Code symbol kind
  * @param languageId The language ID (for language-specific overrides)
- * @returns The pattern name or null if no mapping exists
+ * @returns The trigger name or null if no mapping exists
  */
-export function getPatternNameForSymbolKind(
+export function getTriggerNameForSymbolKind(
     kind: vscode.SymbolKind,
     languageId: string,
 ): string | null {
-    // Check if the language supports the pattern
+    // Check if the language supports the trigger
     const language = getLanguage(languageId);
     if (!language) {
         return null;
     }
 
-    const patternName = SYMBOL_KIND_TO_PATTERN[kind];
-    if (!patternName) {
+    const triggerName = SYMBOL_KIND_TO_TRIGGER[kind];
+    if (!triggerName) {
         return null;
     }
 
-    // Verify the language has this pattern defined
-    const hasPattern = language.patterns.some((p) => p.name === patternName);
-    return hasPattern ? patternName : null;
+    // Verify the language has this trigger defined
+    const hasTrigger = language.triggers.some((t) => t.name === triggerName);
+    return hasTrigger ? triggerName : null;
 }
 
 /**
- * Hover content patterns that map to pattern names
+ * Hover content triggers that map to trigger names
  */
-const HOVER_CONTENT_PATTERNS: Array<{ pattern: RegExp; patternName: string }> =
+const HOVER_CONTENT_TRIGGERS: Array<{ pattern: RegExp; triggerName: string }> =
     [
-        { pattern: /\bconsole\.log\b/, patternName: 'console' },
-        { pattern: /\bPromise</, patternName: 'asyncAwait' },
+        { pattern: /\bconsole\.log\b/, triggerName: 'console' },
+        { pattern: /\bPromise</, triggerName: 'asyncAwait' },
     ];
 
 /**
- * Get pattern name from hover content
+ * Get trigger name from hover content
  *
  * @param hoverContent The hover content text
  * @param languageId The language ID
- * @returns The pattern name or null if no match
+ * @returns The trigger name or null if no match
  */
-export function getPatternNameFromHoverContent(
+export function getTriggerNameFromHoverContent(
     hoverContent: string,
     languageId: string,
 ): string | null {
@@ -346,14 +350,14 @@ export function getPatternNameFromHoverContent(
         return null;
     }
 
-    for (const { pattern, patternName } of HOVER_CONTENT_PATTERNS) {
+    for (const { pattern, triggerName } of HOVER_CONTENT_TRIGGERS) {
         if (pattern.test(hoverContent)) {
-            // Verify the language has this pattern defined
-            const hasPattern = language.patterns.some(
-                (p) => p.name === patternName,
+            // Verify the language has this trigger defined
+            const hasTrigger = language.triggers.some(
+                (t) => t.name === triggerName,
             );
-            if (hasPattern) {
-                return patternName;
+            if (hasTrigger) {
+                return triggerName;
             }
         }
     }
