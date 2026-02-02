@@ -8,7 +8,7 @@ import {
     ColorThemeKind,
     WebviewMessage,
 } from '../common/types';
-import { IPetType } from './states';
+import { IPetType, States } from './states';
 import {
     createPet,
     PetCollection,
@@ -433,6 +433,27 @@ export function petPanelApp(
                     themeInfo.effect.disable();
                 } else if (themeInfo.effect && !message.disabled) {
                     themeInfo.effect.enable();
+                }
+                break;
+            case 'set-pet-state':
+                // Set a specific pet's state (used by agent pet manager)
+                var targetPet = allPets.locatePet(
+                    message.name,
+                    message.type,
+                    message.color,
+                );
+                if (targetPet) {
+                    if (message.state === 'busy') {
+                        // Make the pet run around
+                        targetPet.pet.recoverState({
+                            currentStateEnum: States.runRight,
+                        });
+                    } else if (message.state === 'idle') {
+                        // Make the pet sit idle
+                        targetPet.pet.recoverState({
+                            currentStateEnum: States.sitIdle,
+                        });
+                    }
                 }
                 break;
             case 'tick':

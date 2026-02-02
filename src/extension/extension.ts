@@ -15,6 +15,7 @@ import {
 import { randomName } from '../common/names';
 import * as localize from '../common/localize';
 import { availableColors, normalizeColor } from '../panel/pets';
+import { AgentPetManager, IPetPanelForAgents } from './agentPetManager';
 
 const EXTRA_PETS_KEY = 'vscode-pets.extra-pets';
 const EXTRA_PETS_KEY_TYPES = EXTRA_PETS_KEY + '.types';
@@ -48,6 +49,7 @@ class PetQuickPickItem implements vscode.QuickPickItem {
 }
 
 let webviewViewProvider: PetWebviewViewProvider;
+let agentPetManager: AgentPetManager | undefined;
 
 function getConfiguredSize(): PetSize {
     var size = vscode.workspace
@@ -272,16 +274,22 @@ async function handleRemovePetMessage(
 }
 
 function getPetPanel(): IPetPanel | undefined {
+    let panel: IPetPanel | undefined;
     if (
         getConfigurationPosition() === ExtPosition.explorer &&
         webviewViewProvider
     ) {
-        return webviewViewProvider;
+        panel = webviewViewProvider;
     } else if (PetPanel.currentPanel) {
-        return PetPanel.currentPanel;
-    } else {
-        return undefined;
+        panel = PetPanel.currentPanel;
     }
+
+    // Update the agent pet manager with the current panel
+    if (agentPetManager) {
+        agentPetManager.setPetPanel(panel as IPetPanelForAgents);
+    }
+
+    return panel;
 }
 
 function getWebview(): vscode.Webview | undefined {
@@ -743,6 +751,17 @@ export function activate(context: vscode.ExtensionContext) {
             },
         });
     }
+
+    // Initialize agent pet manager for VS Code Insiders chat session integration
+    // This feature is opt-in and requires VS Code Insiders with proposed APIs
+    agentPetManager = new AgentPetManager();
+    context.subscriptions.push(agentPetManager);
+
+    // Set the initial panel reference and initialize
+    agentPetManager.setPetPanel(getPetPanel() as IPetPanelForAgents);
+    agentPetManager.initialize().catch((e) => {
+        console.log('Agent pets initialization skipped:', e);
+    });
 }
 
 function updateStatusBar(): void {
@@ -753,6 +772,10 @@ function updateStatusBar(): void {
 
 export function spawnPetDeactivate() {
     spawnPetStatusBar.dispose();
+    if (agentPetManager) {
+        agentPetManager.dispose();
+        agentPetManager = undefined;
+    }
 }
 
 function getWebviewOptions(
@@ -771,6 +794,12 @@ interface IPetPanel {
     resetPets(): void;
     spawnPet(spec: PetSpecification): void;
     deletePet(petName: string, petType: string, petColor: string): void;
+    setAgentPetState(
+        petName: string,
+        petType: string,
+        petColor: string,
+        state: 'busy' | 'idle',
+    ): void;
     listPets(): void;
     rollCall(): void;
     themeKind(): vscode.ColorThemeKind;
@@ -921,6 +950,21 @@ class PetWebviewContainer implements IPetPanel {
             name: petName,
             type: petType,
             color: petColor,
+        });
+    }
+
+    public setAgentPetState(
+        petName: string,
+        petType: string,
+        petColor: string,
+        state: 'busy' | 'idle',
+    ) {
+        void this.getWebview().postMessage({
+            command: 'set-pet-state',
+            name: petName,
+            type: petType,
+            color: petColor,
+            state: state,
         });
     }
 

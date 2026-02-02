@@ -77,5 +77,8 @@
     "vscode-pets.theme.castle" : "Castle",
     "vscode-pets.theme.beach" : "Beach",
     "vscode-pets.theme.winter" : "Winter",
-    "vscode-pets.theme.autumn" : "Autumn"
+    "vscode-pets.theme.autumn" : "Autumn",
+
+    "vscode-pets.agentPets.enabled.description" : "Spawn a pet for each VS Code chat agent session. The pet will be active when the agent is busy and idle when complete. (Requires VS Code Insiders)",
+    "vscode-pets.agentPets.petType.description" : "The type of pet to spawn for chat agent sessions"
 }
