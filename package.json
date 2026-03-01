@@ -371,7 +371,7 @@
         "typescript": "^4.7.4",
         "typescript-eslint": "^0.0.1-alpha.0",
         "vscode-test": "^1.4.0",
-        "webpack": "5.95.0",
+        "webpack": "5.105.3",
         "webpack-cli": "^4.10.0"
     },
     "dependencies": {
