@@ -2,6 +2,25 @@
 
 All notable changes to the "vscode-pets" extension will be documented in this file.
 
+## [1.35.0]
+
+### New Pets
+
+* Add monkey with teddy plushie by @tonybaloney in https://github.com/tonybaloney/vscode-pets/pull/865
+
+## Other Updates
+
+* Removed codecov file before packaging the VSIX in CI workflow by @navyansh007 in https://github.com/tonybaloney/vscode-pets/pull/794
+* implemented a flutter effect for the falling leaves in the Autumn theme by @shresthashim in https://github.com/tonybaloney/vscode-pets/pull/796
+* Fixes bug when changing either the pet size or theme doesn't update in panel by @shresthashim in https://github.com/tonybaloney/vscode-pets/pull/797
+* Added settling effect to leaves in autumn theme by @navyansh007 in https://github.com/tonybaloney/vscode-pets/pull/798
+* Add color variant for cockatiel #767 by @MULTidll in https://github.com/tonybaloney/vscode-pets/pull/811
+* "Spawn Pet" instead of "Spawn Additional Pet" by @manabu-nakamura in https://github.com/tonybaloney/vscode-pets/pull/806
+* Add new pet names for cat, dog, and panda by @lychee712 in https://github.com/tonybaloney/vscode-pets/pull/814
+* Added table of content to readme.md by @Towbee05 in https://github.com/tonybaloney/vscode-pets/pull/817
+* Hungarian translations by @balazsjdp in https://github.com/tonybaloney/vscode-pets/pull/824
+* Add purrtran cat names to the list by @tonybaloney in https://github.com/tonybaloney/vscode-pets/pull/849
+
 ## [1.34.0]
 
 ### New Theme 
