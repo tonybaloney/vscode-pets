@@ -8,7 +8,7 @@ All notable changes to the "vscode-pets" extension will be documented in this fi
 
 * Add monkey with teddy plushie by @tonybaloney in https://github.com/tonybaloney/vscode-pets/pull/865
 
-## Other Updates
+### Other Updates
 
 * Removed codecov file before packaging the VSIX in CI workflow by @navyansh007 in https://github.com/tonybaloney/vscode-pets/pull/794
 * implemented a flutter effect for the falling leaves in the Autumn theme by @shresthashim in https://github.com/tonybaloney/vscode-pets/pull/796
