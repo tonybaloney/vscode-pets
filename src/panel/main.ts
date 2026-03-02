@@ -16,6 +16,7 @@ import {
     IPetCollection,
     availableColors,
     InvalidPetException,
+    normalizeColor,
 } from './pets';
 import { PetElementState, PetPanelState } from './states';
 import { THEMES } from './themes';
@@ -152,6 +153,15 @@ export function saveState(stateApi?: VscodeStateApi) {
     });
     state.petCounter = petCounter;
     stateApi?.setState(state);
+    stateApi?.postMessage({
+        command: 'sync-pets',
+        pets:
+            state.petStates?.map((p) => ({
+                name: p.petName ?? '',
+                type: p.petType ?? PetType.cat,
+                color: p.petColor ?? PetColor.brown,
+            })) ?? [],
+    } as WebviewMessage);
 }
 
 function recoverState(
@@ -284,21 +294,6 @@ export function petPanelApp(
     var state = stateApi?.getState();
     if (!state) {
         console.log('No state, starting a new session.');
-        petCounter = 1;
-        allPets.push(
-            addPetToPanel(
-                petType,
-                basePetUri,
-                petColor,
-                petSize,
-                randomStartPosition(),
-                floor,
-                floor,
-                randomName(petType),
-                stateApi,
-            ),
-        );
-        saveState(stateApi);
     } else {
         console.log('Recovering state - ', state);
         recoverState(basePetUri, petSize, floor, stateApi);
@@ -344,6 +339,11 @@ export function petPanelApp(
 
     window.addEventListener('load', () => {
         windowLoaded = true;
+        try {
+            stateApi?.postMessage({ command: 'webview-ready', text: '' });
+        } catch (e) {
+            console.warn('petPanel: failed to post webview-ready', e);
+        }
     });
 
     // Handle messages sent from the extension to the webview
@@ -376,7 +376,69 @@ export function petPanelApp(
                 );
                 saveState(stateApi);
                 break;
+            case 'restore-pets':
+                if (Array.isArray(message.pets) && message.pets.length > 0) {
+                    for (const p of message.pets) {
+                        const name = typeof p.name === 'string' ? p.name : '';
+                        const type =
+                            typeof p.type === 'string'
+                                ? (p.type as PetType)
+                                : PetType.cat;
+                        const color =
+                            typeof p.color === 'string'
+                                ? (p.color as PetColor)
+                                : petColor;
+                        const size =
+                            typeof p.size === 'string'
+                                ? (p.size as PetSize)
+                                : petSize;
 
+                        const existing = allPets.pets.find(
+                            (pe) =>
+                                (pe.pet?.name ?? '') === name &&
+                                pe.type === type &&
+                                pe.color === color,
+                        );
+                        if (existing) {
+                            continue;
+                        }
+
+                        allPets.push(
+                            addPetToPanel(
+                                type,
+                                basePetUri,
+                                normalizeColor(color, type),
+                                size,
+                                randomStartPosition(),
+                                floor,
+                                floor,
+                                name || randomName(type),
+                                stateApi,
+                            ),
+                        );
+                    }
+                    saveState(stateApi);
+                } else {
+                    console.log('restore-pets: no stored pets received.');
+                    petCounter = petCounter ?? 1;
+                    if (!state) {
+                        allPets.push(
+                            addPetToPanel(
+                                petType,
+                                basePetUri,
+                                petColor,
+                                petSize,
+                                randomStartPosition(),
+                                floor,
+                                floor,
+                                randomName(petType),
+                                stateApi,
+                            ),
+                        );
+                        saveState(stateApi);
+                    }
+                }
+                break;
             case 'list-pets':
                 var pets = allPets.pets;
                 stateApi?.postMessage({
