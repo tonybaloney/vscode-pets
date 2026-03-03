@@ -43,6 +43,70 @@ declare global {
 export var allPets: IPetCollection = new PetCollection();
 var petCounter: number;
 
+// Message queue system - ensures messages show for full duration without interruption
+const MESSAGE_DURATION_MS = 6000; // 6 seconds
+interface QueuedMessage {
+    text: string;
+    triggerName: string;
+}
+const messageQueue: QueuedMessage[] = [];
+let isMessageShowing = false;
+let currentMessageTriggerName: string | null = null;
+
+function showNextMessage() {
+    if (messageQueue.length === 0 || isMessageShowing) {
+        return;
+    }
+
+    if (allPets.pets.length === 0) {
+        messageQueue.length = 0; // Clear queue if no pets
+        return;
+    }
+
+    const message = messageQueue.shift();
+    if (!message) {
+        return;
+    }
+    isMessageShowing = true;
+    currentMessageTriggerName = message.triggerName;
+
+    // Prefer Clippy pet if available, otherwise use a random pet
+    const clippyPet = allPets.pets.find((p) => p.type === 'clippy');
+    const randomPetIndex = Math.floor(Math.random() * allPets.pets.length);
+    const petToUse = clippyPet ?? allPets.pets[randomPetIndex];
+
+    // Add clippy class for wider bubble, then show message
+    petToUse.speech.classList.add('bubble-clippy');
+
+    // Enable clamping so bubble stays on screen as pet moves
+    const bubbleWidth = 200; // matches CSS .bubble-clippy width
+    const padding = 10;
+    petToUse.pet.setSpeechClamp(bubbleWidth, padding);
+
+    petToUse.pet.showSpeechBubble(`📎 ${message.text}`, MESSAGE_DURATION_MS);
+
+    // Remove class and clear clamp after bubble hides, then show next message
+    setTimeout(() => {
+        petToUse.speech.classList.remove('bubble-clippy');
+        petToUse.pet.clearSpeechClamp();
+        isMessageShowing = false;
+        currentMessageTriggerName = null;
+        showNextMessage(); // Process next message in queue
+    }, MESSAGE_DURATION_MS + 100);
+}
+
+function queueMessage(text: string, triggerName: string) {
+    // Don't queue duplicate trigger types (check current + queue)
+    if (currentMessageTriggerName === triggerName) {
+        return;
+    }
+    if (messageQueue.some((m) => m.triggerName === triggerName)) {
+        return;
+    }
+    messageQueue.push({ text, triggerName });
+    showNextMessage();
+}
+
 function handleMouseOver(e: MouseEvent) {
     var el = e.currentTarget as HTMLDivElement;
     allPets.pets.forEach((element) => {
@@ -437,6 +501,16 @@ export function petPanelApp(
                 break;
             case 'tick':
                 onTick();
+                break;
+            case 'clippy-message':
+                // Queue the message - shows for 6s, no duplicates of same trigger type
+                if (
+                    allPets.pets.length > 0 &&
+                    message.text &&
+                    message.triggerName
+                ) {
+                    queueMessage(message.text, message.triggerName);
+                }
                 break;
         }
     });

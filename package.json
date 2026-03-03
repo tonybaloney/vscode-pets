@@ -321,6 +321,51 @@
                         "type": "boolean",
                         "default": false,
                         "description": "%vscode-pets.disableEffects.description%"
+                    },
+                    "vscode-pets.clippyHover.enabled": {
+                        "type": "boolean",
+                        "default": false,
+                        "description": "%vscode-pets.clippyHover.enabled.description%"
+                    },
+                    "vscode-pets.clippyHover.personality": {
+                        "type": "string",
+                        "enum": [
+                            "helpful",
+                            "sarcastic",
+                            "encouraging",
+                            "roast"
+                        ],
+                        "default": "helpful",
+                        "description": "%vscode-pets.clippyHover.personality.description%",
+                        "enumItemLabels": [
+                            "%vscode-pets.clippyHover.personality.helpful%",
+                            "%vscode-pets.clippyHover.personality.sarcastic%",
+                            "%vscode-pets.clippyHover.personality.encouraging%",
+                            "%vscode-pets.clippyHover.personality.roast%"
+                        ]
+                    },
+                    "vscode-pets.clippyHover.frequency": {
+                        "type": "string",
+                        "enum": [
+                            "always",
+                            "sometimes",
+                            "rarely"
+                        ],
+                        "default": "sometimes",
+                        "description": "%vscode-pets.clippyHover.frequency.description%",
+                        "enumItemLabels": [
+                            "%vscode-pets.clippyHover.frequency.always%",
+                            "%vscode-pets.clippyHover.frequency.sometimes%",
+                            "%vscode-pets.clippyHover.frequency.rarely%"
+                        ]
+                    },
+                    "vscode-pets.clippyHover.enabledLanguages": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "default": ["*"],
+                        "description": "%vscode-pets.clippyHover.enabledLanguages.description%"
                     }
                 }
             }
