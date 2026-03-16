@@ -212,7 +212,7 @@ img.pet {
 .bubble-small:before,
 .bubble-medium:before,
 .bubble-large:before {
-	left: 10px;
+	left: var(--triangle-left, 10px);
 	bottom: -15px;
 	border: 7px solid;
 	border-color: #333 transparent transparent #333;
@@ -222,8 +222,15 @@ img.pet {
 .bubble-small:after,
 .bubble-medium:after,
 .bubble-large:after {
-	left: 12px;
+	left: calc(var(--triangle-left, 10px) + 2px);
 	bottom: -10px;
 	border: 5px solid;
 	border-color: #fff transparent transparent #fff;
+}
+
+/* Clippy tip bubble - fixed width for consistent display */
+.bubble.bubble-clippy {
+	width: 200px;
+	padding: 10px 12px;
+	text-align: left;
 }

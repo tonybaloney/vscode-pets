@@ -47,6 +47,8 @@ export abstract class BasePetType implements IPetType {
     private _name: string;
     private _speed: number;
     private _size: PetSize;
+    private _speechClamp: { bubbleWidth: number; padding: number } | null =
+        null;
     protected _climbSpeed: number = 1;
     protected _climbHeight: number = 100;
     protected _fallSpeed: number = 5;
@@ -116,7 +118,38 @@ export abstract class BasePetType implements IPetType {
     private repositionAccompanyingElements() {
         this.collision.style.left = `${this._left}px`;
         this.collision.style.bottom = `${this._bottom}px`;
-        this.speech.style.left = `${this._left}px`;
+
+        // Apply clamping if set, otherwise use pet's left position
+        let speechLeft = this._left;
+        if (this._speechClamp) {
+            const { bubbleWidth, padding } = this._speechClamp;
+            const viewportWidth = window.innerWidth;
+            // Ensure padding on BOTH left and right sides
+            const minLeft = padding;
+            const maxLeft = viewportWidth - bubbleWidth - padding;
+            speechLeft = Math.max(minLeft, Math.min(this._left, maxLeft));
+
+            // Calculate triangle position to point at pet center
+            const petCenter =
+                this._left + this.calculateSpriteWidth(this._size) / 2;
+            // Triangle position relative to bubble's left edge
+            let triangleLeft = petCenter - speechLeft;
+            // Clamp triangle to stay within bubble bounds (with some margin)
+            const triangleMargin = 10;
+            const maxTriangleLeft = bubbleWidth - triangleMargin - 14; // 14 = triangle width
+            triangleLeft = Math.max(
+                triangleMargin,
+                Math.min(triangleLeft, maxTriangleLeft),
+            );
+            this.speech.style.setProperty(
+                '--triangle-left',
+                `${triangleLeft}px`,
+            );
+        } else {
+            // Reset to default when not clamping
+            this.speech.style.removeProperty('--triangle-left');
+        }
+        this.speech.style.left = `${speechLeft}px`;
         this.speech.style.bottom = `${
             this._bottom + this.calculateSpriteWidth(this._size)
         }px`;
@@ -240,6 +273,16 @@ export abstract class BasePetType implements IPetType {
 
     hideSpeechBubble() {
         this.speech.style.display = 'none';
+    }
+
+    setSpeechClamp(bubbleWidth: number, padding: number) {
+        this._speechClamp = { bubbleWidth, padding };
+        // Reposition immediately with clamping applied
+        this.repositionAccompanyingElements();
+    }
+
+    clearSpeechClamp() {
+        this._speechClamp = null;
     }
 
     swipe() {
