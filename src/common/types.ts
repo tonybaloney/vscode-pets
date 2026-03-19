@@ -37,6 +37,7 @@ export const enum PetType {
     horse = 'horse',
     mod = 'mod',
     monkey = 'monkey',
+    peacock = 'peacock',
     morph = 'morph',
     panda = 'panda',
     rat = 'rat',
@@ -113,6 +114,7 @@ export const ALL_PETS = [
     PetType.horse,
     PetType.mod,
     PetType.monkey,
+    PetType.peacock,
     PetType.morph,
     PetType.panda,
     PetType.rat,
@@ -146,6 +148,7 @@ export const ALL_COLORS = [
     PetColor.paintbrown,
     PetColor.magical,
     PetColor.warrior,
+    PetColor.pink,
     PetColor.null,
 ];
 export const ALL_SCALES = [

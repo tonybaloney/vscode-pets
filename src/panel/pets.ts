@@ -14,6 +14,7 @@ import { Monkey } from './pets/monkey';
 import { Mod } from './pets/mod';
 import { Morph } from './pets/morph';
 import { Panda } from './pets/panda';
+import { Peacock } from './pets/peacock';
 import { Rat } from './pets/rat';
 import { Rocky } from './pets/rocky';
 import { RubberDuck } from './pets/rubberduck';
@@ -239,6 +240,8 @@ export function createPet(
             return new Cockatiel(...standardPetArguments, PetSpeed.normal);
         case PetType.monkey:
             return new Monkey(...standardPetArguments, PetSpeed.normal);
+        case PetType.peacock:
+            return new Peacock(...standardPetArguments, PetSpeed.normal);
         case PetType.rat:
             return new Rat(...standardPetArguments, PetSpeed.normal);
         case PetType.turtle:
@@ -282,6 +285,8 @@ export function availableColors(petType: PetType): PetColor[] {
             return Mod.possibleColors;
         case PetType.monkey:
             return Monkey.possibleColors;
+        case PetType.peacock:
+            return Peacock.possibleColors;
         case PetType.totoro:
             return Totoro.possibleColors;
         case PetType.snail:

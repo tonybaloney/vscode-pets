@@ -2,9 +2,9 @@ import { PetColor } from '../../common/types';
 import { BasePetType } from '../basepettype';
 import { States } from '../states';
 
-export class Cockatiel extends BasePetType {
-    label = 'cockatiel';
-    static possibleColors = [PetColor.gray, PetColor.brown];
+export class Peacock extends BasePetType {
+    label = 'peacock';
+    static possibleColors = [PetColor.blue, PetColor.green];
     sequence = {
         startingState: States.sitIdle,
         sequenceStates: [
@@ -44,45 +44,24 @@ export class Cockatiel extends BasePetType {
         ],
     };
     get emoji(): string {
-        return '🦜';
+        return '🦚';
     }
     get hello(): string {
-        return Math.random() > 0.5 ? `Chirp chirp!` : `Whistle while you code!`;
+        return Math.random() > 0.5
+            ? `Make way for a colorful strut!`
+            : `Feathers out, bugs down.`;
     }
 }
 
-export const COCKATIEL_NAMES: ReadonlyArray<string> = [
-    'Cocktail',
-    'Pipsqueak',
-    'Sir Chirps a Lot',
-    'Nibbles',
-    'Lord of the Wings',
-    'Girl Nest Door',
-    'Wingman',
-    'Meryl Cheep',
-    'Jack Sparrow',
-    'Godfeather',
-    'Mickey',
-    'Baquack Obama',
-    'Dame Judi Finch',
-    'Kanye Nest',
-    'Speck',
-    'Cheecky',
-    'Arthur',
-    'Paco',
-    'Bobo',
-    'Walt',
-    'Happy',
-    'Junior',
-    'Coco',
-    'Yoyo',
-    'Milo',
-    'Skipper',
-    'Scarlet',
-    'Diva',
-    'Ursula',
-    'Donna',
-    'Lola',
-    'Kiko',
-    'Luna',
+export const PEACOCK_NAMES: ReadonlyArray<string> = [
+    'Azure',
+    'Plume',
+    'Indigo',
+    'Jewel',
+    'Rio',
+    'Pavo',
+    'Skye',
+    'Opal',
+    'Sultan',
+    'Mistral',
 ];

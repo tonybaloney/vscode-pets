@@ -11,6 +11,7 @@ import {
     ColorThemeKind,
     WebviewMessage,
     ALL_PETS,
+    ALL_COLORS,
     ALL_THEMES,
 } from '../../common/types';
 import { PetElementState, PetPanelState } from '../../panel/states';
@@ -234,6 +235,25 @@ suite('Pets Test Suite', () => {
         assert.strictEqual(
             document.getElementById('foreground')?.style.backgroundImage,
             '',
+        );
+    });
+
+    test('Test pink remains a valid configured color', () => {
+        assert.ok(ALL_COLORS.includes(PetColor.pink));
+        assert.strictEqual(
+            pets.normalizeColor(PetColor.pink, PetType.skeleton),
+            PetColor.pink,
+        );
+    });
+
+    test('Test peacock keeps its supported colors', () => {
+        assert.strictEqual(
+            pets.normalizeColor(PetColor.blue, PetType.peacock),
+            PetColor.blue,
+        );
+        assert.strictEqual(
+            pets.normalizeColor(PetColor.green, PetType.peacock),
+            PetColor.green,
         );
     });
 
