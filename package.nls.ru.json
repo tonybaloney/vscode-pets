@@ -36,6 +36,7 @@
     "vscode-pets.petColor.magical": "Волшебник",
     "vscode-pets.petColor.warrior": "Боец",
     "vscode-pets.petColor.pink": "Розовый",
+    "vscode-pets.petType.butterfly": "бабочка",
     "vscode-pets.petType.cat": "Кот",
     "vscode-pets.petType.chicken": "Курица",
     "vscode-pets.petType.crab": "Краб",
