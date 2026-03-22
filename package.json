@@ -19,6 +19,7 @@
     ],
     "keywords": [
         "pet",
+        "butterfly",
         "cat",
         "chicken",
         "dog",
@@ -204,6 +205,7 @@
                     "vscode-pets.petType": {
                         "type": "string",
                         "enum": [
+                            "butterfly",
                             "cat",
                             "chicken",
                             "crab",
@@ -234,6 +236,7 @@
                         "description": "%vscode-pets.petType.description%",
                         "scope": "window",
                         "enumItemLabels": [
+                            "%vscode-pets.petType.butterfly%",
                             "%vscode-pets.petType.cat%",
                             "%vscode-pets.petType.chicken%",
                             "%vscode-pets.petType.crab%",
