@@ -303,6 +303,18 @@ export function activate(context: vscode.ExtensionContext) {
                 webviewViewProvider
             ) {
                 await vscode.commands.executeCommand('petsView.focus');
+
+                // Clear out saved pets from the workspace
+                webviewViewProvider.resetPets();
+
+                // Load the pets from the memento
+                var collection = PetSpecification.collectionFromMemento(
+                    context,
+                    getConfiguredSize(),
+                );
+                collection.forEach((item) => {
+                    webviewViewProvider.spawnPet(item);
+                });
             } else {
                 const spec = PetSpecification.fromConfiguration();
                 PetPanel.createOrShow(
@@ -1231,6 +1243,9 @@ class PetWebviewViewProvider extends PetWebviewContainer {
             null,
             this._disposables,
         );
+
+        // Replace the workspace-saved pets with the global ones
+        vscode.commands.executeCommand("vscode-pets.start");
     }
 
     public tick() {
