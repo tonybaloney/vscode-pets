@@ -20,6 +20,8 @@ export const enum PetColor {
     magical = 'magical',
     warrior = 'warrior',
     pink = 'pink',
+    redbrown = 'red brown',
+    pinkblue = 'pink blue',
     null = 'null',
 }
 
@@ -148,6 +150,8 @@ export const ALL_COLORS = [
     PetColor.paintbrown,
     PetColor.magical,
     PetColor.warrior,
+    PetColor.redbrown,
+    PetColor.pinkblue,
     PetColor.null,
 ];
 export const ALL_SCALES = [
