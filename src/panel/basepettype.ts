@@ -50,6 +50,12 @@ export abstract class BasePetType implements IPetType {
     protected _climbSpeed: number = 1;
     protected _climbHeight: number = 100;
     protected _fallSpeed: number = 5;
+    //added for butterfly
+    private _time: number = 0;
+    protected _flySpeed: number = 3;
+    protected _hoverAmplitude: number = 15;   
+    protected _hoverFrequency: number = 0.01;
+    protected _verticalDrift: number = 0.2;
 
     constructor(
         spriteElement: HTMLImageElement,
@@ -204,6 +210,22 @@ export abstract class BasePetType implements IPetType {
         return this._speed !== PetSpeed.still;
     }
 
+    get flySpeed() : number {
+        return this._flySpeed;
+    }
+
+    get hoverAmplitude() : number {
+        return this._hoverAmplitude;
+    }
+
+    get hoverFrequency() : number {
+        return this._hoverFrequency;
+    }
+  
+    get verticalDrift() : number {
+        return this._verticalDrift;
+    }
+
     recoverFriend(friend: IPetType) {
         // Recover friends..
         this._friend = friend;
@@ -291,7 +313,7 @@ export abstract class BasePetType implements IPetType {
         return possibleNextStates[idx];
     }
 
-    nextFrame() {
+    nextFrame(): void {
         if (
             this.currentState.horizontalDirection === HorizontalDirection.left
         ) {
@@ -318,8 +340,10 @@ export abstract class BasePetType implements IPetType {
                 return;
             }
         }
+        // 6. Run existing state logic
 
         var frameResult = this.currentState.nextFrame();
+        
         if (frameResult === FrameResult.stateComplete) {
             // If recovering from swipe..
             if (this.holdState && this.holdStateEnum) {
