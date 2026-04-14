@@ -340,8 +340,7 @@ export abstract class BasePetType implements IPetType {
                 return;
             }
         }
-        // 6. Run existing state logic
-
+        
         var frameResult = this.currentState.nextFrame();
         
         if (frameResult === FrameResult.stateComplete) {
