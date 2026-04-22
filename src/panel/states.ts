@@ -14,6 +14,7 @@ export interface IPetType {
     fallSpeed: number;
     isMoving: boolean;
     hello: string;
+    flySpeed: number;
 
     // State API
     getState(): PetInstanceState;
@@ -84,6 +85,10 @@ export const enum States {
     chaseFriend = 'chase-friend',
     standRight = 'stand-right',
     standLeft = 'stand-left',
+    flyLeft = 'fly-left',
+    flyUp = 'fly-up',
+    flyRight = 'fly-right',
+    flyDown = 'fly-down',
 }
 
 export enum FrameResult {
@@ -156,6 +161,14 @@ export function resolveState(state: string, pet: IPetType): IState {
             return new StandRightState(pet);
         case States.standLeft:
             return new StandLeftState(pet);
+        case States.flyLeft:
+            return new FlyLeftState(pet);
+        case States.flyUp:
+            return new FlyUpState(pet);
+        case States.flyRight:
+            return new FlyRightState(pet);
+        case States.flyDown:
+            return new FlyDownState(pet);
     }
     return new SitIdleState(pet);
 }
@@ -316,6 +329,89 @@ export class RunLeftState extends WalkLeftState {
     spriteLabel = 'walk_fast';
     speedMultiplier = 1.6;
     holdTime = 130;
+}
+
+export class FlyLeftState implements IState {
+    label = States.flyLeft;
+    spriteLabel = 'fly';
+    horizontalDirection = HorizontalDirection.left;
+    pet: IPetType;
+
+    constructor(pet: IPetType) {
+        this.pet = pet;
+    }
+
+    nextFrame(): FrameResult {
+        this.pet.positionLeft(this.pet.left - this.pet.flySpeed);
+
+        if (Math.random() < 0.01) {
+            return FrameResult.stateComplete;
+        }
+        return FrameResult.stateContinue;
+    }
+}
+
+export class FlyUpState implements IState {
+    label = States.flyUp;
+    spriteLabel = 'fly';
+    horizontalDirection = HorizontalDirection.natural;
+    pet: IPetType;
+
+    constructor(pet: IPetType) {
+        this.pet = pet;
+    }
+
+    nextFrame(): FrameResult {
+         this.pet.positionBottom(this.pet.bottom + this.pet.flySpeed);
+
+        if (Math.random() < 0.01) {
+            return FrameResult.stateComplete;
+        }
+
+        return FrameResult.stateContinue;
+    }
+}
+
+export class FlyRightState implements IState {
+    label = States.flyRight;
+    spriteLabel = 'fly';
+    horizontalDirection = HorizontalDirection.right;
+    pet: IPetType;
+
+    constructor(pet: IPetType) {
+        this.pet = pet;
+    }
+
+    nextFrame(): FrameResult {
+        this.pet.positionLeft(this.pet.left + this.pet.flySpeed);
+
+        if (Math.random() < 0.01) {
+            return FrameResult.stateComplete;
+        }
+
+        return FrameResult.stateContinue;
+    }
+}
+
+export class FlyDownState implements IState {
+    label = States.flyDown;
+    spriteLabel = 'fly';
+    horizontalDirection = HorizontalDirection.natural;
+    pet: IPetType;
+
+    constructor(pet: IPetType) {
+        this.pet = pet;
+    }
+
+    nextFrame(): FrameResult {
+        this.pet.positionBottom(this.pet.bottom - this.pet.flySpeed);
+
+        if (Math.random() < 0.01) {
+            return FrameResult.stateComplete;
+        }
+
+        return FrameResult.stateContinue;
+    }
 }
 
 export class ChaseState implements IState {

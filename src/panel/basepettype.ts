@@ -324,7 +324,7 @@ export abstract class BasePetType implements IPetType {
             this.faceRight();
         }
         this.setAnimation(this.currentState.spriteLabel);
-
+        
         // What's my buddy doing?
         if (
             this.hasFriend &&
