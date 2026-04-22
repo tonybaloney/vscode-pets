@@ -174,7 +174,9 @@
                             "paint brown",
                             "magical",
                             "warrior",
-                            "pink"
+                            "pink",
+                            "redbrown",
+                            "pinkblue"
                         ],
                         "default": "brown",
                         "description": "%vscode-pets.petColor.description%",
@@ -199,7 +201,9 @@
                             "%vscode-pets.petColor.paint brown%",
                             "%vscode-pets.petColor.magical%",
                             "%vscode-pets.petColor.warrior%",
-                            "%vscode-pets.petColor.pink%"
+                            "%vscode-pets.petColor.pink%",
+                            "%vscode-pets.petColor.pinkblue%",
+                            "%vscode-pets.petColor.redbrown%"
                         ]
                     },
                     "vscode-pets.petType": {
