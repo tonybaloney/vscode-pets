@@ -3,7 +3,7 @@ import { BasePetType } from '../basepettype';
 import { States } from '../states';
 
 export class Butterfly extends BasePetType {
-    label= 'butterfly';
+    label = 'butterfly';
     static possibleColors = [
         PetColor.redbrown,
         PetColor.pinkblue,
