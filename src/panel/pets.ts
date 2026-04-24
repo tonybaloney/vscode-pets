@@ -14,6 +14,7 @@ import { Monkey } from './pets/monkey';
 import { Mod } from './pets/mod';
 import { Morph } from './pets/morph';
 import { Panda } from './pets/panda';
+import { Penguin } from './pets/penguin';
 import { Rat } from './pets/rat';
 import { Rocky } from './pets/rocky';
 import { RubberDuck } from './pets/rubberduck';
