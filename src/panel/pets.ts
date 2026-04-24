@@ -248,6 +248,8 @@ export function createPet(
             return new Horse(...standardPetArguments, PetSpeed.normal);
         case PetType.panda:
             return new Panda(...standardPetArguments, PetSpeed.slow);
+        case PetType.penguin:
+            return new Penguin(...standardPetArguments, PetSpeed.normal)
         case PetType.morph:
             return new Morph(...standardPetArguments, PetSpeed.normal);
         case PetType.skeleton:
