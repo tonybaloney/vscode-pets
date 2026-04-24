@@ -24,6 +24,7 @@ import { TURTLE_NAMES } from '../panel/pets/turtle';
 import { HORSE_NAMES } from '../panel/pets/horse';
 import { MONKEY_NAMES } from '../panel/pets/monkey';
 import { PetType } from './types';
+import { PENGUIN_NAMES } from '../panel/pets/penguin';
 
 export function randomName(type: PetType): string {
     const collection: ReadonlyArray<string> =
@@ -50,6 +51,7 @@ export function randomName(type: PetType): string {
                 [PetType.rat]: RAT_NAMES,
                 [PetType.turtle]: TURTLE_NAMES,
                 [PetType.horse]: HORSE_NAMES,
+                [PetType.penguin]: PENGUIN_NAMES,
                 [PetType.panda]: PANDA_NAMES,
                 [PetType.morph]: MORPH_NAMES,
                 [PetType.skeleton]: SKELETON_NAMES,
