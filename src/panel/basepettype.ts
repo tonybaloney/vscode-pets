@@ -83,6 +83,7 @@ export abstract class BasePetType implements IPetType {
         this._name = name;
         this._size = size;
         this._speed = this.randomizeSpeed(speed);
+        console.log("PET ROOT:", this.petRoot);
         if (this._name.toLowerCase() === 'debug') {
             console.log(
                 `Creating pet ${this._name} of size ${this._size} at position (${this._left}, ${this._bottom}) with speed ${this._speed}`,

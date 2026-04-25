@@ -1,13 +1,44 @@
 import { PetColor } from '../../common/types';
 import { BasePetType } from '../basepettype';
 import { States } from '../states';
+import { PetSize } from '../../common/types';
 
 export class Butterfly extends BasePetType {
-    label = 'butterfly';
-    static possibleColors = [
-        PetColor.redbrown,
-        PetColor.pinkblue,
-    ];
+
+    constructor(
+        spriteElement: HTMLImageElement,
+        collisionElement: HTMLDivElement,
+        speechElement: HTMLDivElement,
+        size: PetSize,
+        left: number,
+        bottom: number,
+        petRoot: string,
+        floor: number,
+        name: string,
+        speed: number,
+        color: PetColor
+    ) {
+        super(
+            spriteElement,
+            collisionElement,
+            speechElement,
+            size,
+            left,
+            bottom,
+            petRoot,
+            floor,
+            name,
+            speed
+        );
+
+        // 🔥 THIS IS THE REAL FIX
+        this.petRoot = `media/butterfly/${color}_butterfly`;
+        // this.petRoot = `media/butterfly/pinkblue_butterfly`;
+
+        console.log("Butterfly root:", this.petRoot);
+    }
+    
+
     sequence = {
         startingState: States.flyLeft,
         sequenceStates: [
@@ -21,12 +52,12 @@ export class Butterfly extends BasePetType {
             },
             {
                 state: States.flyRight,
-                possibleNextStates: [States.flyDown, States.flyLeft],
+                possibleNextStates: [States.flyDown, States.idleWithBall],
             },
             {
-                state: States.chase,
-                possibleNextStates: [States.idleWithBall],
-            },
+                state: States.idleWithBall,
+                possibleNextStates: [States.flyLeft]
+            }
         ],
     };
 
