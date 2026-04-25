@@ -150,8 +150,8 @@ export const ALL_COLORS = [
     PetColor.paintbrown,
     PetColor.magical,
     PetColor.warrior,
-    PetColor.redbrown,
     PetColor.pinkblue,
+    PetColor.redbrown,
     PetColor.null,
 ];
 export const ALL_SCALES = [
