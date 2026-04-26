@@ -1,6 +1,6 @@
 import { PetColor, PetSize, PetSpeed, PetType } from '../common/types';
 import { Bunny } from './pets/bunny';
-import {Butterfly} from './pets/butterfly';
+import { Butterfly } from './pets/butterfly';
 import { Cat } from './pets/cat';
 import { Chicken } from './pets/chicken';
 import { Clippy } from './pets/clippy';
