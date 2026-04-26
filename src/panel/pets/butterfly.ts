@@ -15,9 +15,9 @@ export class Butterfly extends BasePetType {
         petRoot: string,
         floor: number,
         name: string,
-        speed: number,
-        color: PetColor
+        speed: number
     ) {
+        const petRootClean = petRoot.replace(' ', '_');
         super(
             spriteElement,
             collisionElement,
@@ -25,18 +25,22 @@ export class Butterfly extends BasePetType {
             size,
             left,
             bottom,
-            petRoot,
+            petRootClean,
             floor,
             name,
             speed
         );
 
         // 🔥 THIS IS THE REAL FIX
-        this.petRoot = `media/butterfly/${color}_butterfly`;
+        // this.petRoot = `media/butterfly/${this.color}_butterfly`;
         // this.petRoot = `media/butterfly/pinkblue_butterfly`;
-
         console.log("Butterfly root:", this.petRoot);
     }
+    label = 'butterfly';
+    static possibleColors = [
+        PetColor.pinkblue,
+        PetColor.redbrown
+    ];
     
 
     sequence = {
