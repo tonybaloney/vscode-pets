@@ -31,7 +31,6 @@ export class Butterfly extends BasePetType {
             speed
         );
 
-        // 🔥 THIS IS THE REAL FIX
         // this.petRoot = `media/butterfly/${this.color}_butterfly`;
         // this.petRoot = `media/butterfly/pinkblue_butterfly`;
         console.log("Butterfly root:", this.petRoot);
