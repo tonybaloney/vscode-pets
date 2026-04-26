@@ -36,6 +36,8 @@
     "vscode-pets.petColor.magical": "Magisch",
     "vscode-pets.petColor.warrior": "Krieger",
     "vscode-pets.petColor.pink": "Rosa",
+    "vscode-pets.petColor.pinkblue": "pinkblue",
+    "vscode-pets.petColor.redbrown": "redbrown",
     "vscode-pets.petType.butterfly": "Schmetterling",
     "vscode-pets.petType.cat": "Katze",
     "vscode-pets.petType.chicken": "Huhn",
