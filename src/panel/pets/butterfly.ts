@@ -5,43 +5,38 @@ import { PetSize } from '../../common/types';
 
 export class Butterfly extends BasePetType {
 
-    constructor(
-        spriteElement: HTMLImageElement,
-        collisionElement: HTMLDivElement,
-        speechElement: HTMLDivElement,
-        size: PetSize,
-        left: number,
-        bottom: number,
-        petRoot: string,
-        floor: number,
-        name: string,
-        speed: number
-    ) {
-        const petRootClean = petRoot.replace(' ', '_');
-        super(
-            spriteElement,
-            collisionElement,
-            speechElement,
-            size,
-            left,
-            bottom,
-            petRootClean,
-            floor,
-            name,
-            speed
-        );
+    // constructor(
+    //     spriteElement: HTMLImageElement,
+    //     collisionElement: HTMLDivElement,
+    //     speechElement: HTMLDivElement,
+    //     size: PetSize,
+    //     left: number,
+    //     bottom: number,
+    //     petRoot: string,
+    //     floor: number,
+    //     name: string,
+    //     speed: number
+    // ) {
+    //     const petRootClean = petRoot.replace(' ', '_');
+    //     super(
+    //         spriteElement,
+    //         collisionElement,
+    //         speechElement,
+    //         size,
+    //         left,
+    //         bottom,
+    //         petRootClean,
+    //         floor,
+    //         name,
+    //         speed
+    //     );
 
-        // this.petRoot = `media/butterfly/${this.color}_butterfly`;
-        // this.petRoot = `media/butterfly/pinkblue_butterfly`;
-        console.log("Butterfly root:", this.petRoot);
-    }
+    //     // this.petRoot = `media/butterfly/${this.color}_butterfly`;
+    //     // this.petRoot = `media/butterfly/pinkblue_butterfly`;
+    //     console.log("Butterfly root:", this.petRoot);
+    // }
     label = 'butterfly';
-    static possibleColors = [
-        PetColor.pinkblue,
-        PetColor.redbrown
-    ];
-    
-
+    static possibleColors = [PetColor.pinkblue,PetColor.redbrown];
     sequence = {
         startingState: States.flyLeft,
         sequenceStates: [
