@@ -1,40 +1,9 @@
 import { PetColor } from '../../common/types';
 import { BasePetType } from '../basepettype';
 import { States } from '../states';
-import { PetSize } from '../../common/types';
 
 export class Butterfly extends BasePetType {
 
-    // constructor(
-    //     spriteElement: HTMLImageElement,
-    //     collisionElement: HTMLDivElement,
-    //     speechElement: HTMLDivElement,
-    //     size: PetSize,
-    //     left: number,
-    //     bottom: number,
-    //     petRoot: string,
-    //     floor: number,
-    //     name: string,
-    //     speed: number
-    // ) {
-    //     const petRootClean = petRoot.replace(' ', '_');
-    //     super(
-    //         spriteElement,
-    //         collisionElement,
-    //         speechElement,
-    //         size,
-    //         left,
-    //         bottom,
-    //         petRootClean,
-    //         floor,
-    //         name,
-    //         speed
-    //     );
-
-    //     // this.petRoot = `media/butterfly/${this.color}_butterfly`;
-    //     // this.petRoot = `media/butterfly/pinkblue_butterfly`;
-    //     console.log("Butterfly root:", this.petRoot);
-    // }
     label = 'butterfly';
     static possibleColors = [PetColor.pinkblue,PetColor.redbrown];
     sequence = {
@@ -63,34 +32,6 @@ export class Butterfly extends BasePetType {
         return '🦋';
     }
 
-
-    // nextFrame(): void {
-    //     if (this.currentState.horizontalDirection === HorizontalDirection.left) {
-    //         this.faceLeft();
-    //         this.positionLeft(this.left - this.flySpeed);
-    //     } else if (this.currentState.horizontalDirection === HorizontalDirection.right) {
-    //         this.faceRight();
-    //         this.positionLeft(this.left + this.flySpeed);
-    //     }
-
-    //     this.setAnimation(this.currentState.spriteLabel);
-
-    //     // Hover motion
-    //     this._time += 1;
-    //     const hoverOffset =
-    //         Math.sin(this._time * this.hoverFrequency) * this.hoverAmplitude;
-
-    //     this.positionBottom(this.bottom + hoverOffset + this.verticalDrift);
-
-    //     const frameResult = this.currentState.nextFrame();
-
-    //     if (frameResult === FrameResult.stateComplete) {
-    //         const nextState = this.chooseNextState(this.currentStateEnum);
-    //         this.currentState = resolveState(nextState, this);
-    //         this.currentStateEnum = nextState;
-    //     }
-    // }
-   
     get hello(): string {
         return ` Hi, I'm Butterfly, would you like some assistance today? 👋!`;
     }
