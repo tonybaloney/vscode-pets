@@ -14,6 +14,15 @@ const pets: { [key: string]: { colors: string[]; states: string[] } } = {
             'stand',
         ],
     },
+    butterfly:{
+        colors: ['pinkblue', 'redbrown'],
+        states:[
+            'fly-left',
+            'fly-up',
+            'fly-right',
+            'fly-down',
+        ]
+    },
     cat: {
         colors: ['black', 'brown', 'gray', 'lightbrown', 'orange', 'white'],
         states: [
