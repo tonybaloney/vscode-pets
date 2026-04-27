@@ -269,3 +269,67 @@ suite('Pets Test Suite', () => {
         // assert.notEqual(mockState.getMessages().length, 0);
     });
 });
+
+suite('Change Theme Test Suite', () => {
+    const COMMAND = 'vscode-pets.change-theme';
+    const originalShowQuickPick = vscode.window.showQuickPick;
+
+    suiteSetup(async () => {
+        await vscode.extensions
+            .getExtension('tonybaloney.vscode-pets')
+            ?.activate();
+    });
+
+    teardown(async () => {
+        (vscode.window as any).showQuickPick = originalShowQuickPick;
+        await vscode.workspace
+            .getConfiguration('vscode-pets')
+            .update('theme', Theme.none, vscode.ConfigurationTarget.Global);
+    });
+
+    test('Test change-theme command is registered', async () => {
+        const commands = await vscode.commands.getCommands(true);
+        assert.ok(commands.includes(COMMAND));
+    });
+
+    test('Test change-theme QuickPick lists all themes', async () => {
+        let captured: any[] = [];
+        (vscode.window as any).showQuickPick = (items: any[]) => {
+            captured = items;
+            return Promise.resolve(undefined);
+        };
+        await vscode.commands.executeCommand(COMMAND);
+        assert.deepStrictEqual(
+            captured.map((i) => i.value),
+            ALL_THEMES,
+        );
+    });
+
+    ALL_THEMES.forEach((theme) => {
+        test('Test change-theme persists ' + String(theme), async () => {
+            (vscode.window as any).showQuickPick = () =>
+                Promise.resolve({ label: String(theme), value: theme });
+            await vscode.commands.executeCommand(COMMAND);
+            assert.strictEqual(
+                vscode.workspace
+                    .getConfiguration('vscode-pets')
+                    .get<Theme>('theme'),
+                theme,
+            );
+        });
+    });
+
+    test('Test change-theme cancel leaves theme unchanged', async () => {
+        await vscode.workspace
+            .getConfiguration('vscode-pets')
+            .update('theme', Theme.forest, vscode.ConfigurationTarget.Global);
+        (vscode.window as any).showQuickPick = () => Promise.resolve(undefined);
+        await vscode.commands.executeCommand(COMMAND);
+        assert.strictEqual(
+            vscode.workspace
+                .getConfiguration('vscode-pets')
+                .get<Theme>('theme'),
+            Theme.forest,
+        );
+    });
+});
