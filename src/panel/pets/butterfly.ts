@@ -3,18 +3,17 @@ import { BasePetType } from '../basepettype';
 import { States } from '../states';
 
 export class Butterfly extends BasePetType {
-
     label = 'butterfly';
-    static possibleColors = [PetColor.pinkblue,PetColor.redbrown];
+    static possibleColors = [PetColor.pinkblue, PetColor.redbrown];
     sequence = {
         startingState: States.flyLeft,
         sequenceStates: [
             {
                 state: States.flyLeft,
-                possibleNextStates: [States.flyUp,States.flyRight],
+                possibleNextStates: [States.flyUp, States.flyRight],
             },
             {
-                state: States.flyUp, 
+                state: States.flyUp,
                 possibleNextStates: [States.flyRight, States.flyDown],
             },
             {
@@ -23,8 +22,8 @@ export class Butterfly extends BasePetType {
             },
             {
                 state: States.idleWithBall,
-                possibleNextStates: [States.flyLeft]
-            }
+                possibleNextStates: [States.flyLeft],
+            },
         ],
     };
 
@@ -43,8 +42,8 @@ export const BUTTERFLY_NAMES: ReadonlyArray<string> = [
     'Wingwoman', //WHY NOT
     'Flutterfly', //BUTTEFLYS FLUTTER AND FLY, SQUEEZE THE WORDS
     'Catrina', //BUTTERFLY NAME FROM CHILDHOOD CARTOON
-    'Carrie Bradshaw', //JUST FOR THE HECK OF IT 
+    'Carrie Bradshaw', //JUST FOR THE HECK OF IT
     'Chidi', //SOUNDS OF A FLYING BUTTERFLY- HINDI WORD
     'Bailey', //CUTE PUPPY NAME
-    'Butterfree',  
+    'Butterfree',
 ];

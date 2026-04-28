@@ -205,7 +205,7 @@ export function createPet(
         case PetType.bunny:
             return new Bunny(...standardPetArguments, PetSpeed.veryFast);
         case PetType.butterfly:
-            return new Butterfly(...standardPetArguments,PetSpeed.veryFast);
+            return new Butterfly(...standardPetArguments, PetSpeed.veryFast);
         case PetType.cat:
             return new Cat(...standardPetArguments, PetSpeed.normal);
         case PetType.chicken:

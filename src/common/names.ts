@@ -1,5 +1,5 @@
 import { BUNNY_NAMES } from '../panel/pets/bunny';
-import { BUTTERFLY_NAMES} from '../panel/pets/butterfly';
+import { BUTTERFLY_NAMES } from '../panel/pets/butterfly';
 import { CAT_NAMES } from '../panel/pets/cat';
 import { CHICKEN_NAMES } from '../panel/pets/chicken';
 import { MORPH_NAMES } from '../panel/pets/morph';

@@ -362,7 +362,7 @@ export class FlyUpState implements IState {
     }
 
     nextFrame(): FrameResult {
-         this.pet.positionBottom(this.pet.bottom + this.pet.flySpeed);
+        this.pet.positionBottom(this.pet.bottom + this.pet.flySpeed);
 
         if (Math.random() < 0.01) {
             return FrameResult.stateComplete;
