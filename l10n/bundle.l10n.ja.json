@@ -3,6 +3,8 @@
 	"Pet Panel": "ペットパネル",
 	"Select a pet": "ペットを選択",
 	"Select a color": "色を選択",
+	"Select a theme": "テーマを選択してください",
+	"A Pet Playground has been created. You can now use the \"Change Theme\" Command to change the theme."	: "ペットの遊び場を作成しました。\"Change Theme\" コマンドを使用して、テーマを変更できるようになりました",
 	"Select the pet to remove.": "削除するペットを選択",
 	"Leave blank for a random name": "未入力の場合は名前をランダムに設定します",
 	"Name your pet": "ペットの名前を入力",
