@@ -50,6 +50,12 @@ export abstract class BasePetType implements IPetType {
     protected _climbSpeed: number = 1;
     protected _climbHeight: number = 100;
     protected _fallSpeed: number = 5;
+    //added for butterfly
+    private _time: number = 0;
+    protected _flySpeed: number = 3;
+    protected _hoverAmplitude: number = 15;
+    protected _hoverFrequency: number = 0.01;
+    protected _verticalDrift: number = 0.2;
 
     constructor(
         spriteElement: HTMLImageElement,
@@ -77,6 +83,7 @@ export abstract class BasePetType implements IPetType {
         this._name = name;
         this._size = size;
         this._speed = this.randomizeSpeed(speed);
+        console.log('PET ROOT:', this.petRoot);
         if (this._name.toLowerCase() === 'debug') {
             console.log(
                 `Creating pet ${this._name} of size ${this._size} at position (${this._left}, ${this._bottom}) with speed ${this._speed}`,
@@ -204,6 +211,22 @@ export abstract class BasePetType implements IPetType {
         return this._speed !== PetSpeed.still;
     }
 
+    get flySpeed(): number {
+        return this._flySpeed;
+    }
+
+    get hoverAmplitude(): number {
+        return this._hoverAmplitude;
+    }
+
+    get hoverFrequency(): number {
+        return this._hoverFrequency;
+    }
+
+    get verticalDrift(): number {
+        return this._verticalDrift;
+    }
+
     recoverFriend(friend: IPetType) {
         // Recover friends..
         this._friend = friend;
@@ -291,7 +314,7 @@ export abstract class BasePetType implements IPetType {
         return possibleNextStates[idx];
     }
 
-    nextFrame() {
+    nextFrame(): void {
         if (
             this.currentState.horizontalDirection === HorizontalDirection.left
         ) {
@@ -320,6 +343,7 @@ export abstract class BasePetType implements IPetType {
         }
 
         var frameResult = this.currentState.nextFrame();
+
         if (frameResult === FrameResult.stateComplete) {
             // If recovering from swipe..
             if (this.holdState && this.holdStateEnum) {
