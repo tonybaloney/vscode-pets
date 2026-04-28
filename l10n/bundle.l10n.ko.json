@@ -3,6 +3,8 @@
 	"Pet Panel": "펫 패널",
 	"Select a pet": "펫을 선택합니다.",
 	"Select a color": "색깔을 정합니다.",
+	"Select a theme": "테마 선택",
+	"A Pet Playground has been created. You can now use the \"Change Theme\" Command to change the theme.": "펫이 돌아다닐 수 있는 공간이 만들어졌습니다. \"Change Theme\" 명령을 사용하여 테마를 변경할 수 있습니다.",
 	"Select the pet to remove.": "제거할 펫을 선택합니다.",
 	"Leave blank for a random name": "비어있으면 무작위 이름이 적용됩니다.",
 	"Name your pet": "펫의 이름을 정합니다.",
