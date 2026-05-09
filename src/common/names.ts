@@ -22,6 +22,8 @@ import { ZAPPY_NAMES } from '../panel/pets/zappy';
 import { RAT_NAMES } from '../panel/pets/rat';
 import { TURTLE_NAMES } from '../panel/pets/turtle';
 import { HORSE_NAMES } from '../panel/pets/horse';
+import { DONKEY_NAMES } from '../panel/pets/donkey';
+import { PENGUIN_NAMES } from '../panel/pets/penguin';
 import { MONKEY_NAMES } from '../panel/pets/monkey';
 import { PetType } from './types';
 
@@ -32,6 +34,8 @@ export function randomName(type: PetType): string {
                 [PetType.bunny]: BUNNY_NAMES,
                 [PetType.cat]: CAT_NAMES,
                 [PetType.chicken]: CHICKEN_NAMES,
+                [PetType.donkey]: DONKEY_NAMES,
+                [PetType.penguin]: PENGUIN_NAMES,
                 [PetType.dog]: DOG_NAMES,
                 [PetType.fox]: FOX_NAMES,
                 [PetType.frog]: FROG_NAMES,

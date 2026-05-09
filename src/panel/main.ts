@@ -94,7 +94,11 @@ function addPetToPanel(
         speechBubbleElement,
     );
 
-    const root = basePetUri + '/' + petType + '/' + petColor;
+    const assetPetType = petType === PetType.donkey ? PetType.horse : petType;
+    const root =
+        petType === PetType.penguin
+            ? `${basePetUri}/${assetPetType}`
+            : `${basePetUri}/${assetPetType}/${petColor}`;
     console.log('Creating new pet : ', petType, root, petColor, petSize, name);
     try {
         if (!availableColors(petType).includes(petColor)) {

@@ -10,6 +10,8 @@ import { Dog } from './pets/dog';
 import { Fox } from './pets/fox';
 import { Frog } from './pets/frog';
 import { Horse } from './pets/horse';
+import { Donkey } from './pets/donkey';
+import { Penguin } from './pets/penguin';
 import { Monkey } from './pets/monkey';
 import { Mod } from './pets/mod';
 import { Morph } from './pets/morph';
@@ -245,6 +247,10 @@ export function createPet(
             return new Turtle(...standardPetArguments, PetSpeed.verySlow);
         case PetType.horse:
             return new Horse(...standardPetArguments, PetSpeed.normal);
+        case PetType.donkey:
+            return new Donkey(...standardPetArguments, PetSpeed.normal);
+        case PetType.penguin:
+            return new Penguin(...standardPetArguments, PetSpeed.normal);
         case PetType.panda:
             return new Panda(...standardPetArguments, PetSpeed.slow);
         case PetType.morph:
@@ -304,6 +310,10 @@ export function availableColors(petType: PetType): PetColor[] {
             return Turtle.possibleColors;
         case PetType.horse:
             return Horse.possibleColors;
+        case PetType.donkey:
+            return Donkey.possibleColors;
+        case PetType.penguin:
+            return Penguin.possibleColors;
         case PetType.panda:
             return Panda.possibleColors;
         case PetType.skeleton:
