@@ -14,6 +14,7 @@ import { Monkey } from './pets/monkey';
 import { Mod } from './pets/mod';
 import { Morph } from './pets/morph';
 import { Panda } from './pets/panda';
+import { Penguin } from './pets/penguin';
 import { Rat } from './pets/rat';
 import { Rocky } from './pets/rocky';
 import { RubberDuck } from './pets/rubberduck';
@@ -247,6 +248,8 @@ export function createPet(
             return new Horse(...standardPetArguments, PetSpeed.normal);
         case PetType.panda:
             return new Panda(...standardPetArguments, PetSpeed.slow);
+        case PetType.penguin:
+            return new Penguin(...standardPetArguments, PetSpeed.normal)
         case PetType.morph:
             return new Morph(...standardPetArguments, PetSpeed.normal);
         case PetType.skeleton:
@@ -306,6 +309,8 @@ export function availableColors(petType: PetType): PetColor[] {
             return Horse.possibleColors;
         case PetType.panda:
             return Panda.possibleColors;
+        case PetType.penguin:
+            return Penguin.possibleColors
         case PetType.skeleton:
             return Skeleton.possibleColors;
         default:
