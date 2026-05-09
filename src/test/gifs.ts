@@ -91,7 +91,7 @@ const pets: { [key: string]: { colors: string[]; states: string[] } } = {
     },
     penguin: {
         colors: ['white'],
-        states: ['idle', 'run', 'swipe', 'walk', 'walk_fast', 'with_ball'],
+        states: ['idle', 'run','walk'],
     },
     rocky: {
         colors: ['gray'],

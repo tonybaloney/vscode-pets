@@ -309,6 +309,8 @@ export function availableColors(petType: PetType): PetColor[] {
             return Horse.possibleColors;
         case PetType.panda:
             return Panda.possibleColors;
+        case PetType.penguin:
+            return Penguin.possibleColors
         case PetType.skeleton:
             return Skeleton.possibleColors;
         default:

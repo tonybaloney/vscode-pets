@@ -52,12 +52,6 @@ export class Penguin extends BasePetType {
             },
         ],
     };
-    get emoji(): string {
-        return '🐔';
-    }
-    get hello(): string {
-        return ` I'm a penguin and stuff.`;
-    }
 }
 
 export const PENGUIN_NAMES: ReadonlyArray<string> = [

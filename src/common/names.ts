@@ -11,6 +11,7 @@ import { FOX_NAMES } from '../panel/pets/fox';
 import { FROG_NAMES } from '../panel/pets/frog';
 import { MOD_NAMES } from '../panel/pets/mod';
 import { PANDA_NAMES } from '../panel/pets/panda';
+import { PENGUIN_NAMES } from '../panel/pets/penguin';
 import { ROCKY_NAMES } from '../panel/pets/rocky';
 import { DUCK_NAMES } from '../panel/pets/rubberduck';
 import { SKELETON_NAMES } from '../panel/pets/skeleton';
@@ -24,7 +25,7 @@ import { TURTLE_NAMES } from '../panel/pets/turtle';
 import { HORSE_NAMES } from '../panel/pets/horse';
 import { MONKEY_NAMES } from '../panel/pets/monkey';
 import { PetType } from './types';
-import { PENGUIN_NAMES } from '../panel/pets/penguin';
+
 
 export function randomName(type: PetType): string {
     const collection: ReadonlyArray<string> =
