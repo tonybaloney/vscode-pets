@@ -700,15 +700,13 @@ export function activate(context: vscode.ExtensionContext) {
                         const configuredColor = vscode.workspace
                             .getConfiguration('vscode-pets')
                             .get<PetColor>('petColor', DEFAULT_COLOR);
-                        if (
-                            validColors.length === 1 &&
-                            configuredColor !== validColors[0]
-                        ) {
+                        if (!validColors.includes(configuredColor)) {
                             void vscode.window.showInformationMessage(
                                 vscode.l10n.t(
-                                    'The {0} pet only supports the color {1}. The color setting will have no effect.',
+                                    'The {0} pet does not support the color {1}. Supported colors: {2}. The color setting will have no effect.',
                                     spec.type,
-                                    validColors[0],
+                                    configuredColor,
+                                    validColors.join(', '),
                                 ),
                             );
                         }
