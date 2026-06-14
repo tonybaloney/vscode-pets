@@ -228,7 +228,8 @@
                             "skeleton",
                             "deno",
                             "morph",
-                            "panda"
+                            "panda",
+                            "penguin"
                         ],
                         "default": "cat",
                         "description": "%vscode-pets.petType.description%",
@@ -258,7 +259,8 @@
                             "%vscode-pets.petType.skeleton%",
                             "%vscode-pets.petType.deno%",
                             "%vscode-pets.petType.morph%",
-                            "%vscode-pets.petType.panda%"
+                            "%vscode-pets.petType.panda%",
+                            "%vscode-pets.petType.penguin%"
                         ]
                     },
                     "vscode-pets.petSize": {
