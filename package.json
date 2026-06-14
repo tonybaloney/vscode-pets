@@ -42,6 +42,7 @@
         "onCommand:vscode-pets.roll-call",
         "onCommand:vscode-pets.export-pet-list",
         "onCommand:vscode-pets.import-pet-list",
+        "onCommand:vscode-pets.change-theme",
         "onWebviewPanel:petCoding",
         "onView:explorer",
         "onView:petsView",
@@ -77,6 +78,11 @@
                     "command": "vscode-pets.delete-pet",
                     "when": "view == petsView",
                     "group": "navigation@3"
+                },
+                {
+                    "command": "vscode-pets.change-theme",
+                    "when": "view == petsView",
+                    "group": "navigation@4"
                 }
             ]
         },
@@ -146,6 +152,15 @@
                 "command": "vscode-pets.roll-call",
                 "title": "%vscode-pets.roll-call.title%",
                 "category": "Pet Coding"
+            },
+            {
+                "command": "vscode-pets.change-theme",
+                "title": "%vscode-pets.change-theme.title%",
+                "category": "Pet Coding",
+                "icon": {
+                    "dark": "media/icon/dark-paintcan.svg",
+                    "light": "media/icon/light-paintcan.svg"
+                }
             }
         ],
         "configuration": [

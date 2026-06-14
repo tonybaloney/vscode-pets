@@ -3,6 +3,8 @@
 	"Pet Panel": "คอกน้อง",
 	"Select a pet": "เลือกน้อง",
 	"Select a color": "เลือกสี",
+	"Select a theme": "เลือกธีม",
+	"A Pet Playground has been created. You can now use the \"Change Theme\" Command to change the theme.": "คอกของน้องได้ถูกสร้างแล้ว. ขณะนี้คุณสามารถใช้คำสั่ง \"เปลี่ยนธีม\" เพื่อเปลี่ยนธีมได้",
 	"Select the pet to remove.": "เลือกน้องที่จะลบออก",
 	"Leave blank for a random name": "ปล่อยว่างไว้เพื่อสุ่มชื่อ",
 	"Name your pet": "ตั้งชื่อน้อง",

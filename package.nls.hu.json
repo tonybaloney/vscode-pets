@@ -9,6 +9,7 @@
     "vscode-pets.delete-pet.title": "Pet eltávolítása",
     "vscode-pets.remove-all-pets.title": "Össes pet eltávolítása",
     "vscode-pets.roll-call.title": "Névsorolvasás",
+    "vscode-pets.change-theme.title": "Téma módosítása",
     "vscode-pets.petColor.description": "A pet színe",
     "vscode-pets.petType.description": "A pet típusa",
     "vscode-pets.petSize.description": "A pet mérete",
