@@ -692,6 +692,25 @@ export function activate(context: vscode.ExtensionContext) {
                     e.affectsConfiguration('workbench.colorTheme')
                 ) {
                     const spec = PetSpecification.fromConfiguration();
+                    if (
+                        e.affectsConfiguration('vscode-pets.petColor') ||
+                        e.affectsConfiguration('vscode-pets.petType')
+                    ) {
+                        const validColors = availableColors(spec.type);
+                        const configuredColor = vscode.workspace
+                            .getConfiguration('vscode-pets')
+                            .get<PetColor>('petColor', DEFAULT_COLOR);
+                        if (!validColors.includes(configuredColor)) {
+                            void vscode.window.showInformationMessage(
+                                vscode.l10n.t(
+                                    'The {0} pet does not support the color {1}. Supported colors: {2}. The color setting will have no effect.',
+                                    spec.type,
+                                    configuredColor,
+                                    validColors.join(', '),
+                                ),
+                            );
+                        }
+                    }
                     const panel = getPetPanel();
                     if (panel) {
                         panel.updatePetColor(spec.color);
