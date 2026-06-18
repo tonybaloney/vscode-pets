@@ -19,6 +19,7 @@
     ],
     "keywords": [
         "pet",
+        "butterfly",
         "cat",
         "chicken",
         "dog",
@@ -173,7 +174,9 @@
                             "paint brown",
                             "magical",
                             "warrior",
-                            "pink"
+                            "pink",
+                            "pinkblue",
+                            "redbrown"
                         ],
                         "default": "brown",
                         "description": "%vscode-pets.petColor.description%",
@@ -198,12 +201,15 @@
                             "%vscode-pets.petColor.paint brown%",
                             "%vscode-pets.petColor.magical%",
                             "%vscode-pets.petColor.warrior%",
-                            "%vscode-pets.petColor.pink%"
+                            "%vscode-pets.petColor.pink%",
+                            "%vscode-pets.petColor.pinkblue%",
+                            "%vscode-pets.petColor.redbrown%"
                         ]
                     },
                     "vscode-pets.petType": {
                         "type": "string",
                         "enum": [
+                            "butterfly",
                             "cat",
                             "chicken",
                             "crab",
@@ -234,6 +240,7 @@
                         "description": "%vscode-pets.petType.description%",
                         "scope": "window",
                         "enumItemLabels": [
+                            "%vscode-pets.petType.butterfly%",
                             "%vscode-pets.petType.cat%",
                             "%vscode-pets.petType.chicken%",
                             "%vscode-pets.petType.crab%",

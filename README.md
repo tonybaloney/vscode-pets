@@ -93,6 +93,7 @@ Squirrel animations were adapted by [Chris Kent](https://github.com/thechriskent
 
 Skeleton animations were adapted by [Chris Kent](https://github.com/thechriskent) from assets by [MonoPixelArt](https://monopixelart.itch.io/).
 
+Butterfly animations were adapted by [Ayushi Roully](https://github.com/ayushiroully) from assets by [MonoPixelArt](https://monopixelart.itch.io/).
 ## Thank you
 
 Thanks to all the [contributors](https://github.com/tonybaloney/vscode-pets/graphs/contributors) to this project.

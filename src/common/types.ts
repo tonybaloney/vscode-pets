@@ -20,11 +20,14 @@ export const enum PetColor {
     magical = 'magical',
     warrior = 'warrior',
     pink = 'pink',
+    redbrown = 'redbrown',
+    pinkblue = 'pinkblue',
     null = 'null',
 }
 
 export const enum PetType {
     bunny = 'bunny',
+    butterfly = 'butterfly',
     cat = 'cat',
     chicken = 'chicken',
     clippy = 'clippy',
@@ -101,6 +104,7 @@ export class WebviewMessage {
 
 export const ALL_PETS = [
     PetType.bunny,
+    PetType.butterfly,
     PetType.cat,
     PetType.chicken,
     PetType.clippy,
@@ -146,6 +150,8 @@ export const ALL_COLORS = [
     PetColor.paintbrown,
     PetColor.magical,
     PetColor.warrior,
+    PetColor.pinkblue,
+    PetColor.redbrown,
     PetColor.null,
 ];
 export const ALL_SCALES = [
