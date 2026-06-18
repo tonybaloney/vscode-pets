@@ -1,0 +1,90 @@
+/*
+ * Tailwind WITHOUT preflight (no `base` layer import).
+ * The engine ships its own reset.css / pets.css, and a global
+ * `*:focus { outline-color: ... !important }` rule — so we avoid resetting
+ * engine elements and rely on `focus-visible:ring-*` (box-shadow) for a11y.
+ */
+@layer theme, base, components, utilities;
+@import 'tailwindcss/theme.css' layer(theme);
+@import 'tailwindcss/utilities.css' layer(utilities);
+
+@theme {
+    --font-display: 'Fredoka', sans-serif;
+    --font-sans: 'Nunito', sans-serif;
+
+    /* Dark playful palette (indigo stage + orange CTA). */
+    --color-stage: #0f1020;
+    --color-stage-soft: #15162a;
+    --color-surface: #1b1d36;
+    --color-line: #2c2f52;
+    --color-ink: #e9eaf6;
+    --color-muted: #9aa0c7;
+    --color-brand: #6366f1;
+    --color-brand-soft: #818cf8;
+    --color-cta: #f97316;
+}
+
+/* The dark stage the pets roam on. */
+body {
+    background:
+        radial-gradient(
+            120% 90% at 50% -10%,
+            #20224a 0%,
+            var(--color-stage) 60%
+        )
+        fixed;
+    font-family: var(--font-sans);
+}
+
+@layer components {
+    .ctrl-select {
+        @apply h-9 cursor-pointer appearance-none rounded-lg border border-line
+            bg-stage-soft/80 py-1.5 pr-7 pl-3 text-sm font-medium text-ink
+            capitalize transition-colors hover:border-brand-soft
+            focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand;
+        /* Custom dropdown chevron (appearance: none removes the native one). */
+        background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" stroke="%239aa0c7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg>');
+        background-repeat: no-repeat;
+        background-position: right 0.55rem center;
+        background-size: 14px;
+    }
+    .ctrl-select option {
+        @apply bg-stage-soft text-ink;
+    }
+
+    /* White buttons, laid out in a row by the control bar's flex container. */
+    .btn {
+        @apply inline-flex h-9 cursor-pointer flex-row items-center gap-1.5
+            rounded-lg border border-line bg-white px-3 text-sm font-semibold
+            text-stage shadow-sm transition-colors motion-reduce:transition-none
+            hover:bg-slate-100 focus-visible:outline-none focus-visible:ring-2
+            focus-visible:ring-offset-2 focus-visible:ring-offset-surface
+            focus-visible:ring-brand;
+    }
+    /* Accent the icon so the white buttons still read as distinct actions. */
+    .btn-cta svg {
+        @apply text-brand;
+    }
+    .btn-danger {
+        @apply hover:bg-red-50 focus-visible:ring-red-400;
+    }
+    .btn-danger,
+    .btn-danger svg {
+        @apply text-red-500;
+    }
+    .btn-danger:hover {
+        @apply text-red-600;
+    }
+
+    /* Active-pet roster */
+    .roster-row {
+        @apply flex items-center justify-between gap-2 rounded-lg border
+            border-line bg-stage-soft/60 px-2.5 py-1.5;
+    }
+    .roster-del {
+        @apply grid h-6 w-6 shrink-0 cursor-pointer place-items-center
+            rounded-md text-muted transition-colors hover:bg-red-500/15
+            hover:text-red-400 focus-visible:outline-none focus-visible:ring-2
+            focus-visible:ring-red-400;
+    }
+}
