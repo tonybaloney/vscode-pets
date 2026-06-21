@@ -45,7 +45,7 @@ function resetBall(): void {
     if (canvas) {
         canvas.style.display = 'block';
     }
-    ballState = new BallState(100, 100, 4, 5);
+    ballState = new BallState(10, 15, 4, 5);
 }
 
 export function dynamicThrowOn(pets: PetElement[]) {
