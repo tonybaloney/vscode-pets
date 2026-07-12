@@ -130,6 +130,10 @@ const pets: { [key: string]: { colors: string[]; states: string[] } } = {
         colors: ['gray', 'white', 'brown'],
         states: ['idle', 'run', 'swipe', 'walk', 'walk_fast', 'with_ball'],
     },
+    raccoon: {
+        colors: ['gray'],
+        states: ['idle', 'run', 'swipe', 'walk', 'with_ball', 'lie'],
+    },
     turtle: {
         colors: ['green', 'orange'],
         states: ['idle', 'run', 'walk', 'lie', 'with_ball'],
