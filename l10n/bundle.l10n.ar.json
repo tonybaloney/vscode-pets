@@ -3,6 +3,8 @@
 	"Pet Panel": "لوحة الحيوانات الأليفة",
 	"Select a pet": "اختر حيوان أليف",
 	"Select a color": "اختر لون",
+	"Select a theme": "اختر مظهرًا",
+	"A Pet Playground has been created. You can now use the \"Change Theme\" Command to change the theme.": "تم إنشاء ”ملعب الحيوانات الأليفة“. يمكنك الآن استخدام الأمر \"تغيير المظهر\" لتغيير المظهر.",
 	"Select the pet to remove.": "حدد الحيوان الأليف الذي تريد إزالته.",
 	"Leave blank for a random name": "اتركه فارغا لاسم عشوائي",
 	"Name your pet": "قم بتسمية حيوانك الأليف",

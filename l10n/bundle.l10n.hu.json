@@ -3,6 +3,8 @@
 	"Pet Panel": "Állatsimogató Panel",
 	"Select a pet": "Válassz háziállatot",
 	"Select a color": "Milyen színű legyen?",
+	"Select a theme": "Válasszon témát",
+	"A Pet Playground has been created. You can now use the \"Change Theme\" Command to change the theme.": "Állatsimogató létrehozva. Mostantól a \"Change theme\" paranccsal megváltoztathatja a témát.",
 	"Select the pet to remove.": "Melyik legyen eltávolítva?",
 	"Leave blank for a random name": "Kitöltetlenül hagyva random nevet fog kapni",
 	"Name your pet": "Adj nevet a háziállatodnak!",

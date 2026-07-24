@@ -3,6 +3,8 @@
 	"Pet Panel": "Panel de Mascotas",
 	"Select a pet": "Seleccione una mascota",
 	"Select a color": "Seleccione un color",
+	"Select a theme": "Selecciona un tema",
+	"A Pet Playground has been created. You can now use the 'Change Theme' Command to change the theme.": "Se ha creado un Área de juegos para mascotas. Ahora puedes utilizar el comando \"Cambiar tema\" para cambiar el tema.",
 	"Select the pet to remove.": "Seleccione la mascota a eliminar.",
 	"Leave blank for a random name": "Dejar en blanco para un nombre aleatorio",
 	"Name your pet": "Nombre su mascota",
