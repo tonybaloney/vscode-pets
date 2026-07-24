@@ -2,6 +2,19 @@
 
 All notable changes to the "vscode-pets" extension will be documented in this file.
 
+## [1.36.0]
+
+### New Pets
+
+* Adding Raccoon (Issue #547) by @Teroooo in https://github.com/tonybaloney/vscode-pets/pull/911
+* Add jimothy by @tonybaloney in https://github.com/tonybaloney/vscode-pets/pull/917
+
+### Other Updates
+* Add brown color variant for chicken by @Tomansion in https://github.com/tonybaloney/vscode-pets/pull/869
+* chore: Update deprecated tsc.autoDetect setting to js/ts namespace by @noritaka1166 in https://github.com/tonybaloney/vscode-pets/pull/904
+* Add GUI button for changing theme by @aaronlockhartdev in https://github.com/tonybaloney/vscode-pets/pull/891
+* Remove Marketplace badges from README by @tonybaloney in https://github.com/tonybaloney/vscode-pets/pull/923
+
 ## [1.35.0]
 
 ### New Pets
