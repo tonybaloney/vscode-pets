@@ -266,6 +266,14 @@ export abstract class BasePetType implements IPetType {
         this.el.style.transform = 'scaleX(1)';
     }
 
+    protected get spriteSource(): string {
+        return this.el.src;
+    }
+
+    protected set spriteSource(src: string) {
+        this.el.src = src;
+    }
+
     setAnimation(face: string) {
         if (this.el.src.endsWith(`_${face}_8fps.gif`)) {
             return;
