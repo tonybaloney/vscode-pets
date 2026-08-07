@@ -9,6 +9,7 @@ import { DENO_NAMES } from '../panel/pets/deno';
 import { DOG_NAMES } from '../panel/pets/dog';
 import { FOX_NAMES } from '../panel/pets/fox';
 import { FROG_NAMES } from '../panel/pets/frog';
+import { LIZARD_NAMES } from '../panel/pets/lizard';
 import { MOD_NAMES } from '../panel/pets/mod';
 import { PANDA_NAMES } from '../panel/pets/panda';
 import { ROCKY_NAMES } from '../panel/pets/rocky';
@@ -39,6 +40,7 @@ export function randomName(type: PetType): string {
                 [PetType.crab]: CRAB_NAMES,
                 [PetType.clippy]: CLIPPY_NAMES,
                 [PetType.deno]: DENO_NAMES,
+                [PetType.lizard]: LIZARD_NAMES,
                 [PetType.mod]: MOD_NAMES,
                 [PetType.totoro]: TOTORO_NAMES,
                 [PetType.snail]: SNAIL_NAMES,
