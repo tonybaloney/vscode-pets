@@ -162,7 +162,10 @@ export abstract class BasePetType implements IPetType {
     }
 
     getState(): PetInstanceState {
-        return { currentStateEnum: this.currentStateEnum };
+        // Temporary states puts the real state in holdStateEnum which is not persisted
+        return {
+            currentStateEnum: this.holdStateEnum ?? this.currentStateEnum,
+        };
     }
 
     get speed(): number {
@@ -210,9 +213,15 @@ export abstract class BasePetType implements IPetType {
     }
 
     recoverState(state: PetInstanceState) {
-        // TODO : Resolve a bug where if it was swiping before, it would fail
-        // because holdState is no longer valid.
-        this.currentStateEnum = state.currentStateEnum ?? States.sitIdle;
+        // Pet may not have the recovered state in its sequence, leading to an invalid state
+        const recoveredStateEnum =
+            state.currentStateEnum ?? this.sequence.startingState;
+        const hasRecoveredStateInSequence = this.sequence.sequenceStates.some(
+            (s) => s.state === recoveredStateEnum,
+        );
+        this.currentStateEnum = hasRecoveredStateInSequence
+            ? recoveredStateEnum
+            : this.sequence.startingState;
         this.currentState = resolveState(this.currentStateEnum, this);
 
         if (!isStateAboveGround(this.currentStateEnum)) {
