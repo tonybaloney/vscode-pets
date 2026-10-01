@@ -61,6 +61,8 @@ Visit the [Crowdin Project](https://crowdin.com/project/vscode-pets) in case you
 
 ## Credits
 
+Finley is adapted from the Microsoft mascot artwork in [`@microsoft/rayfin-cli@1.36.1`](https://www.npmjs.com/package/@microsoft/rayfin-cli/v/1.36.1), used under the [MIT license](media/finley/LICENSE).
+
 The cat animations were designed by [seethingswarm](https://seethingswarm.itch.io/catset). The dog media assets for this extension were designed by [NVPH Studio](https://nvph-studio.itch.io/dog-animation-4-different-dogs). 
 
 The winter theme is original artwork by [Kiana Mosser](https://www.instagram.com/kianamosser/) created for VS Code Pets.
