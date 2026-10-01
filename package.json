@@ -171,6 +171,7 @@
                         "enum": [
                             "black",
                             "blue",
+                            "blue_pixel",
                             "lightbrown",
                             "brown",
                             "green",
@@ -198,6 +199,7 @@
                         "enumItemLabels": [
                             "%vscode-pets.petColor.black%",
                             "%vscode-pets.petColor.blue%",
+                            "%vscode-pets.petColor.blue_pixel%",
                             "%vscode-pets.petColor.lightbrown%",
                             "%vscode-pets.petColor.brown%",
                             "%vscode-pets.petColor.green%",
@@ -349,6 +351,7 @@
     },
     "scripts": {
         "generate:finley": "node scripts/generate-finley.mjs",
+        "generate:finley-pixel": "node scripts/generate-finley-pixel.mjs",
         "vscode:prepublish": "npm run compile",
         "compile:panel": "webpack",
         "compile:extension": "tsc -p ./tsconfig.extension.json",

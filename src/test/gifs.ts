@@ -54,7 +54,7 @@ const pets: { [key: string]: { colors: string[]; states: string[] } } = {
         states: ['idle', 'run', 'swipe', 'walk', 'with_ball'],
     },
     finley: {
-        colors: ['blue'],
+        colors: ['blue', 'blue_pixel'],
         states: ['idle', 'run', 'swipe', 'walk', 'walk_fast', 'with_ball'],
     },
     dog: {

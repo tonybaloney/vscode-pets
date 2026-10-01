@@ -161,6 +161,10 @@ img.pet {
 	z-index: var(--pet-canvas-container-z-index);
 }
 
+img.pet.pixel-art {
+	image-rendering: pixelated;
+}
+
 .collision {
 	position: absolute;
 	left: 0px;

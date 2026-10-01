@@ -26,6 +26,7 @@ import {
 } from '../../panel/states';
 import * as pets from '../../panel/pets';
 import { randomName } from '../../common/names';
+import { petColorLabel } from '../../common/localize';
 import { PetSpecification } from '../../extension/extension';
 import { Finley } from '../../panel/pets/finley';
 
@@ -295,7 +296,10 @@ suite('Finley Test Suite', () => {
         'with_ball',
     ];
 
-    function createFinley(size: PetSize = PetSize.small) {
+    function createFinley(
+        size: PetSize = PetSize.small,
+        color: PetColor = PetColor.blue,
+    ) {
         const image = document.createElement('img');
         const speech = document.createElement('div');
         image.width = 30;
@@ -307,7 +311,7 @@ suite('Finley Test Suite', () => {
             size,
             100,
             0,
-            path.join(mediaRoot, 'blue'),
+            path.join(mediaRoot, color),
             0,
             'Finley Custom',
         );
@@ -319,8 +323,10 @@ suite('Finley Test Suite', () => {
         const { pet } = createFinley();
         assert.ok(ALL_PETS.includes(PetType.finley));
         assert.ok(ALL_COLORS.includes(PetColor.blue));
+        assert.ok(ALL_COLORS.includes(PetColor.bluePixel));
         assert.deepStrictEqual(pets.availableColors(PetType.finley), [
             PetColor.blue,
+            PetColor.bluePixel,
         ]);
         assert.strictEqual(
             pets.normalizeColor(PetColor.blue, PetType.finley),
@@ -329,6 +335,10 @@ suite('Finley Test Suite', () => {
         assert.strictEqual(
             pets.normalizeColor(PetColor.brown, PetType.finley),
             PetColor.blue,
+        );
+        assert.strictEqual(
+            pets.normalizeColor(PetColor.bluePixel, PetType.finley),
+            PetColor.bluePixel,
         );
         assert.strictEqual(randomName(PetType.finley), 'Finley');
         assert.strictEqual(pet.name, 'Finley Custom');
@@ -340,6 +350,55 @@ suite('Finley Test Suite', () => {
         assert.ok(pet.canChase);
         assert.ok(pet.canSwipe);
     });
+
+    test('Labels Finley styles without relabeling other pet colors', () => {
+        assert.strictEqual(
+            petColorLabel(PetType.finley, PetColor.blue),
+            vscode.l10n.t('Smooth'),
+        );
+        assert.strictEqual(
+            petColorLabel(PetType.finley, PetColor.bluePixel),
+            vscode.l10n.t('Pixel Art'),
+        );
+        assert.strictEqual(
+            petColorLabel(PetType.frog, PetColor.blue),
+            vscode.l10n.t('blue'),
+        );
+    });
+
+    for (const color of Finley.possibleColors) {
+        for (const size of ALL_SCALES) {
+            test(`Renders ${color} Finley with the correct style at ${size}`, () => {
+                const mockState = new MockState();
+                panel.allPets.reset();
+                panel.petPanelApp(
+                    vscode.Uri.file(
+                        path.join(extensionRoot, 'media'),
+                    ).toString(),
+                    Theme.none,
+                    ColorThemeKind.dark,
+                    color,
+                    size,
+                    PetType.finley,
+                    false,
+                    true,
+                    mockState,
+                );
+                const element = panel.allPets.pets[0];
+                element.pet.nextFrame();
+                assert.strictEqual(
+                    element.el.classList.contains('pixel-art'),
+                    color === PetColor.bluePixel,
+                );
+                assert.ok(element.el.src.endsWith(`${color}_idle_8fps.gif`));
+                assert.strictEqual(
+                    mockState.getState()?.petStates?.[0].petColor,
+                    color,
+                );
+                panel.allPets.reset();
+            });
+        }
+    }
 
     ALL_SCALES.forEach((size, index) => {
         test(`Supports Finley at ${size} size`, () => {
@@ -435,6 +494,89 @@ suite('Finley Test Suite', () => {
         assert.notStrictEqual(pet.currentStateEnum, States.chaseFriend);
     });
 
+    test('Uses the complete pixel sprite set with unchanged behavior', () => {
+        const { pet, image, speech } = createFinley(
+            PetSize.small,
+            PetColor.bluePixel,
+        );
+        for (const [state, sprite] of [
+            [States.sitIdle, 'idle'],
+            [States.walkRight, 'walk'],
+            [States.runLeft, 'walk_fast'],
+            [States.idleWithBall, 'with_ball'],
+        ] as const) {
+            pet.recoverState({ currentStateEnum: state });
+            pet.nextFrame();
+            assert.ok(image.src.endsWith(`blue_pixel_${sprite}_8fps.gif`));
+        }
+        pet.swipe();
+        pet.nextFrame();
+        assert.ok(image.src.endsWith('blue_pixel_swipe_8fps.gif'));
+        assert.strictEqual(speech.textContent, 'Hi! 👋');
+        for (let frame = 0; frame < 15; frame++) {
+            pet.nextFrame();
+        }
+        const canvas = document.createElement('canvas');
+        canvas.height = 100;
+        const ball = new BallState(pet.left + pet.speed / 2, 100, 0, 0);
+        pet.chase(ball, canvas);
+        pet.nextFrame();
+        assert.ok(image.src.endsWith('blue_pixel_run_8fps.gif'));
+        assert.ok(ball.paused);
+        pet.nextFrame();
+        assert.ok(image.src.endsWith('blue_pixel_with_ball_8fps.gif'));
+    });
+
+    test('Restores same-name Finley appearances and removes only the selected one', () => {
+        const mockState = new MockState();
+        panel.allPets.reset();
+        for (const color of Finley.possibleColors) {
+            const { pet, image } = createFinley(PetSize.small, color);
+            panel.allPets.push(
+                new pets.PetElement(
+                    image,
+                    document.createElement('div'),
+                    document.createElement('div'),
+                    pet,
+                    color,
+                    PetType.finley,
+                ),
+            );
+        }
+        panel.saveState(mockState);
+        panel.allPets.reset();
+        panel.petPanelApp(
+            vscode.Uri.file(path.join(extensionRoot, 'media')).toString(),
+            Theme.none,
+            ColorThemeKind.dark,
+            PetColor.blue,
+            PetSize.small,
+            PetType.finley,
+            false,
+            true,
+            mockState,
+        );
+        assert.deepStrictEqual(
+            panel.allPets.pets.map((pet) => pet.color),
+            [PetColor.blue, PetColor.bluePixel],
+        );
+        const target = panel.allPets.locatePet(
+            'Finley Custom',
+            PetType.finley,
+            PetColor.bluePixel,
+        );
+        assert.ok(target);
+        panel.allPets.remove(target);
+        panel.saveState(mockState);
+        assert.strictEqual(panel.allPets.pets.length, 1);
+        assert.strictEqual(panel.allPets.pets[0].color, PetColor.blue);
+        assert.strictEqual(
+            mockState.getState()?.petStates?.[0].petColor,
+            PetColor.blue,
+        );
+        panel.allPets.reset();
+    });
+
     test('Persists Finley identity, custom name, color and ground state', () => {
         const mockState = new MockState();
         const { pet, image } = createFinley();
@@ -479,19 +621,23 @@ suite('Finley Test Suite', () => {
     });
 
     test('Ships every required GIF, icon and Microsoft license', () => {
-        for (const sprite of spriteNames) {
-            const gif = readFileSync(
-                path.join(mediaRoot, `blue_${sprite}_8fps.gif`),
-            );
-            assert.strictEqual(gif.toString('ascii', 0, 6), 'GIF89a');
-            assert.strictEqual(gif.readUInt16LE(6), 128);
-            assert.strictEqual(gif.readUInt16LE(8), 128);
-            assert.ok(gif.includes(Buffer.from('NETSCAPE2.0')));
+        for (const color of Finley.possibleColors) {
+            for (const sprite of spriteNames) {
+                const gif = readFileSync(
+                    path.join(mediaRoot, `${color}_${sprite}_8fps.gif`),
+                );
+                assert.strictEqual(gif.toString('ascii', 0, 6), 'GIF89a');
+                assert.strictEqual(gif.readUInt16LE(6), 128);
+                assert.strictEqual(gif.readUInt16LE(8), 128);
+                assert.ok(gif.includes(Buffer.from('NETSCAPE2.0')));
+            }
         }
-        const icon = readFileSync(path.join(mediaRoot, 'icon.png'));
-        assert.strictEqual(icon.toString('ascii', 1, 4), 'PNG');
-        assert.strictEqual(icon.readUInt32BE(16), 32);
-        assert.strictEqual(icon.readUInt32BE(20), 32);
+        for (const filename of ['icon.png', 'icon_blue_pixel.png']) {
+            const icon = readFileSync(path.join(mediaRoot, filename));
+            assert.strictEqual(icon.toString('ascii', 1, 4), 'PNG');
+            assert.strictEqual(icon.readUInt32BE(16), 32);
+            assert.strictEqual(icon.readUInt32BE(20), 32);
+        }
         const license = readFileSync(path.join(mediaRoot, 'LICENSE'), 'utf8');
         assert.ok(license.includes('Copyright (c) Microsoft Corporation.'));
         assert.ok(license.includes('Permission is hereby granted'));
@@ -502,6 +648,66 @@ suite('Finley Test Suite', () => {
             readFileSync(path.join(mediaRoot, 'blue_run_8fps.gif')),
             readFileSync(path.join(mediaRoot, 'blue_walk_fast_8fps.gif')),
         );
+        assert.notDeepStrictEqual(
+            readFileSync(path.join(mediaRoot, 'blue_pixel_run_8fps.gif')),
+            readFileSync(path.join(mediaRoot, 'blue_pixel_walk_fast_8fps.gif')),
+        );
+    });
+
+    test('Keeps native pixel drawings and integer frame compositions editable', () => {
+        interface PixelFrame {
+            layers: { sprite: string; x: number; y: number }[];
+        }
+        const source: {
+            width: number;
+            height: number;
+            baseline: number;
+            palette: Record<string, string>;
+            sprites: Record<string, string[]>;
+            animations: Record<string, { frames: PixelFrame[] }>;
+            icon: PixelFrame;
+            provenance: { model: string; reasoningEffort: string };
+        } = JSON.parse(
+            readFileSync(path.join(mediaRoot, 'pixel-art.json'), 'utf8'),
+        );
+        assert.strictEqual(source.width, 32);
+        assert.strictEqual(source.height, 32);
+        assert.strictEqual(source.baseline, 30);
+        assert.ok(Object.keys(source.palette).length <= 16);
+        for (const color of Object.values(source.palette)) {
+            assert.match(color, /^#[0-9a-f]{6}(00|ff)$/i);
+        }
+        assert.strictEqual(source.provenance.model, 'gpt-6-astra');
+        assert.strictEqual(source.provenance.reasoningEffort, 'xhigh');
+        assert.deepStrictEqual(
+            Object.keys(source.animations).sort(),
+            [...spriteNames].sort(),
+        );
+        for (const rows of Object.values(source.sprites)) {
+            assert.ok(rows.length > 0 && rows.length <= 32);
+            assert.ok(rows[0].length > 0 && rows[0].length <= 32);
+            for (const row of rows) {
+                assert.strictEqual(row.length, rows[0].length);
+                assert.ok([...row].every((pixel) => pixel in source.palette));
+            }
+        }
+        const frames = [source.icon];
+        for (const animation of Object.values(source.animations)) {
+            assert.ok(animation.frames.length >= 2);
+            assert.strictEqual(animation.frames.length % 2, 0);
+            frames.push(...animation.frames);
+        }
+        for (const frame of frames) {
+            assert.ok(frame.layers.length > 0);
+            for (const layer of frame.layers) {
+                const sprite = source.sprites[layer.sprite];
+                assert.ok(sprite);
+                assert.ok(Number.isInteger(layer.x) && layer.x >= 0);
+                assert.ok(Number.isInteger(layer.y) && layer.y >= 0);
+                assert.ok(layer.x + sprite[0].length <= 32);
+                assert.ok(layer.y + sprite.length <= 32);
+            }
+        }
     });
 
     test('Aligns settings entries and localized labels', () => {
@@ -523,6 +729,7 @@ suite('Finley Test Suite', () => {
         for (const [setting, value] of [
             ['petType', 'finley'],
             ['petColor', 'blue'],
+            ['petColor', 'blue_pixel'],
         ]) {
             const property =
                 manifest.contributes.configuration[0].properties[
@@ -547,7 +754,7 @@ suite('Finley Test Suite', () => {
         assert.strictEqual(runtimeLabels.finley, 'Finley');
     });
 
-    test('Accepts Finley and blue from extension configuration', async () => {
+    test('Accepts both Finley appearances from extension configuration', async () => {
         const configuration = vscode.workspace.getConfiguration('vscode-pets');
         const originalType =
             configuration.inspect<PetType>('petType')?.globalValue;
@@ -559,15 +766,17 @@ suite('Finley Test Suite', () => {
                 PetType.finley,
                 vscode.ConfigurationTarget.Global,
             );
-            await configuration.update(
-                'petColor',
-                PetColor.blue,
-                vscode.ConfigurationTarget.Global,
-            );
-            const pet = PetSpecification.fromConfiguration();
-            assert.strictEqual(pet.type, PetType.finley);
-            assert.strictEqual(pet.color, PetColor.blue);
-            assert.strictEqual(pet.name, 'Finley');
+            for (const color of Finley.possibleColors) {
+                await configuration.update(
+                    'petColor',
+                    color,
+                    vscode.ConfigurationTarget.Global,
+                );
+                const pet = PetSpecification.fromConfiguration();
+                assert.strictEqual(pet.type, PetType.finley);
+                assert.strictEqual(pet.color, color);
+                assert.strictEqual(pet.name, 'Finley');
+            }
         } finally {
             await configuration.update(
                 'petType',

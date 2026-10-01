@@ -29,12 +29,18 @@ const DEFAULT_THEME = Theme.none;
 class PetQuickPickItem implements vscode.QuickPickItem {
     constructor(
         public readonly name_: string,
-        public readonly type: string,
-        public readonly color: string,
+        public readonly type: PetType,
+        public readonly color: PetColor,
     ) {
         this.name = name_;
         this.label = name_;
-        this.description = `${color} ${type}`;
+        this.description =
+            type === PetType.finley
+                ? `${vscode.l10n.t('finley')} (${localize.petColorLabel(
+                      type,
+                      color,
+                  )})`
+                : `${color} ${type}`;
     }
 
     name: string;
@@ -255,7 +261,11 @@ async function handleRemovePetMessage(
                     panel.deletePet(pet.name, pet.type, pet.color);
                     const collection = petList
                         .filter((item) => {
-                            return item.name !== pet.name;
+                            return (
+                                item.name !== pet.name ||
+                                item.type !== pet.type ||
+                                item.color !== pet.color
+                            );
                         })
                         .map<PetSpecification>((item) => {
                             return new PetSpecification(
@@ -594,6 +604,10 @@ export function activate(context: vscode.ExtensionContext) {
                             )
                             .map(async (qpi) => ({
                                 ...qpi,
+                                label: localize.petColorLabel(
+                                    selectedPetType.value,
+                                    qpi.value,
+                                ),
                                 iconPath: await getPetIconPath(
                                     selectedPetType.value,
                                     qpi.value,
@@ -604,7 +618,10 @@ export function activate(context: vscode.ExtensionContext) {
                     var selectedColor = await vscode.window.showQuickPick(
                         colorQuickPickItems,
                         {
-                            placeHolder: vscode.l10n.t('Select a color'),
+                            placeHolder:
+                                selectedPetType.value === PetType.finley
+                                    ? vscode.l10n.t('Select a style')
+                                    : vscode.l10n.t('Select a color'),
                         },
                     );
                     if (selectedColor === undefined) {

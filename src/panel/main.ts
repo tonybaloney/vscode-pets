@@ -77,6 +77,9 @@ function addPetToPanel(
 ): PetElement {
     var petSpriteElement: HTMLImageElement = document.createElement('img');
     petSpriteElement.className = 'pet';
+    if (petType === PetType.finley && petColor === PetColor.bluePixel) {
+        petSpriteElement.classList.add('pixel-art');
+    }
     (document.getElementById('petsContainer') as HTMLDivElement).appendChild(
         petSpriteElement,
     );
