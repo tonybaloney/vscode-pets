@@ -297,12 +297,13 @@ suite('Finley Test Suite', () => {
 
     function createFinley(size: PetSize = PetSize.small) {
         const image = document.createElement('img');
+        const speech = document.createElement('div');
         image.width = 30;
         const pet = pets.createPet(
             PetType.finley,
             image,
             document.createElement('div'),
-            document.createElement('div'),
+            speech,
             size,
             100,
             0,
@@ -311,7 +312,7 @@ suite('Finley Test Suite', () => {
             'Finley Custom',
         );
         assert.ok(pet instanceof Finley);
-        return { pet, image };
+        return { pet, image, speech };
     }
 
     test('Registers Finley with the original color and default name', () => {
@@ -378,12 +379,13 @@ suite('Finley Test Suite', () => {
     });
 
     test('Waves on hover and restores the interrupted movement', () => {
-        const { pet, image } = createFinley();
+        const { pet, image, speech } = createFinley();
         pet.recoverState({ currentStateEnum: States.walkRight });
         const interrupted = pet.currentState;
         pet.swipe();
         pet.nextFrame();
         assert.ok(image.src.endsWith('blue_swipe_8fps.gif'));
+        assert.strictEqual(speech.textContent, 'Hi! 👋');
         pet.swipe();
         for (let frame = 0; frame < 15; frame++) {
             pet.nextFrame();
@@ -392,9 +394,11 @@ suite('Finley Test Suite', () => {
         assert.strictEqual(pet.currentState, interrupted);
         pet.nextFrame();
         assert.ok(image.src.endsWith('blue_walk_8fps.gif'));
+        pet.showSpeechBubble('❤️');
+        assert.strictEqual(speech.textContent, '❤️');
     });
 
-    test('Catches and holds a ball, and handles cancelled chases', () => {
+    test('Dribbles after catching a ball, and handles cancelled chases', () => {
         const { pet, image } = createFinley();
         const canvas = document.createElement('canvas');
         canvas.height = 100;
@@ -491,6 +495,13 @@ suite('Finley Test Suite', () => {
         const license = readFileSync(path.join(mediaRoot, 'LICENSE'), 'utf8');
         assert.ok(license.includes('Copyright (c) Microsoft Corporation.'));
         assert.ok(license.includes('Permission is hereby granted'));
+    });
+
+    test('Uses distinct sprint and fast-walk animations', () => {
+        assert.notDeepStrictEqual(
+            readFileSync(path.join(mediaRoot, 'blue_run_8fps.gif')),
+            readFileSync(path.join(mediaRoot, 'blue_walk_fast_8fps.gif')),
+        );
     });
 
     test('Aligns settings entries and localized labels', () => {

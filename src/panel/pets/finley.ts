@@ -1,6 +1,6 @@
 import { PetColor } from '../../common/types';
 import { BasePetType } from '../basepettype';
-import { States } from '../states';
+import { resolveState, States } from '../states';
 
 export class Finley extends BasePetType {
     label = 'finley';
@@ -57,6 +57,17 @@ export class Finley extends BasePetType {
     }
     get hello(): string {
         return "Hi, I'm Finley. Let's build something!";
+    }
+
+    swipe() {
+        if (this.currentStateEnum === States.swipe) {
+            return;
+        }
+        this.holdState = this.currentState;
+        this.holdStateEnum = this.currentStateEnum;
+        this.currentStateEnum = States.swipe;
+        this.currentState = resolveState(this.currentStateEnum, this);
+        this.showSpeechBubble('Hi! 👋');
     }
 }
 

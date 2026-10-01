@@ -32,11 +32,37 @@
     </linearGradient>
   </defs>
   <g transform="translate(0 6)">
+  <g id="lounge" opacity="0">
+    <path d="M7 13L16 31H36L38 33H15L5 14Z" fill="#FFF1D6" stroke="#996D42" stroke-width="1.2" stroke-linejoin="round"/>
+    <path d="M8 15L15 29M12 15L19 29M19 31H35" stroke="#F27D72" stroke-width="2.5"/>
+    <path d="M13 28L33 39M34 31L15 39M11 39H17M31 39H36" stroke="#996D42" stroke-width="1.7" stroke-linecap="round"/>
+    <path d="M13 26H27" stroke="#D6AD78" stroke-width="2" stroke-linecap="round"/>
+    <path d="M21 29Q25 35 31 33L36 33M23 32Q27 38 33 36L38 36" stroke="#0067BF" stroke-width="2.2" stroke-linecap="round"/>
+  </g>
+  <g id="speed-trails" opacity="0" transform="translate(0 0)" stroke="#71E9EB" stroke-linecap="round">
+    <path d="M5 17H14M4 22H12M6 27H15" stroke-width="1.4"/>
+    <path d="M10 12H16M3 32H10" stroke-width=".8"/>
+  </g>
+  <g id="dust" opacity="0" transform="translate(0 0)" fill="#C6E7E6">
+    <circle cx="7" cy="36" r="2.5"/>
+    <circle cx="11" cy="37" r="2"/>
+    <circle cx="4" cy="38" r="1.2"/>
+  </g>
+  <g id="speed-feet" opacity="0" transform="translate(25 35)">
+    <ellipse rx="11" ry="4.2" fill="#26CFE8" fill-opacity=".2" stroke="#26CFE8" stroke-width="1.5"/>
+    <ellipse rx="8" ry="2.7" stroke="#0067BF" stroke-width="1.2" stroke-dasharray="5 3"/>
+    <g transform="scale(1 .42)">
+      <g id="spinning-shoes" transform="rotate(0)">
+        <path d="M-9 -5Q-13 0 -9 5M9 5Q13 0 9 -5" stroke="#0067BF" stroke-width="3.5" stroke-linecap="round"/>
+        <path d="M-8 -6L-5 -7M8 6L5 7" stroke="#98F4E2" stroke-width="2" stroke-linecap="round"/>
+      </g>
+    </g>
+  </g>
   <g id="character" transform="translate(0 0)">
-    <g id="left-foot" transform="rotate(0 19 34)">
+    <g id="left-foot" transform="rotate(0 19 34)" opacity="1">
       <path d="M19 34V36Q19 38 21 38H24" stroke="#0067BF" stroke-width="2"/>
     </g>
-    <g id="right-foot" transform="rotate(0 30 34)">
+    <g id="right-foot" transform="rotate(0 30 34)" opacity="1">
       <path d="M30 34V36Q30 38 32 38H35" stroke="#0067BF" stroke-width="2"/>
     </g>
     <g transform="translate(8 6) scale(.2857142857)">
@@ -52,10 +78,36 @@
     <g id="hand" transform="rotate(0 34 29)" opacity="1">
       <path d="M34 21V24Q34 28 38 28H43" stroke="#16BFDF" stroke-width="2"/>
     </g>
-    <g id="ball" opacity="0">
-      <circle cx="40" cy="31" r="4.5" fill="#00CC00"/>
-      <path d="M34 24Q34 30 38 31" stroke="#16BFDF" stroke-width="2" stroke-linecap="round"/>
+    <g id="wave" transform="rotate(0 34 23)" opacity="0" stroke="#16BFDF" stroke-width="1.6" stroke-linecap="round">
+      <path d="M33 23Q39 25 39 17V14" stroke-width="2.2"/>
+      <path d="M37 13L36.5 9M38.5 12V7.5M40 12L40.5 8M41 13L42 10M37 15L35 12"/>
+      <ellipse cx="39" cy="13.5" rx="2.1" ry="2.5" fill="#16BFDF" stroke="none"/>
     </g>
+    <g id="sprint-arm" opacity="0">
+      <path d="M33 22Q30 27 24 25L21 23" stroke="#16BFDF" stroke-width="2" stroke-linecap="round"/>
+    </g>
+    <g id="dribble-hand" transform="translate(0 0)" opacity="0" stroke="#16BFDF" stroke-width="2" stroke-linecap="round">
+      <path d="M32 20Q36 17 40 19M37.5 19H42"/>
+    </g>
+  </g>
+  <g id="basketball" transform="translate(40 24)" opacity="0">
+    <g id="ball-squash" transform="scale(1 1)">
+      <g id="ball-spin" transform="rotate(0)">
+        <circle r="4.6" fill="#F58A24" stroke="#74361F" stroke-width=".6"/>
+        <path d="M-4.5 0H4.5M0 -4.5V4.5M-3 -3.4Q1 0 -3 3.4M3 -3.4Q-1 0 3 3.4" stroke="#74361F" stroke-width=".55"/>
+      </g>
+    </g>
+  </g>
+  <g id="cocktail" transform="translate(0 0)" opacity="0">
+    <path d="M27 28Q30 31 34 28" stroke="#16BFDF" stroke-width="2" stroke-linecap="round"/>
+    <path d="M32 22H40L36 29Z" fill="#FFB64D" stroke="#F8EEE1" stroke-width=".8" stroke-linejoin="round"/>
+    <path d="M33.5 24H38.5L36 27.7Z" fill="#F27D72"/>
+    <path d="M36 29V33M33 33H39" stroke="#F8EEE1" stroke-width="1" stroke-linecap="round"/>
+    <path d="M37 24L33 21L26 27" stroke="#FFF1D6" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle cx="40" cy="22" r="2" fill="#AAD85A" stroke="#F0F5A7" stroke-width=".6"/>
+    <path d="M39 23L41 17" stroke="#D6AD78" stroke-width=".6"/>
+    <path d="M37 18Q41 12 45 18Z" fill="#F27D72"/>
+    <path d="M41 14L40 18M41 14L43 18" stroke="#FFF1D6" stroke-width=".5"/>
   </g>
   </g>
 </svg>

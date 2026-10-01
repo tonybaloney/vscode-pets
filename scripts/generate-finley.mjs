@@ -20,7 +20,7 @@ const animations = {
     idle: 24,
     walk: 8,
     walk_fast: 4,
-    run: 4,
+    run: 8,
     swipe: 12,
     with_ball: 16,
 };
@@ -48,7 +48,57 @@ function frame(state, index, count) {
     const phase = (index / count) * Math.PI * 2;
     let svg = source;
     let pose;
-    if (state === 'walk' || state === 'walk_fast' || state === 'run') {
+    if (state === 'idle') {
+        const sip = (1 - Math.cos(phase)) / 2;
+        svg = attribute(svg, 'lounge', 'opacity', '1');
+        svg = attribute(svg, 'cocktail', 'opacity', '1');
+        svg = attribute(
+            svg,
+            'cocktail',
+            'transform',
+            `translate(${number((1 - sip) * 0.7)} ${number((1 - sip) * 1.5)})`,
+        );
+        for (const part of ['left-foot', 'right-foot', 'hand']) {
+            svg = attribute(svg, part, 'opacity', '0');
+        }
+        pose = `translate(-1 ${number(
+            4 - sip * 0.3,
+        )}) rotate(-18 24 28) translate(24 28) scale(.75) translate(-24 -28)`;
+    } else if (state === 'run') {
+        for (const part of ['left-foot', 'right-foot', 'hand']) {
+            svg = attribute(svg, part, 'opacity', '0');
+        }
+        for (const part of ['speed-feet', 'speed-trails', 'sprint-arm']) {
+            svg = attribute(svg, part, 'opacity', '1');
+        }
+        svg = attribute(
+            svg,
+            'spinning-shoes',
+            'transform',
+            `rotate(${number((index / count) * 360)})`,
+        );
+        svg = attribute(
+            svg,
+            'speed-trails',
+            'transform',
+            `translate(${number(-1 - Math.sin(phase))} 0)`,
+        );
+        svg = attribute(
+            svg,
+            'dust',
+            'opacity',
+            number(0.5 + Math.cos(phase) * 0.2),
+        );
+        svg = attribute(
+            svg,
+            'dust',
+            'transform',
+            `translate(${number(-1 + Math.sin(phase))} 0)`,
+        );
+        pose = `translate(-2 ${number(
+            -2 + Math.sin(phase * 2) * 0.3,
+        )}) rotate(14 24 34)`;
+    } else if (state === 'walk' || state === 'walk_fast') {
         const running = state !== 'walk';
         const stride = Math.sin(phase);
         const bounce = (1 - Math.cos(phase * 2)) * (running ? 0.8 : 0.3);
@@ -80,16 +130,47 @@ function frame(state, index, count) {
         pose = `translate(24 36) scale(${number(scale)}) translate(-24 -36)`;
     }
     if (state === 'swipe') {
+        svg = attribute(svg, 'hand', 'opacity', '0');
+        svg = attribute(svg, 'wave', 'opacity', '1');
         svg = attribute(
             svg,
-            'hand',
+            'wave',
             'transform',
-            `rotate(${number(-100 + Math.cos(phase * 3) * 30)} 34 29)`,
+            `rotate(${number(Math.sin(phase * 2) * 12)} 34 23)`,
         );
     }
     if (state === 'with_ball') {
+        const drop = 1 - Math.abs(Math.cos(phase));
+        const squash = Math.max(0, (drop - 0.85) / 0.15);
+        const scaleY = 1 - squash * 0.16;
         svg = attribute(svg, 'hand', 'opacity', '0');
-        svg = attribute(svg, 'ball', 'opacity', '1');
+        svg = attribute(svg, 'dribble-hand', 'opacity', '1');
+        svg = attribute(
+            svg,
+            'dribble-hand',
+            'transform',
+            `translate(0 ${number(drop * 5)})`,
+        );
+        svg = attribute(svg, 'basketball', 'opacity', '1');
+        svg = attribute(
+            svg,
+            'basketball',
+            'transform',
+            `translate(40 ${number(24 + (39 - 4.6 * scaleY - 24) * drop)})`,
+        );
+        svg = attribute(
+            svg,
+            'ball-squash',
+            'transform',
+            `scale(${number(1 + squash * 0.12)} ${number(scaleY)})`,
+        );
+        svg = attribute(
+            svg,
+            'ball-spin',
+            'transform',
+            `rotate(${number(Math.sin(phase) * 30)})`,
+        );
+        pose = `translate(0 ${number(drop * 0.5)})`;
     }
     return attribute(svg, 'character', 'transform', pose);
 }
@@ -175,8 +256,10 @@ function generate() {
             }
             outputs.push(filename);
         }
+        const iconSource = join(temporary, 'icon.png');
+        writeFileSync(iconSource, new Resvg(source).render().asPng());
         magick([
-            join(temporary, 'idle-0.png'),
+            iconSource,
             '-trim',
             '+repage',
             '-resize',
