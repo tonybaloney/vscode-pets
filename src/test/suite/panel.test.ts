@@ -261,12 +261,30 @@ suite('Pets Test Suite', () => {
             document.getElementById('foreground')?.style.backgroundImage,
             '',
         );
-        const message = new MessageEvent('command', {
-            data: { message: 'roll-call' },
-        });
-        window.postMessage(message, '/');
+        // Test roll-call doesn't fall through to delete-pet
 
-        // assert.notEqual(mockState.getMessages().length, 0);
+        const messagesBeforeRollCall = mockState.getMessages().length;
+
+        // Simulate the roll-call command sent by the extension to the webview
+        window.dispatchEvent(
+            new window.MessageEvent('message', {
+                data: { command: 'roll-call' },
+            }),
+        );
+
+        const rollCallMessages = mockState // Capture messages after roll-call
+            .getMessages()
+            .slice(messagesBeforeRollCall);
+
+        // Check that an info message was sent in response to roll-call
+        assert.ok(
+            rollCallMessages.some((message) => message.command === 'info'),
+        );
+
+        // Regression test for #934: roll-call must not fall through to delete-pet
+        assert.ok(
+            !rollCallMessages.some((message) => message.command === 'error'),
+        );
     });
 });
 
