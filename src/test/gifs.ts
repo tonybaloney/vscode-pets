@@ -30,7 +30,7 @@ const pets: { [key: string]: { colors: string[]; states: string[] } } = {
         ],
     },
     chicken: {
-        colors: ['white', 'brown'],
+        colors: ['white', 'brown', 'gray'],
         states: ['idle', 'run', 'swipe', 'walk', 'walk_fast', 'with_ball'],
     },
     morph: {
