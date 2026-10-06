@@ -402,6 +402,8 @@ export function petPanelApp(
                         text: `${pet.pet.emoji} ${pet.pet.name} (${pet.color} ${pet.type}): ${pet.pet.hello}`,
                     });
                 });
+                break;
+
             case 'delete-pet':
                 var pet = allPets.locatePet(
                     message.name,
