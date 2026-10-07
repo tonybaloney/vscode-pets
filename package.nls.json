@@ -22,6 +22,8 @@
     "vscode-pets.petColor.black" : "Black",
     "vscode-pets.petColor.lightbrown" : "Light Brown",
     "vscode-pets.petColor.brown" : "Brown",
+    "vscode-pets.petColor.blue": "Blue",
+    "vscode-pets.petColor.blue_pixel": "Blue (Finley Pixel Art)",
     "vscode-pets.petColor.green" : "Green",
     "vscode-pets.petColor.yellow" : "Yellow",
     "vscode-pets.petColor.gray" : "Gray",
@@ -64,6 +66,7 @@
     "vscode-pets.petType.squirrel": "Squirrel",
     "vscode-pets.petType.skeleton": "Skeleton",
     "vscode-pets.petType.deno": "Deno",
+    "vscode-pets.petType.finley": "Finley",
     "vscode-pets.petType.morph": "Morph",
     "vscode-pets.petType.panda": "Panda",
 

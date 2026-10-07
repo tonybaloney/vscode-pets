@@ -14,6 +14,8 @@ To add additional pets, run the "Spawn pet" command (`vscode-pets.spawn-pet`) or
 
 Once you've done this, select the pet type, color, and then choose a name or use the randomly assigned one.
 
+For **Finley**, choose **Smooth** or **Pixel Art** instead of a color. Both appearances can live together and are preserved when saving or importing your pets. Existing Finley pets keep their smooth appearance. To configure a default pixel-art Finley, set `vscode-pets.petType` to `finley` and `vscode-pets.petColor` to `blue_pixel` (shown as **Blue (Finley Pixel Art)** in Settings).
+
 ![Pet select](source/_static/pet-select.png)
 
 If you have more than 1 pet, they become friends. When pets become friends, they will say a little "❤️" and then play chase with each other.
@@ -64,4 +66,4 @@ The pet list can be imported by running the "Import pet list" command (`vscode-p
 |       ![Crab](/media/crab/icon.png) <br />Crab       |           ![Deno](/media/deno/icon.png) <br />Deno            |        ![Dog](/media/dog/icon.png) <br />Dog        |     ![Fox](/media/fox/icon.png) <br />Fox      |        ![Frog](/media/frog/icon.png) <br />Frog         |
 |     ![Horse](/media/horse/icon.png) <br />Horse      |             ![Mod](/media/mod/icon.png) <br />Mod             |     ![Morph](/media/morph/icon.png) <br />Morph     |  ![Panda](/media/panda/icon.png) <br />Panda   |          ![Rat](/media/rat/icon.png) <br />Rat          |
 |     ![Rocky](/media/rocky/icon.png) <br />Rocky      | ![Rubber Duck](/media/rubber-duck/icon.png) <br />Rubber Duck | ![Skeleton](/media/skeleton/icon.png) <br/>Skeleton |  ![Snail](/media/snail/icon.png) <br />Snail   |       ![Snake](/media/Snake/icon.png) <br />Snake       |
-| ![Squirrel](/media/squirrel/icon.png) <br />Squirrel |        ![Totoro](/media/totoro/icon.png) <br />Totoro         |   ![Turtle](/media/turtle/icon.png) <br />Turtle    |  ![Zappy](/media/zappy/icon.png) <br />Zappy   |                                                         |
+| ![Squirrel](/media/squirrel/icon.png) <br />Squirrel |        ![Totoro](/media/totoro/icon.png) <br />Totoro         |   ![Turtle](/media/turtle/icon.png) <br />Turtle    |  ![Zappy](/media/zappy/icon.png) <br />Zappy   | ![Smooth Finley](/media/finley/icon.png) ![Pixel Art Finley](/media/finley/icon_blue_pixel.png) <br />Finley |

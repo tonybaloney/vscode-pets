@@ -1,0 +1,113 @@
+<!--
+  Finley artwork adapted from @microsoft/rayfin-cli@1.36.1:
+  templates/universal-app/packages/frontend/src/FabricAppMark.tsx
+  templates/universal-app/.template-features/finley/packages/frontend/src/Finley.css
+  Copyright (c) Microsoft Corporation. Licensed under MIT; see LICENSE.
+  Regenerate the GIFs and icon with npm run generate:finley (ImageMagick 7 required).
+-->
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 48 48" fill="none">
+  <defs>
+    <linearGradient id="blue" x1="3.66355" y1="50.7663" x2="37.1001" y2="111.795" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0067BF"/>
+      <stop offset=".514919" stop-color="#004695"/>
+      <stop offset="1" stop-color="#163697"/>
+    </linearGradient>
+    <linearGradient id="cyan" x1="10.3225" y1="29.8317" x2="61.3504" y2="89.3646" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#26CFE8"/>
+      <stop offset=".438656" stop-color="#0094F0"/>
+      <stop offset="1" stop-color="#0067BF"/>
+    </linearGradient>
+    <linearGradient id="shade" x1="19.0748" y1="53.9349" x2="56.9915" y2="53.9349" gradientUnits="userSpaceOnUse">
+      <stop offset=".269" stop-color="#000000" stop-opacity="0"/>
+      <stop offset=".928" stop-color="#000000" stop-opacity=".154"/>
+      <stop offset="1" stop-color="#000000" stop-opacity=".2"/>
+    </linearGradient>
+    <linearGradient id="teal" x1="80.0578" y1="76.4111" x2="23.5945" y2="4.23913" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#16BFDF"/>
+      <stop offset="1" stop-color="#3EE5C9"/>
+    </linearGradient>
+    <linearGradient id="green" x1="80.0578" y1="54.4832" x2="36.3496" y2="9.2845" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#3EE5C9" stop-opacity="0"/>
+      <stop offset="1" stop-color="#9BF3AF"/>
+    </linearGradient>
+  </defs>
+  <g transform="translate(0 6)">
+  <g id="lounge" opacity="0">
+    <path d="M7 13L16 31H36L38 33H15L5 14Z" fill="#FFF1D6" stroke="#996D42" stroke-width="1.2" stroke-linejoin="round"/>
+    <path d="M8 15L15 29M12 15L19 29M19 31H35" stroke="#F27D72" stroke-width="2.5"/>
+    <path d="M13 28L33 39M34 31L15 39M11 39H17M31 39H36" stroke="#996D42" stroke-width="1.7" stroke-linecap="round"/>
+    <path d="M13 26H27" stroke="#D6AD78" stroke-width="2" stroke-linecap="round"/>
+    <path d="M21 29Q25 35 31 33L36 33M23 32Q27 38 33 36L38 36" stroke="#0067BF" stroke-width="2.2" stroke-linecap="round"/>
+  </g>
+  <g id="speed-trails" opacity="0" transform="translate(0 0)" stroke="#71E9EB" stroke-linecap="round">
+    <path d="M5 17H14M4 22H12M6 27H15" stroke-width="1.4"/>
+    <path d="M10 12H16M3 32H10" stroke-width=".8"/>
+  </g>
+  <g id="dust" opacity="0" transform="translate(0 0)" fill="#C6E7E6">
+    <circle cx="7" cy="36" r="2.5"/>
+    <circle cx="11" cy="37" r="2"/>
+    <circle cx="4" cy="38" r="1.2"/>
+  </g>
+  <g id="speed-feet" opacity="0" transform="translate(25 35)">
+    <ellipse rx="11" ry="4.2" fill="#26CFE8" fill-opacity=".2" stroke="#26CFE8" stroke-width="1.5"/>
+    <ellipse rx="8" ry="2.7" stroke="#0067BF" stroke-width="1.2" stroke-dasharray="5 3"/>
+    <g transform="scale(1 .42)">
+      <g id="spinning-shoes" transform="rotate(0)">
+        <path d="M-9 -5Q-13 0 -9 5M9 5Q13 0 9 -5" stroke="#0067BF" stroke-width="3.5" stroke-linecap="round"/>
+        <path d="M-8 -6L-5 -7M8 6L5 7" stroke="#98F4E2" stroke-width="2" stroke-linecap="round"/>
+      </g>
+    </g>
+  </g>
+  <g id="character" transform="translate(0 0)">
+    <g id="left-foot" transform="rotate(0 19 34)" opacity="1">
+      <path d="M19 34V36Q19 38 21 38H24" stroke="#0067BF" stroke-width="2"/>
+    </g>
+    <g id="right-foot" transform="rotate(0 30 34)" opacity="1">
+      <path d="M30 34V36Q30 38 32 38H35" stroke="#0067BF" stroke-width="2"/>
+    </g>
+    <g transform="translate(8 6) scale(.2857142857)">
+      <path d="M36.134 105.002L1.337 55.2999C0.494667 54.0935 0 52.6259 0 51.0439C0 46.9395 3.32733 43.6099 7.434 43.6099H51.5363L49.56 100.602C49.56 104.706 46.2327 108.036 42.126 108.036C39.6667 108.036 37.4873 106.841 36.134 105.002Z" fill="url(#blue)"/>
+      <path d="M43.4348 80.8662C44.7765 82.8099 47.0188 84.0815 49.5575 84.0815C53.6618 84.0815 56.9915 80.7542 56.9915 76.6475V23.7882H17.7565C13.6522 23.7882 10.3225 27.1155 10.3225 31.2222C10.3225 32.8042 10.8172 34.2719 11.6595 35.4782L43.4348 80.8662Z" fill="url(#cyan)"/>
+      <path d="M49.5575 84.0816C47.0188 84.0816 44.7765 82.8076 43.4348 80.8662C43.4348 80.8662 28.4642 59.4812 19.0725 46.0669V23.7859H56.9892V76.6476C56.9892 80.7542 53.6642 84.0816 49.5575 84.0816Z" fill="url(#shade)"/>
+      <path d="M110.621 15.7102C111.489 14.4946 112 13.0059 112 11.3982C112 7.2939 108.673 3.96423 104.566 3.96423H56.9917C52.8873 3.96423 49.5577 7.29157 49.5577 11.3982V100.602C49.5577 102.249 49.021 103.77 48.1157 105.002L110.621 15.7102Z" fill="url(#teal)"/>
+      <path d="M110.621 15.7102C111.489 14.4946 112 13.0059 112 11.3982C112 7.2939 108.673 3.96423 104.566 3.96423H56.9917C52.8873 3.96423 49.5577 7.29157 49.5577 11.3982V100.602C49.5577 102.249 49.021 103.77 48.1157 105.002L110.621 15.7102Z" fill="url(#green)"/>
+    </g>
+    <ellipse cx="26" cy="17.5" rx="1" ry="1.5" fill="#16465A"/>
+    <ellipse cx="31" cy="17.5" rx="1" ry="1.5" fill="#16465A"/>
+    <path d="M27 22Q29.5 25 32 22" stroke="#16465A" stroke-width="1" stroke-linecap="round"/>
+    <g id="hand" transform="rotate(0 34 29)" opacity="1">
+      <path d="M34 21V24Q34 28 38 28H43" stroke="#16BFDF" stroke-width="2"/>
+    </g>
+    <g id="wave" transform="rotate(0 34 23)" opacity="0" stroke="#16BFDF" stroke-width="1.6" stroke-linecap="round">
+      <path d="M33 23Q39 25 39 17V14" stroke-width="2.2"/>
+      <path d="M37 13L36.5 9M38.5 12V7.5M40 12L40.5 8M41 13L42 10M37 15L35 12"/>
+      <ellipse cx="39" cy="13.5" rx="2.1" ry="2.5" fill="#16BFDF" stroke="none"/>
+    </g>
+    <g id="sprint-arm" opacity="0">
+      <path d="M33 22Q30 27 24 25L21 23" stroke="#16BFDF" stroke-width="2" stroke-linecap="round"/>
+    </g>
+    <g id="dribble-hand" transform="translate(0 0)" opacity="0" stroke="#16BFDF" stroke-width="2" stroke-linecap="round">
+      <path d="M32 20Q36 17 40 19M37.5 19H42"/>
+    </g>
+  </g>
+  <g id="basketball" transform="translate(40 24)" opacity="0">
+    <g id="ball-squash" transform="scale(1 1)">
+      <g id="ball-spin" transform="rotate(0)">
+        <circle r="4.6" fill="#F58A24" stroke="#74361F" stroke-width=".6"/>
+        <path d="M-4.5 0H4.5M0 -4.5V4.5M-3 -3.4Q1 0 -3 3.4M3 -3.4Q-1 0 3 3.4" stroke="#74361F" stroke-width=".55"/>
+      </g>
+    </g>
+  </g>
+  <g id="cocktail" transform="translate(0 0)" opacity="0">
+    <path d="M27 28Q30 31 34 28" stroke="#16BFDF" stroke-width="2" stroke-linecap="round"/>
+    <path d="M32 22H40L36 29Z" fill="#FFB64D" stroke="#F8EEE1" stroke-width=".8" stroke-linejoin="round"/>
+    <path d="M33.5 24H38.5L36 27.7Z" fill="#F27D72"/>
+    <path d="M36 29V33M33 33H39" stroke="#F8EEE1" stroke-width="1" stroke-linecap="round"/>
+    <path d="M37 24L33 21L26 27" stroke="#FFF1D6" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle cx="40" cy="22" r="2" fill="#AAD85A" stroke="#F0F5A7" stroke-width=".6"/>
+    <path d="M39 23L41 17" stroke="#D6AD78" stroke-width=".6"/>
+    <path d="M37 18Q41 12 45 18Z" fill="#F27D72"/>
+    <path d="M41 14L40 18M41 14L43 18" stroke="#FFF1D6" stroke-width=".5"/>
+  </g>
+  </g>
+</svg>
