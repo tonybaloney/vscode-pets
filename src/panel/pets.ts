@@ -10,6 +10,7 @@ import { Dog } from './pets/dog';
 import { Fox } from './pets/fox';
 import { Frog } from './pets/frog';
 import { Horse } from './pets/horse';
+import { Lizard } from './pets/lizard';
 import { Monkey } from './pets/monkey';
 import { Mod } from './pets/mod';
 import { Morph } from './pets/morph';
@@ -220,6 +221,8 @@ export function createPet(
             return new Crab(...standardPetArguments, PetSpeed.slow);
         case PetType.clippy:
             return new Clippy(...standardPetArguments, PetSpeed.slow);
+        case PetType.lizard:
+            return new Lizard(...standardPetArguments, PetSpeed.normal);
         case PetType.mod:
             return new Mod(...standardPetArguments, PetSpeed.normal);
         case PetType.totoro:
@@ -267,6 +270,8 @@ export function availableColors(petType: PetType): PetColor[] {
             return Cat.possibleColors;
         case PetType.chicken:
             return Chicken.possibleColors;
+        case PetType.lizard:
+            return Lizard.possibleColors;
         case PetType.morph:
             return Morph.possibleColors;
         case PetType.dog:
