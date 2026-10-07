@@ -23,3 +23,5 @@ The horse animations were adapted by [Chris Kent](https://github.com/thechrisken
 The frog animations were created by [seethingswarm](https://seethingswarm.itch.io/frogpack).
 
 [Jessie Ferris](https://github.com/jeferris) created the panda media assets.
+
+The bee media assets are a placeholder generated programmatically pending real artwork; see the related issue for a call for contributions.
