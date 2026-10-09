@@ -163,6 +163,25 @@ class AutumnThemeInfo extends ThemeInfo {
     }
 }
 
+class SpringThemeInfo extends ThemeInfo {
+    name = 'spring';
+    description = 'A spring meadow theme';
+
+    floor(size: PetSize): number {
+        switch (size) {
+            case PetSize.small:
+                return 9;
+            case PetSize.medium:
+                return 15;
+            case PetSize.large:
+                return 20;
+            case PetSize.nano:
+            default:
+                return 7;
+        }
+    }
+}
+
 // Map of theme name to theme info
 export const THEMES: Record<Theme, ThemeInfo> = {
     none: {
@@ -187,4 +206,5 @@ export const THEMES: Record<Theme, ThemeInfo> = {
     beach: new BeachThemeInfo(),
     winter: new WinterThemeInfo(),
     autumn: new AutumnThemeInfo(),
+    spring: new SpringThemeInfo(),
 };
