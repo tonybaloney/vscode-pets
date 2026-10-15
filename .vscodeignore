@@ -13,5 +13,4 @@ coverage/
 docs/
 node_modules
 scripts/generate-finley.mjs
-scripts/generate-finley-pixel.mjs
 media/finley/pixel-art.json

@@ -18,7 +18,9 @@
     "S": "#85472FFF",
     "H": "#B78759FF",
     "P": "#ACCAC6FF",
-    "Y": "#F2D769FF"
+    "Y": "#F2D769FF",
+    "G": "#2ED851FF",
+    "g": "#25AD41FF"
   },
   "sprites": {
     "standing-folds": [
@@ -531,55 +533,55 @@
       ".........."
     ],
     "basketball-round": [
-      "...SOO...",
-      ".SOOSOOO.",
-      ".OSOOSOS.",
-      "OOSOSSSOO",
-      "OSSSOOSOO",
-      "SOSOOOSOO",
-      ".OSOOSOO.",
-      ".SOOSOOO.",
-      "...SRR..."
+      "...SGG...",
+      ".SGGSGGG.",
+      ".GSGGSGS.",
+      "GGSGSSSGG",
+      "GSSSGGSGG",
+      "SGSGGGSGG",
+      ".GSGGSGG.",
+      ".SGGSGGG.",
+      "...Sgg..."
     ],
     "basketball-turn": [
-      "...OSO...",
-      ".SOOOSOO.",
-      ".OSOOOSS.",
-      "OOSOSSSOO",
-      "OSSSOOOSO",
-      "SOSOOOOSO",
-      ".OSOOOSO.",
-      ".SOOOSOO.",
-      "...RSR..."
+      "...GSG...",
+      ".SGGGSGG.",
+      ".GSGGGSS.",
+      "GGSGSSSGG",
+      "GSSSGGGSG",
+      "SGSGGGGSG",
+      ".GSGGGSG.",
+      ".SGGGSGG.",
+      "...gSg..."
     ],
     "basketball-stretch": [
-      "...OSO...",
-      "..OOOSO..",
-      ".SOOOOSO.",
-      ".OSOOOSS.",
-      "OOSOSSOSO",
-      "OOSSOOOSO",
-      ".SSOOOSO.",
-      ".SOOOOSO.",
-      "..OOOSO..",
-      "...RSR..."
+      "...GSG...",
+      "..GGGSG..",
+      ".SGGGGSG.",
+      ".GSGGGSS.",
+      "GGSGSSGSG",
+      "GGSSGGGSG",
+      ".SSGGGSG.",
+      ".SGGGGSG.",
+      "..GGGSG..",
+      "...gSg..."
     ],
     "basketball-squash": [
-      "....OSO....",
-      ".SSOOOSOSS.",
-      "OOOSSSSSOOO",
-      "OSSSOOOSOOO",
-      "SOSOOOSOOOO",
-      "..SRRSRRR.."
+      "....GSG....",
+      ".SSGGGSGSS.",
+      "GGGSSSSSGGG",
+      "GSSSGGGSGGG",
+      "SGSGGGSGGGG",
+      "..SggSggg.."
     ],
     "basketball-rebound": [
-      "...OOSOO...",
-      ".SOOOOSOSS.",
-      "OOSOSSSSOOO",
-      "OSSSOOOSOOO",
-      "SOSOOOOSOOO",
-      ".SOOOOSOOO.",
-      "...RRSRR..."
+      "...GGSGG...",
+      ".SGGGGSGSS.",
+      "GGSGSSSSGGG",
+      "GSSSGGGSGGG",
+      "SGSGGGGSGGG",
+      ".SGGGGSGGG.",
+      "...ggSgg..."
     ],
     "sprint-folds": [
       "................................",

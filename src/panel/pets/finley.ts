@@ -4,7 +4,7 @@ import { resolveState, States } from '../states';
 
 export class Finley extends BasePetType {
     label = 'finley';
-    static possibleColors = [PetColor.blue, PetColor.bluePixel];
+    static possibleColors = [PetColor.blue];
     sequence = {
         startingState: States.sitIdle,
         sequenceStates: [

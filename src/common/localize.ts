@@ -1,17 +1,4 @@
 import * as vscode from 'vscode';
-import { PetColor, PetType } from './types';
-
-export function petColorLabel(type: PetType, color: PetColor): string {
-    if (type === PetType.finley) {
-        if (color === PetColor.blue) {
-            return vscode.l10n.t('Smooth');
-        }
-        if (color === PetColor.bluePixel) {
-            return vscode.l10n.t('Pixel Art');
-        }
-    }
-    return vscode.l10n.t(String(color));
-}
 
 export class TranslatedQuickPickItem<T> implements vscode.QuickPickItem {
     label: string;

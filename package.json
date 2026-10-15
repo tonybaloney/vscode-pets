@@ -171,7 +171,6 @@
                         "enum": [
                             "black",
                             "blue",
-                            "blue_pixel",
                             "lightbrown",
                             "brown",
                             "green",
@@ -199,7 +198,6 @@
                         "enumItemLabels": [
                             "%vscode-pets.petColor.black%",
                             "%vscode-pets.petColor.blue%",
-                            "%vscode-pets.petColor.blue_pixel%",
                             "%vscode-pets.petColor.lightbrown%",
                             "%vscode-pets.petColor.brown%",
                             "%vscode-pets.petColor.green%",
@@ -351,7 +349,6 @@
     },
     "scripts": {
         "generate:finley": "node scripts/generate-finley.mjs",
-        "generate:finley-pixel": "node scripts/generate-finley-pixel.mjs",
         "vscode:prepublish": "npm run compile",
         "compile:panel": "webpack",
         "compile:extension": "tsc -p ./tsconfig.extension.json",
@@ -369,7 +366,6 @@
         "test:gifs": "node ./out/test/gifs.js"
     },
     "devDependencies": {
-        "@resvg/resvg-js": "2.6.2",
         "@rbarilani/remove-source-map-url-webpack-plugin": "^1.1.0",
         "@types/chai": "^5.0.1",
         "@types/glob": "^7.1.3",
