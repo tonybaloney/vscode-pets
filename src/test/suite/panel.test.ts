@@ -792,6 +792,88 @@ suite('Finley Test Suite', () => {
     });
 });
 
+suite('Pet State Recovery Test Suite', () => {
+    function createTestPet(petType: PetType) {
+        const petImageEl = global.document.createElement(
+            'img',
+        ) as HTMLImageElement;
+        const petDivEl = global.document.createElement('div') as HTMLDivElement;
+        const petSpeechEl = global.document.createElement(
+            'div',
+        ) as HTMLDivElement;
+        return pets.createPet(
+            String(petType),
+            petImageEl,
+            petDivEl,
+            petSpeechEl,
+            PetSize.medium,
+            0,
+            0,
+            'testPet',
+            0,
+            'Tester',
+        );
+    }
+
+    /// Every state a pet can be saved in: the states of its own sequence, plus
+    /// the ones entered from outside it by hovering, balls and friends.
+    function persistableStates(petType: PetType): States[] {
+        const sequence = (createTestPet(petType) as any).sequence;
+        const states = new Set<States>([sequence.startingState]);
+        sequence.sequenceStates.forEach((node: any) => {
+            states.add(node.state);
+            node.possibleNextStates.forEach((next: States) => states.add(next));
+        });
+        states.add(States.swipe);
+        states.add(States.chase);
+        states.add(States.chaseFriend);
+        return [...states];
+    }
+
+    ALL_PETS.forEach((petType) => {
+        test(
+            'Test ' + String(petType) + ' recovers from every saved state',
+            () => {
+                persistableStates(petType).forEach((state) => {
+                    const pet = createTestPet(petType);
+                    pet.recoverState({ currentStateEnum: state });
+                    /// Long enough for the state to run out and pick a
+                    /// successor, which is where an unrecoverable state throws.
+                    for (let i = 0; i < 200; i++) {
+                        pet.nextFrame();
+                    }
+                });
+            },
+        );
+    });
+
+    test('Test a swiping pet saves the state it was interrupted in', () => {
+        const pet = createTestPet(PetType.cat);
+        pet.recoverState({ currentStateEnum: States.walkRight });
+        pet.swipe();
+
+        assert.strictEqual(pet.getState().currentStateEnum, States.walkRight);
+    });
+
+    test('Test a pet interrupted mid-swipe survives a reload', () => {
+        const pet = createTestPet(PetType.cat);
+        pet.recoverState({ currentStateEnum: States.walkRight });
+        pet.swipe();
+
+        /// The panel is torn down and rebuilt while the pet is mid-swipe.
+        const restored = createTestPet(PetType.cat);
+        restored.recoverState(pet.getState());
+        for (let i = 0; i < 200; i++) {
+            restored.nextFrame();
+        }
+
+        assert.notStrictEqual(
+            restored.getState().currentStateEnum,
+            States.swipe,
+        );
+    });
+});
+
 suite('Change Theme Test Suite', () => {
     const COMMAND = 'vscode-pets.change-theme';
     const originalShowQuickPick = vscode.window.showQuickPick;
