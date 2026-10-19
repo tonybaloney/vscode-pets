@@ -2,6 +2,9 @@
     "name": "vscode-pets",
     "displayName": "vscode-pets",
     "description": "Pets for your VS Code",
+    "extensionKind": [
+        "ui"
+    ],
     "version": "1.36.0",
     "engines": {
         "vscode": "^1.73.0"
