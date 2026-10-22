@@ -6,31 +6,32 @@ import * as path from 'path';
 // as well as import your extension to test it
 import * as vscode from 'vscode';
 import {
-    PetSize,
-    PetType,
-    PetColor,
-    Theme,
-    ColorThemeKind,
-    WebviewMessage,
-    ALL_PETS,
-    ALL_THEMES,
-    ALL_COLORS,
-    ALL_SCALES,
-    PetSpeed,
+  PetSize,
+  PetType,
+  PetColor,
+  Theme,
+  ColorThemeKind,
+  WebviewMessage,
+  ALL_PETS,
+  ALL_THEMES,
+  ALL_COLORS,
+  ALL_SCALES,
+  PetSpeed,
 } from '../../common/types';
 import {
-    BallState,
-    PetElementState,
-    PetPanelState,
-    States,
+  BallState,
+  PetElementState,
+  PetPanelState,
+  States,
 } from '../../panel/states';
 import * as pets from '../../panel/pets';
 import { randomName } from '../../common/names';
 import { PetSpecification } from '../../extension/extension';
 import { Finley } from '../../panel/pets/finley';
+import { getThemeConfigurationTarget } from '../../extension/extension';
 
 function mockPanelWindow() {
-    const html = `<!DOCTYPE html>
+  const html = `<!DOCTYPE html>
 			<html lang="en">
 			<head>
 				<meta charset="UTF-8">
@@ -53,47 +54,47 @@ function mockPanelWindow() {
 			</body>
 			</html>`;
 
-    var jsdom = require('jsdom');
-    var document = new jsdom.JSDOM(html);
-    var window = document.window;
+  var jsdom = require('jsdom');
+  var document = new jsdom.JSDOM(html);
+  var window = document.window;
 
-    global.document = window.document;
-    global.window = window;
-    window.console = global.console;
+  global.document = window.document;
+  global.window = window;
+  window.console = global.console;
 }
 
 class MockState implements VscodeStateApi {
-    counter: number = 1;
-    states: Array<PetElementState> | undefined = undefined;
-    sentMessages: Array<WebviewMessage> = [];
+  counter: number = 1;
+  states: Array<PetElementState> | undefined = undefined;
+  sentMessages: Array<WebviewMessage> = [];
 
-    getState(): PetPanelState | undefined {
-        if (!this.states) {
-            return undefined;
-        }
-        return {
-            petCounter: this.counter,
-            petStates: this.states,
-        };
+  getState(): PetPanelState | undefined {
+    if (!this.states) {
+      return undefined;
     }
+    return {
+      petCounter: this.counter,
+      petStates: this.states,
+    };
+  }
 
-    setState(state: PetPanelState): void {
-        this.counter = state.petCounter ?? this.counter;
-        this.states = state.petStates ?? this.states;
-    }
+  setState(state: PetPanelState): void {
+    this.counter = state.petCounter ?? this.counter;
+    this.states = state.petStates ?? this.states;
+  }
 
-    postMessage(message: WebviewMessage): void {
-        this.sentMessages.push(message);
-    }
+  postMessage(message: WebviewMessage): void {
+    this.sentMessages.push(message);
+  }
 
-    getMessages(): Array<WebviewMessage> {
-        return this.sentMessages;
-    }
+  getMessages(): Array<WebviewMessage> {
+    return this.sentMessages;
+  }
 
-    reset() {
-        this.counter = 1;
-        this.states = undefined;
-    }
+  reset() {
+    this.counter = 1;
+    this.states = undefined;
+  }
 }
 
 mockPanelWindow();
@@ -102,746 +103,789 @@ import * as panel from '../../panel/main';
 import { Cat } from '../../panel/pets/cat';
 
 suite('Pets Test Suite', () => {
-    void vscode.window.showInformationMessage('Start all tests.');
+  void vscode.window.showInformationMessage('Start all tests.');
 
-    test('Test pet collection', () => {
-        var collection = new pets.PetCollection();
-        const petImageEl = global.document.createElement(
-            'image',
-        ) as HTMLImageElement;
-        const petDivEl = global.document.createElement('div') as HTMLDivElement;
-        const petSpeechEl = global.document.createElement(
-            'div',
-        ) as HTMLDivElement;
-        const testPet = pets.createPet(
-            'cat',
-            petImageEl,
-            petDivEl,
-            petSpeechEl,
-            PetSize.medium,
-            0,
-            0,
-            'testPet',
-            0,
-            'Jerry',
-        );
-        assert.ok(testPet instanceof Cat);
-        assert.equal(testPet.emoji, '🐱');
-        assert.equal(testPet.name, 'Jerry');
+  test('Test pet collection', () => {
+    var collection = new pets.PetCollection();
+    const petImageEl = global.document.createElement(
+      'image',
+    ) as HTMLImageElement;
+    const petDivEl = global.document.createElement('div') as HTMLDivElement;
+    const petSpeechEl = global.document.createElement(
+      'div',
+    ) as HTMLDivElement;
+    const testPet = pets.createPet(
+      'cat',
+      petImageEl,
+      petDivEl,
+      petSpeechEl,
+      PetSize.medium,
+      0,
+      0,
+      'testPet',
+      0,
+      'Jerry',
+    );
+    assert.ok(testPet instanceof Cat);
+    assert.equal(testPet.emoji, '🐱');
+    assert.equal(testPet.name, 'Jerry');
 
-        const testPetElement = new pets.PetElement(
-            petImageEl,
-            petDivEl,
-            petSpeechEl,
-            testPet,
-            PetColor.brown,
-            PetType.cat,
-        );
-        assert.strictEqual(testPetElement.color, PetColor.brown);
-        assert.strictEqual(testPetElement.type, PetType.cat);
+    const testPetElement = new pets.PetElement(
+      petImageEl,
+      petDivEl,
+      petSpeechEl,
+      testPet,
+      PetColor.brown,
+      PetType.cat,
+    );
+    assert.strictEqual(testPetElement.color, PetColor.brown);
+    assert.strictEqual(testPetElement.type, PetType.cat);
 
-        assert.strictEqual(collection.locate('Jerry'), undefined);
+    assert.strictEqual(collection.locate('Jerry'), undefined);
 
-        collection.push(testPetElement);
-        assert.strictEqual(collection.locate('Jerry'), testPetElement);
+    collection.push(testPetElement);
+    assert.strictEqual(collection.locate('Jerry'), testPetElement);
 
-        collection.remove(testPetElement);
-        assert.strictEqual(collection.locate('Jerry'), undefined);
-    });
+    collection.remove(testPetElement);
+    assert.strictEqual(collection.locate('Jerry'), undefined);
+  });
 
-    ALL_THEMES.forEach((theme) => {
-        ALL_PETS.forEach((petType) => {
-            test(
-                'Test panel app initialization with theme and ' +
-                    String(petType) +
-                    ' and ' +
-                    String(theme),
-                () => {
-                    const mockState = new MockState();
-                    const color = pets.normalizeColor(PetColor.black, petType);
-                    panel.allPets.reset();
-                    mockState.reset();
-                    panel.petPanelApp(
-                        'https://test.com',
-                        theme,
-                        ColorThemeKind.dark,
-                        color,
-                        PetSize.large,
-                        petType,
-                        false,
-                        false,
-                        mockState,
-                    );
+  ALL_THEMES.forEach((theme) => {
+    ALL_PETS.forEach((petType) => {
+      test(
+        'Test panel app initialization with theme and ' +
+        String(petType) +
+        ' and ' +
+        String(theme),
+        () => {
+          const mockState = new MockState();
+          const color = pets.normalizeColor(PetColor.black, petType);
+          panel.allPets.reset();
+          mockState.reset();
+          panel.petPanelApp(
+            'https://test.com',
+            theme,
+            ColorThemeKind.dark,
+            color,
+            PetSize.large,
+            petType,
+            false,
+            false,
+            mockState,
+          );
 
-                    if (theme !== Theme.none) {
-                        assert.notStrictEqual(
-                            document.getElementById('background')?.style
-                                .backgroundImage,
-                            '',
-                        );
-                        assert.notStrictEqual(
-                            document.getElementById('foreground')?.style
-                                .backgroundImage,
-                            '',
-                        );
-                    } else {
-                        assert.strictEqual(
-                            document.getElementById('background')?.style
-                                .backgroundImage,
-                            '',
-                        );
-                        assert.strictEqual(
-                            document.getElementById('foreground')?.style
-                                .backgroundImage,
-                            '',
-                        );
-                    }
-
-                    assert.equal(mockState.getState()?.petStates?.length, 1);
-
-                    const firstPet: PetElementState = (mockState.getState()
-                        ?.petStates ?? [])[0];
-                    assert.equal(firstPet.petType, petType);
-                    assert.equal(firstPet.petColor, color);
-
-                    const createdPets = panel.allPets.pets;
-                    assert.notEqual(createdPets.at(0), undefined);
-
-                    assert.equal(createdPets.at(0)?.color, color);
-
-                    /// Cycle 1000 frames
-                    for (var i = 0; i < 1000; i++) {
-                        createdPets.at(0)?.pet.nextFrame();
-                        assert.notEqual(
-                            createdPets.at(0)?.pet.getState(),
-                            undefined,
-                        );
-                    }
-                },
+          if (theme !== Theme.none) {
+            assert.notStrictEqual(
+              document.getElementById('background')?.style
+                .backgroundImage,
+              '',
             );
-        });
-    });
+            assert.notStrictEqual(
+              document.getElementById('foreground')?.style
+                .backgroundImage,
+              '',
+            );
+          } else {
+            assert.strictEqual(
+              document.getElementById('background')?.style
+                .backgroundImage,
+              '',
+            );
+            assert.strictEqual(
+              document.getElementById('foreground')?.style
+                .backgroundImage,
+              '',
+            );
+          }
 
-    test('Test panel app initialization with no theme', () => {
-        const mockState = new MockState();
+          assert.equal(mockState.getState()?.petStates?.length, 1);
+
+          const firstPet: PetElementState = (mockState.getState()
+            ?.petStates ?? [])[0];
+          assert.equal(firstPet.petType, petType);
+          assert.equal(firstPet.petColor, color);
+
+          const createdPets = panel.allPets.pets;
+          assert.notEqual(createdPets.at(0), undefined);
+
+          assert.equal(createdPets.at(0)?.color, color);
+
+          /// Cycle 1000 frames
+          for (var i = 0; i < 1000; i++) {
+            createdPets.at(0)?.pet.nextFrame();
+            assert.notEqual(
+              createdPets.at(0)?.pet.getState(),
+              undefined,
+            );
+          }
+        },
+      );
+    });
+  });
+
+  test('Test panel app initialization with no theme', () => {
+    const mockState = new MockState();
+    panel.allPets.reset();
+    mockState.reset();
+    panel.petPanelApp(
+      'https://test.com',
+      Theme.none,
+      ColorThemeKind.dark,
+      PetColor.black,
+      PetSize.large,
+      PetType.cat,
+      false,
+      false,
+      mockState,
+    );
+
+    assert.strictEqual(
+      document.getElementById('background')?.style.backgroundImage,
+      '',
+    );
+    assert.strictEqual(
+      document.getElementById('foreground')?.style.backgroundImage,
+      '',
+    );
+  });
+
+  test('Uses archived filenames for new and restored cats of every color', () => {
+    assert.deepStrictEqual(Cat.possibleColors.slice(0, 6), [
+      'black',
+      'brown',
+      'gray',
+      'lightbrown',
+      'orange',
+      'white',
+    ]);
+    const baseUri = 'https://test.com/media';
+    const sprites = [
+      'idle',
+      'walk',
+      'walk_fast',
+      'run',
+      'swipe',
+      'with_ball',
+      'wallclimb',
+      'wallgrab',
+      'fall_from_grab',
+      'land',
+    ];
+    for (const color of Cat.possibleColors) {
+      const mockState = new MockState();
+      for (const phase of ['new', 'restored']) {
         panel.allPets.reset();
-        mockState.reset();
         panel.petPanelApp(
-            'https://test.com',
-            Theme.none,
-            ColorThemeKind.dark,
-            PetColor.black,
-            PetSize.large,
-            PetType.cat,
-            false,
-            false,
-            mockState,
+          baseUri,
+          Theme.none,
+          ColorThemeKind.dark,
+          color,
+          PetSize.large,
+          PetType.cat,
+          false,
+          false,
+          mockState,
         );
-
+        const element = panel.allPets.pets[0];
+        const cat = element.pet;
+        assert.ok(cat instanceof Cat);
+        assert.strictEqual(element.color, color, phase);
         assert.strictEqual(
-            document.getElementById('background')?.style.backgroundImage,
-            '',
+          mockState.states?.[0]?.petColor,
+          color,
+          phase,
         );
-        assert.strictEqual(
-            document.getElementById('foreground')?.style.backgroundImage,
-            '',
-        );
-    });
-
-    test('Uses archived filenames for new and restored cats of every color', () => {
-        assert.deepStrictEqual(Cat.possibleColors.slice(0, 6), [
-            'black',
-            'brown',
-            'gray',
-            'lightbrown',
-            'orange',
-            'white',
-        ]);
-        const baseUri = 'https://test.com/media';
-        const sprites = [
-            'idle',
-            'walk',
-            'walk_fast',
-            'run',
-            'swipe',
-            'with_ball',
-            'wallclimb',
-            'wallgrab',
-            'fall_from_grab',
-            'land',
-        ];
-        for (const color of Cat.possibleColors) {
-            const mockState = new MockState();
-            for (const phase of ['new', 'restored']) {
-                panel.allPets.reset();
-                panel.petPanelApp(
-                    baseUri,
-                    Theme.none,
-                    ColorThemeKind.dark,
-                    color,
-                    PetSize.large,
-                    PetType.cat,
-                    false,
-                    false,
-                    mockState,
-                );
-                const element = panel.allPets.pets[0];
-                const cat = element.pet;
-                assert.ok(cat instanceof Cat);
-                assert.strictEqual(element.color, color, phase);
-                assert.strictEqual(
-                    mockState.states?.[0]?.petColor,
-                    color,
-                    phase,
-                );
-                for (const sprite of sprites) {
-                    cat.setAnimation(sprite);
-                    assert.strictEqual(
-                        element.el.src,
-                        `${baseUri}/cat/${color}_${sprite}_8fps.gif`,
-                        phase,
-                    );
-                }
-            }
+        for (const sprite of sprites) {
+          cat.setAnimation(sprite);
+          assert.strictEqual(
+            element.el.src,
+            `${baseUri}/cat/${color}_${sprite}_8fps.gif`,
+            phase,
+          );
         }
+      }
+    }
+  });
+
+  test('Test post message to panel', () => {
+    const mockState = new MockState();
+    panel.allPets.reset();
+    mockState.reset();
+    panel.petPanelApp(
+      'https://test.com',
+      Theme.none,
+      ColorThemeKind.dark,
+      PetColor.black,
+      PetSize.large,
+      PetType.cat,
+      false,
+      false,
+      mockState,
+    );
+
+    assert.strictEqual(
+      document.getElementById('background')?.style.backgroundImage,
+      '',
+    );
+    assert.strictEqual(
+      document.getElementById('foreground')?.style.backgroundImage,
+      '',
+    );
+    const message = new MessageEvent('command', {
+      data: { message: 'roll-call' },
     });
+    window.postMessage(message, '/');
 
-    test('Test post message to panel', () => {
-        const mockState = new MockState();
-        panel.allPets.reset();
-        mockState.reset();
-        panel.petPanelApp(
-            'https://test.com',
-            Theme.none,
-            ColorThemeKind.dark,
-            PetColor.black,
-            PetSize.large,
-            PetType.cat,
-            false,
-            false,
-            mockState,
-        );
-
-        assert.strictEqual(
-            document.getElementById('background')?.style.backgroundImage,
-            '',
-        );
-        assert.strictEqual(
-            document.getElementById('foreground')?.style.backgroundImage,
-            '',
-        );
-        const message = new MessageEvent('command', {
-            data: { message: 'roll-call' },
-        });
-        window.postMessage(message, '/');
-
-        // assert.notEqual(mockState.getMessages().length, 0);
-    });
+    // assert.notEqual(mockState.getMessages().length, 0);
+  });
 });
 
 suite('Finley Test Suite', () => {
-    const extensionRoot = path.resolve(__dirname, '../../..');
-    const mediaRoot = path.join(extensionRoot, 'media', 'finley');
-    const spriteNames = [
-        'idle',
-        'walk',
-        'walk_fast',
-        'run',
-        'swipe',
-        'with_ball',
+  const extensionRoot = path.resolve(__dirname, '../../..');
+  const mediaRoot = path.join(extensionRoot, 'media', 'finley');
+  const spriteNames = [
+    'idle',
+    'walk',
+    'walk_fast',
+    'run',
+    'swipe',
+    'with_ball',
+  ];
+
+  function createFinley(size: PetSize = PetSize.small) {
+    const image = document.createElement('img');
+    const speech = document.createElement('div');
+    image.width = 30;
+    const pet = pets.createPet(
+      PetType.finley,
+      image,
+      document.createElement('div'),
+      speech,
+      size,
+      100,
+      0,
+      path.join(mediaRoot, 'blue'),
+      0,
+      'Finley Custom',
+    );
+    assert.ok(pet instanceof Finley);
+    return { pet, image, speech };
+  }
+
+  test('Registers Finley with the original color and default name', () => {
+    const { pet } = createFinley();
+    assert.ok(ALL_PETS.includes(PetType.finley));
+    assert.ok(ALL_COLORS.includes(PetColor.blue));
+    assert.deepStrictEqual(pets.availableColors(PetType.finley), [
+      PetColor.blue,
+    ]);
+    assert.strictEqual(
+      pets.normalizeColor(PetColor.blue, PetType.finley),
+      PetColor.blue,
+    );
+    assert.strictEqual(
+      pets.normalizeColor(PetColor.brown, PetType.finley),
+      PetColor.blue,
+    );
+    assert.strictEqual(randomName(PetType.finley), 'Finley');
+    assert.strictEqual(pet.name, 'Finley Custom');
+    assert.strictEqual(pet.label, 'finley');
+    assert.strictEqual(pet.emoji, '🔷');
+    assert.ok(pet.hello.includes('Finley'));
+    assert.ok(pet.speed >= PetSpeed.normal * 0.7);
+    assert.ok(pet.speed <= PetSpeed.normal * 1.3);
+    assert.ok(pet.canChase);
+    assert.ok(pet.canSwipe);
+  });
+
+  ALL_SCALES.forEach((size, index) => {
+    test(`Supports Finley at ${size} size`, () => {
+      const { image } = createFinley(size);
+      const width = `${[30, 40, 55, 110][index]}px`;
+      assert.strictEqual(image.style.maxWidth, width);
+      assert.strictEqual(image.style.maxHeight, width);
+    });
+  });
+
+  test('Maps ground states to the correct sprites and directions', () => {
+    const { pet, image } = createFinley();
+    const states: [States, string, string][] = [
+      [States.sitIdle, 'idle', 'scaleX(1)'],
+      [States.walkRight, 'walk', 'scaleX(1)'],
+      [States.walkLeft, 'walk', 'scaleX(-1)'],
+      [States.runRight, 'walk_fast', 'scaleX(1)'],
+      [States.runLeft, 'walk_fast', 'scaleX(-1)'],
+      [States.idleWithBall, 'with_ball', 'scaleX(-1)'],
     ];
-
-    function createFinley(size: PetSize = PetSize.small) {
-        const image = document.createElement('img');
-        const speech = document.createElement('div');
-        image.width = 30;
-        const pet = pets.createPet(
-            PetType.finley,
-            image,
-            document.createElement('div'),
-            speech,
-            size,
-            100,
-            0,
-            path.join(mediaRoot, 'blue'),
-            0,
-            'Finley Custom',
-        );
-        assert.ok(pet instanceof Finley);
-        return { pet, image, speech };
+    for (const [state, sprite, direction] of states) {
+      pet.recoverState({ currentStateEnum: state });
+      pet.nextFrame();
+      assert.ok(image.src.endsWith(`blue_${sprite}_8fps.gif`));
+      assert.strictEqual(image.style.transform, direction);
     }
-
-    test('Registers Finley with the original color and default name', () => {
-        const { pet } = createFinley();
-        assert.ok(ALL_PETS.includes(PetType.finley));
-        assert.ok(ALL_COLORS.includes(PetColor.blue));
-        assert.deepStrictEqual(pets.availableColors(PetType.finley), [
-            PetColor.blue,
-        ]);
-        assert.strictEqual(
-            pets.normalizeColor(PetColor.blue, PetType.finley),
-            PetColor.blue,
+    for (const state of pet.sequence.sequenceStates) {
+      assert.ok(state.possibleNextStates.length > 0);
+      for (const next of state.possibleNextStates) {
+        assert.ok(
+          pet.sequence.sequenceStates.some(
+            (entry) => entry.state === next,
+          ),
         );
-        assert.strictEqual(
-            pets.normalizeColor(PetColor.brown, PetType.finley),
-            PetColor.blue,
+      }
+    }
+  });
+
+  test('Waves on hover and restores the interrupted movement', () => {
+    const { pet, image, speech } = createFinley();
+    pet.recoverState({ currentStateEnum: States.walkRight });
+    const interrupted = pet.currentState;
+    pet.swipe();
+    pet.nextFrame();
+    assert.ok(image.src.endsWith('blue_swipe_8fps.gif'));
+    assert.strictEqual(speech.textContent, 'Hi! 👋');
+    pet.swipe();
+    for (let frame = 0; frame < 15; frame++) {
+      pet.nextFrame();
+    }
+    assert.strictEqual(pet.currentStateEnum, States.walkRight);
+    assert.strictEqual(pet.currentState, interrupted);
+    pet.nextFrame();
+    assert.ok(image.src.endsWith('blue_walk_8fps.gif'));
+    pet.showSpeechBubble('❤️');
+    assert.strictEqual(speech.textContent, '❤️');
+  });
+
+  test('Dribbles after catching a ball, and handles cancelled chases', () => {
+    const { pet, image } = createFinley();
+    const canvas = document.createElement('canvas');
+    canvas.height = 100;
+    const ball = new BallState(pet.left + pet.speed / 2, 100, 0, 0);
+    pet.chase(ball, canvas);
+    pet.nextFrame();
+    assert.ok(image.src.endsWith('blue_run_8fps.gif'));
+    assert.strictEqual(ball.paused, true);
+    assert.strictEqual(canvas.style.display, 'none');
+    assert.strictEqual(pet.currentStateEnum, States.idleWithBall);
+    pet.nextFrame();
+    assert.ok(image.src.endsWith('blue_with_ball_8fps.gif'));
+    for (let frame = 0; frame < 30; frame++) {
+      pet.nextFrame();
+    }
+    assert.notStrictEqual(pet.currentStateEnum, States.idleWithBall);
+    pet.chase(ball, canvas);
+    pet.nextFrame();
+    assert.notStrictEqual(pet.currentStateEnum, States.chase);
+  });
+
+  test('Plays chase with friends and returns to normal behavior', () => {
+    const { pet, image } = createFinley();
+    const friend = createFinley().pet;
+    friend.positionLeft(200);
+    friend.recoverState({ currentStateEnum: States.runRight });
+    assert.ok(pet.makeFriendsWith(friend));
+    pet.nextFrame();
+    assert.strictEqual(pet.currentStateEnum, States.chaseFriend);
+    pet.nextFrame();
+    assert.ok(image.src.endsWith('blue_run_8fps.gif'));
+    friend.recoverState({ currentStateEnum: States.sitIdle });
+    pet.nextFrame();
+    assert.notStrictEqual(pet.currentStateEnum, States.chaseFriend);
+  });
+
+  test('Persists Finley identity, custom name, color and ground state', () => {
+    const mockState = new MockState();
+    const { pet, image } = createFinley();
+    pet.recoverState({ currentStateEnum: States.walkLeft });
+    panel.allPets.reset();
+    panel.allPets.push(
+      new pets.PetElement(
+        image,
+        document.createElement('div'),
+        document.createElement('div'),
+        pet,
+        PetColor.blue,
+        PetType.finley,
+      ),
+    );
+    panel.saveState(mockState);
+    panel.allPets.reset();
+    panel.petPanelApp(
+      vscode.Uri.file(path.join(extensionRoot, 'media')).toString(),
+      Theme.none,
+      ColorThemeKind.dark,
+      PetColor.blue,
+      PetSize.small,
+      PetType.finley,
+      false,
+      true,
+      mockState,
+    );
+    assert.strictEqual(panel.allPets.pets.length, 1);
+    const restored = panel.allPets.pets[0];
+    assert.ok(restored.pet instanceof Finley);
+    assert.strictEqual(restored.pet.name, 'Finley Custom');
+    assert.strictEqual(restored.type, PetType.finley);
+    assert.strictEqual(restored.color, PetColor.blue);
+    assert.strictEqual(
+      restored.pet.getState().currentStateEnum,
+      States.walkLeft,
+    );
+    restored.pet.nextFrame();
+    assert.ok(restored.el.src.endsWith('blue_walk_8fps.gif'));
+    panel.allPets.reset();
+  });
+
+  test('Ships every required GIF, icon and Microsoft license', () => {
+    for (const color of Finley.possibleColors) {
+      for (const sprite of spriteNames) {
+        const gif = readFileSync(
+          path.join(mediaRoot, `${color}_${sprite}_8fps.gif`),
         );
-        assert.strictEqual(randomName(PetType.finley), 'Finley');
-        assert.strictEqual(pet.name, 'Finley Custom');
-        assert.strictEqual(pet.label, 'finley');
-        assert.strictEqual(pet.emoji, '🔷');
-        assert.ok(pet.hello.includes('Finley'));
-        assert.ok(pet.speed >= PetSpeed.normal * 0.7);
-        assert.ok(pet.speed <= PetSpeed.normal * 1.3);
-        assert.ok(pet.canChase);
-        assert.ok(pet.canSwipe);
-    });
+        assert.strictEqual(gif.toString('ascii', 0, 6), 'GIF89a');
+        assert.strictEqual(gif.readUInt16LE(6), 128);
+        assert.strictEqual(gif.readUInt16LE(8), 128);
+        assert.ok(gif.includes(Buffer.from('NETSCAPE2.0')));
+      }
+    }
+    const icon = readFileSync(path.join(mediaRoot, 'icon.png'));
+    assert.strictEqual(icon.toString('ascii', 1, 4), 'PNG');
+    assert.strictEqual(icon.readUInt32BE(16), 32);
+    assert.strictEqual(icon.readUInt32BE(20), 32);
+    const license = readFileSync(path.join(mediaRoot, 'LICENSE'), 'utf8');
+    assert.ok(license.includes('Copyright (c) Microsoft Corporation.'));
+    assert.ok(license.includes('Permission is hereby granted'));
+  });
 
-    ALL_SCALES.forEach((size, index) => {
-        test(`Supports Finley at ${size} size`, () => {
-            const { image } = createFinley(size);
-            const width = `${[30, 40, 55, 110][index]}px`;
-            assert.strictEqual(image.style.maxWidth, width);
-            assert.strictEqual(image.style.maxHeight, width);
-        });
-    });
+  test('Uses distinct sprint and fast-walk animations', () => {
+    assert.notDeepStrictEqual(
+      readFileSync(path.join(mediaRoot, 'blue_run_8fps.gif')),
+      readFileSync(path.join(mediaRoot, 'blue_walk_fast_8fps.gif')),
+    );
+  });
 
-    test('Maps ground states to the correct sprites and directions', () => {
-        const { pet, image } = createFinley();
-        const states: [States, string, string][] = [
-            [States.sitIdle, 'idle', 'scaleX(1)'],
-            [States.walkRight, 'walk', 'scaleX(1)'],
-            [States.walkLeft, 'walk', 'scaleX(-1)'],
-            [States.runRight, 'walk_fast', 'scaleX(1)'],
-            [States.runLeft, 'walk_fast', 'scaleX(-1)'],
-            [States.idleWithBall, 'with_ball', 'scaleX(-1)'],
+  test('Keeps native pixel drawings and integer frame compositions editable', () => {
+    interface PixelFrame {
+      layers: { sprite: string; x: number; y: number }[];
+    }
+    const source: {
+      width: number;
+      height: number;
+      baseline: number;
+      palette: Record<string, string>;
+      sprites: Record<string, string[]>;
+      animations: Record<string, { frames: PixelFrame[] }>;
+      icon: PixelFrame;
+      provenance: { model: string; reasoningEffort: string };
+    } = JSON.parse(
+      readFileSync(path.join(mediaRoot, 'pixel-art.json'), 'utf8'),
+    );
+    assert.strictEqual(source.width, 32);
+    assert.strictEqual(source.height, 32);
+    assert.strictEqual(source.baseline, 30);
+    assert.ok(Object.keys(source.palette).length <= 32);
+    assert.ok(Object.values(source.palette).includes('#2ED851FF'));
+    for (const color of Object.values(source.palette)) {
+      assert.match(color, /^#[0-9a-f]{6}(00|ff)$/i);
+    }
+    assert.strictEqual(source.provenance.model, 'gpt-6-astra');
+    assert.strictEqual(source.provenance.reasoningEffort, 'xhigh');
+    assert.deepStrictEqual(
+      Object.keys(source.animations).sort(),
+      [...spriteNames].sort(),
+    );
+    for (const rows of Object.values(source.sprites)) {
+      assert.ok(rows.length > 0 && rows.length <= 32);
+      assert.ok(rows[0].length > 0 && rows[0].length <= 32);
+      for (const row of rows) {
+        assert.strictEqual(row.length, rows[0].length);
+        assert.ok([...row].every((pixel) => pixel in source.palette));
+      }
+    }
+    const frames = [source.icon];
+    for (const animation of Object.values(source.animations)) {
+      assert.ok(animation.frames.length >= 2);
+      assert.strictEqual(animation.frames.length % 2, 0);
+      frames.push(...animation.frames);
+    }
+    for (const frame of frames) {
+      assert.ok(frame.layers.length > 0);
+      for (const layer of frame.layers) {
+        const sprite = source.sprites[layer.sprite];
+        assert.ok(sprite);
+        assert.ok(Number.isInteger(layer.x) && layer.x >= 0);
+        assert.ok(Number.isInteger(layer.y) && layer.y >= 0);
+        assert.ok(layer.x + sprite[0].length <= 32);
+        assert.ok(layer.y + sprite.length <= 32);
+      }
+    }
+  });
+
+  test('Aligns settings entries and localized labels', () => {
+    const manifest: {
+      contributes: {
+        configuration: {
+          properties: Record<
+            string,
+            { enum: string[]; enumItemLabels: string[] }
+          >;
+        }[];
+      };
+    } = JSON.parse(
+      readFileSync(path.join(extensionRoot, 'package.json'), 'utf8'),
+    );
+    const labels: Record<string, string> = JSON.parse(
+      readFileSync(path.join(extensionRoot, 'package.nls.json'), 'utf8'),
+    );
+    for (const [setting, value] of [
+      ['petType', 'finley'],
+      ['petColor', 'blue'],
+    ]) {
+      const property =
+        manifest.contributes.configuration[0].properties[
+        `vscode-pets.${setting}`
         ];
-        for (const [state, sprite, direction] of states) {
-            pet.recoverState({ currentStateEnum: state });
-            pet.nextFrame();
-            assert.ok(image.src.endsWith(`blue_${sprite}_8fps.gif`));
-            assert.strictEqual(image.style.transform, direction);
-        }
-        for (const state of pet.sequence.sequenceStates) {
-            assert.ok(state.possibleNextStates.length > 0);
-            for (const next of state.possibleNextStates) {
-                assert.ok(
-                    pet.sequence.sequenceStates.some(
-                        (entry) => entry.state === next,
-                    ),
-                );
-            }
-        }
-    });
+      const index = property.enum.indexOf(value);
+      const key = `vscode-pets.${setting}.${value}`;
+      assert.ok(index >= 0);
+      assert.strictEqual(
+        property.enum.length,
+        property.enumItemLabels.length,
+      );
+      assert.strictEqual(property.enumItemLabels[index], `%${key}%`);
+      assert.ok(labels[key]);
+    }
+    const runtimeLabels: Record<string, string> = JSON.parse(
+      readFileSync(
+        path.join(extensionRoot, 'l10n', 'bundle.l10n.json'),
+        'utf8',
+      ),
+    );
+    assert.strictEqual(runtimeLabels.finley, 'Finley');
+  });
 
-    test('Waves on hover and restores the interrupted movement', () => {
-        const { pet, image, speech } = createFinley();
-        pet.recoverState({ currentStateEnum: States.walkRight });
-        const interrupted = pet.currentState;
-        pet.swipe();
-        pet.nextFrame();
-        assert.ok(image.src.endsWith('blue_swipe_8fps.gif'));
-        assert.strictEqual(speech.textContent, 'Hi! 👋');
-        pet.swipe();
-        for (let frame = 0; frame < 15; frame++) {
-            pet.nextFrame();
-        }
-        assert.strictEqual(pet.currentStateEnum, States.walkRight);
-        assert.strictEqual(pet.currentState, interrupted);
-        pet.nextFrame();
-        assert.ok(image.src.endsWith('blue_walk_8fps.gif'));
-        pet.showSpeechBubble('❤️');
-        assert.strictEqual(speech.textContent, '❤️');
-    });
-
-    test('Dribbles after catching a ball, and handles cancelled chases', () => {
-        const { pet, image } = createFinley();
-        const canvas = document.createElement('canvas');
-        canvas.height = 100;
-        const ball = new BallState(pet.left + pet.speed / 2, 100, 0, 0);
-        pet.chase(ball, canvas);
-        pet.nextFrame();
-        assert.ok(image.src.endsWith('blue_run_8fps.gif'));
-        assert.strictEqual(ball.paused, true);
-        assert.strictEqual(canvas.style.display, 'none');
-        assert.strictEqual(pet.currentStateEnum, States.idleWithBall);
-        pet.nextFrame();
-        assert.ok(image.src.endsWith('blue_with_ball_8fps.gif'));
-        for (let frame = 0; frame < 30; frame++) {
-            pet.nextFrame();
-        }
-        assert.notStrictEqual(pet.currentStateEnum, States.idleWithBall);
-        pet.chase(ball, canvas);
-        pet.nextFrame();
-        assert.notStrictEqual(pet.currentStateEnum, States.chase);
-    });
-
-    test('Plays chase with friends and returns to normal behavior', () => {
-        const { pet, image } = createFinley();
-        const friend = createFinley().pet;
-        friend.positionLeft(200);
-        friend.recoverState({ currentStateEnum: States.runRight });
-        assert.ok(pet.makeFriendsWith(friend));
-        pet.nextFrame();
-        assert.strictEqual(pet.currentStateEnum, States.chaseFriend);
-        pet.nextFrame();
-        assert.ok(image.src.endsWith('blue_run_8fps.gif'));
-        friend.recoverState({ currentStateEnum: States.sitIdle });
-        pet.nextFrame();
-        assert.notStrictEqual(pet.currentStateEnum, States.chaseFriend);
-    });
-
-    test('Persists Finley identity, custom name, color and ground state', () => {
-        const mockState = new MockState();
-        const { pet, image } = createFinley();
-        pet.recoverState({ currentStateEnum: States.walkLeft });
-        panel.allPets.reset();
-        panel.allPets.push(
-            new pets.PetElement(
-                image,
-                document.createElement('div'),
-                document.createElement('div'),
-                pet,
-                PetColor.blue,
-                PetType.finley,
-            ),
+  test('Accepts blue Finley from extension configuration', async () => {
+    const configuration = vscode.workspace.getConfiguration('vscode-pets');
+    const originalType =
+      configuration.inspect<PetType>('petType')?.globalValue;
+    const originalColor =
+      configuration.inspect<PetColor>('petColor')?.globalValue;
+    try {
+      await configuration.update(
+        'petType',
+        PetType.finley,
+        vscode.ConfigurationTarget.Global,
+      );
+      for (const color of Finley.possibleColors) {
+        await configuration.update(
+          'petColor',
+          color,
+          vscode.ConfigurationTarget.Global,
         );
-        panel.saveState(mockState);
-        panel.allPets.reset();
-        panel.petPanelApp(
-            vscode.Uri.file(path.join(extensionRoot, 'media')).toString(),
-            Theme.none,
-            ColorThemeKind.dark,
-            PetColor.blue,
-            PetSize.small,
-            PetType.finley,
-            false,
-            true,
-            mockState,
-        );
-        assert.strictEqual(panel.allPets.pets.length, 1);
-        const restored = panel.allPets.pets[0];
-        assert.ok(restored.pet instanceof Finley);
-        assert.strictEqual(restored.pet.name, 'Finley Custom');
-        assert.strictEqual(restored.type, PetType.finley);
-        assert.strictEqual(restored.color, PetColor.blue);
-        assert.strictEqual(
-            restored.pet.getState().currentStateEnum,
-            States.walkLeft,
-        );
-        restored.pet.nextFrame();
-        assert.ok(restored.el.src.endsWith('blue_walk_8fps.gif'));
-        panel.allPets.reset();
-    });
-
-    test('Ships every required GIF, icon and Microsoft license', () => {
-        for (const color of Finley.possibleColors) {
-            for (const sprite of spriteNames) {
-                const gif = readFileSync(
-                    path.join(mediaRoot, `${color}_${sprite}_8fps.gif`),
-                );
-                assert.strictEqual(gif.toString('ascii', 0, 6), 'GIF89a');
-                assert.strictEqual(gif.readUInt16LE(6), 128);
-                assert.strictEqual(gif.readUInt16LE(8), 128);
-                assert.ok(gif.includes(Buffer.from('NETSCAPE2.0')));
-            }
-        }
-        const icon = readFileSync(path.join(mediaRoot, 'icon.png'));
-        assert.strictEqual(icon.toString('ascii', 1, 4), 'PNG');
-        assert.strictEqual(icon.readUInt32BE(16), 32);
-        assert.strictEqual(icon.readUInt32BE(20), 32);
-        const license = readFileSync(path.join(mediaRoot, 'LICENSE'), 'utf8');
-        assert.ok(license.includes('Copyright (c) Microsoft Corporation.'));
-        assert.ok(license.includes('Permission is hereby granted'));
-    });
-
-    test('Uses distinct sprint and fast-walk animations', () => {
-        assert.notDeepStrictEqual(
-            readFileSync(path.join(mediaRoot, 'blue_run_8fps.gif')),
-            readFileSync(path.join(mediaRoot, 'blue_walk_fast_8fps.gif')),
-        );
-    });
-
-    test('Keeps native pixel drawings and integer frame compositions editable', () => {
-        interface PixelFrame {
-            layers: { sprite: string; x: number; y: number }[];
-        }
-        const source: {
-            width: number;
-            height: number;
-            baseline: number;
-            palette: Record<string, string>;
-            sprites: Record<string, string[]>;
-            animations: Record<string, { frames: PixelFrame[] }>;
-            icon: PixelFrame;
-            provenance: { model: string; reasoningEffort: string };
-        } = JSON.parse(
-            readFileSync(path.join(mediaRoot, 'pixel-art.json'), 'utf8'),
-        );
-        assert.strictEqual(source.width, 32);
-        assert.strictEqual(source.height, 32);
-        assert.strictEqual(source.baseline, 30);
-        assert.ok(Object.keys(source.palette).length <= 32);
-        assert.ok(Object.values(source.palette).includes('#2ED851FF'));
-        for (const color of Object.values(source.palette)) {
-            assert.match(color, /^#[0-9a-f]{6}(00|ff)$/i);
-        }
-        assert.strictEqual(source.provenance.model, 'gpt-6-astra');
-        assert.strictEqual(source.provenance.reasoningEffort, 'xhigh');
-        assert.deepStrictEqual(
-            Object.keys(source.animations).sort(),
-            [...spriteNames].sort(),
-        );
-        for (const rows of Object.values(source.sprites)) {
-            assert.ok(rows.length > 0 && rows.length <= 32);
-            assert.ok(rows[0].length > 0 && rows[0].length <= 32);
-            for (const row of rows) {
-                assert.strictEqual(row.length, rows[0].length);
-                assert.ok([...row].every((pixel) => pixel in source.palette));
-            }
-        }
-        const frames = [source.icon];
-        for (const animation of Object.values(source.animations)) {
-            assert.ok(animation.frames.length >= 2);
-            assert.strictEqual(animation.frames.length % 2, 0);
-            frames.push(...animation.frames);
-        }
-        for (const frame of frames) {
-            assert.ok(frame.layers.length > 0);
-            for (const layer of frame.layers) {
-                const sprite = source.sprites[layer.sprite];
-                assert.ok(sprite);
-                assert.ok(Number.isInteger(layer.x) && layer.x >= 0);
-                assert.ok(Number.isInteger(layer.y) && layer.y >= 0);
-                assert.ok(layer.x + sprite[0].length <= 32);
-                assert.ok(layer.y + sprite.length <= 32);
-            }
-        }
-    });
-
-    test('Aligns settings entries and localized labels', () => {
-        const manifest: {
-            contributes: {
-                configuration: {
-                    properties: Record<
-                        string,
-                        { enum: string[]; enumItemLabels: string[] }
-                    >;
-                }[];
-            };
-        } = JSON.parse(
-            readFileSync(path.join(extensionRoot, 'package.json'), 'utf8'),
-        );
-        const labels: Record<string, string> = JSON.parse(
-            readFileSync(path.join(extensionRoot, 'package.nls.json'), 'utf8'),
-        );
-        for (const [setting, value] of [
-            ['petType', 'finley'],
-            ['petColor', 'blue'],
-        ]) {
-            const property =
-                manifest.contributes.configuration[0].properties[
-                    `vscode-pets.${setting}`
-                ];
-            const index = property.enum.indexOf(value);
-            const key = `vscode-pets.${setting}.${value}`;
-            assert.ok(index >= 0);
-            assert.strictEqual(
-                property.enum.length,
-                property.enumItemLabels.length,
-            );
-            assert.strictEqual(property.enumItemLabels[index], `%${key}%`);
-            assert.ok(labels[key]);
-        }
-        const runtimeLabels: Record<string, string> = JSON.parse(
-            readFileSync(
-                path.join(extensionRoot, 'l10n', 'bundle.l10n.json'),
-                'utf8',
-            ),
-        );
-        assert.strictEqual(runtimeLabels.finley, 'Finley');
-    });
-
-    test('Accepts blue Finley from extension configuration', async () => {
-        const configuration = vscode.workspace.getConfiguration('vscode-pets');
-        const originalType =
-            configuration.inspect<PetType>('petType')?.globalValue;
-        const originalColor =
-            configuration.inspect<PetColor>('petColor')?.globalValue;
-        try {
-            await configuration.update(
-                'petType',
-                PetType.finley,
-                vscode.ConfigurationTarget.Global,
-            );
-            for (const color of Finley.possibleColors) {
-                await configuration.update(
-                    'petColor',
-                    color,
-                    vscode.ConfigurationTarget.Global,
-                );
-                const pet = PetSpecification.fromConfiguration();
-                assert.strictEqual(pet.type, PetType.finley);
-                assert.strictEqual(pet.color, color);
-                assert.strictEqual(pet.name, 'Finley');
-            }
-        } finally {
-            await configuration.update(
-                'petType',
-                originalType,
-                vscode.ConfigurationTarget.Global,
-            );
-            await configuration.update(
-                'petColor',
-                originalColor,
-                vscode.ConfigurationTarget.Global,
-            );
-        }
-    });
+        const pet = PetSpecification.fromConfiguration();
+        assert.strictEqual(pet.type, PetType.finley);
+        assert.strictEqual(pet.color, color);
+        assert.strictEqual(pet.name, 'Finley');
+      }
+    } finally {
+      await configuration.update(
+        'petType',
+        originalType,
+        vscode.ConfigurationTarget.Global,
+      );
+      await configuration.update(
+        'petColor',
+        originalColor,
+        vscode.ConfigurationTarget.Global,
+      );
+    }
+  });
 });
 
 suite('Pet State Recovery Test Suite', () => {
-    function createTestPet(petType: PetType) {
-        const petImageEl = global.document.createElement(
-            'img',
-        ) as HTMLImageElement;
-        const petDivEl = global.document.createElement('div') as HTMLDivElement;
-        const petSpeechEl = global.document.createElement(
-            'div',
-        ) as HTMLDivElement;
-        return pets.createPet(
-            String(petType),
-            petImageEl,
-            petDivEl,
-            petSpeechEl,
-            PetSize.medium,
-            0,
-            0,
-            'testPet',
-            0,
-            'Tester',
-        );
-    }
+  function createTestPet(petType: PetType) {
+    const petImageEl = global.document.createElement(
+      'img',
+    ) as HTMLImageElement;
+    const petDivEl = global.document.createElement('div') as HTMLDivElement;
+    const petSpeechEl = global.document.createElement(
+      'div',
+    ) as HTMLDivElement;
+    return pets.createPet(
+      String(petType),
+      petImageEl,
+      petDivEl,
+      petSpeechEl,
+      PetSize.medium,
+      0,
+      0,
+      'testPet',
+      0,
+      'Tester',
+    );
+  }
 
-    /// Every state a pet can be saved in: the states of its own sequence, plus
-    /// the ones entered from outside it by hovering, balls and friends.
-    function persistableStates(petType: PetType): States[] {
-        const sequence = (createTestPet(petType) as any).sequence;
-        const states = new Set<States>([sequence.startingState]);
-        sequence.sequenceStates.forEach((node: any) => {
-            states.add(node.state);
-            node.possibleNextStates.forEach((next: States) => states.add(next));
+  /// Every state a pet can be saved in: the states of its own sequence, plus
+  /// the ones entered from outside it by hovering, balls and friends.
+  function persistableStates(petType: PetType): States[] {
+    const sequence = (createTestPet(petType) as any).sequence;
+    const states = new Set<States>([sequence.startingState]);
+    sequence.sequenceStates.forEach((node: any) => {
+      states.add(node.state);
+      node.possibleNextStates.forEach((next: States) => states.add(next));
+    });
+    states.add(States.swipe);
+    states.add(States.chase);
+    states.add(States.chaseFriend);
+    return [...states];
+  }
+
+  ALL_PETS.forEach((petType) => {
+    test(
+      'Test ' + String(petType) + ' recovers from every saved state',
+      () => {
+        persistableStates(petType).forEach((state) => {
+          const pet = createTestPet(petType);
+          pet.recoverState({ currentStateEnum: state });
+          /// Long enough for the state to run out and pick a
+          /// successor, which is where an unrecoverable state throws.
+          for (let i = 0; i < 200; i++) {
+            pet.nextFrame();
+          }
         });
-        states.add(States.swipe);
-        states.add(States.chase);
-        states.add(States.chaseFriend);
-        return [...states];
+      },
+    );
+  });
+
+  test('Test a swiping pet saves the state it was interrupted in', () => {
+    const pet = createTestPet(PetType.cat);
+    pet.recoverState({ currentStateEnum: States.walkRight });
+    pet.swipe();
+
+    assert.strictEqual(pet.getState().currentStateEnum, States.walkRight);
+  });
+
+  test('Test a pet interrupted mid-swipe survives a reload', () => {
+    const pet = createTestPet(PetType.cat);
+    pet.recoverState({ currentStateEnum: States.walkRight });
+    pet.swipe();
+
+    /// The panel is torn down and rebuilt while the pet is mid-swipe.
+    const restored = createTestPet(PetType.cat);
+    restored.recoverState(pet.getState());
+    for (let i = 0; i < 200; i++) {
+      restored.nextFrame();
     }
 
-    ALL_PETS.forEach((petType) => {
-        test(
-            'Test ' + String(petType) + ' recovers from every saved state',
-            () => {
-                persistableStates(petType).forEach((state) => {
-                    const pet = createTestPet(petType);
-                    pet.recoverState({ currentStateEnum: state });
-                    /// Long enough for the state to run out and pick a
-                    /// successor, which is where an unrecoverable state throws.
-                    for (let i = 0; i < 200; i++) {
-                        pet.nextFrame();
-                    }
-                });
-            },
-        );
-    });
-
-    test('Test a swiping pet saves the state it was interrupted in', () => {
-        const pet = createTestPet(PetType.cat);
-        pet.recoverState({ currentStateEnum: States.walkRight });
-        pet.swipe();
-
-        assert.strictEqual(pet.getState().currentStateEnum, States.walkRight);
-    });
-
-    test('Test a pet interrupted mid-swipe survives a reload', () => {
-        const pet = createTestPet(PetType.cat);
-        pet.recoverState({ currentStateEnum: States.walkRight });
-        pet.swipe();
-
-        /// The panel is torn down and rebuilt while the pet is mid-swipe.
-        const restored = createTestPet(PetType.cat);
-        restored.recoverState(pet.getState());
-        for (let i = 0; i < 200; i++) {
-            restored.nextFrame();
-        }
-
-        assert.notStrictEqual(
-            restored.getState().currentStateEnum,
-            States.swipe,
-        );
-    });
+    assert.notStrictEqual(
+      restored.getState().currentStateEnum,
+      States.swipe,
+    );
+  });
 });
 
 suite('Change Theme Test Suite', () => {
-    const COMMAND = 'vscode-pets.change-theme';
-    const originalShowQuickPick = vscode.window.showQuickPick;
+  const COMMAND = 'vscode-pets.change-theme';
+  const originalShowQuickPick = vscode.window.showQuickPick;
 
-    suiteSetup(async () => {
-        await vscode.extensions
-            .getExtension('tonybaloney.vscode-pets')
-            ?.activate();
-    });
+  const configurationTarget = getThemeConfigurationTarget();
 
-    teardown(async () => {
-        (vscode.window as any).showQuickPick = originalShowQuickPick;
-        await vscode.workspace
-            .getConfiguration('vscode-pets')
-            .update('theme', Theme.none, vscode.ConfigurationTarget.Global);
-    });
+  suiteSetup(async () => {
+    await vscode.extensions
+      .getExtension('tonybaloney.vscode-pets')
+      ?.activate();
+  });
 
-    test('Test change-theme command is registered', async () => {
-        const commands = await vscode.commands.getCommands(true);
-        assert.ok(commands.includes(COMMAND));
-    });
+  teardown(async () => {
+    (vscode.window as any).showQuickPick = originalShowQuickPick;
+    await vscode.workspace
+      .getConfiguration('vscode-pets')
+      .update(
+        'theme',
+        configurationTarget === vscode.ConfigurationTarget.Global
+          ? Theme.none
+          : undefined,
+        configurationTarget,
+      );
+    if (configurationTarget === vscode.ConfigurationTarget.Workspace) {
+      await vscode.workspace
+        .getConfiguration('vscode-pets')
+        .update('theme', Theme.none, vscode.ConfigurationTarget.Global);
+    }
+  });
 
-    test('Test change-theme QuickPick lists all themes', async () => {
-        let captured: any[] = [];
-        (vscode.window as any).showQuickPick = (items: any[]) => {
-            captured = items;
-            return Promise.resolve(undefined);
-        };
-        await vscode.commands.executeCommand(COMMAND);
-        assert.deepStrictEqual(
-            captured.map((i) => i.value),
-            ALL_THEMES,
-        );
-    });
+  test('Test theme configuration target follows workspace availability', () => {
+    assert.strictEqual(
+      getThemeConfigurationTarget({
+        workspaceFile: undefined,
+        workspaceFolders: undefined,
+      }),
+      vscode.ConfigurationTarget.Global,
+    );
+    assert.strictEqual(
+      getThemeConfigurationTarget({
+        workspaceFile: vscode.Uri.parse('file:///test.code-workspace'),
+        workspaceFolders: undefined,
+      }),
+      vscode.ConfigurationTarget.Workspace,
+    );
+    assert.strictEqual(
+      getThemeConfigurationTarget({
+        workspaceFile: undefined,
+        workspaceFolders: [{} as vscode.WorkspaceFolder],
+      }),
+      vscode.ConfigurationTarget.Workspace,
+    );
+  });
 
-    ALL_THEMES.forEach((theme) => {
-        test('Test change-theme persists ' + String(theme), async () => {
-            (vscode.window as any).showQuickPick = () =>
-                Promise.resolve({ label: String(theme), value: theme });
-            await vscode.commands.executeCommand(COMMAND);
-            assert.strictEqual(
-                vscode.workspace
-                    .getConfiguration('vscode-pets')
-                    .get<Theme>('theme'),
-                theme,
-            );
-        });
-    });
+  test('Test change-theme command is registered', async () => {
+    const commands = await vscode.commands.getCommands(true);
+    assert.ok(commands.includes(COMMAND));
+  });
 
-    test('Test change-theme cancel leaves theme unchanged', async () => {
-        await vscode.workspace
-            .getConfiguration('vscode-pets')
-            .update('theme', Theme.forest, vscode.ConfigurationTarget.Global);
-        (vscode.window as any).showQuickPick = () => Promise.resolve(undefined);
-        await vscode.commands.executeCommand(COMMAND);
-        assert.strictEqual(
-            vscode.workspace
-                .getConfiguration('vscode-pets')
-                .get<Theme>('theme'),
-            Theme.forest,
-        );
+  test('Test change-theme QuickPick lists all themes', async () => {
+    let captured: any[] = [];
+    (vscode.window as any).showQuickPick = (items: any[]) => {
+      captured = items;
+      return Promise.resolve(undefined);
+    };
+    await vscode.commands.executeCommand(COMMAND);
+    assert.deepStrictEqual(
+      captured.map((i) => i.value),
+      ALL_THEMES,
+    );
+  });
+
+  ALL_THEMES.forEach((theme) => {
+    test('Test change-theme persists ' + String(theme), async () => {
+      (vscode.window as any).showQuickPick = () =>
+        Promise.resolve({ label: String(theme), value: theme });
+      await vscode.commands.executeCommand(COMMAND);
+      const themeConfiguration = vscode.workspace
+        .getConfiguration('vscode-pets')
+        .inspect<Theme>('theme');
+      assert.strictEqual(
+        configurationTarget === vscode.ConfigurationTarget.Workspace
+          ? themeConfiguration?.workspaceValue
+          : themeConfiguration?.globalValue,
+        theme,
+      );
+      if (configurationTarget === vscode.ConfigurationTarget.Workspace) {
+        assert.strictEqual(themeConfiguration?.globalValue, Theme.none);
+      }
     });
+  });
+
+  test('Test change-theme cancel leaves theme unchanged', async () => {
+    await vscode.workspace
+      .getConfiguration('vscode-pets')
+      .update('theme', Theme.forest, configurationTarget);
+    (vscode.window as any).showQuickPick = () => Promise.resolve(undefined);
+    await vscode.commands.executeCommand(COMMAND);
+    assert.strictEqual(
+      vscode.workspace
+        .getConfiguration('vscode-pets')
+        .get<Theme>('theme'),
+      Theme.forest,
+    );
+  });
 });
