@@ -3,6 +3,7 @@ import { CAT_NAMES } from '../panel/pets/cat';
 import { CHICKEN_NAMES } from '../panel/pets/chicken';
 import { MORPH_NAMES } from '../panel/pets/morph';
 import { CLIPPY_NAMES } from '../panel/pets/clippy';
+import { AFRICAN_GREY_NAMES } from '../panel/pets/africangrey';
 import { COCKATIEL_NAMES } from '../panel/pets/cockatiel';
 import { CRAB_NAMES } from '../panel/pets/crab';
 import { DENO_NAMES } from '../panel/pets/deno';
@@ -48,6 +49,7 @@ export function randomName(type: PetType): string {
                 [PetType.zappy]: ZAPPY_NAMES,
                 [PetType.rocky]: ROCKY_NAMES,
                 [PetType.cockatiel]: COCKATIEL_NAMES,
+                [PetType.africangrey]: AFRICAN_GREY_NAMES,
                 [PetType.raccoon]: RACCOON_NAMES,
                 [PetType.rat]: RAT_NAMES,
                 [PetType.turtle]: TURTLE_NAMES,

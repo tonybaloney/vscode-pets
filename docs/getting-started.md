@@ -30,7 +30,7 @@ Set a default color, size, pet type, position, and theme when you open a Pet Pan
 
 * Pet Color: black, brown, green, yellow, gray, purple, red, white, orange
 * Pet Size: nano, small, medium, large
-* Pet Type: cat, chicken, crab, clippy, cockatiel, dog, horse, mod, rocky, rubber duck, snake, totoro, turtle, zappy
+* Pet Type: african grey, cat, chicken, crab, clippy, cockatiel, dog, horse, mod, rocky, rubber duck, snake, totoro, turtle, zappy
 
 ![Usage screenshot](source/_static/screenshot-2.gif)
 
