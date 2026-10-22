@@ -15,6 +15,7 @@ import {
 } from '../../common/types';
 import { PetElementState, PetPanelState, States } from '../../panel/states';
 import * as pets from '../../panel/pets';
+import { getThemeConfigurationTarget } from '../../extension/extension';
 
 function mockPanelWindow() {
     const html = `<!DOCTYPE html>
@@ -356,6 +357,8 @@ suite('Change Theme Test Suite', () => {
     const COMMAND = 'vscode-pets.change-theme';
     const originalShowQuickPick = vscode.window.showQuickPick;
 
+    const configurationTarget = getThemeConfigurationTarget();
+
     suiteSetup(async () => {
         await vscode.extensions
             .getExtension('tonybaloney.vscode-pets')
@@ -366,7 +369,42 @@ suite('Change Theme Test Suite', () => {
         (vscode.window as any).showQuickPick = originalShowQuickPick;
         await vscode.workspace
             .getConfiguration('vscode-pets')
-            .update('theme', Theme.none, vscode.ConfigurationTarget.Global);
+            .update(
+                'theme',
+                configurationTarget === vscode.ConfigurationTarget.Global
+                    ? Theme.none
+                    : undefined,
+                configurationTarget,
+            );
+        if (configurationTarget === vscode.ConfigurationTarget.Workspace) {
+            await vscode.workspace
+                .getConfiguration('vscode-pets')
+                .update('theme', Theme.none, vscode.ConfigurationTarget.Global);
+        }
+    });
+
+    test('Test theme configuration target follows workspace availability', () => {
+        assert.strictEqual(
+            getThemeConfigurationTarget({
+                workspaceFile: undefined,
+                workspaceFolders: undefined,
+            }),
+            vscode.ConfigurationTarget.Global,
+        );
+        assert.strictEqual(
+            getThemeConfigurationTarget({
+                workspaceFile: vscode.Uri.parse('file:///test.code-workspace'),
+                workspaceFolders: undefined,
+            }),
+            vscode.ConfigurationTarget.Workspace,
+        );
+        assert.strictEqual(
+            getThemeConfigurationTarget({
+                workspaceFile: undefined,
+                workspaceFolders: [{} as vscode.WorkspaceFolder],
+            }),
+            vscode.ConfigurationTarget.Workspace,
+        );
     });
 
     test('Test change-theme command is registered', async () => {
@@ -392,19 +430,25 @@ suite('Change Theme Test Suite', () => {
             (vscode.window as any).showQuickPick = () =>
                 Promise.resolve({ label: String(theme), value: theme });
             await vscode.commands.executeCommand(COMMAND);
+            const themeConfiguration = vscode.workspace
+                .getConfiguration('vscode-pets')
+                .inspect<Theme>('theme');
             assert.strictEqual(
-                vscode.workspace
-                    .getConfiguration('vscode-pets')
-                    .get<Theme>('theme'),
+                configurationTarget === vscode.ConfigurationTarget.Workspace
+                    ? themeConfiguration?.workspaceValue
+                    : themeConfiguration?.globalValue,
                 theme,
             );
+            if (configurationTarget === vscode.ConfigurationTarget.Workspace) {
+                assert.strictEqual(themeConfiguration?.globalValue, Theme.none);
+            }
         });
     });
 
     test('Test change-theme cancel leaves theme unchanged', async () => {
         await vscode.workspace
             .getConfiguration('vscode-pets')
-            .update('theme', Theme.forest, vscode.ConfigurationTarget.Global);
+            .update('theme', Theme.forest, configurationTarget);
         (vscode.window as any).showQuickPick = () => Promise.resolve(undefined);
         await vscode.commands.executeCommand(COMMAND);
         assert.strictEqual(
