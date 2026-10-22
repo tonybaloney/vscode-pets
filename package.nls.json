@@ -41,6 +41,8 @@
     "vscode-pets.petColor.warrior" : "Warrior",
     "vscode-pets.petColor.pink" : "Pink",
 
+    "vscode-pets.petType.african-grey": "African grey",
+
     "vscode-pets.petType.cat": "Cat",
     "vscode-pets.petType.chicken": "Chicken",
     "vscode-pets.petType.crab": "Crab",
