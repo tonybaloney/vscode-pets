@@ -35,6 +35,7 @@ export const enum PetType {
     crab = 'crab',
     dog = 'dog',
     deno = 'deno',
+    finley = 'finley',
     fox = 'fox',
     frog = 'frog',
     horse = 'horse',
@@ -84,6 +85,7 @@ export const enum Theme {
     beach = 'beach',
     winter = 'winter',
     autumn = 'autumn',
+    library = 'library',
 }
 
 export const enum ColorThemeKind {
@@ -112,6 +114,7 @@ export const ALL_PETS = [
     PetType.crab,
     PetType.dog,
     PetType.deno,
+    PetType.finley,
     PetType.fox,
     PetType.frog,
     PetType.horse,
@@ -133,6 +136,7 @@ export const ALL_PETS = [
 ];
 export const ALL_COLORS = [
     PetColor.black,
+    PetColor.blue,
     PetColor.brown,
     PetColor.lightbrown,
     PetColor.whiteface,
@@ -169,4 +173,5 @@ export const ALL_THEMES = [
     Theme.beach,
     Theme.winter,
     Theme.autumn,
+    Theme.library,
 ];

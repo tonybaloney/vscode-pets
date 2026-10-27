@@ -34,6 +34,12 @@ The minimum set of behaviors is:
 * running/chasing
 * holding green ball
 
+### Regenerating Finley artwork
+
+Finley's editable pixel palette, sprites, and animation frames are in `media/finley/pixel-art.json`. After installing the project's development dependencies and ImageMagick 7, run `npm run generate:finley` to regenerate the six `blue_*_8fps.gif` animations and `icon.png`.
+
+The generator preserves the authored pixels and checks the GIF output against the source. Keep the ball green (`#2ed851`) to match the thrown ball in the pet panel.
+
 ## Testing the changes
 
 * Run `npm install`.
