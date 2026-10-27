@@ -83,6 +83,7 @@ export const enum Theme {
     beach = 'beach',
     winter = 'winter',
     autumn = 'autumn',
+    library = 'library',
 }
 
 export const enum ColorThemeKind {
@@ -168,4 +169,5 @@ export const ALL_THEMES = [
     Theme.beach,
     Theme.winter,
     Theme.autumn,
+    Theme.library,
 ];

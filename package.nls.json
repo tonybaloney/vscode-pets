@@ -82,5 +82,6 @@
     "vscode-pets.theme.castle" : "Castle",
     "vscode-pets.theme.beach" : "Beach",
     "vscode-pets.theme.winter" : "Winter",
-    "vscode-pets.theme.autumn" : "Autumn"
+    "vscode-pets.theme.autumn" : "Autumn",
+    "vscode-pets.theme.library": "Library"
 }

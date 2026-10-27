@@ -163,6 +163,25 @@ class AutumnThemeInfo extends ThemeInfo {
     }
 }
 
+class LibraryThemeInfo extends ThemeInfo {
+    name = 'library';
+    description = 'A cozy library theme';
+
+    floor(size: PetSize): number {
+        switch (size) {
+            case PetSize.small:
+                return 22;
+            case PetSize.medium:
+                return 32;
+            case PetSize.large:
+                return 44;
+            case PetSize.nano:
+            default:
+                return 16;
+        }
+    }
+}
+
 // Map of theme name to theme info
 export const THEMES: Record<Theme, ThemeInfo> = {
     none: {
@@ -187,4 +206,5 @@ export const THEMES: Record<Theme, ThemeInfo> = {
     beach: new BeachThemeInfo(),
     winter: new WinterThemeInfo(),
     autumn: new AutumnThemeInfo(),
+    library: new LibraryThemeInfo(),
 };

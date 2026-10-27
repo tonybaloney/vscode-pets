@@ -320,7 +320,8 @@
                             "castle",
                             "beach",
                             "winter",
-                            "autumn"
+                            "autumn",
+                            "library"
                         ],
                         "default": "none",
                         "description": "%vscode-pets.theme.description%",
@@ -330,7 +331,8 @@
                             "%vscode-pets.theme.castle%",
                             "%vscode-pets.theme.beach%",
                             "%vscode-pets.theme.winter%",
-                            "%vscode-pets.theme.autumn%"
+                            "%vscode-pets.theme.autumn%",
+                            "%vscode-pets.theme.library%"
                         ]
                     },
                     "vscode-pets.throwBallWithMouse": {
