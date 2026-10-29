@@ -37,6 +37,10 @@ const pets: { [key: string]: { colors: string[]; states: string[] } } = {
         colors: ['purple'],
         states: ['idle', 'run', 'swipe', 'walk', 'walk_fast', 'with_ball'],
     },
+    'african-grey': {
+        colors: ['gray'],
+        states: ['idle', 'run', 'swipe', 'walk', 'walk_fast', 'with_ball'],
+    },
     clippy: {
         colors: ['black', 'brown', 'green', 'yellow'],
         states: ['idle', 'run', 'swipe', 'walk', 'walk_fast', 'with_ball'],

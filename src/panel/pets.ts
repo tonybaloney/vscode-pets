@@ -3,6 +3,7 @@ import { Bunny } from './pets/bunny';
 import { Cat } from './pets/cat';
 import { Chicken } from './pets/chicken';
 import { Clippy } from './pets/clippy';
+import { AfricanGrey } from './pets/africangrey';
 import { Cockatiel } from './pets/cockatiel';
 import { Crab } from './pets/crab';
 import { Deno } from './pets/deno';
@@ -239,6 +240,8 @@ export function createPet(
             return new Zappy(...standardPetArguments, PetSpeed.veryFast);
         case PetType.rocky:
             return new Rocky(...standardPetArguments, PetSpeed.still);
+        case PetType.africangrey:
+            return new AfricanGrey(...standardPetArguments, PetSpeed.normal);
         case PetType.cockatiel:
             return new Cockatiel(...standardPetArguments, PetSpeed.normal);
         case PetType.monkey:
@@ -304,6 +307,8 @@ export function availableColors(petType: PetType): PetColor[] {
             return Zappy.possibleColors;
         case PetType.rocky:
             return Rocky.possibleColors;
+        case PetType.africangrey:
+            return AfricanGrey.possibleColors;
         case PetType.cockatiel:
             return Cockatiel.possibleColors;
         case PetType.rat:

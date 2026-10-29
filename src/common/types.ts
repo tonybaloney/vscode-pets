@@ -54,6 +54,7 @@ export const enum PetType {
     totoro = 'totoro',
     turtle = 'turtle',
     zappy = 'zappy',
+    africangrey = 'african-grey',
     null = 'null',
 }
 
@@ -106,6 +107,7 @@ export class WebviewMessage {
 }
 
 export const ALL_PETS = [
+    PetType.africangrey,
     PetType.bunny,
     PetType.cat,
     PetType.chicken,
