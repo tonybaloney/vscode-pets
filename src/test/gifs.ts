@@ -46,7 +46,7 @@ const pets: { [key: string]: { colors: string[]; states: string[] } } = {
         states: ['idle', 'run', 'swipe', 'walk', 'walk_fast', 'with_ball'],
     },
     cockatiel: {
-        colors: ['gray', 'brown'],
+        colors: ['gray', 'brown', 'whiteface', 'piedpearl'],
         states: ['idle', 'run', 'swipe', 'walk', 'walk_fast', 'with_ball'],
     },
     crab: {
@@ -56,6 +56,10 @@ const pets: { [key: string]: { colors: string[]; states: string[] } } = {
     deno: {
         colors: ['green'],
         states: ['idle', 'run', 'swipe', 'walk', 'with_ball'],
+    },
+    finley: {
+        colors: ['blue'],
+        states: ['idle', 'run', 'swipe', 'walk', 'walk_fast', 'with_ball'],
     },
     dog: {
         colors: ['black', 'brown', 'red', 'white', 'akita'],
