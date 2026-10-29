@@ -54,6 +54,8 @@ export const enum PetType {
     totoro = 'totoro',
     turtle = 'turtle',
     zappy = 'zappy',
+    donkey = 'donkey',
+    penguin = 'penguin',
     null = 'null',
 }
 
@@ -118,6 +120,8 @@ export const ALL_PETS = [
     PetType.fox,
     PetType.frog,
     PetType.horse,
+    PetType.donkey,
+    PetType.penguin,
     PetType.mod,
     PetType.monkey,
     PetType.morph,
