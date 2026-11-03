@@ -9,26 +9,24 @@ suite('GIF filename validator', () => {
     let folder: string;
     let errors: string[];
     let warnings: string[];
-    const originalError = console.error;
-    const originalWarn = console.warn;
+    const logger = {
+        error: (message: string) => errors.push(message),
+        warn: (message: string) => warnings.push(message),
+    };
 
     setup(() => {
         folder = fs.mkdtempSync(path.join(os.tmpdir(), 'vscode-pets-gifs-'));
         errors = [];
         warnings = [];
-        console.error = (message: string) => errors.push(message);
-        console.warn = (message: string) => warnings.push(message);
     });
 
     teardown(() => {
-        console.error = originalError;
-        console.warn = originalWarn;
         fs.rmSync(folder, { recursive: true, force: true });
     });
 
     test('Accepts a complete asset inventory', () => {
         assert.strictEqual(
-            checkGifFilenames(() => true),
+            checkGifFilenames(() => true, logger),
             true,
         );
         assert.deepStrictEqual(errors, []);
@@ -41,7 +39,7 @@ suite('GIF filename validator', () => {
             'cat/solid_white_walk_fast_8fps.gif',
         ]);
         assert.strictEqual(
-            checkGifFilenames((filename) => !missing.has(filename)),
+            checkGifFilenames((filename) => !missing.has(filename), logger),
             false,
         );
         assert.strictEqual(errors.length, missing.size);
@@ -54,6 +52,7 @@ suite('GIF filename validator', () => {
         assert.strictEqual(
             checkGifFilenames(
                 (filename) => filename !== 'cat/icon_solid_white.png',
+                logger,
             ),
             true,
         );
@@ -68,6 +67,7 @@ suite('GIF filename validator', () => {
                 (filename) =>
                     filename !== 'cat/icon_solid_white.png' &&
                     filename !== 'cat/icon.png',
+                logger,
             ),
             false,
         );
@@ -77,7 +77,7 @@ suite('GIF filename validator', () => {
 
     test('Rejects an empty asset inventory', () => {
         assert.strictEqual(
-            checkGifFilenames(() => false),
+            checkGifFilenames(() => false, logger),
             false,
         );
         assert.ok(errors.length > 0);
@@ -109,7 +109,8 @@ suite('GIF filename validator', () => {
         assert.deepStrictEqual(await readArchivedFiles(folder), new Set());
     });
 
-    test('CLI exits nonzero for missing GIFs, icons, and an empty media folder', () => {
+    test('CLI exits nonzero for missing GIFs, icons, and an empty media folder', function () {
+        this.timeout(10000);
         const run = () =>
             spawnSync(process.execPath, [path.join(__dirname, 'gifs.js')], {
                 cwd: folder,
@@ -148,7 +149,8 @@ suite('GIF filename validator', () => {
         assert.ok(missingIcon.stderr.includes('cat/icon_solid_white.png'));
     });
 
-    test('CLI exits nonzero for a corrupt archive', () => {
+    test('CLI exits nonzero for a corrupt archive', function () {
+        this.timeout(10000);
         fs.mkdirSync(path.join(folder, 'media'));
         fs.writeFileSync(path.join(folder, 'media', 'extra.zip'), 'not a ZIP');
         const result = spawnSync(

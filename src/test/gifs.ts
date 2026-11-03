@@ -173,6 +173,7 @@ const pets: { [key: string]: { colors: string[]; states: string[] } } = {
 
 export function checkGifFilenames(
     fileExists: (filename: string) => boolean,
+    logger: Pick<Console, 'error' | 'warn'> = console,
 ): boolean {
     let valid = true;
     for (const pet in pets) {
@@ -184,7 +185,7 @@ export function checkGifFilenames(
                 const filePath = `${pet}/${filename}`;
                 if (!fileExists(filePath)) {
                     // \x1b[31m is the ANSI escape code for red, and \x1b[0m resets the color back to the terminal's default.
-                    console.error(
+                    logger.error(
                         `\x1b[31mFile "${filePath}" does not exist.\x1b[0m`,
                     );
                     valid = false;
@@ -196,11 +197,11 @@ export function checkGifFilenames(
             const iconFilePath = `${pet}/${iconFilename}`;
             if (!fileExists(iconFilePath)) {
                 if (fileExists(`${pet}/icon.png`)) {
-                    console.warn(
+                    logger.warn(
                         `\x1b[33mNo icon found for "${pet}" with color "${color}". Using default icon.\x1b[0m`,
                     );
                 } else {
-                    console.error(
+                    logger.error(
                         `\x1b[31mFile "${iconFilePath}" and "${pet}/icon.png" do not exist.\x1b[0m`,
                     );
                     valid = false;
