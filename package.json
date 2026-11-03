@@ -192,7 +192,23 @@
                             "paint brown",
                             "magical",
                             "warrior",
-                            "pink"
+                            "pink",
+                            "solid_white",
+                            "chocolate",
+                            "cream",
+                            "brown_tabby",
+                            "silver_tabby",
+                            "ginger_tabby",
+                            "cream_tabby",
+                            "gray_white",
+                            "ginger_white",
+                            "tabby_white",
+                            "tortoiseshell",
+                            "dilute_tortie",
+                            "calico",
+                            "dilute_calico",
+                            "seal_point",
+                            "blue_point"
                         ],
                         "default": "brown",
                         "description": "%vscode-pets.petColor.description%",
@@ -221,7 +237,23 @@
                             "%vscode-pets.petColor.paint brown%",
                             "%vscode-pets.petColor.magical%",
                             "%vscode-pets.petColor.warrior%",
-                            "%vscode-pets.petColor.pink%"
+                            "%vscode-pets.petColor.pink%",
+                            "%vscode-pets.petColor.solid_white%",
+                            "%vscode-pets.petColor.chocolate%",
+                            "%vscode-pets.petColor.cream%",
+                            "%vscode-pets.petColor.brown_tabby%",
+                            "%vscode-pets.petColor.silver_tabby%",
+                            "%vscode-pets.petColor.ginger_tabby%",
+                            "%vscode-pets.petColor.cream_tabby%",
+                            "%vscode-pets.petColor.gray_white%",
+                            "%vscode-pets.petColor.ginger_white%",
+                            "%vscode-pets.petColor.tabby_white%",
+                            "%vscode-pets.petColor.tortoiseshell%",
+                            "%vscode-pets.petColor.dilute_tortie%",
+                            "%vscode-pets.petColor.calico%",
+                            "%vscode-pets.petColor.dilute_calico%",
+                            "%vscode-pets.petColor.seal_point%",
+                            "%vscode-pets.petColor.blue_point%"
                         ]
                     },
                     "vscode-pets.petType": {
@@ -379,6 +411,7 @@
         "@types/mocha": "^9.1.1",
         "@types/node": "^20.19.10",
         "@types/vscode": "^1.73.0",
+        "@types/yauzl": "^3.4.0",
         "@typescript-eslint/eslint-plugin": "^5.29.0",
         "@typescript-eslint/parser": "^5.29.0",
         "@vscode/l10n-dev": "^0.0.29",
@@ -400,7 +433,8 @@
         "typescript-eslint": "^0.0.1-alpha.0",
         "vscode-test": "^1.4.0",
         "webpack": "5.95.0",
-        "webpack-cli": "^4.10.0"
+        "webpack-cli": "^4.10.0",
+        "yauzl": "^3.4.0"
     },
     "dependencies": {
         "@vscode/l10n": "^0.0.10"
