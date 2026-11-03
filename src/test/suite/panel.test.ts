@@ -250,7 +250,15 @@ suite('Pets Test Suite', () => {
         );
     });
 
-    test('Uses archived filenames for every cat color and animation', () => {
+    test('Uses archived filenames for new and restored cats of every color', () => {
+        assert.deepStrictEqual(Cat.possibleColors.slice(0, 6), [
+            'black',
+            'brown',
+            'gray',
+            'lightbrown',
+            'orange',
+            'white',
+        ]);
         const baseUri = 'https://test.com/media';
         const sprites = [
             'idle',
@@ -266,31 +274,36 @@ suite('Pets Test Suite', () => {
         ];
         for (const color of Cat.possibleColors) {
             const mockState = new MockState();
-            panel.allPets.reset();
-            panel.petPanelApp(
-                baseUri,
-                Theme.none,
-                ColorThemeKind.dark,
-                color,
-                PetSize.large,
-                PetType.cat,
-                false,
-                false,
-                mockState,
-            );
-            const element = panel.allPets.pets[0];
-            const cat = element.pet;
-            assert.ok(cat instanceof Cat);
-            assert.strictEqual(element.color, color);
-            for (const sprite of sprites) {
-                cat.setAnimation(sprite);
-                assert.strictEqual(
-                    element.el.src,
-                    `${baseUri}/cat/${color.replace(
-                        ' ',
-                        '_',
-                    )}_${sprite}_8fps.gif`,
+            for (const phase of ['new', 'restored']) {
+                panel.allPets.reset();
+                panel.petPanelApp(
+                    baseUri,
+                    Theme.none,
+                    ColorThemeKind.dark,
+                    color,
+                    PetSize.large,
+                    PetType.cat,
+                    false,
+                    false,
+                    mockState,
                 );
+                const element = panel.allPets.pets[0];
+                const cat = element.pet;
+                assert.ok(cat instanceof Cat);
+                assert.strictEqual(element.color, color, phase);
+                assert.strictEqual(
+                    mockState.states?.[0]?.petColor,
+                    color,
+                    phase,
+                );
+                for (const sprite of sprites) {
+                    cat.setAnimation(sprite);
+                    assert.strictEqual(
+                        element.el.src,
+                        `${baseUri}/cat/${color}_${sprite}_8fps.gif`,
+                        phase,
+                    );
+                }
             }
         }
     });

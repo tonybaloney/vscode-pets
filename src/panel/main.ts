@@ -94,7 +94,7 @@ function addPetToPanel(
         speechBubbleElement,
     );
 
-    const root = `${basePetUri}/${petType}/${petColor.replace(' ', '_')}`;
+    const root = basePetUri + '/' + petType + '/' + petColor;
     console.log('Creating new pet : ', petType, root, petColor, petSize, name);
     try {
         if (!availableColors(petType).includes(petColor)) {

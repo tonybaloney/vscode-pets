@@ -48,16 +48,16 @@ Cats support the following values for the `vscode-pets.petColor` setting:
 
 | Coat | Available colors |
 | --- | --- |
-| Solid | `black`, `blue`, `solid white`, `chocolate`, `cream` |
-| Tabby | `brown tabby`, `silver tabby`, `ginger tabby`, `cream tabby` |
-| Bicolor | `white` (tuxedo), `gray white`, `ginger white`, `tabby white` |
-| Tortoiseshell | `tortoiseshell`, `dilute tortie` |
-| Calico | `calico`, `dilute calico` |
-| Colorpoint | `seal point`, `blue point` |
+| Solid | `black`, `blue`, `solid_white`, `chocolate`, `cream` |
+| Tabby | `brown_tabby`, `silver_tabby`, `ginger_tabby`, `cream_tabby` |
+| Bicolor | `white` (tuxedo), `gray_white`, `ginger_white`, `tabby_white` |
+| Tortoiseshell | `tortoiseshell`, `dilute_tortie` |
+| Calico | `calico`, `dilute_calico` |
+| Colorpoint | `seal_point`, `blue_point` |
 | Other original colors | `brown`, `gray`, `lightbrown`, `orange` |
 
 The original `white` option remains the black-and-white tuxedo cat for compatibility
-with saved pets. Choose `solid white` for an all-white cat.
+with saved pets. Choose `solid_white` for an all-white cat.
 
 ## Place the pet's window
 
