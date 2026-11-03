@@ -20,16 +20,6 @@ If you have more than 1 pet, they become friends. When pets become friends, they
 
 You can also click the squirrel icon in the bottom of the VS Code Window to create pets.
 
-### Cat coats
-
-Alongside the original six colors, cats support solid white, blue-gray, chocolate,
-cream, brown/silver/ginger/cream tabby, gray-and-white, ginger-and-white,
-tabby-and-white, tortoiseshell, dilute tortoiseshell, calico, dilute calico,
-seal point, and blue point coats.
-
-The original `white` option remains the black-and-white tuxedo cat for
-compatibility with saved pets. Choose **Solid white** for an all-white cat.
-
 ## Throwing a ball
 
 Play catch with your pet! Click the ball icon in the VS Code Pets panel to throw the ball:
