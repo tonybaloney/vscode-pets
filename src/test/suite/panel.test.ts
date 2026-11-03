@@ -250,6 +250,51 @@ suite('Pets Test Suite', () => {
         );
     });
 
+    test('Uses archived filenames for every cat color and animation', () => {
+        const baseUri = 'https://test.com/media';
+        const sprites = [
+            'idle',
+            'walk',
+            'walk_fast',
+            'run',
+            'swipe',
+            'with_ball',
+            'wallclimb',
+            'wallgrab',
+            'fall_from_grab',
+            'land',
+        ];
+        for (const color of Cat.possibleColors) {
+            const mockState = new MockState();
+            panel.allPets.reset();
+            panel.petPanelApp(
+                baseUri,
+                Theme.none,
+                ColorThemeKind.dark,
+                color,
+                PetSize.large,
+                PetType.cat,
+                false,
+                false,
+                mockState,
+            );
+            const element = panel.allPets.pets[0];
+            const cat = element.pet;
+            assert.ok(cat instanceof Cat);
+            assert.strictEqual(element.color, color);
+            for (const sprite of sprites) {
+                cat.setAnimation(sprite);
+                assert.strictEqual(
+                    element.el.src,
+                    `${baseUri}/cat/${color.replace(
+                        ' ',
+                        '_',
+                    )}_${sprite}_8fps.gif`,
+                );
+            }
+        }
+    });
+
     test('Test post message to panel', () => {
         const mockState = new MockState();
         panel.allPets.reset();
