@@ -77,13 +77,11 @@ class MockState implements VscodeStateApi {
         };
     }
 
-    // eslint-disable-next-line no-unused-vars
     setState(state: PetPanelState): void {
         this.counter = state.petCounter ?? this.counter;
         this.states = state.petStates ?? this.states;
     }
 
-    // eslint-disable-next-line no-unused-vars
     postMessage(message: WebviewMessage): void {
         this.sentMessages.push(message);
     }

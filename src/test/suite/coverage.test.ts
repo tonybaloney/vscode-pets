@@ -56,14 +56,9 @@ suite('Coverage Lifecycle Test Suite', () => {
                         case 'nyc':
                             return MockNyc;
                         case 'glob':
-                            return (
-                                _pattern: string,
-                                _options: object,
-                                callback: (
-                                    error: null,
-                                    files: string[],
-                                ) => void,
-                            ) => callback(null, ['example.test.js']);
+                            return {
+                                glob: async () => ['example.test.js'],
+                            };
                         default:
                             throw new Error(`Unexpected dependency: ${name}`);
                     }

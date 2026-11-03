@@ -8,10 +8,13 @@ on:
 
 jobs:
     build:
-        # Playwright 1.54.1 does not support Ubuntu 26.04.
         runs-on: ubuntu-24.04
         steps:
-            - uses: actions/checkout@v6
+            - uses: actions/checkout@v7
+            - uses: actions/setup-node@v7
+              with:
+                  node-version-file: .nvmrc
+                  cache: npm
             - name: Verify Gifs Filename
               run: |
                   npm ci
