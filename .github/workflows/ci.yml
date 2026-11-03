@@ -24,11 +24,16 @@ jobs:
               uses: actions/setup-node@v7
               with:
                   node-version: ${{ matrix.node-version }}
+            - name: Test cat asset packaging
+              run: python3 -m unittest discover -s scripts/tests -p "test_cat_colors.py"
             - name: Extract cats frogs and bunnies
               run: cd media && unzip -P ${{ secrets.EXTRA_ASSETS }} extra.zip && rm -f extra.zip
               if: github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/tags/')
             - name: Extract extra icons
               run: cd media && unzip extraIcons.zip && rm -f extraIcons.zip
+              if: github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/tags/')
+            - name: Extract additional cat coats
+              run: cd media && unzip -P "${{ secrets.EXTRA_ASSETS }}" cat-colors.zip && rm -f cat-colors.zip
               if: github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/tags/')
             - run: npm ci
             - run: npm run compile

@@ -14,3 +14,6 @@ docs/
 node_modules
 scripts/generate-finley.mjs
 media/finley/pixel-art.json
+scripts/package-cat-colors.py
+scripts/tests/**
+media/cat-colors.json

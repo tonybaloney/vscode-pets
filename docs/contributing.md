@@ -40,6 +40,45 @@ Finley's editable pixel palette, sprites, and animation frames are in `media/fin
 
 The generator preserves the authored pixels and checks the GIF output against the source. Keep the ball green (`#2ed851`) to match the thrown ball in the pet panel.
 
+### Packaging additional cat coats
+
+`media/cat-colors.json` lists the 17 additional cat options and maps their runtime
+color IDs to the approved offline animation review matrix. It keeps palette swaps
+separate from new region-mask artwork. The six existing cat color IDs and their
+assets are unchanged: in particular, legacy `white` remains the tuxedo cat, while
+`solid white` is the all-white option. Existing black and tuxedo artwork supply
+two of the 19 representative coats; the archive adds the other 17.
+
+With Python 3.10 or later, package the approved HTML matrix without installing
+additional dependencies:
+
+```shell
+python scripts/package-cat-colors.py path-to-approved-review.html
+```
+
+The output is `.build-out/cat-colors.zip`, containing 170 GIFs, 17 matching 32x32
+icons, and a manifest recording source groups, frame timing, repeat behavior, and
+SHA-256 hashes. Entries are rooted at `cat/` for extraction inside `media/`.
+No original assets are overwritten. Fall-from-wall and land must play once;
+the other eight animations must repeat indefinitely. The packager rejects
+incomplete matrices, mismatched metadata, and incorrect repeat behavior.
+
+Keep the approved review HTML, loose GIFs, and loose icons out of Git. The HTML
+embeds artwork and is an asset, not source code. Commit only the protected bundle
+as `media/cat-colors.zip`.
+
+The standard-library packager creates an unencrypted ZIP; protect its contents
+using the same password and ZIP encryption format as `media/extra.zip` before
+replacing the committed bundle. Do not put the password in source or
+documentation. Release CI extracts the new archive after the existing assets
+using the `EXTRA_ASSETS` secret.
+
+Run the packager's tests with:
+
+```shell
+python -m unittest discover -s scripts/tests -p "test_cat_colors.py"
+```
+
 ## Testing the changes
 
 * Run `npm install`.

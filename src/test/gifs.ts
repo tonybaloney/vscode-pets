@@ -1,4 +1,5 @@
 import * as fs from 'fs';
+import { Cat } from '../panel/pets/cat';
 
 const pets: { [key: string]: { colors: string[]; states: string[] } } = {
     bunny: {
@@ -15,7 +16,7 @@ const pets: { [key: string]: { colors: string[]; states: string[] } } = {
         ],
     },
     cat: {
-        colors: ['black', 'brown', 'gray', 'lightbrown', 'orange', 'white'],
+        colors: Cat.possibleColors.map((color) => color.replace(' ', '_')),
         states: [
             'fall_from_grab',
             'idle',

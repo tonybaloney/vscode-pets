@@ -6,7 +6,7 @@ node_modules
 .build-out/
 coverage/
 .nyc_output/
+__pycache__/
 .idea/
 media/main-bundle.js
 .DS_Store
-
