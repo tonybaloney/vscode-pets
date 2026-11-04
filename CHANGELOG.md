@@ -2,6 +2,25 @@
 
 All notable changes to the "vscode-pets" extension will be documented in this file.
 
+## [1.37.0]
+
+### New Pets
+
+* Add gray color variant for chicken by @tcheffert in https://github.com/tonybaloney/vscode-pets/pull/962
+* Add 17 new cat colors - calico, solid, tabby, tortie and points by @tonybaloney in https://github.com/tonybaloney/vscode-pets/pull/977
+* Add white-faced and pied pearl cockatiel colours by @mberguig in https://github.com/tonybaloney/vscode-pets/pull/967
+* Add Finley with smooth and pixel-art appearances by @sinedied in https://github.com/tonybaloney/vscode-pets/pull/960
+
+### New Themes
+
+* Add library background theme by @KlaudiuszW9693 in https://github.com/tonybaloney/vscode-pets/pull/964
+
+### Other Updates
+
+* Fix roll-call fallthrough and add regression test by @tcheffert in https://github.com/tonybaloney/vscode-pets/pull/958
+* Fix pets being stuck in an infinite swiping state when webview is destroyed by @e-newton in https://github.com/tonybaloney/vscode-pets/pull/944
+* Modernize Node LTS, development tooling and dependency maintenance by @tonybaloney in https://github.com/tonybaloney/vscode-pets/pull/979
+
 ## [1.36.0]
 
 ### New Pets
