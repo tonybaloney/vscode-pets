@@ -1,6 +1,6 @@
 import * as path from 'path';
-import * as Mocha from 'mocha';
-import * as glob from 'glob';
+import Mocha = require('mocha');
+import { glob } from 'glob';
 import { join } from 'path';
 
 async function setupCoverage() {
@@ -31,35 +31,22 @@ export async function run(): Promise<void> {
     const mocha = new Mocha({
         ui: 'tdd',
         color: true,
-        require: [
-            'ts-node/register',
-            'source-map-support/register',
-            'jsdom-global/register',
-        ],
+        timeout: 10000,
     });
 
     const testsRoot = path.resolve(__dirname, '..');
 
     try {
+        const files = await glob('**/*.test.js', { cwd: testsRoot });
         await new Promise<void>((resolve, reject) => {
-            glob('**/**.test.js', { cwd: testsRoot }, (err, files) => {
-                if (err) {
-                    return reject(err);
-                }
-
-                try {
-                    files.forEach((file) =>
-                        mocha.addFile(path.resolve(testsRoot, file)),
-                    );
-                    mocha.run((failures) => {
-                        if (failures > 0) {
-                            reject(new Error(`${failures} tests failed.`));
-                        } else {
-                            resolve();
-                        }
-                    });
-                } catch (error) {
-                    reject(error);
+            files.forEach((file) =>
+                mocha.addFile(path.resolve(testsRoot, file)),
+            );
+            mocha.run((failures) => {
+                if (failures > 0) {
+                    reject(new Error(`${failures} tests failed.`));
+                } else {
+                    resolve();
                 }
             });
         });

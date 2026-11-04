@@ -2,6 +2,8 @@ out
 dist
 node_modules
 .vscode-test/
+.vscode-test-web/
+.tools/
 *.vsix
 .build-out/
 coverage/
@@ -9,4 +11,3 @@ coverage/
 .idea/
 media/main-bundle.js
 .DS_Store
-

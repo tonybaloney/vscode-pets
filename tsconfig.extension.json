@@ -1,10 +1,13 @@
 {
 	"compilerOptions": {
-		"module": "commonjs",
-		"target": "esnext",
+		"target": "es2020",
+		"module": "node16",
+		"moduleResolution": "node16",
 		"outDir": "out",
+		"rootDir": "src",
+		"types": ["node"],
 		"lib": [
-			"es6"
+			"es2022", "DOM"
 		],
 		"sourceMap": true,
 		"rootDirs": ["extension", "common"],
@@ -14,6 +17,7 @@
 		// "noFallthroughCasesInSwitch": true, /* Report errors for fallthrough cases in switch statement. */
 		// "noUnusedParameters": true,  /* Report errors on unused parameters. */
 	},
+	"include": ["src/**/*.ts"],
 	"exclude": [
 		"node_modules",
 		".vscode-test",
