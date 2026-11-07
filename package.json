@@ -410,7 +410,7 @@
         "@rbarilani/remove-source-map-url-webpack-plugin": "^1.1.0",
         "@types/jsdom": "^30.0.0",
         "@types/mocha": "^10.0.10",
-        "@types/node": "^24.0.0",
+        "@types/node": "^26.6.6",
         "@types/vscode": "1.73.0",
         "@types/yauzl": "^3.4.0",
         "@typescript-eslint/eslint-plugin": "^8.72.1",
