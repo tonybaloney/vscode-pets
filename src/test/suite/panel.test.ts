@@ -27,6 +27,7 @@ import {
 import * as pets from '../../panel/pets';
 import { randomName } from '../../common/names';
 import { PetSpecification } from '../../extension/extension';
+import { Bat } from '../../panel/pets/bat';
 import { Finley } from '../../panel/pets/finley';
 
 function mockPanelWindow() {
@@ -336,6 +337,63 @@ suite('Pets Test Suite', () => {
         window.postMessage(message, '/');
 
         // assert.notEqual(mockState.getMessages().length, 0);
+    });
+});
+
+suite('Bat Test Suite', () => {
+    const mediaRoot = path.resolve(__dirname, '../../../media/bat');
+
+    test('Registers bat with its correct type, color and names', () => {
+        assert.ok(ALL_PETS.includes(PetType.bat));
+        assert.deepStrictEqual(pets.availableColors(PetType.bat), [
+            PetColor.black,
+        ]);
+        assert.strictEqual(
+            pets.normalizeColor(PetColor.brown, PetType.bat),
+            PetColor.black,
+        );
+        assert.ok(randomName(PetType.bat).length > 0);
+
+        const image = document.createElement('img');
+        image.width = 30;
+        const pet = pets.createPet(
+            PetType.bat,
+            image,
+            document.createElement('div'),
+            document.createElement('div'),
+            PetSize.small,
+            100,
+            0,
+            path.join(mediaRoot, 'black'),
+            0,
+            'Echo',
+        );
+        assert.ok(pet instanceof Bat);
+        assert.strictEqual(pet.label, 'bat');
+        assert.strictEqual(pet.emoji, '🦇');
+        assert.ok(pet.canChase);
+        assert.ok(pet.canSwipe);
+    });
+
+    test('Provides all six transparent animated GIFs and a PNG icon', () => {
+        for (const state of [
+            'idle',
+            'walk',
+            'walk_fast',
+            'run',
+            'swipe',
+            'with_ball',
+        ]) {
+            const gif = readFileSync(
+                path.join(mediaRoot, `black_${state}_8fps.gif`),
+            );
+            assert.strictEqual(gif.subarray(0, 6).toString(), 'GIF89a');
+        }
+        const icon = readFileSync(path.join(mediaRoot, 'icon.png'));
+        assert.strictEqual(
+            icon.subarray(0, 8).toString('hex'),
+            '89504e470d0a1a0a',
+        );
     });
 });
 
