@@ -4,6 +4,10 @@ import { Entry, open } from 'yauzl';
 import { Cat } from '../panel/pets/cat';
 
 const pets: { [key: string]: { colors: string[]; states: string[] } } = {
+    bat: {
+        colors: ['black'],
+        states: ['idle', 'run', 'swipe', 'walk', 'walk_fast', 'with_ball'],
+    },
     bunny: {
         colors: ['white', 'purple', 'gray'],
         states: [
