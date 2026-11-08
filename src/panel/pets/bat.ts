@@ -8,14 +8,54 @@ export class Bat extends BasePetType {
     sequence = {
         startingState: States.sitIdle,
         sequenceStates: [
-            { state: States.sitIdle, possibleNextStates: [States.walkRight, States.walkLeft, States.swipe] },
-            { state: States.walkRight, possibleNextStates: [States.walkLeft, States.runRight, States.sitIdle] },
-            { state: States.walkLeft, possibleNextStates: [States.walkRight, States.runLeft, States.sitIdle] },
-            { state: States.runRight, possibleNextStates: [States.runLeft, States.walkLeft] },
-            { state: States.runLeft, possibleNextStates: [States.runRight, States.walkRight] },
-            { state: States.swipe, possibleNextStates: [States.sitIdle] },
-            { state: States.chase, possibleNextStates: [States.idleWithBall] },
-            { state: States.idleWithBall, possibleNextStates: [States.sitIdle, States.walkLeft, States.walkRight] },
+            {
+                state: States.sitIdle,
+                possibleNextStates: [
+                    States.walkRight,
+                    States.walkLeft,
+                    States.swipe,
+                ],
+            },
+            {
+                state: States.walkRight,
+                possibleNextStates: [
+                    States.walkLeft,
+                    States.runRight,
+                    States.sitIdle,
+                ],
+            },
+            {
+                state: States.walkLeft,
+                possibleNextStates: [
+                    States.walkRight,
+                    States.runLeft,
+                    States.sitIdle,
+                ],
+            },
+            {
+                state: States.runRight,
+                possibleNextStates: [States.runLeft, States.walkLeft],
+            },
+            {
+                state: States.runLeft,
+                possibleNextStates: [States.runRight, States.walkRight],
+            },
+            {
+                state: States.swipe,
+                possibleNextStates: [States.sitIdle],
+            },
+            {
+                state: States.chase,
+                possibleNextStates: [States.idleWithBall],
+            },
+            {
+                state: States.idleWithBall,
+                possibleNextStates: [
+                    States.sitIdle,
+                    States.walkLeft,
+                    States.walkRight,
+                ],
+            },
         ],
     };
 
@@ -40,6 +80,16 @@ export class Bat extends BasePetType {
 }
 
 export const BAT_NAMES: ReadonlyArray<string> = [
-    'Echo', 'Pip', 'Nimbus', 'Vesper', 'Flappy', 'Nocturne', 'Count Flapula',
-    'Wingston', 'Moonbeam', 'Batzilla', 'Squeak', 'Midnight',
+    'Echo',
+    'Pip',
+    'Nimbus',
+    'Vesper',
+    'Flappy',
+    'Nocturne',
+    'Count Flapula',
+    'Wingston',
+    'Moonbeam',
+    'Batzilla',
+    'Squeak',
+    'Midnight',
 ];
