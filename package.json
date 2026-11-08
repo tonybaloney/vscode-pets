@@ -391,6 +391,7 @@
     },
     "scripts": {
         "generate:finley": "node scripts/generate-finley.mjs",
+        "generate:bat": "node scripts/generate-bat.mjs",
         "vscode:prepublish": "npm run compile",
         "compile:panel": "webpack",
         "compile:extension": "tsc -p ./tsconfig.extension.json",
