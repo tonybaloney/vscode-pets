@@ -34,6 +34,11 @@ The minimum set of behaviors is:
 * running/chasing
 * holding green ball
 
+### Regenerating Bat artwork
+
+The original bat sprite is generated deterministically without dependencies:
+run `npm run generate:bat` to regenerate the six `media/bat/black_*_8fps.gif` animations and `icon.png`. The 32×32 source pixel art is drawn on a fixed palette, enlarged with nearest-neighbor pixels to 128×128, and encoded as transparent 8 fps GIFs. The ball uses the existing `#2ed851` green. Edit `scripts/generate-bat.mjs` to change poses or palette; all source and output assets are included in the PR.
+
 ### Regenerating Finley artwork
 
 Finley's editable pixel palette, sprites, and animation frames are in `media/finley/pixel-art.json`. After installing the project's development dependencies and ImageMagick 7, run `npm run generate:finley` to regenerate the six `blue_*_8fps.gif` animations and `icon.png`.
