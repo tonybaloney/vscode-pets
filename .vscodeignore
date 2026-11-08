@@ -20,3 +20,4 @@ docs/
 node_modules
 scripts/generate-finley.mjs
 media/finley/pixel-art.json
+scripts/generate-bat.mjs
