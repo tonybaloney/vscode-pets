@@ -59,6 +59,9 @@ The pet list can be imported by running the "Import pet list" command (`vscode-p
 
 ## Pet Gallery
 
+![Bat](/media/bat/icon.png) **Bat** — a tiny purple-and-black bat that flaps, blinks, chases the green ball, and waves its wings. Added for [issue #973](https://github.com/tonybaloney/vscode-pets/issues/973).
+
+
 |     ![Bunny](/media/bunny/icon.png) <br />Bunny      |             ![Cat](/media/cat/icon.png) <br />Cat             |  ![Chicken](/media/chicken/icon.png) <br />Chicken  | ![Clippy](/media/clippy/icon.png) <br />Clippy | ![Cockatiel](/media/cockatiel/icon.png) <br />Cockatiel |
 | :--------------------------------------------------: | :-----------------------------------------------------------: | :-------------------------------------------------: | :--------------------------------------------: | :-----------------------------------------------------: |
 |       ![Crab](/media/crab/icon.png) <br />Crab       |           ![Deno](/media/deno/icon.png) <br />Deno            |        ![Dog](/media/dog/icon.png) <br />Dog        |     ![Fox](/media/fox/icon.png) <br />Fox      |        ![Frog](/media/frog/icon.png) <br />Frog         |

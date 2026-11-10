@@ -1,3 +1,4 @@
+import { BAT_NAMES } from '../panel/pets/bat';
 import { BUNNY_NAMES } from '../panel/pets/bunny';
 import { CAT_NAMES } from '../panel/pets/cat';
 import { CHICKEN_NAMES } from '../panel/pets/chicken';
@@ -31,6 +32,7 @@ export function randomName(type: PetType): string {
     const collection: ReadonlyArray<string> =
         (
             {
+                [PetType.bat]: BAT_NAMES,
                 [PetType.bunny]: BUNNY_NAMES,
                 [PetType.cat]: CAT_NAMES,
                 [PetType.chicken]: CHICKEN_NAMES,

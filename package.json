@@ -261,6 +261,7 @@
                     "vscode-pets.petType": {
                         "type": "string",
                         "enum": [
+                            "bat",
                             "cat",
                             "chicken",
                             "crab",
@@ -292,6 +293,7 @@
                         "description": "%vscode-pets.petType.description%",
                         "scope": "window",
                         "enumItemLabels": [
+                            "%vscode-pets.petType.bat%",
                             "%vscode-pets.petType.cat%",
                             "%vscode-pets.petType.chicken%",
                             "%vscode-pets.petType.crab%",
@@ -391,6 +393,7 @@
     },
     "scripts": {
         "generate:finley": "node scripts/generate-finley.mjs",
+        "generate:bat": "node scripts/generate-bat.mjs",
         "vscode:prepublish": "npm run compile",
         "compile:panel": "webpack",
         "compile:extension": "tsc -p ./tsconfig.extension.json",

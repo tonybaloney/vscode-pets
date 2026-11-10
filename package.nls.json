@@ -60,6 +60,7 @@
     "vscode-pets.petColor.seal_point": "Seal point",
     "vscode-pets.petColor.blue_point": "Blue point",
 
+    "vscode-pets.petType.bat": "Bat",
     "vscode-pets.petType.cat": "Cat",
     "vscode-pets.petType.chicken": "Chicken",
     "vscode-pets.petType.crab": "Crab",

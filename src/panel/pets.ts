@@ -1,4 +1,5 @@
 import { PetColor, PetSize, PetSpeed, PetType } from '../common/types';
+import { Bat } from './pets/bat';
 import { Bunny } from './pets/bunny';
 import { Cat } from './pets/cat';
 import { Chicken } from './pets/chicken';
@@ -203,6 +204,8 @@ export function createPet(
     ] = [el, collision, speech, size, left, bottom, petRoot, floor, name];
 
     switch (petType) {
+        case PetType.bat:
+            return new Bat(...standardPetArguments, PetSpeed.fast);
         case PetType.bunny:
             return new Bunny(...standardPetArguments, PetSpeed.veryFast);
         case PetType.cat:
@@ -264,6 +267,8 @@ export function createPet(
 
 export function availableColors(petType: PetType): PetColor[] {
     switch (petType) {
+        case PetType.bat:
+            return Bat.possibleColors;
         case PetType.bunny:
             return Bunny.possibleColors;
         case PetType.cat:
