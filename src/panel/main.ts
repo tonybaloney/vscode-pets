@@ -269,6 +269,12 @@ export function petPanelApp(
         themeKind,
         petSize,
     );
+    [backgroundEl, foregroundEl].forEach((element) => {
+        if (element) {
+            element.style.backgroundRepeat =
+                themeInfo.backgroundRepeat ?? 'repeat-x';
+        }
+    });
     const floor = themeInfo.floor(petSize);
 
     console.log(

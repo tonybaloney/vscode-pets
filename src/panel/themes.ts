@@ -22,6 +22,7 @@ function normalizeColorThemeKind(kind: ColorThemeKind): 'dark' | 'light' {
 interface AbstractThemeInfo {
     name: string;
     description: string;
+    backgroundRepeat?: string;
     effect?: Effect;
 
     floor(size: PetSize): number;
@@ -40,6 +41,7 @@ interface AbstractThemeInfo {
 export class ThemeInfo implements AbstractThemeInfo {
     name: string = '';
     description: string = '';
+    backgroundRepeat?: string;
     effect?: Effect = undefined;
 
     // eslint-disable-next-line no-unused-vars
@@ -182,6 +184,44 @@ class LibraryThemeInfo extends ThemeInfo {
     }
 }
 
+class BarnThemeInfo extends ThemeInfo {
+    name = 'barn';
+    description = 'A red barn with a white fenced pasture';
+    backgroundRepeat = 'no-repeat, repeat-x';
+
+    backgroundImageUrl(
+        basePetUri: string,
+        themeKind: ColorThemeKind,
+        petSize: PetSize,
+    ): string {
+        const color = normalizeColorThemeKind(themeKind);
+        return `${super.backgroundImageUrl(basePetUri, themeKind, petSize)}, url('${basePetUri}/backgrounds/${this.name}/pasture-background-${color}-${petSize}.png')`;
+    }
+
+    foregroundImageUrl(
+        basePetUri: string,
+        themeKind: ColorThemeKind,
+        petSize: PetSize,
+    ): string {
+        const color = normalizeColorThemeKind(themeKind);
+        return `${super.foregroundImageUrl(basePetUri, themeKind, petSize)}, url('${basePetUri}/backgrounds/${this.name}/pasture-foreground-${color}-${petSize}.png')`;
+    }
+
+    floor(size: PetSize): number {
+        switch (size) {
+            case PetSize.small:
+                return 22;
+            case PetSize.medium:
+                return 32;
+            case PetSize.large:
+                return 44;
+            case PetSize.nano:
+            default:
+                return 16;
+        }
+    }
+}
+
 // Map of theme name to theme info
 export const THEMES: Record<Theme, ThemeInfo> = {
     none: {
@@ -207,4 +247,5 @@ export const THEMES: Record<Theme, ThemeInfo> = {
     winter: new WinterThemeInfo(),
     autumn: new AutumnThemeInfo(),
     library: new LibraryThemeInfo(),
+    barn: new BarnThemeInfo(),
 };
