@@ -171,6 +171,7 @@
                     "vscode-pets.petColor": {
                         "type": "string",
                         "enum": [
+                            "blue",
                             "black",
                             "blue",
                             "lightbrown",
@@ -216,6 +217,7 @@
                         "description": "%vscode-pets.petColor.description%",
                         "scope": "window",
                         "enumItemLabels": [
+                            "%vscode-pets.petColor.blue%",
                             "%vscode-pets.petColor.black%",
                             "%vscode-pets.petColor.blue%",
                             "%vscode-pets.petColor.lightbrown%",
@@ -261,6 +263,7 @@
                     "vscode-pets.petType": {
                         "type": "string",
                         "enum": [
+                            "butterfly",
                             "cat",
                             "chicken",
                             "crab",
@@ -292,6 +295,7 @@
                         "description": "%vscode-pets.petType.description%",
                         "scope": "window",
                         "enumItemLabels": [
+                            "%vscode-pets.petType.butterfly%",
                             "%vscode-pets.petType.cat%",
                             "%vscode-pets.petType.chicken%",
                             "%vscode-pets.petType.crab%",
