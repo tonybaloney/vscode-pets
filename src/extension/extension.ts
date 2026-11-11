@@ -69,6 +69,20 @@ function getConfiguredTheme(): Theme {
     return theme;
 }
 
+export function getThemeConfigurationTarget(
+    workspace: Pick<
+        typeof vscode.workspace,
+        'workspaceFile' | 'workspaceFolders'
+    > = vscode.workspace,
+): vscode.ConfigurationTarget {
+    const hasWorkspace =
+        workspace.workspaceFile !== undefined ||
+        (workspace.workspaceFolders?.length ?? 0) > 0;
+    return hasWorkspace
+        ? vscode.ConfigurationTarget.Workspace
+        : vscode.ConfigurationTarget.Global;
+}
+
 function getConfiguredThemeKind(): ColorThemeKind {
     return vscode.window.activeColorTheme.kind;
 }
@@ -688,13 +702,15 @@ export function activate(context: vscode.ExtensionContext) {
                         );
                         return;
                     }
-                    // trigger onDidChangeConfiguration() and update the theme
+                    // Prefer a workspace-specific theme when possible. Empty
+                    // windows have no workspace settings, so persist their
+                    // selection as the global default instead.
                     await vscode.workspace
                         .getConfiguration('vscode-pets')
                         .update(
                             'theme',
                             selectedTheme.value,
-                            vscode.ConfigurationTarget.Global,
+                            getThemeConfigurationTarget(),
                         );
                 } else {
                     await createPetPlayground(context);
