@@ -459,4 +459,6 @@ export function petPanelApp(
             themeInfo.effect.handleResize();
         }
     });
+
+    stateApi?.postMessage({ command: 'ready', text: '' });
 }

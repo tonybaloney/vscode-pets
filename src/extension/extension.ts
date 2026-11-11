@@ -361,6 +361,7 @@ export function activate(context: vscode.ExtensionContext) {
         getConfiguredThemeKind(),
         getThrowWithMouseConfiguration(),
         getEffectsDisabledConfiguration(),
+        context,
     );
     updateExtensionPositionContext().catch((e) => {
         console.error(e);
@@ -1267,6 +1268,31 @@ class PetWebviewViewProvider extends PetWebviewContainer {
     public static readonly viewType = 'petsView';
 
     private _webviewView?: vscode.WebviewView;
+    private _context: vscode.ExtensionContext;
+
+    constructor(
+        extensionUri: vscode.Uri,
+        color: PetColor,
+        type: PetType,
+        size: PetSize,
+        theme: Theme,
+        themeKind: ColorThemeKind,
+        throwBallWithMouse: boolean,
+        disableEffects: boolean,
+        context: vscode.ExtensionContext,
+    ) {
+        super(
+            extensionUri,
+            color,
+            type,
+            size,
+            theme,
+            themeKind,
+            throwBallWithMouse,
+            disableEffects,
+        );
+        this._context = context;
+    }
 
     resolveWebviewView(webviewView: vscode.WebviewView): void | Thenable<void> {
         this._webviewView = webviewView;
@@ -1278,6 +1304,23 @@ class PetWebviewViewProvider extends PetWebviewContainer {
             handleWebviewMessage,
             null,
             this._disposables,
+        );
+
+        // Spawn persisted extra pets once the panel JS signals it is ready.
+        const readyDisposable = webviewView.webview.onDidReceiveMessage(
+            (message) => {
+                if (message.command === 'ready') {
+                    readyDisposable.dispose();
+                    this.resetPets();
+                    const collection = PetSpecification.collectionFromMemento(
+                        this._context,
+                        getConfiguredSize(),
+                    );
+                    collection.forEach((item) => {
+                        this.spawnPet(item);
+                    });
+                }
+            },
         );
     }
 
