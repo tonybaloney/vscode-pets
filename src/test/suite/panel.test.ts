@@ -28,6 +28,7 @@ import * as pets from '../../panel/pets';
 import { randomName } from '../../common/names';
 import { PetSpecification } from '../../extension/extension';
 import { Finley } from '../../panel/pets/finley';
+import { Otter } from '../../panel/pets/otter';
 
 function mockPanelWindow() {
     const html = `<!DOCTYPE html>
@@ -697,6 +698,59 @@ suite('Finley Test Suite', () => {
                 vscode.ConfigurationTarget.Global,
             );
         }
+    });
+});
+
+suite('Otter Test Suite', () => {
+    const extensionRoot = path.resolve(__dirname, '../../..');
+    const mediaRoot = path.join(extensionRoot, 'media', 'otter');
+
+    function createOtter() {
+        mockPanelWindow();
+        const image = document.createElement('img');
+        const speech = document.createElement('div');
+        const pet = pets.createPet(
+            PetType.otter,
+            image,
+            document.createElement('div'),
+            speech,
+            PetSize.small,
+            100,
+            0,
+            path.join(mediaRoot, 'brown'),
+            0,
+            'Ollie',
+        );
+        assert.ok(pet instanceof Otter);
+        return { pet, image, speech };
+    }
+
+    test('Registers the otter with a brown color', () => {
+        assert.ok(ALL_PETS.includes(PetType.otter));
+        assert.deepStrictEqual(pets.availableColors(PetType.otter), [
+            PetColor.brown,
+        ]);
+        assert.strictEqual(createOtter().pet.emoji, '🦦');
+    });
+
+    test('Keeps the stand-up hover animation on screen for 1.9 seconds', () => {
+        const { pet, image, speech } = createOtter();
+        pet.recoverState({ currentStateEnum: States.walkRight });
+        const interrupted = pet.currentState;
+        pet.swipe();
+        pet.nextFrame();
+        assert.ok(image.src.endsWith('brown_swipe_8fps.gif'));
+        assert.strictEqual(speech.textContent, '👀');
+        // Still standing up after the default 1.5 s hold
+        for (let frame = 1; frame < 16; frame++) {
+            pet.nextFrame();
+        }
+        assert.strictEqual(pet.currentStateEnum, States.swipe);
+        for (let frame = 16; frame < 19; frame++) {
+            pet.nextFrame();
+        }
+        assert.strictEqual(pet.currentStateEnum, States.walkRight);
+        assert.strictEqual(pet.currentState, interrupted);
     });
 });
 

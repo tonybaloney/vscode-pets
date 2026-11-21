@@ -14,6 +14,7 @@ import { Horse } from './pets/horse';
 import { Monkey } from './pets/monkey';
 import { Mod } from './pets/mod';
 import { Morph } from './pets/morph';
+import { Otter } from './pets/otter';
 import { Panda } from './pets/panda';
 import { Rat } from './pets/rat';
 import { Rocky } from './pets/rocky';
@@ -257,6 +258,8 @@ export function createPet(
             return new Skeleton(...standardPetArguments, PetSpeed.normal);
         case PetType.raccoon:
             return new Raccoon(...standardPetArguments, PetSpeed.normal);
+        case PetType.otter:
+            return new Otter(...standardPetArguments, PetSpeed.normal);
         default:
             throw new InvalidPetException("Pet type doesn't exist");
     }
@@ -318,6 +321,8 @@ export function availableColors(petType: PetType): PetColor[] {
             return Skeleton.possibleColors;
         case PetType.raccoon:
             return Raccoon.possibleColors;
+        case PetType.otter:
+            return Otter.possibleColors;
         default:
             throw new InvalidPetException("Pet type doesn't exist");
     }
