@@ -64,6 +64,7 @@
     "vscode-pets.petType.finley": "Finley",
     "vscode-pets.petType.morph": "모프",
     "vscode-pets.petType.panda": "판다",
+    "vscode-pets.petType.otter": "수달",
     "vscode-pets.petSize.nano": "매우 작음",
     "vscode-pets.petSize.small": "작음",
     "vscode-pets.petSize.medium": "중간",
