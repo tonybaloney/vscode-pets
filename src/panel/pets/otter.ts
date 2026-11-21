@@ -4,7 +4,8 @@ import { States, SwipeState } from '../states';
 
 // The otter's hover animation (standing up and looking around) is a little
 // longer than most pets', so keep the swipe state on screen for 1.9 seconds
-// instead of the default 1.5 so the animation is not cut off.
+// instead of the default 1.5 so the animation is not cut off. The GIF itself
+// is slightly longer than that so it never loops back while it is shown.
 const OTTER_SWIPE_HOLD_TIME = 18;
 
 export class Otter extends BasePetType {
