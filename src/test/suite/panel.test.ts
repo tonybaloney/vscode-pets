@@ -28,6 +28,7 @@ import * as pets from '../../panel/pets';
 import { randomName } from '../../common/names';
 import { PetSpecification } from '../../extension/extension';
 import { Finley } from '../../panel/pets/finley';
+import { LeafEffect } from '../../panel/effects/leaves';
 
 function mockPanelWindow() {
     const html = `<!DOCTYPE html>
@@ -843,5 +844,53 @@ suite('Change Theme Test Suite', () => {
                 .get<Theme>('theme'),
             Theme.forest,
         );
+    });
+});
+
+suite('Leaf Effect Test Suite', () => {
+    function mockCanvas(width: number, height: number): HTMLCanvasElement {
+        return {
+            width,
+            height,
+            getContext: () => null,
+        } as unknown as HTMLCanvasElement;
+    }
+
+    test('Keeps leaves anchored to the trees when the panel is resized', () => {
+        const effect = new LeafEffect();
+        const canvas = mockCanvas(300, 200);
+        effect.init(
+            canvas,
+            mockCanvas(300, 200),
+            PetSize.nano,
+            7,
+            ColorThemeKind.dark,
+        );
+        // Simulate one leaf that has already settled on the ground
+        effect.particles[0].settled = true;
+        effect.particles[0].position.y = canvas.height - 7 - 119.5 / 20;
+
+        const round = (n: number) => Math.round(n * 1000) / 1000;
+        const distanceFromBottom = () =>
+            effect.particles.map((p) => [
+                round(canvas.height - p.origin.y),
+                round(canvas.height - p.position.y),
+            ]);
+        const before = distanceFromBottom();
+
+        // The panel is expanded to be much taller and narrower
+        canvas.height = 900;
+        canvas.width = 150;
+        effect.handleResize();
+
+        assert.deepStrictEqual(distanceFromBottom(), before);
+        effect.particles.forEach((p) => {
+            assert.ok(p.origin.x <= canvas.width);
+        });
+
+        // And shrunk again
+        canvas.height = 120;
+        effect.handleResize();
+        assert.deepStrictEqual(distanceFromBottom(), before);
     });
 });

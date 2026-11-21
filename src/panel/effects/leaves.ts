@@ -97,6 +97,7 @@ export class LeafEffect implements Effect {
     pRotationSpeed: number[] = [0.5, 3]; // min and max rotation speed for flutter effect
 
     floor: number = 0;
+    canvasHeight: number = 0; // canvas height the particle positions are based on
 
     enable(): void {
         this.running = true;
@@ -167,6 +168,7 @@ export class LeafEffect implements Effect {
         }
         // clear the particles array
         this.particles.length = 0;
+        this.canvasHeight = this.canvas.height;
 
         for (var i = 0; i < this.pAmount; i++) {
             var origin = new Vector2(
@@ -295,6 +297,22 @@ export class LeafEffect implements Effect {
     }
 
     handleResize(): void {
-        return;
+        if (!this.canvas) {
+            return;
+        }
+        // The canvas is anchored to the bottom of the window, but leaf
+        // positions are measured from the top. When the panel height changes,
+        // shift every leaf by the same amount so it stays in the same place
+        // relative to the trees and the ground instead of hanging in the sky.
+        const heightDelta = this.canvas.height - this.canvasHeight;
+        const width = this.canvas.width;
+        for (const particle of this.particles) {
+            particle.origin.y += heightDelta;
+            particle.position.y += heightDelta;
+            if (particle.origin.x > width) {
+                particle.origin.x = Math.random() * width;
+            }
+        }
+        this.canvasHeight = this.canvas.height;
     }
 }
