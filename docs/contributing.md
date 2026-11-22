@@ -34,12 +34,25 @@ The minimum set of behaviors is:
 * running/chasing
 * holding green ball
 
+### Regenerating Finley artwork
+
+Finley's editable pixel palette, sprites, and animation frames are in `media/finley/pixel-art.json`. After installing the project's development dependencies and ImageMagick 7, run `npm run generate:finley` to regenerate the six `blue_*_8fps.gif` animations and `icon.png`.
+
+The generator preserves the authored pixels and checks the GIF output against the source. Keep the ball green (`#2ed851`) to match the thrown ball in the pet panel.
+
 ## Testing the changes
 
-* Run `npm install`.
+* Use Node.js 26 LTS (`nvm use` reads `.nvmrc`) and npm 11. CI also checks Node.js 24 LTS (24.22.2 or newer). These are contributor tooling requirements; the extension still supports VS Code 1.73 and newer.
+* Run `npm ci` to install the locked dependencies.
 * Run `npm run compile`.
 * Go to the debug panel on the sidebar and launch the development version with the extension loaded (first option in the debug profiles).
 * Refer to [VS Code Extension Documentation](https://code.visualstudio.com/api) for additional resources.
+
+Run `npm test` for the full build, lint, and unit/integration suite in a downloaded VS Code host. The runner uses temporary user-data and extensions directories, leaving your personal VS Code profile untouched. Tests have a bounded 10-second timeout to accommodate extension configuration updates on slower hosts. On headless Linux, use `xvfb-run npm test`.
+
+Run `npm run test:coverage` after compiling for coverage in the same VS Code host. Run `npm run test:gifs` after compiling to validate GIF and icon filenames; encrypted asset ZIP directories are inspected without extracting private artwork or needing a password. Run `npm run package` to build a VSIX with the repository's locked VSCE version (no global install is needed).
+
+Keep `.nvmrc` and `.node-version` aligned with the current Node.js LTS, and update the CI compatibility matrix and `engines.node` together. Dependabot checks npm and GitHub Actions weekly, grouping related tooling updates. TypeScript is held to the stable line supported by typescript-eslint.
 
 ## Submitting a PR
 

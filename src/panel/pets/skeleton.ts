@@ -155,8 +155,8 @@ export class Skeleton extends BasePetType {
             this.petRoot.endsWith('orange')
                 ? '🎃'
                 : this.petRoot.endsWith('warrior')
-                ? '🏴‍☠️'
-                : '☠️',
+                  ? '🏴‍☠️'
+                  : '☠️',
         );
     }
 

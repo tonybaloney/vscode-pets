@@ -1,9 +1,9 @@
 import * as path from 'path';
-import * as Mocha from 'mocha';
-import * as glob from 'glob';
+import Mocha = require('mocha');
+import { glob } from 'glob';
 import { join } from 'path';
 
-function setupCoverage() {
+async function setupCoverage() {
     const NYC = require('nyc');
     const nyc = new NYC({
         cwd: join(__dirname, '..', '..', '..'),
@@ -16,55 +16,44 @@ function setupCoverage() {
         hookRunInThisContext: true,
     });
 
-    nyc.reset();
+    const reset = nyc.reset();
+    // Install hooks before yielding, while the extension host can still activate modules.
     nyc.wrap();
+    await reset;
 
     return nyc;
 }
 
 export async function run(): Promise<void> {
-    const nyc = process.env.COVERAGE ? setupCoverage() : null;
+    const nyc = process.env.COVERAGE ? await setupCoverage() : null;
 
     // Create the mocha test
     const mocha = new Mocha({
         ui: 'tdd',
         color: true,
-        require: [
-            'ts-node/register',
-            'source-map-support/register',
-            'jsdom-global/register',
-        ],
+        timeout: 10000,
     });
 
     const testsRoot = path.resolve(__dirname, '..');
 
-    return new Promise((c, e) => {
-        glob('**/**.test.js', { cwd: testsRoot }, async (err, files) => {
-            if (err) {
-                return e(err);
-            }
-
-            // Add files to the test suite
-            files.forEach((f) => mocha.addFile(path.resolve(testsRoot, f)));
-
-            try {
-                // Run the mocha test
-                mocha.run((failures) => {
-                    if (failures > 0) {
-                        e(new Error(`${failures} tests failed.`));
-                    } else {
-                        c();
-                    }
-                });
-            } catch (err) {
-                console.error(err);
-                e(err);
-            } finally {
-                if (nyc) {
-                    nyc.writeCoverageFile();
-                    await nyc.report();
+    try {
+        const files = await glob('**/*.test.js', { cwd: testsRoot });
+        await new Promise<void>((resolve, reject) => {
+            files.forEach((file) =>
+                mocha.addFile(path.resolve(testsRoot, file)),
+            );
+            mocha.run((failures) => {
+                if (failures > 0) {
+                    reject(new Error(`${failures} tests failed.`));
+                } else {
+                    resolve();
                 }
-            }
+            });
         });
-    });
+    } finally {
+        if (nyc) {
+            await nyc.writeCoverageFile();
+            await nyc.report();
+        }
+    }
 }

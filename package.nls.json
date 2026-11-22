@@ -9,6 +9,7 @@
     "vscode-pets.delete-pet.title": "Delete pet",
     "vscode-pets.remove-all-pets.title": "Remove all pets",
     "vscode-pets.roll-call.title": "Roll call",
+    "vscode-pets.change-theme.title": "Change theme",
 
     "vscode-pets.petColor.description": "Color of the pet",
     "vscode-pets.petType.description": "Type of the pet",
@@ -21,9 +22,13 @@
     "vscode-pets.petColor.black" : "Black",
     "vscode-pets.petColor.lightbrown" : "Light Brown",
     "vscode-pets.petColor.brown" : "Brown",
+    "vscode-pets.petColor.whiteface": "White-faced",
+    "vscode-pets.petColor.piedpearl": "Pied pearl",
+    "vscode-pets.petColor.blue": "Blue",
     "vscode-pets.petColor.green" : "Green",
     "vscode-pets.petColor.yellow" : "Yellow",
     "vscode-pets.petColor.gray" : "Gray",
+    "vscode-pets.petColor.gray_jimothy" : "Gray (Jimothy)",
     "vscode-pets.petColor.purple" : "Purple",
     "vscode-pets.petColor.red" : "Red",
     "vscode-pets.petColor.white" : "White",
@@ -64,6 +69,7 @@
     "vscode-pets.petType.squirrel": "Squirrel",
     "vscode-pets.petType.skeleton": "Skeleton",
     "vscode-pets.petType.deno": "Deno",
+    "vscode-pets.petType.finley": "Finley",
     "vscode-pets.petType.morph": "Morph",
     "vscode-pets.petType.panda": "Panda",
 
@@ -80,5 +86,7 @@
     "vscode-pets.theme.castle" : "Castle",
     "vscode-pets.theme.beach" : "Beach",
     "vscode-pets.theme.winter" : "Winter",
-    "vscode-pets.theme.autumn" : "Autumn"
+    "vscode-pets.theme.autumn" : "Autumn",
+    "vscode-pets.theme.library": "Library",
+    "vscode-pets.theme.barn": "Barn"
 }

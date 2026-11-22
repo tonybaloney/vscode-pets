@@ -8,6 +8,7 @@ import { Cockatiel } from './pets/cockatiel';
 import { Crab } from './pets/crab';
 import { Deno } from './pets/deno';
 import { Dog } from './pets/dog';
+import { Finley } from './pets/finley';
 import { Fox } from './pets/fox';
 import { Frog } from './pets/frog';
 import { Horse } from './pets/horse';
@@ -18,6 +19,7 @@ import { Panda } from './pets/panda';
 import { Rat } from './pets/rat';
 import { Rocky } from './pets/rocky';
 import { RubberDuck } from './pets/rubberduck';
+import { Raccoon } from './pets/raccoon';
 import { Skeleton } from './pets/skeleton';
 import { Snail } from './pets/snail';
 import { Snake } from './pets/snake';
@@ -214,6 +216,8 @@ export function createPet(
             return new Deno(...standardPetArguments, PetSpeed.slow);
         case PetType.dog:
             return new Dog(...standardPetArguments, PetSpeed.normal);
+        case PetType.finley:
+            return new Finley(...standardPetArguments, PetSpeed.normal);
         case PetType.fox:
             return new Fox(...standardPetArguments, PetSpeed.fast);
         case PetType.frog:
@@ -254,6 +258,8 @@ export function createPet(
             return new Morph(...standardPetArguments, PetSpeed.normal);
         case PetType.skeleton:
             return new Skeleton(...standardPetArguments, PetSpeed.normal);
+        case PetType.raccoon:
+            return new Raccoon(...standardPetArguments, PetSpeed.normal);
         default:
             throw new InvalidPetException("Pet type doesn't exist");
     }
@@ -275,6 +281,8 @@ export function availableColors(petType: PetType): PetColor[] {
             return Dog.possibleColors;
         case PetType.deno:
             return Deno.possibleColors;
+        case PetType.finley:
+            return Finley.possibleColors;
         case PetType.fox:
             return Fox.possibleColors;
         case PetType.frog:
@@ -313,6 +321,8 @@ export function availableColors(petType: PetType): PetColor[] {
             return Panda.possibleColors;
         case PetType.skeleton:
             return Skeleton.possibleColors;
+        case PetType.raccoon:
+            return Raccoon.possibleColors;
         default:
             throw new InvalidPetException("Pet type doesn't exist");
     }

@@ -662,6 +662,54 @@ export function activate(context: vscode.ExtensionContext) {
 
     context.subscriptions.push(
         vscode.commands.registerCommand(
+            'vscode-pets.change-theme',
+            async () => {
+                const panel = getPetPanel();
+                if (
+                    getConfigurationPosition() === ExtPosition.explorer &&
+                    webviewViewProvider
+                ) {
+                    await vscode.commands.executeCommand('petsView.focus');
+                }
+                if (panel) {
+                    const quickPickItems =
+                        localize.stringListAsQuickPickItemList<Theme>(
+                            ALL_THEMES,
+                        );
+                    const selectedTheme = await vscode.window.showQuickPick(
+                        quickPickItems,
+                        {
+                            placeHolder: vscode.l10n.t('Select a theme'),
+                        },
+                    );
+                    if (selectedTheme === undefined) {
+                        console.log(
+                            'Cancelled Changing Theme - No Theme Selected',
+                        );
+                        return;
+                    }
+                    // trigger onDidChangeConfiguration() and update the theme
+                    await vscode.workspace
+                        .getConfiguration('vscode-pets')
+                        .update(
+                            'theme',
+                            selectedTheme.value,
+                            vscode.ConfigurationTarget.Global,
+                        );
+                } else {
+                    await createPetPlayground(context);
+                    await vscode.window.showInformationMessage(
+                        vscode.l10n.t(
+                            "A Pet Playground has been created. You can now use the 'Change Theme' Command to change the theme.",
+                        ),
+                    );
+                }
+            },
+        ),
+    );
+
+    context.subscriptions.push(
+        vscode.commands.registerCommand(
             'vscode-pets.remove-all-pets',
             async () => {
                 const panel = getPetPanel();
@@ -990,8 +1038,8 @@ class PetWebviewContainer implements IPetPanel {
 				<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src ${
                     webview.cspSource
                 } 'nonce-${nonce}'; img-src ${
-            webview.cspSource
-        } https:; script-src 'nonce-${nonce}';
+                    webview.cspSource
+                } https:; script-src 'nonce-${nonce}';
                 font-src ${webview.cspSource};">
 				<meta name="viewport" content="width=device-width, initial-scale=1.0">
 				<link href="${stylesResetUri}" rel="stylesheet" nonce="${nonce}">

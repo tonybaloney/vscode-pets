@@ -1,11 +1,14 @@
 export const enum PetColor {
     brown = 'brown',
+    whiteface = 'whiteface',
+    piedpearl = 'piedpearl',
     lightbrown = 'lightbrown',
     black = 'black',
     green = 'green',
     blue = 'blue',
     yellow = 'yellow',
     gray = 'gray',
+    grayJimothy = 'gray_jimothy',
     purple = 'purple',
     red = 'red',
     white = 'white',
@@ -35,6 +38,7 @@ export const enum PetType {
     crab = 'crab',
     dog = 'dog',
     deno = 'deno',
+    finley = 'finley',
     fox = 'fox',
     frog = 'frog',
     horse = 'horse',
@@ -42,6 +46,7 @@ export const enum PetType {
     monkey = 'monkey',
     morph = 'morph',
     panda = 'panda',
+    raccoon = 'raccoon',
     rat = 'rat',
     rocky = 'rocky',
     rubberduck = 'rubber-duck',
@@ -83,6 +88,8 @@ export const enum Theme {
     beach = 'beach',
     winter = 'winter',
     autumn = 'autumn',
+    library = 'library',
+    barn = 'barn',
 }
 
 export const enum ColorThemeKind {
@@ -112,6 +119,7 @@ export const ALL_PETS = [
     PetType.crab,
     PetType.dog,
     PetType.deno,
+    PetType.finley,
     PetType.fox,
     PetType.frog,
     PetType.horse,
@@ -119,6 +127,7 @@ export const ALL_PETS = [
     PetType.monkey,
     PetType.morph,
     PetType.panda,
+    PetType.raccoon,
     PetType.rat,
     PetType.rocky,
     PetType.rubberduck,
@@ -132,11 +141,15 @@ export const ALL_PETS = [
 ];
 export const ALL_COLORS = [
     PetColor.black,
+    PetColor.blue,
     PetColor.brown,
     PetColor.lightbrown,
+    PetColor.whiteface,
+    PetColor.piedpearl,
     PetColor.green,
     PetColor.yellow,
     PetColor.gray,
+    PetColor.grayJimothy,
     PetColor.purple,
     PetColor.red,
     PetColor.white,
@@ -167,4 +180,6 @@ export const ALL_THEMES = [
     Theme.beach,
     Theme.winter,
     Theme.autumn,
+    Theme.library,
+    Theme.barn,
 ];

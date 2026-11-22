@@ -1,4 +1,7 @@
 import * as fs from 'fs';
+import * as path from 'path';
+import { Entry, open } from 'yauzl';
+import { Cat } from '../panel/pets/cat';
 
 const pets: { [key: string]: { colors: string[]; states: string[] } } = {
     bunny: {
@@ -19,7 +22,7 @@ const pets: { [key: string]: { colors: string[]; states: string[] } } = {
         states: ['fly-left', 'fly-up', 'fly-right', 'fly-down'],
     },
     cat: {
-        colors: ['black', 'brown', 'gray', 'lightbrown', 'orange', 'white'],
+        colors: Cat.possibleColors,
         states: [
             'fall_from_grab',
             'idle',
@@ -34,7 +37,7 @@ const pets: { [key: string]: { colors: string[]; states: string[] } } = {
         ],
     },
     chicken: {
-        colors: ['white', 'brown'],
+        colors: ['white', 'brown', 'gray'],
         states: ['idle', 'run', 'swipe', 'walk', 'walk_fast', 'with_ball'],
     },
     morph: {
@@ -46,7 +49,7 @@ const pets: { [key: string]: { colors: string[]; states: string[] } } = {
         states: ['idle', 'run', 'swipe', 'walk', 'walk_fast', 'with_ball'],
     },
     cockatiel: {
-        colors: ['gray', 'brown'],
+        colors: ['gray', 'brown', 'whiteface', 'piedpearl'],
         states: ['idle', 'run', 'swipe', 'walk', 'walk_fast', 'with_ball'],
     },
     crab: {
@@ -56,6 +59,10 @@ const pets: { [key: string]: { colors: string[]; states: string[] } } = {
     deno: {
         colors: ['green'],
         states: ['idle', 'run', 'swipe', 'walk', 'with_ball'],
+    },
+    finley: {
+        colors: ['blue'],
+        states: ['idle', 'run', 'swipe', 'walk', 'walk_fast', 'with_ball'],
     },
     dog: {
         colors: ['black', 'brown', 'red', 'white', 'akita'],
@@ -134,6 +141,10 @@ const pets: { [key: string]: { colors: string[]; states: string[] } } = {
         colors: ['gray', 'white', 'brown'],
         states: ['idle', 'run', 'swipe', 'walk', 'walk_fast', 'with_ball'],
     },
+    raccoon: {
+        colors: ['gray', 'gray_jimothy'],
+        states: ['idle', 'run', 'swipe', 'walk', 'with_ball', 'lie'],
+    },
     turtle: {
         colors: ['green', 'orange'],
         states: ['idle', 'run', 'walk', 'lie', 'with_ball'],
@@ -164,49 +175,98 @@ const pets: { [key: string]: { colors: string[]; states: string[] } } = {
     },
 };
 
-function checkGifFilenames(folder: string) {
+export function checkGifFilenames(
+    fileExists: (filename: string) => boolean,
+    logger: Pick<Console, 'error' | 'warn'> = console,
+): boolean {
+    let valid = true;
     for (const pet in pets) {
         const allowedColors = pets[pet].colors;
         const allowedStates = pets[pet].states;
-        if (!allowedColors) {
-            console.error(`No colors found for pet "${pet}"`);
-            return;
-        }
-        allowedColors.forEach((color) => {
-            allowedStates.forEach((state) => {
+        for (const color of allowedColors) {
+            for (const state of allowedStates) {
                 const filename = `${color}_${state}_8fps.gif`;
-                const filePath = `${folder}/${pet}/${filename}`;
-                if (!fs.existsSync(filePath)) {
+                const filePath = `${pet}/${filename}`;
+                if (!fileExists(filePath)) {
                     // \x1b[31m is the ANSI escape code for red, and \x1b[0m resets the color back to the terminal's default.
-                    console.error(
+                    logger.error(
                         `\x1b[31mFile "${filePath}" does not exist.\x1b[0m`,
                     );
-                    return false;
-                } else {
-                    // console.log(`File "${filePath}" exists.`);
+                    valid = false;
                 }
-            });
+            }
 
             // Check icon as well
             const iconFilename = `icon_${color}.png`;
-            const iconFilePath = `${folder}/${pet}/${iconFilename}`;
-            if (!fs.existsSync(iconFilePath)) {
-                if (fs.existsSync(`${folder}/${pet}/icon.png`)) {
-                    console.warn(
+            const iconFilePath = `${pet}/${iconFilename}`;
+            if (!fileExists(iconFilePath)) {
+                if (fileExists(`${pet}/icon.png`)) {
+                    logger.warn(
                         `\x1b[33mNo icon found for "${pet}" with color "${color}". Using default icon.\x1b[0m`,
                     );
                 } else {
-                    console.error(
-                        `\x1b[31mFile "${iconFilePath}" and "${folder}/${pet}/icon.png" does not exist.\x1b[0m`,
+                    logger.error(
+                        `\x1b[31mFile "${iconFilePath}" and "${pet}/icon.png" do not exist.\x1b[0m`,
                     );
+                    valid = false;
                 }
-                return false;
-            } else {
-                // console.log(`File "${iconFilePath}" exists.`);
             }
+        }
+    }
+    return valid;
+}
+
+export async function readArchivedFiles(folder: string): Promise<Set<string>> {
+    const files = new Set<string>();
+    for (const filename of ['extra.zip', 'extraIcons.zip']) {
+        const archivePath = path.join(folder, filename);
+        if (!fs.existsSync(archivePath)) {
+            continue;
+        }
+        await new Promise<void>((resolve, reject) => {
+            open(archivePath, { lazyEntries: true }, (error, archive) => {
+                if (error || !archive) {
+                    reject(
+                        new Error(
+                            `Cannot read "${archivePath}": ${
+                                error?.message ?? 'ZIP directory unavailable'
+                            }`,
+                        ),
+                    );
+                    return;
+                }
+                archive.on('error', reject);
+                archive.on('end', resolve);
+                archive.on('entry', (entry: Entry) => {
+                    if (!entry.fileName.endsWith('/')) {
+                        files.add(entry.fileName);
+                    }
+                    archive.readEntry();
+                });
+                archive.readEntry();
+            });
         });
+    }
+    return files;
+}
+
+async function main(): Promise<void> {
+    const mediaFolder = './media';
+    // ZIP directories expose filenames without decrypting the protected artwork.
+    const archivedFiles = await readArchivedFiles(mediaFolder);
+    const valid = checkGifFilenames(
+        (filename) =>
+            fs.existsSync(path.join(mediaFolder, filename)) ||
+            archivedFiles.has(filename),
+    );
+    if (!valid) {
+        process.exitCode = 1;
     }
 }
 
-const mediaFolder = './media';
-checkGifFilenames(mediaFolder);
+if (require.main === module) {
+    void main().catch((error) => {
+        console.error(error);
+        process.exitCode = 1;
+    });
+}

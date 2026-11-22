@@ -28,7 +28,7 @@ Open the setting panel with `Ctrl+,` on Windows/Linux or `Cmd(⌘)+,` on MacOS. 
 
 Set a default color, size, pet type, position, and theme when you open a Pet Panel.
 
-* Pet Color: black, brown, green, yellow, gray, purple, red, white, orange
+* Pet Color: depends on the selected pet. See [Cat coat options](#cat-coat-options) for all available cat colors.
 * Pet Size: nano, small, medium, large
 * Pet Type: cat, chicken, crab, clippy, cockatiel, dog, horse, mod, rocky, rubber duck, snake, totoro, turtle, zappy
 
@@ -41,6 +41,23 @@ Set a default color, size, pet type, position, and theme when you open a Pet Pan
 * Ferris the crab can only be red
 * Rocky can only be gray
 * Mod can only be purple
+
+### Cat coat options
+
+Cats support the following values for the `vscode-pets.petColor` setting:
+
+| Coat | Available colors |
+| --- | --- |
+| Solid | `black`, `blue`, `solid_white`, `chocolate`, `cream` |
+| Tabby | `brown_tabby`, `silver_tabby`, `ginger_tabby`, `cream_tabby` |
+| Bicolor | `white` (tuxedo), `gray_white`, `ginger_white`, `tabby_white` |
+| Tortoiseshell | `tortoiseshell`, `dilute_tortie` |
+| Calico | `calico`, `dilute_calico` |
+| Colorpoint | `seal_point`, `blue_point` |
+| Other original colors | `brown`, `gray`, `lightbrown`, `orange` |
+
+The original `white` option remains the black-and-white tuxedo cat for compatibility
+with saved pets. Choose `solid_white` for an all-white cat.
 
 ## Place the pet's window
 
